@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS /*TABLE_PREFIX*/t_rubrics (
+  id int(21) NOT NULL AUTO_INCREMENT,
+  name varchar(64) NOT NULL,
+  image varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS /*TABLE_PREFIX*/t_user_rubrics (
+  id int(21) NOT NULL AUTO_INCREMENT,
+  user_id int(21) NOT NULL,
+  rubric_id int(21) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -1,0 +1,1 @@
+DROP TABLE /*TABLE_PREFIX*/t_user_resource

@@ -1,0 +1,26 @@
+/* Front stylesheet for the Custom Attributes plugin */
+
+/* Listing */
+
+#custom_attributes {
+	clear: both;
+}
+#custom_attributes label {
+	margin-right:0;
+}
+#custom_attributes input[type="text"], 
+#custom_attributes select, 
+#custom_attributes textarea {
+	width:100%;
+}
+#custom_attributes .checkbox input[type="checkbox"] {
+	position:inherit;
+	margin-left:0;
+}
+@media (min-width:280px) and (max-width:768px) { 
+	#custom_attributes input, 
+	#custom_attributes select, 
+	#custom_attributes textarea {
+		margin-left:0;
+	} 
+}

@@ -1,0 +1,136 @@
+/**
+Name: ResponsiveSlides.js
+Version: 1.54
+Author: viljamis
+URL: http://responsiveslides.com
+Modified by DrizzleThemes.com
+Last updated: 03 Aug 2015
+**/
+
+#sliders{
+  clear: both;
+  margin: 0 auto;
+  position: relative;
+  z-index: 99;
+  border-bottom:1px solid #F1F1F1;
+}
+.rslides_container {
+  position: relative;
+  width: 100%;
+  }
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+  }
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+.rslides img {
+  display: block;
+  float: left;
+  width: 100%;
+  border: 0;
+  }
+.sliderstyle_nav {
+  z-index: 3;
+  position: absolute;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  top: 50%;
+  left: 10px;
+  opacity: 0.2;
+  text-indent: -9999px;
+  overflow: hidden;
+  text-decoration: none;
+  height: 70px;
+  width: 39px;
+  background: transparent url(slide-nav.png) no-repeat left top;
+  margin-top: -45px;
+  transition: all 0.5s ease;
+  }
+.sliderstyle_nav:hover, .sliderstyle_nav:active {
+  opacity: 0.7;
+  left:15px;
+  }
+.sliderstyle_nav.next:hover, .sliderstyle_nav.next:active { right:15px; }
+.sliderstyle_nav.next {
+  left: auto;
+  background-position: right top;
+  right: 10px;
+  }
+.sliderstyle_nav:focus{
+  outline: none;
+  }
+ul.sliderstyle_tabs { margin-bottom:0px; padding:0px; width:100%;}
+.sliderstyle_tabs{
+	position:absolute;
+	bottom:20px;
+  text-align: center;
+  z-index:999;
+  }
+.sliderstyle_tabs li{
+  display: inline;
+  float: none;
+  _float: left;
+  *float: left;
+  margin-right: 5px;
+  }
+.sliderstyle_tabs a{
+  text-indent: -9999px;
+  overflow: hidden;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background: #ccc;
+  background: rgba(0,0,0, .2);
+  display: inline-block;
+  _display: block;
+  *display: block;
+  width: 9px;
+  height: 9px;
+  }
+.sliderstyle_here a{
+  background: #222;
+  background: rgba(0,0,0, .8);
+  }  
+.sliderstyle .caption {
+    background: rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    color: #FFFFFF;
+    display: block;
+    font-size: 20px;
+    left: 0;
+    margin: 0;
+    max-width: none;
+    padding: 10px 20px;
+    position: absolute;
+    right: 0;
+    text-shadow: none;
+    z-index: 2;
+}
+.slidefix {
+	margin-bottom:-100px!important;
+}
+@media (min-width:280px) and (max-width:480px) { 
+	.slidefix {
+		margin-bottom:0px!important;
+	}
+}
+@media (min-width:481px) and (max-width:768px) {  
+	.slidefix {
+		margin-bottom:0px!important;
+	}
+}

@@ -1,0 +1,21 @@
+div#plug {
+	width: 100%;
+	height: 100%;
+	display: none;
+	background-color: #000000;
+	opacity: 0.5;
+	zoom: 1;
+	filter: alpha(opacity=50);
+	z-index: 10;
+	position: absolute;
+	left: 0;
+	top: 0;
+} 
+#plug img {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+div.ad_list {
+	position: relative;
+}
