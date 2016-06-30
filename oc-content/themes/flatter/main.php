@@ -532,18 +532,18 @@
             <script>
                 $(document).ready(function () {
                     $('#search_form a').click(function (e) {
+                        $('#search_form li').removeClass('active');
+                        $(this).parent().addClass('active');
                         e.preventDefault();
-                        var eid = $(this).attr('data-val');
-                        $('#filter_value').val(eid);
-                        $('#search_form').submit();
-                        var url = "<?php echo osc_ajax_hook_url(osc_base_url() . 'test.php', array('test1')) ?>";
 
+                        var filter_value = $(this).attr('data-val');
                         $.ajax({
-                            url: url,
-                            type: 'POST',
+                            url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                            data: {filter_value: filter_value},
                             success: function (data, textStatus, jqXHR) {
+                                $('.masonry_row').html(data);
                             }
-                        })
+                        });
                     })
                 });
             </script>
@@ -557,6 +557,13 @@
         }
         .loading{
             opacity:0.2;
+        }
+        #search_form li{
+            margin-right: 0;
+            border-right: 1px solid #ddd;
+        }
+        #search_form li.active{
+            border-bottom: 2px solid #00ACED;
         }
     </style>
     <div class="section all_news">
@@ -582,7 +589,7 @@
                                 var dir = check_scroll_direction($(window).scrollTop());
                                 if (dir === 'down') {
                                     if ($(window).scrollTop() == $('.loading').offset().top - 200) {
-                                    disable_scroll();
+                                        disable_scroll();
                                         $('.masonry_row').css({'opacity': '0.6'});
                                         $('.loading').css({'opacity': '1'});
                                         $.ajax({
@@ -624,7 +631,6 @@
             </div>
         </div>
     </div>
-    <img class="loading" src="https://corporatelaws.taxmann.com/images/loading.gif" />
 <?php endif; ?>
 
 

@@ -5,11 +5,14 @@ $data = new DAO();
 $data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
 $data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
 $data->dao->orderBy('dt_pub_date', 'DESC');
-//if ($_REQUEST['filter_value']):
-//    $data->dao->where('fk_i_theme_id', $_REQUEST['filter_value']);
-//endif;
+
+if ($_REQUEST['filter_value']):
+    $categories = get_category_array($_REQUEST['filter_value']);
+    $data->dao->whereIn('fk_i_category_id', $categories);
+endif;
+
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 10;
+$offset = 1000;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 //$data->dao->offset(10);
@@ -20,9 +23,23 @@ if ($result) {
     $items = array();
 }
 
+function get_category_array($parent_category_id) {
+    $category_array = array($parent_category_id);
+    $category_data = new DAO();
+    $category_data->dao->select(sprintf('%st_category.*', DB_TABLE_PREFIX));
+    $category_data->dao->from(sprintf('%st_category', DB_TABLE_PREFIX));
+    $category_data->dao->where('fk_i_parent_id', $parent_category_id);
+    $result1 = $category_data->dao->get();
+    $cat_data = $result1->result();
+    foreach($cat_data as $k => $cat):
+        $category_array[] = $cat['pk_i_id'];
+    endforeach;
+    return $category_array;
+}
+
 $item_result = Item::newInstance()->extendData($items);
 ?>
-<?php foreach ($item_result as $k => $item):?>
+<?php foreach ($item_result as $k => $item): ?>
     <?php
     osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
     while (osc_has_custom_items()):

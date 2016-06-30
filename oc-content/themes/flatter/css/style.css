@@ -1609,10 +1609,14 @@ select {
     color: #00ACED;
 }
 .custom_filter_navigation .navbar-nav > li {
-    margin-right: 10px;
+    margin-right: 0;
+    border-right: 1px solid #eee;
 }
 .custom_filter_navigation .navbar-nav > li.active {
-    border-bottom: 1px solid #00ACED;
+    border-bottom: 2px solid #00ACED;
+}
+.custom_filter_navigation .navbar-nav > li.active a{
+    background-color: transparent;
 }
 .all_news{
     padding-top: 40px;
