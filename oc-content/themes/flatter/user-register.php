@@ -168,11 +168,15 @@ osc_current_web_theme_path('header.php');
 function ex_load_scripts() {
     osc_register_script('switch', osc_current_web_theme_js_url('bootstrap-switch.min.js'), 'switch-jquery');
     osc_enqueue_script('switch');
-    osc_enqueue_style('switchCss', osc_base_url() . 'oc-content/themes/flatter/css/bootstrap-switch.min.css');
+    osc_enqueue_style('switchCss', osc_current_web_theme_url('css/bootstrap-switch.min.css'));
+    
+    osc_register_script('typeahead', osc_current_web_theme_url('js/bootstrap-typeahead.min.js'), 'typeahead');
+    osc_enqueue_script('typeahead');
 }
 
 function new_footer() {
     ?>
+    <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-typeahead.min.js'); ?>"></script>
     <script>
         $(document).ready(function () {
             $('.terms_checkbox').bootstrapSwitch({
@@ -216,7 +220,6 @@ function new_footer() {
     <?php
 }
 
-//osc_add_hook('footer', 'ex_load_scripts');
 osc_add_hook('footer', 'new_footer');
 osc_add_hook('init', 'ex_load_scripts');
 ?>

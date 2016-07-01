@@ -186,16 +186,10 @@
         <?php
         require_once('geoplugin.class.php');
         $geoplugin = new geoPlugin();
-        //$ip = $_SERVER['REMOTE_ADDR'];
-        //$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        //locate the IP
         $geoplugin->locate();
-
-
         $ct = $geoplugin->city;
         $rg = $geoplugin->region;
         $cy = $geoplugin->countryName;
-        //echo "$cy";
         ?> 
 
         <div class="section" style="background-color: black;">
@@ -496,6 +490,7 @@
             <div class="container"> 
                 <form id="search_form" method="POST">
                     <input type="hidden" name="filter_value" id="filter_value">
+                    <input type="hidden" name="page_number" id="page_number" value="1">
                     <input type="hidden"  size="5" type="text" id="item_id" name="id">              
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -529,111 +524,30 @@
                     </div>
                 </form>
             </div>
-            <script>
-                $(document).ready(function () {
-                    $('#search_form a').click(function (e) {
-                        $('#search_form li').removeClass('active');
-                        $(this).parent().addClass('active');
-                        e.preventDefault();
 
-                        var filter_value = $(this).attr('data-val');
-                        $.ajax({
-                            url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                            data: {filter_value: filter_value},
-                            success: function (data, textStatus, jqXHR) {
-                                $('.masonry_row').html(data);
-                            }
-                        });
-                    })
-                });
-            </script>
             <!-- Categories -->                    
             <!-- Locations -->
         </div>
-    </div>
-    <style>
-        .masonry_row > .col-md-4{
-            visibility: visible !important;
-        }
-        .loading{
-            opacity:0.2;
-        }
-        #search_form li{
-            margin-right: 0;
-            border-right: 1px solid #ddd;
-        }
-        #search_form li.active{
-            border-bottom: 2px solid #00ACED;
-        }
-    </style>
+    </div>   
     <div class="section all_news">
         <div class="container-fluid">
-            <div class="row masonry_row">                
-                <?php
-                if (!empty($_REQUEST['filter_value'])):
-                    ?>
-                    <script>
-                        jQuery(document).ready(function ($) {
-                            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-
-                            $.ajax({
-                                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                                data: {filter_value: '<?php echo $_REQUEST['filter_value'] ?>'},
-                                success: function (data, textStatus, jqXHR) {
-                                    $('.masonry_row').append(data);
-                                }
-                            });
-
-
-                            $(window).scroll(function () {
-                                var dir = check_scroll_direction($(window).scrollTop());
-                                if (dir === 'down') {
-                                    if ($(window).scrollTop() == $('.loading').offset().top - 200) {
-                                        disable_scroll();
-                                        $('.masonry_row').css({'opacity': '0.6'});
-                                        $('.loading').css({'opacity': '1'});
-                                        $.ajax({
-                                            url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                                            data: {filter_value: '<?php echo $_REQUEST['filter_value'] ?>'},
-                                            success: function (data, textStatus, jqXHR) {
-                                                $('.masonry_row').append(data);
-                                                $('.masonry_row').css({'opacity': '1'});
-                                                $('.loading').css({'opacity': '0.2'});
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        });
-                        var lastScrollTop = 0;
-                        function disable_scroll() {
-                            jQuery(window).unbind('scroll');
-                        }
-                        function enable_scroll() {
-                            jQuery(window).bind('scroll');
-                        }
-                        function check_scroll_direction() {
-                            var st = $(this).scrollTop();
-                            var dir;
-                            if (st > lastScrollTop) {
-                                dir = 'down';
-                            } else {
-                                dir = 'up';
-                            }
-                            lastScrollTop = st;
-                            console.log(dir);
-                            return dir;
-                        }
-                    </script>
-                    <?php
-                endif;
-                ?>      
+            <div class="row  effect-3">
+                <div class="col-md-12">
+                    <div class="masonry_row"></div>
+                </div>
+            </div>
+            
+            <div class="clearfix"></div>
+            
+            <div class="row">                
+                <h2 class="result_text"></h2>                
+                <div class="loading text-center">
+                    <i class="fa fa-spin fa-refresh fa-3x"></i>
+                </div>
             </div>
         </div>
     </div>
 <?php endif; ?>
-
-
 <!-- bottom background -->
 
 
@@ -707,17 +621,96 @@ osc_add_hook('footer', 'footer_script');
 
 function footer_script() {
     ?>
+    <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-        jQuery(document).ready(function ($) {
+        var pageNumber = $('#page_number').val();
+        var is_enable_ajax = false;
+        var loading = false;
+
+        $(document).ready(function () {
+
             $('.select2').each(function () {
                 var placeholder = $(this).attr('title');
                 $(this).select2({
                     placeholder: 'placeholder'
                 });
             });
-        })
+
+            $('.masonry_row').masonry({
+                columnWidth: '.item',
+                itemSelector: '.item',
+            });
+            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                //data: {page_number: pageNumber, },
+                success: function (data, textStatus, jqXHR) {
+                    $('.masonry_row').html(data);
+                }
+            });
+            $('#search_form a').click(function (e) {
+                $('#search_form li').removeClass('active');
+                $(this).parent().addClass('active');
+                e.preventDefault();
+
+                var filter_value = $(this).attr('data-val');
+                $('#filter_value').val(filter_value);
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                    data: {
+                        filter_value: filter_value
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        $('.masonry_row').html(data);
+                        is_enable_ajax = true;
+                        $(".result_text").hide();
+                        $('.masonry_row').masonry('reloadItems');
+                        $('.masonry_row').masonry('layout');
+                        $('#page_number').val(1);
+                    }
+
+                });
+            });
+
+            $(window).bind('scroll', function () {
+                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
+                    loading = true;
+                    $('.loading').fadeIn(500);
+                    $('.masonry_row').css({'opacity': '0.2'});
+                    setTimeout(make_item_ajax_call, 1000);
+                }
+            });
+        });
+        function make_item_ajax_call() {
+            var filter_value = $('#filter_value').val();
+            var page_number = $('#page_number').val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                data: {
+                    page_number: page_number,
+                    filter_value: filter_value,
+                },
+                success: function (data) {
+                    if (data !== '0') {
+                        $(".masonry_row").append(data);
+                        $('.loading').fadeOut(1000);
+                        $('.masonry_row').css({'opacity': '1'});
+                        var next_page = parseInt($('#page_number').val()) + 1;
+                        $('#page_number').val(next_page);
+                        loading = false;
+                    } else {
+                        $(".result_text").text('No More Data Found').show();
+                        $('.loading').fadeOut(1000);
+                        $('.masonry_row').css({'opacity': '1'});
+                        is_enable_ajax = false;
+                        loading = false;
+                    }
+                    $('.masonry_row').masonry('reloadItems');
+                    $('.masonry_row').masonry('layout');
+                }
+            });
+        }
     </script>
-    <script src="<?php echo osc_current_web_theme_url() . 'js/jquery.infinitescroll.min.js' ?>"></script>
     <?php
 }
 ?>

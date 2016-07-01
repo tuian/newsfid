@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 // meta tag robots
 osc_add_hook('header', 'flatter_nofollow_construct');
 
@@ -9,16 +9,17 @@ osc_current_web_theme_path('header.php');
 ?>
 
 <?php if ($_SESSION['after_register'] && $_SESSION['after_register'] == 'yes'): ?>
-
     <?php
     if ($_REQUEST['submit']):
         $user_id = $_SESSION['user_id'];
         $conn = getConnection();
         if (count($_REQUEST['cat_id']) >= 1):
+            $theme_id_array = implode(',', $_REQUEST['cat_id']);
             foreach ($_REQUEST['cat_id'] as $k => $v):
                 $conn->osc_dbExec("INSERT INTO %st_user_themes ( user_id, theme_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
             endforeach;
             unset($_SESSION['after_register']);
+            Session::newInstance()->_set('theme_ids', $theme_id_array);
             //unset($_SESSION['user_id']);
             osc_reset_static_pages();
             osc_get_static_page('rubric');
@@ -61,23 +62,38 @@ osc_current_web_theme_path('header.php');
                     <div class="col-md-8 col-sm-8">
                         <div class="row">
                             <?php
-                            $themes = get_all_themes_icon();
+                            $data = new DAO();
+                            $data->dao->select("a.*, b.*, c.i_num_items, d.*");
+                            $data->dao->from(DB_TABLE_PREFIX . 't_category as a');
+                            $data->dao->join(DB_TABLE_PREFIX . 't_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
+                            $data->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
+                            $data->dao->join(DB_TABLE_PREFIX . 'bs_theme_category_icon  as d ', 'a.pk_i_id = d.pk_i_id', 'LEFT');
+                            $data->dao->where("a.fk_i_parent_id IS NULL");
+                            $data->dao->where("b.fk_c_locale_code = 'en_US'");
+                            $data->dao->orderBy('a.pk_i_id', 'ASC');
+                            $result1 = $data->dao->get();
+                            $themes = $result1->result();
                             ?>
                             <?php foreach ($themes as $k => $theme): ?>
                                 <div class="col-md-3 col-sm-3 margin-bottom-20">
-                                    <div class="category_box" data-id="<?php echo $theme['id'] ?>">
+                                    <div class="category_box" data-id="<?php echo $theme['pk_i_id'] ?>">
                                         <div class="category_image">
-                                            <?php if ($theme['image']) : ?>
-                                                <img src="<?php echo THEME_UPLOAD_DIR_PATH . $theme['image']; ?>" class="img img-responsive cat-image"/>    
-                                            <?php endif; ?>
+                                            <?php
+                                            if ($theme['bs_image_name']) :
+                                                $img_path = UPLOAD_PATH . $theme['bs_image_name'];
+                                            else:
+                                                $img_path = osc_current_web_theme_url() . 'images/no-photo.jpg';
+                                            endif;
+                                            ?>
+                                            <img src="<?php echo $img_path; ?>" class="img img-responsive cat-image"/>    
                                             <div class="add_box">
                                                 <span class="add_icon"></span>
                                             </div>
                                             <div class="overlay"></div>
-                                            <input type="checkbox" name="cat_id[]" value="<?php echo $theme['id'] ?>" class="cat_checkbox" style="display: none">
+                                            <input type="checkbox" name="cat_id[]" value="<?php echo $theme['pk_i_id'] ?>" class="cat_checkbox" style="display: none">
                                         </div>
                                         <div class="category_title">
-                                            <?php echo $theme['name']; ?>
+                                            <?php echo $theme['s_name']; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -91,77 +107,6 @@ osc_current_web_theme_path('header.php');
         </div>
     </form>
 
-
-    <style>
-        .cat-image{
-            height: 100px;
-            display: inline-block;
-        }
-        .category_title {
-            padding: 10px;
-            color: #000;
-            font-weight: bold;
-            background-color: #fff;
-            text-align: center;
-            text-transform: uppercase;
-        }
-        .category_box {
-            border: 1px solid #e3e3e5;
-            background-color: #eee;
-            cursor: pointer;
-        }
-        .add_box{
-            position: absolute;
-            top: 25%;
-            left: 35%;
-            background-color: rgba(0,0,0,0.5);
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            z-index: 2;
-        }
-        .add_box::after {
-            position: absolute;
-            left: 25%;
-            font-family: FontAwesome;
-            content: '\f067';
-            font-size: 30px;
-            color: #fff;
-            z-index: 2;
-            top: 7%;
-        }
-        .category_box.selected  .add_box::after {
-            content: "\f00c";
-        }
-        /*    .add_icon {
-                position: absolute;
-                top: -25%;
-                color: #fff;
-                font-weight: bold;
-                font-size: 50px;
-                left: 25%;
-            }*/
-        .category_image{
-            position: relative;
-            text-align: center;
-        }
-        .category_box{
-            transition: all 0.5s 0.5s ease-in-out;        
-        }
-        .overlay{
-            height: 100%;
-            width: 100%;
-            background-color: rgba(28, 125, 193, 0.8);
-            z-index: 1;
-            top: 0;
-            left: 0;
-            position: absolute;
-            display: none;
-        }
-        .category_box.selected .overlay{
-            display: block;
-        }
-    </style>
     <?php
 
     function new_footer() {
@@ -187,7 +132,6 @@ osc_current_web_theme_path('header.php');
         <?php
     }
 
-//osc_add_hook('footer', 'ex_load_scripts');
     osc_add_hook('footer', 'new_footer');
     ?>
 <?php else: ?>
