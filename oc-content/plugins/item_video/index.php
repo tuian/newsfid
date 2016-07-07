@@ -14,13 +14,13 @@
 require_once 'ItemVideoModel.php';
 
 
-define('item_video_FILE_PATH', osc_base_path() . 'oc-content/uploads/item_video/');
-define('item_video_FILE_URL', osc_base_url() . 'oc-content/uploads/item_video/');
-define('item_video_PLUGIN_DIR_NAME', basename(__DIR__));
+define('ITEM_VIDEO_FILE_PATH', osc_base_path() . 'oc-content/uploads/item_video/');
+define('ITEM_VIDEO_FILE_URL', osc_base_url() . 'oc-content/uploads/item_video/');
+define('ITEM_VIDEO_PLUGIN_DIR_NAME', basename(__DIR__));
 
 function item_video_install() {
-    ItemVideoModel::newInstance()->import(item_video_PLUGIN_DIR_NAME . '/struct.sql');
-    @mkdir(item_video_FILE_PATH);
+    ItemVideoModel::newInstance()->import(ITEM_VIDEO_PLUGIN_DIR_NAME . '/struct.sql');
+    @mkdir(ITEM_VIDEO_FILE_PATH);
     osc_set_preference('item_video_max_file_number', '1', 'item_video', 'INTEGER');
     osc_set_preference('item_video_allowed_ext', 'mp4', 'item_video', 'STRING');
     osc_set_preference('item_video_max_file_size', '100', 'item_video', 'INTEGER');
@@ -40,7 +40,7 @@ function item_video_configure() {
 function item_video_admin_menu() {
     osc_add_admin_submenu_divider('plugins', 'Item Video', 'item_video_divider', 'administrator');
     osc_add_admin_submenu_page('plugins', __('Settings', 'item_video'), osc_route_admin_url('item-video-admin-conf'), 'item_video_settings', 'administrator');
-    //osc_add_admin_submenu_page('plugins', __('Configure categories', 'item_video'), osc_admin_configure_plugin_url(item_video_PLUGIN_DIR_NAME . "/index.php"), 'item_video_categories', 'administrator');
+    //osc_add_admin_submenu_page('plugins', __('Configure categories', 'item_video'), osc_admin_configure_plugin_url(ITEM_VIDEO_PLUGIN_DIR_NAME . "/index.php"), 'item_video_categories', 'administrator');
     osc_add_admin_submenu_page('plugins', __('File stats', 'item_video'), osc_route_admin_url('item-video-admin-stats'), 'item_video_stats', 'administrator');
 }
 
@@ -74,28 +74,25 @@ function item_video_upload_files($item) {
     if ($item['fk_i_category_id'] != null) {
         //if (osc_is_this_category('item_video', $item['fk_i_category_id'])) {
         $files = Params::getFiles('item_video_files');
-
-        if (count($files) > 0) {
+        if (is_array($files) && count($files) > 0) {
             require LIB_PATH . 'osclass/mimes.php';
             $allowed_types = array_map('trim', explode(',', osc_get_preference('item_video_allowed_ext', 'item_video')));
             $failed = false;
             $errorMsg = '';
             $maxSize = 1048576 * osc_get_preference('item_video_max_file_size', 'item_video');
             foreach ($files['error'] as $key => $error) :
-                if (!$error == 4):
+                if ($error !== 4):
                     $bool_img = false;
                     $size = $files['size'][$key];
                     if ($size <= $maxSize) :
                         $fileMime = $files['type'][$key];
                         $path = $files['name'][$key];
                         $ext = pathinfo($path, PATHINFO_EXTENSION);
-                        var_dump($ext);
-                        var_dump($allowed_types);
                         if (in_array($ext, $allowed_types)) :
                             $date = date('YmdHis');
                             $new_file_name = uniqid() . '.' . $ext;
                             $file_name = $date . '_' . $item['pk_i_id'] . '_' . $new_file_name;
-                            $path = item_video_FILE_PATH . $file_name;
+                            $path = ITEM_VIDEO_FILE_PATH . $file_name;
                             if (move_uploaded_file($files['tmp_name'][$key], $path)) :
                                 ItemVideoModel::newInstance()->insertFile($item['pk_i_id'], $new_file_name, $files['name'][$key], $date);
                                 $failed = FALSE;
@@ -142,7 +139,20 @@ osc_add_hook('posted_item', 'item_video_upload_files');
 
 osc_add_hook('delete_item', 'item_video_delete_item');
 
-osc_add_route('item-video-admin-conf', item_video_PLUGIN_DIR_NAME . '/admin/conf', item_video_PLUGIN_DIR_NAME . '/admin/conf', osc_plugin_folder(__FILE__) . 'admin/conf.php');
-osc_add_route('item-video-admin-stats', item_video_PLUGIN_DIR_NAME . '/admin/stats', item_video_PLUGIN_DIR_NAME . '/admin/stats', osc_plugin_folder(__FILE__) . 'admin/stats.php');
-osc_add_route('item-video-ajax', item_video_PLUGIN_DIR_NAME . '/ajax', item_video_PLUGIN_DIR_NAME . '/ajax', osc_plugin_folder(__FILE__) . 'ajax.php');
-osc_add_route('item-video-download', item_video_PLUGIN_DIR_NAME . '/download/(.+)', item_video_PLUGIN_DIR_NAME . '/download/{file}', osc_plugin_folder(__FILE__) . 'download.php');
+osc_add_route('item-video-admin-conf', ITEM_VIDEO_PLUGIN_DIR_NAME . '/admin/conf', ITEM_VIDEO_PLUGIN_DIR_NAME . '/admin/conf', osc_plugin_folder(__FILE__) . 'admin/conf.php');
+osc_add_route('item-video-admin-stats', ITEM_VIDEO_PLUGIN_DIR_NAME . '/admin/stats', ITEM_VIDEO_PLUGIN_DIR_NAME . '/admin/stats', osc_plugin_folder(__FILE__) . 'admin/stats.php');
+osc_add_route('item-video-ajax', ITEM_VIDEO_PLUGIN_DIR_NAME . '/ajax', ITEM_VIDEO_PLUGIN_DIR_NAME . '/ajax', osc_plugin_folder(__FILE__) . 'ajax.php');
+osc_add_route('item-video-download', ITEM_VIDEO_PLUGIN_DIR_NAME . '/download/(.+)', ITEM_VIDEO_PLUGIN_DIR_NAME . '/download/{file}', osc_plugin_folder(__FILE__) . 'download.php');
+
+function item_video_load_admin_styles() {
+    osc_enqueue_style('item-video-admin-style', osc_base_url() . 'oc-content/plugins/item_video/assets/css/admin_style.css');
+    //osc_enqueue_style('bootstrap-style', osc_base_url() . 'oc-content/plugins/item_video/assets/css/bootstrap.min.css' );
+}
+
+osc_add_hook('init_admin', 'item_video_load_admin_styles');
+
+function item_video_load_styles() {
+    osc_enqueue_style('item-video-style', osc_base_url() . 'oc-content/plugins/item_video/assets/css/style.css');
+}
+
+osc_add_hook('init', 'item_video_load_styles');

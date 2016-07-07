@@ -113,9 +113,10 @@ osc_current_web_theme_path('header.php');
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <?php echo UserForm::city_select(array()); ?>
+                                            <?php //echo UserForm::city_select(array()); ?>
                                             <?php //UserForm::location_javascript(); ?>
-                                            <!--<input type="text" name="s_city" class="form-control" id="s_city" placeholder="<?php _e('City', 'flatter'); ?>">-->
+                                            <input type="text" name="s_city" class="form-control" id="s_city" placeholder="<?php _e('City', 'flatter'); ?>">
+                                            <input type="hidden" name="cityId" class="form-control" id="cityId">
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +170,7 @@ function ex_load_scripts() {
     osc_register_script('switch', osc_current_web_theme_js_url('bootstrap-switch.min.js'), 'switch-jquery');
     osc_enqueue_script('switch');
     osc_enqueue_style('switchCss', osc_current_web_theme_url('css/bootstrap-switch.min.css'));
-    
+
     osc_register_script('typeahead', osc_current_web_theme_url('js/bootstrap-typeahead.min.js'), 'typeahead');
     osc_enqueue_script('typeahead');
 }
@@ -186,36 +187,87 @@ function new_footer() {
             });
 
             $('#s_birthday').datepicker();
-            $('#countryId').on('change', function () {
-                var c_id = $(this).val();
-                var result = '';
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('401.php'); ?>" + '?function=get_city&country_id=' + c_id,
-                    dataType: 'json',
-                    success: function (data, textStatus, jqXHR) {
-                        var length = data.length;
-                        if (length > 0) {
-                            result += '<option selected value=""><?php echo osc_esc_js(__("Select a city...")); ?></option>';
-                            for (key in data) {
-                                result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
+            //            $('#countryId').on('change', function () {
+            //                var c_id = $(this).val();
+            //                var result = '';
+            //                $.ajax({
+            //                    url: "<?php echo osc_current_web_theme_url('401.php'); ?>" + '?function=get_city&country_id=' + c_id,
+            //                    dataType: 'json',
+            //                    success: function (data, textStatus, jqXHR) {
+            //                        var length = data.length;
+            //                        if (length > 0) {
+            //                            result += '<option selected value=""><?php echo osc_esc_js(__("Select a city...")); ?></option>';
+            //                            for (key in data) {
+            //                                result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
+            //                            }
+            //
+            //                            $("#city").before('<select class="form-control" name="cityId" id="cityId" ></select>');
+            //                            $("#city").remove();
+            //                        } else {
+            //                            result += '<option value=""><?php echo osc_esc_js(__('No results')); ?></option>';
+            //                            $("#cityId").before('<input type="text" class="form-control" name="city" id="city" />');
+            //                            $("#cityId").remove();
+            //                        }
+            //                        $("#cityId").html(result);
+            //
+            ////                        setNormalSelectText(self);
+            ////                        setNormalSelectText($("#cityId"));
+            //                        $("#cityId").attr('disabled', false);
+            //                    }
+            //                });
+            $('#s_city').typeahead({
+                source: function (query, process) {
+                    var $items = new Array;
+                    var c_id = $('#countryId').val();
+                    if (c_id) {
+                        $items = [""];
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url('city_ajax.php') ?>",
+                            dataType: "json",
+                            type: "POST",
+                            data: {city_name: query, country_id: c_id},
+                            success: function (data) {
+                                $.map(data, function (data) {
+                                    var group;
+                                    group = {
+                                        id: data.pk_i_id,
+                                        name: data.s_name,
+                                        //                                    toString: function () {
+                                        //                                        return JSON.stringify(this);
+                                        //                                        //return this.app;
+                                        //                                    },
+                                        //                                    toLowerCase: function () {
+                                        //                                        return this.name.toLowerCase();
+                                        //                                    },
+                                        //                                    indexOf: function (string) {
+                                        //                                        return String.prototype.indexOf.apply(this.name, arguments);
+                                        //                                    },
+                                        //                                    replace: function (string) {
+                                        //                                        var value = '';
+                                        //                                        value += this.name;
+                                        //                                        if (typeof (this.level) != 'undefined') {
+                                        //                                            value += ' <span class="pull-right muted">';
+                                        //                                            value += this.level;
+                                        //                                            value += '</span>';
+                                        //                                        }
+                                        //                                        return String.prototype.replace.apply('<div style="padding: 10px; font-size: 1.5em;">' + value + '</div>', arguments);
+                                        //                                    }
+                                    };
+                                    $items.push(group);
+                                });
+
+                                process($items);
                             }
-
-                            $("#city").before('<select class="form-control" name="cityId" id="cityId" ></select>');
-                            $("#city").remove();
-                        } else {
-                            result += '<option value=""><?php echo osc_esc_js(__('No results')); ?></option>';
-                            $("#cityId").before('<input type="text" class="form-control" name="city" id="city" />');
-                            $("#cityId").remove();
-                        }
-                        $("#cityId").html(result);
-
-//                        setNormalSelectText(self);
-//                        setNormalSelectText($("#cityId"));
-                        $("#cityId").attr('disabled', false);
+                        });
+                    } else {
+                        alert('Please select country first');
                     }
-                });
+                },
+                afterSelect: function (obj) {
+                    $('#cityId').val(obj.id);
+                },
             });
-        })
+        });
     </script>
     <?php
 }

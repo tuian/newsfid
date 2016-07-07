@@ -74,23 +74,20 @@ function item_mp3_upload_files($item) {
     if ($item['fk_i_category_id'] != null) {
         //if (osc_is_this_category('item_mp3', $item['fk_i_category_id'])) {
         $files = Params::getFiles('item_mp3_files');
-
-        if (count($files) > 0) {
+        if (is_array($files) && count($files) > 0) {
             require LIB_PATH . 'osclass/mimes.php';
             $allowed_types = array_map('trim', explode(',', osc_get_preference('item_mp3_allowed_ext', 'item_mp3')));
             $failed = false;
             $errorMsg = '';
             $maxSize = 1048576 * osc_get_preference('item_mp3_max_file_size', 'item_mp3');
-            foreach ($files['error'] as $key => $error) :
-                if (!$error == 4):
+            foreach ($files['name'] as $key => $error) :
+                if ($error !== 4):
                     $bool_img = false;
                     $size = $files['size'][$key];
                     if ($size <= $maxSize) :
                         $fileMime = $files['type'][$key];
                         $path = $files['name'][$key];
                         $ext = pathinfo($path, PATHINFO_EXTENSION);
-                        var_dump($ext);
-                        var_dump($allowed_types);
                         if (in_array($ext, $allowed_types)) :
                             $date = date('YmdHis');
                             $new_file_name = uniqid() . '.' . $ext;
@@ -147,14 +144,15 @@ osc_add_route('item-mp3-admin-stats', ITEM_MP3_PLUGIN_DIR_NAME . '/admin/stats',
 osc_add_route('item-mp3-ajax', ITEM_MP3_PLUGIN_DIR_NAME . '/ajax', ITEM_MP3_PLUGIN_DIR_NAME . '/ajax', osc_plugin_folder(__FILE__) . 'ajax.php');
 osc_add_route('item-mp3-download', ITEM_MP3_PLUGIN_DIR_NAME . '/download/(.+)', ITEM_MP3_PLUGIN_DIR_NAME . '/download/{file}', osc_plugin_folder(__FILE__) . 'download.php');
 
-
 function item_mp3_load_admin_styles() {
-    osc_enqueue_style('item-mp3-admin-style', osc_base_url() . 'oc-content/plugins/item_mp3/assets/css/admin_style.css' );
+    osc_enqueue_style('item-mp3-admin-style', osc_base_url() . 'oc-content/plugins/item_mp3/assets/css/admin_style.css');
     //osc_enqueue_style('bootstrap-style', osc_base_url() . 'oc-content/plugins/item_mp3/assets/css/bootstrap.min.css' );
 }
+
 osc_add_hook('init_admin', 'item_mp3_load_admin_styles');
 
 function item_mp3_load_styles() {
-    osc_enqueue_style('item-mp3-style', osc_base_url() . 'oc-content/plugins/item_mp3/assets/css/style.css' );
+    osc_enqueue_style('item-mp3-style', osc_base_url() . 'oc-content/plugins/item_mp3/assets/css/style.css');
 }
+
 osc_add_hook('init', 'item_mp3_load_styles');

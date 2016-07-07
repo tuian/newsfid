@@ -1,10 +1,10 @@
-.item_mp3_container {
+.item_podcast_container {
     margin: 25px 0px;
     background-color: #ddd;
     padding: 10px;
     clear: both;
 }
-.item_mp3_single_row {
+.item_podcast_single_row {
     margin-bottom: 20px;
     padding: 10px;
     background-color: #eee;

@@ -1,6 +1,6 @@
 <?php
 
-class ItemVideoModel extends DAO {
+class ItemPodcastModel extends DAO {
 
     private static $instance;
 
@@ -15,8 +15,8 @@ class ItemVideoModel extends DAO {
         parent::__construct();
     }
 
-    public function get_item_video_table() {
-        return DB_TABLE_PREFIX . 't_item_video_files';
+    public function get_item_podcast_table() {
+        return DB_TABLE_PREFIX . 't_item_podcasts';
     }
 
     public function import($file) {
@@ -30,14 +30,14 @@ class ItemVideoModel extends DAO {
 
     public function uninstall() {
 //        $this->removeAllFiles();
-//        $this->dao->query("DELETE FROM %s WHERE s_plugin_name = 'digitalgoods'", $this->get_item_video_table());
+//        $this->dao->query("DELETE FROM %s WHERE s_plugin_name = 'digitalgoods'", $this->get_item_podcast_table());
     }
 
     public function getFileByItemNameCode($item, $name, $code) {
         $this->dao->select();
-        $this->dao->from($this->get_item_video_table());
+        $this->dao->from($this->get_item_podcast_table());
         $this->dao->where('fk_i_item_id', $item);
-        $this->dao->where('s_name', $name);
+        $this->dao->where('s_embed_code', $name);
         $this->dao->where('s_code', $code);
 
         $result = $this->dao->get();
@@ -50,7 +50,7 @@ class ItemVideoModel extends DAO {
 
     public function getMp3File($id) {
         $this->dao->select();
-        $this->dao->from($this->get_item_video_table());
+        $this->dao->from($this->get_item_podcast_table());
         $this->dao->where('pk_i_id', $id);
 
         $result = $this->dao->get();
@@ -63,7 +63,7 @@ class ItemVideoModel extends DAO {
 
     public function getFilesFromItem($itemId) {
         $this->dao->select();
-        $this->dao->from($this->get_item_video_table());
+        $this->dao->from($this->get_item_podcast_table());
         $this->dao->where('fk_i_item_id', $itemId);
 
         $result = $this->dao->get();
@@ -76,7 +76,7 @@ class ItemVideoModel extends DAO {
 
     public function getAllFiles() {
         $this->dao->select();
-        $this->dao->from($this->get_item_video_table());
+        $this->dao->from($this->get_item_podcast_table());
 
         $result = $this->dao->get();
         if (!$result) {
@@ -89,31 +89,30 @@ class ItemVideoModel extends DAO {
     public function removeAllFiles() {
         $dgs = $this->getAllFiles();
         foreach ($dgs as $dg) {
-            @unlink(osc_get_preference('upload_path', 'item_video') . $dg['s_code'] . "_" . $dg['fk_i_item_id'] . "_" . $dg['s_name']);
-            @rmdir(osc_get_preference('upload_path', 'item_video'));
+            @unlink(osc_get_preference('upload_path', 'item_podcast') . $dg['s_code'] . "_" . $dg['fk_i_item_id'] . "_" . $dg['s_embed_code']);
+            @rmdir(osc_get_preference('upload_path', 'item_podcast'));
         }
-        $this->dao->query('DROP TABLE %s', $this->get_item_video_table());
+        $this->dao->query('DROP TABLE %s', $this->get_item_podcast_table());
     }
 
     public function removeItem($itemId) {
         $dgs = $this->getFilesFromItem($itemId);
         foreach ($dgs as $dg) {
-            @unlink(osc_get_preference('upload_path', 'item_video') . $dg['s_code'] . "_" . $dg['fk_i_item_id'] . "_" . $dg['s_name']);
-            $this->dao->query("DELETE FROM %s WHERE fk_i_item_id = %d", $this->get_item_video_table(), $dg['pk_i_id']);
+            @unlink(osc_get_preference('upload_path', 'item_podcast') . $dg['s_code'] . "_" . $dg['fk_i_item_id'] . "_" . $dg['s_embed_code']);
+            $this->dao->query("DELETE FROM %s WHERE fk_i_item_id = %d", $this->get_item_podcast_table(), $dg['pk_i_id']);
         }
     }
 
-    public function insertFile($itemId, $filename, $actual_file_name, $date) {
+    public function insertFile($itemId, $content, $date) {
         $aSet = array();
         $aSet['fk_i_item_id'] = $itemId;
-        $aSet['s_name'] = $filename;
-        $aSet['s_actual_name'] = $actual_file_name;
+        $aSet['s_embed_code'] = $content;
         $aSet['s_code'] = $date;
-        return $this->dao->insert($this->get_item_video_table(), $aSet);
+        return $this->dao->insert($this->get_item_podcast_table(), $aSet);
     }
 
     function updateDownloads($id, $downloads) {
-        $this->dao->from($this->get_item_video_table());
+        $this->dao->from($this->get_item_podcast_table());
         $this->dao->set(array('i_downloads' => $downloads));
         $this->dao->where(array('pk_i_id' => $id));
         return $this->dao->update();

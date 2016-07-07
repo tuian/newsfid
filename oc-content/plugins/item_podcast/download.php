@@ -1,13 +1,13 @@
 <?php
     require_once('../../../oc-load.php');
     $filename= Params::getParam('file');
-    $file = ITEM_VIDEO_FILE_PATH .$filename;
+    $file = ITEM_PODCAST_FILE_PATH .$filename;
     $tmp = explode("_", $filename);
 
-    $download = ItemVideoModel::newInstance()->getFileByItemNameCode(@$tmp[1], @$tmp[2], $tmp[0]);
+    $download = ItemPodcastModel::newInstance()->getFileByItemNameCode(@$tmp[1], @$tmp[2], $tmp[0]);
 
     if (isset($download['pk_i_id']) && file_exists($file)) {
-        ItemVideoModel::newInstance()->updateDownloads($download['pk_i_id'], $download['i_downloads']+1);
+        ItemPodcastModel::newInstance()->updateDownloads($download['pk_i_id'], $download['i_downloads']+1);
 
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
