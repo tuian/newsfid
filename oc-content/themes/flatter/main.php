@@ -37,12 +37,9 @@
 <!-- bottom background -->
 
 <?php if (osc_is_web_user_logged_in()) : ?>
-
-
     <?php if (function_exists("osc_slider")) { ?>
         <?php osc_slider(); ?>  
-    <?php } ?>                         
-
+    <?php } ?>
     <div class="bigsearch transbg">
         <div class="row">
             <form action="<?php echo osc_base_url(true); ?>" method="get" class="search nocsrf">
@@ -114,144 +111,30 @@
     <!-- Big Search --> 
 
 <?php else : ?>
-
     <div class="section" >
-
-        <span style=   "position:absolute;
-              top:230px;
-              left:270px;
-              width:100px;
-              color: white;
-              font-weight: bold;
-              font-size: 5vw; 
-              text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.33);
-
-              background-color: none;
-              z-index:10;" > Newsfid </span>
-
-
-
-        <DIV id="cover" classe="cover" style=" 
-             margin:0;
-             padding:0; no-repeat center fixed; 
-             -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-             background-size: cover; /* version standardisée */
-             background-color: black;
-             max-height: 400px;
-             overflow: hidden; 
-             ">
-
+        <span class="home-slider-text"> Newsfid </span>
+        <div id="cover" classe="cover home-slider-img">
             <img src="images/top.main.jpg" class="img-responsive" />
-
         </div>
-
     </div>
 
     <div class="section">
-
-        <div class="postadspace"      style="
-
-
-             background-image:-moz-linear-gradient(30deg, #75D0FA, #61F4C3);
-             background-image:-webkit-linear-gradient(30deg, #75D0FA, #61F4C3);
-             background-image:-o-linear-gradient(30deg, #75D0FA, #F883FF);
-             background-image:linear-gradient(60deg, #75D0FA173, 0.95), #F883FF);
-             }
-             "    >
+        <div class="postadspace">
             <div class="container">
                 <br> 
-                <h2 class="clr" style=" margin-top: 40px; text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.33); font-size: 18px; "><?php echo osc_get_preference("fpromo_text", "flatter_theme"); ?></h2>
+                <h2 class="clr"><?php echo osc_get_preference("fpromo_text", "flatter_theme"); ?></h2>
 
-                <span style=" text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.13); font-size: 10px">  Publish and share stories with the world </span> 
+                <span style=" ">  Publish and share stories with the world </span> 
 
                 <?php if (osc_is_web_user_logged_in()) { ?>
-                    <a href="https://newsfid.com/index.php?page=item&action=item_add" style=" color: black; font-weight: bold"; > Share a story with us now.</a>  <br><br>
+                    <a href="https://newsfid.com/index.php?page=item&action=item_add"> Share a story with us now.</a>  <br><br>
                 <?php } else { ?>
-                    <a href="<?php echo osc_register_account_url(); ?>" style=" color: black; "; > Or get an account for free now.</a>  <br><br>
-                <?php } ?>
-
-                <br><br><br>
+                    <a href="<?php echo osc_register_account_url(); ?>"> Or get an account for free now.</a>  <br><br>
+                <?php } ?>                
             </div>
         </div>
-
-
-
     <?php endif; ?>
-
 </div><!-- Section 5 -->
-
-
-<div id="sections">
-    <div class="section">
-        <?php
-        require_once('geoplugin.class.php');
-        $geoplugin = new geoPlugin();
-        $geoplugin->locate();
-        $ct = $geoplugin->city;
-        $rg = $geoplugin->region;
-        $cy = $geoplugin->countryName;
-        ?> 
-
-        <div class="section" style="background-color: black;">
-            <?php $premiumcount = osc_get_preference('premium_count', 'flatter_theme'); ?>
-            <?php
-            osc_get_premiums($premiumcount);
-            if (osc_count_premiums() >= 1) {
-                ?>
-                <div class="featuredlistings">
-                    <div class="clr-layer"></div>
-                    <div class="container">
-                        <h2 style=" text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.73); font-size: 18px; "><?php _e(' Sponsored Stories', 'flatter'); ?></h2> 
-
-
-                        <div id="fuListings" class="carousel slide bdr" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <?php while (osc_has_premiums()) { ?>
-                                    <div class="item clearfix">
-                                        <div class="col-md-5 col-sm-5 premium-image">
-                                            <?php if (osc_images_enabled_at_items()) { ?>
-                                                <div>
-                                                    <?php if (osc_count_premium_resources()) { ?>
-                                                        <a href="<?php echo osc_premium_url(); ?>"><img src="<?php echo osc_resource_url(); ?>" alt="<?php echo osc_premium_title(); ?>" class="img-responsive" /></a>
-                                                    <?php } else { ?>
-                                                        <a href="<?php echo osc_premium_url(); ?>"><img src="<?php echo osc_current_web_theme_url('images/no-photo.jpg'); ?>" alt="<?php echo osc_premium_title(); ?>" class="img-responsive"></a>
-                                                    <?php } ?>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                        <div class="col-md-7 col-sm-7 premium-content">
-                                            <div>
-                                                <h3 class="sclr"><a href="<?php echo osc_premium_url(); ?>"><?php echo osc_premium_title(); ?></a>
-                                                    <span class="meta"><?php echo osc_premium_category(); ?> (<?php echo osc_premium_region(); ?>, <?php echo osc_premium_country(); ?>)</span></h3>
-                                                <p class="description"><?php echo osc_highlight(strip_tags(osc_premium_description()), 320); ?></p>
-                                                <?php if (osc_price_enabled_at_items()) { ?><span class="premium-price clr"><?php echo osc_format_premium_price(); ?></span><?php } ?>
-                                                <div class="image-thumbs">
-                                                    <?php osc_reset_resources(); ?>
-                                                    <?php
-                                                    for ($i = 0; osc_has_item_resources(); $i++) {
-                                                        if ($i != 0) { // except 1st image 
-                                                            ?>
-                                                            <a href="<?php echo osc_premium_url(); ?>"><img class="img-responsive" src="<?php echo osc_resource_thumbnail_url(); ?>" alt="<?php echo osc_premium_title(); ?>" /></a>
-                                                        <?php } ?>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- Item -->
-                                <?php } ?>
-                            </div><!-- Carousel Inner END -->
-                            <!-- Controls -->
-                            <a class="left carousel-control hidden-xs" href="#fuListings" role="button" data-slide="prev">Prev</a>
-                            <a class="right carousel-control hidden-xs" href="#fuListings" role="button" data-slide="next">Next</a>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-        </div><!-- Section 2 -->
-
-    </div><!-- Section END -->
-
-</div><!-- Section 3 -->
 
 <?php if (osc_is_web_user_logged_in()): ?>
     <?php
@@ -480,11 +363,7 @@
 
         </div>
     </div>
-<?php endif; ?>
-
-<?php if (!osc_is_web_user_logged_in()) : ?>
-
-
+<?php else: ?>
     <div class="section custom_filter_navigation">
         <div class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container"> 
@@ -501,25 +380,52 @@
                         </button>
                         <a class="navbar-brand clr" href="<?php echo osc_base_url(); ?>"></a>
                     </div>
-                    <div class="navbar-collapse collapse">
+                    <div class="navbar-collapse collapse" id="home_primary_nav_wrap">
                         <ul class="nav navbar-nav">
-                            <?php $themes = get_all_themes_icon(); ?>
-                            <?php foreach ($themes as $k => $theme): ?>
-                                <!--                            <li>
-                                                                <a class="category" data-val="<?php echo $theme['id'] ?>" href="#"><?php echo $theme['name'] ?></a>
-                                                            </li>-->
-                            <?php endforeach; ?>
+                            <?php /* $themes = get_all_themes_icon();
+                                foreach ($themes as $k => $theme): ?>
+                            <li>
+                                <a class="category" data-val="<?php echo $theme['id'] ?>" href="#"><?php echo $theme['name'] ?></a>
+                             </li>
+                            <?php endforeach; */ ?>
                             <?php osc_goto_first_category(); ?>
-                            <?php if (osc_count_categories()) { ?>
-                                <?php while (osc_has_categories()) { ?>
-                                    <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name ?>">
-                                        <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
-                                            <?php echo osc_category_name(); ?>
-                                            <span>(<?php echo osc_category_total_items(); ?>)</span>
-                                        </a>
-                                    </li>
-                                <?php } ?> 
-                            <?php } ?>
+                            <?php 
+                            $other_cat = array();
+                            if (osc_count_categories()) { ?>
+                                <?php 
+                                $i = 1; $j=0;
+                                while (osc_has_categories()) { 
+                                    if($i <6):
+                                    ?>
+                                        <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
+                                            <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
+                                                <?php echo osc_category_name(); ?>
+                                                <span>(<?php echo osc_category_total_items(); ?>)</span>
+                                            </a>
+                                        </li>
+                                    <?php 
+                                else:
+                                    $other_cat[$j]['slug'] = osc_category_slug();
+                                    $other_cat[$j]['name'] = osc_category_name();
+                                    $other_cat[$j]['id'] = osc_category_id();
+                                    $other_cat[$j]['href'] = osc_search_category_url();
+                                    $other_cat[$j]['count'] = osc_category_total_items();
+                                    $j++;
+                                endif;
+                                $i++;                                
+                                } ?> 
+                            <?php }?>
+                            <li class="show-more-li"><a href="#"><?php echo __('Show more')."&nbsp;&nbsp;&nbsp;";?><i class="fa fa-angle-down vertical-bottom"></i></a>
+                                <ul class="">
+                                   <?php  foreach ($other_cat as $$k => $n):?>
+                                        <li class="<?php echo $n['slug'];?>" value="<?php echo $n['name'];?>">
+                                            <a class="category" data-val="<?php echo $n['id'];?>" href="<?php echo $n['href'];?>">
+                                                <?php echo $n['name'];?><span>(<?php echo $n['count'];?>)</span>
+                                            </a>
+                                        </li>
+                                   <?php endforeach;?>                            
+                                </ul>  
+                            </li>
                         </ul>                                    
                     </div>
                 </form>
@@ -536,9 +442,9 @@
                     <div class="masonry_row"></div>
                 </div>
             </div>
-            
+
             <div class="clearfix"></div>
-            
+
             <div class="row">                
                 <h2 class="result_text"></h2>                
                 <div class="loading text-center">
@@ -547,17 +453,6 @@
             </div>
         </div>
     </div>
-<?php endif; ?>
-<!-- bottom background -->
-
-
-
-<?php if (osc_is_web_user_logged_in()) { ?>
-
-
-<?php } else { ?>
-
-
     <div id="cover" classe="cover" style=" 
          margin:0;
          padding:0; no-repeat center fixed; 
@@ -572,7 +467,8 @@
         <img src="images/bottom.main.jpg" class="img-responsive" />
 
 
-    <?php } ?>
+    <?php endif; ?>
+    <!-- bottom background -->
 
     <?php if (osc_get_preference('position2_enable', 'flatter_theme') != '0') { ?>
         <div id="position_widget" class="greybg<?php
@@ -589,31 +485,16 @@
         <!-- Homepage widget 2 -->
     <?php } ?>
 </div>
-
-
-
-
-<?php if (osc_is_web_user_logged_in()) : ?>
-
-
-<?php else : ?>
-
+<?php if (!osc_is_web_user_logged_in()) : ?>
     <div class="section">
         <div class="postadspace">
             <div class="container">
-
                 <?php if (osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_post() )) : ?>
-
-
                     <center> <h50 style=" margin:0 0 10px 0; font-weight:600; font-size: 32px; color: black;">  Join us for free now  </h50></center> <br>
-
-                    <a class="btn btn-sclr btn-lg" href=" <?php echo osc_register_account_url(); ?>"><?php _e(" Sign up for free ", 'flatter'); ?></a>
-                <?php endif; ?>
+                    <a class="btn btn-sclr btn-lg" href=" <?php echo osc_register_account_url(); ?>"><?php _e(" Sign up for free ", 'flatter'); ?></a>                <?php endif; ?>
             </div>
         </div>
     </div>
-
-
 <?php endif; ?>
 
 <?php
@@ -623,93 +504,93 @@ function footer_script() {
     ?>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-        var pageNumber = $('#page_number').val();
-        var is_enable_ajax = true;
-        var loading = false;
+                        var pageNumber = $('#page_number').val();
+                        var is_enable_ajax = true;
+                        var loading = false;
 
-        $(document).ready(function () {
+                        $(document).ready(function () {
 
-            $('.select2').each(function () {
-                var placeholder = $(this).attr('title');
-                $(this).select2({
-                    placeholder: 'placeholder'
-                });
-            });
+                            $('.select2').each(function () {
+                                var placeholder = $(this).attr('title');
+                                $(this).select2({
+                                    placeholder: 'placeholder'
+                                });
+                            });
 
-            $('.masonry_row').masonry({
-                columnWidth: '.item',
-                itemSelector: '.item',
-            });
-            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                //data: {page_number: pageNumber, },
-                success: function (data, textStatus, jqXHR) {
-                    $('.masonry_row').html(data);
-                }
-            });
-            $('#search_form a').click(function (e) {
-                $('#search_form li').removeClass('active');
-                $(this).parent().addClass('active');
-                e.preventDefault();
+                            $('.masonry_row').masonry({
+                                columnWidth: '.item',
+                                itemSelector: '.item',
+                            });
+                            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                                //data: {page_number: pageNumber, },
+                                success: function (data, textStatus, jqXHR) {
+                                    $('.masonry_row').html(data);
+                                }
+                            });
+                            $('#search_form a').click(function (e) {
+                                $('#search_form li').removeClass('active');
+                                $(this).parent().addClass('active');
+                                e.preventDefault();
 
-                var filter_value = $(this).attr('data-val');
-                $('#filter_value').val(filter_value);
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                    data: {
-                        filter_value: filter_value
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.masonry_row').html(data);
-                        is_enable_ajax = true;
-                        $(".result_text").hide();
-                        $('.masonry_row').masonry('reloadItems');
-                        $('.masonry_row').masonry('layout');
-                        $('#page_number').val(1);
-                    }
+                                var filter_value = $(this).attr('data-val');
+                                $('#filter_value').val(filter_value);
+                                $.ajax({
+                                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                    data: {
+                                        filter_value: filter_value
+                                    },
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('.masonry_row').html(data);
+                                        is_enable_ajax = true;
+                                        $(".result_text").hide();
+                                        $('.masonry_row').masonry('reloadItems');
+                                        $('.masonry_row').masonry('layout');
+                                        $('#page_number').val(1);
+                                    }
 
-                });
-            });
+                                });
+                            });
 
-            $(window).bind('scroll', function () {
-                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
-                    loading = true;
-                    $('.loading').fadeIn(500);
-                    $('.masonry_row').css({'opacity': '0.2'});
-                    setTimeout(make_item_ajax_call, 1000);
-                }
-            });
-        });
-        function make_item_ajax_call() {
-            var filter_value = $('#filter_value').val();
-            var page_number = $('#page_number').val();
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                data: {
-                    page_number: page_number,
-                    filter_value: filter_value,
-                },
-                success: function (data) {
-                    if (data !== '0') {
-                        $(".masonry_row").append(data);
-                        $('.loading').fadeOut(1000);
-                        $('.masonry_row').css({'opacity': '1'});
-                        var next_page = parseInt($('#page_number').val()) + 1;
-                        $('#page_number').val(next_page);
-                        loading = false;
-                    } else {
-                        $(".result_text").text('No More Data Found').show();
-                        $('.loading').fadeOut(1000);
-                        $('.masonry_row').css({'opacity': '1'});
-                        is_enable_ajax = false;
-                        loading = false;
-                    }
-                    $('.masonry_row').masonry('reloadItems');
-                    $('.masonry_row').masonry('layout');
-                }
-            });
-        }
+                            $(window).bind('scroll', function () {
+                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
+                                    loading = true;
+                                    $('.loading').fadeIn(500);
+                                    $('.masonry_row').css({'opacity': '0.2'});
+                                    setTimeout(make_item_ajax_call, 1000);
+                                }
+                            });
+                        });
+                        function make_item_ajax_call() {
+                            var filter_value = $('#filter_value').val();
+                            var page_number = $('#page_number').val();
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                data: {
+                                    page_number: page_number,
+                                    filter_value: filter_value,
+                                },
+                                success: function (data) {
+                                    if (data !== '0') {
+                                        $(".masonry_row").append(data);
+                                        $('.loading').fadeOut(1000);
+                                        $('.masonry_row').css({'opacity': '1'});
+                                        var next_page = parseInt($('#page_number').val()) + 1;
+                                        $('#page_number').val(next_page);
+                                        loading = false;
+                                    } else {
+                                        $(".result_text").text('No More Data Found').show();
+                                        $('.loading').fadeOut(1000);
+                                        $('.masonry_row').css({'opacity': '1'});
+                                        is_enable_ajax = false;
+                                        loading = false;
+                                    }
+                                    $('.masonry_row').masonry('reloadItems');
+                                    $('.masonry_row').masonry('layout');
+                                }
+                            });
+                        }
     </script>
     <?php
 }
