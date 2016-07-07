@@ -624,7 +624,7 @@ function footer_script() {
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
         var pageNumber = $('#page_number').val();
-        var is_enable_ajax = false;
+        var is_enable_ajax = true;
         var loading = false;
 
         $(document).ready(function () {

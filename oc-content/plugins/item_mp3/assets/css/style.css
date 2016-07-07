@@ -1,0 +1,12 @@
+.item_mp3_container {
+    margin: 25px 0px;
+    background-color: #ddd;
+    padding: 10px;
+    clear: both;
+}
+.item_mp3_single_row {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,14 @@
+.item_edit_box {
+/*    margin: 20px 0;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 20px;*/
+}
+.item_edit_row {
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 20px;
+}
+.item_btn{
+    height: auto !important;
+}
