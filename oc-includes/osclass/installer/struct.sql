@@ -211,7 +211,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_user_id INT(10) UNSIGNED NULL,
     fk_i_category_id INT(10) UNSIGNED NOT NULL,
-    fk_i_theme_id INT(5) NOT NULL,
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     f_price FLOAT NULL,

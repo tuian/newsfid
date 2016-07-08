@@ -63,7 +63,7 @@
                 'pk_i_id',
                 'fk_i_user_id',
                 'fk_i_category_id',
-                'fk_i_theme_id',
+                //'fk_i_theme_id',
                 'dt_pub_date',
                 'dt_mod_date',
                 'f_price',

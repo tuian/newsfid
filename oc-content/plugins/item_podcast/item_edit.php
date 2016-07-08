@@ -4,7 +4,7 @@
             <h2><?php _e("Item Podcast", 'item_podcast'); ?></h2>
             <div class="podcast_files ">
                
-                        <p><?php printf(__('Allowed extensions are %s. Any other file will not be uploaded', 'item_podcast'), osc_get_preference('item_podcast_allowed_ext', 'item_podcast')); ?></p>
+                        <p><?php printf(__('Just copy whole iframe code inside text box', 'item_podcast'), osc_get_preference('item_podcast_allowed_ext', 'item_podcast')); ?></p>
                   
                 <?php if ($item_podcast_files != null && is_array($item_podcast_files) && count($item_podcast_files) > 0) : ?>
                     <table class="table table-striped">
@@ -15,10 +15,10 @@
                         </thead>
                         <tbody>
                             <?php foreach ($item_podcast_files as $k => $_r) : ?>
-                                <tr id="<?php echo $_r['pk_i_id']; ?>" fkid="<?php echo $_r['fk_i_item_id']; ?>" name="<?php echo $_r['s_embed_code']; ?>">
+                                <tr id="<?php echo $_r['pk_i_id']; ?>" fkid="<?php echo $_r['fk_i_item_id']; ?>" name="<?php echo $_r['pk_i_id']; ?>">
                                     <td> <?php echo $k + 1 ?> </td>
                                     <td> <?php echo $_r['s_embed_code']; ?> </td>
-                                    <td><a href="javascript:delete_item_podcast_file(<?php echo $_r['pk_i_id'] . ", " . $_r['fk_i_item_id'] . ", '" . $_r['s_embed_code'] . "', '" . $secret . "'"; ?>);"  class="delete btn btn-danger item_btn"><?php _e('Delete', 'item_podcast'); ?></a></td>
+                                    <td><a href="javascript:delete_item_podcast_file(<?php echo $_r['pk_i_id'] . ", '" . $_r['fk_i_item_id'] . "', '" . $secret . "'"; ?>);"  class="delete btn btn-danger item_btn"><?php _e('Delete', 'item_podcast'); ?></a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -100,17 +100,17 @@
         }
     }
 
-    function delete_item_podcast_file(id, item_id, name, secret) {
+    function delete_item_podcast_file(id, item_id, secret) {
         var result = confirm('<?php echo __('This action can\\\'t be undone. Are you sure you want to continue?', 'item_podcast'); ?>');
         if (result) {
             $.ajax({
                 type: "POST",
-                url: '<?php echo osc_route_ajax_url('item-podcast-ajax'); ?>&id=' + id + '&item=' + item_id + '&code=' + name + '&secret=' + secret,
+                url: '<?php echo osc_route_ajax_url('item-podcast-ajax'); ?>&id=' + id + '&item=' + item_id + '&secret=' + secret,
                 dataType: 'json',
                 success: function (data) {
                     var class_type = "error";
                     if (data.success) {
-                        var div_name = '[name="' + name + '"]';
+                        var div_name = '[name="' + id + '"]';
                         $(div_name).remove();
                         class_type = "ok";
                     }

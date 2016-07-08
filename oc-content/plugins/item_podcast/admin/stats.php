@@ -2,7 +2,7 @@
 if (!defined('OC_ADMIN') || OC_ADMIN !== true)
     exit('Access is not allowed.');
 $conn = getConnection();
-$stats = $conn->osc_dbFetchResults("SELECT * FROM %st_item_podcast_files f, %st_item_podcast_files_downloads d WHERE d.fk_i_file_id = f.pk_i_id ORDER BY f.fk_i_item_id ASC, f.pk_i_id ASC", DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+$stats = $conn->osc_dbFetchResults("SELECT * FROM %st_item_podcasts f, %st_item_podcasts_downloads d WHERE d.fk_i_file_id = f.pk_i_id ORDER BY f.fk_i_item_id ASC, f.pk_i_id ASC", DB_TABLE_PREFIX, DB_TABLE_PREFIX);
 ?>
 <div style="border: 1px solid #ccc; background: #eee; ">
     <div style="padding: 20px;">

@@ -5,8 +5,8 @@ if (!defined('OC_ADMIN') || OC_ADMIN !== true)
 if (Params::getParam('plugin_action') == 'done') {
    
     osc_set_preference('item_podcast_max_file_number', Params::getParam('item_podcast_max_files'), 'item_podcast', 'INTEGER');
-    osc_set_preference('item_podcast_allowed_ext', Params::getParam('item_podcast_allowed_ext'), 'item_podcast', 'STRING');
-    osc_set_preference('item_podcast_max_file_size', Params::getParam('item_podcast_max_file_size'), 'item_podcast', 'INTEGER');
+//    osc_set_preference('item_podcast_allowed_ext', Params::getParam('item_podcast_allowed_ext'), 'item_podcast', 'STRING');
+//    osc_set_preference('item_podcast_max_file_size', Params::getParam('item_podcast_max_file_size'), 'item_podcast', 'INTEGER');
 
     ob_get_clean();
     osc_add_flash_ok_message(__('Plugin configuration changed successfully', 'item_podcast'), 'admin');
@@ -31,7 +31,7 @@ if (Params::getParam('plugin_action') == 'done') {
                         <input type="text" name="item_podcast_max_files" id="item_podcast_max_files" value="<?php echo osc_get_preference('item_podcast_max_file_number', 'item_podcast') ?>"/>
                         <br/>
                         
-                        <label for="item_podcast_max_file_size"><?php _e('Max file size allowed (in MB)', 'item_podcast'); ?></label>
+<!--                        <label for="item_podcast_max_file_size"><?php _e('Max file size allowed (in MB)', 'item_podcast'); ?></label>
                         <br/>
                         <input type="text" name="item_podcast_max_file_size" id="item_podcast_max_file_size" value="<?php echo osc_get_preference('item_podcast_max_file_size', 'item_podcast') ?>"/>
                         <br/>
@@ -40,7 +40,7 @@ if (Params::getParam('plugin_action') == 'done') {
                         <label for="item_podcast_allowed_ext"><?php _e('Allowed filetypes (separated by comma)', 'item_podcast'); ?></label>
                         <br/>
                         <input type="text" name="item_podcast_allowed_ext" id="item_podcast_allowed_ext" value="<?php echo osc_get_preference('item_podcast_allowed_ext', 'item_podcast'); ?>"/>
-                        <br/>
+                        <br/>-->
                         
                         
                         <span style="float:right;"><button type="submit" style="float: right;"><?php _e('Update', 'item_podcast'); ?></button></span>

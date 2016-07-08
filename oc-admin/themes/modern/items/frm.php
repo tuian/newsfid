@@ -247,10 +247,10 @@ function customPageHeader() { ?>
                                 <label><?php _e('Address'); ?></label>
                                 <?php ItemForm::address_text(); ?>
                             </div>
-                            <div class="input-has-placeholder input-separate-top">
-                                <label><?php _e('Theme'); ?></label>
-                                <?php ItemForm::item_theme(); ?>
-                            </div>
+<!--                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php //_e('Theme'); ?></label>
+                                <?php //ItemForm::item_theme(); ?>
+                            </div>-->
                         </div>
 
                         <div class="well ui-rounded-corners input-separate-top">

@@ -79,7 +79,7 @@
 
             $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
             $contactName       = strip_tags( trim( $aItem['contactName'] ) );
-            $itemTheme         = $aItem['itemTheme'];
+            //$itemTheme         = $aItem['itemTheme'];
             $contactEmail      = strip_tags( trim( $aItem['contactEmail'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
             $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
@@ -184,7 +184,7 @@
                     'fk_i_user_id'          => $aItem['userId'],
                     'dt_pub_date'           => date('Y-m-d H:i:s'),
                     'fk_i_category_id'      => $aItem['catId'],
-                    'fk_i_theme_id'         => $itemTheme,
+                    //'fk_i_theme_id'         => $itemTheme,
                     'i_price'               => $aItem['price'],
                     'fk_c_currency_code'    => $aItem['currency'],
                     's_contact_name'        => $contactName,
@@ -301,7 +301,7 @@
             $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
             $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
-            $itemTheme       = strip_tags( trim( $aItem['itemTheme'] ) );
+            //$itemTheme       = strip_tags( trim( $aItem['itemTheme'] ) );
 
             // Validate
             if ( !$this->checkAllowedExt($aItem['photos']) ) {
@@ -422,7 +422,7 @@
                     ,'i_price'            => $aItem['price']
                     ,'fk_c_currency_code' => $aItem['currency']
                     ,'b_show_email'       => $aItem['showEmail']
-                    ,'fk_i_theme_id'       => $itemTheme
+                    //,'fk_i_theme_id'       => $itemTheme
                 );
 
                 // only can change the user if you're an admin
@@ -1112,7 +1112,7 @@
             } else {
                 $aItem['contactName']   = Params::getParam('contactName');
                 $aItem['contactEmail']  = Params::getParam('contactEmail');
-                $aItem['itemTheme']  = Params::getParam('itemTheme');
+                //$aItem['itemTheme']  = Params::getParam('itemTheme');
             }
             $aItem['userId']        = $userId;
 
@@ -1153,7 +1153,7 @@
 
             // get params
             $aItem['catId']         = Params::getParam('catId');
-            $aItem['fk_i_theme_id'] = Params::getParam('itemTheme');
+            //$aItem['fk_i_theme_id'] = Params::getParam('itemTheme');
             $aItem['countryId']     = Params::getParam('countryId');
             $aItem['country']       = Params::getParam('country');
             $aItem['region']        = Params::getParam('region');

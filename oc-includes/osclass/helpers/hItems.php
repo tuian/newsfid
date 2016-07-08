@@ -1296,9 +1296,9 @@
         return Item::newInstance()->totalItems(null, 'TODAY');
     }
     
-    function osc_item_theme() {
-        return (string) osc_item_field("fk_i_theme_id");
-    }
+//    function osc_item_theme() {
+//        return (string) osc_item_field("fk_i_theme_id");
+//    }
 
     /**
      * Perform a search based on custom filters and conditions

@@ -606,7 +606,7 @@
         return View::newInstance()->_get('metafields');
     }
 
-    function osc_premium_theme() {
-        return (string) osc_premium_field("fk_i_theme_id");
-    }
+//    function osc_premium_theme() {
+//        return (string) osc_premium_field("fk_i_theme_id");
+//    }
  ?>

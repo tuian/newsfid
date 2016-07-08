@@ -2,7 +2,6 @@
 
 $id = Params::getParam('id');
 $item = Params::getParam('item');
-$code = Params::getParam('code');
 $secret = Params::getParam('secret');
 $json = array();
 
@@ -49,12 +48,9 @@ if ($userId == null && $aItem['fk_i_user_id'] == null && $secret != $aItem['s_se
 }
 
 $conn = getConnection();
-$result = $conn->osc_dbFetchResult("SELECT * FROM %st_item_podcast_files WHERE pk_i_id = %d AND s_embed_code = '%s'", DB_TABLE_PREFIX, $id, $code);
+$result = $conn->osc_dbFetchResult("SELECT * FROM %st_item_podcasts WHERE pk_i_id = %d AND fk_i_item_id = '%s'", DB_TABLE_PREFIX, $id, $item);
 if ($result['pk_i_id']) {
-
-    $conn->osc_dbExec("DELETE FROM %st_item_podcast_files WHERE pk_i_id = %d AND s_embed_code = '%s'", DB_TABLE_PREFIX, $id, $code);
-    @unlink(ITEM_PODCAST_FILE_PATH  . $result['s_code'] . "_" . $result['fk_i_item_id'] . "_" . $result['s_embed_code']);
-
+    $conn->osc_dbExec("DELETE FROM %st_item_podcasts WHERE pk_i_id = %d AND fk_i_item_id = '%s'", DB_TABLE_PREFIX, $id, $item);
     $json['msg'] = __('The selected file has been successfully deleted', "item_podcast");
     $json['success'] = 'true';
 } else {

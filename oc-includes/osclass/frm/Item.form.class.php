@@ -1554,29 +1554,29 @@
 //            parent::generic_input_text('itemTheme', (isset($item['fk_i_theme_id'])) ? $item['fk_i_theme_id'] : null);
 //            return true;
 //        }
-         static public function item_theme($item = null) {
-              // Did user select a specific category to post in?
-            $themeId = Params::getParam('itemTheme');
-            if(Session::newInstance()->_getForm('itemTheme') != "") {
-                $themeId = Session::newInstance()->_getForm('itemTheme');
-            }
-
-            if ($item == null) { $item = osc_item(); }
-
-            echo '<select name="itemTheme" id="itemTheme">';
-              
-                echo '<option value="">' . __('Select a theme') . '</option>';
-
-            $themes = get_all_themes_icon();
-            
-            foreach($themes as $c) {              
-                $selected = ( (isset($item["fk_i_theme_id"]) && $item["fk_i_theme_id"] == $c['id']) || (isset($themeId) && $themeId == $c['id']) );
-                echo '<option value="' . $c['id'] . '"' . ($selected ? ' selected="selected"' : '' ). '>' . $c['name'] . '</option>';
-            }
-            echo '</select>';
-            return true;             
-           
-        }
+//         static public function item_theme($item = null) {
+//              // Did user select a specific category to post in?
+//            $themeId = Params::getParam('itemTheme');
+//            if(Session::newInstance()->_getForm('itemTheme') != "") {
+//                $themeId = Session::newInstance()->_getForm('itemTheme');
+//            }
+//
+//            if ($item == null) { $item = osc_item(); }
+//
+//            echo '<select name="itemTheme" id="itemTheme">';
+//              
+//                echo '<option value="">' . __('Select a theme') . '</option>';
+//
+//            $themes = get_all_themes_icon();
+//            
+//            foreach($themes as $c) {              
+//                $selected = ( (isset($item["fk_i_theme_id"]) && $item["fk_i_theme_id"] == $c['id']) || (isset($themeId) && $themeId == $c['id']) );
+//                echo '<option value="' . $c['id'] . '"' . ($selected ? ' selected="selected"' : '' ). '>' . $c['name'] . '</option>';
+//            }
+//            echo '</select>';
+//            return true;             
+//           
+//        }
     }
 
 ?>
