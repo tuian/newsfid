@@ -1990,3 +1990,7 @@ select {
 .vertical-bottom{
     vertical-align: bottom;
 }
+.user_thumbnail{
+    max-width: 32px;
+    border-radius: 5px;
+}

@@ -39,11 +39,30 @@ function get_category_array($parent_category_id) {
 
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
-    ?>
-    <?php foreach ($item_result as $k => $item): ?>
-        <?php
+    $conn = DBConnectionClass::newInstance();
+    $data = $conn->getOsclassDb();
+    $comm = new DBCommandClass($data);
+    $db_prefix = DB_TABLE_PREFIX;
+    foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
         while (osc_has_custom_items()):
+            $date = osc_item_field("dt_pub_date");
+            setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+            $date_in_french = strftime("%d %B %Y ", strtotime($date));
+
+
+            $user_id = osc_item_user_id();
+            $item_id = osc_item_id();
+            $query = "SELECT user.*, user.s_name as name, user2.* FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$user_id} LIMIT 1";
+            $result = $comm->query($query);
+            $user = $result->result();   
+            if(!empty($user)):
+                $user_image_url = osc_base_url().$user[0]['s_path'].$user[0]['pk_i_id']."_nav.".$user[0]['s_extension'];
+            else:
+                $user_image_url = osc_current_web_theme_url('images/user_icon.jpg');
+            endif;
+//            echo "<pre>";
+//            print_r($user);
             ?>
             <div class="item wow animated col-md-4 col-sm-4 col-lg-4">
                 <div class="list">
@@ -63,9 +82,11 @@ if ($items):
                         </div>
                     <?php } ?>
                     <div class="description" >
+                        <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user[0]['name'])?$user[0]['name']:'user icon'; ?>" class="img-responsive item_image user_thumbnail">
                         <h3 class="item_title">
                             <a style="item_link" href="<?php echo osc_item_url(); ?>">
-                                <?php echo osc_item_title(); ?>
+                                <?php echo isset($user[0]['name'])?$user[0]['name']:osc_item_title(); ?>
+                                <?php //echo osc_item_title(); ?>
                             </a>
                         </h3>
 
