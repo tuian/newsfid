@@ -74,7 +74,7 @@ function item_podcast_upload_files($item) {
     if ($item['fk_i_category_id'] != null) {
         //if (osc_is_this_category('item_podcast', $item['fk_i_category_id'])) {
         $files =Params::getParam('item_podcast_files', FALSE, FALSE, FALSE);
-      
+        $date = date('YmdHis');
         if (count($files) > 0) {
             foreach ($files as $key => $content) :
                 ItemPodcastModel::newInstance()->insertFile($item['pk_i_id'],$content, $date);

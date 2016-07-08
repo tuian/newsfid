@@ -27,8 +27,8 @@
                 <div id="item_podcast_files1">
                     <?php if (osc_get_preference('item_podcast_max_file_number') == 0 || (osc_get_preference('item_podcast_max_file_number') != 0 && count($item_podcast_files) < osc_get_preference('item_podcast_max_file_number'))) { ?>
                         <div class="file_row">
-                            <!--<input type="text" name="item_podcast_files[]" value="" />-->
-                            <textarea  name="item_podcast_files[]"></textarea>
+                            <input type="text" name="item_podcast_files[]" value="" />
+                            <!--<textarea  name="item_podcast_files[]"></textarea>-->
                         </div>
                     <?php } ?>
                 </div>
