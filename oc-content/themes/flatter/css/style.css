@@ -1992,5 +1992,9 @@ select {
 }
 .user_thumbnail{
     max-width: 32px;
-    border-radius: 5px;
+    border-radius: 10px;    
+}
+.item_title{
+    display: inline-block;
+    padding-left: 10px;    
 }
