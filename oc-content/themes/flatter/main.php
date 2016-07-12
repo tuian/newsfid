@@ -143,20 +143,20 @@
     $comm = new DBCommandClass($data);
     $db_prefix = DB_TABLE_PREFIX;
     $logged_in_user_id = osc_logged_user_id();
-    $query = "SELECT * FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$logged_in_user_id}";
+    $query = "SELECT user.*, user.s_name as name, user2.* FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$logged_in_user_id}";
     $user_result = $comm->query($query);
     $logged_user = $user_result->result();
     ?>
     <div id="sections">
         <div class="user_area">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 bg-white">
                     <div class="box box-widget widget-user">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
 
-                        <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/user-default.jpg" ?>') center center;">
+                        <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
                             <h3 class="widget-user-username">
-                                <?php echo $logged_user[0]['s_username'] ?>
+                                <?php echo $logged_user[0]['name'] ?>
                             </h3>
                             <h5 class="widget-user-desc">
                                 Web Designer
@@ -181,7 +181,7 @@
                                             3,200
                                         </h5>
                                         <span class="description-text">
-                                            SALES
+                                            ABONNEMENTS
                                         </span>
                                     </div>
                                     <!-- /.description-block -->
@@ -202,7 +202,7 @@
                                 <div class="col-sm-4">
                                     <div class="description-block">
                                         <h5 class="description-header">35</h5>
-                                        <span class="description-text">PRODUCTS</span>
+                                        <span class="description-text">LIKES</span>
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
@@ -224,9 +224,20 @@
                             <!-- /.box-tools -->
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body" style="display: block;">
+                        <div class="box-body" style="display: block;">                             
                             <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                <option selected="selected">Alabama</option>
+                                <option>Podcast</option>                                
+                                <option>Podcast1</option>                                
+                                <option>Podcast2</option>                                
+                                <option>Podcast3</option>                                
+                                <option>Podcast4</option>                                
+                                <option>Podcast5</option>                                
+                            </select>
+                        </div>                       
+                        <div class="box-body" style="display: block;">
+                            <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Category" aria-hidden="true">
+                                <option>Select a category</option>
+                                <option>Alabama</option>
                                 <option>Alaska</option>
                                 <option>California</option>
                                 <option>Delaware</option>
@@ -235,16 +246,69 @@
                                 <option>Washington</option>
                             </select>
                         </div>
-                        <!-- /.box-body -->
+
+                        <div class="box-body" style="display: block;">
+                            <select class="form-control select2" style="width: 100%;" tabindex="-1" title="City" aria-hidden="true">
+                                <option>Type a city</option>
+                                <option>Alabama</option>
+                                <option>Alaska</option>
+                                <option>California</option>
+                                <option>Delaware</option>
+                                <option>Tennessee</option>
+                                <option>Texas</option>
+                                <option>Washington</option>
+                            </select>
+                        </div>
+                        <div class="box-body" style="display: block;">                            
+                            <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                        </div>
                     </div>
                     <!-- /.box -->
-
+                    <div class="col-md-12 margin-bottom-30">
+                        <div class="col-md-3">
+                            <!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">
+                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>" width="16px" height="16px">
+                        </div>
+                        <div class="col-md-9 padding-right-0">
+                            <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
+                            <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
+                        
+                            <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-bottom-30">
+                        <div class="col-md-3">
+                            <!-- /.direct-chat-info -->
+                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">
+                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/star.png' ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>" width="16px" height="16px">
+                        </div>
+                        <div class="col-md-9 padding-right-0">
+                            <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
+                            <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
+                        
+                            <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 margin-bottom-30">
+                        <div class="col-md-3">                            
+                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">                            
+                        </div>
+                        <div class="col-md-9 padding-right-0">
+                            <h4 class="direct-chat-name margin-0">Gemma Morris</h4>                                
+                            <span class=""><i class="fa fa-users"></i> 25,2k</span>   
+                            <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
+                        </div>
+                    </div>
+                    
+                    
                 </div>
 
                 <div class="col-md-8">
 
                     <div class="col-md-4 pull-right">
-                        <div class="country_flag_box pull-right">
+                        <div class="country_flag_box vertical_center pull-right">
                             <li>
                                 <?php echo 'Flux' ?>
                             </li>
@@ -252,7 +316,8 @@
                                 <?php echo 'India' ?>
                             </li>
                             <li>                                
-                                <img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">
+                                <!--<img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">-->
+                                <i class="fa fa-ellipsis-v fa-2x"></i>
                             </li>
                         </div>
                     </div>
@@ -271,96 +336,12 @@
                             <!-- /.tab-content -->
                         </div>
                     </div>
-
-
-
                     <div class="clearfix"></div>
-                    <div class="box box-widget">
-                        <div class="box-header with-border">
-                            <div class="user-block">
-                                <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user1-128x128.jpg' ?>" alt="User Image">
-                                <span class="username"><a href="<?php echo osc_user_public_profile_url('55') ?>">Jonathan Burke Jr.</a></span>
-                                <span class="description">Shared publicly - 7:30 PM Today</span>
-                            </div>
-                            <!-- /.user-block -->
-                            <div class="box-tools">
-                                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
-                                    <i class="fa fa-circle-o"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                            <!-- /.box-tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <img class="img-responsive pad" src="<?php echo osc_current_web_theme_url() . '/images/photo2.png' ?>" alt="Photo">
+                    <div class="user_related_posts">
 
-                            <p>I took this photo this morning. What do you guys think?</p>
-                            <?php echo '127' ?> &nbsp;
-                            <a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;
-                            <?php echo 'Like' ?>
-                            &nbsp;&nbsp;
-                            <?php echo '' ?> &nbsp;
-                            <a href="#"><i class="fa fa-retweet"></i></a>&nbsp;
-                            <?php echo 'Share' ?>
-
-                            &nbsp;&nbsp;
-                            <?php echo '' ?> &nbsp;
-                            <a href="#"><i class="fa fa-comments"></i></a>&nbsp;
-                            <?php echo 'Comment' ?>
-
-                            &nbsp;&nbsp;
-                            <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer box-comments">
-                            <div class="box-comment">
-                                <!-- User image -->
-                                <img class="img-circle img-sm" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" alt="User Image">
-
-                                <div class="comment-text">
-                                    <span class="username">
-                                        Maria Gonzales
-                                        <span class="text-muted pull-right">8:03 PM Today</span>
-                                    </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
-                                </div>
-                                <!-- /.comment-text -->
-                            </div>
-                            <!-- /.box-comment -->
-                            <div class="box-comment">
-                                <!-- User image -->
-                                <img class="img-circle img-sm" src="<?php echo osc_current_web_theme_url() . '/images/user4-128x128.jpg' ?>" alt="User Image">
-
-                                <div class="comment-text">
-                                    <span class="username">
-                                        Luna Stark
-                                        <span class="text-muted pull-right">8:03 PM Today</span>
-                                    </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
-                                </div>
-                                <!-- /.comment-text -->
-                            </div>
-                            <!-- /.box-comment -->
-                        </div>
-                        <!-- /.box-footer -->
-                        <div class="box-footer">
-                            <form action="#" method="post">
-                                <img class="img-responsive img-circle img-sm" src="<?php echo osc_current_web_theme_url() . '/images/user4-128x128.jpg' ?>" alt="Alt Text">
-                                <!-- .img-push is used to add margin to elements next to floating images -->
-                                <div class="img-push">
-                                    <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.box-footer -->
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 <?php else: ?>
@@ -383,47 +364,50 @@
                     <div class="navbar-collapse collapse" id="home_primary_nav_wrap">
                         <ul class="nav navbar-nav">
                             <?php /* $themes = get_all_themes_icon();
-                                foreach ($themes as $k => $theme): ?>
-                            <li>
-                                <a class="category" data-val="<?php echo $theme['id'] ?>" href="#"><?php echo $theme['name'] ?></a>
-                             </li>
-                            <?php endforeach; */ ?>
+                              foreach ($themes as $k => $theme): ?>
+                              <li>
+                              <a class="category" data-val="<?php echo $theme['id'] ?>" href="#"><?php echo $theme['name'] ?></a>
+                              </li>
+                              <?php endforeach; */ ?>
                             <?php osc_goto_first_category(); ?>
-                            <?php 
+                            <?php
                             $other_cat = array();
-                            if (osc_count_categories()) { ?>
-                                <?php 
-                                $i = 1; $j=0;
-                                while (osc_has_categories()) { 
-                                    if($i <6):
-                                    ?>
+                            if (osc_count_categories()) {
+                                ?>
+                                <?php
+                                $i = 1;
+                                $j = 0;
+                                while (osc_has_categories()) {
+                                    if ($i < 6):
+                                        ?>
                                         <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
                                                 <span>(<?php echo osc_category_total_items(); ?>)</span>
                                             </a>
                                         </li>
-                                    <?php 
-                                else:
-                                    $other_cat[$j]['slug'] = osc_category_slug();
-                                    $other_cat[$j]['name'] = osc_category_name();
-                                    $other_cat[$j]['id'] = osc_category_id();
-                                    $other_cat[$j]['href'] = osc_search_category_url();
-                                    $other_cat[$j]['count'] = osc_category_total_items();
-                                    $j++;
-                                endif;
-                                $i++;                                
-                                } ?> 
-                            <?php }?>
-                            <li class="show-more-li"><a href="#"><?php echo __('Show more')."&nbsp;&nbsp;&nbsp;";?><i class="fa fa-angle-down vertical-bottom"></i></a>
+                                        <?php
+                                    else:
+                                        $other_cat[$j]['slug'] = osc_category_slug();
+                                        $other_cat[$j]['name'] = osc_category_name();
+                                        $other_cat[$j]['id'] = osc_category_id();
+                                        $other_cat[$j]['href'] = osc_search_category_url();
+                                        $other_cat[$j]['count'] = osc_category_total_items();
+                                        $j++;
+                                    endif;
+                                    $i++;
+                                }
+                                ?> 
+                            <?php } ?>
+                            <li class="show-more-li"><a href="#"><?php echo __('Show more') . "&nbsp;&nbsp;&nbsp;"; ?><i class="fa fa-angle-down vertical-bottom"></i></a>
                                 <ul class="">
-                                   <?php  foreach ($other_cat as $$k => $n):?>
-                                        <li class="<?php echo $n['slug'];?>" value="<?php echo $n['name'];?>">
-                                            <a class="category" data-val="<?php echo $n['id'];?>" href="<?php echo $n['href'];?>">
-                                                <?php echo $n['name'];?><span>(<?php echo $n['count'];?>)</span>
+                                    <?php foreach ($other_cat as $$k => $n): ?>
+                                        <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
+                                            <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
+                                                <?php echo $n['name']; ?><span>(<?php echo $n['count']; ?>)</span>
                                             </a>
                                         </li>
-                                   <?php endforeach;?>                            
+                                    <?php endforeach; ?>                            
                                 </ul>  
                             </li>
                         </ul>                                    
@@ -516,52 +500,80 @@ function footer_script() {
                                     placeholder: 'placeholder'
                                 });
                             });
-
-                            $('.masonry_row').masonry({
-                                columnWidth: '.item',
-                                itemSelector: '.item',
-                            });
-                            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-                            $.ajax({
-                                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                                //data: {page_number: pageNumber, },
-                                success: function (data, textStatus, jqXHR) {
-                                    $('.masonry_row').html(data);
-                                }
-                            });
-                            $('#search_form a').click(function (e) {
-                                $('#search_form li').removeClass('active');
-                                $(this).parent().addClass('active');
-                                e.preventDefault();
-
-                                var filter_value = $(this).attr('data-val');
-                                $('#filter_value').val(filter_value);
+                        <?php if (!osc_is_web_user_logged_in()): ?>
+                                $('.masonry_row').masonry({
+                                    columnWidth: '.item',
+                                    itemSelector: '.item',
+                                });
+                                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
                                 $.ajax({
-                                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                                    data: {
-                                        filter_value: filter_value
-                                    },
+                                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                                    //data: {page_number: pageNumber, },
                                     success: function (data, textStatus, jqXHR) {
                                         $('.masonry_row').html(data);
-                                        is_enable_ajax = true;
-                                        $(".result_text").hide();
-                                        $('.masonry_row').masonry('reloadItems');
-                                        $('.masonry_row').masonry('layout');
-                                        $('#page_number').val(1);
                                     }
-
                                 });
+                                $('#search_form a').click(function (e) {
+                                    $('#search_form li').removeClass('active');
+                                    $(this).parent().addClass('active');
+                                    e.preventDefault();
+
+                                    var filter_value = $(this).attr('data-val');
+                                    $('#filter_value').val(filter_value);
+                                    $.ajax({
+                                        url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                        data: {
+                                            filter_value: filter_value
+                                        },
+                                        success: function (data, textStatus, jqXHR) {
+                                            $('.masonry_row').html(data);
+                                            is_enable_ajax = true;
+                                            $(".result_text").hide();
+                                            $('.masonry_row').masonry('reloadItems');
+                                            $('.masonry_row').masonry('layout');
+                                            $('#page_number').val(1);
+                                        }
+
+                                    });
+                                });
+
+                                $(window).bind('scroll', function () {
+                                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
+                                        loading = true;
+                                        $('.loading').fadeIn(500);
+                                        $('.masonry_row').css({'opacity': '0.2'});
+                                        setTimeout(make_item_ajax_call, 1000);
+                                    }
+                                });
+    <?php else: ?>
+                                $.ajax({
+                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                    //data: {page_number: pageNumber, },
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('.user_related_posts').replaceWith(data);
+                                    }
+                                });
+    <?php endif; ?>
+
+                            $(document).on('submit', 'form.comment_form', function (event) {
+                                var comment_form = $(this);
+                                var item_id = comment_form.attr('data_item_id');
+                                var user_id = comment_form.attr('data_user_id');
+                                var comment_text = comment_form.find('.comment_text').val();
+                                $.ajax({
+                                    url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
+                                    type: 'POST',
+                                    data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
+                                    success: function (data, textStatus, jqXHR) {
+                                        comment_form.find('.comment_text').val('');
+                                        $('.comments_container_' + item_id).replaceWith(data);
+                                    }
+                                });
+                                return false;
                             });
 
-                            $(window).bind('scroll', function () {
-                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
-                                    loading = true;
-                                    $('.loading').fadeIn(500);
-                                    $('.masonry_row').css({'opacity': '0.2'});
-                                    setTimeout(make_item_ajax_call, 1000);
-                                }
-                            });
                         });
+
                         function make_item_ajax_call() {
                             var filter_value = $('#filter_value').val();
                             var page_number = $('#page_number').val();
