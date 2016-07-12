@@ -1002,7 +1002,7 @@ function go_to_theme_select($user) {
 
 osc_add_hook('after_login', 'user_login_redirect');
 
-function user_login_redirect($user) {   
+function user_login_redirect($user) {
     osc_redirect_to(osc_base_url());
 }
 
@@ -1014,13 +1014,126 @@ function cust_admin_my_custom_items_column_header($table) {
 function cust_admin_my_custom_items_column_data($row, $aRow) {
 
     $conn = getConnection();
-    $item = $conn->osc_dbFetchResult("SELECT my_custom_db_field FROM my_custom_db_table WHERE fk_i_item_id = '%d'", $aRow['pk_i_id'] );
+    $item = $conn->osc_dbFetchResult("SELECT my_custom_db_field FROM my_custom_db_table WHERE fk_i_item_id = '%d'", $aRow['pk_i_id']);
 
-    $row['my_custom_items_column'] = $item['my_custom_db_field'] ;
-    return $row ;
+    $row['my_custom_items_column'] = $item['my_custom_db_field'];
+    return $row;
 }
 
 //osc_add_hook('admin_items_table', 'cust_admin_my_custom_items_column_header');
 //osc_add_filter('items_processing_row', 'cust_admin_my_custom_items_column_data');
+function get_user_data($user_id) {
+    $conn = DBConnectionClass::newInstance();
+    $data = $conn->getOsclassDb();
+    $comm = new DBCommandClass($data);
+    $db_prefix = DB_TABLE_PREFIX;
+    $query = "SELECT user.*, user.s_name as name, user2.* FROM `{$db_prefix}t_user` user INNER JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$user_id} LIMIT 1";
+    $result = $comm->query($query);
+    $user = $result->result();
+    return $user;
+}
+function item_resources($item_id) {
+    $type = 'image';
+    $item_podcast_data = new DAO();
+    $item_podcast_data->dao->select(sprintf('%st_item_podcasts.*', DB_TABLE_PREFIX));
+    $item_podcast_data->dao->from(sprintf('%st_item_podcasts', DB_TABLE_PREFIX));
+    $item_podcast_data->dao->where(array('fk_i_item_id' => $item_id));
+    $item_podcast_data->dao->limit(1);
+    $item_podcast_result = $item_podcast_data->dao->get();
+    $data = $item_podcast_result->result();
+    $type = 'podcast';
 
+    if (empty($data)):
+        $item_video_data = new DAO();
+        $item_video_data->dao->select(sprintf('%st_item_video_files.*', DB_TABLE_PREFIX));
+        $item_video_data->dao->from(sprintf('%st_item_video_files', DB_TABLE_PREFIX));
+        $item_video_data->dao->where(array('fk_i_item_id' => $item_id));
+        $item_video_data->dao->limit(1);
+        $item_video_result = $item_video_data->dao->get();
+        $data = $item_video_result->result();
+        $type = 'video';
+    endif;
+
+    if (empty($data)):
+        $item_mp3_data = new DAO();
+        $item_mp3_data->dao->select(sprintf('%st_item_mp3_files.*', DB_TABLE_PREFIX));
+        $item_mp3_data->dao->from(sprintf('%st_item_mp3_files', DB_TABLE_PREFIX));
+        $item_mp3_data->dao->where(array('fk_i_item_id' => $item_id));
+        $item_mp3_data->dao->limit(1);
+        $item_mp3_result = $item_mp3_data->dao->get();
+        $data = $item_mp3_result->result();
+        $type = 'mp3';
+    endif;
+
+    if (empty($data)):
+        $item_image_data = new DAO();
+        $item_image_data->dao->select(sprintf('%st_item_resource.*', DB_TABLE_PREFIX));
+        $item_image_data->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
+        $item_image_data->dao->where(array('fk_i_item_id' => $item_id));
+        $item_image_data->dao->limit(1);
+        $item_image_result = $item_image_data->dao->get();
+        $data = $item_image_result->result();
+        $type = 'image';
+    endif;
+
+
+    switch ($type):
+
+        case 'podcast':
+            echo $data[0]['s_embed_code'];
+            break;
+
+        case 'video':
+            ?>
+            <video controls>
+                <source src="<?php echo ITEM_VIDEO_FILE_URL . $data[0]['s_code'] . "_" . $data[0]['fk_i_item_id'] . "_" . $data[0]['s_name']; ?>" />
+            </video>
+            <?php
+            break;
+
+        case 'mp3':
+            ?>
+            <audio controls>
+                <source src="<?php echo ITEM_MP3_FILE_URL . $data[0]['s_code'] . "_" . $data[0]['fk_i_item_id'] . "_" . $data[0]['s_name']; ?>" />
+            </audio>
+            <?php
+            break;
+
+        case 'image':
+            if (empty($data)):
+                $img_path = osc_current_web_theme_url('images/no-image.jpg');
+            else:
+                $img_path = osc_base_url() . '/' . $data[0]['s_path'] . $data[0]['pk_i_id'] . '_original.' . $data[0]['s_extension'];
+            endif;
+            ?>
+            <img src="<?php echo $img_path ?>" class="img img-responsive pad">
+            <?php
+            break;
+
+        default :
+            break;
+    endswitch;
+}
+function get_user_categories() {
+    $category_array = array();
+    $user_themes_data = new DAO();
+    $user_themes_data->dao->select(sprintf('%st_user_themes.*', DB_TABLE_PREFIX));
+    $user_themes_data->dao->from(sprintf('%st_user_themes', DB_TABLE_PREFIX));
+    $user_themes_data->dao->where(array('user_id' => osc_logged_user_id()));
+    $user_themes_result = $user_themes_data->dao->get();
+    $user_themes = $user_themes_result->result();
+    foreach ($user_themes as $theme):
+        $category_array[] = $theme['theme_id'];
+    endforeach;
+    $user_rubrics_data = new DAO();
+    $user_rubrics_data->dao->select(sprintf('%st_user_rubrics.*', DB_TABLE_PREFIX));
+    $user_rubrics_data->dao->from(sprintf('%st_user_rubrics', DB_TABLE_PREFIX));
+    $user_rubrics_data->dao->where(array('user_id' => osc_logged_user_id()));
+    $user_rubrics_result = $user_rubrics_data->dao->get();
+    $user_rubrics = $user_rubrics_result->result();
+    foreach ($user_rubrics as $rubric):
+        $category_array[] = $rubric['rubric_id'];
+    endforeach;
+    return $category_array;
+}
 ?>
