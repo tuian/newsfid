@@ -332,7 +332,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="posts_container">
-                         <input type="hidden" name="item_page_number" id="item_page_number" value="0">
+                        <input type="hidden" name="item_page_number" id="item_page_number" value="1">
                         <div class="user_related_posts">
 
                         </div>
@@ -550,19 +550,20 @@ function footer_script() {
                                 var item_page_number = $('#item_page_number').val();
                                 $.ajax({
                                     url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                    data: {page_number: item_page_number },
+                                    //data: {page_number: item_page_number},
                                     success: function (data, textStatus, jqXHR) {
                                         $('.user_related_posts').append(data);
                                     }
                                 });
-                                 $(window).bind('scroll', function () {
-                                    if ( $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
-                                        //$('.loading').fadeIn(500);
-                                       
+                                $(window).bind('scroll', function () {
+                                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
+                                        loading = true;
+                                        $('.posts_container .loading').fadeIn(500);
+                                        $('.user_related_posts').css({'opacity': '0.2'});
                                         setTimeout(make_after_login_item_ajax_call, 1000);
                                     }
                                 });
-                                
+
     <?php endif; ?>
 
                             $(document).on('submit', 'form.comment_form', function (event) {
@@ -583,7 +584,7 @@ function footer_script() {
                             });
 
                         });
-                        
+
                         function make_after_login_item_ajax_call() {
                             var page_number = $('#item_page_number').val();
                             $.ajax({
@@ -592,17 +593,21 @@ function footer_script() {
                                     page_number: page_number,
                                 },
                                 success: function (data) {
+
                                     if (data !== '0') {
+                                        $('.posts_container .loading').fadeOut(1000);
+                                        $('.user_related_posts').css({'opacity': '1'});
+                                        loading = false;
                                         $(".user_related_posts").append(data);
-                                       
                                         var next_page = parseInt($('#item_page_number').val()) + 1;
                                         $('#item_page_number').val(next_page);
-                                       
                                     } else {
                                         $(".result_text").text('No More Data Found').show();
-                                      
+                                        $('.posts_container .loading').fadeOut(1000);
+                                        $('.user_related_posts').css({'opacity': '1'});
+                                        is_enable_ajax = false;
                                     }
-                                   
+
                                 }
                             });
                         }

@@ -14,7 +14,6 @@ $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 1;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
-
 $result = $data->dao->get();
 if ($result) {
     $items = $result->result();
@@ -68,7 +67,7 @@ if ($items):
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-
+                    <p><?php echo osc_item_title(); ?></p>
                     <?php
                     item_resources(osc_item_id());
                     ?>
@@ -112,9 +111,6 @@ if ($items):
                             ?>
                             <?php
                             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-//                            echo '<pre>';
-//                            print_r($comment_user);
-//                            echo '</pre>';
                             if ($comment_user[0]['s_path']):
                                 $user_image_url = osc_base_url() . $comment_user[0]['s_path'] . $comment_user[0]['pk_i_id'] . "_nav." . $comment_user[0]['s_extension'];
                             else:
@@ -172,5 +168,4 @@ if ($items):
 else:
     echo '0';
 endif;
-?>
 
