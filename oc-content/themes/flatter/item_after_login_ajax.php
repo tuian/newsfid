@@ -11,7 +11,7 @@ $data->dao->whereIn('fk_i_category_id', get_user_categories());
 $data->dao->where('fk_i_user_id !=', osc_logged_user_id());
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 10;
+$offset = 1;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 

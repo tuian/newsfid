@@ -61,7 +61,8 @@ endif;
                         $data->dao->join(DB_TABLE_PREFIX . 't_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
                         $data->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
                         $data->dao->join(DB_TABLE_PREFIX . 'bs_theme_category_icon  as d ', 'a.pk_i_id = d.pk_i_id', 'LEFT');
-                        $data->dao->where(sprintf("a.fk_i_parent_id in (%s)", $_SESSION['theme_ids']));
+                        //$data->dao->where(sprintf("a.fk_i_parent_id in (%s)", $_SESSION['theme_ids']));
+                        $data->dao->whereIn("a.fk_i_parent_id", $_SESSION['theme_ids']);
                         $data->dao->where("b.fk_c_locale_code = 'en_US'");
                         $data->dao->orderBy('a.pk_i_id', 'ASC');
                         $result1 = $data->dao->get();
@@ -86,7 +87,7 @@ endif;
                                         <input type="checkbox" name="cat_id[]" value="<?php echo $theme['pk_i_id'] ?>" class="cat_checkbox" style="display: none">
                                     </div>
                                     <div class="category_title">
-                                        <?php echo $theme['s_name']; ?>
+                                        <?php echo osc_highlight($theme['s_name'], 13); ?>
                                     </div>
                                 </div>
                             </div>

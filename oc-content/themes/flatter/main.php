@@ -267,7 +267,7 @@
                         <div class="col-md-9 padding-right-0">
                             <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
                             <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
-                        
+
                             <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
                         </div>
                     </div>
@@ -280,11 +280,11 @@
                         <div class="col-md-9 padding-right-0">
                             <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
                             <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
-                        
+
                             <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
                         </div>
                     </div>
-                    
+
                     <div class="col-md-12 margin-bottom-30">
                         <div class="col-md-3">                            
                             <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">                            
@@ -295,8 +295,8 @@
                             <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
 
                 <div class="col-md-8">
@@ -331,8 +331,15 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="user_related_posts">
+                    <div class="posts_container">
+                         <input type="hidden" name="item_page_number" id="item_page_number" value="0">
+                        <div class="user_related_posts">
 
+                        </div>
+                        <h2 class="result_text"></h2>                
+                        <div class="loading text-center">
+                            <i class="fa fa-spin fa-refresh fa-3x"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -494,7 +501,7 @@ function footer_script() {
                                     placeholder: 'placeholder'
                                 });
                             });
-                        <?php if (!osc_is_web_user_logged_in()): ?>
+    <?php if (!osc_is_web_user_logged_in()): ?>
                                 $('.masonry_row').masonry({
                                     columnWidth: '.item',
                                     itemSelector: '.item',
@@ -540,13 +547,22 @@ function footer_script() {
                                     }
                                 });
     <?php else: ?>
+                                var item_page_number = $('#item_page_number').val();
                                 $.ajax({
                                     url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                    //data: {page_number: pageNumber, },
+                                    data: {page_number: item_page_number },
                                     success: function (data, textStatus, jqXHR) {
-                                        $('.user_related_posts').replaceWith(data);
+                                        $('.user_related_posts').append(data);
                                     }
                                 });
+                                 $(window).bind('scroll', function () {
+                                    if ( $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
+                                        //$('.loading').fadeIn(500);
+                                       
+                                        setTimeout(make_after_login_item_ajax_call, 1000);
+                                    }
+                                });
+                                
     <?php endif; ?>
 
                             $(document).on('submit', 'form.comment_form', function (event) {
@@ -567,6 +583,29 @@ function footer_script() {
                             });
 
                         });
+                        
+                        function make_after_login_item_ajax_call() {
+                            var page_number = $('#item_page_number').val();
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                                data: {
+                                    page_number: page_number,
+                                },
+                                success: function (data) {
+                                    if (data !== '0') {
+                                        $(".user_related_posts").append(data);
+                                       
+                                        var next_page = parseInt($('#item_page_number').val()) + 1;
+                                        $('#item_page_number').val(next_page);
+                                       
+                                    } else {
+                                        $(".result_text").text('No More Data Found').show();
+                                      
+                                    }
+                                   
+                                }
+                            });
+                        }
 
                         function make_item_ajax_call() {
                             var filter_value = $('#filter_value').val();

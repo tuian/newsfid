@@ -93,7 +93,7 @@ osc_current_web_theme_path('header.php');
                                             <input type="checkbox" name="cat_id[]" value="<?php echo $theme['pk_i_id'] ?>" class="cat_checkbox" style="display: none">
                                         </div>
                                         <div class="category_title">
-                                            <?php echo $theme['s_name']; ?>
+                                            <?php echo osc_highlight($theme['s_name'], 13); ?>
                                         </div>
                                     </div>
                                 </div>
