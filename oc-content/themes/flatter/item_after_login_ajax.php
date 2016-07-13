@@ -8,6 +8,7 @@ $data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
 $data->dao->orderBy('dt_pub_date', 'DESC');
 
 $data->dao->whereIn('fk_i_category_id', get_user_categories());
+$data->dao->where('fk_i_user_id !=', osc_logged_user_id());
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
@@ -35,7 +36,8 @@ if ($items):
             $date_in_french = strftime("%d %B %Y ", strtotime($date));
             $item_id = osc_item_id();
             $user = get_user_data(osc_item_user_id());
-            if ($user):
+           
+            if (!empty($user[0]['s_path'])):
                 $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
             else:
                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
@@ -45,12 +47,13 @@ if ($items):
 //            else:
 //                $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
 //            endif;
+           
             ?>
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user[0]['s_name'] ?>">
-                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user[0]['pk_i_id']) ?>"><?php echo $user[0]['s_name'] ?></a></span>
+                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user[0]['user_name'] ?>">
+                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user[0]['user_id']) ?>"><?php echo $user[0]['user_name'] ?></a></span>
                         <span class="description"><?php echo $date_in_french ?></span>
                     </div>
                     <!-- /.user-block -->
@@ -70,7 +73,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php echo osc_item_description(); ?></p>
+                    <p><?php echo osc_highlight(osc_item_description(), 200); ?></p>
                     <?php echo '127' ?> &nbsp;
                     <a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;
                     <?php echo 'Like' ?>
@@ -109,8 +112,10 @@ if ($items):
                             ?>
                             <?php
                             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-                          
-                            if ($comment_user):
+//                            echo '<pre>';
+//                            print_r($comment_user);
+//                            echo '</pre>';
+                            if ($comment_user[0]['s_path']):
                                 $user_image_url = osc_base_url() . $comment_user[0]['s_path'] . $comment_user[0]['pk_i_id'] . "_nav." . $comment_user[0]['s_extension'];
                             else:
                                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
@@ -119,12 +124,12 @@ if ($items):
                             <div class="box-footer box-comments">
                                 <div class="box-comment">
                                     <!-- User image -->
-                                    <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user[0]['s_name'] ?>">
+                                    <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user[0]['user_name'] ?>">
 
                                     <div class="comment-text">
                                         <span class="username">
-                                            <?php echo $comment_user[0]['s_name'] ?>
-                                            <span class="text-muted pull-right"><?php echo $comment_data['dt_pub_date'] ?></span>
+                                            <?php echo $comment_user[0]['user_name'] ?>
+                                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                         </span><!-- /.username -->
                                         <?php echo $comment_data['s_body']; ?>
                                     </div>
@@ -143,14 +148,14 @@ if ($items):
                         $current_user = get_user_data(osc_logged_user_id());
                         $current_user_image_url = '';
                         
-                        if ($current_user):
+                        if ($current_user[0]['s_path']):
                             $current_user_image_url = osc_base_url() . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . "_nav." . $current_user[0]['s_extension'];
                         else:
                             $current_user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                         endif;
                         
                         ?>
-                        <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user[0]['s_name'] ?>">
+                        <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user[0]['user_name'] ?>">
                         <!-- .img-push is used to add margin to elements next to floating images -->
                         <div class="img-push">
                             <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">

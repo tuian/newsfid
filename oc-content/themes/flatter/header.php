@@ -64,14 +64,9 @@
                 <section class="sidebar">
                     <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
                         <?php
-                        $conn = DBConnectionClass::newInstance();
-                        $data = $conn->getOsclassDb();
-                        $comm = new DBCommandClass($data);
-                        $db_prefix = DB_TABLE_PREFIX;
+                       
                         $user_id = osc_logged_user_id();
-                        $query = "SELECT * FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$user_id}";
-                        $result = $comm->query($query);
-                        $user = $result->result();
+                        $user = get_user_data($user_id);
                         if (!empty($user[0]['s_path'])):
                             $img_path = osc_base_url() . '/' . $user[0]['s_path'] . $user[0]['pk_i_id'] . '.' . $user[0]['s_extension'];
                         else:

@@ -1,5 +1,6 @@
 <?php
 require '../../../oc-load.php';
+require 'functions.php';
 
 $data = new DAO();
 $data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
@@ -23,39 +24,8 @@ if ($result) {
     $items = array();
 }
 
-function get_category_array($parent_category_id) {
-    $category_array = array($parent_category_id);
-    $category_data = new DAO();
-    $category_data->dao->select(sprintf('%st_category.*', DB_TABLE_PREFIX));
-    $category_data->dao->from(sprintf('%st_category', DB_TABLE_PREFIX));
-    $category_data->dao->where('fk_i_parent_id', $parent_category_id);
-    $result1 = $category_data->dao->get();
-    $cat_data = $result1->result();
-    foreach ($cat_data as $k => $cat):
-        $category_array[] = $cat['pk_i_id'];
-    endforeach;
-    return $category_array;
-}
-
-function time_elapsed_string($ptime) {
-    $etime = time() - $ptime;
-    if ($etime < 1) {
-        return '0 seconds';
-    }
-    $d = $etime / 3600;
-    if ($d > 0 && $d <= 24) {
-        $r = round($d);
-        return $r . ' h';
-    } else {
-        return strftime("%d %b", $ptime);
-    }
-}
-
-if ($items):
+if ($items):   
     $item_result = Item::newInstance()->extendData($items);
-    $conn = DBConnectionClass::newInstance();
-    $data = $conn->getOsclassDb();
-    $comm = new DBCommandClass($data);
     $db_prefix = DB_TABLE_PREFIX;
     foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
@@ -65,11 +35,9 @@ if ($items):
             $date_in_french = time_elapsed_string(strtotime($date));
 
             $user_id = osc_item_user_id();
-            $item_id = osc_item_id();
-            $query = "SELECT user.*, user.s_name as name, user2.* FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$user_id} LIMIT 1";
-            $result = $comm->query($query);
-            $user = $result->result();
-            if (!empty($user)):
+            $item_id = osc_item_id();            
+            $user = get_user_data($user_id);
+            if (!empty($user[0]['s_path'])):
                 $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
             else:
                 $user_image_url = osc_current_web_theme_url('images/user_icon.jpg');
@@ -96,10 +64,10 @@ if ($items):
                     <?php } ?>
                     <div class="description" >
                         <div class="col-md-9 padding-top-10">
-                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user[0]['name']) ? $user[0]['name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
+                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user[0]['user_name']) ? $user[0]['user_name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
                             <h3 class="item_title">
                                 <a style="item_link" href="<?php echo osc_item_url(); ?>">
-                                    <?php echo isset($user[0]['name']) ? $user[0]['name'] : osc_item_title(); ?>
+                                    <?php echo isset($user[0]['user_name']) ? $user[0]['user_name'] : osc_item_title(); ?>
                                     <?php //echo osc_item_title();  ?>
                                 </a>
                             </h3>

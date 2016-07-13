@@ -1027,11 +1027,13 @@ function get_user_data($user_id) {
     $data = $conn->getOsclassDb();
     $comm = new DBCommandClass($data);
     $db_prefix = DB_TABLE_PREFIX;
-    $query = "SELECT user.*, user.s_name as name, user2.* FROM `{$db_prefix}t_user` user INNER JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$user_id} LIMIT 1";
+//    $query = "SELECT user.*, user.pk_i_id as user_id, user.s_name as user_name, user2.* FROM `{$db_prefix}t_user` user INNER JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
+    $query = "SELECT user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
     $result = $comm->query($query);
     $user = $result->result();
     return $user;
 }
+
 function item_resources($item_id) {
     $type = 'image';
     $item_podcast_data = new DAO();
@@ -1114,6 +1116,7 @@ function item_resources($item_id) {
             break;
     endswitch;
 }
+
 function get_user_categories() {
     $category_array = array();
     $user_themes_data = new DAO();
@@ -1133,6 +1136,34 @@ function get_user_categories() {
     $user_rubrics = $user_rubrics_result->result();
     foreach ($user_rubrics as $rubric):
         $category_array[] = $rubric['rubric_id'];
+    endforeach;
+    return $category_array;
+}
+
+function time_elapsed_string($ptime) {
+    $etime = time() - $ptime;
+    if ($etime < 1) {
+        return '0 seconds';
+    }
+    $d = $etime / 3600;
+    if ($d > 0 && $d <= 24) {
+        $r = round($d);
+        return $r . ' h';
+    } else {
+        return strftime("%d %b", $ptime);
+    }
+}
+
+function get_category_array($parent_category_id) {
+    $category_array = array($parent_category_id);
+    $category_data = new DAO();
+    $category_data->dao->select(sprintf('%st_category.*', DB_TABLE_PREFIX));
+    $category_data->dao->from(sprintf('%st_category', DB_TABLE_PREFIX));
+    $category_data->dao->where('fk_i_parent_id', $parent_category_id);
+    $result1 = $category_data->dao->get();
+    $cat_data = $result1->result();
+    foreach ($cat_data as $k => $cat):
+        $category_array[] = $cat['pk_i_id'];
     endforeach;
     return $category_array;
 }

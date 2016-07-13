@@ -138,14 +138,8 @@
 
 <?php if (osc_is_web_user_logged_in()): ?>
     <?php
-    $conn = DBConnectionClass::newInstance();
-    $data = $conn->getOsclassDb();
-    $comm = new DBCommandClass($data);
-    $db_prefix = DB_TABLE_PREFIX;
     $logged_in_user_id = osc_logged_user_id();
-    $query = "SELECT user.*, user.s_name as name, user2.* FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user2.fk_i_user_id = user.pk_i_id WHERE user.pk_i_id={$logged_in_user_id}";
-    $user_result = $comm->query($query);
-    $logged_user = $user_result->result();
+    $logged_user = get_user_data($logged_in_user_id)
     ?>
     <div id="sections">
         <div class="user_area">
@@ -156,7 +150,7 @@
 
                         <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
                             <h3 class="widget-user-username">
-                                <?php echo $logged_user[0]['name'] ?>
+                                <?php echo $logged_user[0]['user_name'] ?>
                             </h3>
                             <h5 class="widget-user-desc">
                                 Web Designer
@@ -171,7 +165,7 @@
                             endif;
                             ?>
 
-                            <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">
+                            <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
                         </div>
                         <div class="box-footer">
                             <div class="row">
@@ -267,8 +261,8 @@
                     <div class="col-md-12 margin-bottom-30">
                         <div class="col-md-3">
                             <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">
-                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>" width="16px" height="16px">
+                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
+                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
                         </div>
                         <div class="col-md-9 padding-right-0">
                             <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
@@ -280,8 +274,8 @@
                     <div class="col-md-12 margin-bottom-30">
                         <div class="col-md-3">
                             <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">
-                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/star.png' ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>" width="16px" height="16px">
+                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
+                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/star.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
                         </div>
                         <div class="col-md-9 padding-right-0">
                             <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
