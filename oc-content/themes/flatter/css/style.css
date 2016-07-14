@@ -2104,3 +2104,23 @@ select {
     opacity: 1;
     top: -11px;
 }
+/********************/
+
+.search-popup{
+    width: 90%;
+    
+}
+.search-popup .modal-content{
+    height: 600px;
+    background-color: #ccc;
+}
+.search-popup .modal-header{
+    border-bottom: none;
+    margin-left: 40px;
+    padding-top: 56px;
+}
+.search-popup  .col-md-3{
+    border-bottom: 1px solid #cccccc;
+    margin: 0px 10px;
+    padding: 10px 0px;
+}

@@ -102,8 +102,31 @@
                         <div class="input-group">
                             <input type="text" name="q" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
+                                <button type="submit" id="search-btn" class="btn btn-flat" data-toggle="modal" data-target="#newsfid-search"><i class="fa fa-search"></i> </button>
+                                  <div id="newsfid-search" class="modal fade" role="dialog">
+                                    <div class="modal-dialog search-popup">
+
+                                      <!-- Modal content-->
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h1><b style="font-size: 70px; font-weight: 700;">RECHERCHE SUR NEWSFID</b></h1>
+                                         <h5> Your Search did not return any results. Please try again. </h5>
+                                        </div>
+                                        <div class="modal-body col-md-offset-1">
+                                          
+                                            
+                                            
+                                            <div class="col-md-3">Users</div>
+                                            <div class="col-md-3">Articles</div>
+                                            <div class="col-md-3">Type of Account</div>
+                                        </div>
+                                        
+                                      </div>
+
+                                    </div>
+                                  </div>  
+                               
                             </span>
                         </div>
                     </form>
@@ -280,3 +303,8 @@
                         ga('send', 'pageview');
 
                     </script>
+                    <script>
+                        $(document).ready(function(){
+                            $('#newsfid-search').appendTo("body"); 
+                        })
+                        </script>
