@@ -555,6 +555,23 @@ function footer_script() {
                                         $('.user_related_posts').append(data);
                                     }
                                 });
+                                $(document).on('click', '.like_box', function(){
+                                    var like_box = $(this);
+                                    var item_id = $(this).attr('data_item_id');
+                                    var user_id = $(this).attr('data_user_id');
+                                    var action = $(this).attr('data_action');
+                                    $.ajax({
+                                       url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
+                                       data:{
+                                           item_id:item_id,
+                                           user_id:user_id,
+                                           action:action
+                                       },
+                                       success: function (data, textStatus, jqXHR) {
+                                          like_box.replaceWith(data);
+                                        }
+                                    });
+                                });
                                 $(window).bind('scroll', function () {
                                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
                                         loading = true;

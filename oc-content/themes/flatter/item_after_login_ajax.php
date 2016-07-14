@@ -35,7 +35,7 @@ if ($items):
             $date_in_french = strftime("%d %B %Y ", strtotime($date));
             $item_id = osc_item_id();
             $user = get_user_data(osc_item_user_id());
-           
+
             if (!empty($user[0]['s_path'])):
                 $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
             else:
@@ -46,7 +46,6 @@ if ($items):
 //            else:
 //                $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
 //            endif;
-           
             ?>
             <div class="box box-widget">
                 <div class="box-header with-border">
@@ -73,9 +72,9 @@ if ($items):
                     ?>
 
                     <p><?php echo osc_highlight(osc_item_description(), 200); ?></p>
-                    <?php echo '127' ?> &nbsp;
-                    <a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;
-                    <?php echo 'Like' ?>
+
+                    <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
+                    
                     &nbsp;&nbsp;
                     <?php echo '' ?> &nbsp;
                     <a href="#"><i class="fa fa-retweet"></i></a>&nbsp;
@@ -143,13 +142,12 @@ if ($items):
                         <?php
                         $current_user = get_user_data(osc_logged_user_id());
                         $current_user_image_url = '';
-                        
+
                         if ($current_user[0]['s_path']):
                             $current_user_image_url = osc_base_url() . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . "_nav." . $current_user[0]['s_extension'];
                         else:
                             $current_user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                         endif;
-                        
                         ?>
                         <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user[0]['user_name'] ?>">
                         <!-- .img-push is used to add margin to elements next to floating images -->

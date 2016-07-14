@@ -2036,3 +2036,54 @@ select {
     display: flex;
     align-items: center;
 }
+.like_box{
+    cursor: pointer;
+}
+.like_box.liked{
+    color: #03A9F4;
+}
+
+.follow-user{
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .6;
+}
+.user-block .box-body img {
+    width: 100%;
+    height: 100%;
+    float: none;
+}
+.popup{
+    min-height: 16.43px;
+    padding: 15px;
+}
+.modal-image{
+    border-radius:10px 10px 0px 0px;
+}
+.popup-social{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+.user-block .box-body .box-comment img {
+    float:left;
+}
+.user-block .box-body .box-comment{
+    margin-top:20px;
+}
+.user-block .box-body .username{
+    margin-left:0px;
+}
+.user-block .box-body .comment-text{
+    margin-left:50px;
+}
+.popup-muted {
+    font-weight: 400;
+    font-size: 12px;
+}

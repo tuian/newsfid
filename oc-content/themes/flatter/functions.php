@@ -1167,4 +1167,92 @@ function get_category_array($parent_category_id) {
     endforeach;
     return $category_array;
 }
+
+function get_user_themes($user_id) {
+    $user_theme_data = new DAO();
+    $user_theme_data->dao->select(sprintf('%st_user_themes.*', DB_TABLE_PREFIX));
+    $user_theme_data->dao->from(sprintf('%st_user_themes', DB_TABLE_PREFIX));
+    $user_theme_data->dao->where('user_id', $user_id);
+    $user_theme_result = $user_theme_data->dao->get();
+    $user_theme_array = $user_theme_result->result();
+    $theme_id_array = array_column($user_theme_array, 'theme_id');
+    return $theme_id_array;
+}
+
+function get_item_likes_count($item_id) {
+    $item_like_data = new DAO();
+    $item_like_data->dao->select(sprintf('%st_item_likes.*', DB_TABLE_PREFIX));
+    $item_like_data->dao->from(sprintf('%st_item_likes', DB_TABLE_PREFIX));
+    $item_like_data->dao->where('item_id', $item_id);
+    $item_like_data->dao->where('like_value', '1');
+    $item_like_result = $item_like_data->dao->get();
+    $item_like_array = $item_like_result->result();
+    if ($item_like_array):
+        $like_count = count($item_like_array);
+    else:
+        $like_count = 0;
+    endif;
+    return $like_count;
+}
+
+function get_user_item_likes($user_id) {
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('%st_item_likes.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_item_likes', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('user_id', $user_id);
+    $user_like_data->dao->where('like_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $item_result = array_column($user_like_array, 'item_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function update_item_like($user_id, $item_id, $like_value) {
+
+    $like_array['user_id'] = $user_id;
+    $like_array['item_id'] = $item_id;
+    $like_array['like_value'] = $like_value;
+
+    $like_data = new DAO();
+    $like_data->dao->select(sprintf('%st_item_likes.*', DB_TABLE_PREFIX));
+    $like_data->dao->from(sprintf('%st_item_likes', DB_TABLE_PREFIX));
+    $like_data->dao->where('user_id', $user_id);
+    $like_data->dao->where('item_id', $item_id);
+    $like_data->dao->limit(1);
+    $like_data_result = $like_data->dao->get();
+    $like_data_array = $like_data_result->result();
+    if ($like_data_array):
+        $like_reult = $like_data->dao->update(sprintf('%st_item_likes', DB_TABLE_PREFIX), $like_array, array('id' => $like_data_array[0]['id']));
+    else:
+        $like_reult = $like_data->dao->insert(sprintf('%st_item_likes', DB_TABLE_PREFIX), $like_array);
+    endif;
+
+    return $like_reult;
+}
+
+function item_like_box($user_id, $item_id) {
+
+    $like = 'like';
+    $like_text = 'Like';
+    $like_class = '';
+    $like_item_array = get_user_item_likes($user_id);
+    if (in_array($item_id, $like_item_array)):
+        $like = 'unlike';
+        $like_class = 'liked';
+        $like_text = 'Unlike';
+    endif;
+    ?>
+    <span class="like_box <?php echo $like_class ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $like ?>">
+        <?php echo get_item_likes_count($item_id) ?> &nbsp;
+        <span class="item_like">
+            <i class="fa fa-thumbs-o-up"></i>
+        </span>&nbsp;
+        <?php echo $like_text ?>
+    </span>
+    <?php
+}
 ?>
