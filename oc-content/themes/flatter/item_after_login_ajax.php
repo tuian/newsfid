@@ -11,7 +11,7 @@ $data->dao->whereIn('fk_i_category_id', get_user_categories());
 $data->dao->where('fk_i_user_id !=', osc_logged_user_id());
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 1;
+$offset = 10;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 $result = $data->dao->get();
@@ -66,7 +66,8 @@ if ($items):
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <p><?php echo osc_item_title(); ?></p>
+                    <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
+                    
                     <?php
                     item_resources(osc_item_id());
                     ?>

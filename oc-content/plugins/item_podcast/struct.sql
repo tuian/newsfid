@@ -3,6 +3,5 @@ CREATE TABLE IF NOT EXISTS /*TABLE_PREFIX*/t_item_podcasts (
     fk_i_item_id INT UNSIGNED NOT NULL,
     s_embed_code VARCHAR(250) NOT NULL,
     s_code VARCHAR(14) NOT NULL,
-        PRIMARY KEY (pk_i_id),
-        FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id)
+        PRIMARY KEY (pk_i_id)       
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

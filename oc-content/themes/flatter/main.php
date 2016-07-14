@@ -42,69 +42,7 @@
     <?php } ?>
     <div class="bigsearch transbg">
         <div class="row">
-            <form action="<?php echo osc_base_url(true); ?>" method="get" class="search nocsrf">
-                <input type="hidden" name="page" value="search"/>
-                <div class="col-md-5 col-xs-12">
-                    <input type="text" name="sPattern" id="query" value="" placeholder="<?php echo osc_esc_html(__(osc_get_preference('keyword_placeholder', 'flatter_theme'), 'flatter')); ?>" />
-                </div>
-                <!-- Keyword -->
-                <div class="col-md-3 col-xs-12">
-                    <?php osc_goto_first_category(); ?>
-                    <?php if (osc_count_categories()) { ?>
-                        <select id="sCategory" name="sCategory">
-                            <option value=""><?php _e('Select a category', 'flatter'); ?></option>
-                            <?php while (osc_has_categories()) { ?>
-                                <option class="maincat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                <?php if (osc_count_subcategories()) { ?>
-                                    <?php while (osc_has_subcategories()) { ?>
-                                        <option class="subcat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                    <?php } ?>
-                                <?php } ?>
-                            <?php } ?>
-                        </select>
-                    <?php } ?>
-                </div>
-                <!-- Categories -->
-                <div class="col-md-3 col-xs-12">
-                    <?php if (osc_get_preference('location_input', 'flatter_theme') == '1') { ?> 
-                        <?php $aRegions = Region::newInstance()->listAll(); ?>
-                        <?php if (count($aRegions) > 0) { ?>
-                            <select name="sRegion" id="sRegion">
-                                <option value=""><?php _e('Select a region', 'flatter'); ?></option>
-                                <?php foreach ($aRegions as $region) { ?>
-                                    <option value="<?php echo $region['s_name']; ?>"><?php echo $region['s_name']; ?></option>
-                                <?php } ?>
-                            </select>
-                        <?php } ?>
-                    <?php } else { ?>
-                        <input name="sCity" id="sCity" placeholder="<?php _e('Type a city', 'flatter'); ?>" type="text" />
-                        <input name="sRegion" id="sRegion" type="hidden" />
-                        <script type="text/javascript">
-                            $(function () {
-                                function log(message) {
-                                    $("<div/>").text(message).prependTo("#log");
-                                    $("#log").attr("scrollTop", 0);
-                                }
-
-                                $("#sCity").autocomplete({
-                                    source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
-                                    minLength: 2,
-                                    select: function (event, ui) {
-                                        $("#sRegion").attr("value", ui.item.region);
-                                        log(ui.item ?
-                                                "<?php _e('Selected', 'flatter'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                                "<?php _e('Nothing selected, input was', 'flatter'); ?> " + this.value);
-                                    }
-                                });
-                            });
-                        </script>
-                    <?php } ?>
-                </div>
-                <!-- Locations -->
-                <div class="col-md-1 pull-right col-xs-12">
-                    <button class="btn btn-sclr"><?php _e("GO", 'flatter'); ?></button>
-                </div>
-            </form>    
+            <!-- search form --> 
         </div>
 
     </div>
@@ -229,29 +167,57 @@
                             </select>
                         </div>                       
                         <div class="box-body" style="display: block;">
-                            <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Category" aria-hidden="true">
-                                <option>Select a category</option>
-                                <option>Alabama</option>
-                                <option>Alaska</option>
-                                <option>California</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
-                            </select>
+                            <?php osc_goto_first_category(); ?>
+                            <?php if (osc_count_categories()) { ?>
+                            <select id="sCategory" class="form-control" name="sCategory">
+                                    <option value=""><?php _e('Select a category', 'flatter'); ?></option>
+                                    <?php while (osc_has_categories()) { ?>
+                                        <option class="maincat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                        <?php if (osc_count_subcategories()) { ?>
+                                            <?php while (osc_has_subcategories()) { ?>
+                                                <option class="subcat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            <?php } ?>
+
                         </div>
 
                         <div class="box-body" style="display: block;">
-                            <select class="form-control select2" style="width: 100%;" tabindex="-1" title="City" aria-hidden="true">
-                                <option>Type a city</option>
-                                <option>Alabama</option>
-                                <option>Alaska</option>
-                                <option>California</option>
-                                <option>Delaware</option>
-                                <option>Tennessee</option>
-                                <option>Texas</option>
-                                <option>Washington</option>
-                            </select>
+                            <?php if (osc_get_preference('location_input', 'flatter_theme') == '1') { ?> 
+                                <?php $aRegions = Region::newInstance()->listAll(); ?>
+                                <?php if (count($aRegions) > 0) { ?>
+                                    <select name="sRegion"  class="form-control" id="sRegion">
+                                        <option value=""><?php _e('Select a region', 'flatter'); ?></option>
+                                        <?php foreach ($aRegions as $region) { ?>
+                                            <option value="<?php echo $region['s_name']; ?>"><?php echo $region['s_name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <input name="sCity" id="sCity" class="form-control" placeholder="<?php _e('Type a city', 'flatter'); ?>" type="text" />
+                                <input name="sRegion" id="sRegion" type="hidden" />
+                                <script type="text/javascript">
+                                    $(function () {
+                                        function log(message) {
+                                            $("<div/>").text(message).prependTo("#log");
+                                            $("#log").attr("scrollTop", 0);
+                                        }
+
+                                        $("#sCity").autocomplete({
+                                            source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
+                                            minLength: 2,
+                                            select: function (event, ui) {
+                                                $("#sRegion").attr("value", ui.item.region);
+                                                log(ui.item ?
+                                                        "<?php _e('Selected', 'flatter'); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                                        "<?php _e('Nothing selected, input was', 'flatter'); ?> " + this.value);
+                                            }
+                                        });
+                                    });
+                                </script>
+                            <?php } ?>
                         </div>
                         <div class="box-body" style="display: block;">                            
                             <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
@@ -259,7 +225,7 @@
                     </div>
                     <!-- /.box -->
                     <div class="col-md-12 margin-bottom-30">
-                        <div class="col-md-3">
+                        <div class="col-md-3 padding-right-0">
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
                             <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
@@ -272,7 +238,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 margin-bottom-30">
-                        <div class="col-md-3">
+                        <div class="col-md-3 padding-right-0">
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
                             <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/star.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
@@ -482,6 +448,8 @@
     </div>
 <?php endif; ?>
 
+<div class="popup"></div>
+
 <?php
 osc_add_hook('footer', 'footer_script');
 
@@ -489,175 +457,190 @@ function footer_script() {
     ?>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-                        var pageNumber = $('#page_number').val();
-                        var is_enable_ajax = true;
-                        var loading = false;
+                                    var pageNumber = $('#page_number').val();
+                                    var is_enable_ajax = true;
+                                    var loading = false;
 
-                        $(document).ready(function () {
+                                    $(document).ready(function () {
 
-                            $('.select2').each(function () {
-                                var placeholder = $(this).attr('title');
-                                $(this).select2({
-                                    placeholder: 'placeholder'
-                                });
-                            });
+                                        $('.select2').each(function () {
+                                            var placeholder = $(this).attr('title');
+                                            $(this).select2({
+                                                placeholder: 'placeholder'
+                                            });
+                                        });
     <?php if (!osc_is_web_user_logged_in()): ?>
-                                $('.masonry_row').masonry({
-                                    columnWidth: '.item',
-                                    itemSelector: '.item',
-                                });
-                                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-                                $.ajax({
-                                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                                    //data: {page_number: pageNumber, },
-                                    success: function (data, textStatus, jqXHR) {
-                                        $('.masonry_row').html(data);
-                                    }
-                                });
-                                $('#search_form a').click(function (e) {
-                                    $('#search_form li').removeClass('active');
-                                    $(this).parent().addClass('active');
-                                    e.preventDefault();
+                                            $('.masonry_row').masonry({
+                                                columnWidth: '.item',
+                                                itemSelector: '.item',
+                                            });
+                                            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+                                            $.ajax({
+                                                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                                                //data: {page_number: pageNumber, },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.masonry_row').html(data);
+                                                }
+                                            });
+                                            $('#search_form a').click(function (e) {
+                                                $('#search_form li').removeClass('active');
+                                                $(this).parent().addClass('active');
+                                                e.preventDefault();
 
-                                    var filter_value = $(this).attr('data-val');
-                                    $('#filter_value').val(filter_value);
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                                        data: {
-                                            filter_value: filter_value
-                                        },
-                                        success: function (data, textStatus, jqXHR) {
-                                            $('.masonry_row').html(data);
-                                            is_enable_ajax = true;
-                                            $(".result_text").hide();
-                                            $('.masonry_row').masonry('reloadItems');
-                                            $('.masonry_row').masonry('layout');
-                                            $('#page_number').val(1);
-                                        }
+                                                var filter_value = $(this).attr('data-val');
+                                                $('#filter_value').val(filter_value);
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                                    data: {
+                                                        filter_value: filter_value
+                                                    },
+                                                    success: function (data, textStatus, jqXHR) {
+                                                        $('.masonry_row').html(data);
+                                                        is_enable_ajax = true;
+                                                        $(".result_text").hide();
+                                                        $('.masonry_row').masonry('reloadItems');
+                                                        $('.masonry_row').masonry('layout');
+                                                        $('#page_number').val(1);
+                                                    }
 
-                                    });
-                                });
+                                                });
+                                            });
 
-                                $(window).bind('scroll', function () {
-                                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
-                                        loading = true;
-                                        $('.loading').fadeIn(500);
-                                        $('.masonry_row').css({'opacity': '0.2'});
-                                        setTimeout(make_item_ajax_call, 1000);
-                                    }
-                                });
+                                            $(window).bind('scroll', function () {
+                                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
+                                                    loading = true;
+                                                    $('.loading').fadeIn(500);
+                                                    $('.masonry_row').css({'opacity': '0.2'});
+                                                    setTimeout(make_item_ajax_call, 1000);
+                                                }
+                                            });
     <?php else: ?>
-                                var item_page_number = $('#item_page_number').val();
-                                $.ajax({
-                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                    //data: {page_number: item_page_number},
-                                    success: function (data, textStatus, jqXHR) {
-                                        $('.user_related_posts').append(data);
-                                    }
-                                });
-                                $(document).on('click', '.like_box', function(){
-                                    var like_box = $(this);
-                                    var item_id = $(this).attr('data_item_id');
-                                    var user_id = $(this).attr('data_user_id');
-                                    var action = $(this).attr('data_action');
-                                    $.ajax({
-                                       url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
-                                       data:{
-                                           item_id:item_id,
-                                           user_id:user_id,
-                                           action:action
-                                       },
-                                       success: function (data, textStatus, jqXHR) {
-                                          like_box.replaceWith(data);
-                                        }
-                                    });
-                                });
-                                $(window).bind('scroll', function () {
-                                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
-                                        loading = true;
-                                        $('.posts_container .loading').fadeIn(500);
-                                        $('.user_related_posts').css({'opacity': '0.2'});
-                                        setTimeout(make_after_login_item_ajax_call, 1000);
-                                    }
-                                });
+                                            var item_page_number = $('#item_page_number').val();
+                                            $.ajax({
+                                                url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                //data: {page_number: item_page_number},
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.user_related_posts').append(data);
+                                                }
+                                            });
+                                            $(document).on('click', '.like_box', function () {
+                                                var like_box = $(this);
+                                                var item_id = $(this).attr('data_item_id');
+                                                var user_id = $(this).attr('data_user_id');
+                                                var action = $(this).attr('data_action');
+                                                $.ajax({
+                                                    url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
+                                                    data: {
+                                                        item_id: item_id,
+                                                        user_id: user_id,
+                                                        action: action
+                                                    },
+                                                    success: function (data, textStatus, jqXHR) {
+                                                        $('.item_like_box'+item_id).replaceWith(data);
+                                                    }
+                                                });
+                                            });
+
+                                            $(document).on('click', '.item_title_head', function () {
+                                                var item_id = $(this).attr('data_item_id');
+                                                $.ajax({
+                                                    url: '<?php echo osc_current_web_theme_url() . 'popup_ajax.php' ?>',
+                                                    data: {
+                                                        item_id: item_id,
+                                                    },
+                                                    success: function (data, textStatus, jqXHR) {
+                                                        $('.popup').empty().append(data);
+                                                        $('#item_popup_modal').modal('show');
+                                                    }
+                                                });
+                                            });
+
+                                            $(window).bind('scroll', function () {
+                                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
+                                                    loading = true;
+                                                    $('.posts_container .loading').fadeIn(500);
+                                                    $('.user_related_posts').css({'opacity': '0.2'});
+                                                    setTimeout(make_after_login_item_ajax_call, 1000);
+                                                }
+                                            });
 
     <?php endif; ?>
 
-                            $(document).on('submit', 'form.comment_form', function (event) {
-                                var comment_form = $(this);
-                                var item_id = comment_form.attr('data_item_id');
-                                var user_id = comment_form.attr('data_user_id');
-                                var comment_text = comment_form.find('.comment_text').val();
-                                $.ajax({
-                                    url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
-                                    type: 'POST',
-                                    data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
-                                    success: function (data, textStatus, jqXHR) {
-                                        comment_form.find('.comment_text').val('');
-                                        $('.comments_container_' + item_id).replaceWith(data);
+                                        $(document).on('submit', 'form.comment_form', function (event) {
+                                            var comment_form = $(this);
+                                            var item_id = comment_form.attr('data_item_id');
+                                            var user_id = comment_form.attr('data_user_id');
+                                            var comment_text = comment_form.find('.comment_text').val();
+                                            $.ajax({
+                                                url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
+                                                type: 'POST',
+                                                data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
+                                                success: function (data, textStatus, jqXHR) {
+                                                    comment_form.find('.comment_text').val('');
+                                                    $('.comments_container_' + item_id).replaceWith(data);
+                                                }
+                                            });
+                                            return false;
+                                        });
+
+                                    });
+
+                                    function make_after_login_item_ajax_call() {
+                                        var page_number = $('#item_page_number').val();
+                                        $.ajax({
+                                            url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                                            data: {
+                                                page_number: page_number,
+                                            },
+                                            success: function (data) {
+
+                                                if (data !== '0') {
+                                                    $('.posts_container .loading').fadeOut(1000);
+                                                    $('.user_related_posts').css({'opacity': '1'});
+                                                    loading = false;
+                                                    $(".user_related_posts").append(data);
+                                                    var next_page = parseInt($('#item_page_number').val()) + 1;
+                                                    $('#item_page_number').val(next_page);
+                                                } else {
+                                                    $(".result_text").text('No More Data Found').show();
+                                                    $('.posts_container .loading').fadeOut(1000);
+                                                    $('.user_related_posts').css({'opacity': '1'});
+                                                    is_enable_ajax = false;
+                                                }
+
+                                            }
+                                        });
                                     }
-                                });
-                                return false;
-                            });
 
-                        });
-
-                        function make_after_login_item_ajax_call() {
-                            var page_number = $('#item_page_number').val();
-                            $.ajax({
-                                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
-                                data: {
-                                    page_number: page_number,
-                                },
-                                success: function (data) {
-
-                                    if (data !== '0') {
-                                        $('.posts_container .loading').fadeOut(1000);
-                                        $('.user_related_posts').css({'opacity': '1'});
-                                        loading = false;
-                                        $(".user_related_posts").append(data);
-                                        var next_page = parseInt($('#item_page_number').val()) + 1;
-                                        $('#item_page_number').val(next_page);
-                                    } else {
-                                        $(".result_text").text('No More Data Found').show();
-                                        $('.posts_container .loading').fadeOut(1000);
-                                        $('.user_related_posts').css({'opacity': '1'});
-                                        is_enable_ajax = false;
+                                    function make_item_ajax_call() {
+                                        var filter_value = $('#filter_value').val();
+                                        var page_number = $('#page_number').val();
+                                        $.ajax({
+                                            url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                            data: {
+                                                page_number: page_number,
+                                                filter_value: filter_value,
+                                            },
+                                            success: function (data) {
+                                                if (data !== '0') {
+                                                    $(".masonry_row").append(data);
+                                                    $('.loading').fadeOut(1000);
+                                                    $('.masonry_row').css({'opacity': '1'});
+                                                    var next_page = parseInt($('#page_number').val()) + 1;
+                                                    $('#page_number').val(next_page);
+                                                    loading = false;
+                                                } else {
+                                                    $(".result_text").text('No More Data Found').show();
+                                                    $('.loading').fadeOut(1000);
+                                                    $('.masonry_row').css({'opacity': '1'});
+                                                    is_enable_ajax = false;
+                                                    loading = false;
+                                                }
+                                                $('.masonry_row').masonry('reloadItems');
+                                                $('.masonry_row').masonry('layout');
+                                            }
+                                        });
                                     }
-
-                                }
-                            });
-                        }
-
-                        function make_item_ajax_call() {
-                            var filter_value = $('#filter_value').val();
-                            var page_number = $('#page_number').val();
-                            $.ajax({
-                                url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                                data: {
-                                    page_number: page_number,
-                                    filter_value: filter_value,
-                                },
-                                success: function (data) {
-                                    if (data !== '0') {
-                                        $(".masonry_row").append(data);
-                                        $('.loading').fadeOut(1000);
-                                        $('.masonry_row').css({'opacity': '1'});
-                                        var next_page = parseInt($('#page_number').val()) + 1;
-                                        $('#page_number').val(next_page);
-                                        loading = false;
-                                    } else {
-                                        $(".result_text").text('No More Data Found').show();
-                                        $('.loading').fadeOut(1000);
-                                        $('.masonry_row').css({'opacity': '1'});
-                                        is_enable_ajax = false;
-                                        loading = false;
-                                    }
-                                    $('.masonry_row').masonry('reloadItems');
-                                    $('.masonry_row').masonry('layout');
-                                }
-                            });
-                        }
     </script>
     <?php
 }

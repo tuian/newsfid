@@ -1240,13 +1240,13 @@ function item_like_box($user_id, $item_id) {
     $like_text = 'Like';
     $like_class = '';
     $like_item_array = get_user_item_likes($user_id);
-    if (in_array($item_id, $like_item_array)):
+    if ($like_item_array && in_array($item_id, $like_item_array)):
         $like = 'unlike';
         $like_class = 'liked';
         $like_text = 'Unlike';
     endif;
     ?>
-    <span class="like_box <?php echo $like_class ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $like ?>">
+    <span class="like_box <?php echo $like_class ?> item_like_box<?php echo $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $like ?>">
         <?php echo get_item_likes_count($item_id) ?> &nbsp;
         <span class="item_like">
             <i class="fa fa-thumbs-o-up"></i>
@@ -1254,5 +1254,22 @@ function item_like_box($user_id, $item_id) {
         <?php echo $like_text ?>
     </span>
     <?php
+}
+
+function get_item_comments($item_id) {
+    $comments_data = new DAO();
+    $comments_data->dao->select(sprintf('%st_item_comment.*', DB_TABLE_PREFIX));
+    $comments_data->dao->from(sprintf('%st_item_comment', DB_TABLE_PREFIX));
+    $conditions = array(
+        'fk_i_item_id' => $item_id,
+        'b_active' => 1,
+        'b_enabled' => 1
+    );
+    $comments_data->dao->limit(3);
+    $comments_data->dao->where($conditions);
+    $comments_data->dao->orderBy('dt_pub_date', 'DESC');
+    $comments_result = $comments_data->dao->get();
+    $comments = $comments_result->result();
+    return $comments;
 }
 ?>
