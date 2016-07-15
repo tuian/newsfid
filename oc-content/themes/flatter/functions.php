@@ -1028,7 +1028,7 @@ function get_user_data($user_id) {
     $comm = new DBCommandClass($data);
     $db_prefix = DB_TABLE_PREFIX;
 //    $query = "SELECT user.*, user.pk_i_id as user_id, user.s_name as user_name, user2.* FROM `{$db_prefix}t_user` user INNER JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
-    $query = "SELECT user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
+    $query = "SELECT user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
     $result = $comm->query($query);
     $user = $result->result();
     return $user;

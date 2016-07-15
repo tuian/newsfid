@@ -77,7 +77,7 @@
 <?php if (osc_is_web_user_logged_in()): ?>
     <?php
     $logged_in_user_id = osc_logged_user_id();
-    $logged_user = get_user_data($logged_in_user_id)
+    $logged_user = get_user_data($logged_in_user_id);
     ?>
     <div id="sections">
         <div class="user_area">
@@ -169,7 +169,7 @@
                         <div class="box-body" style="display: block;">
                             <?php osc_goto_first_category(); ?>
                             <?php if (osc_count_categories()) { ?>
-                            <select id="sCategory" class="form-control" name="sCategory">
+                                <select id="sCategory" class="form-control" name="sCategory">
                                     <option value=""><?php _e('Select a category', 'flatter'); ?></option>
                                     <?php while (osc_has_categories()) { ?>
                                         <option class="maincat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
@@ -286,9 +286,9 @@
                     <div class="col-md-8 pull-right">
                         <div class="nav-tabs-theme pull-right">
                             <ul class="nav nav-tabs">
-                                <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="false">WORLD</a></li>
-                                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">NATIONAL</a></li>
-                                <li class="active"><a href="#tab_3" data-toggle="tab" aria-expanded="true">LOCAL</a></li>
+                                <li class="location_filter_tab"><a href="#tab_1" data-toggle="tab" aria-expanded="false">WORLD</a></li>
+                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#tab_2" data-toggle="tab" aria-expanded="false">NATIONAL</a></li>
+                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#tab_3" data-toggle="tab" aria-expanded="true">LOCAL</a></li>
                             </ul>
                             <div class="tab-content">
 
@@ -457,190 +457,212 @@ function footer_script() {
     ?>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-                                    var pageNumber = $('#page_number').val();
-                                    var is_enable_ajax = true;
-                                    var loading = false;
+                                var pageNumber = $('#page_number').val();
+                                var is_enable_ajax = true;
+                                var loading = false;
+                                var location_type = $('.nav-tabs-theme li.active').attr('data_location_type');
+                                var location_id = $('.nav-tabs-theme li.active').attr('data_location_id');
+                                $(document).ready(function () {
 
-                                    $(document).ready(function () {
-
-                                        $('.select2').each(function () {
-                                            var placeholder = $(this).attr('title');
-                                            $(this).select2({
-                                                placeholder: 'placeholder'
-                                            });
+                                    $('.select2').each(function () {
+                                        var placeholder = $(this).attr('title');
+                                        $(this).select2({
+                                            placeholder: 'placeholder'
                                         });
+                                    });
     <?php if (!osc_is_web_user_logged_in()): ?>
-                                            $('.masonry_row').masonry({
-                                                columnWidth: '.item',
-                                                itemSelector: '.item',
-                                            });
-                                            var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+                                        $('.masonry_row').masonry({
+                                            columnWidth: '.item',
+                                            itemSelector: '.item',
+                                        });
+                                        var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+                                        $.ajax({
+                                            url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                                            //data: {page_number: pageNumber, },
+                                            success: function (data, textStatus, jqXHR) {
+                                                $('.masonry_row').html(data);
+                                            }
+                                        });
+                                        $('#search_form a').click(function (e) {
+                                            $('#search_form li').removeClass('active');
+                                            $(this).parent().addClass('active');
+                                            e.preventDefault();
+
+                                            var filter_value = $(this).attr('data-val');
+                                            $('#filter_value').val(filter_value);
                                             $.ajax({
-                                                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                                                //data: {page_number: pageNumber, },
+                                                url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                                data: {
+                                                    filter_value: filter_value
+                                                },
                                                 success: function (data, textStatus, jqXHR) {
                                                     $('.masonry_row').html(data);
+                                                    is_enable_ajax = true;
+                                                    $(".result_text").hide();
+                                                    $('.masonry_row').masonry('reloadItems');
+                                                    $('.masonry_row').masonry('layout');
+                                                    $('#page_number').val(1);
                                                 }
-                                            });
-                                            $('#search_form a').click(function (e) {
-                                                $('#search_form li').removeClass('active');
-                                                $(this).parent().addClass('active');
-                                                e.preventDefault();
 
-                                                var filter_value = $(this).attr('data-val');
-                                                $('#filter_value').val(filter_value);
-                                                $.ajax({
-                                                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                                                    data: {
-                                                        filter_value: filter_value
-                                                    },
-                                                    success: function (data, textStatus, jqXHR) {
-                                                        $('.masonry_row').html(data);
-                                                        is_enable_ajax = true;
-                                                        $(".result_text").hide();
-                                                        $('.masonry_row').masonry('reloadItems');
-                                                        $('.masonry_row').masonry('layout');
-                                                        $('#page_number').val(1);
-                                                    }
-
-                                                });
                                             });
+                                        });
 
-                                            $(window).bind('scroll', function () {
-                                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
-                                                    loading = true;
-                                                    $('.loading').fadeIn(500);
-                                                    $('.masonry_row').css({'opacity': '0.2'});
-                                                    setTimeout(make_item_ajax_call, 1000);
-                                                }
-                                            });
+                                        $(window).bind('scroll', function () {
+                                            if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
+                                                loading = true;
+                                                $('.loading').fadeIn(500);
+                                                $('.masonry_row').css({'opacity': '0.2'});
+                                                setTimeout(make_item_ajax_call, 1000);
+                                            }
+                                        });
     <?php else: ?>
-                                            var item_page_number = $('#item_page_number').val();
+                                        var item_page_number = $('#item_page_number').val();
+                                        $.ajax({
+                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                            data: {
+                                                location_type: location_type,
+                                                location_id: location_id,
+                                            },
+                                            success: function (data, textStatus, jqXHR) {
+                                                $('.user_related_posts').append(data);
+                                            }
+                                        });
+                                        $('.location_filter_tab').click(function () {
+                                            $('#item_page_number').val(1);
+                                            $('.posts_container .loading').fadeIn(500);
+                                            $('.user_related_posts').css({'opacity': '0.2'});
                                             $.ajax({
                                                 url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                                //data: {page_number: item_page_number},
+                                                data: {
+                                                    location_type: location_type,
+                                                    location_id: location_id,
+                                                },
                                                 success: function (data, textStatus, jqXHR) {
-                                                    $('.user_related_posts').append(data);
+                                                    $('.user_related_posts').empty().append(data);
+                                                    $('.posts_container .loading').fadeOut(1000);
+                                                    $('.user_related_posts').css({'opacity': '1'});
                                                 }
                                             });
-                                            $(document).on('click', '.like_box', function () {
-                                                var like_box = $(this);
-                                                var item_id = $(this).attr('data_item_id');
-                                                var user_id = $(this).attr('data_user_id');
-                                                var action = $(this).attr('data_action');
-                                                $.ajax({
-                                                    url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
-                                                    data: {
-                                                        item_id: item_id,
-                                                        user_id: user_id,
-                                                        action: action
-                                                    },
-                                                    success: function (data, textStatus, jqXHR) {
-                                                        $('.item_like_box'+item_id).replaceWith(data);
-                                                    }
-                                                });
-                                            });
-
-                                            $(document).on('click', '.item_title_head', function () {
-                                                var item_id = $(this).attr('data_item_id');
-                                                $.ajax({
-                                                    url: '<?php echo osc_current_web_theme_url() . 'popup_ajax.php' ?>',
-                                                    data: {
-                                                        item_id: item_id,
-                                                    },
-                                                    success: function (data, textStatus, jqXHR) {
-                                                        $('.popup').empty().append(data);
-                                                        $('#item_popup_modal').modal('show');
-                                                    }
-                                                });
-                                            });
-
-                                            $(window).bind('scroll', function () {
-                                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
-                                                    loading = true;
-                                                    $('.posts_container .loading').fadeIn(500);
-                                                    $('.user_related_posts').css({'opacity': '0.2'});
-                                                    setTimeout(make_after_login_item_ajax_call, 1000);
+                                        });
+                                        $(document).on('click', '.like_box', function () {
+                                            var like_box = $(this);
+                                            var item_id = $(this).attr('data_item_id');
+                                            var user_id = $(this).attr('data_user_id');
+                                            var action = $(this).attr('data_action');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
+                                                data: {
+                                                    item_id: item_id,
+                                                    user_id: user_id,
+                                                    action: action
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.item_like_box' + item_id).replaceWith(data);
                                                 }
                                             });
+                                        });
+
+                                        $(document).on('click', '.item_title_head', function () {
+                                            var item_id = $(this).attr('data_item_id');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'popup_ajax.php' ?>',
+                                                data: {
+                                                    item_id: item_id,
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.popup').empty().append(data);
+                                                    $('#item_popup_modal').modal('show');
+                                                }
+                                            });
+                                        });
+
+                                        $(window).bind('scroll', function () {
+                                            if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
+                                                loading = true;
+                                                $('.posts_container .loading').fadeIn(500);
+                                                $('.user_related_posts').css({'opacity': '0.2'});
+                                                setTimeout(make_after_login_item_ajax_call, 1000);
+                                            }
+                                        });
 
     <?php endif; ?>
 
-                                        $(document).on('submit', 'form.comment_form', function (event) {
-                                            var comment_form = $(this);
-                                            var item_id = comment_form.attr('data_item_id');
-                                            var user_id = comment_form.attr('data_user_id');
-                                            var comment_text = comment_form.find('.comment_text').val();
-                                            $.ajax({
-                                                url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
-                                                type: 'POST',
-                                                data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
-                                                success: function (data, textStatus, jqXHR) {
-                                                    comment_form.find('.comment_text').val('');
-                                                    $('.comments_container_' + item_id).replaceWith(data);
-                                                }
-                                            });
-                                            return false;
+                                    $(document).on('submit', 'form.comment_form', function (event) {
+                                        var comment_form = $(this);
+                                        var item_id = comment_form.attr('data_item_id');
+                                        var user_id = comment_form.attr('data_user_id');
+                                        var comment_text = comment_form.find('.comment_text').val();
+                                        $.ajax({
+                                            url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
+                                            type: 'POST',
+                                            data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
+                                            success: function (data, textStatus, jqXHR) {
+                                                comment_form.find('.comment_text').val('');
+                                                $('.comments_container_' + item_id).replaceWith(data);
+                                            }
                                         });
-
+                                        return false;
                                     });
 
-                                    function make_after_login_item_ajax_call() {
-                                        var page_number = $('#item_page_number').val();
-                                        $.ajax({
-                                            url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
-                                            data: {
-                                                page_number: page_number,
-                                            },
-                                            success: function (data) {
+                                });
 
-                                                if (data !== '0') {
-                                                    $('.posts_container .loading').fadeOut(1000);
-                                                    $('.user_related_posts').css({'opacity': '1'});
-                                                    loading = false;
-                                                    $(".user_related_posts").append(data);
-                                                    var next_page = parseInt($('#item_page_number').val()) + 1;
-                                                    $('#item_page_number').val(next_page);
-                                                } else {
-                                                    $(".result_text").text('No More Data Found').show();
-                                                    $('.posts_container .loading').fadeOut(1000);
-                                                    $('.user_related_posts').css({'opacity': '1'});
-                                                    is_enable_ajax = false;
-                                                }
-
+                                function make_after_login_item_ajax_call() {
+                                    var page_number = $('#item_page_number').val();
+                                    $.ajax({
+                                        url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                                        data: {
+                                            page_number: page_number,
+                                            location_type: location_type,
+                                            location_id: location_id,
+                                        },
+                                        success: function (data) {
+                                            if (data !== '0') {
+                                                $('.posts_container .loading').fadeOut(1000);
+                                                $('.user_related_posts').css({'opacity': '1'});
+                                                loading = false;
+                                                $(".user_related_posts").append(data);
+                                                var next_page = parseInt($('#item_page_number').val()) + 1;
+                                                $('#item_page_number').val(next_page);
+                                            } else {
+                                                $(".result_text").text('No More Data Found').show();
+                                                $('.posts_container .loading').fadeOut(1000);
+                                                $('.user_related_posts').css({'opacity': '1'});
+                                                is_enable_ajax = false;
                                             }
-                                        });
-                                    }
 
-                                    function make_item_ajax_call() {
-                                        var filter_value = $('#filter_value').val();
-                                        var page_number = $('#page_number').val();
-                                        $.ajax({
-                                            url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                                            data: {
-                                                page_number: page_number,
-                                                filter_value: filter_value,
-                                            },
-                                            success: function (data) {
-                                                if (data !== '0') {
-                                                    $(".masonry_row").append(data);
-                                                    $('.loading').fadeOut(1000);
-                                                    $('.masonry_row').css({'opacity': '1'});
-                                                    var next_page = parseInt($('#page_number').val()) + 1;
-                                                    $('#page_number').val(next_page);
-                                                    loading = false;
-                                                } else {
-                                                    $(".result_text").text('No More Data Found').show();
-                                                    $('.loading').fadeOut(1000);
-                                                    $('.masonry_row').css({'opacity': '1'});
-                                                    is_enable_ajax = false;
-                                                    loading = false;
-                                                }
-                                                $('.masonry_row').masonry('reloadItems');
-                                                $('.masonry_row').masonry('layout');
+                                        }
+                                    });
+                                }
+
+                                function make_item_ajax_call() {
+                                    var filter_value = $('#filter_value').val();
+                                    var page_number = $('#page_number').val();
+                                    $.ajax({
+                                        url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                                        data: {
+                                            page_number: page_number,
+                                            filter_value: filter_value,
+                                        },
+                                        success: function (data) {
+                                            if (data !== '0') {
+                                                $(".masonry_row").append(data);
+                                                $('.loading').fadeOut(1000);
+                                                $('.masonry_row').css({'opacity': '1'});
+                                                var next_page = parseInt($('#page_number').val()) + 1;
+                                                $('#page_number').val(next_page);
+                                                loading = false;
+                                            } else {
+                                                $(".result_text").text('No More Data Found').show();
+                                                $('.loading').fadeOut(1000);
+                                                $('.masonry_row').css({'opacity': '1'});
+                                                is_enable_ajax = false;
+                                                loading = false;
                                             }
-                                        });
-                                    }
+                                            $('.masonry_row').masonry('reloadItems');
+                                            $('.masonry_row').masonry('layout');
+                                        }
+                                    });
+                                }
     </script>
     <?php
 }

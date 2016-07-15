@@ -38,14 +38,14 @@
                 <input type="hidden" name="action" value="login_post" />
                 <p>
                     <label for="user_login">
-                        <span><?php _e('Username'); ?></span>
-                        <input type="text" name="user" id="user_login" class="input" value="<?php if( defined('DEMO') ){ echo 'admin'; } ?>" size="20" tabindex="10" />
+                        <span><?php //_e('Username'); ?></span>
+                        <input type="text" name="user" placeholder="<?php _e('Username'); ?>" id="user_login" class="input" value="<?php if( defined('DEMO') ){ echo 'admin'; } ?>" size="20" tabindex="10" />
                     </label>
                 </p>
                 <p>
                     <label for="user_pass">
-                        <span><?php _e('Password'); ?></span>
-                        <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" autocomplete="off" />
+                        <span><?php //_e('Password'); ?></span>
+                        <input type="password" name="password" placeholder="<?php _e('Password'); ?>" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" autocomplete="off" />
                     </label>
                 </p>
                 <?php osc_run_hook('login_admin_form'); ?>

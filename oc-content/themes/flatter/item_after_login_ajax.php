@@ -3,12 +3,26 @@ require '../../../oc-load.php';
 require 'functions.php';
 
 $data = new DAO();
-$data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
-$data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
-$data->dao->orderBy('dt_pub_date', 'DESC');
+$data->dao->select('item.*, item_location.*');
+$data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER' );
+$data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+$data->dao->orderBy('item.dt_pub_date', 'DESC');
 
-$data->dao->whereIn('fk_i_category_id', get_user_categories());
-$data->dao->where('fk_i_user_id !=', osc_logged_user_id());
+$data->dao->whereIn('item.fk_i_category_id', get_user_categories());
+$data->dao->where('item.fk_i_user_id !=', osc_logged_user_id());
+
+
+if(isset($_REQUEST['location_type'])):
+    $location_type = $_REQUEST['location_type'];
+    $location_id = isset($_REQUEST['location_id']) ? $_REQUEST['location_id'] : '';
+    if($_REQUEST['location_type'] == 'world'):
+        
+    elseif($_REQUEST['location_type'] == 'country'):
+        $data->dao->where('item_location.fk_c_country_code', $location_id);
+    elseif($_REQUEST['location_type'] == 'city'):
+        $data->dao->where('item_location.fk_i_city_id', $location_id);
+    endif;
+endif;
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
@@ -20,7 +34,6 @@ if ($result) {
 } else {
     $items = array();
 }
-
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
     $conn = DBConnectionClass::newInstance();

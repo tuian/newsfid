@@ -96,12 +96,7 @@ osc_enqueue_script('jquery-validate');
                             <?php ItemForm::description_textarea('description',osc_current_user_locale(), osc_esc_html( flatter_item_description() )); ?>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="itmeTheme"><?php _e('Theme', 'bender'); ?></label>
-                        <div class="col-sm-8">
-                        <?php ItemForm::item_theme(); ?>
-                        </div>
-                    </div>
+                   
                     <?php if( osc_price_enabled_at_items() ) { ?>
                     <div class="form-group price-group">
                        
