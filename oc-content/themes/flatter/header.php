@@ -64,7 +64,6 @@
                 <section class="sidebar">
                     <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
                         <?php
-                       
                         $user_id = osc_logged_user_id();
                         $user = get_user_data($user_id);
                         if (!empty($user[0]['s_path'])):
@@ -98,38 +97,40 @@
                     <?php endif; ?>
 
                     <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                  
+                        <div class="input-group sidebar-form">
+                            <input type="text"  name="q" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
                                 <button type="submit" id="search-btn" class="btn btn-flat" data-toggle="modal" data-target="#newsfid-search"><i class="fa fa-search"></i> </button>
-                                  <div id="newsfid-search" class="modal fade" role="dialog">
+                                <div id="newsfid-search" class="modal fade" role="dialog">
                                     <div class="modal-dialog search-popup">
 
-                                      <!-- Modal content-->
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                         <h1><b style="font-size: 70px; font-weight: 700;">RECHERCHE SUR NEWSFID</b></h1>
-                                         <h5> Your Search did not return any results. Please try again. </h5>
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
+                                                <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
+                                                <input type="text" class="search-modal-textbox" name="q" placeholder="Start typing...">
+                                                <h1><b style="font-size: 70px; font-weight: 700;">RECHERCHE SUR NEWSFID</b></h1>
+                                                <h5> Your Search did not return any results. Please try again. </h5>
+                                            </div>
+                                            <div class="modal-body col-md-offset-1">
+
+
+
+                                                <div class="col-md-3 search-list">Users</div>
+                                                <div class="col-md-3 search-list">Articles</div>
+                                                <div class="col-md-3 search-list">Type of Account</div>
+                                            </div>
+
                                         </div>
-                                        <div class="modal-body col-md-offset-1">
-                                          
-                                            
-                                            
-                                            <div class="col-md-3">Users</div>
-                                            <div class="col-md-3">Articles</div>
-                                            <div class="col-md-3">Type of Account</div>
-                                        </div>
-                                        
-                                      </div>
 
                                     </div>
-                                  </div>  
-                               
+                                </div>  
+
                             </span>
                         </div>
-                    </form>
+                   
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
@@ -153,9 +154,15 @@
                                 Fil d'actualité
                             </a>
                         </li>
+                        <li class="add-item">
+                            <a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">
+                                <i class="fa fa-list-ul"></i>
+                                Add Item
+                            </a>
+                        </li>
                         <?php if (osc_is_web_user_logged_in()): ?>
                             <li class="treeview">
-                                <a href="<?php echo osc_base_url() ?>">
+                                <a href="#">
                                     <i class="fa fa-copy"></i>
                                     Ma chaîne
                                 </a>
@@ -164,7 +171,7 @@
 
                         <?php if (osc_is_web_user_logged_in()): ?>
                             <li class="treeview">
-                                <a href="<?php echo osc_base_url() ?>">
+                                <a href="#">
                                     <i class="fa fa-th"></i>
                                     People
                                 </a>
@@ -173,7 +180,7 @@
 
                         <?php if (osc_is_web_user_logged_in()): ?>
                             <li class="treeview">
-                                <a href="<?php echo osc_user_public_profile_url() ?>">
+                                <a href="#">
                                     <i class="fa fa-th"></i>Compte
                                 </a>
                             </li>   
@@ -304,7 +311,7 @@
 
                     </script>
                     <script>
-                        $(document).ready(function(){
-                            $('#newsfid-search').appendTo("body"); 
+                        $(document).ready(function () {
+                            $('#newsfid-search').appendTo("body");
                         })
-                        </script>
+                    </script>

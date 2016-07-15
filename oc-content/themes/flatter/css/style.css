@@ -2112,15 +2112,24 @@ select {
 }
 .search-popup .modal-content{
     height: 600px;
-    background-color: #ccc;
+    background-color: #f3f3f2;
 }
 .search-popup .modal-header{
     border-bottom: none;
     margin-left: 40px;
-    padding-top: 56px;
+    padding-top: 40px;
 }
-.search-popup  .col-md-3{
-    border-bottom: 1px solid #cccccc;
+.search-list{
+    border-bottom: 1px solid #fff;
     margin: 0px 10px;
     padding: 10px 0px;
+    font-weight: 600;
+}
+.modal-header .search-modal-textbox{
+    border: 1px solid #f3f3f2;
+    background-color: #f3f3f2;
+    width: auto;
+    box-shadow: none;
+    margin-left: -5px;
+    margin-top: -10px;
 }
