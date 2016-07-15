@@ -2156,3 +2156,27 @@ select {
 .location_filter_container .location_filter_tab a:focus{
     background-color: transparent;
 }
+.search-text{
+    background-color: #f9f9f9;
+    
+}
+.people-search input[type=text]{
+    box-shadow: none;
+    border-bottom: none;
+    font-weight: 600;
+}
+.search-button button{
+    background-color: #337ab7;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    margin-top:8px;
+}
+.pull-right-search{
+    margin-right: 115px;
+}
+.people-result-text{
+    color: #333;
+    font-weight: 700;
+    margin-left: 15px;
+}
