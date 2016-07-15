@@ -202,7 +202,7 @@
                                 </a>
                             </li>
                             <li class="treeview">
-                                <a href="#">
+                                <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32'?>">
                                     <i class="fa fa-laptop"></i>m'abonner
                                 </a>
                             </li>
