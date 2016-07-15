@@ -97,40 +97,40 @@
                     <?php endif; ?>
 
                     <!-- search form -->
-                  
-                        <div class="input-group sidebar-form">
-                            <input type="text"  name="q" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button type="submit" id="search-btn" class="btn btn-flat" data-toggle="modal" data-target="#newsfid-search"><i class="fa fa-search"></i> </button>
-                                <div id="newsfid-search" class="modal fade" role="dialog">
-                                    <div class="modal-dialog search-popup">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
-                                                <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
-                                                <input type="text" class="search-modal-textbox" name="q" placeholder="Start typing...">
-                                                <h1><b style="font-size: 70px; font-weight: 700;">RECHERCHE SUR NEWSFID</b></h1>
-                                                <h5> Your Search did not return any results. Please try again. </h5>
-                                            </div>
-                                            <div class="modal-body col-md-offset-1">
+                    <div class="input-group sidebar-form">
+                        <input type="text"  name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" id="search-btn" class="btn btn-flat" data-toggle="modal" data-target="#newsfid-search"><i class="fa fa-search"></i> </button>
+                            <div id="newsfid-search" class="modal fade" role="dialog">
+                                <div class="modal-dialog search-popup">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
+                                            <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
+                                            <input type="text" class="search-modal-textbox" name="q" placeholder="Start typing...">
+                                            <h1><b style="font-size: 70px; font-weight: 700;">RECHERCHE SUR NEWSFID</b></h1>
+                                            <h5> Your Search did not return any results. Please try again. </h5>
+                                        </div>
+                                        <div class="modal-body col-md-offset-1">
 
 
 
-                                                <div class="col-md-3 search-list">Users</div>
-                                                <div class="col-md-3 search-list">Articles</div>
-                                                <div class="col-md-3 search-list">Type of Account</div>
-                                            </div>
-
+                                            <div class="col-md-3 search-list">Users</div>
+                                            <div class="col-md-3 search-list">Articles</div>
+                                            <div class="col-md-3 search-list">Type of Account</div>
                                         </div>
 
                                     </div>
-                                </div>  
 
-                            </span>
-                        </div>
-                   
+                                </div>
+                            </div>  
+
+                        </span>
+                    </div>
+
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
@@ -154,12 +154,14 @@
                                 Fil d'actualité
                             </a>
                         </li>
-                        <li class="add-item">
-                            <a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">
-                                <i class="fa fa-list-ul"></i>
-                                Add Item
-                            </a>
-                        </li>
+                        <?php if (osc_is_web_user_logged_in()): ?>
+                            <li class="add-item treeview">
+                                <a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">
+                                    <i class="fa fa-list-ul"></i>
+                                    Add Item
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <?php if (osc_is_web_user_logged_in()): ?>
                             <li class="treeview">
                                 <a href="#">

@@ -273,7 +273,19 @@
                                 <?php echo 'Flux' ?>
                             </li>
                             <li>
-                                <?php echo 'India' ?>
+                                <img src=<?php echo osc_current_web_theme_url() . "images/flags/us.png" ?> width="50px" height="20px">
+                            </li>
+                            <li>
+                                <?php $counrty_array = get_country_array(); ?>
+                                <select id="country-list">
+                                    <?php
+                                    foreach ($counrty_array as $countryList):
+                                        ?>
+                                        <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                        <?php
+                                    endforeach;
+                                    ?>
+                                </select>
                             </li>
                             <li>                                
                                 <!--<img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">-->
@@ -284,15 +296,12 @@
                     <div class="clearfix"></div>
 
                     <div class="col-md-8 pull-right">
-                        <div class="nav-tabs-theme pull-right">
-                            <ul class="nav nav-tabs">
-                                <li class="location_filter_tab"><a href="#tab_1" data-toggle="tab" aria-expanded="false">WORLD</a></li>
-                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#tab_2" data-toggle="tab" aria-expanded="false">NATIONAL</a></li>
-                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#tab_3" data-toggle="tab" aria-expanded="true">LOCAL</a></li>
-                            </ul>
-                            <div class="tab-content">
-
-                            </div>
+                        <div class="location_filter_container pull-right">
+                            <ul class="nav">
+                                <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                            </ul>                            
                             <!-- /.tab-content -->
                         </div>
                     </div>
@@ -528,21 +537,28 @@ function footer_script() {
                                             }
                                         });
                                         $('.location_filter_tab').click(function () {
-                                            $('#item_page_number').val(1);
-                                            $('.posts_container .loading').fadeIn(500);
-                                            $('.user_related_posts').css({'opacity': '0.2'});
-                                            $.ajax({
-                                                url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                                data: {
-                                                    location_type: location_type,
-                                                    location_id: location_id,
-                                                },
-                                                success: function (data, textStatus, jqXHR) {
-                                                    $('.user_related_posts').empty().append(data);
-                                                    $('.posts_container .loading').fadeOut(1000);
-                                                    $('.user_related_posts').css({'opacity': '1'});
-                                                }
-                                            });
+                                            if (!$(this).hasClass('active')) {
+                                                $('.location_filter_tab').removeClass('active');
+                                                $(this).addClass('active');
+                                                var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                                                var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                                                $('.posts_container .loading').fadeIn(500);
+                                                $('.user_related_posts').css({'opacity': '0.2'});
+                                                reset_variable_after_login();
+                                                // make_after_login_item_ajax_call();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                    data: {
+                                                        location_type: location_type,
+                                                        location_id: location_id,
+                                                    },
+                                                    success: function (data, textStatus, jqXHR) {
+                                                        $('.user_related_posts').empty().append(data);
+                                                        $('.posts_container .loading').fadeOut(1000);
+                                                        $('.user_related_posts').css({'opacity': '1'});
+                                                    }
+                                                });
+                                            }
                                         });
                                         $(document).on('click', '.like_box', function () {
                                             var like_box = $(this);
@@ -662,6 +678,14 @@ function footer_script() {
                                             $('.masonry_row').masonry('layout');
                                         }
                                     });
+                                }
+
+                                function reset_variable_after_login() {
+                                    is_enable_ajax = true;
+                                    loading = false;
+                                    location_type = $('.nav-tabs-theme li.active').attr('data_location_type');
+                                    location_id = $('.nav-tabs-theme li.active').attr('data_location_id');
+                                    $('#item_page_number').val(1);
                                 }
     </script>
     <?php

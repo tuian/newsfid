@@ -1272,4 +1272,13 @@ function get_item_comments($item_id) {
     $comments = $comments_result->result();
     return $comments;
 }
+
+function get_country_array() {
+    $item_like_data = new DAO();
+    $item_like_data->dao->select(sprintf('%st_country.*', DB_TABLE_PREFIX));
+    $item_like_data->dao->from(sprintf('%st_country', DB_TABLE_PREFIX));
+    $item_like_result = $item_like_data->dao->get();
+    $item_like_array = $item_like_result->result();
+    return $item_like_array;
+}
 ?>
