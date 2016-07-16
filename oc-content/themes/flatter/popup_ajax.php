@@ -23,7 +23,7 @@ while (osc_has_custom_items()):
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="popup">
-                                        <span class="follow-user" ><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                                            <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
                                         <div class="user-block">
                                             <?php
                                             $user = get_user_data(osc_item_user_id());

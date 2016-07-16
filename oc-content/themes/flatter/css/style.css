@@ -1628,15 +1628,17 @@ select {
     background-color: #fff;
     border-bottom: 0 none;
 }
-.custom_filter_navigation .navbar-nav > li > a{
-    color: #00ACED;
+.custom_filter_navigation .navbar-nav > li > a {
+    color: #00aced;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 .custom_filter_navigation .navbar-nav > li {
     margin-right: 0;
     border-right: 1px solid #eee;    
     font-weight: bold;
     font-size: 18px;
-    width: 190px;
+    //width: 190px;
 }
 .custom_filter_navigation .navbar-nav > li.active {
     border-bottom: 2px solid #00ACED;
@@ -2108,7 +2110,7 @@ select {
 
 .search-popup{
     width: 90%;
-    
+
 }
 .search-popup .modal-content{
     height: 600px;
@@ -2150,7 +2152,7 @@ select {
     margin: 0;
 }
 .location_filter_container .location_filter_tab a{
-    padding: 10px 40px;
+    padding: 10px 30px;
 }
 .location_filter_container .location_filter_tab a:hover,
 .location_filter_container .location_filter_tab a:focus{
@@ -2158,7 +2160,7 @@ select {
 }
 .search-text{
     background-color: #f9f9f9;
-    
+
 }
 .people-search input[type=text]{
     box-shadow: none;
@@ -2179,4 +2181,78 @@ select {
     color: #333;
     font-weight: 700;
     margin-left: 15px;
+}
+.main_wrapper .main-sidebar {
+    position: relative;
+    width: auto;
+    max-width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.main_wrapper .content-wrapper {
+    margin-left: 0;
+}
+.user_area > .row{
+    margin: 0;
+}
+.list .item_image{
+    width: 100%;
+}
+.follow-user{
+    cursor: pointer;
+    //color: #02a213;
+    color: #00a65a;
+}
+.follow-user.following{
+    //color: #f10000;
+    color: #dd4b39;
+}
+.share_box{
+    cursor: pointer;
+}
+.share_box.unshare{
+    color: #F54322;
+}
+.load_more{
+    display: none;
+}
+.load_more_comment {
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+}
+.comment_count{
+    display: none;
+}
+.box-body .img{
+    width: 100%;
+}
+.bold{
+    font-weight: 700;
+}
+.large-modal{
+    margin-top:30px;
+}
+.greybg{
+    background-color: #ccc;
+    height: 300px;
+
+}
+.sub{
+    padding-left: 60px;
+    padding-top: 30px;
+    color:#fff;
+}
+.user-photo{
+    margin-top: 50px;
+    margin-left: 65px;
+    float: left;
+}
+.big-font{
+    font-size: 50px;
+    padding: 0px;
+}
+.user-info{
+    padding-top: 100px;
+    padding-left: 0px;
 }

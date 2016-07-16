@@ -4,25 +4,30 @@ require 'functions.php';
 
 $data = new DAO();
 $data->dao->select('item.*, item_location.*');
-$data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER' );
+$data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
+//$data->dao->whereIn('item.fk_i_category_id', get_user_categories());
+//$data->dao->where('item.fk_i_user_id !=', osc_logged_user_id());
 
-$data->dao->whereIn('item.fk_i_category_id', get_user_categories());
-$data->dao->where('item.fk_i_user_id !=', osc_logged_user_id());
 
-
-if(isset($_REQUEST['location_type'])):
+if (isset($_REQUEST['location_type'])):
     $location_type = $_REQUEST['location_type'];
     $location_id = isset($_REQUEST['location_id']) ? $_REQUEST['location_id'] : '';
-    if($_REQUEST['location_type'] == 'world'):
-        
-    elseif($_REQUEST['location_type'] == 'country'):
+    if ($_REQUEST['location_type'] == 'world'):
+
+    elseif ($_REQUEST['location_type'] == 'country'):
         $data->dao->where('item_location.fk_c_country_code', $location_id);
-    elseif($_REQUEST['location_type'] == 'city'):
+    elseif ($_REQUEST['location_type'] == 'city'):
         $data->dao->where('item_location.fk_i_city_id', $location_id);
     endif;
 endif;
+//$data->dao->whereIn('item.fk_i_category_id', get_user_categories());
+$following_user = get_user_following_data(osc_logged_user_id());
+if($following_user):
+    $data->dao->where(sprintf('item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s)', implode(',', get_user_categories()), implode(',', $following_user) ));
+endif;
+$data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
@@ -80,7 +85,7 @@ if ($items):
                 <!-- /.box-header -->
                 <div class="box-body">
                     <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
-                    
+
                     <?php
                     item_resources(osc_item_id());
                     ?>
@@ -88,11 +93,10 @@ if ($items):
                     <p><?php echo osc_highlight(osc_item_description(), 200); ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
-                    
+
                     &nbsp;&nbsp;
-                    <?php echo '' ?> &nbsp;
-                    <a href="#"><i class="fa fa-retweet"></i></a>&nbsp;
-                    <?php echo 'Share' ?>
+
+                    <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
 
                     &nbsp;&nbsp;
                     <?php echo '' ?> &nbsp;
@@ -103,7 +107,8 @@ if ($items):
                     <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
                 </div>
                 <!-- /.box-body -->
-                <div class="comments_container_<?php echo osc_item_id(); ?>">
+
+                <div class="comments_container_<?php echo osc_item_id(); ?>">                    
                     <?php
                     $c_data;
                     $comments_data = new DAO();
@@ -112,7 +117,7 @@ if ($items):
                     $conditions = array('fk_i_item_id' => osc_item_id(),
                         'b_active' => 1,
                         'b_enabled' => 1);
-                    $comments_data->dao->limit(3);
+                    //$comments_data->dao->limit(3);
                     $comments_data->dao->where($conditions);
                     $comments_data->dao->orderBy('dt_pub_date', 'DESC');
                     $comments_result = $comments_data->dao->get();
@@ -120,6 +125,12 @@ if ($items):
                     ?>
                     <?php
                     if ($c_data):
+                        ?>
+                        <div class="box-body">
+                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                            <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                        </div>
+                        <?php
                         foreach ($c_data as $k => $comment_data):
                             ?>
                             <?php
@@ -130,21 +141,37 @@ if ($items):
                                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                             endif;
                             ?>
-                            <div class="box-footer box-comments">
-                                <div class="box-comment">
-                                    <!-- User image -->
-                                    <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user[0]['user_name'] ?>">
+                            <?php
+                            if ($k > 2 && !$load_more):
+                                $load_more = 'load more';
+                                ?>                                
+                                <div class="load_more">
+                                    <?php
+                                endif;
+                                ?>
+                                <div class="box-footer box-comments">
+                                    <div class="box-comment">
+                                        <!-- User image -->
+                                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user[0]['user_name'] ?>">
 
-                                    <div class="comment-text">
-                                        <span class="username">
-                                            <?php echo $comment_user[0]['user_name'] ?>
-                                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
-                                        </span><!-- /.username -->
-                                        <?php echo $comment_data['s_body']; ?>
-                                    </div>
-                                    <!-- /.comment-text -->
-                                </div>                       
-                            </div>                  
+                                        <div class="comment-text">
+                                            <span class="username">
+                                                <?php echo $comment_user[0]['user_name'] ?>
+                                                <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                                            </span><!-- /.username -->
+                                            <?php echo $comment_data['s_body']; ?>
+                                        </div>
+                                        <!-- /.comment-text -->
+                                    </div>                       
+                                </div>  
+                                <?php
+                                if ($k == (count($c_data) - 1)):
+                                    unset($load_more);
+                                    ?>
+                                </div>                                
+                                <?php
+                            endif;
+                            ?>                            
                             <?php
                         endforeach;
                     endif;

@@ -24,7 +24,7 @@ if ($result) {
     $items = array();
 }
 
-if ($items):   
+if ($items):
     $item_result = Item::newInstance()->extendData($items);
     $db_prefix = DB_TABLE_PREFIX;
     foreach ($item_result as $k => $item):
@@ -35,7 +35,7 @@ if ($items):
             $date_in_french = time_elapsed_string(strtotime($date));
 
             $user_id = osc_item_user_id();
-            $item_id = osc_item_id();            
+            $item_id = osc_item_id();
             $user = get_user_data($user_id);
             if (!empty($user[0]['s_path'])):
                 $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
@@ -84,7 +84,7 @@ if ($items):
                             <div class="item_counts">
                                 <div class="col-md-2 padding-0">
                                     <span class="item_view_count">
-                                        <i class="fa fa-retweet"></i> <?php echo osc_item_views(); ?>
+                                        <i class="fa fa-retweet"></i> <?php echo get_item_shares_count(osc_item_id()) ?>
                                     </span>
                                     <?php if (!empty($count_result)): ?>
                                         <span class="item_favourite_count">
@@ -92,11 +92,18 @@ if ($items):
                                         </span>
                                     <?php endif; ?>
                                 </div>
-                                <div class="col-md-3 padding-0">                                                                           
-                                    <span class="item_view_count">
-                                        <i class="fa fa-heart fa-lg"></i> <?php echo '24'; ?>
-                                    </span>
-                                </div>
+
+                                <?php if (function_exists("watchlist")) { ?>
+                                    <div class="col-md-3 col-sm-3 col-xs-3 padding-0">
+                                        <div class="wishlist pull-right">
+                                            <?php if (osc_is_web_user_logged_in()) { ?>
+                                                <?php watchlist2(); ?>
+                                            <?php } else { ?>
+                                                <a title="<?php _e("Add to watchlist", 'watchlist'); ?>" rel="nofollow" href="<?php echo osc_user_login_url(); ?>"><i class="fa fa-heart fa-lg"></i></a>&nbsp;<?php echo get_item_watchlist_count(osc_item_id()) ?>
+                                            <?php } ?>                                                    
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="row">
@@ -107,17 +114,7 @@ if ($items):
                                     </span>
                                 <?php } ?>
                             </div>
-                            <?php if (function_exists("watchlist")) { ?>
-                                <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <div class="wishlist pull-right">
-                                        <?php if (osc_is_web_user_logged_in()) { ?>
-                                            <?php watchlist2(); ?>
-                                        <?php } else { ?>
-                                            <a title="<?php _e("Add to watchlist", 'watchlist'); ?>" rel="nofollow" href="<?php echo osc_user_login_url(); ?>"><i class="fa fa-heart-o fa-lg"></i></a>
-                                            <?php } ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
+
                         </div>
                     </div>
                 </div>

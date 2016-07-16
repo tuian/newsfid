@@ -1187,12 +1187,7 @@ function get_item_likes_count($item_id) {
     $item_like_data->dao->where('like_value', '1');
     $item_like_result = $item_like_data->dao->get();
     $item_like_array = $item_like_result->result();
-    if ($item_like_array):
-        $like_count = count($item_like_array);
-    else:
-        $like_count = 0;
-    endif;
-    return $like_count;
+    return count($item_like_array);
 }
 
 function get_user_item_likes($user_id) {
@@ -1280,5 +1275,164 @@ function get_country_array() {
     $item_like_result = $item_like_data->dao->get();
     $item_like_array = $item_like_result->result();
     return $item_like_array;
+}
+
+function get_user_following_data($user_id) {
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('user_id', $user_id);
+    $user_like_data->dao->where('follow_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $item_result = array_column($user_like_array, 'follow_user_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function get_user_follower_data($user_id) {
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('follow_user_id', $user_id);
+    $user_like_data->dao->where('follow_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $item_result = array_column($user_like_array, 'follow_user_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function user_follow_box($logged_in_user_id, $follow_user_id) {
+
+    $following = 'following';
+    $action = 'unfollow';
+    $fa_class = 'fa fa-user-times';
+    $follow_text = 'Unfollow';
+    $user_following = get_user_following_data($logged_in_user_id);
+
+    if (!($user_following && ( in_array($follow_user_id, $user_following)) )):
+        $following = 'unfollowing';
+        $action = 'follow';
+        $fa_class = 'fa fa-user-plus';
+        $follow_text = 'Follow';
+    endif;
+    ?>
+    <span title="<?php echo $follow_text ?>" class="follow-user follow_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>">
+        <i class="<?php echo $fa_class ?>"></i>     
+    </span>
+    <?php
+}
+
+function update_user_following($logged_in_user_id, $follow_user_id, $follow_value) {
+
+    $follow_array['user_id'] = $logged_in_user_id;
+    $follow_array['follow_user_id'] = $follow_user_id;
+    $follow_array['follow_value'] = $follow_value;
+
+    $user_follow_data = new DAO();
+    $user_follow_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
+    $user_follow_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
+    $user_follow_data->dao->where('user_id', $logged_in_user_id);
+    $user_follow_data->dao->where('follow_user_id', $follow_user_id);
+    $user_follow_data->dao->limit(1);
+    $user_follow_result = $user_follow_data->dao->get();
+    $user_follow_array = $user_follow_result->result();
+
+    if ($user_follow_array):
+        $user_follow_data->dao->update(sprintf('%st_user_follow', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
+    else:
+        $user_follow_data->dao->insert(sprintf('%st_user_follow', DB_TABLE_PREFIX), $follow_array);
+    endif;
+}
+
+function get_user_shared_item($user_id) {
+    $user_share_data = new DAO();
+    $user_share_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
+    $user_share_data->dao->from(sprintf('%st_user_share_item', DB_TABLE_PREFIX));
+    $user_share_data->dao->where('user_id', $user_id);
+    $user_share_data->dao->where('share_value', '1');
+    $user_share_result = $user_share_data->dao->get();
+    $user_share_array = $user_share_result->result();
+    if ($user_share_array):
+        $item_result = array_column($user_share_array, 'item_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function get_item_shares_count($item_id) {
+    $item_share_data = new DAO();
+    $item_share_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
+    $item_share_data->dao->from(sprintf('%st_user_share_item', DB_TABLE_PREFIX));
+    $item_share_data->dao->where('item_id', $item_id);
+    $item_share_data->dao->where('share_value', '1');
+    $item_share_result = $item_share_data->dao->get();
+    $item_share_array = $item_share_result->result();
+    return count($item_share_array);
+}
+
+function user_share_box($user_id, $item_id) {
+
+    $share_class = 'unshare';
+    $action = 'unshare';
+    $fa_class = 'fa fa-user-times';
+    $share_text = 'Unshare';
+    $user_share = get_user_shared_item($user_id);
+
+    if (!($user_share && ( in_array($item_id, $user_share)) )):
+        $share_class = 'share';
+        $action = 'share';
+        $fa_class = 'fa fa-user-plus';
+        $share_text = 'Share';
+    endif;
+    ?>
+    <span class="share_box <?php echo $share_class ?> item_share_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
+        <?php echo get_item_shares_count($item_id) ?> &nbsp;
+        <span class="item_share">
+            <i class="fa fa-retweet"></i>
+        </span>&nbsp;
+        <?php echo $share_text ?>
+    </span>
+    <?php
+}
+
+function update_user_share_item($user_id, $item_id, $share_value) {
+
+    $follow_array['user_id'] = $user_id;
+    $follow_array['item_id'] = $item_id;
+    $follow_array['share_value'] = $share_value;
+
+    $user_follow_data = new DAO();
+    $user_follow_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
+    $user_follow_data->dao->from(sprintf('%st_user_share_item', DB_TABLE_PREFIX));
+    $user_follow_data->dao->where('user_id', $user_id);
+    $user_follow_data->dao->where('item_id', $item_id);
+    $user_follow_data->dao->limit(1);
+    $user_follow_result = $user_follow_data->dao->get();
+    $user_follow_array = $user_follow_result->result();
+
+    if ($user_follow_array):
+        $user_follow_data->dao->update(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
+    else:
+        $user_follow_data->dao->insert(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array);
+    endif;
+}
+
+function get_item_watchlist_count($item_id) {
+    $item_watchlist_data = new DAO();
+    $item_watchlist_data->dao->select(sprintf('%st_item_watchlist.*', DB_TABLE_PREFIX));
+    $item_watchlist_data->dao->from(sprintf('%st_item_watchlist', DB_TABLE_PREFIX));
+    $item_watchlist_data->dao->where('fk_i_item_id', $item_id);
+    $user_follow_result = $item_watchlist_data->dao->get();
+    $user_follow_array = $user_follow_result->result();
+    return count($user_follow_array);
 }
 ?>
