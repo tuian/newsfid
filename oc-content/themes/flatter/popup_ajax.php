@@ -110,9 +110,8 @@ while (osc_has_custom_items()):
                                             <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
                                             &nbsp;&nbsp;
-                                            <?php echo '' ?> &nbsp;
-                                            <a href="#"><i class="fa fa-retweet"></i></a>&nbsp;
-                                            <?php echo 'Share' ?>
+                                            
+                                            <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
 
                                             &nbsp;&nbsp;
                                             <?php echo '' ?> &nbsp;

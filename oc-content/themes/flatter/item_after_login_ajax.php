@@ -22,10 +22,11 @@ if (isset($_REQUEST['location_type'])):
         $data->dao->where('item_location.fk_i_city_id', $location_id);
     endif;
 endif;
-//$data->dao->whereIn('item.fk_i_category_id', get_user_categories());
 $following_user = get_user_following_data(osc_logged_user_id());
-if($following_user):
-    $data->dao->where(sprintf('item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s)', implode(',', get_user_categories()), implode(',', $following_user) ));
+if ($following_user):
+    $data->dao->where(sprintf('item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s)', implode(',', get_user_categories()), implode(',', $following_user)));
+else:
+    $data->dao->whereIn('item.fk_i_category_id', get_user_categories());
 endif;
 $data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
 
@@ -126,10 +127,12 @@ if ($items):
                     <?php
                     if ($c_data):
                         ?>
-                        <div class="box-body">
-                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
-                            <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
-                        </div>
+                        <?php if (count($c_data) > 3): ?>
+                            <div class="box-body">
+                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                            </div>
+                        <?php endif; ?>
                         <?php
                         foreach ($c_data as $k => $comment_data):
                             ?>
@@ -142,7 +145,7 @@ if ($items):
                             endif;
                             ?>
                             <?php
-                            if ($k > 2 && !$load_more):
+                            if ($k > 2 && !$load_more && count($c_data) > 3):
                                 $load_more = 'load more';
                                 ?>                                
                                 <div class="load_more">
@@ -165,7 +168,7 @@ if ($items):
                                     </div>                       
                                 </div>  
                                 <?php
-                                if ($k == (count($c_data) - 1)):
+                                if ($k > 2 && $k == (count($c_data) - 1)):
                                     unset($load_more);
                                     ?>
                                 </div>                                

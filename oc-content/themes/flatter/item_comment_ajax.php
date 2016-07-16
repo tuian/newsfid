@@ -38,10 +38,12 @@ $c_data = $comments_result->result();
     <?php
     if ($c_data):
         ?>
-        <div class="box-body">
-            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
-            <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
-        </div>
+        <?php if (count($c_data) > 3): ?>
+            <div class="box-body">
+                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+            </div>
+        <?php endif; ?>
         <?php
         foreach ($c_data as $k => $comment_data):
             ?>
@@ -52,7 +54,7 @@ $c_data = $comments_result->result();
             else:
                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
             endif;
-            if ($k > 2 && !$load_more):
+            if ($k > 2 && !$load_more && count($c_data) > 3):
                 $load_more = 'load more';
                 ?>                
                 <div class="load_more">
@@ -76,13 +78,13 @@ $c_data = $comments_result->result();
                     </div>                       
                 </div>
                 <?php
-                if ($k == (count($c_data) - 1)):
+                if ($k > 2 && $k == (count($c_data) - 1)):
                     unset($load_more);
                     ?>
                 </div>                                
                 <?php
             endif;
-            ?>          
+            ?>       
             <?php
         endforeach;
     endif;
