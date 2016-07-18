@@ -1454,4 +1454,5 @@ function is_user_online($user_id) {
         }
     }
 }
+osc_add_route('custom-route', 'flatter/admin/conf', 'flatter/admin/conf', osc_plugin_folder(__FILE__) . 'admin/conf.php');
 ?>

@@ -2256,3 +2256,58 @@ select {
     padding-top: 100px;
     padding-left: 0px;
 }
+.user_serach_row{
+    width: 80%;
+    margin: 0 auto;
+}
+.widget-user-header {
+    box-shadow: 0px 0px 1000px 1000px rgba(0,0,0,0.5) inset;
+}
+.widget-user-header a {
+    color: #fff;
+}
+.en-savoir-plus{
+    padding-top: 106px;
+    padding-left: 24px;
+    margin-left: 71px;
+}
+.en-savoir-plus-button{
+    padding: 9px 70px;
+    background-color: #f36512;
+    color: white;
+    border: none;
+}
+.user-data{
+    padding-bottom: 60px;
+    padding-top: 15px;
+}
+.breack-line{
+    background-color: rgb(0, 0, 0);
+    padding-top: 25px;
+}
+.orange{
+    color: #f36512;
+}
+.round-border{
+    border-radius: 10px;
+    margin-top: -10px;
+    border-top: 11px solid #ffffff;
+}
+.category-dropdown{
+    width: 220px;
+    border-bottom: 2px solid #777;
+    position: relative;
+}
+.category-dropdown .form-control{
+    border: 0;
+}
+.input-box{
+    border-bottom: 1px solid #f8f9f9;  
+}
+.input-box::before {
+    content: "sdsd";
+    height: 10px;
+    width: 2px;
+    position: absolute;
+    background-color: #292927;
+}
