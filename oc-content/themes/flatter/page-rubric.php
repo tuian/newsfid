@@ -16,7 +16,14 @@ if ($_REQUEST['submit']):
             $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
         endforeach;
         osc_reset_static_pages();
-        header('Location: ' . osc_user_login_url());
+
+        $user = User::newInstance()->findByPrimaryKey($user_id);
+        Session::newInstance()->_set('userId', $user['pk_i_id']);
+        Session::newInstance()->_set('userName', $user['s_name']);
+        Session::newInstance()->_set('userEmail', $user['s_email']);
+        $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+        Session::newInstance()->_set('userPhone', $phone);
+        header('Location: ' . osc_base_url());
         die;
     else:
         osc_add_flash_error_message(_m('You must select at least four rubrics'));

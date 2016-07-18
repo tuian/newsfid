@@ -1435,4 +1435,23 @@ function get_item_watchlist_count($item_id) {
     $user_follow_array = $user_follow_result->result();
     return count($user_follow_array);
 }
+
+function is_user_online($user_id) {
+    $itemUserId = $user_id;
+    $conn = getConnection();
+    $userOnline = $conn->osc_dbFetchResult("SELECT * FROM %st_useronline WHERE userid = '%s'", DB_TABLE_PREFIX, $itemUserId);
+    if ($userOnline != '') {
+        if (osc_get_preference('useronline_set_text_image', 'useronline') == 'image') {
+            echo '<img src="' . osc_base_url() . 'oc-content/plugins/useronline/images/online.png" />';
+        } else {
+            echo '<span style="color:#00CC00 !important; font-weight:bold">' . osc_get_preference('useronline_text', 'useronline') . '&nbsp;</span>';
+        }
+    } else {
+        if (osc_get_preference('useronline_set_text_image', 'useronline') == 'image') {
+            echo '<img src="' . osc_base_url() . 'oc-content/plugins/useronline/images/offline.png" />';
+        } else {
+            echo '<span style="color:#F00 !important; font-weight:bold">' . osc_get_preference('useroffline_text', 'useronline') . '&nbsp;</span>';
+        }
+    }
+}
 ?>

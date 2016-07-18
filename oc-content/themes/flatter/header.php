@@ -83,7 +83,10 @@
                                 </div>
                                 <div class="pull-left info">
                                     <a href="<?php echo osc_user_profile_url() ?>">
-                                        <p><i class="fa fa-circle text-success"></i> Online</p>
+                                        <p>
+                                            <!--<i class="fa fa-circle text-success"></i> -->
+                                            <?php is_user_online(osc_logged_user_id()); ?> 
+                                        </p>
                                     </a>
                                 </div>
                                 <div class="clearfix"></div>

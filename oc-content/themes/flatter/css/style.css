@@ -2201,11 +2201,11 @@ select {
 .follow-user{
     cursor: pointer;
     //color: #02a213;
-    color: #00a65a;
+    color: #00a65a !important;
 }
 .follow-user.following{
     //color: #f10000;
-    color: #dd4b39;
+    color: #dd4b39 !important;
 }
 .share_box{
     cursor: pointer;
