@@ -53,7 +53,7 @@ osc_current_web_theme_path('header.php');
                                     <div class="col-md-12">
                                         <h2>Create a free account</h2>
                                         <span>
-                                            Newsfid is asocial network.<br/>
+                                            Newsfid is a social network.<br/>
                                             You can share stories and keep in touch with followers
                                         </span>
                                     </div>

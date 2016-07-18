@@ -176,56 +176,12 @@
                             <?php endif; ?>
 
                             <?php if (osc_is_web_user_logged_in()): ?>
-                                <li class="treeview" class="free_account" data-toggle="modal" data-target="#popup-free-user-post">
+                                <li class="treeview free_account" data-toggle="modal" data-target="#popup-free-user-post">
 
                                     <a href="#">
                                         <i class="fa fa-th"></i>
                                         People
                                     </a>
-                                    <!-- Modal -->
-                                    <div id="popup-free-user-post" class="modal fade" role="dialog">
-                                        <div class="col-md-offset-1 col-md-10">
-                                            <div class="large-modal">
-
-
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-
-                                                    <div class="modal-body greybg">
-
-                                                        <div class="sub">
-                                                            <div class="col-md-12">
-                                                                <h1 class="bold big-font col-md-12">Publier librement sur Newsfid</h1>
-                                                                <p class="col-md-7" style="margin-left: -10px;">
-                                                                    A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                                                </p>
-                                                            </div>
-                                                        </div><div class="clear"></div>
-                                                        <div class="user-photo col-md-2">
-                                                            <?php
-                                                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                                                            ?>
-                                                            <img src="<?php echo $img_path; ?>" alt="user"" width="100px" height="100px">
-                                                        </div> 
-                                                        <div class="user-info col-md-6"><h5>Gwinel Madlisse</h5>
-                                                            <h5>Vous avez deja <span style="color:orangered">365</span> publication</h5>
-                                                        </div>
-
-                                                        <div class="col-md-2">
-                                                            <button>En savoir plus</button>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </li>
                             <?php endif; ?>
 
@@ -331,6 +287,7 @@
                     <!-- /.sidebar -->
                 </aside>
             </div>
+            <div class="free-user-post"></div>
             <?php (osc_is_web_user_logged_in()) ? $class = "col-md-8 col-sm-8" : $class = "col-md-10 col-sm-10" ?>
             <div class="<?php echo $class ?> padding-0">
                 <div class="content-wrapper">
@@ -367,6 +324,20 @@
                         <script>
                             $(document).ready(function () {
                                 $('#newsfid-search').appendTo("body");
-                                $('#popup-free-user-post').appendTo('body');
                             })
+                        </script>
+                        <script>
+                            $(document).ready(function () {
+                                $(document).on('click', '.free_account', function () {
+                                    $.ajax({
+                                        url: '<?php echo osc_current_web_theme_url() . 'popup_free_account_post.php' ?>',
+                                        success: function (data) {
+                                            console.log(data);
+                                            $('.free-user-post').append(data);
+//                                            $('#popup-free-user-post').appendTo("body");
+                                           $('#popup-free-user-post').modal('show');
+                                        }
+                                    });
+                                });
+                            });
                         </script>
