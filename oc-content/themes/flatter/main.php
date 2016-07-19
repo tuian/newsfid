@@ -82,253 +82,246 @@
     <div id="sections">
         <div class="user_area">
             <div class="row">
-                <div class="col-md-4 bg-white">
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="col-md-4">
+                    <div class=" bg-white col-md-12 padding-0">
+                        <!--                    <div class="box box-widget widget-user">
+                        
+                                                <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
+                                                    <h3 class="widget-user-username">
+                        <?php echo $logged_user[0]['user_name'] ?>
+                                                    </h3>
+                                                    <h5 class="widget-user-desc">
+                                                        Web Designer
+                                                    </h5>
+                                                </div>
+                                                <div class="widget-user-image">
+                        <?php
+                        if (!empty($logged_user[0]['s_path'])):
+                            $img_path = osc_base_url() . '/' . $logged_user[0]['s_path'] . $logged_user[0]['pk_i_id'] . '.' . $logged_user[0]['s_extension'];
+                        else:
+                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                        endif;
+                        ?>
+                        
+                                                    <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
+                                                </div>
+                                                <div class="box-footer">
+                                                    <div class="row">
+                                                        <div class="col-sm-4 border-right">
+                                                            <div class="description-block">
+                                                                <h5 class="description-header">
+                        <?php
+                        $user_following = get_user_following_data(osc_logged_user_id());
+                        if ($user_following):
+                            echo count($user_following);
+                        else:
+                            echo 0;
+                        endif;
+                        ?>
+                                                                </h5>
+                                                                <span class="description-text">
+                                                                    ABONNEMENTS
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 border-right">
+                                                            <div class="description-block">
+                                                                <h5 class="description-header">
+                        <?php
+                        $user_followers = get_user_follower_data(osc_logged_user_id());
+                        if ($user_followers):
+                            echo count($user_followers);
+                        else:
+                            echo 0;
+                        endif;
+                        ?>
+                                                                </h5>
+                                                                <span class="description-text">
+                                                                    FOLLOWERS
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="description-block">
+                                                                <h5 class="description-header">
+                        <?php
+                        $user_likes = get_user_item_likes(osc_logged_user_id());
+                        if ($user_likes):
+                            echo count($user_likes);
+                        else:
+                            echo 0;
+                        endif;
+                        ?>
+                                                                </h5>
+                                                                <span class="description-text">LIKES</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>-->
 
-                        <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
-                            <h3 class="widget-user-username">
-                                <?php echo $logged_user[0]['user_name'] ?>
-                            </h3>
-                            <h5 class="widget-user-desc">
-                                Web Designer
-                            </h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <?php
-                            if (!empty($logged_user[0]['s_path'])):
-                                $img_path = osc_base_url() . '/' . $logged_user[0]['s_path'] . $logged_user[0]['pk_i_id'] . '.' . $logged_user[0]['s_extension'];
-                            else:
-                                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                            endif;
-                            ?>
 
-                            <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">
-                                            <?php
-                                            $user_following = get_user_following_data(osc_logged_user_id());
-                                            if ($user_following):
-                                                echo count($user_following);
-                                            else:
-                                                echo 0;
-                                            endif;
-                                            ?>
-                                        </h5>
-                                        <span class="description-text">
-                                            ABONNEMENTS
-                                        </span>
-                                    </div>
-                                    <!-- /.description-block -->
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <input type='text' placeholder="What are you looking for?">
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
                                 </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">
-                                            <?php
-                                            $user_followers = get_user_follower_data(osc_logged_user_id());
-                                            if ($user_followers):
-                                                echo count($user_followers);
-                                            else:
-                                                echo 0;
-                                            endif;
-                                            ?>
-                                        </h5>
-                                        <span class="description-text">
-                                            FOLLOWERS
-                                        </span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header">
-                                            <?php
-                                            $user_likes = get_user_item_likes(osc_logged_user_id());
-                                            if ($user_likes):
-                                                echo count($user_likes);
-                                            else:
-                                                echo 0;
-                                            endif;
-                                            ?>
-                                        </h5>
-                                        <span class="description-text">LIKES</span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
+                                <!-- /.box-tools -->
                             </div>
-                            <!-- /.row -->
-                        </div>
-                    </div>
-
-
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <input type='text' placeholder="What are you looking for?">
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <!-- /.box-tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body" style="display: block;">                             
-                            <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                <option>Podcast</option>                                
-                                <option>Podcast1</option>                                
-                                <option>Podcast2</option>                                
-                                <option>Podcast3</option>                                
-                                <option>Podcast4</option>                                
-                                <option>Podcast5</option>                                
-                            </select>
-                        </div>                       
-                        <div class="box-body" style="display: block;">
-                            <?php osc_goto_first_category(); ?>
-                            <?php if (osc_count_categories()) { ?>
-                                <select id="sCategory" class="form-control" name="sCategory">
-                                    <option value=""><?php _e('Select a category', 'flatter'); ?></option>
-                                    <?php while (osc_has_categories()) { ?>
-                                        <option class="maincat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                        <?php if (osc_count_subcategories()) { ?>
-                                            <?php while (osc_has_subcategories()) { ?>
-                                                <option class="subcat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    <?php } ?>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="display: block;">                             
+                                <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                    <option>Podcast</option>                                
+                                    <option>Podcast1</option>                                
+                                    <option>Podcast2</option>                                
+                                    <option>Podcast3</option>                                
+                                    <option>Podcast4</option>                                
+                                    <option>Podcast5</option>                                
                                 </select>
-                            <?php } ?>
-
-                        </div>
-
-                        <div class="box-body" style="display: block;">
-                            <?php if (osc_get_preference('location_input', 'flatter_theme') == '1') { ?> 
-                                <?php $aRegions = Region::newInstance()->listAll(); ?>
-                                <?php if (count($aRegions) > 0) { ?>
-                                    <select name="sRegion"  class="form-control" id="sRegion">
-                                        <option value=""><?php _e('Select a region', 'flatter'); ?></option>
-                                        <?php foreach ($aRegions as $region) { ?>
-                                            <option value="<?php echo $region['s_name']; ?>"><?php echo $region['s_name']; ?></option>
+                            </div>                       
+                            <div class="box-body" style="display: block;">
+                                <?php osc_goto_first_category(); ?>
+                                <?php if (osc_count_categories()) { ?>
+                                    <select id="sCategory" class="form-control" name="sCategory">
+                                        <option value=""><?php _e('Select a category', 'flatter'); ?></option>
+                                        <?php while (osc_has_categories()) { ?>
+                                            <option class="maincat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                            <?php if (osc_count_subcategories()) { ?>
+                                                <?php while (osc_has_subcategories()) { ?>
+                                                    <option class="subcat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                                <?php } ?>
+                                            <?php } ?>
                                         <?php } ?>
                                     </select>
                                 <?php } ?>
-                            <?php } else { ?>
-                                <input name="sCity" id="sCity" class="form-control" placeholder="<?php _e('Type a city', 'flatter'); ?>" type="text" />
-                                <input name="sRegion" id="sRegion" type="hidden" />
-                                <script type="text/javascript">
-                                    $(function () {
-                                        function log(message) {
-                                            $("<div/>").text(message).prependTo("#log");
-                                            $("#log").attr("scrollTop", 0);
-                                        }
 
-                                        $("#sCity").autocomplete({
-                                            source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
-                                            minLength: 2,
-                                            select: function (event, ui) {
-                                                $("#sRegion").attr("value", ui.item.region);
-                                                log(ui.item ?
-                                                        "<?php _e('Selected', 'flatter'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                                        "<?php _e('Nothing selected, input was', 'flatter'); ?> " + this.value);
+                            </div>
+
+                            <div class="box-body" style="display: block;">
+                                <?php if (osc_get_preference('location_input', 'flatter_theme') == '1') { ?> 
+                                    <?php $aRegions = Region::newInstance()->listAll(); ?>
+                                    <?php if (count($aRegions) > 0) { ?>
+                                        <select name="sRegion"  class="form-control" id="sRegion">
+                                            <option value=""><?php _e('Select a region', 'flatter'); ?></option>
+                                            <?php foreach ($aRegions as $region) { ?>
+                                                <option value="<?php echo $region['s_name']; ?>"><?php echo $region['s_name']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <input name="sCity" id="sCity" class="form-control" placeholder="<?php _e('Type a city', 'flatter'); ?>" type="text" />
+                                    <input name="sRegion" id="sRegion" type="hidden" />
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            function log(message) {
+                                                $("<div/>").text(message).prependTo("#log");
+                                                $("#log").attr("scrollTop", 0);
                                             }
+
+                                            $("#sCity").autocomplete({
+                                                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
+                                                minLength: 2,
+                                                select: function (event, ui) {
+                                                    $("#sRegion").attr("value", ui.item.region);
+                                                    log(ui.item ?
+                                                            "<?php _e('Selected', 'flatter'); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                                            "<?php _e('Nothing selected, input was', 'flatter'); ?> " + this.value);
+                                                }
+                                            });
                                         });
-                                    });
-                                </script>
-                            <?php } ?>
+                                    </script>
+                                <?php } ?>
+                            </div>
+                            <div class="box-body" style="display: block;">                            
+                                <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                            </div>
                         </div>
-                        <div class="box-body" style="display: block;">                            
-                            <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                        <!-- /.box -->
+                        <div class="col-md-12 margin-bottom-30">
+                            <div class="col-md-3 padding-right-0">
+                                <!-- /.direct-chat-info -->
+                                <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
+                                <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
+                            </div>
+                            <div class="col-md-9 padding-right-0">
+                                <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
+                                <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
+
+                                <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
+                            </div>
                         </div>
+                        <div class="col-md-12 margin-bottom-30">
+                            <div class="col-md-3 padding-right-0">
+                                <!-- /.direct-chat-info -->
+                                <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
+                                <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/star.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
+                            </div>
+                            <div class="col-md-9 padding-right-0">
+                                <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
+                                <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
+
+                                <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 margin-bottom-30">
+                            <div class="col-md-3">                            
+                                <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">                            
+                            </div>
+                            <div class="col-md-9 padding-right-0">
+                                <h4 class="direct-chat-name margin-0">Gemma Morris</h4>                                
+                                <span class=""><i class="fa fa-users"></i> 25,2k</span>   
+                                <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
+                            </div>
+                        </div>
+
+
                     </div>
-                    <!-- /.box -->
-                    <div class="col-md-12 margin-bottom-30">
-                        <div class="col-md-3 padding-right-0">
-                            <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
-                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
-                        </div>
-                        <div class="col-md-9 padding-right-0">
-                            <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
-                            <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
-
-                            <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
-                        </div>
-                    </div>
-                    <div class="col-md-12 margin-bottom-30">
-                        <div class="col-md-3 padding-right-0">
-                            <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
-                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/star.png' ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>" width="16px" height="16px">
-                        </div>
-                        <div class="col-md-9 padding-right-0">
-                            <h4 class="direct-chat-name  margin-0">Gemma Morris</h4>                                
-                            <span class=""><i class="fa fa-users"></i> 25,2k</span>                                                            
-
-                            <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 margin-bottom-30">
-                        <div class="col-md-3">                            
-                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['s_username'] ?>">                            
-                        </div>
-                        <div class="col-md-9 padding-right-0">
-                            <h4 class="direct-chat-name margin-0">Gemma Morris</h4>                                
-                            <span class=""><i class="fa fa-users"></i> 25,2k</span>   
-                            <button type="submit" class="btn btn-box-tool frnd-sug-button pull-right" data-toggle="tooltip" title="Subscribe">M'abonner</button>                                                           
-                        </div>
-                    </div>
-
-
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-8 padding-left-0">
 
-                    <div class="col-md-4 pull-right">
-                        <div class="country_flag_box vertical_center pull-right">
-                            <li>
-                                <?php echo 'Flux' ?>
-                            </li>
-                            <li>
-                                <img src=<?php echo osc_current_web_theme_url() . "images/flags/us.png" ?> width="50px" height="20px">
-                            </li>
-                            <li>
-                                <?php $counrty_array = get_country_array(); ?>
-                                <select id="country-list">
-                                    <?php
-                                    foreach ($counrty_array as $countryList):
-                                        ?>
-                                        <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                </select>
-                            </li>
-                            <li>                                
-                                <!--<img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">-->
-                                <i class="fa fa-ellipsis-v fa-2x"></i>
-                            </li>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <div class="col-md-8 pull-right">
-                        <div class="location_filter_container pull-right">
-                            <ul class="nav">
-                                <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
-                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
-                            </ul>                            
-                            <!-- /.tab-content -->
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
+                    <!--                    <div class="col-md-4 pull-right">
+                                            <div class="country_flag_box vertical_center pull-right">
+                                                <li>
+                    <?php echo 'Flux' ?>
+                                                </li>
+                                                <li>
+                                                    <img src=<?php echo osc_current_web_theme_url() . "images/flags/us.png" ?> width="50px" height="20px">
+                                                </li>
+                                                <li>
+                    <?php $counrty_array = get_country_array(); ?>
+                                                    <select id="country-list">
+                    <?php
+                    foreach ($counrty_array as $countryList):
+                        ?>
+                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                        <?php
+                    endforeach;
+                    ?>
+                                                    </select>
+                                                </li>
+                                                <li>                                
+                                                    <img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">
+                                                    <i class="fa fa-ellipsis-v fa-2x"></i>
+                                                </li>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                    
+                                        <div class="col-md-8 pull-right">
+                                            <div class="location_filter_container pull-right">
+                                                <ul class="nav">
+                                                    <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                                    <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                                                </ul>                            
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>-->
                     <div class="posts_container">
                         <input type="hidden" name="item_page_number" id="item_page_number" value="1">
                         <div class="user_related_posts">
@@ -336,12 +329,22 @@
                         </div>
                         <h2 class="result_text"></h2>                
                         <div class="loading text-center">
-                            <i class="fa fa-spin fa-refresh fa-3x"></i>
+                            <div class="cs-loader">
+                                <div class="cs-loader-inner">
+                                    <label>	●</label>
+                                    <label>	●</label>
+                                    <label>	●</label>
+                                    <label>	●</label>
+                                    <label>	●</label>
+                                    <label>	●</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 <?php else: ?>
     <div class="section custom_filter_navigation">
@@ -431,7 +434,16 @@
             <div class="row">                
                 <h2 class="result_text"></h2>                
                 <div class="loading text-center">
-                    <i class="fa fa-spin fa-refresh fa-3x"></i>
+                    <div class="cs-loader">
+                        <div class="cs-loader-inner">
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -684,6 +696,8 @@ function footer_script() {
                                                 success: function (data, textStatus, jqXHR) {
                                                     comment_form.find('.comment_text').val('');
                                                     $('.comments_container_' + item_id).replaceWith(data);
+                                                    var current_comment_number = $('.comment_count_' + item_id).first().html();
+                                                    $('.comment_count_' + item_id).html(parseInt(current_comment_number) + 1);
                                                 }
                                             });
                                             return false;

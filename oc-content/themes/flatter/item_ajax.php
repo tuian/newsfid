@@ -119,7 +119,6 @@ if ($items):
                     </div>
                 </div>
             </div>
-            </div>
             <?php
         endwhile;
     endforeach;

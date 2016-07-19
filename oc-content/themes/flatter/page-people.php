@@ -63,18 +63,20 @@ function custom_script() {
             var search_name = $('.search_name').val();
             var location_type = $('.location_filter_tab.active').attr('data_location_type');
             var location_id = $('.location_filter_tab.active').attr('data_location_id');
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() ?>" + 'user_search_ajax.php',
-                data: {
-                    search_name: search_name,
-                    location_type: location_type,
-                    location_id: location_id
-                },
-                success: function (data, textStatus, jqXHR) {
-                    $('.user_serach_row').empty().append(data);
-                }
+            if (search_name != '') {
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() ?>" + 'user_search_ajax.php',
+                    data: {
+                        search_name: search_name,
+                        location_type: location_type,
+                        location_id: location_id
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        $('.user_serach_row').empty().append(data);
+                    }
 
-            });
+                });
+            }
         }
 
 

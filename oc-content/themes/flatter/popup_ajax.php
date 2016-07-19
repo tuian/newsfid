@@ -23,7 +23,7 @@ while (osc_has_custom_items()):
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="popup">
-                                            <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
+                                        <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
                                         <div class="user-block">
                                             <?php
                                             $user = get_user_data(osc_item_user_id());
@@ -80,7 +80,7 @@ while (osc_has_custom_items()):
                                             <ul class="social-share">
                                                 <li class="facebook">
                                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                                return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                                         <i class="fa fa-facebook"></i>
                                                     </a>
                                                 </li>
@@ -90,7 +90,7 @@ while (osc_has_custom_items()):
                                                 </li>
                                                 <li class="googleplus">
                                                     <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                                return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                                         <i class="fa fa-google-plus"></i>
                                                     </a>
                                                 </li>                                               
@@ -110,16 +110,15 @@ while (osc_has_custom_items()):
                                             <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
                                             &nbsp;&nbsp;
-                                            
+
                                             <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
 
-                                            &nbsp;&nbsp;
-                                            <?php echo '' ?> &nbsp;
-                                            <a href="#"><i class="fa fa-comments"></i></a>&nbsp;
-                                            <?php echo 'Comment' ?>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
+                                                <?php echo 'Comments' ?>
 
-                                            &nbsp;&nbsp;
-                                            <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
+                                                &nbsp;&nbsp;
+                                                <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
                                         </div>
                                     </div>
 

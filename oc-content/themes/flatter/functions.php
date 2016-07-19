@@ -1117,12 +1117,12 @@ function item_resources($item_id) {
     endswitch;
 }
 
-function get_user_categories() {
+function get_user_categories($user_id) {
     $category_array = array();
     $user_themes_data = new DAO();
     $user_themes_data->dao->select(sprintf('%st_user_themes.*', DB_TABLE_PREFIX));
     $user_themes_data->dao->from(sprintf('%st_user_themes', DB_TABLE_PREFIX));
-    $user_themes_data->dao->where(array('user_id' => osc_logged_user_id()));
+    $user_themes_data->dao->where(array('user_id' => $user_id));
     $user_themes_result = $user_themes_data->dao->get();
     $user_themes = $user_themes_result->result();
     foreach ($user_themes as $theme):
@@ -1131,7 +1131,7 @@ function get_user_categories() {
     $user_rubrics_data = new DAO();
     $user_rubrics_data->dao->select(sprintf('%st_user_rubrics.*', DB_TABLE_PREFIX));
     $user_rubrics_data->dao->from(sprintf('%st_user_rubrics', DB_TABLE_PREFIX));
-    $user_rubrics_data->dao->where(array('user_id' => osc_logged_user_id()));
+    $user_rubrics_data->dao->where(array('user_id' => $user_id));
     $user_rubrics_result = $user_rubrics_data->dao->get();
     $user_rubrics = $user_rubrics_result->result();
     foreach ($user_rubrics as $rubric):
@@ -1454,5 +1454,19 @@ function is_user_online($user_id) {
         }
     }
 }
-osc_add_route('custom-route', 'flatter/admin/conf', 'flatter/admin/conf', osc_plugin_folder(__FILE__) . 'admin/conf.php');
+
+function get_comment_count($item_id) {
+    $comments_data = new DAO();
+    $comments_data->dao->select(sprintf('%st_item_comment.*', DB_TABLE_PREFIX));
+    $comments_data->dao->from(sprintf('%st_item_comment', DB_TABLE_PREFIX));
+    $conditions = array('fk_i_item_id' => osc_item_id(),
+        'b_active' => 1,
+        'b_enabled' => 1,
+        'fk_i_item_id' => $item_id);
+    
+    $comments_data->dao->where($conditions);
+    $comments_result = $comments_data->dao->get();
+    return count($comments_result->result());
+}
+
 ?>

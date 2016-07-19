@@ -2,14 +2,16 @@
 require '../../../oc-load.php';
 require 'functions.php';
 
+if ($_REQUEST['user_id']):
+    $user_id = $_REQUEST['user_id'];
+else:
+    $user_id = osc_logged_user_id();
+endif;
 $data = new DAO();
 $data->dao->select('item.*, item_location.*');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
-//$data->dao->whereIn('item.fk_i_category_id', get_user_categories());
-//$data->dao->where('item.fk_i_user_id !=', osc_logged_user_id());
-
 
 if (isset($_REQUEST['location_type'])):
     $location_type = $_REQUEST['location_type'];
@@ -22,13 +24,16 @@ if (isset($_REQUEST['location_type'])):
         $data->dao->where('item_location.fk_i_city_id', $location_id);
     endif;
 endif;
-$following_user = get_user_following_data(osc_logged_user_id());
-if ($following_user):
-    $data->dao->where(sprintf('item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s)', implode(',', get_user_categories(osc_logged_user_id())), implode(',', $following_user)));
-else:
-    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
+//$following_user = get_user_following_data($user_id);
+//if ($following_user):
+//    $data->dao->where(sprintf('item.fk_i_user_id IN (%s)', implode(',', $following_user)));
+//else:
+//    $data->dao->whereIn('item.fk_i_category_id', get_user_categories($user_id));
+//endif;
+
+if ($_REQUEST['user_id']):
+    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
 endif;
-$data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
@@ -60,11 +65,6 @@ if ($items):
             else:
                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
             endif;
-//            if (!empty($user)):
-//                $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
-//            else:
-//                $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
-//            endif;
             ?>
             <div class="box box-widget">
                 <div class="box-header with-border">
@@ -91,7 +91,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200); ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);     ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -101,10 +101,10 @@ if ($items):
 
                     &nbsp;&nbsp;&nbsp;
                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                    <?php echo 'Comments' ?>
+                        <?php echo 'Comments' ?>
 
-                    &nbsp;&nbsp;
-                    <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
+                        &nbsp;&nbsp;
+                        <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
                 </div>
                 <!-- /.box-body -->
 
@@ -209,4 +209,3 @@ if ($items):
 else:
     echo '0';
 endif;
-
