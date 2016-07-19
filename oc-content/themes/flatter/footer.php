@@ -11,10 +11,11 @@
                     <h4><?php _e('Information', 'flatter'); ?></h4>
                     <div class="fb-content links">
                         <ul>
-                            <?php osc_reset_static_pages();
+                            <?php
+                            osc_reset_static_pages();
                             while (osc_has_static_pages()) {
                                 ?>
-    <!--                            <li><a href="<?php echo osc_static_page_url(); ?>"><?php echo osc_static_page_title(); ?></a></li>-->
+        <!--                            <li><a href="<?php echo osc_static_page_url(); ?>"><?php echo osc_static_page_title(); ?></a></li>-->
 <?php } ?>
                             <li><a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact us', 'flatter'); ?></a></li>
                         </ul>
@@ -60,17 +61,22 @@
     <?php osc_goto_first_locale(); ?>
                             <select class="form-control" id="langselection">
                                 <option value="<?php echo osc_change_language_url(osc_current_user_locale()); ?>"><?php $lcode = osc_get_current_user_locale();
-                            echo $lcode['s_short_name']; ?></option>
+                                echo $lcode['s_short_name'];
+    ?></option>
                                 <?php $i = 0; ?>
                                 <?php while (osc_has_web_enabled_locales()) {
-                                    if (osc_locale_code() != osc_current_user_locale()) { ?>
+                                    if (osc_locale_code() != osc_current_user_locale()) {
+                                        ?>
                                         <option value="<?php echo osc_change_language_url(osc_locale_code()); ?>"><?php echo osc_locale_name(); ?></option>
-            <?php if ($i == 0) {
-                echo "";
-            } ?>
+                                        <?php
+                                        if ($i == 0) {
+                                            echo "";
+                                        }
+                                        ?>
             <?php $i++; ?>
         <?php }
-    } ?>
+    }
+    ?>
                             </select>
                             <script type="text/javascript">
                                 $(document).ready(function () {
@@ -107,7 +113,42 @@
 </div> <!-- / content -->
 
 <?php if (osc_is_web_user_logged_in()): ?>
-    <div class="col-md-2 col-sm-2 padding-0">
+    <div class="col-md-2 col-sm-2 padding-left-0">
+        <div class="chat-notification">
+            <div class="col-md-2 padding-left-0">
+                <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
+            </div>
+            <div class="col-md-2 padding-left-0">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-2 padding-left-0">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-2 padding-left-0">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+            </div>    
+        </div>
+        <div class="chat-dropdown">
+            <select class="orange">
+                <option>Conversations du cercle</option>
+            </select>
+        </div>
+        <div class="col-md-12 margin-top-20">
+            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
+            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+        </div>
+        <div class="col-md-12 margin-top-20">
+            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user1-128x128.jpg' ?>" width="50px">
+            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+        </div>
+        <div class="col-md-12 margin-top-20">
+            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user4-128x128.jpg' ?>" width="50px">
+            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+        </div>
+        <div class="col-md-12 margin-top-20">
+            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
+            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+        </div>
         <div class="right-sidebar">
     <?php
     osc_run_hook('mdh_messenger_widget');
@@ -138,10 +179,17 @@
 <?php if (osc_get_preference('anim', 'flatter_theme') != '0') { ?>
     <script src="<?php echo osc_current_web_theme_url('js/wow.min.js'); ?>"></script>
     <script type="text/javascript">
-    new WOW().init();
+        new WOW().init();
     </script>
 <?php } ?>
 <?php osc_run_hook('footer'); ?>
+<?php if (osc_is_home_page() && !osc_is_web_user_logged_in()): ?>
+    <style type="text/css">
+        #footer {
+            display: block;
+        }
+    </style>
+<?php endif; ?>
 <script src="<?php echo osc_current_web_theme_url('js/jPushMenu.js'); ?>"></script>
 <script src="<?php echo osc_current_web_theme_url('js/main.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/owl.carousel.min.js'); ?>"></script>
