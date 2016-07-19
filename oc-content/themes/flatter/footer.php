@@ -110,10 +110,10 @@
 
 </div>
 <!-- / Footer -->
-</div> <!-- / content -->
+<!-- / content -->
 
 <?php if (osc_is_web_user_logged_in()): ?>
-    <div class="col-md-2 col-sm-2 padding-left-0">
+    <div class="col-md-2 col-sm-2 padding-left-0 t-chat">
         <div class="chat-notification">
             <div class="col-md-2 padding-left-0">
                 <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
@@ -134,20 +134,43 @@
             </select>
         </div>
         <div class="col-md-12 margin-top-20">
+            <div class="col-md-5 padding-left-0">
             <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
-            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+            
+            </div>
+            <div class="col-md-7 padding-left-0">
+                <span class="bold chat-user">Maccini News</span>
+            </div>
         </div>
-        <div class="col-md-12 margin-top-20">
+         <div class="col-md-12 margin-top-20">
+            <div class="col-md-5 padding-left-0">
             <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user1-128x128.jpg' ?>" width="50px">
-            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+            
+            </div>
+            <div class="col-md-7 padding-left-0">
+                <span class="bold chat-user">Maccini News</span>
+                <p class="chat-text"> oung Muslim....</p>
+            </div>
         </div>
         <div class="col-md-12 margin-top-20">
+            <div class="col-md-5 padding-left-0">
             <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user4-128x128.jpg' ?>" width="50px">
-            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+            
+            </div>
+            <div class="col-md-7 padding-left-0">
+                <span class="bold chat-user">Maccini News</span>
+                <p class="chat-text"> oung Muslim....</p>
+            </div>
         </div>
-        <div class="col-md-12 margin-top-20">
+         <div class="col-md-12 margin-top-20">
+            <div class="col-md-5 padding-left-0">
             <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
-            <img class="green-dot" src="<?php echo osc_current_web_theme_url() . '/images/green-dot.png' ?>" width="12px">
+            
+            </div>
+            <div class="col-md-7 padding-left-0">
+                <span class="bold chat-user">Maccini News</span>
+                <p class="chat-text"> oung Muslim....</p>
+            </div>
         </div>
         <div class="right-sidebar">
     <?php
@@ -155,7 +178,6 @@
     mdh_messenger_widget();
     ?>
         </div>
-    </div>
 <?php endif; ?>
 </div> <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>

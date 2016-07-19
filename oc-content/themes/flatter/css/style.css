@@ -2064,8 +2064,8 @@ select {
     float: none;
 }
 .popup{
-    min-height: 16.43px;
-    padding: 15px;
+   // min-height: 16.43px;
+   // padding: 15px;
 }
 .modal-image{
     border-radius:10px 10px 0px 0px;
@@ -2586,4 +2586,23 @@ select {
     background-color: #f4f6f7;
     top: 88%;
     position: absolute;
+}
+.chat-user{
+    color:#fff;
+    margin-left: -10px;
+}
+.chat-text{
+    margin-left: -10px;
+}
+
+.masonry_row .item {
+    min-height: 440px;
+}
+.t-chat{
+    position: fixed;
+    top: 0px;
+    
+    bottom: 0px;
+    width: 195px;
+    overflow-y: auto;
 }
