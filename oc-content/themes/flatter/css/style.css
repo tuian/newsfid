@@ -2452,12 +2452,16 @@ select {
     padding: 10px;
     padding-bottom: 30px; 
 }
-.green-dot{
+.green-dot{ 
     border: 2px solid #fff;
     border-radius: 50%;
-    margin-bottom: -39px;
-    margin-left: -16px;
+    margin-bottom: 0px;
+    margin-left: 37px;
+    width: 12px;
+    height: 12px;
+    margin-top: -12px;
     background-color: #34c300;
+    position: absolute;
 }
 .user_area{
     padding-top: 15px;

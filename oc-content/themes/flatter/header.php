@@ -38,7 +38,7 @@
         <link href="<?php echo osc_current_web_theme_url('plugins/iCheck/flat/blue.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/bootstrap-switch.min.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css" />
-
+        <link href="<?php echo osc_current_web_theme_url('css/style2.css'); ?>" rel="stylesheet" type="text/css" />
 
 
         <!-- Header Hook -->
@@ -101,40 +101,12 @@
                         <?php endif; ?>
 
                         <!-- search form -->
-
-                        <div class="input-group sidebar-form">
+                        <div class="input-group sidebar-form search-newsfid" >
                             <input type="text"  name="q" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
                                 <button type="submit" id="search-btn" class="btn btn-flat" data-toggle="modal" data-target="#newsfid-search"><i class="fa fa-search"></i> </button>
-                                <div id="newsfid-search" class="modal fade" role="dialog">
-                                    <div class="modal-dialog search-popup">
-
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
-                                                <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
-                                                <input type="text" class="search-modal-textbox" name="q" placeholder="Start typing...">
-                                                <h1><b style="font-size: 70px; font-weight: 700;">RECHERCHE SUR NEWSFID</b></h1>
-                                                <h5> Your Search did not return any results. Please try again. </h5>
-                                            </div>
-                                            <div class="modal-body col-md-offset-1">
-
-
-
-                                                <div class="col-md-3 search-list">Users</div>
-                                                <div class="col-md-3 search-list">Articles</div>
-                                                <div class="col-md-3 search-list">Type of Account</div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>  
-
                             </span>
                         </div>
-
                         <!-- /.search form -->
                         <!-- sidebar menu: : style can be found in sidebar.less -->
                         <ul class="sidebar-menu">
@@ -288,6 +260,7 @@
                 </aside>
             </div>
             <div class="free-user-post"></div>
+            <div class="search-newsfid-popup"></div>
             <?php (osc_is_web_user_logged_in()) ? $class = "col-md-8 col-sm-8" : $class = "col-md-10 col-sm-10" ?>
             <div class="<?php echo $class ?> padding-0">
                 <div class="content-wrapper">
@@ -335,9 +308,22 @@
                                             console.log(data);
                                             $('.free-user-post').append(data);
 //                                            $('#popup-free-user-post').appendTo("body");
-                                           $('#popup-free-user-post').modal('show');
+                                            $('#popup-free-user-post').modal('show');
                                         }
                                     });
                                 });
+                            });
+                        </script>
+                        <script>
+                            $(document).ready(function(){
+                               $(document).on('click','.search-newsfid',function(){
+                                   $.ajax({
+                                       url:'<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
+                                       success: function (data){
+                                           colsol.log(data);
+                                           $('.search-newsfid-popup').append(data);
+                                           $('#newsfid-search').modal('show');
+                                   })
+                               }) 
                             });
                         </script>
