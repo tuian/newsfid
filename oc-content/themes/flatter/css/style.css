@@ -2611,15 +2611,18 @@ select {
     margin-left: -10px;
 }
 
-.masonry_row .item {
-    min-height: 440px;
+.masonry_row .image {
+    min-height: 240px;
+}
+.masonry_row .item .iteme_image{
+    min-height: 250px;
 }
 .t-chat{
     position: fixed;
     top: 0px;
     right:0px;
     bottom: 0px;
-    width: 195px;
+    width: 16%;
     overflow-y: auto;
 }
 .alert.alert-custom{
@@ -2651,3 +2654,14 @@ select {
     padding: 15px;
     margin-top: 1px;
 }
+.search-height{
+    overflow-y: scroll;
+    height: 300px;
+}
+/**********
+orange: ##f68935
+blue: #20a8e0
+grey: #c7c8cd
+
+
+********/

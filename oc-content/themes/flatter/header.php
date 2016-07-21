@@ -77,12 +77,14 @@
 
                             <div class="user-panel">
                                 <div class="pull-left image">
-                                    <a href="<?php echo osc_user_profile_url() ?>">
+                                    <!--<a href="<?php echo osc_user_profile_url() ?>">-->
+                                    <a href="javascript:void(0)">
                                         <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">
                                     </a>
                                 </div>
                                 <div class="pull-left info">
-                                    <a href="<?php echo osc_user_profile_url() ?>">
+                                    <!--<a href="<?php echo osc_user_profile_url() ?>">-->
+                                    <a href="javascript:void(0)">
                                         <p>
                                             <!--<i class="fa fa-circle text-success"></i> -->
                                             <?php is_user_online(osc_logged_user_id()); ?> 
@@ -92,7 +94,8 @@
                                 <div class="clearfix"></div>
                                 <div style="height: 10px;"></div>
                                 <div class="pull-left">
-                                    <a href="<?php echo osc_user_profile_url() ?>">
+                                    <!--<a href="<?php echo osc_user_profile_url() ?>">-->
+                                    <a href="javascript:void(0)">
                                         <p><?php echo osc_logged_user_name() ?></p>
                                     </a>                                
                                 </div>
@@ -102,9 +105,9 @@
 
                         <!-- search form -->
                         <div class="input-group sidebar-form search-newsfid" >
-                            <input type="text"  name="q" class="form-control" placeholder="Search...">
+                            <input type="text"  name="q" class="form-control search-newsfid-text" placeholder="Search...">
                             <span class="input-group-btn">
-                                <button type="submit" id="search-btn" class="btn btn-flat" data-toggle="modal" data-target="#newsfid-search"><i class="fa fa-search"></i> </button>
+                                <button type="submit" id="search-btn" class="btn btn-flat search-newsfid-btn"><i class="fa fa-search"></i> </button>
                             </span>
                         </div>
                         <!-- /.search form -->
@@ -130,16 +133,7 @@
                                     Fil d'actualité
                                 </a>
                             </li>
-                            <?php if (osc_is_web_user_logged_in()): ?>
-                                <li class="add-item treeview" >
-                                    <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
-                                    <a href="javascript:void(0)" class="free_account" >
-                                        <i class="fa fa-list-ul"></i>
-                                        Add Item
-                                    </a>
 
-                                </li>
-                            <?php endif; ?>
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview">
                                     <a href="#">
@@ -156,6 +150,16 @@
                                         <i class="fa fa-th"></i>
                                         People
                                     </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if (osc_is_web_user_logged_in()): ?>
+                                <li class="add-item treeview" >
+                                    <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
+                                    <a href="javascript:void(0)" class="free_account" >
+                                        <i class="fa fa-list-ul"></i>
+                                        Publier
+                                    </a>
+
                                 </li>
                             <?php endif; ?>
 
@@ -297,11 +301,7 @@
                             ga('send', 'pageview');
 
                         </script>
-                        <script>
-                            $(document).ready(function () {
-                                $('#newsfid-search').appendTo("body");
-                            })
-                        </script>
+
                         <script>
                             $(document).ready(function () {
                                 $(document).on('click', '.free_account', function () {
@@ -319,14 +319,24 @@
                         </script>
                         <script>
                             $(document).ready(function () {
-                                $(document).on('click', '.search-newsfid', function () {
-                                    $.ajax({
-                                        url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
-                                        success: function (data) {
-                                            $('.search-newsfid-popup').append(data);
-                                            $('#newsfid-search').modal('show');
-                                        }
-                                    });
+                                $(document).on('click', '.search-newsfid-btn', function () {
+
+                                    var search_newsfid_text = $('.search-newsfid-text').val();
+                                    if (search_newsfid_text != '') {
+                                        $.ajax({
+                                            url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
+                                            data: {
+                                                search_newsfid_text: search_newsfid_text
+                                            },
+                                            success: function (data, textStatus, jqXHR) {
+                                                $('.search-newsfid-popup').empty().append(data);
+                                                $('#newsfid-search').modal('show');
+                                            }
+                                        })
+                                    }
+
                                 });
                             });
+
+
                         </script>
