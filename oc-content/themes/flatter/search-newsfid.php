@@ -7,8 +7,6 @@ $search_newsfid = $_REQUEST['search_newsfid_text'];
 
 $user_search_data = new DAO();
 $user_search_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code');
-$user_search_data->dao->select('');
-$user_search_data->dao->join(sprintf('', DB_TABLE_PREFIX), '', 'LEFT');
 $user_search_data->dao->from(sprintf('%st_user AS user', DB_TABLE_PREFIX));
 $user_search_data->dao->where(sprintf("user.s_name LIKE '%s'", '%' . $search_newsfid . '%'));
 $user_search_data->dao->orderBy('user.s_name', 'ASC');
@@ -62,4 +60,10 @@ $user_search_array = $user_search_result->result();
 
 </div>  
 
-
+<script>
+    $(document).ready(function () {
+        $("#newsfid-search").click(function () {
+            $("input").val("");
+        });
+    });
+</script>

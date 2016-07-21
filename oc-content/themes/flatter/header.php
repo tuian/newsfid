@@ -146,7 +146,7 @@
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview">
 
-                                    <a href="#">
+                                    <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
                                         <i class="fa fa-th"></i>
                                         People
                                     </a>
@@ -186,7 +186,7 @@
                                     </a>
                                 </li>
                                 <li class="treeview">
-                                    <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
+                                    <a href="javascript:void(0)">
                                         <i class="fa fa-laptop"></i>m'abonner
                                     </a>
                                 </li>
@@ -337,6 +337,5 @@
 
                                 });
                             });
-
-
                         </script>
+                   
