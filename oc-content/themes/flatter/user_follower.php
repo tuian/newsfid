@@ -6,7 +6,7 @@ require 'functions.php';
 //$location_type = $_REQUEST['location_type'];
 //$location_id = $_REQUEST['location_id'];
 $user_id = $_REQUEST['user_id'];
-$follower_users = get_user_follower_data(16);
+$follower_users = get_user_follower_data($user_id);
 //print_r($user_id);
 //print_r($follower_users);
 //die;
@@ -135,7 +135,7 @@ if ($follower_users):
     </div>  
 
 <?php else: ?>
-    <div class = "col-md-12">
+    <div class = "col-md-12 no-of-result">
         <p class = "people-result-text">No people found</p>
     </div>
 <?php endif; ?>

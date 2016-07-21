@@ -43,3 +43,7 @@
     background-color: #fff;
     margin-bottom: 3px !important;
 }
+.user_map{
+    height: 300px;
+    width: 100%;
+}
