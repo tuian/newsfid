@@ -2615,10 +2615,39 @@ select {
     min-height: 440px;
 }
 .t-chat{
-    //position: fixed;
+    position: fixed;
     top: 0px;
-
+    right:0px;
     bottom: 0px;
     width: 195px;
     overflow-y: auto;
+}
+.alert.alert-custom{
+    background-color: #fff !important;
+    color: #caccd2 !important;
+    border: none;
+    border-radius: 0px;
+    margin-top: -1px
+}
+.search-box{
+    background-color: white;
+    margin-top: -19px;
+}
+.search-box .box-shadow-none input[type=text]{
+    border: none;
+}
+.left-border-30::before {
+    content: " ";
+    width: 1px;
+    height: 29px;
+    background-color: #292927;
+    position: absolute;
+    top: 5px;
+    left: 1px;
+}
+.no-of-result{
+    background-color: white;
+    color: #caccd2;
+    padding: 15px;
+    margin-top: 1px;
 }

@@ -131,11 +131,13 @@
                                 </a>
                             </li>
                             <?php if (osc_is_web_user_logged_in()): ?>
-                                <li class="add-item treeview">
-                                    <a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">
+                                <li class="add-item treeview" >
+                                    <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
+                                    <a href="javascript:void(0)" class="free_account" >
                                         <i class="fa fa-list-ul"></i>
                                         Add Item
                                     </a>
+
                                 </li>
                             <?php endif; ?>
                             <?php if (osc_is_web_user_logged_in()): ?>
@@ -148,7 +150,7 @@
                             <?php endif; ?>
 
                             <?php if (osc_is_web_user_logged_in()): ?>
-                                <li class="treeview free_account" data-toggle="modal" data-target="#popup-free-user-post">
+                                <li class="treeview">
 
                                     <a href="#">
                                         <i class="fa fa-th"></i>
@@ -174,7 +176,8 @@
                                 endif;
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
-                                    <a href="<?php echo osc_user_dashboard_url() ?>">
+                                    <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
+                                    <a href="javascript:void(0)">
                                         <i class="fa fa-pie-chart"></i>Réglage
                                     </a>
                                 </li>
@@ -315,15 +318,15 @@
                             });
                         </script>
                         <script>
-                            $(document).ready(function(){
-                               $(document).on('click','.search-newsfid',function(){
-                                   $.ajax({
-                                       url:'<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
-                                       success: function (data){
-                                           colsol.log(data);
-                                           $('.search-newsfid-popup').append(data);
-                                           $('#newsfid-search').modal('show');
-                                   })
-                               }) 
+                            $(document).ready(function () {
+                                $(document).on('click', '.search-newsfid', function () {
+                                    $.ajax({
+                                        url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
+                                        success: function (data) {
+                                            $('.search-newsfid-popup').append(data);
+                                            $('#newsfid-search').modal('show');
+                                        }
+                                    });
+                                });
                             });
                         </script>

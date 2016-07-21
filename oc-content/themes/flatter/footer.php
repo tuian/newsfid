@@ -15,7 +15,7 @@
                             osc_reset_static_pages();
                             while (osc_has_static_pages()) {
                                 ?>
-            <!--                            <li><a href="<?php echo osc_static_page_url(); ?>"><?php echo osc_static_page_title(); ?></a></li>-->
+                <!--                            <li><a href="<?php echo osc_static_page_url(); ?>"><?php echo osc_static_page_title(); ?></a></li>-->
                             <?php } ?>
                             <li><a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact us', 'flatter'); ?></a></li>
                         </ul>
@@ -76,7 +76,7 @@
                                         }
                                         ?>
                                         <?php $i++; ?>
-                                    <?php
+                                        <?php
                                     }
                                 }
                                 ?>
@@ -88,7 +88,7 @@
                                     });
                                 });
                             </script>
-<?php } ?>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -99,14 +99,14 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 copyright">
                     &copy; <?php echo date('Y'); ?> <a href="#"><?php echo osc_page_title(); ?></a>. <?php _e('All Rights Reserved', 'flatter'); ?>. 
-                <?php if (osc_get_preference('footer_link', 'flatter_theme') !== '0') { ?>
-                    <?php _e('Powered by', ' '); ?> <a title="Osclass" target="_blank" rel="nofollow" href="http://osclass.org/"> Eustache & Madisse SAS </a> 
-<?php } ?>
+                    <?php if (osc_get_preference('footer_link', 'flatter_theme') !== '0') { ?>
+                        <?php _e('Powered by', ' '); ?> <a title="Osclass" target="_blank" rel="nofollow" href="http://osclass.org/"> Eustache & Madisse SAS </a> 
+                    <?php } ?>
                 </div>
                 <?php if (osc_get_preference('footer_link', 'flatter_theme') !== '0') { ?>
                     <div class="col-md-6 col-sm-6 col-xs-6 powered">
                     </div>
-<?php } ?>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -175,15 +175,17 @@
                     <p class="chat-text"> oung Muslim....</p>
                 </div>
             </div>
-        </div>	
-    </div>	
-    <div class="right-sidebar">
+            <div class="right-sidebar">
 
-        <?php
-        osc_run_hook('mdh_messenger_widget');
-        mdh_messenger_widget();
-        ?>
-    </div>
+            <?php
+            osc_run_hook('mdh_messenger_widget');
+            mdh_messenger_widget();
+            ?>
+        </div>
+        </div>	
+        
+    </div>	
+
 <?php endif; ?>
 </div> <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
