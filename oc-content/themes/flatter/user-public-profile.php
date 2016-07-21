@@ -224,16 +224,16 @@ $user = get_user_data(osc_user_id());
             </div>
 
             <div class="col-md-8 padding-left-0">
-                <ul class="nav navbar-nav user_profile_navigation bg-white">
-                    <li class="active user_posts"><a href="javascript:void(0)">Post</a></li>
-                    <li class=""><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)">Infos</a></li>
-                    <li class=""><a href="javascript:void(0)">Watchlist</a></li>
-                    <li class=""><a href="javascript:void(0)">Followers</a></li>
-                    <li class=""><a href="javascript:void(0)">Circle</a></li>
+                <ul class="nav nav-tabs user_profile_navigation bg-white">
+                    <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)">Post</a></li>
+                    <li class="user_info"><a data-toggle="tab" data-target="#user_info" href="javascript:void(0)">Infos</a></li>
+                    <li class="user_watchlist"><a data-toggle="tab" data-target="#user_watchlist" href="javascript:void(0)">Watchlist</a></li>
+                    <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)">Followers</a></li>
+                    <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
                 </ul>  
 
-                <div class="user_content col-md-12 padding-0">
-                    <div class="user_posts_area">
+                <div class="user_content col-md-12 padding-0 tab-content">
+                    <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                         <input type="hidden" value="0" class="user_post_page_number">
                         <div class="user_posts_container"></div>
                         <h2 class="result_text"></h2>                
@@ -250,6 +250,29 @@ $user = get_user_data(osc_user_id());
                             </div>
                         </div>
                     </div>
+                    <div class="user_info_container user_details tab-pane fade" id="user_info">
+
+                        <div>	<?php osc_current_web_theme_path('user_info.php') ?> </div>
+                    </div>
+                    <div class="user_watchlist_container user_details tab-pane fade" id="user_watchlist">
+                        <?php osc_current_web_theme_path('user_watchlist.php') ?> 
+                    </div>
+                    <div class="user_follower_container user_details tab-pane fade" id="user_follower">
+                        <div class="row">
+                            <div class="alert alert-warning alert-custom alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                            </div>
+                            
+                            <div class="user_follower_box"></div>
+                            
+                        </div>
+                    </div>
+                    <div class="user_circle_container user_details tab-pane fade" id="user_circle">
+                        <?php osc_current_web_theme_path('user_circle.php') ?> 
+                    </div>
                 </div>
 
             </div>
@@ -262,17 +285,32 @@ osc_add_hook('footer', 'custom_script');
 
 function custom_script() {
     ?>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
-        var is_enable_ajax = true;
-        var loading = false;
-        jQuery(document).ready(function ($) {
-            $(document).on('click', '.user_profile_navigation a', function () {
-                $('.user_profile_navigation li').removeClass('active');
-                $(this).parent().addClass('active');
-            });
+                                    var is_enable_ajax = true;
+                                    var loading = false;
+                                    jQuery(document).ready(function ($) {
+                                        initMap();
+                                        $(document).on('click', '.user_profile_navigation a', function () {
+                                            //$('.user_profile_navigation li').removeClass('active');
+                                            //$(this).parent().addClass('active');
+                                        });
 
-            $(document).on('click', '.user_posts', function () {
-                var user_id = '<?php echo osc_user_id() ?>';
+                                        $(document).on('click', '.user_profile_navigation .user_follower', function () {
+                                            $.ajax({
+                                                url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
+                                                data: {
+                                                    user_id: <?php echo osc_user_id() ?>,
+                                                },
+                                                success: function (data) {
+                                                    $('.user_follower_container .user_follower_box').html(data);
+                                                }
+                                            });
+
+                                        });
+
+                                        $(document).on('click', '.user_posts', function () {
+                                            var user_id = '<?php echo osc_user_id() ?>';
     //                $.ajax({
     //                    url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
     //                    data: {
@@ -282,139 +320,154 @@ function custom_script() {
     //                        $('.user_posts_container').empty().append(data);
     //                    }
     //                });
-            });
+                                        });
 
-            $(window).bind('scroll', function () {
-                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
-                    loading = true;
-                    $('.user_posts_area .loading').fadeIn(500);
-                    $('.user_posts_container').css({'opacity': '0.2'});
-                    setTimeout(make_after_login_item_ajax_call, 1000);
-                }
-            });
+                                        $(window).bind('scroll', function () {
+                                            if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
+                                                loading = true;
+                                                $('.user_posts_area .loading').fadeIn(500);
+                                                $('.user_posts_container').css({'opacity': '0.2'});
+                                                setTimeout(make_after_login_item_ajax_call, 1000);
+                                            }
+                                        });
 
-            $(document).on('click', '.load_more_comment', function () {
-                var count = $(this).siblings('.comment_count').text();
-                $(this).parent().parent().children('.load_more').toggle(500);
-                if ($(this).hasClass('load_comment_text')) {
-                    $(this).html('<i class="fa fa-plus-square-o"></i> Display ' + count + ' comments more ');
-                    $(this).removeClass('load_comment_text');
-                } else {
-                    $(this).html('<i class="fa fa-minus-square-o"></i> Hide comments');
-                    $(this).addClass('load_comment_text');
-                }
-            });
+                                        $(document).on('click', '.load_more_comment', function () {
+                                            var count = $(this).siblings('.comment_count').text();
+                                            $(this).parent().parent().children('.load_more').toggle(500);
+                                            if ($(this).hasClass('load_comment_text')) {
+                                                $(this).html('<i class="fa fa-plus-square-o"></i> Display ' + count + ' comments more ');
+                                                $(this).removeClass('load_comment_text');
+                                            } else {
+                                                $(this).html('<i class="fa fa-minus-square-o"></i> Hide comments');
+                                                $(this).addClass('load_comment_text');
+                                            }
+                                        });
 
-            $(document).on('submit', 'form.comment_form', function (event) {
-                var comment_form = $(this);
-                var item_id = comment_form.attr('data_item_id');
-                var user_id = comment_form.attr('data_user_id');
-                var comment_text = comment_form.find('.comment_text').val();
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
-                    type: 'POST',
-                    data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
-                    success: function (data, textStatus, jqXHR) {
-                        comment_form.find('.comment_text').val('');
-                        $('.comments_container_' + item_id).replaceWith(data);
-                        var current_comment_number = $('.comment_count_' + item_id).first().html();
-                        $('.comment_count_' + item_id).html(parseInt(current_comment_number) + 1);
-                    }
-                });
-                return false;
-            });
+                                        $(document).on('submit', 'form.comment_form', function (event) {
+                                            var comment_form = $(this);
+                                            var item_id = comment_form.attr('data_item_id');
+                                            var user_id = comment_form.attr('data_user_id');
+                                            var comment_text = comment_form.find('.comment_text').val();
+                                            $.ajax({
+                                                url: "<?php echo osc_current_web_theme_url('item_comment_ajax.php') ?>",
+                                                type: 'POST',
+                                                data: {user_id: user_id, item_id: item_id, comment_text: comment_text},
+                                                success: function (data, textStatus, jqXHR) {
+                                                    comment_form.find('.comment_text').val('');
+                                                    $('.comments_container_' + item_id).replaceWith(data);
+                                                    var current_comment_number = $('.comment_count_' + item_id).first().html();
+                                                    $('.comment_count_' + item_id).html(parseInt(current_comment_number) + 1);
+                                                }
+                                            });
+                                            return false;
+                                        });
 
-            $(document).on('click', '.like_box', function () {
-                var item_id = $(this).attr('data_item_id');
-                var user_id = $(this).attr('data_user_id');
-                var action = $(this).attr('data_action');
-                $.ajax({
-                    url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
-                    data: {
-                        item_id: item_id,
-                        user_id: user_id,
-                        action: action
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.item_like_box' + item_id).replaceWith(data);
-                    }
-                });
-            });
+                                        $(document).on('click', '.like_box', function () {
+                                            var item_id = $(this).attr('data_item_id');
+                                            var user_id = $(this).attr('data_user_id');
+                                            var action = $(this).attr('data_action');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'item_like_ajax.php' ?>',
+                                                data: {
+                                                    item_id: item_id,
+                                                    user_id: user_id,
+                                                    action: action
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.item_like_box' + item_id).replaceWith(data);
+                                                }
+                                            });
+                                        });
 
-            $(document).on('click', '.follow-user', function () {
-                var user_id = $(this).attr('data_current_user_id');
-                var follow_user_id = $(this).attr('data_follow_user_id');
-                var action = $(this).attr('data_action');
-                $.ajax({
-                    url: '<?php echo osc_current_web_theme_url() . 'user_follow_ajax.php' ?>',
-                    data: {
-                        user_id: user_id,
-                        follow_user_id: follow_user_id,
-                        action: action
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.follow_box_' + user_id + follow_user_id).replaceWith(data);
-                    }
-                });
-            });
+                                        $(document).on('click', '.follow-user', function () {
+                                            var user_id = $(this).attr('data_current_user_id');
+                                            var follow_user_id = $(this).attr('data_follow_user_id');
+                                            var action = $(this).attr('data_action');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'user_follow_ajax.php' ?>',
+                                                data: {
+                                                    user_id: user_id,
+                                                    follow_user_id: follow_user_id,
+                                                    action: action
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.follow_box_' + user_id + follow_user_id).replaceWith(data);
+                                                }
+                                            });
+                                        });
 
-            $(document).on('click', '.share_box', function () {
-                var item_id = $(this).attr('data_item_id');
-                var user_id = $(this).attr('data_user_id');
-                var action = $(this).attr('data_action');
-                $.ajax({
-                    url: '<?php echo osc_current_web_theme_url() . 'item_share_ajax.php' ?>',
-                    data: {
-                        item_id: item_id,
-                        user_id: user_id,
-                        action: action
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.item_share_box' + user_id + item_id).replaceWith(data);
-                    }
-                });
-            });
+                                        $(document).on('click', '.share_box', function () {
+                                            var item_id = $(this).attr('data_item_id');
+                                            var user_id = $(this).attr('data_user_id');
+                                            var action = $(this).attr('data_action');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'item_share_ajax.php' ?>',
+                                                data: {
+                                                    item_id: item_id,
+                                                    user_id: user_id,
+                                                    action: action
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.item_share_box' + user_id + item_id).replaceWith(data);
+                                                }
+                                            });
+                                        });
 
-            $(document).on('click', '.item_title_head', function () {
-                var item_id = $(this).attr('data_item_id');
-                $.ajax({
-                    url: '<?php echo osc_current_web_theme_url() . 'popup_ajax.php' ?>',
-                    data: {
-                        item_id: item_id,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.popup').empty().append(data);
-                        $('#item_popup_modal').modal('show');
-                    }
-                });
-            });
-        });
-        function make_after_login_item_ajax_call() {
-            var page_number = $('.user_posts_area .user_post_page_number').val();
-            var user_id = '<?php echo osc_user_id() ?>';
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
-                data: {
-                    user_id: user_id,
-                    page_number: page_number,
-                },
-                success: function (data) {
-                    if (data !== '0') {
-                        $('.user_posts_area .loading').fadeOut(1000);
-                        $('.user_posts_container').css({'opacity': '1'});
-                        loading = false;
-                        $(".user_posts_container").append(data);
-                        var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
-                        $('.user_posts_area .user_post_page_number').val(next_page);
-                    } else {
-                        $(".user_posts_area .result_text").text('No More Data Found').show();
-                        $('.user_posts_area .loading').fadeOut(1000);
-                        $('.user_posts_container').css({'opacity': '1'});
-                        is_enable_ajax = false;
-                    }
-                }
-            });
-        }
+                                        $(document).on('click', '.item_title_head', function () {
+                                            var item_id = $(this).attr('data_item_id');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'popup_ajax.php' ?>',
+                                                data: {
+                                                    item_id: item_id,
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+                                                    $('.popup').empty().append(data);
+                                                    $('#item_popup_modal').modal('show');
+                                                }
+                                            });
+                                        });
+                                    });
+                                    function make_after_login_item_ajax_call() {
+                                        var page_number = $('.user_posts_area .user_post_page_number').val();
+                                        var user_id = '<?php echo osc_user_id() ?>';
+                                        $.ajax({
+                                            url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
+                                            data: {
+                                                user_id: user_id,
+                                                page_number: page_number,
+                                            },
+                                            success: function (data) {
+                                                if (data !== '0') {
+                                                    $('.user_posts_area .loading').fadeOut(1000);
+                                                    $('.user_posts_container').css({'opacity': '1'});
+                                                    loading = false;
+                                                    $(".user_posts_container").append(data);
+                                                    var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
+                                                    $('.user_posts_area .user_post_page_number').val(next_page);
+                                                } else {
+                                                    $(".user_posts_area .result_text").text('No More Data Found').show();
+                                                    $('.user_posts_area .loading').fadeOut(1000);
+                                                    $('.user_posts_container').css({'opacity': '1'});
+                                                    is_enable_ajax = false;
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    function initMap() {
+                                        var myLatLng = {lat: -25.363, lng: 131.044};
+
+                                        var map = new google.maps.Map(document.getElementById('user_map'), {
+                                            zoom: 4,
+                                            center: myLatLng
+                                        });
+
+                                        var marker = new google.maps.Marker({
+                                            position: myLatLng,
+                                            map: map,
+                                            title: ''
+                                        });
+                                    }
     </script>
     <?php
 }

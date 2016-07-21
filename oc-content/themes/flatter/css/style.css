@@ -2064,8 +2064,8 @@ select {
     float: none;
 }
 .popup{
-   // min-height: 16.43px;
-   // padding: 15px;
+    // min-height: 16.43px;
+    // padding: 15px;
 }
 .modal-image{
     border-radius:10px 10px 0px 0px;
@@ -2383,7 +2383,7 @@ select {
     padding: 13px;
     position: absolute; top: -6px; bottom: 0;
     right: 40px;
-  //  left: 5px;
+    //  left: 5px;
     border-radius: 30px;
     box-shadow: 0 6px 12px 0px #757575;
 }
@@ -2429,7 +2429,7 @@ select {
     margin-left: -10px;
 }
 .publier-btn{
-        padding: 9px 50px
+    padding: 9px 50px
 }
 .text-bg-color{
     background-color: #f5f6f6;
@@ -2453,7 +2453,7 @@ select {
     padding-bottom: 30px; 
 }
 .green-dot{
-   border: 2px solid #fff;
+    border: 2px solid #fff;
     border-radius: 50%;
     margin-bottom: -39px;
     margin-left: -16px;
@@ -2571,13 +2571,25 @@ select {
     padding-bottom: 5px;
     position: relative;
 }
+.user_profile_navigation li {
+    display: inline-block;
+    float: none;
+    margin: 0;
+}
 .user_profile_navigation a{
     z-index: 1;
     color: #13496b;
     font-weight: bold;
+    margin: 0 !important;
+    border: 0 !important;
 }
 .user_profile_navigation > li.active > a{
-    border-bottom: 2px solid #f68935;
+    border: 0 !important;
+    border-bottom: 2px solid #f68935 !important;
+}
+.user_profile_navigation > li:hover > a{
+    border: 0 !important;
+    border-bottom: 2px solid #f68935 !important;
 }
 .user_profile_navigation::after {
     height: 2px;
@@ -2599,9 +2611,9 @@ select {
     min-height: 440px;
 }
 .t-chat{
-    position: fixed;
+    //position: fixed;
     top: 0px;
-    
+
     bottom: 0px;
     width: 195px;
     overflow-y: auto;
