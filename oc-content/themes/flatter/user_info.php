@@ -49,7 +49,6 @@ if (osc_user_address() != '') {
 
 <?php $user_lat = (osc_user_field('d_coord_lat')) ? osc_user_field('d_coord_lat') : '45.7640' ?>
 <?php $user_lng = (osc_user_field('d_coord_lng')) ? osc_user_field('d_coord_lng') : '4.8357' ?>
-<?php echo $user_lat . $user_lng ?>
 
 <div class="row user_info_row margin-0 user_map_box">
     <div class="user_map" id="user_map"></div>
@@ -68,8 +67,7 @@ function custom_map_script() {
             var longitude = <?php echo floatval ( $user_lng ); ?>;
             latitude = 45.7640;
             longitude = 4.8357
-            console.log(latitude);
-            console.log(longitude);
+            
             var myLatLng = {lat: latitude, lng: longitude};
 
             var map = new google.maps.Map(document.getElementById('user_map'), {

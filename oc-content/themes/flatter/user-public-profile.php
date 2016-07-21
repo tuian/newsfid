@@ -39,18 +39,18 @@ function sidebar() {
 
 <!-- profil cover -->
 
-<DIV id="cover" classe="cover" style=" 
-     margin:0;
-     padding:0; no-repeat center fixed; 
-     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-     background-size: cover; /* version standardisée */
-     background-color: black;
-     max-height: 580px;
-     overflow: hidden; 
-     ">
-
+<div id="cover" class="cover">
+    <?php
+    if (get_user_last_post_resource(osc_user_id())):
+        get_user_last_post_resource(osc_user_id());
+    else:
+        ?>
+        <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
+    <?php
+    endif;
+    ?>
     <?php if (function_exists("profile_picture_show")) { ?>
-        <?php profile_picture_show(); ?>
+        <?php //profile_picture_show(); ?>
 
     <?php } else { ?>
         <img src="http://www.gravatar.com/avatar/<?php echo md5(strtolower(trim(osc_user_email()))); ?>?s=150&d=<?php echo osc_current_web_theme_url('images/user-default.jpg'); ?>" class="img-responsive" />
@@ -65,8 +65,15 @@ $user = get_user_data(osc_user_id());
         <div class="row">
             <div class="col-md-4">
                 <div class=" bg-white col-md-12 padding-0">
+                    <?php
+                    if ($user[0]['cover_picture_user_id']):
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user[0]['cover_picture_user_id'] . $user[0]['pic_ext'];
+                    else:
+                        $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+                    endif;
+                    ?>
                     <div class="box box-widget widget-user">
-                        <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
+                        <div class="widget-user-header bg-black" style="background: url('<?php echo $cover_image_path ?>') center center;">
                             <h3 class="widget-user-username">
                                 <?php echo $user[0]['user_name'] ?>
                             </h3>
@@ -283,9 +290,9 @@ $user = get_user_data(osc_user_id());
                                 <div class="col-md-offset-1 col-md-10">
                                     <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
                                         <div class="col-md-10  margin-bottom-20">
-                                            <input type="text" class="bold" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Qui recherchez vous dans le cercle?">
+                                            <input type="text" class="bold follower_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
                                         </div>
-                                        <div class="search-button col-md-1">
+                                        <div class="follower-search-button search-button col-md-1">
                                             <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
@@ -322,9 +329,9 @@ $user = get_user_data(osc_user_id());
                                 <div class="col-md-offset-1 col-md-10">
                                     <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
                                         <div class="col-md-10  margin-bottom-20">
-                                            <input type="text" class="bold" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Qui recherchez vous dans le cercle?">
+                                            <input type="text" class="bold circle_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
                                         </div>
-                                        <div class="search-button col-md-1">
+                                        <div class="circle-search-button search-button col-md-1">
                                             <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
@@ -351,10 +358,7 @@ function custom_script() {
         var is_enable_ajax = true;
         var loading = false;
         jQuery(document).ready(function ($) {
-            $(document).on('click', '.user_profile_navigation a', function () {
-                //$('.user_profile_navigation li').removeClass('active');
-                //$(this).parent().addClass('active');
-            });
+            fetch_user_posts();
 
             $(document).on('click', '.user_profile_navigation .user_follower', function () {
                 $.ajax({
@@ -366,7 +370,20 @@ function custom_script() {
                         $('.user_follower_container .user_follower_box').html(data);
                     }
                 });
+            });
 
+            $(document).on('click', '.user_follower_container .follower-search-button', function () {
+                var search_name = $('.follower_search_text').val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
+                    data: {
+                        user_id: <?php echo osc_user_id() ?>,
+                        search_name: search_name
+                    },
+                    success: function (data) {
+                        $('.user_follower_container .user_follower_box').html(data);
+                    }
+                });
             });
 
             $(document).on('click', '.user_profile_navigation .user_circle', function () {
@@ -380,6 +397,20 @@ function custom_script() {
                     }
                 });
 
+            });
+
+            $(document).on('click', '.user_circle_container .circle-search-button', function () {
+                var search_name = $('.circle_search_text').val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
+                    data: {
+                        user_id: <?php echo osc_user_id() ?>,
+                        search_name: search_name
+                    },
+                    success: function (data) {
+                        $('.user_circle_container .user_circle_box').html(data);
+                    }
+                });
             });
 
             $(document).on('click', '.user_posts', function () {
@@ -400,7 +431,7 @@ function custom_script() {
                     loading = true;
                     $('.user_posts_area .loading').fadeIn(500);
                     $('.user_posts_container').css({'opacity': '0.2'});
-                    setTimeout(make_after_login_item_ajax_call, 1000);
+                    setTimeout(fetch_user_posts, 1000);
                 }
             });
 
@@ -500,7 +531,7 @@ function custom_script() {
                 });
             });
         });
-        function make_after_login_item_ajax_call() {
+        function fetch_user_posts() {
             var page_number = $('.user_posts_area .user_post_page_number').val();
             var user_id = '<?php echo osc_user_id() ?>';
             $.ajax({
@@ -510,17 +541,15 @@ function custom_script() {
                     page_number: page_number,
                 },
                 success: function (data) {
+                    $('.user_posts_area .loading').fadeOut(1000);
+                    $('.user_posts_container').css({'opacity': '1'});
                     if (data !== '0') {
-                        $('.user_posts_area .loading').fadeOut(1000);
-                        $('.user_posts_container').css({'opacity': '1'});
                         loading = false;
                         $(".user_posts_container").append(data);
                         var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
                         $('.user_posts_area .user_post_page_number').val(next_page);
                     } else {
                         $(".user_posts_area .result_text").text('No More Data Found').show();
-                        $('.user_posts_area .loading').fadeOut(1000);
-                        $('.user_posts_container').css({'opacity': '1'});
                         is_enable_ajax = false;
                     }
                 }

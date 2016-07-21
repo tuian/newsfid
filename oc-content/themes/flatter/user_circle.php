@@ -2,32 +2,20 @@
 require '../../../oc-load.php';
 require 'functions.php';
 
-//$search_name = $_REQUEST['search_name'];
-//$location_type = $_REQUEST['location_type'];
-//$location_id = $_REQUEST['location_id'];
+$search_name = $_REQUEST['search_name'];
 $user_id = $_REQUEST['user_id'];
 $follower_users = get_user_following_data($user_id);
-//print_r($user_id);
-//print_r($follower_users);
-//die;
+
 if ($follower_users):
-//print_r($follower_users);
     $user_search_data = new DAO();
     $user_search_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code');
     $user_search_data->dao->select('user_resource.pk_i_id, user_resource.fk_i_user_id, user_resource.s_extension, user_resource.s_path');
+    $user_search_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
     $user_search_data->dao->join(sprintf('%st_user_resource AS user_resource', DB_TABLE_PREFIX), 'user.pk_i_id = user_resource.fk_i_user_id', 'LEFT');
+    $user_search_data->dao->join(sprintf('%st_profile_picture AS user_cover_picture', DB_TABLE_PREFIX), 'user.pk_i_id = user_cover_picture.user_id', 'LEFT');
     $user_search_data->dao->from(sprintf('%st_user AS user', DB_TABLE_PREFIX));
     $user_search_data->dao->where(sprintf("user.s_name LIKE '%s'", '%' . $search_name . '%'));
-//$user_search_data->dao->where(sprintf("user.pk_i_id IN (%s)", osc_logged_user_id()));
     $user_search_data->dao->whereIn("user.pk_i_id", $follower_users);
-
-//if ($location_type !== 'world'):
-//    if ($location_type == 'national'):
-//        $user_search_data->dao->where("user.fk_c_country_code", $location_id);
-//    else:
-//        $user_search_data->dao->where("user.fk_i_city_id", $location_id);
-//    endif;
-//endif;
 
     $user_search_data->dao->orderBy('user.s_name', 'ASC');
     $user_search_result = $user_search_data->dao->get();
@@ -35,16 +23,24 @@ if ($follower_users):
 
 //if ($user_search_array):
     ?>
-    <div class="col-md-12">
-        <p class="people-result-text"><?php echo '(' . count($user_search_array) . ')' ?> results found </p>
+    <div class="col-md-12 padding-0">
+        <div class="user_found_text bg-white"><?php echo 'Nous avons trouvé <span class="result_count_text blue_text">' . count($user_search_array) . '</span> résultats'; ?></div>
     </div>
-    <div class="col-md-12 padding-0 user_serach_box">
+    <div class="col-md-12 padding-0">
         <?php foreach ($user_search_array as $user): ?>
-            <div class="col-md-6">
+            <div class="col-md-12 user_box padding-0">
                 <div class="box box-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
 
-                    <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
+                    <?php
+                    if ($user['cover_picture_user_id']):
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . $user['pic_ext'];
+                    else:
+                        $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+                    endif;
+                    ?>
+
+                    <div class="widget-user-header bg-black" style="background: url('<?php echo $cover_image_path ?>') center center;">
                         <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
                             <h3 class="widget-user-username">
                                 <?php echo $user['user_name'] ?>
@@ -111,15 +107,10 @@ if ($follower_users):
                                 <div class="description-block">
                                     <h5 class="description-header">
                                         <?php
-                                        $user_likes = get_user_item_likes($user['user_id']);
-                                        if ($user_likes):
-                                            echo count($user_likes);
-                                        else:
-                                            echo 0;
-                                        endif;
+                                        echo count(get_user_posts_count($user['user_id']));
                                         ?>
                                     </h5>
-                                    <span class="description-text">LIKES</span>
+                                    <span class="description-text">POSTS</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
@@ -136,6 +127,6 @@ if ($follower_users):
 
 <?php else: ?>
     <div class = "col-md-12 no-of-result">
-        <p class = "people-result-text">No people found</p>
+        <p class = "people-result-text">No user found</p>
     </div>
 <?php endif; ?>

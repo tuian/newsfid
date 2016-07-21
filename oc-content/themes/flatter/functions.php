@@ -1028,7 +1028,7 @@ function get_user_data($user_id) {
     $comm = new DBCommandClass($data);
     $db_prefix = DB_TABLE_PREFIX;
 //    $query = "SELECT user.*, user.pk_i_id as user_id, user.s_name as user_name, user2.* FROM `{$db_prefix}t_user` user INNER JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
-    $query = "SELECT user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
+    $query = "SELECT user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path, user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id LEFT JOIN `{$db_prefix}t_profile_picture` user_cover_picture ON user.pk_i_id = user_cover_picture.user_id  WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
     $result = $comm->query($query);
     $user = $result->result();
     return $user;
@@ -1302,11 +1302,21 @@ function get_user_follower_data($user_id) {
     $user_like_result = $user_like_data->dao->get();
     $user_like_array = $user_like_result->result();
     if ($user_like_array):
-        $item_result = array_column($user_like_array, 'follow_user_id');
+        $item_result = array_column($user_like_array, 'user_id');
     else:
         $item_result = false;
     endif;
     return $item_result;
+}
+
+function get_user_posts_count($user_id) {
+    $user_posts_data = new DAO();
+    $user_posts_data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
+    $user_posts_data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
+    $user_posts_data->dao->where('fk_i_user_id', $user_id);
+    $user_posts_result = $user_posts_data->dao->get();
+    $user_posts_array = $user_posts_result->result();
+    return $user_posts_array;
 }
 
 function user_follow_box($logged_in_user_id, $follow_user_id) {
@@ -1463,10 +1473,31 @@ function get_comment_count($item_id) {
         'b_active' => 1,
         'b_enabled' => 1,
         'fk_i_item_id' => $item_id);
-    
+
     $comments_data->dao->where($conditions);
     $comments_result = $comments_data->dao->get();
     return count($comments_result->result());
 }
 
+function get_user_last_post_resource($user_id) {
+    $user_categories = get_user_categories($user_id);
+    if ($user_categories):
+        $user_last_post_data = new DAO();
+        $user_last_post_data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
+        $user_last_post_data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
+        $user_last_post_data->dao->whereIn('fk_i_category_id', $user_categories);
+        $user_last_post_data->dao->orderBy('dt_pub_date', 'DESC');
+        $user_last_post_data->dao->limit(1);
+        $user_last_post_result = $user_last_post_data->dao->get();
+        $user_last_post_result = $user_last_post_result->result();
+        if ($user_last_post_result):
+            print_r($user_last_post_result[0]['pk_i_id']);
+            return item_resources($user_last_post_result[0]['pk_i_id']);
+        else:
+            return FALSE;
+        endif;
+    else:
+        return FALSE;
+    endif;
+}
 ?>

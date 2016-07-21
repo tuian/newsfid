@@ -38,14 +38,25 @@
 
 <?php if (osc_is_web_user_logged_in()) : ?>
     <?php if (function_exists("osc_slider")) { ?>
-        <?php osc_slider(); ?>  
+        <?php //osc_slider(); ?>  
     <?php } ?>
+<div id="cover" class="cover">
+ <?php
+    if (get_user_last_post_resource(osc_logged_user_id())):
+        get_user_last_post_resource(osc_logged_user_id());
+    else:
+        ?>
+        <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
+    <?php
+    endif;
+    ?>
+    
     <div class="bigsearch transbg">
         <div class="row">
             <!-- search form --> 
         </div>
-
     </div>
+</div>
     <!-- Big Search --> 
 
 <?php else : ?>

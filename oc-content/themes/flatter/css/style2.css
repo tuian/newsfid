@@ -2,6 +2,7 @@
     width: 100%;
     padding-bottom: 5px;
     position: relative;
+    border-bottom: 0;
 }
 .user_profile_navigation a{
     z-index: 1;
@@ -47,3 +48,41 @@
     height: 300px;
     width: 100%;
 }
+.widget-user .widget-user-header {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+}
+.blue_text{
+    color: #20a8e0;
+}
+.user_found_text {
+    padding: 20px 5px;
+    color: #c7c8cd;
+}
+.search_text {
+    padding: 10px 30px !important;
+}
+.search_text:focus{
+    outline: 0;
+}
+.cover{
+    margin:0;
+    padding:0; no-repeat center fixed; 
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+    background-color: black;
+    max-height: 580px;
+    overflow: hidden; 
+}
+#cover img{
+    width: 100%;
+    padding: 0;
+}
+/**********
+orange: #f68935
+blue: #20a8e0
+grey: #c7c8cd
+
+
+********/
