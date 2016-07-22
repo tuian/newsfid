@@ -1,6 +1,23 @@
 <?php
 require_once '../../../oc-load.php';
 require_once 'functions.php';
+
+$user_post_item['fk_i_category_id'] = $_REQUEST['sCategory'];
+$user_post_item_disc['s_title'] = $_REQUEST['p_title'];
+$user_post_item_disc['s_description'] = $_REQUEST['p_disc'];
+
+
+//$user_post['s_title'] = $s_title;
+//$user_post['s_description'] = $s_description;
+//$user_post['s_description'] = $s_description;
+//$user_post['s_description'] = $s_description;
+//$user_post['s_description'] = $s_description;
+
+$insert_user_post = new DAO();
+$insert_user_post->dao->insert(sprintf('%st_item', DB_TABLE_PREFIX, $user_post_item));
+//$insert_user_post_disc->dao->insert(sprintf('%st_item_description', DB_TABLE_PREFIX, $user_post_item_disc));
+//$insert_user_post->insert(sprintf('%st_item_description', DB_TABLE_PREFIX, $user_post));
+
 ?>
 <!---- modal popup for free user post start------>
 
@@ -11,6 +28,7 @@ require_once 'functions.php';
             <!-- Modal content-->
             <div class="modal-content">
                 <form method="post">
+                    <input type="hidden" name="save" value="true">
                     <!-------------------------User Information Start---------------------------->
                     <div class="modal-body greybg">
                         <div class="sub">
@@ -21,11 +39,11 @@ require_once 'functions.php';
                                 </p>
                             </div>
                         </div><div class="clear"></div>
-                        <div class="user-photo col-md-2">
-                            <?php
-                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                            ?>
-                            <img src="<?php echo $img_path; ?>" alt="user"" width="100px" height="100px">
+                        <div class="col-md-2 ">
+<?php
+$img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+?>
+                            <img src="<?php echo $img_path; ?>" alt="user" class="img img-responsive">
                         </div> 
                         <div class="user-info col-md-6">
                             <h5>Gwinel Madlisse<img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>" width="16px" height="16px" style="margin-left: 10px"></h5>
@@ -51,11 +69,11 @@ require_once 'functions.php';
                         </div>
                         <div class="col-md-offset-1">
                             <div class="category-dropdown left-border margin-top-20" style="display: block;">
-                                <?php osc_goto_first_category(); ?>
+<?php osc_goto_first_category(); ?>
                                 <?php if (osc_count_categories()) { ?>
                                     <select id="sCategory" class="form-control input-box" name="sCategory">
                                         <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
-                                        <?php while (osc_has_categories()) { ?>
+    <?php while (osc_has_categories()) { ?>
                                             <option class="maincat bold" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
                                             <?php if (osc_count_subcategories()) { ?>
                                                 <?php while (osc_has_subcategories()) { ?>
@@ -65,14 +83,14 @@ require_once 'functions.php';
                                         <?php } ?>
 
                                     </select>
-                                <?php } ?>
+<?php } ?>
 
                             </div>
                             <div class="input-text-area margin-top-20 left-border box-shadow-none width-60">
-                                <input type="text" placeholder="Title">
+                                <input type="text" placeholder="Title" name="p_title">
                             </div>
                             <div class="box-shadow-none width-90 description-box">
-                                <textarea placeholder="Redigez la description ici..."></textarea>
+                                <textarea placeholder="Redigez la description ici..." name="p_disc"></textarea>
                             </div>
 
                         </div>
@@ -89,100 +107,116 @@ require_once 'functions.php';
                             <h3 class="modal-title bold orange">Add a Media </h3>
                         </div>
                         <div class="col-md-offset-1 col-md-10 margin-top-20">
-                            <div class="border-bottom col-md-12">
-                                <img class="vertical-top col-md-1" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
-                                <p class="col-md-10">
+                            <div class="border-bottom col-md-12 vertical-row">
+                                <div class="col-md-1">
+                                    <img class="vertical-top img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
+                                </div>
+                                <div class="col-md-11">
                                     A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                </p>
+                                </div>
                             </div>
-                            <div class="border-bottom col-md-12">
-                                <img class="vertical-top col-md-1" src="<?php echo osc_current_web_theme_url() . '/images/filters.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
+                            <div class="border-bottom col-md-12 vertical-row">
+                                <div class="col-md-1">
+                                    <img class="vertical-top img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/filters.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
+                                </div>
                                 <span class="orange col-md-1"><h3 class="bold">Filters</h3></span>
                             </div>
-                            <div class=" col-md-12 border-bottom">
-                                <div class="col-md-2 margin-top-20">
-                                    <span class="bold">Image</span>
-                                </div>
-
-                                <div class="col-md-2 margin-top-20">
-                                    <span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
-                                </div>
-                                <div class="col-md-8 text-bg-color">
-                                    <p class="bold col-md-11">
-                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                    </p>
-                                </div>
-                                <div class="col-md-4 media-video-image">
-                                    <div class="onoffswitch margin-top-20 col-md-5">
-                                        <input type="checkbox" name="image" class="onoffswitch-checkbox" id="image" checked>
-                                        <label class="onoffswitch-label" for="image"></label>
+                            <div class=" col-md-12 border-bottom vertical-row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12 padding-10 vertical-row">
+                                        <div class="col-md-3"> <span class="bold">Image</span>
+                                            <div class="onoffswitch margin-top-20">
+                                                <input type="checkbox" name="image" class="onoffswitch-checkbox" id="image" checked>
+                                                <label class="onoffswitch-label" for="image"></label>
+                                            </div>
+                                        </div><div class="col-md-1">ou</div>
+                                        <div class="col-md-3"><span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
+                                            <div class="onoffswitch margin-top-20">
+                                                <input type="checkbox" name="video" class="onoffswitch-checkbox" id="video">
+                                                <label class="onoffswitch-label" for="video"></label>
+                                            </div>
+                                        </div>
                                     </div>
-
-
-                                    <div class="col-md-3 ou" style="text-align: center">ou</div>
-
-                                    <div class="onoffswitch margin-top-20 col-md-3">
-                                        <input type="checkbox" name="video" class="onoffswitch-checkbox" id="video">
-                                        <label class="onoffswitch-label" for="video"></label>
-                                    </div>
-                                </div>   
-
-                                <div class="col-md-12">
-                                    <div class=" col-md-offset-1 margin-bottom-20">
-                                        <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>" width="80px" height="80px" style="margin-left: -3px; margin-top:30px;cursor: pointer;">
+                                    <div class="col-md-12 vertical-row">
+                                        <div class="col-md-offset-1 col-md-4">
+                                            <img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6  text-bg-color">
+                                    <div class="bold padding-10">
+                                        Vous ne pouvez pas choisir lee deux en meme
+                                        temps. Vous pubiiez soit une Image .JPG I PNG I
+                                        colt un liens video (Youtubel Daylinotion I Vimio)
+                                    </div>
+                                </div>
+
+
+
+                                <!--                                
+                                                                <div class="col-md-4 media-video-image">
+                                                                    
+                                
+                                
+                                                                    <div class="col-md-3 ou" style="text-align: center">ou</div>
+                                
+                                                                   
+                                                                </div>   -->
+
+                                <!--                                <div class="col-md-12 vertical-row">
+                                                                    <div class=" col-md-offset-1 margin-bottom-20">
+                                
+                                                                        
+                                                                    </div>
+                                                                </div>-->
                             </div> 
-                            <div class=" col-md-12 border-bottom">
-                                <div class="col-md-2 margin-top-20">
+                            <div class=" col-md-12 border-bottom vertical-row">
+                                <div class="col-md-6">
                                     <span class="bold">GIF</span>
-                                </div>
-                                <div class="col-md-offset-2 col-md-8  text-bg-color">
-                                    <p class="bold col-md-11">
-                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                    </p>
-                                </div>
-                                <div class="col-md-4 media-video-image">
-                                    <div class="onoffswitch margin-top-20 col-md-5">
+                                    <div class="onoffswitch margin-top-20">
                                         <input type="checkbox" name="gif" class="onoffswitch-checkbox" id="gif">
                                         <label class="onoffswitch-label" for="gif"></label>
                                     </div>
-                                </div>   
+                                </div>
+                                <div class="col-md-6  text-bg-color">
+                                    <div class="bold padding-10">
+                                        L’image commencera I s’animer de manière automatique au survol de votre publication.
+                                    </div>
+                                </div>
                             </div>
-                            <div class=" col-md-12 border-bottom">
-                                <div class="col-md-2 margin-top-20">
+                            <div class=" col-md-12 border-bottom vertical-row">
+                                <div class="col-md-6">
                                     <span class="bold">Music</span>
-                                </div>
-                                <div class="col-md-offset-2 col-md-8  text-bg-color">
-                                    <p class="bold col-md-11">
-                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                    </p>
-                                </div>
-                                <div class="col-md-4 media-video-image">
-                                    <div class="onoffswitch margin-top-20 col-md-2">
+                                    <div class="onoffswitch margin-top-20">
                                         <input type="checkbox" name="music" class="onoffswitch-checkbox" id="music">
                                         <label class="onoffswitch-label" for="music"></label>
                                     </div>
-                                    <div class="col-md-10 mp3-max">
+                                    <div class="mp3-max">
                                         <span class="">(MP3 10.MO maximum) </span>
                                     </div>
-                                </div>   
+                                </div>
+                                <div class="col-md-6 text-bg-color">
+                                    <div class="bold padding-10">
+                                        Vous ne pouvez télecharger qu’un fichier MP3. Si vos désirez publier un fichier supeneur I 1OMO merci e vous abonner I Newefid
+                                    </div>
+                                </div>
                             </div>
-                            <div class=" col-md-12 border-bottom">
-                                <div class="col-md-2 margin-top-20">
+                            <div class=" col-md-12 border-bottom vertical-row">
+                                <div class="col-md-6">
                                     <span class="bold">Podcast</span>
-                                </div>
-                                <div class="col-md-offset-2 col-md-8  text-bg-color">
-                                    <p class="bold col-md-11">
-                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                    </p>
-                                </div>
-                                <div class="col-md-4 media-video-image">
-                                    <div class="onoffswitch margin-top-20 col-md-5">
+                                    <div class="onoffswitch margin-top-20">
                                         <input type="checkbox" name="podcast" class="onoffswitch-checkbox" id="podcast">
                                         <label class="onoffswitch-label" for="podcast"></label>
                                     </div>
-                                </div>   
+                                </div>
+                                <div class="col-md-6 text-bg-color">
+                                    <div class="bold padding-10">
+                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+
+                                    </div>
+                                </div>
+
+
                             </div>
                             <!-- <div class="col-md-5">
                                  
@@ -201,10 +235,12 @@ require_once 'functions.php';
                         <div class="modal-header">
                             <div class="col-md-offset-1 col-md-10 margin-top-20">
                                 <div class="col-md-12 margin-top-20 padding-bottom-20">
-                                    <img class="vertical-top col-md-1" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
-                                    <p class="col-md-10">
+                                    <div class="col-md-1">
+                                        <img class="vertical-top  img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
+                                    </div>
+                                    <div class="col-md-10 padding-10">
                                         A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                    </p>
+                                    </div>
                                 </div>
 
                             </div><div class="clear"></div>
@@ -214,23 +250,23 @@ require_once 'functions.php';
                                 <!--                                <?php $counrty_array = get_country_array(); ?>
                                                                 <select id="country-list" style="box-shadow: none;">
                                                                     <option value="Country">&nbsp;Country</option>
-                                <?php
-                                foreach ($counrty_array as $countryList):
-                                    ?>
-                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+<?php
+foreach ($counrty_array as $countryList):
+    ?>
+                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                     <?php
                                 endforeach;
                                 ?>
                                                                 </select><i class="icon-chevron-down"></i>-->
                                 <?php UserForm::country_select(osc_get_countries()); ?>
                             </div>
-                            
+
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
                                 <input type="text" id="s_region" name="s_region" placeholder="Region">
                                 <input type="hidden" id="sRegion" name="sRegion">
                             </div>
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                <input type="text" name="s_city" class="form-control" id="s_city" placeholder="<?php _e('City', 'flatter'); ?>">
+                                <input type="text" name="s_city" class="form-control" id="s_city" placeholder="City">
                                 <input type="hidden" name="cityId" class="form-control" id="cityId">
                             </div>
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
@@ -247,16 +283,16 @@ require_once 'functions.php';
                     <div class="modal-body greybg round-border-top">
                         <div class="sub">
                             <div class="col-md-12">
-                                <h1 class="bold big-font col-md-12">Publier librement sur Newsfid</h1>
+                                <h1 class="bold big-font col-md-12">Bon a Savior</h1>
                                 <p class="col-md-7" style="margin-left: -10px;">
                                     A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
                                 </p>
                             </div>
                         </div><div class="clear"></div>
                         <div class="user-photo col-md-2">
-                            <?php
-                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                            ?>
+<?php
+$img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+?>
                             <img src="<?php echo $img_path; ?>" alt="user"" width="100px" height="100px">
                         </div> 
                         <div class="user-info col-md-6">
@@ -298,7 +334,7 @@ require_once 'functions.php';
                         </div>
                         <div class="modal-footer ">
                             <div class="en-savoir-plus publier col-md-offset-1 col-md-3">
-                                <button class="en-savoir-plus-button publier-btn"><span class="bold">Publier<span></button>
+                                <button type="submit" class="en-savoir-plus-button publier-btn"><span class="bold">Publier<span></button>
                                             </div>
                                             </div>
 
@@ -386,4 +422,4 @@ require_once 'functions.php';
                                                 });
                                             </script>
 
- 
+

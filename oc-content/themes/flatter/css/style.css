@@ -2095,8 +2095,9 @@ select {
 .modal .container{
     max-width: 100%;
 }
-.item_title_head{
+.item_title_head {
     cursor: pointer;
+    font-size: 22px;
 }
 .item_title_head:hover{
     color: #03A9F4;
@@ -2666,6 +2667,10 @@ select {
 .country-select select{
     box-shadow: none !important;
     outline: 0;
+}
+.camera-icon{
+    padding: 20%;
+    margin-left: 15%;
 }
 /**********
 orange: ##f68935
