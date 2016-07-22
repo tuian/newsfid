@@ -1457,17 +1457,19 @@ function update_user_share_item($user_id, $item_id, $share_value) {
 
 function get_user_watchlist_item($user_id) {
     $user_watchlist_data = new DAO();
+     $item_result = false;
     $user_watchlist_data->dao->select(sprintf('%st_item_watchlist.*', DB_TABLE_PREFIX));
     $user_watchlist_data->dao->from(sprintf('%st_item_watchlist', DB_TABLE_PREFIX));
     $user_watchlist_data->dao->where('user_id', $user_id);
     $user_watchlist_data->dao->where('watchlist_value', '1');
     $user_watchlist_result = $user_watchlist_data->dao->get();
+    if($user_watchlist_result){
     $user_watchlist_array = $user_watchlist_result->result();
     if ($user_watchlist_array):
         $item_result = array_column($user_watchlist_array, 'item_id');
-    else:
-        $item_result = false;
+    
     endif;
+    }
     return $item_result;
 }
 
