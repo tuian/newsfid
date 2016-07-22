@@ -76,7 +76,7 @@ while (osc_has_custom_items()):
                                     </div><!-- Item Content End -->
 
                                     <div class="row item-bottom">
-                                        <div class="col-md-6 col-md-offset-6">
+                                        <div class="col-md-6 col-md-offset-3"> 
                                             <ul class="social-share">
                                                 <li class="facebook">
                                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');

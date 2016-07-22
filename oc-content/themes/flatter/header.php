@@ -77,14 +77,14 @@
 
                             <div class="user-panel">
                                 <div class="pull-left image">
-                                    <!--<a href="<?php echo osc_user_profile_url() ?>">-->
-                                    <a href="javascript:void(0)">
+                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                    <!--<a href="javascript:void(0)">-->
                                         <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">
                                     </a>
                                 </div>
                                 <div class="pull-left info">
-                                    <!--<a href="<?php echo osc_user_profile_url() ?>">-->
-                                    <a href="javascript:void(0)">
+                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                    <!--<a href="javascript:void(0)">-->
                                         <p>
                                             <!--<i class="fa fa-circle text-success"></i> -->
                                             <?php is_user_online(osc_logged_user_id()); ?> 
@@ -94,8 +94,8 @@
                                 <div class="clearfix"></div>
                                 <div style="height: 10px;"></div>
                                 <div class="pull-left">
-                                    <!--<a href="<?php echo osc_user_profile_url() ?>">-->
-                                    <a href="javascript:void(0)">
+                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                    <!--<a href="javascript:void(0)">-->
                                         <p><?php echo osc_logged_user_name() ?></p>
                                     </a>                                
                                 </div>
@@ -165,7 +165,7 @@
 
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview">
-                                    <a href="#">
+                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                         <i class="fa fa-th"></i>Compte
                                     </a>
                                 </li>   

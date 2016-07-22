@@ -1340,6 +1340,25 @@ function user_follow_box($logged_in_user_id, $follow_user_id) {
     <?php
 }
 
+function user_follow_btn_box($logged_in_user_id, $follow_user_id) {
+
+    $following = 'following';
+    $action = 'unfollow';
+    $fa_class = 'fa fa-user-times';
+    $follow_text = 'Se désabonner';
+    $user_following = get_user_following_data($logged_in_user_id);
+
+    if (!($user_following && ( in_array($follow_user_id, $user_following)) )):
+        $following = 'unfollowing';
+        $action = 'follow';
+        $fa_class = 'fa fa-user-plus';
+        $follow_text = "M'abonner";
+    endif;
+    ?>
+    <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
+    <?php
+}
+
 function update_user_following($logged_in_user_id, $follow_user_id, $follow_value) {
 
     $follow_array['user_id'] = $logged_in_user_id;
@@ -1436,11 +1455,70 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     endif;
 }
 
+function get_user_watchlist_item($user_id) {
+    $user_watchlist_data = new DAO();
+    $user_watchlist_data->dao->select(sprintf('%st_item_watchlist.*', DB_TABLE_PREFIX));
+    $user_watchlist_data->dao->from(sprintf('%st_item_watchlist', DB_TABLE_PREFIX));
+    $user_watchlist_data->dao->where('user_id', $user_id);
+    $user_watchlist_data->dao->where('watchlist_value', '1');
+    $user_watchlist_result = $user_watchlist_data->dao->get();
+    $user_watchlist_array = $user_watchlist_result->result();
+    if ($user_watchlist_array):
+        $item_result = array_column($user_watchlist_array, 'item_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function user_watchlist_box($user_id, $item_id) {
+
+    $watchlist_class = 'remove_from_watchlist';
+    $action = 'remove_watchlist';
+    //$fa_class = 'fa fa-user-times';
+    $watchlist_text = 'Remove from watchlist';
+    $user_share = get_user_watchlist_item($user_id);
+
+    if (!($user_share && ( in_array($item_id, $user_share)) )):
+        $watchlist_class = 'add_watchlist';
+        $action = 'add_watchlist';
+        //$fa_class = 'fa fa-user-plus';
+        $watchlist_text = 'Add to watchlist';
+    endif;
+    ?>
+    <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
+        <?php echo $watchlist_text ?>
+    </span>
+    <?php
+}
+
+function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
+    $follow_array['user_id'] = $user_id;
+    $follow_array['item_id'] = $item_id;
+    $follow_array['watchlist_value'] = $watchlist_value;
+
+    $user_watchlist_data = new DAO();
+    $user_watchlist_data->dao->select(sprintf('%st_item_watchlist.*', DB_TABLE_PREFIX));
+    $user_watchlist_data->dao->from(sprintf('%st_item_watchlist', DB_TABLE_PREFIX));
+    $user_watchlist_data->dao->where('user_id', $user_id);
+    $user_watchlist_data->dao->where('item_id', $item_id);
+    $user_watchlist_data->dao->limit(1);
+    $user_follow_result = $user_watchlist_data->dao->get();
+    $user_follow_array = $user_follow_result->result();
+
+    if ($user_follow_array):
+        $user_watchlist_data->dao->update(sprintf('%st_item_watchlist', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
+    else:
+        $user_watchlist_data->dao->insert(sprintf('%st_item_watchlist', DB_TABLE_PREFIX), $follow_array);
+    endif;
+}
+
 function get_item_watchlist_count($item_id) {
     $item_watchlist_data = new DAO();
     $item_watchlist_data->dao->select(sprintf('%st_item_watchlist.*', DB_TABLE_PREFIX));
     $item_watchlist_data->dao->from(sprintf('%st_item_watchlist', DB_TABLE_PREFIX));
-    $item_watchlist_data->dao->where('fk_i_item_id', $item_id);
+    $item_watchlist_data->dao->where('item_id', $item_id);
+    $item_watchlist_data->dao->where('watchlist_value', 1);
     $user_follow_result = $item_watchlist_data->dao->get();
     $user_follow_array = $user_follow_result->result();
     return count($user_follow_array);
@@ -1500,6 +1578,7 @@ function get_user_last_post_resource($user_id) {
         return FALSE;
     endif;
 }
+
 function get_search_popup($search_newsfid, $item_search_array, $user_search_array) {
     ?>
     <!-- Modal content-->
@@ -1544,5 +1623,39 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
     </div>
 
     <?php
+}
+
+function get_suggested_users($user_id, $limit) {
+    $user_categories = get_user_categories($user_id);
+    if (!$user_categories):
+        return FALSE;
+    endif;
+    $themes = implode(',', $user_categories);
+    $db_prefix = DB_TABLE_PREFIX;
+
+    $suggest_user_data = new DAO();
+    $suggest_user_data->dao->select("user_themes.*");
+    $suggest_user_data->dao->from("{$db_prefix}t_user_themes as user_themes");
+    $suggest_user_data->dao->where("user_themes.theme_id IN ({$themes})");
+    $suggest_user_data->dao->where("user_themes.user_id != {$user_id}");
+    $suggest_user_data->dao->limit($limit);
+    $suggest_user_result = $suggest_user_data->dao->get();
+    $suggest_user_array = $suggest_user_result->result();
+    $theme_user_id = array_column($suggest_user_array, 'user_id');
+
+    $suggest_user_data->dao->select("user_rubrics.*");
+    $suggest_user_data->dao->from("{$db_prefix}t_user_rubrics as user_rubrics");
+    $suggest_user_data->dao->where("user_rubrics.rubric_id IN ({$themes})");
+    $suggest_user_data->dao->where("user_rubrics.user_id != {$user_id}");
+    $suggest_user_data->dao->limit($limit);
+    $suggest_user_result = $suggest_user_data->dao->get();
+    $suggest_user_array = $suggest_user_result->result();
+
+    $rubric_user_id = array_column($suggest_user_array, 'user_id');
+
+    $users = array_merge($theme_user_id, $rubric_user_id);
+
+
+    return array_slice(array_unique($users), 0, $limit);
 }
 ?>

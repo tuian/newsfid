@@ -91,7 +91,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);     ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);      ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -102,9 +102,9 @@ if ($items):
                     &nbsp;&nbsp;&nbsp;
                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
                         <?php echo 'Comments' ?>
-
-                        &nbsp;&nbsp;
-                        <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
+                    </span>
+                    &nbsp;&nbsp;
+                    <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
                 </div>
                 <!-- /.box-body -->
 

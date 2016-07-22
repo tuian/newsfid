@@ -101,6 +101,28 @@ textarea.border-bottom-0{
 .red_text{
     color: #a94442;
 }
+.follow-user-btn{
+    color: #fff !important;
+    font-weight: bold;
+}
+.follow-user-btn.unfollowing{
+    color: #00a65a !important;
+}
+.follow-user-btn.following{
+    color: #dd4b39 !important;
+}
+.suggested_user_div {
+    max-height: 350px;
+    overflow-y: auto;
+}
+.watch_box{
+    cursor: pointer;
+}
+.copyright_box {
+    box-shadow: none;
+    padding: 15px 10px;
+    margin: 0;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

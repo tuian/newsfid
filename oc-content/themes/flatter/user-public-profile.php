@@ -348,7 +348,7 @@ $user = get_user_data(osc_user_id());
         </div>
     </div>
 </div>
-
+<div class="popup"></div>
 <?php
 osc_add_hook('footer', 'custom_script');
 
@@ -415,15 +415,15 @@ function custom_script() {
 
             $(document).on('click', '.user_posts', function () {
                 var user_id = '<?php echo osc_user_id() ?>';
-    //                                            $.ajax({
-    //                                                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
-    //                                                data: {
-    //                                                    user_id: user_id,
-    //                                                },
-    //                                                success: function (data) {
-    //                                                    $('.user_posts_container').empty().append(data);
-    //                                                }
-    //                                            });
+                //                                            $.ajax({
+                //                                                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                //                                                data: {
+                //                                                    user_id: user_id,
+                //                                                },
+                //                                                success: function (data) {
+                //                                                    $('.user_posts_container').empty().append(data);
+                //                                                }
+                //                                            });
             });
 
             $(window).bind('scroll', function () {
@@ -496,6 +496,24 @@ function custom_script() {
                     },
                     success: function (data, textStatus, jqXHR) {
                         $('.follow_box_' + user_id + follow_user_id).replaceWith(data);
+                    }
+                });
+            });
+
+            $(document).on('click', '.watch_box', function () {
+
+                var item_id = $(this).attr('data_item_id');
+                var user_id = $(this).attr('data_user_id');
+                var action = $(this).attr('data_action');
+                $.ajax({
+                    url: '<?php echo osc_current_web_theme_url() . 'item_watchlist_ajax.php' ?>',
+                    data: {
+                        item_id: item_id,
+                        user_id: user_id,
+                        action: action
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        $('.item_watch_box' + user_id + item_id).replaceWith(data);
                     }
                 });
             });
