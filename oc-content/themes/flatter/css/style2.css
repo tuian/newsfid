@@ -79,6 +79,28 @@
     width: 100%;
     padding: 0;
 }
+.btn-blue{
+    background-color: #20a8e0;
+    color: #fff;
+}
+.border-radius-0{
+    border-radius: 0;
+}
+.modal-footer.text-left{
+    text-align: left;
+}
+.border-bottom-0{
+    border-bottom: 0;
+}
+input[type=text].border-bottom-0, 
+input[type=password].border-bottom-0, 
+select.border-bottom-0, 
+textarea.border-bottom-0{
+    border-bottom: 0;
+}
+.red_text{
+    color: #a94442;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

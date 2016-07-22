@@ -179,7 +179,7 @@
                                     endif;
                                 endif;
                                 ?>
-                                <li class="treeview <?php echo $active ?>">
+                                <li class="user_settings treeview <?php echo $active ?>" data-toggle="modal" data-target="#user_confirm_password">
                                     <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-pie-chart"></i>Réglage
@@ -267,7 +267,43 @@
                 </aside>
             </div>
             <div class="free-user-post"></div>
-            <div class="search-newsfid-popup"></div>
+            <div class="search-newsfid-popup">                
+                <div id="newsfid-search" class="modal fade" role="dialog">
+                    <div class="modal-dialog search-popup">
+                        <div class="modal-content">
+
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="user_passwor_popup_container">
+                <div id="user_confirm_password" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="blue_text modal-title bold">
+                                    Identification
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="">
+                                    Cette page contient des informations personelles,<br/>
+                                    <span class="bold">confirmer votre mot de passe pour y accéder.</span>
+                                </div>
+                                <div class="input-text-area margin-top-20 left-border box-shadow-none width-60">
+                                    <input class="border-bottom-0 user_password_field" type="password" placeholder="Mot de passe">
+                                </div>
+                                <div class="red_text alert_text"></div>
+                            </div>
+                            <div class="modal-footer text-left">
+                                <button type="button" class="btn btn-blue border-radius-0 user_password_check_btn">Confirmer</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <?php (osc_is_web_user_logged_in()) ? $class = "col-md-8 col-sm-8" : $class = "col-md-10 col-sm-10" ?>
             <div class="<?php echo $class ?> padding-0">
                 <div class="content-wrapper">
@@ -308,19 +344,41 @@
                                     $.ajax({
                                         url: '<?php echo osc_current_web_theme_url() . 'popup_free_account_post.php' ?>',
                                         success: function (data) {
-                                            console.log(data);
-                                            $('.free-user-post').append(data);
+                                            $('.free-user-post').html(data);
 //                                            $('#popup-free-user-post').appendTo("body");
                                             $('#popup-free-user-post').modal('show');
                                         }
                                     });
                                 });
-                            });
-                        </script>
+//                                $(document).on('click', '.user_settings', function () {
+//                                    $.ajax({
+//                                        url: '<?php echo osc_current_web_theme_url() . 'user_confirm_password_popup.php' ?>',
+//                                        success: function (data) {
+//                                            $('.user_passwor_popup_container').html(data);
+//                                            $('#user_confirm_password').modal('show');
+//                                        }
+//                                    });
+//                                });
+                                $(document).on('click', '.user_password_check_btn', function () {
+                                    var password = $('.user_password_field').val();
+                                    $.ajax({
+                                        url: '<?php echo osc_current_web_theme_url() . 'password_check_ajax.php' ?>',
+                                        data: {
+                                            password: password
+                                        },
+                                        success: function (data) {
+                                            if (data == 1) {
+                                                window.location.href = '<?php echo osc_user_profile_url() ?>'
+                                            } else {
+                                                $('.alert_text').html('password is not correct');
+                                            }
+                                        }
+                                    });
+                                });
+                            });</script>
                         <script>
                             $(document).ready(function () {
                                 $(document).on('click', '.search-newsfid-btn', function () {
-
                                     var search_newsfid_text = $('.search-newsfid-text').val();
                                     if (search_newsfid_text != '') {
                                         $.ajax({
@@ -329,13 +387,26 @@
                                                 search_newsfid_text: search_newsfid_text
                                             },
                                             success: function (data, textStatus, jqXHR) {
-                                                $('.search-newsfid-popup').empty().append(data);
+                                                $('.search-newsfid-popup .modal-content').empty().append(data);
                                                 $('#newsfid-search').modal('show');
                                             }
                                         })
                                     }
+                                });
 
+                                $(document).on('keyup', '.search_newsfid_text', function () {
+                                    var search_newsfid_text = $('.search_newsfid_text').val();
+                                    if (search_newsfid_text != '') {
+                                        $.ajax({
+                                            url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
+                                            data: {
+                                                search_newsfid_text: search_newsfid_text
+                                            },
+                                            success: function (data) {
+                                                $('.search-newsfid-popup .modal-content').empty().append(data);
+                                            }
+                                        })
+                                    }
                                 });
                             });
                         </script>
-                   
