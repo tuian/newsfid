@@ -1491,7 +1491,7 @@ function get_user_last_post_resource($user_id) {
         $user_last_post_result = $user_last_post_data->dao->get();
         $user_last_post_result = $user_last_post_result->result();
         if ($user_last_post_result):
-            print_r($user_last_post_result[0]['pk_i_id']);
+            //print_r($user_last_post_result[0]['pk_i_id']);
             return item_resources($user_last_post_result[0]['pk_i_id']);
         else:
             return FALSE;
@@ -1499,5 +1499,50 @@ function get_user_last_post_resource($user_id) {
     else:
         return FALSE;
     endif;
+}
+function get_search_popup($search_newsfid, $item_search_array, $user_search_array) {
+    ?>
+    <!-- Modal content-->
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
+        <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
+        <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="Start typing...">
+        <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>
+        <?php if (!$user_search_array): ?>
+            <h5> Your Search did not return any results. Please try again. </h5>
+
+        <?php endif; ?>
+    </div>
+    <div class="modal-body col-md-offset-2 ">
+        <div class="col-md-12">
+            <label  class="col-md-4  search-list">User</label>
+            <label class="col-md-4 search-list">Articles</label>
+        </div>
+        <?php if ($user_search_array): ?>
+            <div class="search-height col-md-12 padding-0">
+                <div class="col-md-4">
+                    <?php foreach ($user_search_array as $user) : ?>
+                        <div class="col-md-12">
+                            <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
+                                <?php echo $user['user_name']; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="col-md-4">
+                    <?php foreach ($item_search_array as $item) : ?>
+                        <div class="col-md-12">
+                            <a href="javascript:void(0)" >
+                                <?php echo $item['s_title']; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?> 
+                </div>
+            </div>   
+        <?php endif; ?>
+    </div>
+
+    <?php
 }
 ?>

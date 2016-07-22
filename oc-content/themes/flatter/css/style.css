@@ -2386,6 +2386,7 @@ select {
     //  left: 5px;
     border-radius: 30px;
     box-shadow: 0 6px 12px 0px #757575;
+    transition: all 0.4s ease-in-out;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label {
     background-color: rgba(51, 92, 183, 0.7);
@@ -2420,8 +2421,8 @@ select {
 }
 .en-savoir-plus-gry {
     padding-top: 0px;
-    padding-left: 24px;
-    margin-left: 23px;
+    padding-left: 20px;
+    margin-left: 22px;
 }
 .publier{
     padding-top: 20px;
@@ -2657,6 +2658,14 @@ select {
 .search-height{
     overflow-y: scroll;
     height: 300px;
+}
+.input-text-area input[type="text"]{
+    padding-left: 25px;
+    outline: 0;
+}
+.country-select select{
+    box-shadow: none !important;
+    outline: 0;
 }
 /**********
 orange: ##f68935
