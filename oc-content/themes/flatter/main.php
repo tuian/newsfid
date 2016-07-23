@@ -211,7 +211,7 @@
                             </div>
 
                             <div class="box-body" style="display: block;">
-                                <input type="text" class="filter_city">
+                                <input type="text" class="filter_city" data_location_id="" data_location_type="city">
                             </div>
                             <div class="box-body" style="display: block;">                            
                                 <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
@@ -266,7 +266,7 @@
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                        <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -460,8 +460,9 @@ function footer_script() {
         var pageNumber = $('#page_number').val();
         var is_enable_ajax = true;
         var loading = false;
-        var location_type = $('.nav-tabs-theme li.active').attr('data_location_type');
-        var location_id = $('.nav-tabs-theme li.active').attr('data_location_id');
+        var location_type = $('.filter_city').attr('data_location_type');
+        var location_id = $('.filter_city').attr('data_location_id');
+        var category_id = $('#sCategory').val();
         $(document).ready(function () {
 
             $('.select2').each(function () {
@@ -469,39 +470,37 @@ function footer_script() {
                 $(this).select2({
                     placeholder: 'placeholder'
                 });
-            });
-
+            });           
             $('.filter_city').typeahead({
                 source: function (query, process) {
                     var $items = new Array;
-                    var c_id = $('#countryId').val();
-                    if (c_id) {
-                        $items = [""];
-                        $.ajax({
-                            url: "<?php echo osc_current_web_theme_url('city_ajax.php') ?>",
-                            dataType: "json",
-                            type: "POST",
-                            data: {city_name: query, country_id: c_id},
-                            success: function (data) {
-                                $.map(data, function (data) {
-                                    var group;
-                                    group = {
-                                        id: data.pk_i_id,
-                                        name: data.s_name,
-                                    };
-                                    $items.push(group);
-                                });
+                    $items = [""];
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                        dataType: "json",
+                        type: "POST",
+                        data: {city_name: query},
+                        success: function (data) {
+                            $.map(data, function (data) {
+                                var group;
+                                group = {
+                                    id: data.city_id,
+                                    name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                                };
+                                $items.push(group);
+                            });
 
-                                process($items);
-                            }
-                        });
-                    } else {
-                        alert('Please select country first');
-                    }
+                            process($items);
+                        }
+                    });
                 },
+                
                 afterSelect: function (obj) {
-                    $('#sRegion').val(obj.id);
+                    $('.filter_city').attr('data_location_id', obj.id);
                 },
+//                updater:function (item) {
+//                    console.log(item);
+//                },
             });
 
     <?php if (!osc_is_web_user_logged_in()): ?>
@@ -584,6 +583,25 @@ function footer_script() {
                             }
                         });
                     }
+                });
+                $('.filter-button').click(function () {                    
+                    $('.posts_container .loading').fadeIn(500);
+                    $('.user_related_posts').css({'opacity': '0.2'});
+                    reset_variable_after_login();
+                    //make_after_login_item_ajax_call();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            location_type: location_type,
+                            location_id: location_id,
+                            category_id: category_id
+                        },
+                        success: function (data) {
+                            $('.user_related_posts').empty().append(data);
+                            $('.posts_container .loading').fadeOut(1000);
+                            $('.user_related_posts').css({'opacity': '1'});
+                        }
+                    });
                 });
 
                 $(document).on('click', '.load_more_comment', function () {
@@ -738,6 +756,7 @@ function footer_script() {
                     page_number: page_number,
                     location_type: location_type,
                     location_id: location_id,
+                    category_id: category_id,
                 },
                 success: function (data) {
                     if (data !== '0') {
@@ -791,8 +810,12 @@ function footer_script() {
         function reset_variable_after_login() {
             is_enable_ajax = true;
             loading = false;
-            location_type = $('.nav-tabs-theme li.active').attr('data_location_type');
-            location_id = $('.nav-tabs-theme li.active').attr('data_location_id');
+            if( ! $('.filter_city').val()){
+                $('.filter_city').attr('data_location_id', '');
+            }
+            location_type = $('.filter_city').attr('data_location_type');
+            location_id = $('.filter_city').attr('data_location_id');
+            category_id = $('#sCategory').val();
             $('#item_page_number').val(1);
         }
     </script>

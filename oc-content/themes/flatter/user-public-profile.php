@@ -42,7 +42,7 @@ function sidebar() {
 <div id="cover" class="cover">
     <?php
     if (get_user_last_post_resource(osc_user_id()) !== FALSE):
-        //get_user_last_post_resource(osc_user_id());
+    //get_user_last_post_resource(osc_user_id());
     else:
         ?>
         <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
@@ -150,16 +150,17 @@ $user = get_user_data(osc_user_id());
 
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <input type='text' placeholder="What are you looking for?">
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>
                             </div>
+                            <span> What are you looking for?</span>
                             <!-- /.box-tools -->
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body" style="display: block;">                             
+
+                        <!--<div class="box-body" style="display: block;">                             
                             <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
                                 <option>Podcast</option>                                
                                 <option>Podcast1</option>                                
@@ -168,65 +169,36 @@ $user = get_user_data(osc_user_id());
                                 <option>Podcast4</option>                                
                                 <option>Podcast5</option>                                
                             </select>
-                        </div>                       
+                        </div> -->
+
                         <div class="box-body" style="display: block;">
-                            <?php osc_goto_first_category(); ?>
-                            <?php if (osc_count_categories()) { ?>
-                                <select id="sCategory" class="form-control" name="sCategory">
-                                    <option value=""><?php _e('Select a category', 'flatter'); ?></option>
-                                    <?php while (osc_has_categories()) { ?>
-                                        <option class="maincat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                        <?php if (osc_count_subcategories()) { ?>
-                                            <?php while (osc_has_subcategories()) { ?>
-                                                <option class="subcat" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                            <div class="category-dropdown left-border margin-top-20" style="display: block;">
+                                <?php osc_goto_first_category(); ?>
+                                <?php if (osc_count_categories()) { ?>
+                                    <select id="sCategory" class="form-control input-box" name="sCategory">
+                                        <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
+                                        <?php while (osc_has_categories()) { ?>
+                                            <option class="maincat bold" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                            <?php if (osc_count_subcategories()) { ?>
+                                                <?php while (osc_has_subcategories()) { ?>
+                                                    <option class="subcat margin-left-30" value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
+                                                <?php } ?>
                                             <?php } ?>
                                         <?php } ?>
-                                    <?php } ?>
-                                </select>
-                            <?php } ?>
 
+                                    </select>
+                                <?php } ?>
+                            </div>
                         </div>
 
                         <div class="box-body" style="display: block;">
-                            <?php if (osc_get_preference('location_input', 'flatter_theme') == '1') { ?> 
-                                <?php $aRegions = Region::newInstance()->listAll(); ?>
-                                <?php if (count($aRegions) > 0) { ?>
-                                    <select name="sRegion"  class="form-control" id="sRegion">
-                                        <option value=""><?php _e('Select a region', 'flatter'); ?></option>
-                                        <?php foreach ($aRegions as $region) { ?>
-                                            <option value="<?php echo $region['s_name']; ?>"><?php echo $region['s_name']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                <?php } ?>
-                            <?php } else { ?>
-                                <input name="sCity" id="sCity" class="form-control" placeholder="<?php _e('Type a city', 'flatter'); ?>" type="text" />
-                                <input name="sRegion" id="sRegion" type="hidden" />
-                                <script type="text/javascript">
-                                    $(function () {
-                                        function log(message) {
-                                            $("<div/>").text(message).prependTo("#log");
-                                            $("#log").attr("scrollTop", 0);
-                                        }
-
-                                        $("#sCity").autocomplete({
-                                            source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
-                                            minLength: 2,
-                                            select: function (event, ui) {
-                                                $("#sRegion").attr("value", ui.item.region);
-                                                log(ui.item ?
-                                                        "<?php _e('Selected', 'flatter'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                                        "<?php _e('Nothing selected, input was', 'flatter'); ?> " + this.value);
-                                            }
-                                        });
-                                    });
-                                </script>
-                            <?php } ?>
+                            <input type="text" class="filter_city" data_location_id="" data_location_type="city">
                         </div>
                         <div class="box-body" style="display: block;">                            
                             <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
                         </div>
                     </div>
-                    <!-- /.box -->                   
+                    <!-- /.box -->                 
                 </div>
             </div>
 
