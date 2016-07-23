@@ -2372,7 +2372,7 @@ select {
 }
 .media-info,.location-info{
     background-color: white;
-    height: 1000px;
+    height: auto;
 }
 .location-info{
     height: 800px;
@@ -2726,6 +2726,25 @@ select {
 .margin-bottom-3per{
     margin-bottom: 3%;
 }
+ .ou{
+        margin-left: 11%;
+    }
+@media only screen and (max-width: 768px){
+    .ou{
+        margin-left: 0;
+    }
+}
+@media only screen and (min-width:767px) and (max-width: 1024px){
+    .ou{
+        margin-left: 22%;
+    }
+}
+@media only screen and (min-width:990px){
+    .media-info{
+       height: 810px;
+    }
+}
+
 /**********
 orange: ##f68935
 blue: #20a8e0

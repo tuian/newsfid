@@ -143,7 +143,8 @@ require_once 'functions.php';
                                                     <input type="checkbox" name="name" class="onoffswitch-checkbox" id="image" checked>
                                                     <label class="onoffswitch-label" for="image"></label>
                                                 </div>
-                                            </div><div class="col-md-1">ou</div>
+                                            </div>
+                                            <div class="col-md-1 ou">ou</div>
                                             <div class="col-md-2"><span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
                                                 <div class="onoffswitch">
                                                     <input type="checkbox" name="name" class="onoffswitch-checkbox" id="video">
@@ -154,7 +155,7 @@ require_once 'functions.php';
                                         <div class="col-md-12">
                                             <div class="col-md-offset-1 col-md-4">
                                                 <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
-                                                <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera1.png' ?>')">
+                                                <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
                                                     <input type="file" name="photos[]" id="photos" placeholder="Address">
                                                 </div>
                                             </div>
@@ -167,27 +168,8 @@ require_once 'functions.php';
                                             colt un liens video (Youtubel Daylinotion I Vimio)
                                         </div>
                                     </div>
-
-
-
-                                    <!--                                
-                                                                    <div class="col-md-4 media-video-image">
-                                                                        
-                                    
-                                    
-                                                                        <div class="col-md-3 ou" style="text-align: center">ou</div>
-                                    
-                                                                       
-                                                                    </div>   -->
-
-                                    <!--                                <div class="col-md-12 vertical-row">
-                                                                        <div class=" col-md-offset-1 margin-bottom-20">
-                                    
-                                                                            
-                                                                        </div>
-                                                                    </div>-->
                                 </div> 
-                                <div class=" col-md-12 border-bottom vertical-row">
+                                <div class=" col-md-12 border-bottom">
                                     <div class="col-md-6">
                                         <span class="bold">GIF</span>
                                         <div class="onoffswitch margin-top-20">
@@ -201,7 +183,7 @@ require_once 'functions.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class=" col-md-12 border-bottom vertical-row">
+                                <div class=" col-md-12 border-bottom">
                                     <div class="col-md-6">
                                         <span class="bold">Music</span>
                                         <div class="onoffswitch margin-top-20">
@@ -218,7 +200,7 @@ require_once 'functions.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class=" col-md-12 border-bottom vertical-row">
+                                <div class=" col-md-12 border-bottom">
                                     <div class="col-md-6">
                                         <span class="bold">Podcast</span>
                                         <div class="onoffswitch margin-top-20">
@@ -270,7 +252,7 @@ require_once 'functions.php';
                                     <?php
                                     foreach ($counrty_array as $countryList):
                                         ?>
-                                                                                                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                         <?php
                                     endforeach;
                                     ?>
@@ -297,35 +279,63 @@ require_once 'functions.php';
                         <!-------------------------Location end------------------------------>
                         <div class="breack-line"></div></div>
                     <!-------------------------Reminder start------------------------------>
-                    <div class="modal-body greybg border-radius-10">
-                        <div class="sub">
-                            <div class="col-md-12">
-                                <h1 class="bold big-font col-md-12">Bon a Savior</h1>
-                                <p class="col-md-7" style="margin-left: -10px;">
-                                    A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
-                                </p>
+                    <div class="col-md-12 padding-0 border-radius-10">
+                        <div class="greybg padding-top-3per">
+                            <div class="col-md-12 vertical-row">
+                                <div class="sub col-md-offset-1">
+                                    <h1 class="bold big-font col-md-12">Bor a savoir</h1>
+                                    <div class="col-md-7">
+                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+                                    </div>
+
+                                </div>
                             </div>
-                        </div><div class="clear"></div>
-                        <div class="user-photo col-md-2">
-                            <?php
-                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                            ?>
-                            <img src="<?php echo $img_path; ?>" alt="user"" width="100px" height="100px">
-                        </div> 
-                        <div class="user-info col-md-6">
-                            <h5>Gwinel Madlisse<img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>" width="16px" height="16px" style="margin-left: 10px"></h5>
-                            <h5>Vous avez deja <span style="color:orangered">365</span> publication</h5>
+                            <div class="col-md-12">
+                                <div class="col-md-offset-8">
+                                    <button class="en-savoir-plus-button-gry">Ne plus afficher ce message</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="en-savoir-plus-gry col-md-3">
-                            <button class="en-savoir-plus-button-gry">En savoir plus</button>
+                        <div class="col-md-12 bg-white">
+                            <div class="col-md-12 vertical-row">
+                                <div class="col-md-offset-1">
+                                    <div class="col-md-2 margin-top-20">
+                                        <?php
+                                        $current_user = get_user_data(osc_logged_user_id());
+
+                                        if (!empty($current_user[0]['s_path'])):
+                                            $img_path = osc_base_url() . '/' . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . '.' . $current_user[0]['s_extension'];
+                                        else:
+                                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                                        endif;
+                                        ?>
+
+                                        <img src="<?php echo $img_path; ?>" alt="user" class="img img-responsive">
+                                    </div> 
+                                    <div class="col-md-6 padding-top-3per">
+                                        <div class="col-md-12 vertical-row">
+                                            <div class="col-md-4 padding-0">
+                                                <h5 >Gwinel Madlisse</h5>
+                                            </div>
+                                            <div class="col-md-6 padding-0">
+                                                <img class="vertical-top col-md-1 star img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-12 vertical-row">
+                                            <h5 class=" margin-0">Vous avez deja <span style="color:orangered">365</span> publication</h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 vertical-row">
+                                <div class="col-md-offset-1 col-md-11 padding-top-3per">
+                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                </div>
+                            </div>
                         </div>
-
-
-                    </div>
-                    <div class="clear"></div>
-                    <div class="col-md-offset-1 user-data">
-                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
-                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
                     </div>
                     <!-------------------------Reminder end------------------------------>
                     <div class="breack-line"></div>
