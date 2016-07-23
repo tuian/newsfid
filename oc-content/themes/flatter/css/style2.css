@@ -123,6 +123,22 @@ textarea.border-bottom-0{
     padding: 15px 10px;
     margin: 0;
 }
+.post_file_upload_container {
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 80px;
+    cursor: pointer;
+}
+.post_file_upload_container #photos {
+    filter: alpha(opacity=0);
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 80px;
+    cursor: pointer;
+    width: 100px;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

@@ -28,7 +28,8 @@ if ($following_user):
 else:
     $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
 endif;
-$data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
+//$data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
+$data->dao->orWhere(sprintf('item.fk_i_user_id = %s', osc_logged_user_id()));
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;

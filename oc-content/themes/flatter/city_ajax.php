@@ -2,12 +2,6 @@
 
 require '../../../oc-load.php';
 
-//$conn = DBConnectionClass::newInstance();
-//$data = $conn->getOsclassDb();
-//$comm = new DBCommandClass($data);
-//$db_prefix = DB_TABLE_PREFIX;
-
-
 $country_id = $_REQUEST['country_id'];
 $city_name = $_REQUEST['city_name'];
 $conn = getConnection();

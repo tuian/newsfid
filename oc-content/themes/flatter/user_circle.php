@@ -107,7 +107,7 @@ if ($follower_users):
                                 <div class="description-block">
                                     <h5 class="description-header">
                                         <?php
-                                        echo count(get_user_posts_count($user['user_id']));
+                                        echo get_user_posts_count($user['user_id']);
                                         ?>
                                     </h5>
                                     <span class="description-text">POSTS</span>

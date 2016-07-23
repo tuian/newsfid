@@ -41,8 +41,8 @@ function sidebar() {
 
 <div id="cover" class="cover">
     <?php
-    if (get_user_last_post_resource(osc_user_id())):
-        get_user_last_post_resource(osc_user_id());
+    if (get_user_last_post_resource(osc_user_id()) !== FALSE):
+        //get_user_last_post_resource(osc_user_id());
     else:
         ?>
         <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />

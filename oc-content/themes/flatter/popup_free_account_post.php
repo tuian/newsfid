@@ -1,23 +1,6 @@
 <?php
 require_once '../../../oc-load.php';
 require_once 'functions.php';
-
-$user_post_item['fk_i_category_id'] = $_REQUEST['sCategory'];
-$user_post_item_disc['s_title'] = $_REQUEST['p_title'];
-$user_post_item_disc['s_description'] = $_REQUEST['p_disc'];
-
-
-//$user_post['s_title'] = $s_title;
-//$user_post['s_description'] = $s_description;
-//$user_post['s_description'] = $s_description;
-//$user_post['s_description'] = $s_description;
-//$user_post['s_description'] = $s_description;
-
-$insert_user_post = new DAO();
-$insert_user_post->dao->insert(sprintf('%st_item', DB_TABLE_PREFIX, $user_post_item));
-//$insert_user_post_disc->dao->insert(sprintf('%st_item_description', DB_TABLE_PREFIX, $user_post_item_disc));
-//$insert_user_post->insert(sprintf('%st_item_description', DB_TABLE_PREFIX, $user_post));
-
 ?>
 <!---- modal popup for free user post start------>
 
@@ -27,8 +10,8 @@ $insert_user_post->dao->insert(sprintf('%st_item', DB_TABLE_PREFIX, $user_post_i
         <div class="large-modal">
             <!-- Modal content-->
             <div class="modal-content">
-                <form method="post">
-                    <input type="hidden" name="save" value="true">
+                <form method="post" action="<?php echo osc_current_web_theme_url('post_add.php'); ?>" enctype="multipart/form-data">
+                    <!--<input type="hidden" name="save" value="true">-->
                     <!-------------------------User Information Start---------------------------->
                     <div class="modal-body greybg">
                         <div class="sub">
@@ -40,14 +23,21 @@ $insert_user_post->dao->insert(sprintf('%st_item', DB_TABLE_PREFIX, $user_post_i
                             </div>
                         </div><div class="clear"></div>
                         <div class="col-md-2 ">
-<?php
-$img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-?>
+                            <?php
+                            $current_user = get_user_data(osc_logged_user_id());
+
+                            if (!empty($current_user[0]['s_path'])):
+                                $img_path = osc_base_url() . '/' . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . '.' . $current_user[0]['s_extension'];
+                            else:
+                                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                            endif;
+                            ?>
+
                             <img src="<?php echo $img_path; ?>" alt="user" class="img img-responsive">
                         </div> 
                         <div class="user-info col-md-6">
-                            <h5>Gwinel Madlisse<img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>" width="16px" height="16px" style="margin-left: 10px"></h5>
-                            <h5>Vous avez deja <span style="color:orangered">365</span> publication</h5>
+                            <h5><?php echo $current_user[0]['user_name'] ?><img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>" width="16px" height="16px" style="margin-left: 10px"></h5>
+                            <h5>Vous avez deja <span style="color:orangered"><?php echo get_user_posts_count($current_user[0]['user_id']) ?></span> publication</h5>
                         </div>
                         <div class="en-savoir-plus col-md-3">
                             <button class="en-savoir-plus-button">En savoir plus</button>
@@ -69,11 +59,11 @@ $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                         </div>
                         <div class="col-md-offset-1">
                             <div class="category-dropdown left-border margin-top-20" style="display: block;">
-<?php osc_goto_first_category(); ?>
+                                <?php osc_goto_first_category(); ?>
                                 <?php if (osc_count_categories()) { ?>
                                     <select id="sCategory" class="form-control input-box" name="sCategory">
                                         <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
-    <?php while (osc_has_categories()) { ?>
+                                        <?php while (osc_has_categories()) { ?>
                                             <option class="maincat bold" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
                                             <?php if (osc_count_subcategories()) { ?>
                                                 <?php while (osc_has_subcategories()) { ?>
@@ -83,7 +73,7 @@ $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                         <?php } ?>
 
                                     </select>
-<?php } ?>
+                                <?php } ?>
 
                             </div>
                             <div class="input-text-area margin-top-20 left-border box-shadow-none width-60">
@@ -139,7 +129,10 @@ $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                     </div>
                                     <div class="col-md-12 vertical-row">
                                         <div class="col-md-offset-1 col-md-4">
-                                            <img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">
+                                            <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
+                                            <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
+                                                <input type="file" name="photos[]" id="photos" placeholder="Address">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -250,10 +243,10 @@ $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                 <!--                                <?php $counrty_array = get_country_array(); ?>
                                                                 <select id="country-list" style="box-shadow: none;">
                                                                     <option value="Country">&nbsp;Country</option>
-<?php
-foreach ($counrty_array as $countryList):
-    ?>
-                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                <?php
+                                foreach ($counrty_array as $countryList):
+                                    ?>
+                                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                     <?php
                                 endforeach;
                                 ?>
@@ -262,18 +255,18 @@ foreach ($counrty_array as $countryList):
                             </div>
 
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                <input type="text" id="s_region" name="s_region" placeholder="Region">
-                                <input type="hidden" id="sRegion" name="sRegion">
+                                <input type="text" id="s_region_name" name="s_region_name" placeholder="Region">
+                                <input type="hidden" id="s_region_id" name="s_region_id">
                             </div>
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                <input type="text" name="s_city" class="form-control" id="s_city" placeholder="City">
-                                <input type="hidden" name="cityId" class="form-control" id="cityId">
+                                <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City">
+                                <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
                             </div>
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                <input type="text" placeholder="City Area">
+                                <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name">
                             </div>
                             <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                <input type="text" placeholder="Address">
+                                <input type="text" name="s_address" id="s_address" placeholder="Address">
                             </div>
                         </div>
                     </div>
@@ -290,9 +283,9 @@ foreach ($counrty_array as $countryList):
                             </div>
                         </div><div class="clear"></div>
                         <div class="user-photo col-md-2">
-<?php
-$img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-?>
+                            <?php
+                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                            ?>
                             <img src="<?php echo $img_path; ?>" alt="user"" width="100px" height="100px">
                         </div> 
                         <div class="user-info col-md-6">
@@ -351,7 +344,7 @@ $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                             <!----free user post end------->
                                             <script>
                                                 $(document).ready(function () {
-                                                    $('#s_region').typeahead({
+                                                    $('#s_region_name').typeahead({
                                                         source: function (query, process) {
                                                             var $items = new Array;
                                                             var c_id = $('#countryId').val();
@@ -380,14 +373,14 @@ $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                                             }
                                                         },
                                                         afterSelect: function (obj) {
-                                                            $('#cityId').val(obj.id);
+                                                            $('#s_region_id').val(obj.id);
                                                         },
                                                     });
                                                 });
                                             </script>
                                             <script>
                                                 $(document).ready(function () {
-                                                    $('#s_city').typeahead({
+                                                    $('#s_city_name').typeahead({
                                                         source: function (query, process) {
                                                             var $items = new Array;
                                                             var c_id = $('#countryId').val();

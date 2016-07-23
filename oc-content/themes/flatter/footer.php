@@ -178,8 +178,8 @@
             <div class="right-sidebar">
 
             <?php
-            osc_run_hook('mdh_messenger_widget');
-            mdh_messenger_widget();
+            //osc_run_hook('mdh_messenger_widget');
+            //mdh_messenger_widget();
             ?>
         </div>
         </div>	

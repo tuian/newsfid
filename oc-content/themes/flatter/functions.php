@@ -1316,7 +1316,7 @@ function get_user_posts_count($user_id) {
     $user_posts_data->dao->where('fk_i_user_id', $user_id);
     $user_posts_result = $user_posts_data->dao->get();
     $user_posts_array = $user_posts_result->result();
-    return $user_posts_array;
+    return count($user_posts_array);
 }
 
 function user_follow_box($logged_in_user_id, $follow_user_id) {
@@ -1457,18 +1457,18 @@ function update_user_share_item($user_id, $item_id, $share_value) {
 
 function get_user_watchlist_item($user_id) {
     $user_watchlist_data = new DAO();
-     $item_result = false;
+    $item_result = false;
     $user_watchlist_data->dao->select(sprintf('%st_item_watchlist.*', DB_TABLE_PREFIX));
     $user_watchlist_data->dao->from(sprintf('%st_item_watchlist', DB_TABLE_PREFIX));
     $user_watchlist_data->dao->where('user_id', $user_id);
     $user_watchlist_data->dao->where('watchlist_value', '1');
     $user_watchlist_result = $user_watchlist_data->dao->get();
-    if($user_watchlist_result){
-    $user_watchlist_array = $user_watchlist_result->result();
-    if ($user_watchlist_array):
-        $item_result = array_column($user_watchlist_array, 'item_id');
-    
-    endif;
+    if ($user_watchlist_result) {
+        $user_watchlist_array = $user_watchlist_result->result();
+        if ($user_watchlist_array):
+            $item_result = array_column($user_watchlist_array, 'item_id');
+
+        endif;
     }
     return $item_result;
 }
@@ -1561,21 +1561,19 @@ function get_comment_count($item_id) {
 
 function get_user_last_post_resource($user_id) {
     $user_categories = get_user_categories($user_id);
+    $user_last_post_data = new DAO();
+    $user_last_post_data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
+    $user_last_post_data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
     if ($user_categories):
-        $user_last_post_data = new DAO();
-        $user_last_post_data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
-        $user_last_post_data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
         $user_last_post_data->dao->whereIn('fk_i_category_id', $user_categories);
-        $user_last_post_data->dao->orderBy('dt_pub_date', 'DESC');
-        $user_last_post_data->dao->limit(1);
-        $user_last_post_result = $user_last_post_data->dao->get();
-        $user_last_post_result = $user_last_post_result->result();
-        if ($user_last_post_result):
-            //print_r($user_last_post_result[0]['pk_i_id']);
-            return item_resources($user_last_post_result[0]['pk_i_id']);
-        else:
-            return FALSE;
-        endif;
+    endif;
+    $user_last_post_data->dao->orWhere('fk_i_user_id', $user_id);
+    $user_last_post_data->dao->orderBy('dt_pub_date', 'DESC');
+    $user_last_post_data->dao->limit(1);
+    $user_last_post_array = $user_last_post_data->dao->get();
+    $user_last_post_result = $user_last_post_array->result();
+    if ($user_last_post_result):
+        return item_resources($user_last_post_result[0]['pk_i_id']);
     else:
         return FALSE;
     endif;
