@@ -136,23 +136,23 @@
 
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview">
+                                    <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
+                                        <i class="fa fa-circle-o"></i>
+                                        Centres d'intérêt
+                                    </a>
+                                </li>
+                                <li class="treeview">
                                     <a href="#">
                                         <i class="fa fa-copy"></i>
                                         Ma chaîne
                                     </a>
-                                </li>
-                            <?php endif; ?>
-
-                            <?php if (osc_is_web_user_logged_in()): ?>
+                                </li>                             
                                 <li class="treeview">
-
                                     <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
                                         <i class="fa fa-th"></i>
                                         People
                                     </a>
-                                </li>
-                            <?php endif; ?>
-                            <?php if (osc_is_web_user_logged_in()): ?>
+                                </li>                             
                                 <li class="add-item treeview" >
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
@@ -160,10 +160,7 @@
                                         Publier
                                     </a>
 
-                                </li>
-                            <?php endif; ?>
-
-                            <?php if (osc_is_web_user_logged_in()): ?>
+                                </li>                            
                                 <li class="treeview">
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                         <i class="fa fa-th"></i>Compte
@@ -189,10 +186,7 @@
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-laptop"></i>m'abonner
                                     </a>
-                                </li>
-                            <?php endif; ?>
-
-                            <?php if (osc_is_web_user_logged_in()): ?>
+                                </li>                            
 
                                 <li class="treeview">
                                     <a href="#">
