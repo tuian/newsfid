@@ -2242,15 +2242,22 @@ select {
     height: 300px;
 
 }
+@media only screen and (max-width:767px){
+    .greybg{
+        height: 370px;
+
+    }
+}
 .sub{
-    padding-left: 60px;
-    padding-top: 30px;
     color:#fff;
 }
 .user-photo{
-    margin-top: 50px;
-    margin-left: 65px;
-    float: left;
+    margin-top: -5%;
+}
+@media only screen and (max-width: 980px){
+    .user-photo{
+        margin-top: 0;
+    }
 }
 .big-font{
     font-size: 50px;
@@ -2281,6 +2288,18 @@ select {
     color: white;
     border: none;
 }
+.en-savoir-plus-button-orng{
+    padding: 6% 22%;
+    background-color: #f68935;
+    color: white;
+    border: none;
+}
+@media only screen and (max-width: 1024px){
+    .en-savoir-plus-button-orng{
+        padding: 6% 17%;
+
+    }
+}
 .en-savoir-plus-button-gry{
     padding: 9px 70px;
     background-color: #808080;
@@ -2292,8 +2311,8 @@ select {
     padding-top: 15px;
 }
 .breack-line{
-    background-color: rgb(0, 0, 0);
-    padding-top: 25px;
+    height: 10px;
+    clear: both;
 }
 .orange{
     color: #f68935;
@@ -2671,6 +2690,41 @@ select {
 .camera-icon{
     padding: 20%;
     margin-left: 15%;
+}
+.star{
+    padding: 0;
+    width: 7%;
+}
+.padding-top-3per{
+    padding-top: 3%;
+}
+.padding-top-4per{
+    padding-top: 4%;
+}
+.bg-white{
+    background-color: #ffffff;
+    padding-bottom: 5%;
+}
+#popup-free-user-post .modal-content {
+    background-color: transparent;
+}
+.center-contant{
+    width: 80%;
+    margin: auto;
+}
+.border-radius-10{
+    border-radius: 10px;
+}
+.theme-modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #f4f4f4;
+}
+.theme-modal-footer{
+    border-top: 1px solid #f4f4f4;
+    padding: 15px;
+}
+.margin-bottom-3per{
+    margin-bottom: 3%;
 }
 /**********
 orange: ##f68935

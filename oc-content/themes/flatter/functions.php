@@ -1658,4 +1658,5 @@ function get_suggested_users($user_id, $limit) {
 
     return array_slice(array_unique($users), 0, $limit);
 }
+
 ?>
