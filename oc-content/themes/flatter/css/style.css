@@ -2744,11 +2744,86 @@ select {
        height: 810px;
     }
 }
-
+.subscribe-page .cover-img{
+    background-image: url(../images/cover_home_image.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-top: 35%; 
+}
+.font-color-white{
+    color: #fff;
+}
+.bold-600{
+    font-weight: 600;
+}
+.font-65px{
+    font-size: 65px;
+}
+.button-orng{
+    padding: 1% 8%;
+    background-color: #f68935;
+    color: white;
+    border: none;
+}
+.padding-top-8per{
+    padding-top: 8%;
+}
+.font-color-black{
+    color: #000;
+}
+.green-round{
+    border: 1px solid #9fd7c7;
+    border-radius: 50%;
+    background-color: #9fd7c7;
+    width: 15px;
+    height: 15px;
+}
+.white-round{
+    border: 3px solid #faf9f8;
+    border-radius: 50%;
+    background-color: #fff;
+    width: 16px;
+    height: 16px;
+}
+.margin-left-15{
+    margin-left: 15px;
+}
+.font-color-light-blue{
+    color: #a6dded;
+}
+.font-color-royal-blue{
+    color: #0f0f43;
+}
+.bg-transperent{
+    background-color: transparent;
+}
+.bg-blue-light{
+    background-color: #edf6fc;
+}
+.border-right-white{
+    border-right: 1px solid #ffffff;
+}
+.payment-section-2 .container{
+    padding: 0px !important;
+}
+.payment-img{
+    min-height: 90px;;
+}
+.padding-3per{
+    padding: 3%;
+}
+.bg-green-light{
+    background-color: #dbedd2;
+}
 /**********
 orange: ##f68935
 blue: #20a8e0
 grey: #c7c8cd
+light blue: #a6dded
+royal blue: #0f0f43
+light blue bg: #edf6fc
+light green bg: #dbedd2
 
 
 ********/

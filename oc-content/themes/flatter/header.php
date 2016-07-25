@@ -78,13 +78,13 @@
                             <div class="user-panel">
                                 <div class="pull-left image">
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
-                                    <!--<a href="javascript:void(0)">-->
+                                        <!--<a href="javascript:void(0)">-->
                                         <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">
                                     </a>
                                 </div>
                                 <div class="pull-left info">
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
-                                    <!--<a href="javascript:void(0)">-->
+                                        <!--<a href="javascript:void(0)">-->
                                         <p>
                                             <!--<i class="fa fa-circle text-success"></i> -->
                                             <?php is_user_online(osc_logged_user_id()); ?> 
@@ -95,7 +95,7 @@
                                 <div style="height: 10px;"></div>
                                 <div class="pull-left">
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
-                                    <!--<a href="javascript:void(0)">-->
+                                        <!--<a href="javascript:void(0)">-->
                                         <p><?php echo osc_logged_user_name() ?></p>
                                     </a>                                
                                 </div>
@@ -183,7 +183,7 @@
                                     </a>
                                 </li>
                                 <li class="treeview">
-                                    <a href="javascript:void(0)">
+                                    <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
                                         <i class="fa fa-laptop"></i>m'abonner
                                     </a>
                                 </li>                            
@@ -302,6 +302,7 @@
             <div class="<?php echo $class ?> padding-0">
                 <div class="content-wrapper">
                     <div class="content">
+                        <?php osc_show_flash_message() ?>
                         <a href="#" class="scrollToTop"><span class="fa fa-chevron-up fa-2x"></span></a>
                         <?php if (osc_show_flash_message()) { ?>
                             <div class="container">
