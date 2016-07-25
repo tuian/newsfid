@@ -52,7 +52,7 @@ if ($items):
                             <div>
                                 <?php if (osc_count_item_resources()) { ?>
                                     <a href="<?php echo osc_item_url(); ?>">
-                                        <img src="<?php echo osc_resource_preview_url(); ?>" alt="<?php echo osc_item_title(); ?>" class="img-responsive item_image" />
+                                        <?php item_resources(osc_item_id()) ?>
                                     </a>
                                 <?php } else { ?>
                                     <a href="<?php echo osc_item_url(); ?>">

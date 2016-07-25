@@ -2,13 +2,54 @@
 
 require '../../../oc-load.php';
 require 'functions.php';
-//$item_action = new ItemActions();
-//$item_action->uploadItemResources($_FILES['photos'], 800);
-//die;
+
+$db_prefix = DB_TABLE_PREFIX;
+
 $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
+
+$item_type = $_REQUEST['post_type'];
+if ($item_type == 'image'):
+    $file_name = $_FILES['post_media']['name'];
+    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+    $image_extensions = array('png', 'jpg');
+    if (!in_array($extension, $image_extensions)):
+        osc_add_flash_error_message(__("Please choose png or jpg format image", 'flatter'));
+        osc_redirect_to(osc_base_url());
+        die;
+    endif;
+endif;
+
+if ($item_type == 'gif'):
+    $file_name = $_FILES['post_media']['name'];
+    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+    $image_extensions = array('gif');
+    if (!in_array($extension, $image_extensions)):
+        osc_add_flash_error_message(__("Please choose gif format image", 'flatter'));
+        osc_redirect_to(osc_base_url());
+        die;
+    endif;
+endif;
+
+if ($item_type == 'music'):
+    $file_name = $_FILES['post_media']['name'];
+    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+    $image_extensions = array('mp3', 'mp4');
+
+    if (!in_array($extension, $image_extensions)):
+        osc_add_flash_error_message(__("Please choose mp3 or mp4 format file", 'flatter'));
+        osc_redirect_to(osc_base_url());
+        die;
+    endif;
+    if ($_FILES['post_media']['size'] > 10000000):
+        osc_add_flash_error_message(__("Please choose file less than or equal to 10 mb", 'flatter'));
+        osc_redirect_to(osc_base_url());
+        die;
+    endif;
+endif;
 
 $item_array['fk_i_user_id'] = $user['pk_i_id'];
 $item_array['fk_i_category_id'] = $_REQUEST['sCategory'];
+$item_array['item_type'] = $item_type;
 $item_array['dt_pub_date'] = date("Y-m-d H:i:s");
 $item_array['dt_mod_date'] = date("Y-m-d H:i:s");
 $item_array['s_contact_name'] = $user['s_name'];
@@ -23,7 +64,7 @@ $item_array['b_show_email'] = 0;
 //$item_array['dt_expiration'] = '';
 
 $item_data = new DAO();
-$item_data->dao->insert(sprintf('%st_item', DB_TABLE_PREFIX), $item_array);
+$item_data->dao->insert("{$db_prefix}t_item", $item_array);
 $item_id = $item_data->dao->insertedId();
 
 if ($item_id) {
@@ -31,7 +72,7 @@ if ($item_id) {
     $item_desc['fk_c_locale_code'] = 'en_US';
     $item_desc['s_title'] = $_REQUEST['p_title'];
     $item_desc['s_description'] = $_REQUEST['p_disc'];
-    $item_data->dao->insert(sprintf('%st_item_description', DB_TABLE_PREFIX), $item_desc);
+    $item_data->dao->insert("{$db_prefix}t_item_description", $item_desc);
 
     $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
     $region = Region::newInstance()->findByName($_REQUEST['s_region_name']);
@@ -51,14 +92,74 @@ if ($item_id) {
 //$item_location['d_coord_lat'] = '';
 //$item_location['d_coord_long'] = '';
 
-    $item_data->dao->insert(sprintf('%st_item_location', DB_TABLE_PREFIX), $item_location);
+    $item_data->dao->insert("{$db_prefix}t_item_location", $item_location);
     $item = Item::newInstance()->findByPrimaryKey($item_id);
     insert_geo_location($item);
 
     $item_action = new ItemActions();
-    $item_action->uploadItemResources($_FILES['photos'], $item_id);
+
+    if ($item_type == 'image' || $item_type == 'gif' || $item_type == 'music'):
+        item_files_upload($_FILES['post_media'], $item_id);
+    else:
+        item_embedcode_upload($_REQUEST['post_media'], $item_id);
+    endif;
 
     osc_redirect_to(osc_base_url());
     die;
 }
+
+function item_files_upload($aResources, $itemId) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $item_resource_data = new DAO();
+    $folder = osc_uploads_path() . (floor($itemId / 100)) . "/";
+
+    //foreach ($aResources as $key => $error) {
+    $tmpName = $aResources['tmp_name'];
+    $file_name = $aResources['name'];
+    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+    $item_resource_data->dao->insert("{$db_prefix}t_item_resource", array('fk_i_item_id' => $itemId));
+
+    $resourceId = $item_resource_data->dao->insertedId();
+
+    if (!is_dir($folder)) {
+        if (!@mkdir($folder, 0755, true)) {
+            return 3; // PATH CAN NOT BE CREATED
+        }
+    }
+    move_uploaded_file($tmpName, $folder . $resourceId . '.' . $extension);
+    //osc_copy($tmpName, $folder . $resourceId . '.' . $extension);
+    $s_path = str_replace(osc_base_path(), '', $folder);
+    $item_resource_data->dao->update("{$db_prefix}t_item_resource", array(
+        's_path' => $s_path
+        , 's_name' => osc_genRandomPassword()
+        , 's_extension' => $extension
+            //, 's_content_type' => $mime
+            )
+            , array(
+        'pk_i_id' => $resourceId
+        , 'fk_i_item_id' => $itemId
+            )
+    );
+}
+
+function item_embedcode_upload($aResources, $itemId) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $item_resource_data = new DAO();
+    $item_resource_data->dao->insert("{$db_prefix}t_item_resource", array('fk_i_item_id' => $itemId));
+    $resourceId = $item_resource_data->dao->insertedId();
+    $s_path = $aResources;
+    $item_resource_data->dao->update("{$db_prefix}t_item_resource", array(
+        's_path' => $s_path
+        , 's_name' => osc_genRandomPassword()
+            //, 's_extension' => $extension
+            //, 's_content_type' => $mime
+            )
+            , array(
+        'pk_i_id' => $resourceId
+        , 'fk_i_item_id' => $itemId
+            )
+    );
+}
+
 ?>

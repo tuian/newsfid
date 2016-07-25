@@ -211,7 +211,7 @@
                             </div>
 
                             <div class="box-body" style="display: block;">
-                                <input type="text" class="filter_city" data_location_id="" data_location_type="city">
+                                <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city name here' ?>">
                             </div>
                             <div class="box-body" style="display: block;">                            
                                 <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
@@ -266,7 +266,7 @@
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -470,7 +470,7 @@ function footer_script() {
                 $(this).select2({
                     placeholder: 'placeholder'
                 });
-            });           
+            });
             $('.filter_city').typeahead({
                 source: function (query, process) {
                     var $items = new Array;
@@ -494,13 +494,12 @@ function footer_script() {
                         }
                     });
                 },
-                
                 afterSelect: function (obj) {
                     $('.filter_city').attr('data_location_id', obj.id);
                 },
-//                updater:function (item) {
-//                    console.log(item);
-//                },
+    //                updater:function (item) {
+    //                    console.log(item);
+    //                },
             });
 
     <?php if (!osc_is_web_user_logged_in()): ?>
@@ -584,7 +583,7 @@ function footer_script() {
                         });
                     }
                 });
-                $('.filter-button').click(function () {                    
+                $('.filter-button').click(function () {
                     $('.posts_container .loading').fadeIn(500);
                     $('.user_related_posts').css({'opacity': '0.2'});
                     reset_variable_after_login();
@@ -810,7 +809,7 @@ function footer_script() {
         function reset_variable_after_login() {
             is_enable_ajax = true;
             loading = false;
-            if( ! $('.filter_city').val()){
+            if (!$('.filter_city').val()) {
                 $('.filter_city').attr('data_location_id', '');
             }
             location_type = $('.filter_city').attr('data_location_type');

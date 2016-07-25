@@ -75,7 +75,10 @@
     max-height: 580px;
     overflow: hidden; 
 }
-#cover img{
+#cover img,
+#cover iframe,
+#cover video,
+#cover audio{
     width: 100%;
     padding: 0;
 }
@@ -129,7 +132,7 @@ textarea.border-bottom-0{
     height: 80px;
     cursor: pointer;
 }
-.post_file_upload_container #photos {
+.post_file_upload_container input[type=file] {
     filter: alpha(opacity=0);
     opacity: 0;
     position: absolute;
@@ -138,6 +141,11 @@ textarea.border-bottom-0{
     height: 80px;
     cursor: pointer;
     width: 100px;
+}
+.image iframe, 
+.image video,
+.image audio{
+    max-width: 100% !important;
 }
 /**********
 orange: #f68935

@@ -46,7 +46,7 @@ require_once 'functions.php';
                                         <div class="col-md-6 padding-top-3per">
                                             <div class="col-md-12 vertical-row">
                                                 <div class="col-md-4 padding-0">
-                                                    <h5 >Gwinel Madlisse</h5>
+                                                    <h5><?php echo $current_user[0]['user_name'] ?></h5>
                                                 </div>
                                                 <div class="col-md-6 padding-0">
                                                     <img class="vertical-top col-md-1 star img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>">
@@ -54,7 +54,7 @@ require_once 'functions.php';
 
                                             </div>
                                             <div class="col-md-12 vertical-row">
-                                                <h5 class=" margin-0">Vous avez deja <span style="color:orangered">365</span> publication</h5>
+                                                <h5 class=" margin-0">Vous avez deja <span style="color:orangered"><?php echo get_user_posts_count($current_user[0]['user_id']) ?></span> publication</h5>
                                             </div>
 
 
@@ -140,14 +140,14 @@ require_once 'functions.php';
                                         <div class="col-md-12 vertical-row center-contant">
                                             <div class="col-md-2"> <span class="bold">Image</span>
                                                 <div class="onoffswitch">
-                                                    <input type="checkbox" name="name" class="onoffswitch-checkbox" id="image" checked>
+                                                    <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" checked value="image">
                                                     <label class="onoffswitch-label" for="image"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-1 ou">ou</div>
                                             <div class="col-md-2"><span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
                                                 <div class="onoffswitch">
-                                                    <input type="checkbox" name="name" class="onoffswitch-checkbox" id="video">
+                                                    <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="video" id="video" value="video">
                                                     <label class="onoffswitch-label" for="video"></label>
                                                 </div>
                                             </div>
@@ -156,7 +156,7 @@ require_once 'functions.php';
                                             <div class="col-md-offset-1 col-md-4">
                                                 <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                 <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
-                                                    <input type="file" name="photos[]" id="photos" placeholder="Address">
+                                                    <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add yur embedding code here">
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +173,7 @@ require_once 'functions.php';
                                     <div class="col-md-6">
                                         <span class="bold">GIF</span>
                                         <div class="onoffswitch margin-top-20">
-                                            <input type="checkbox" name="name" class="onoffswitch-checkbox" id="gif">
+                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif" value="gif">
                                             <label class="onoffswitch-label" for="gif"></label>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@ require_once 'functions.php';
                                     <div class="col-md-6">
                                         <span class="bold">Music</span>
                                         <div class="onoffswitch margin-top-20">
-                                            <input type="checkbox" name="name" class="onoffswitch-checkbox" id="music">
+                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" value="music">
                                             <label class="onoffswitch-label" for="music"></label>
                                         </div>
                                         <div class="mp3-max">
@@ -204,7 +204,7 @@ require_once 'functions.php';
                                     <div class="col-md-6">
                                         <span class="bold">Podcast</span>
                                         <div class="onoffswitch margin-top-20">
-                                            <input type="checkbox" name="name" class="onoffswitch-checkbox" id="podcast">
+                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" value="podcast">
                                             <label class="onoffswitch-label" for="podcast"></label>
                                         </div>
                                     </div>
@@ -252,7 +252,7 @@ require_once 'functions.php';
                                     <?php
                                     foreach ($counrty_array as $countryList):
                                         ?>
-                                                                                                                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                         <?php
                                     endforeach;
                                     ?>
@@ -451,14 +451,37 @@ require_once 'functions.php';
                                             </script>
 
                                             <script>
-                                                $("input:checkbox").on('click', function () {
+                                                $(".post_type_switch").on('click', function () {
                                                     var $box = $(this);
                                                     if ($box.is(":checked")) {
-                                                        var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                                                        var group = ".post_type_switch";
                                                         $(group).prop("checked", false);
                                                         $box.prop("checked", true);
                                                     } else {
                                                         $box.prop("checked", false);
+                                                    }
+                                                    var selected_post_type = $('.post_type_switch').filter(':checked');
+
+                                                    if (selected_post_type.attr('data_post_type') == 'music' || selected_post_type.attr('data_post_type') == 'podcast') {
+                                                        var duplicate_post_media = $('#post_media').clone();
+                                                        $('#post_media').remove();
+                                                        $(selected_post_type).parent().after(duplicate_post_media);
+                                                    }
+                                                    if (selected_post_type.attr('data_post_type') == 'gif') {
+                                                        var duplicate_post_media2 = $('#post_media').clone();
+                                                        $('#post_media').remove();
+                                                        $(selected_post_type).parent().after(duplicate_post_media2);
+                                                    }
+                                                    if (selected_post_type.attr('data_post_type') == 'image' || selected_post_type.attr('data_post_type') == 'video') {
+                                                        var duplicate_post_media = $('#post_media').clone();
+                                                        $('#post_media').remove();
+                                                        $('.post_file_upload_container').append(duplicate_post_media);
+                                                    }
+
+                                                    if (selected_post_type.attr('data_post_type') == 'podcast' || selected_post_type.attr('data_post_type') == 'video') {
+                                                        $('#post_media').attr('type', 'text');
+                                                    } else {
+                                                        $('#post_media').attr('type', 'file');
                                                     }
                                                 });
                                             </script>

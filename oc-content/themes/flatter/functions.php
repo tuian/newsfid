@@ -1034,7 +1034,7 @@ function get_user_data($user_id) {
     return $user;
 }
 
-function item_resources($item_id) {
+function item_resources_old($item_id) {
     $type = 'image';
     $item_podcast_data = new DAO();
     $item_podcast_data->dao->select(sprintf('%st_item_podcasts.*', DB_TABLE_PREFIX));
@@ -1109,6 +1109,77 @@ function item_resources($item_id) {
             endif;
             ?>
             <img src="<?php echo $img_path ?>" class="img img-responsive pad">
+            <?php
+            break;
+
+        default :
+            break;
+    endswitch;
+}
+
+function item_resources($item_id) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $post_data = new DAO();
+    $post_data->dao->select("item.*");
+    $post_data->dao->from("{$db_prefix}t_item AS item");
+    $post_data->dao->where("item.pk_i_id", $item_id);
+    $post_data->dao->limit(1);
+    $post_data_result = $post_data->dao->get();
+    $post_data_array = $post_data_result->row();
+    $type = $post_data_array['item_type'];
+
+    $post_resource_data = new DAO();
+    $post_resource_data->dao->select("item_resource.*");
+    $post_resource_data->dao->from("{$db_prefix}t_item_resource AS item_resource");
+    $post_resource_data->dao->where("item_resource.fk_i_item_id", $item_id);
+    $post_resource_data->dao->limit(1);
+    $post_resource_data_result = $post_resource_data->dao->get();
+    $post_resource_array = $post_resource_data_result->row();
+    switch ($type):
+
+        case 'podcast':
+            echo $post_resource_array['s_path'];
+            break;
+
+        case 'video':
+            echo $post_resource_array['s_path'];
+            break;
+
+        case 'music':
+            if ($post_resource_array['s_extension'] == 'mp3'):
+                ?>
+                <audio controls>
+                    <source src="<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension'] ?>" />
+                </audio>
+                <?php
+            else:
+                ?>
+                <video controls>
+                    <source src="<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension'] ?>" />
+                </video>
+            <?php
+            endif;
+            break;
+
+        case 'image':
+            if (empty($post_resource_array)):
+                $img_path = osc_current_web_theme_url('images/no-image.jpg');
+            else:
+                $img_path = osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension'];
+            endif;
+            ?>
+            <img src="<?php echo $img_path ?>" class="img img-responsive">
+            <?php
+            break;
+
+        case 'gif':
+            if (empty($post_resource_array)):
+                $img_path = osc_current_web_theme_url('images/no-image.jpg');
+            else:
+                $img_path = osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension'];
+            endif;
+            ?>
+            <img src="<?php echo $img_path ?>" class="img img-responsive">
             <?php
             break;
 
@@ -1652,11 +1723,7 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_array = $suggest_user_result->result();
 
     $rubric_user_id = array_column($suggest_user_array, 'user_id');
-
     $users = array_merge($theme_user_id, $rubric_user_id);
-
-
     return array_slice(array_unique($users), 0, $limit);
 }
-
 ?>
