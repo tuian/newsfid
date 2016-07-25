@@ -103,13 +103,81 @@ require 'functions.php';
                                         </div>
 
                                     </div>
-                                    <div class="col-md-offset-4 col-md-6">
+                                    <div class="col-md-offset-3 col-md-6">
                                         <div class="col-md-12">
                                             <div class="blue_text bold">Mode de Paiement</div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="Name de Carte">
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="margin-top-20">
+                                                <div class="col-md-5">
+                                                    Expiration
+                                                </div>
+                                                <div class="col-md-offset-5 col-md-2">
+                                                    CVV ?
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 vertical-row">
+                                            <div class="col-md-3 grey-border">
+                                                <input type="text" placeholder="MM">
+                                            </div>
+                                            <div class="col-md-1">
+                                                /
+                                            </div>
+                                            <div class="col-md-3 grey-border">
+                                                <input type="text" placeholder="AA">
+                                            </div>
+                                            <div class="col-md-offset-2 col-md-3 grey-border">
+                                                <input type="text" placeholder="Code">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border">
+                                            <select>
+                                                <option>Select Country</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border">
+                                            <input type="text" placeholder="Ligne d'address 1">
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border" >
+                                            <input type="text">
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border">
+                                            <input type="text" placeholder="Code Postal">
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border">
+                                            <input type="text" placeholder="Ville">
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border">
+                                            <input type="text" placeholder="CEDEX">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="breack-line"></div>
+                                <div class="col-md-12 padding-0 bg-white border-radius-10 padding-top-4per">
+                                    <div class="col-md-12 theme-modal-header">
+                                        <div class="col-md-offset-2 col-md-1">
+                                            <div class="onoffswitch margin-top-10">
+                                                <input type="checkbox" name="accept" class="onoffswitch-checkbox post_type_switch" data_post_type="accept" id="accept" value="accept">
+                                                <label class="onoffswitch-label" for="accept"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8"><h4 class=" bold">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</h4> </div>
+                                    </div>
+                                    <div class="col-md-offset-2 col-md-10 theme-modal-header">
+                                       
+                                            <div class="col-md-9">
+                                                I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use
+                                            </div>
+                                            <div class="col-md-9 margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision </div>
+                                            <div class="col-md-9 margin-top-20">
+                                                <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment">Activer mes 30 jours gartuit</button>
+                                                <div class="margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</div>
+                                            </div>
+                                        
                                     </div>
                                 </div>
                             </div>

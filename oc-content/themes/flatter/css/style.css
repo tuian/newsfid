@@ -2816,6 +2816,14 @@ select {
 .bg-green-light{
     background-color: #dbedd2;
 }
+.grey-border input[type=text],.grey-border select{
+    border: 2px solid #eaeff4 !important;
+    border-radius: 5px !important;
+    outline: 0 !important;
+}
+.margin-top-10{
+    margin-top: 10px;
+}
 /**********
 orange: ##f68935
 blue: #20a8e0
@@ -2824,6 +2832,6 @@ light blue: #a6dded
 royal blue: #0f0f43
 light blue bg: #edf6fc
 light green bg: #dbedd2
-
+grey border: #eaeff4
 
 ********/
