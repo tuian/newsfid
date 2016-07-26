@@ -151,8 +151,18 @@
                                         Centres d'intérêt
                                     </a>
                                 </li>
-                                <li class="treeview">
-                                    <a href="#">
+                                <?php
+                                $active = '';
+//                                if (empty($parts[0])):
+                                if (strpos($_SERVER['REQUEST_URI'], 'soundpass') !== false):
+                                    $active = 'active';
+                                else:
+                                    $active = '';
+                                endif;
+//                                endif;
+                                ?>
+                                <li class="treeview <?php echo $active ?>">
+                                    <a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>">
                                         <i class="fa fa-copy"></i>
                                         Ma chaîne
                                     </a>
@@ -240,9 +250,18 @@
                                         <i class="fa fa-laptop"></i>m'abonner
                                     </a>
                                 </li>                            
-
-                                <li class="treeview">
-                                    <a href="#">
+                                <?php
+                                $active = '';
+                                if (!empty($parts[0])):
+                                    if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=34') !== false):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                                endif;
+                                ?>
+                                <li class="treeview <?php echo $active ?>">
+                                    <a href="<?php echo osc_base_url().'?page=page&id=34'?>">
                                         <i class="fa fa-book"></i>Terms
                                     </a>
                                 </li>

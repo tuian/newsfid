@@ -2874,11 +2874,19 @@ select {
     float: right;
 }
 .border-box{
-    border: 1px solid #ccc;
+    border: 1px solid #eaeff4;
 }
 .border-box li.active a{
     border-top:3px solid #20a8e0;
     margin-right: -1px;
+}
+.border-box .menu-tabs li a{
+    padding: 15px 5px;
+}
+.menu-tabs ul li a:hover{
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 .set{
     line-height: 40px;
@@ -2891,6 +2899,17 @@ select {
     .font-30px{
         font-size:17px;
     }
+}
+.soundpass-page .cover-img{
+    background-image: url(../images/sound_cloud.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.min-height-300{
+    min-height: 300px;
+}
+.text-gray-dark {
+    color: #8a8484 !important;
 }
     /**********
     orange: ##f68935

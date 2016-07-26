@@ -24,8 +24,8 @@ require 'functions.php';
                     <li><a href="#">General</a></li>
                 </ul>
             </div>
-            <div class="col-md-12 padding-0">      
-                <ul class="nav nav-tabs">
+            <div class="col-md-12 menu-tabs padding-0 ">      
+                <ul class="nav nav-tabs padding-top-4per padding-bottom-20">
                     <li class="col-md-offset-1"><a href="#">Compte</a></li>
                     <li><a href="#">Contenu</a></li>
                     <li><a href="#">Moyen de Paiment</a></li>
@@ -33,6 +33,14 @@ require 'functions.php';
                     <li><a href="#">Verouillage</a></li>
                     <li><a href="#">Audio</a></li>
                 </ul>
+            </div>
+            <div class="col-md-12">
+                <div class='col-md-3'>
+                    <h1 class="bold blue_text">Compte</h1>
+                </div>
+                <div class="col-md-offset-7 col-md-2 col-sm-2 blue_text text-right padding-20">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit
+                </div>
             </div>
         </div>
     </div>
