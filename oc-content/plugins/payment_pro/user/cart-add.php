@@ -8,16 +8,16 @@ if(substr($item_p, 0, 3)=='PUB') {
 
         if (!ModelPaymentPro::newInstance()->publishFeeIsPaid($item['pk_i_id'])) {
             $category_fee_pub = ModelPaymentPro::newInstance()->getPublishPrice($item['fk_i_category_id']);
-            if ($category_fee_pub > 0) {
+            if (isset($category_fee_pub['price']) && $category_fee_pub['price'] > 0) {
                 $added = true;
-                payment_pro_cart_add('PUB' . $item['fk_i_category_id'] . '-' . $item['pk_i_id'], sprintf(__('Frais de publication %d', 'payment_pro'), $item['pk_i_id']), $category_fee_pub);
+                payment_pro_cart_add('PUB' . $item['fk_i_category_id'] . '-' . $item['pk_i_id'], sprintf(__('Publish fee for listing %d', 'payment_pro'), $item['pk_i_id']), $category_fee_pub['price'], 1, osc_get_preference('default_tax', 'payment_pro')/*$category_fee_pub['tax']*/);
             }
         }
 
     }
 
     if(!$added) {
-        osc_add_flash_error_message(__(' Ce produit ne peut être ajouté', 'payment_pro'));
+        osc_add_flash_error_message(__('Product could not be added', 'payment_pro'));
     }
 
 } else if(substr($item_p, 0, 3)=='PRM') {
@@ -28,14 +28,14 @@ if(substr($item_p, 0, 3)=='PUB') {
     $added = false;
     if(str_replace("PRM", "", $id[0])==$item['fk_i_category_id']) {
         $category_fee = ModelPaymentPro::newInstance()->getPremiumPrice($item['fk_i_category_id']);
-        if($category_fee > 0) {
+        if (isset($category_fee['price']) && $category_fee['price'] > 0) {
             $added = true;
-            payment_pro_cart_add('PRM' . $item['fk_i_category_id'] . '-' . $item['pk_i_id'], sprintf(__(' Frais de publication pour annonce %d', 'payment_pro'), $item['pk_i_id']), $category_fee);
+            payment_pro_cart_add('PRM' . $item['fk_i_category_id'] . '-' . $item['pk_i_id'], sprintf(__('Premium enchancement for listing %d', 'payment_pro'), $item['pk_i_id']), $category_fee['price'], 1, osc_get_preference('default_tax', 'payment_pro')/*$category_fee['tax']*/);
 
             if(!ModelPaymentPro::newInstance()->publishFeeIsPaid($item['pk_i_id'])) {
                 $category_fee_pub = ModelPaymentPro::newInstance()->getPublishPrice($item['fk_i_category_id']);
-                if($category_fee_pub > 0) {
-                    payment_pro_cart_add('PUB' . $item['fk_i_category_id'] . '-' . $item['pk_i_id'], sprintf(__(' Frais de publication pour annonce %d', 'payment_pro'), $item['pk_i_id']), $category_fee_pub);
+                if (isset($category_fee_pub['price']) && $category_fee_pub['price'] > 0) {
+                    payment_pro_cart_add('PUB' . $item['fk_i_category_id'] . '-' . $item['pk_i_id'], sprintf(__('Publish fee for listing %d', 'payment_pro'), $item['pk_i_id']), $category_fee_pub['price'], 1, osc_get_preference('default_tax', 'payment_pro')/*$category_fee_pub['tax']*/);
                 }
             }
 
@@ -43,7 +43,7 @@ if(substr($item_p, 0, 3)=='PUB') {
     }
 
     if(!$added) {
-        osc_add_flash_error_message(__(' Ce produit ne peut être ajouté', 'payment_pro'));
+        osc_add_flash_error_message(__('Product could not be added', 'payment_pro'));
     }
 
 } else {

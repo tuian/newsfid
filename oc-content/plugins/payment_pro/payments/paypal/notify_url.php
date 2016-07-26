@@ -19,9 +19,9 @@
     } else {
         $get_magic_quotes_exists = false;
     }
-    
+
     foreach ($_POST as $key => $value) {
-        // Handle escape characters, which depends on setting of magic quotes 
+        // Handle escape characters, which depends on setting of magic quotes
         if ($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
             $value = urlencode(stripslashes($value));
         } else {
@@ -45,12 +45,18 @@
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_TIMEOUT, 30);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-					
+
     $res = curl_exec($curl);
 
     if (strcmp($res, 'VERIFIED') == 0) {
 
-        PaypalPayment::processStandardPayment();
+        error_log('VERIFIED');
+
+        if(substr($_POST['txn_type'], 0, 6) == 'subscr') { // subscr_payment
+            PaypalPayment::processSubcriptionPayment();
+        } else {
+            PaypalPayment::processStandardPayment();
+        }
 
         if($email_admin) {
             $emailtext = '';
@@ -62,5 +68,3 @@
     } else if (strcmp($res, 'INVALID') == 0) {
         // INVALID: Do nothing
     }
-    
-?>

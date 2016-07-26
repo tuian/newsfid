@@ -7,65 +7,118 @@
 
         public static function button($products, $extra = null) {
 
-            $Amount = 0;
+            $amount = 0;
             foreach($products as $p) {
-                $Amount += $p['amount']*$p['quantity'];
+                $amount += $p['amount']*$p['quantity'];
             }
 
             $r = rand(0,1000);
             $extra['random'] = $r;
             $extra['items'] = $products;
-            $extra['amount'] = $Amount;
+            $extra['amount'] = $amount;
             $extra = payment_pro_set_custom($extra);
 
-            $tx_id = ModelPaymentPro::newInstance()->pendingInvoice($products);
+            $tx_id = ModelPaymentPro::newInstance()->pendingInvoice($products, 30);
 
-            $Merchant_Id   = osc_get_preference('ccavenue_merchant_id', 'payment_pro');
-            $Order_Id         = $tx_id;  // use order id/invoice id instead of product_id
-            $WorkingKey    = osc_get_preference('ccavenue_working_key', 'payment_pro');
-            $Redirect_Url   = osc_route_url('ccavenue-redirect');
-            $Checksum      = self::_getCheckSum($Merchant_Id,$Amount,$Order_Id ,$Redirect_Url,$WorkingKey);
+            $merchant_id = payment_pro_decrypt(osc_get_preference('ccavenue_merchant_id', 'payment_pro'));
+            $order_id = $tx_id;  // use order id/invoice id instead of product_id
+
+            if(osc_get_preference('ccavenue_sandbox','payment_pro')==1) {
+                $working_key = payment_pro_decrypt(osc_get_preference('ccavenue_sandbox_working_key', 'payment_pro'));
+                $access_code = payment_pro_decrypt(osc_get_preference('ccavenue_sandbox_access_code', 'payment_pro'));
+            } else {
+                $working_key = payment_pro_decrypt(osc_get_preference('ccavenue_working_key', 'payment_pro'));
+                $access_code = payment_pro_decrypt(osc_get_preference('ccavenue_access_code', 'payment_pro'));
+            }
+            $redirect_url = osc_route_url('ccavenue-redirect');
+
+            $merchant_data = "";
+            $merchant_data .= "tid=" . time() . "&";
+            $merchant_data .= "merchant_id=" . urlencode($merchant_id) . "&";
+            $merchant_data .= "order_id=" . urlencode($order_id) . "&";
+            $merchant_data .= "currency=INR&";// . urlencode(osc_get_preference("currency", 'payment_pro')) . "&";
+            $merchant_data .= "amount=" . urlencode($amount) . "&";
+            $merchant_data .= "redirect_url=" . urlencode($redirect_url) . "&";
+            $merchant_data .= "cancel_url=" . urlencode($redirect_url) . "&";
+            $merchant_data .= "language=" . urlencode("EN") . "&";
+            //$merchant_data .= "merchant_param1=ABCDEF";// . urlencode($extra) . "";
+
+            Session::newInstance()->_set('ccavenue_' . $order_id, $extra);
+
+            $encrypted_data = self::_encrypt($merchant_data, $working_key);
 
             ?>
             <li class="payment ccavenue-btn">
-                <form id="ccavenue_<?php echo $r; ?>" name="paymentform" method="post" action="https://www.ccavenue.com/shopzone/cc_details.jsp">
-                    <input type="hidden" name="Merchant_Id" value="<?php echo $Merchant_Id; ?>">
-                    <input type="hidden" name="Amount" value="<?php echo $Amount; ?>">
-                    <input type="hidden" name="Order_Id" value="<?php echo $Order_Id; ?>">
-                    <input type="hidden" name="Redirect_Url" value="<?php echo $Redirect_Url; ?>">
-                    <input type="hidden" name="Checksum" value="<?php echo $Checksum; ?>">
-                    <input type="hidden" name="Merchant_Param" value="<?php echo $extra; ?>">
+                <form method="post" id="ccavenue_<?php echo $r; ?>" name="paymentform" class="nocsrf" action="https://<?php if(osc_get_preference('ccavenue_sandbox','payment_pro')==1){ echo 'test'; } else { echo 'secure'; }; ?>.ccavenue.com/transaction/transaction.do?command=initiateTransaction">
+                    <input type=hidden name=encRequest value="<?php echo $encrypted_data; ?>">
+                    <input type=hidden name=access_code value="<?php echo $access_code; ?>">
                 </form>
                 <a id="button-confirm" class="button" onclick="$('#ccavenue_<?php echo $r; ?>').submit();"><span><img  style="cursor:pointer;cursor:hand" src='<?php echo PAYMENT_PRO_URL; ?>payments/ccavenue/ccavenue.gif' border='0' /></span></a>
             </li>
             <?php
         }
 
+        public static function recurringButton($products, $extra = null) {}
+
         public static function processPayment()
         {
-            $working_key   = osc_get_preference('ccavenue_working_key', 'payment_pro');
-            $Merchant_Id   = Params::getParam('Merchant_Id');
-            $Amount          = Params::getParam('Amount');
-            $Order_Id         = Params::getParam('Order_Id');
-            $Checksum      = Params::getParam('Checksum');
-            $AuthDesc       = Params::getParam('AuthDesc');
-            $extra               = Params::getParam('Merchant_Param');
+            if(osc_get_preference('ccavenue_sandbox','payment_pro')==1) {
+                $working_key = payment_pro_decrypt(osc_get_preference('ccavenue_sandbox_working_key', 'payment_pro'));
+            } else {
+                $working_key = payment_pro_decrypt(osc_get_preference('ccavenue_working_key', 'payment_pro'));
+            }
 
-            $verify = self::_verifyCheckSum($Merchant_Id, $Order_Id, $Amount, $AuthDesc, $Checksum, $working_key);
+            $encResponse = $_POST["encResp"];
+            $rcvdString = self::_decrypt($encResponse, $working_key);
+            $order_status = "";
+            $ccData = self::_extractData($rcvdString);
 
-            $data                = payment_pro_get_custom($extra);
-            if(empty($data['items']) || !$verify || $AuthDesc == 'N') {
+            Params::setParam('ccavenue_order_id', @$ccData['order_id']);
+            Params::setParam('ccavenue_status_message', @$ccData['status_message']);
+
+            if(!isset($ccData['order_id']) || $ccData['order_id']=='') {
+                Params::setParam('ccavenue_status_message', __('order id missing', 'payment_pro'));
                 return PAYMENT_PRO_FAILED;
             }
-            $status   = payment_pro_check_items($data['items'], $Amount);
 
-            if ($AuthDesc == "B") {
+            $exists = ModelPaymentPro::newInstance()->getPaymentByCode($ccData['order_id'], 'CCAVENUE', PAYMENT_PRO_COMPLETED);
+            if (isset($exists['pk_i_id'])) {
+                Params::setParam('ccavenue_status_message', __('already paid', 'payment_pro'));
+                return PAYMENT_PRO_ALREADY_PAID;
+            }
+
+            $ccData['order_status'] = strtolower($ccData['order_status']);
+            $ccData['status_message'] = strtolower($ccData['status_message']);
+
+            if($ccData['order_status']==="success" || ($ccData['order_status']=='initiated' && $ccData['status_message']=='success')) {
+                // SUCCESS, continue with the process
+            } else if($order_status==="aborted") {
+                return PAYMENT_PRO_CANCELED;
+            } else {
+                return PAYMENT_PRO_FAILED;
+            }
+
+            if(isset($ccData['merchant_param1']) && trim($ccData['merchant_param1'])!='') {
+                $data = payment_pro_get_custom($ccData['merchant_param1']);
+            } else {
+                $data = payment_pro_get_custom(Session::newInstance()->_get('ccavenue_' . $ccData['order_id']));
+            }
+
+            if(empty($data['items']) || $ccData['status_message'] == 'n' || $ccData['order_status'] == 'failure') {
+                Params::setParam('ccavenue_status_message', __('no items', 'payment_pro'));
+                return PAYMENT_PRO_FAILED;
+            }
+            $status   = payment_pro_check_items($data['items'], $ccData['amount']);
+
+            if ($ccData['vault'] == "B") {
                 return PAYMENT_PRO_PENDING;
             }
 
-           $invoiceId = ModelPaymentPro::newInstance()->saveInvoice(
-                $Order_Id, // transaction code
-                $Amount, //amount
+            $invoiceId = ModelPaymentPro::newInstance()->saveInvoice(
+                $ccData['order_id'], // transaction code
+                $ccData['amount'], //amount
+                0,
+                $ccData['amount'], //amount
                 $status,
                 osc_get_preference("currency", 'payment_pro'), //currency
                 $data['email'], // payer's email
@@ -76,71 +129,85 @@
 
             if($status==PAYMENT_PRO_COMPLETED) {
                 foreach($data['items'] as $item) {
-                    if (substr($item['id'], 0, 3) == 'PUB') {
-                        $tmp = explode("-", $item['id']);
-                        ModelPaymentPro::newInstance()->payPublishFee($tmp[count($tmp)-1], $invoiceId);
-                    } else if (substr($item['id'], 0, 3) == 'PRM') {
-                        $tmp = explode("-", $item['id']);
-                        ModelPaymentPro::newInstance()->payPremiumFee($tmp[count($tmp)-1], $invoiceId);
-                    } else if (substr($item['id'], 0, 3) == 'WLT') {
-                        ModelPaymentPro::newInstance()->addWallet($data['user'], $item['amount']);
-                    } else {
-                        osc_run_hook('payment_pro_item_paid', $item);
-                    }
+                    $tmp = explode("-", $item['id']);
+                    $item['item_id'] = $tmp[count($tmp) - 1];
+                    osc_run_hook('payment_pro_item_paid', $item, $data, $invoiceId);
                 }
             }
             return PAYMENT_PRO_COMPLETED;
         }
 
-        private static function _getchecksum($MerchantId,$Amount,$OrderId ,$URL,$WorkingKey) {
-            $str ="$MerchantId|$OrderId|$Amount|$URL|$WorkingKey";
-            $adler = 1;
-            $adler = self::_adler32($adler,$str);
-            return $adler;
+
+
+        private static function _encrypt($plainText,$key)
+        {
+            $secretKey = self::_hextobin(md5($key));
+            $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+            $openMode = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '','cbc', '');
+            $blockSize = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, 'cbc');
+            $plainPad = self::_pkcs5_pad($plainText, $blockSize);
+            $encryptedText = "";
+            if (mcrypt_generic_init($openMode, $secretKey, $initVector) != -1)
+            {
+                $encryptedText = mcrypt_generic($openMode, $plainPad);
+                mcrypt_generic_deinit($openMode);
+
+            }
+            return bin2hex($encryptedText);
         }
 
-        private static function _verifychecksum($MerchantId,$OrderId,$Amount,$AuthDesc,$CheckSum,$WorkingKey) {
-            $str = "$MerchantId|$OrderId|$Amount|$AuthDesc|$WorkingKey";
-            $adler = 1;
-            $adler = self::_adler32($adler,$str);
-            if($adler == $CheckSum) {
-                return true;
-            } else {
-                return false;
-            }
+        private static function _decrypt($encryptedText,$key)
+        {
+            $secretKey = self::_hextobin(md5($key));
+            $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+            $encryptedText = self::_hextobin($encryptedText);
+            $openMode = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '','cbc', '');
+            mcrypt_generic_init($openMode, $secretKey, $initVector);
+            $decryptedText = mdecrypt_generic($openMode, $encryptedText);
+            $decryptedText = rtrim($decryptedText, "\0");
+            mcrypt_generic_deinit($openMode);
+            return $decryptedText;
+
         }
 
-        //functions
-        private static function _adler32($adler, $str) {
-            $BASE = 65521;
-            $s1 = $adler & 0xffff;
-            $s2 = ($adler >> 16) & 0xffff;
-            for ($i = 0; $i < strlen($str); $i++) {
-                $s1 = ($s1 + Ord($str[$i])) % $BASE;
-                $s2 = ($s2 + $s1) % $BASE;
-            }
-            return self::_leftshift($s2, 16) + $s1;
+        private static function _pkcs5_pad ($plainText, $blockSize)
+        {
+            $pad = $blockSize - (strlen($plainText) % $blockSize);
+            return $plainText . str_repeat(chr($pad), $pad);
         }
 
-        //leftshift function
-        private static function _leftshift($str, $num) {
-            $str = DecBin($str);
-            for ($i = 0; $i < (64 - strlen($str)); $i++) {
-                $str = "0" . $str;
+        private static function _hextobin($hexString)
+        {
+            $length = strlen($hexString);
+            $binString="";
+            $count=0;
+            while($count<$length)
+            {
+                $subString =substr($hexString,$count,2);
+                $packedString = pack("H*",$subString);
+                if ($count==0)
+                {
+                    $binString=$packedString;
+                }
+
+                else
+                {
+                    $binString.=$packedString;
+                }
+
+                $count+=2;
             }
-            for ($i = 0; $i < $num; $i++) {
-                $str = $str . "0";
-                $str = substr($str, 1);
-            }
-            return self::_cdec($str);
+            return $binString;
         }
-        //cdec function
-        private static function _cdec($num) {
-            $dec = 0;
-            for ($n = 0 ; $n < strlen($num) ; $n++)  {
-                $temp = $num[$n] ;
-                $dec = $dec + $temp*pow(2 , strlen($num) - $n - 1);
+
+        private static function _extractData($datastr) {
+            $data = array();
+            $tmp = explode("&", $datastr);
+            foreach($tmp as $t) {
+                $keyvar = explode("=", $t);
+                $data[$keyvar[0]] = @$keyvar[1];
             }
-            return $dec;
+            return $data;
         }
-}
+
+    }

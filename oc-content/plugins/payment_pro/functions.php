@@ -35,7 +35,7 @@
         return json_decode(payment_pro_decrypt(str_replace(" ", "+", $str)), true);
     }
 
-    function wallet_button($amount = '0.00', $description = '', $itemnumber = '101', $extra_array = '||') {
+    function payment_pro_wallet_button($amount = '0.00', $description = '', $itemnumber = '101', $extra_array = '||') {
         $extra = payment_pro_set_custom($extra_array);
         $extra .= 'concept,'.$description.'|';
         $extra .= 'product,'.$itemnumber.'|';
@@ -56,6 +56,20 @@
                 $payment = Payment::newInstance($service);
                 if($payment) {
                     $payment->button($products, $extra);
+                }
+            };
+        } else {
+            _e('No method of payment is available', 'payment_pro');
+        };
+    }
+
+    function payment_pro_recurring_buttons($products, $extra = null) {
+        $services = View::newInstance()->_get('_payment_pro_services');
+        if(is_array($services)) {
+            foreach ($services as $service => $file) {
+                $payment = Payment::newInstance($service);
+                if($payment) {
+                    $payment->recurringButton($products, $extra);
                 }
             };
         } else {
@@ -108,18 +122,20 @@
         osc_sendMail($emailParams);
     }
 
-    function payment_pro_cart_add($id, $description, $amount, $quantity = 1, $extra = null) {
+    function payment_pro_cart_add($id, $description, $amount, $quantity = 1, $tax = 0, $extra = null) {
         if(!is_numeric($amount) || !is_numeric($quantity) || $quantity<=0) {
             return false;
         }
         $items = Session::newInstance()->_get('_payment_pro_cart_items');
         if(isset($items[$id])) {
             $items[$id]['quantity'] = osc_apply_filter('payment_pro_add_quantity', ($items[$id]['quantity']+$quantity), $items[$id]);
+            $items[$id]['extra'] = osc_apply_filter('payment_pro_add_extra', $extra, $items[$id]);
         } else {
             $items[$id] = osc_apply_filter('payment_pro_add_to_cart', array(
                 'id' => $id,
                 'description' => $description,
                 'amount' => $amount,
+                'tax' => $tax,
                 'quantity' => $quantity,
                 'extra' => $extra
             ));
@@ -151,7 +167,11 @@
 
     function payment_pro_register_service($name, $file) {
         $services = json_decode(osc_get_preference('services', 'payment_pro'), true);
-        $services[$name] = str_replace(PAYMENT_PRO_PATH, '', $file);
+        $tmp = explode('plugins/payment_pro/', $file);
+        if(count($tmp)>1) {
+            $file = PAYMENT_PRO_PATH . preg_replace('|^' . $tmp[0] . 'plugins/payment_pro/|', '', $file);
+        }
+        $services[$name] = $file;
         osc_set_preference('services', json_encode($services), 'payment_pro');
         osc_reset_preferences();
     }
@@ -163,21 +183,25 @@
         osc_reset_preferences();
     }
 
-    function payment_pro_check_items($items, $total) {
+    function payment_pro_check_items($items, $total, $error = 0.15) {
         $subtotal = 0;
         foreach($items as $item) {
-            $subtotal += $item['amount'];
+            if(isset($item['amount_total'])) {
+                $subtotal += $item['amount_total'];
+            } else {
+                $subtotal += $item['amount']*$item['quantity']*((100+$item['tax'])/100);
+            }
             $str = substr($item['id'], 0, 3);
             if($str=='PUB') {
                 $cat = explode("-", $item['id']);
                 $price = ModelPaymentPro::newInstance()->getPublishPrice(substr($cat[0], 3));
-                if($item['quantity']!=1 || $price!=$item['amount']) {
+                if($item['quantity']!=1 || $price['price']!=$item['amount']) {
                     return PAYMENT_PRO_WRONG_AMOUNT_ITEM;
                 }
             } if($str=='PRM') {
                 $cat = explode("-", $item['id']);
                 $price = ModelPaymentPro::newInstance()->getPremiumPrice(substr($cat[0], 3));
-                if($item['quantity']!=1 || $price!=$item['amount']) {
+                if($item['quantity']!=1 || $price['price']!=$item['amount']) {
                     return PAYMENT_PRO_WRONG_AMOUNT_ITEM;
                 }
             } else {
@@ -187,9 +211,95 @@
                 }
             }
         }
-        if($subtotal!=$total) {
+        if(abs($subtotal-$total)>($total*$error)) {
             return PAYMENT_PRO_WRONG_AMOUNT_TOTAL;
         }
         return PAYMENT_PRO_COMPLETED;
     }
 
+    function payment_pro_do_404() {
+        ob_get_clean();
+        Rewrite::newInstance()->set_location('error');
+        header('HTTP/1.1 404 Not Found');
+        osc_current_web_theme_path('404.php');
+        exit;
+    }
+
+    function payment_pro_complete_item($item) {
+        if(!isset($item['tax'])) {
+            $item['tax'] = 0;
+            if(isset($item['amount_tax'])) {
+                $item['tax'] = $item['amount_tax']/$item['quantity'];
+            } else if (isset($item['amount_total'])) {
+                $item['tax'] = (100*$item['amount_total']/$item['amount'])-100;
+            }
+        }
+        if(!isset($item['amount_total'])) {
+            $item['amount_total'] = $item['amount']*$item['quantity']*((100+$item['tax'])/100);
+        }
+        if(!isset($item['amount_tax'])) {
+            $item['amount_tax'] = $item['amount']*$item['quantity']*($item['tax']/100);
+        }
+        return $item;
+    }
+
+    function payment_pro_format_price($price, $symbol = null) {
+
+        if($symbol==null) { $symbol = osc_item_currency_symbol(); }
+
+        $price = $price/1000000;
+
+        $currencyFormat = osc_locale_currency_format();
+        $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', $symbol, $currencyFormat);
+        return osc_apply_filter('item_price', $currencyFormat );
+    }
+
+    function payment_pro_is_highlighted($id = null) {
+        if($id==null) {
+            $id = osc_item_id();
+            if($id==0) {
+                return false;
+            }
+        }
+        return ModelPaymentPro::newInstance()->isHighlighted($id);
+    }
+
+    function payment_pro_print_highlight_class($id = null) {
+        if (payment_pro_is_highlighted($id)) {
+            echo " payment-pro-highlighted ";
+        }
+    }
+    osc_add_hook('highlight_class', 'payment_pro_print_highlight_class');
+
+    function payment_pro_invoice_to_items($products) {
+
+        foreach($products as $k => $p) {
+            $products[$k]['description'] = $p['s_concept'];
+            $products[$k]['amount'] = $p['i_amount']/1000000;
+            $products[$k]['tax'] = $p['i_tax']/100;
+            $products[$k]['amount_tax'] = $p['i_amount_tax']/1000000;
+            $products[$k]['amount_total'] = $p['i_amount_total']/1000000;
+            $products[$k]['quantity'] = $p['i_quantity'];
+            $products[$k]['item_id'] = $p['fk_i_item_id'];
+            $products[$k]['id'] = $p['i_product_type'];
+        }
+
+        return $products;
+    }
+
+    function payment_pro_tx_link($code, $source) {
+        $template = '<a href="%s">%s</a>';
+        if($source=='PAYPAL') {
+            $url = 'https://www.paypal.com/uk/cgi-bin/webscr?cmd=_view-a-trans&id=' . $code;
+            return sprintf($template, $url, $code);
+        } else if($source=='STRIPE') {
+            if(substr($code, 0, 2)=="in") {
+                $url = 'https://dashboard.stripe.com/invoices/' . $code;
+            } else {
+                $url = 'https://dashboard.stripe.com/payments/' . $code;
+            }
+            return sprintf($template, $url, $code);
+        }
+        return $code;
+    }

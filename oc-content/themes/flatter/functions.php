@@ -1683,7 +1683,7 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
                 <div class="col-md-4">
                     <?php foreach ($item_search_array as $item) : ?>
                         <div class="col-md-12">
-                            <a href="javascript:void(0)" >
+                            <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
                                 <?php echo $item['s_title']; ?>
                             </a>
                         </div>

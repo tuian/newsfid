@@ -3,6 +3,8 @@
 osc_add_route('paypal-notify', 'payment/paypal-notify/(.+)', 'payment/paypal-notify/{extra}', PAYMENT_PRO_PLUGIN_FOLDER . 'payments/paypal/notify_url.php');
 osc_add_route('paypal-return', 'payment/paypal-return/(.+)', 'payment/paypal-return/{extra}', PAYMENT_PRO_PLUGIN_FOLDER . 'payments/paypal/return.php');
 osc_add_route('paypal-cancel', 'payment/paypal-cancel/(.+)', 'payment/paypal-cancel/{extra}', PAYMENT_PRO_PLUGIN_FOLDER . 'payments/paypal/cancel.php');
+osc_add_route('paypal-webhook', 'payment/paypal-webhook', 'payment/paypal-webhook', PAYMENT_PRO_PLUGIN_FOLDER . 'payments/paypal/webhook.php');
+//require_once PAYMENT_PRO_PATH . 'payments/paypal/lib/autoload.php';
 require_once PAYMENT_PRO_PATH . 'payments/paypal/PaypalPayment.php';
 
 function payment_pro_paypal_install() {
@@ -39,10 +41,44 @@ osc_add_hook('payment_pro_conf_save', 'payment_pro_paypal_conf_save');
 function payment_pro_paypal_conf_form() {
     require_once dirname(__FILE__) . '/admin/conf.php';
 }
-osc_add_hook('payment_pro_conf_form', 'payment_pro_paypal_conf_form');
+osc_add_hook('payment_pro_conf_form', 'payment_pro_paypal_conf_form', 1);
 
 function payment_pro_paypal_conf_footer() {
     require_once dirname(__FILE__) . '/admin/footer.php';
 }
 osc_add_hook('payment_pro_conf_footer', 'payment_pro_paypal_conf_footer');
+
+
+// BLINDLY CREATE A NEW WEBHOOK
+function payment_pro_paypal_create_webhook() {
+
+    $apiContext = PaypalPayment::getApiContext();
+    $output = \PayPal\Api\Webhook::getAll($apiContext);
+    print_r($output->webhooks);
+
+    $webhook = new \PayPal\Api\Webhook();
+    $webhook->setUrl(osc_route_url('paypal-webhook'));
+
+    $webhookEventTypes = array();
+    $webhookEventTypes[] = new \PayPal\Api\WebhookEventType(
+        '{
+        "name":"PAYMENT.AUTHORIZATION.CREATED"
+    }'
+    );
+    $webhookEventTypes[] = new \PayPal\Api\WebhookEventType(
+        '{
+        "name":"PAYMENT.SALE.COMPLETED"
+    }'
+    );
+    $webhook->setEventTypes($webhookEventTypes);
+
+    try {
+        $output = $webhook->create($apiContext);
+    } catch (Exception $ex) {
+        return false;
+    }
+
+    return true;
+
+}
 

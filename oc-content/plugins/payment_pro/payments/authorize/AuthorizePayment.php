@@ -141,6 +141,8 @@
         <?php
         }
 
+        public static function recurringButton($products, $extra = null) {}
+
         public static  function ajaxPayment() {
 
             $status = AuthorizePayment::processPayment();
@@ -188,17 +190,9 @@
 
                 if($status==PAYMENT_PRO_COMPLETED) {
                     foreach($data['items'] as $item) {
-                        if (substr($item['id'], 0, 3) == 'PUB') {
-                            $tmp = explode("-", $item['id']);
-                            ModelPaymentPro::newInstance()->payPublishFee($tmp[count($tmp)-1], $invoiceId);
-                        } else if (substr($item['id'], 0, 3) == 'PRM') {
-                            $tmp = explode("-", $item['id']);
-                            ModelPaymentPro::newInstance()->payPremiumFee($tmp[count($tmp)-1], $invoiceId);
-                        } else if (substr($item['id'], 0, 3) == 'WLT') {
-                            ModelPaymentPro::newInstance()->addWallet($data['user'], $item['amount']);
-                        } else {
-                            osc_run_hook('payment_pro_item_paid', $item);
-                        }
+                        $tmp = explode("-", $item['id']);
+                        $item['item_id'] = $tmp[count($tmp) - 1];
+                        osc_run_hook('payment_pro_item_paid', $item, $data, $invoiceId);
                     }
                 }
 

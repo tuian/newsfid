@@ -16,7 +16,7 @@
             </p>
             <h3><?php _e('Blockchain', 'payment_pro'); ?></h3>
             <p>
-                <?php _e('To use Blockchain as a method of payment you need a bitcoin address, there are several ways to obtain one (they are free of charge), please refer to some of the previous links on more information about how to obtain one.', 'payment_pro'); ?>.
+                <?php _e('To use Blockchain as a method of payment you need to apply for <a href="https://api.blockchain.info/v2/apikey/request/">blockchain.info API key here</a> and a bitcoin XPUB address, there are several ways to obtain one (they are free of charge), please refer to some of the previous links on more information about how to obtain one.', 'payment_pro'); ?>.
                 <br/>
                 <?php _e('The services of Blockchain are free if the usage fits in their "fair use policy".', 'payment_pro'); ?>.
                 <br/>

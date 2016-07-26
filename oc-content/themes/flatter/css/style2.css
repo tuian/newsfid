@@ -147,6 +147,11 @@ textarea.border-bottom-0{
 .image audio{
     max-width: 100% !important;
 }
+.modal iframe, 
+.modal video,
+.modal audio{
+    max-width: 100%;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

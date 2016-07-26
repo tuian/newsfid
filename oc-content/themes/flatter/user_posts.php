@@ -91,7 +91,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);      ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);       ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -180,25 +180,27 @@ if ($items):
                     ?>
                 </div>
                 <!-- /.box-footer -->
-                <div class="box-footer">
-                    <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                        <?php
-                        $current_user = get_user_data(osc_logged_user_id());
-                        $current_user_image_url = '';
+                <?php if (osc_is_web_user_logged_in()): ?>
+                    <div class="box-footer">
+                        <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
+                            <?php
+                            $current_user = get_user_data(osc_logged_user_id());
+                            $current_user_image_url = '';
 
-                        if ($current_user[0]['s_path']):
-                            $current_user_image_url = osc_base_url() . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . "_nav." . $current_user[0]['s_extension'];
-                        else:
-                            $current_user_image_url = osc_current_web_theme_url('images/user-default.jpg');
-                        endif;
-                        ?>
-                        <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user[0]['user_name'] ?>">
-                        <!-- .img-push is used to add margin to elements next to floating images -->
-                        <div class="img-push">
-                            <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
-                        </div>
-                    </form>
-                </div>
+                            if ($current_user[0]['s_path']):
+                                $current_user_image_url = osc_base_url() . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . "_nav." . $current_user[0]['s_extension'];
+                            else:
+                                $current_user_image_url = osc_current_web_theme_url('images/user-default.jpg');
+                            endif;
+                            ?>
+                            <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user[0]['user_name'] ?>">
+                            <!-- .img-push is used to add margin to elements next to floating images -->
+                            <div class="img-push">
+                                <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
+                            </div>
+                        </form>
+                    </div>
+                <?php endif; ?>
                 <!-- /.box-footer -->
             </div>
             <?php

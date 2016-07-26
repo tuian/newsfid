@@ -35,14 +35,16 @@
         private function addTableHeader()
         {
 
-            $this->addColumn('status', __('Statut'));
-            $this->addColumn('date', __('Date'));
-            $this->addColumn('items', __('Items'));
-            $this->addColumn('amount', __('Montant'));
-            $this->addColumn('user', __('Utilisateur'));
-            $this->addColumn('email', __('Email'));
-            $this->addColumn('code', __('Tx ID'));
-            $this->addColumn('source', __('source'));
+            $this->addColumn('status', __('Status', 'payment_pro'));
+            $this->addColumn('date', __('Date', 'payment_pro'));
+            $this->addColumn('items', __('Items', 'payment_pro'));
+            $this->addColumn('amount', __('Subtotal', 'payment_pro'));
+            $this->addColumn('amount_tax', __('Taxes', 'payment_pro'));
+            $this->addColumn('amount_total', __('Total', 'payment_pro'));
+            $this->addColumn('user', __('User', 'payment_pro'));
+            $this->addColumn('email', __('Email', 'payment_pro'));
+            $this->addColumn('code', __('Tx ID', 'payment_pro'));
+            $this->addColumn('source', __('source', 'payment_pro'));
 
             $dummy = &$this;
             osc_run_hook("admin_payment_pro_invoices_table", $dummy);
@@ -57,9 +59,19 @@
 
                     $row['status'] = $aRow['i_status'];
                     $row['date'] = $aRow['dt_date'];
-                    $row['code'] = $aRow['s_code'];
+                    $row['code'] = payment_pro_tx_link($aRow['s_code'], $aRow['s_source']);
+
                     $row['items'] = $this->_invoiceRows($aRow['pk_i_id'], $aRow['s_currency_code']);
-                    $row['amount'] = osc_format_price($aRow['i_amount'], $aRow['s_currency_code']);
+                    if($aRow['s_currency_code']=="BTC") {
+                        // FORGET FORMAT IF BTC
+                        $row['amount'] = ($aRow['i_amount']/1000000) . " " . $aRow['s_currency_code'];
+                        $row['amount_tax'] = ($aRow['i_amount_tax']/1000000) . " " . $aRow['s_currency_code'];
+                        $row['amount_total'] = ($aRow['i_amount_total']/1000000) . " " . $aRow['s_currency_code'];
+                    } else {
+                        $row['amount'] = payment_pro_format_price($aRow['i_amount'], $aRow['s_currency_code']);
+                        $row['amount_tax'] = payment_pro_format_price($aRow['i_amount_tax'], $aRow['s_currency_code']);
+                        $row['amount_total'] = payment_pro_format_price($aRow['i_amount_total'], $aRow['s_currency_code']);
+                    }
                     $row['email'] = $aRow['s_email'];
                     $row['user'] = $aRow['fk_i_user_id'];
                     $row['source'] = $aRow['s_source'];
@@ -77,7 +89,7 @@
             $items = ModelPaymentPro::newInstance()->itemsByInvoice($id);
             $rows = '';
             foreach($items as $item) {
-                $rows .= '<li>' . osc_format_price($item['i_amount'], $currency) . ' - ' . $item['i_product_type'] . ' - ' . $item['s_concept'] . '</li>';
+                $rows .= '<li>' . payment_pro_format_price($item['i_amount'], $currency) . ' - ' . $item['i_product_type'] . ' - ' . $item['s_concept'] . '</li>';
             }
 
             return '<ul>' . $rows . '</ul>';
@@ -86,22 +98,22 @@
        public function _status($status) {
             switch($status) {
                 case PAYMENT_PRO_FAILED:
-                    return __('Refusé', 'payment_pro');
+                    return __('Failed', 'payment_pro');
                     break;
                 case PAYMENT_PRO_COMPLETED:
-                    return __('Accepté', 'payment_pro');
+                    return __('Completed', 'payment_pro');
                     break;
                 case PAYMENT_PRO_PENDING:
-                    return __('En attente', 'payment_pro');
+                    return __('Pending', 'payment_pro');
                     break;
                 case PAYMENT_PRO_ALREADY_PAID:
-                    return __('Déjà payé', 'payment_pro');
+                    return __('Already paid', 'payment_pro');
                     break;
                 case PAYMENT_PRO_WRONG_AMOUNT_TOTAL:
                     return __('Wrong amount/total', 'payment_pro');
                     break;
                 case PAYMENT_PRO_WRONG_AMOUNT_ITEM:
-                    return __('Mauvais montant/Annonce', 'payment_pro');
+                    return __('Wrong amount/listing', 'payment_pro');
                     break;
                 default:
                     return 'ERROR';
@@ -110,10 +122,9 @@
 
         }
 
-        public function row_class($row)
+        public function row_class($status)
         {
-            $status_class = $this->get_row_status_class($row['status']);
-            return $status_class;
+            return $this->get_row_status_class($status);
         }
 
         private function get_row_status_class($status) {

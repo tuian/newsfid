@@ -15,7 +15,7 @@
 
     // GET TX ID
     $tx = Params::getParam('tx')!=''?Params::getParam('tx'):Params::getParam('txn_id');
-    $payment = ModelPaymentPro::newInstance()->getPayment($tx);
+    $payment = ModelPaymentPro::newInstance()->getPaymentByCode($tx, 'AUTHORIZE');
     if (isset($payment['pk_i_id'])) {
         osc_add_flash_ok_message(__('Payment processed correctly', 'payment_pro'));
     } else {

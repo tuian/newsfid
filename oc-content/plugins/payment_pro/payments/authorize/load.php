@@ -31,7 +31,7 @@ osc_add_hook('payment_pro_conf_save', 'payment_pro_authorize_conf_save');
 function payment_pro_authorize_conf_form() {
     require_once dirname(__FILE__) . '/admin/conf.php';
 }
-osc_add_hook('payment_pro_conf_form', 'payment_pro_authorize_conf_form');
+osc_add_hook('payment_pro_conf_form', 'payment_pro_authorize_conf_form', 6);
 
 function payment_pro_authorize_conf_footer() {
     require_once dirname(__FILE__) . '/admin/footer.php';

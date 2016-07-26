@@ -11,8 +11,12 @@
     </div>
 </div>
 <div class="form-row blockchain hide">
-    <div class="form-label"><?php _e('Bitcoin address', 'payment_pro'); ?></div>
-    <div class="form-controls"><input type="text" class="xlarge" name="blockchain_btc_address" value="<?php echo osc_get_preference('blockchain_btc_address', 'payment_pro'); ?>" /></div>
+    <div class="form-label"><?php _e('Blockchain API KEY', 'payment_pro'); ?></div>
+    <div class="form-controls"><input type="text" class="xlarge" name="blockchain_apikey" value="<?php echo payment_pro_decrypt(osc_get_preference('blockchain_apikey', 'payment_pro')); ?>" /></div>
+</div>
+<div class="form-row blockchain hide">
+    <div class="form-label"><?php _e('Bitcoin XPUB address', 'payment_pro'); ?></div>
+    <div class="form-controls"><input type="text" class="xlarge" name="blockchain_xpub" value="<?php echo osc_get_preference('blockchain_xpub', 'payment_pro'); ?>" /></div>
 </div>
 <div class="form-row blockchain hide">
     <div class="form-label"><?php _e('Bitcoin confirmations (default = 6)', 'payment_pro'); ?></div>

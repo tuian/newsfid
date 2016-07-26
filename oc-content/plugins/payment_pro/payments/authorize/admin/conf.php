@@ -1,6 +1,14 @@
 <h2 class="render-title separate-top"><?php _e('Authorize.Net settings', 'payment_pro'); ?> <span><a href="javascript:void(0);" onclick="$('#dialog-authorize').dialog('open');" ><?php _e('help', 'payment_pro'); ?></a></span> <span style="font-size: 0.5em" ><a href="javascript:void(0);" onclick="$('.authorize').toggle();" ><?php _e('Show options', 'payment_pro'); ?></a></span></h2>
 <div class="form-row authorize hide">
-    <div class="form-label"><?php _e('Enable Authorize.Net'); ?></div>
+    <div class="form-label"><?php _e('Don\'t have an account?', 'payment_pro'); ?></div>
+    <div class="form-controls">
+        <label>
+            <?php printf(__('Create an <a href="%s" target="_blank">Authorize.Net account</a>', 'payment_pro'), 'http://reseller.authorize.net/application/?id=5562279'); ?>
+        </label>
+    </div>
+</div>
+<div class="form-row authorize hide">
+    <div class="form-label"><?php _e('Enable Authorize.Net', 'payment_pro'); ?></div>
     <div class="form-controls">
         <div class="form-label-checkbox">
             <label>

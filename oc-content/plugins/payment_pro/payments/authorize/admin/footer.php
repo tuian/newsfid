@@ -1,6 +1,7 @@
 <form id="dialog-authorize" method="get" action="#" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row">
+            <p><?php printf(__('You need an <a href="%s" target="_blank">Authorize.Net account</a>. Once created, access to your panel and copy the API login ID and API transaction key here.', 'payment_pro'), 'http://reseller.authorize.net/application/?id=5562279'); ?></p>
         </div>
         <div class="form-actions">
             <div class="wrapper">

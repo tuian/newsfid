@@ -32,7 +32,7 @@
         <div class="form-label-checkbox">
             <label>
                 <input type="checkbox" <?php echo (osc_get_preference('paypal_standard', 'payment_pro') ? 'checked="true"' : ''); ?> name="paypal_standard" value="1" />
-                <?php _e('Use "Standard payments" if "Digital Goods" is not available in your country', 'payment_pro'); ?>
+                <?php _e('Use "Standard payments" (not recommended), only if your country/currency or account type is not supported by Express Checkout.', 'payment_pro'); ?>
             </label>
         </div>
     </div>

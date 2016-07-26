@@ -1,7 +1,9 @@
 <?php
 
-osc_add_hook('ajax_stripe', array('StripePayment', 'ajaxPayment'));
 require_once PAYMENT_PRO_PATH . 'payments/stripe/StripePayment.php';
+osc_add_hook('ajax_stripe', array('StripePayment', 'ajaxPayment'));
+
+osc_add_route('stripe-webhook', 'payment/stripe-webhook', 'payment/stripe-webhook', PAYMENT_PRO_PLUGIN_FOLDER . 'payments/stripe/webhook.php');
 
 function payment_pro_stripe_install() {
     osc_set_preference('stripe_secret_key', payment_pro_crypt(''), 'payment_pro', 'STRING');
@@ -34,7 +36,7 @@ osc_add_hook('payment_pro_conf_save', 'payment_pro_stripe_conf_save');
 function payment_pro_stripe_conf_form() {
     require_once dirname(__FILE__) . '/admin/conf.php';
 }
-osc_add_hook('payment_pro_conf_form', 'payment_pro_stripe_conf_form');
+osc_add_hook('payment_pro_conf_form', 'payment_pro_stripe_conf_form', 2);
 
 function payment_pro_stripe_conf_footer() {
     require_once dirname(__FILE__) . '/admin/footer.php';

@@ -38,6 +38,8 @@
             echo '<li class="payment braintree-btn"><a href="javascript:braintree_pay(\''.osc_format_price($amount*1000000).'\',\''.$description.'\',\''.$product_id.'\',\''.$extra.'\');" ><img src="'.PAYMENT_PRO_URL . 'payments/braintree/pay_with_card.png" ></a></li>';
         }
 
+        public static function recurringButton($products, $extra = null) {}
+
         public static function dialogJS() { ?>
             <div id="braintree-dialog" >
                 <div id="braintree-info">
@@ -168,17 +170,9 @@
 
                 if($status==PAYMENT_PRO_COMPLETED) {
                     foreach($data['items'] as $item) {
-                        if (substr($item['id'], 0, 3) == 'PUB') {
-                            $tmp = explode("-", $item['id']);
-                            ModelPaymentPro::newInstance()->payPublishFee($tmp[count($tmp)-1], $invoiceId);
-                        } else if (substr($item['id'], 0, 3) == 'PRM') {
-                            $tmp = explode("-", $item['id']);
-                            ModelPaymentPro::newInstance()->payPremiumFee($tmp[count($tmp)-1], $invoiceId);
-                        } else if (substr($item['id'], 0, 3) == 'WLT') {
-                            ModelPaymentPro::newInstance()->addWallet($data['user'], $item['amount']);
-                        } else {
-                            osc_run_hook('payment_pro_item_paid', $item);
-                        }
+                        $tmp = explode("-", $item['id']);
+                        $item['item_id'] = $tmp[count($tmp) - 1];
+                        osc_run_hook('payment_pro_item_paid', $item, $data, $invoiceId);
                     }
                 }
 

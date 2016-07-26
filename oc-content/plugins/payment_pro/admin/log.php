@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
 require_once PAYMENT_PRO_PATH . "CheckoutInvoicesDataTable.php";
 
