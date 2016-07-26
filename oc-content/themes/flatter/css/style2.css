@@ -152,6 +152,9 @@ textarea.border-bottom-0{
 .modal audio{
     max-width: 100%;
 }
+.buttons{
+    display: none;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

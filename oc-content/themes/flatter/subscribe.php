@@ -7,8 +7,6 @@ require 'functions.php';
 <!-- profile cover -->
 <div class="subscribe-page">
     <div class="cover-img">
-
-
         <div class="container">
             <div class="col-md-8">
                 <h3 class="font-color-white bold-600 margin-0">Decouvrez l'offre</h3>
@@ -39,8 +37,7 @@ require 'functions.php';
                                                 </div>
                                                 <div class="col-md-12 padding-top-13per">
                                                     en devenant abonnez vous bénéficierez de services avantageux.
-                                                    Vous pourrai mieux gérer votre notoriété et atteindre plus d'utilisateurs facilement.
-                                                </div>
+                                                    Vous pourrai mieux gérer votre notoriété et atteindre plus d'utilisateurs facilement.                                                </div>
                                             </div>
                                         </div>
 
@@ -109,7 +106,7 @@ require 'functions.php';
                                             <div class="blue_text bold">Mode de paiement</div>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Name de Carte">
+                                            <input type="text" placeholder="Name de Carte" required class="card_number">
                                             <span class="card-icon"></span>
                                         </div>
                                         <div class="col-md-12">                                           
@@ -124,24 +121,22 @@ require 'functions.php';
                                         </div>
                                         <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
                                             <div class="col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="MM">
+                                                <input type="text" placeholder="MM" required class="expiry_month">
 
                                             </div>
                                             <div class="col-md-1 col-sm-1">
                                                 /
                                             </div>
                                             <div class="col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="AA">
+                                                <input type="text" placeholder="AA" required class="expiry_year">
                                             </div>
                                             <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="Code">
+                                                <input type="text" placeholder="Code" required class="card_cvv_code">
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <select>
-                                                <option>Select Country</option>
-                                            </select>
+                                            <?php UserForm::country_select(osc_get_countries()); ?>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="Ligne d'address 1">
@@ -186,7 +181,7 @@ require 'functions.php';
                                         </div>
                                         <div class="col-md-9 margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision </div>
                                         <div class="col-md-9 margin-top-20">
-                                            <button type="submit" class="btn btn-lg button-orng btn-radius-0" data-toggle="modal" data-target="#payment">Activer mes 30 jours gartuit</button>
+                                            <button type="submit" class="btn btn-lg button-orng btn-radius-0 payment_btn">Activer mes 30 jours gartuit</button>
                                             <div class="margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</div>
                                         </div>
 
@@ -285,6 +280,27 @@ require 'functions.php';
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                             <div class="green-round margin-left-15"></div>
+                            <?php
+                            $id = '11';
+                            $description = 'test';
+                            $amount = '11';
+                            $tax = '0';
+                            $quantity = 1;
+                            //$extra = '';
+                            $k = 0;
+                            $items[$k]['id'] = $id;
+                            $items[$k]['description'] = $description;
+                            $items[$k]['amount'] = $amount;
+                            $items[$k]['tax'] = $tax;
+                            $items[$k]['quantity'] = $quantity;
+                            //$items['extra'] = $extra;
+
+                            $paypal_btn = new PaypalPayment();
+                            $paypal_btn->standardButton($items);
+
+//                            $braintree_btn = new BraintreePayment();
+//                            $braintree_btn->button($items);
+                            ?>
                         </div>
                     </div>
                     <!------------------Table row end-------5--------->
@@ -300,11 +316,40 @@ require 'functions.php';
                         var remove = $(this).val();
                         $('#' + remove).addClass('none');
                     });
-
                     var data = $(this).val();
                     $('#' + data).removeClass('none');
-//                  $('.none').hide();
-//                  $('#' + data).show();
+                });
+
+                $('.payment_btn').click(function () {
+                    var selected_payment_method = $('.payment-option:checked').val();
+                    if (selected_payment_method == 'paypal') {
+                        $('.paypal-btn').trigger('click');
+                    }
+                    if (selected_payment_method == 'payment-card') {
+                        var braintree_number = $('.card_number').val();
+                        var braintree_cvv = $('.card_cvv_code').val();
+                        var amount = 10;
+                        var braintree_month = $('.expiry_month').val();
+                        var braintree_year = $('.expiry_year').val();
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
+                            data: {
+                                braintree_number: 'braintree_number',
+                                braintree_cvv: braintree_cvv,
+                                amount: amount,
+                                braintree_month: braintree_month,
+                                braintree_year: braintree_year,
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                if (data == 0) {
+                                    console.log('payment is not successful');
+                                }
+                                if (data == 1) {
+                                    console.log('payment is successful');
+                                }
+                            }
+                        });
+                    }
                 });
             });
         </script>
