@@ -40,13 +40,13 @@ osc_current_web_theme_path('header.php');
                         <div class="titlebox background-white padding-10">
                             <h2>Centre d'intérêt</h2>
                             <h1>
-                                Choisissez un ou plusieurs themes
+                                Choisissez les sujets qui vous intéresse
                             </h1>
                             <span>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus.
+                                Cette étape nous permet simplement de vous faire des suggestions de sujet auquel vous êtes intéressé(e).
                                 <br/>
                                 <br/>
-                                In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat.
+                                Prenez le temps de faire votre choix. Vous pourrai le modifier plus tard. 
                             </span>
                         </div>
 

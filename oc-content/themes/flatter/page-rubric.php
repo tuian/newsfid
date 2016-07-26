@@ -40,13 +40,10 @@ endif;
                     <div class="titlebox background-white padding-10">
                         <h2>Centre d'intérêt</h2>
                         <h1>
-                            Choisissez un ou plusieurs themes
+                            Choisissez un ou plusieurs sujets qui vous intéressent
                         </h1>
                         <span>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus.
-                            <br/>
-                            <br/>
-                            In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat.
+                            Quel genre de sujets vous intéresse? Vous devez en sélectionner au moins un d'entre eux. Cela nous permettra de vous connecter à personnes et l'organisation qu ont les même centre d'intérêts que vous.
                         </span>
                     </div>
 

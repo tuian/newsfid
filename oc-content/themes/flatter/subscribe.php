@@ -38,7 +38,8 @@ require 'functions.php';
                                                     <h3 class="bold font-color-royal-blue margin-0">Ameliorez votre experience</h3>
                                                 </div>
                                                 <div class="col-md-12 padding-top-13per">
-                                                    I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to be solely responsible for and agree that newsfid and its partners 
+                                                    en devenant abonnez vous bénéficierez de services avantageux.
+                                                    Vous pourrai mieux gérer votre notoriété et atteindre plus d'utilisateurs facilement.
                                                 </div>
                                             </div>
                                         </div>
@@ -50,7 +51,7 @@ require 'functions.php';
                                 <div class="payment-section-2 bg-white col-md-12 border-radius-10 padding-0">
                                     <div class="col-md-12 theme-modal-header">
                                         <div class="col-md-offset-1">
-                                            <h2 class="bold margin-0"> Selectionnez votre mode de paiement </h2>
+                                            <h2 class="bold margin-0"> Choisissez un mode de paiement </h2>
                                         </div>
                                     </div>
                                     <div class="container">
@@ -99,13 +100,13 @@ require 'functions.php';
                                             <input type="radio" class="payment-option" name="payment" value="paypal">
                                         </div>
                                         <div class="col-md-6 padding-3per bg-green-light">
-                                            I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use 
+                                            Vous en serai pas débiter avant la fin de votre période d’essai en date du .............. Vous pourrai annuler votre abonnement en ligne à tout moment.
                                         </div>
 
                                     </div>
                                     <div class="col-md-offset-3 col-md-6" id="payment-card">
                                         <div class="col-md-12">
-                                            <div class="blue_text bold">Mode de Paiement</div>
+                                            <div class="blue_text bold">Mode de paiement</div>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="Name de Carte">
@@ -124,7 +125,7 @@ require 'functions.php';
                                         <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
                                             <div class="col-md-3 col-sm-3 grey-border">
                                                 <input type="text" placeholder="MM">
-                                                
+
                                             </div>
                                             <div class="col-md-1 col-sm-1">
                                                 /
@@ -225,7 +226,7 @@ require 'functions.php';
                     <!------------------Table row Start-------1--------->
                     <div class="col-md-12 border-bottom  vertical-row">
                         <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Public de media audio(format MP3)</div>
+                            <div class="orange bold padding-top-4per">Publier un média audio</div>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                             <div class="white-round margin-left-15"></div>
@@ -238,7 +239,7 @@ require 'functions.php';
                     <!------------------Table row Start-------2--------->
                     <div class="col-md-12 border-bottom  vertical-row">
                         <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Publication d'image au format GIF</div>
+                            <div class="orange bold padding-top-4per">Publier une image animée au format GIF</div>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                             <div class="green-round margin-left-15"></div>
@@ -251,7 +252,7 @@ require 'functions.php';
                     <!------------------Table row Start-------3--------->
                     <div class="col-md-12 border-bottom  vertical-row">
                         <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Publication sponsorisee gratuit</div>
+                            <div class="orange bold padding-top-4per">Sponsoriser vos publications quand vous le voulez</div>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                             <div class="white-round margin-left-15"></div>
@@ -264,7 +265,7 @@ require 'functions.php';
                     <!------------------Table row Start-------4--------->
                     <div class="col-md-12 border-bottom  vertical-row">
                         <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Publication video(liens youtube / Vimeo...)</div>
+                            <div class="orange bold padding-top-4per">Publier un lien vidéo automatique ( youtube / Viméo / Dailymotion)</div>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                             <div class="green-round margin-left-15"></div>
@@ -277,7 +278,7 @@ require 'functions.php';
                     <!------------------Table row Start-------5--------->
                     <div class="col-md-12 border-bottom  vertical-row">
                         <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Une mention (complete professionel) pour marquer vorte diffrence avec les autres utilisateurs</div>
+                            <div class="orange bold padding-top-4per">Obtenir un logo professionnel pour faire directement la différence avec les autres utilisateurs.</div>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                             <div class="white-round margin-left-15"></div>

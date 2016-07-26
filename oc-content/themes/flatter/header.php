@@ -134,9 +134,18 @@
                                     Fil d'actualité
                                 </a>
                             </li>
-
+                            <?php
+                                $active = '';
+                                if (!empty($parts[0])):
+                                    if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=33') !== false):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                                endif;
+                                ?>
                             <?php if (osc_is_web_user_logged_in()): ?>
-                                <li class="treeview">
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
                                         <i class="fa fa-circle-o"></i>
                                         Centres d'intérêt
@@ -147,22 +156,52 @@
                                         <i class="fa fa-copy"></i>
                                         Ma chaîne
                                     </a>
-                                </li>                             
-                                <li class="treeview">
+                                </li>   
+                                <?php
+                                $active = '';
+                                if (!empty($parts[0])):
+                                    if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=32') !== false):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                                endif;
+                                ?>
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
                                         <i class="fa fa-th"></i>
                                         People
                                     </a>
-                                </li>                             
-                                <li class="add-item treeview" >
+                                </li> 
+                                <?php
+                                $active = '';
+                                if (!empty($parts[0])):
+                                    if (strpos($parts[0], 'page=item') !== false && strpos($parts[0], 'action=item_add') !== false):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                                endif;
+                                ?>
+                                <li class="add-item treeview <?php echo $active ?>" >
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
                                         <i class="fa fa-list-ul"></i>
                                         Publier
                                     </a>
 
-                                </li>                            
-                                <li class="treeview">
+                                </li> 
+                                <?php
+                                $active = '';
+                                if (!empty($parts[0])):
+                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                                endif;
+                                ?>
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                         <i class="fa fa-th"></i>Compte
                                     </a>

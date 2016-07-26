@@ -19,9 +19,9 @@ require_once 'functions.php';
                             <div class="greybg padding-top-3per">
                                 <div class="col-md-12 vertical-row">
                                     <div class="sub col-md-offset-1">
-                                        <h1 class="bold big-font col-md-12">Publier librement sur Newsfid</h1>
+                                        <h1 class="bold big-font col-md-12">Publish freely on Newsfid.</h1>
                                         <div class="col-md-7">
-                                            A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+                                            At any time you can update your free account to get more publishing options. This will allow you as well to mark your profile with a professional logo to make the difference with other users.
                                         </div>
 
                                     </div>
@@ -54,7 +54,7 @@ require_once 'functions.php';
 
                                             </div>
                                             <div class="col-md-12 vertical-row">
-                                                <h5 class=" margin-0">Vous avez deja <span style="color:orangered"><?php echo get_user_posts_count($current_user[0]['user_id']) ?></span> publication</h5>
+                                                <h5 class=" margin-0">You have  <span style="color:orangered"><?php echo get_user_posts_count($current_user[0]['user_id']) ?></span> publicaton </h5>
                                             </div>
 
 
@@ -126,7 +126,8 @@ require_once 'functions.php';
                                         <img class="vertical-top img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" >
                                     </div>
                                     <div class="col-md-11 padding-10">
-                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+                                        Depending on your needs choose the type of media you are interested in for your publication,
+                                        some media uses require a subscription while others are free of use.
                                     </div>
                                 </div>
                                 <div class="border-bottom col-md-12 vertical-row  padding-10">
@@ -163,9 +164,8 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6  text-bg-color">
                                         <div class="bold padding-10">
-                                            Vous ne pouvez pas choisir lee deux en meme
-                                            temps. Vous pubiiez soit une Image .JPG I PNG I
-                                            colt un liens video (Youtubel Daylinotion I Vimio)
+                                            You can not choose both at the same time
+                                            you can publish  image or a video link.
                                         </div>
                                     </div>
                                 </div> 
@@ -179,7 +179,7 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6  text-bg-color">
                                         <div class="bold padding-10">
-                                            L’image commencera I s’animer de manière automatique au survol de votre publication.
+                                            The image begins to automatically animate when the user will scroll.
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6 text-bg-color">
                                         <div class="bold padding-10">
-                                            Vous ne pouvez télecharger qu’un fichier MP3. Si vos désirez publier un fichier supeneur I 1OMO merci e vous abonner I Newefid
+                                            You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +210,7 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6 text-bg-color">
                                         <div class="bold padding-10">
-                                            A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+                                            Your podcst must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
 
                                         </div>
                                     </div>
@@ -229,7 +229,7 @@ require_once 'functions.php';
                         <!-------------------------Location Start------------------------------>
                         <div class="location-info border-radius-10">
                             <div class="modal-header">
-                                <h3 class="modal-title bold orange">Location </h3>
+                                <h3 class="modal-title bold orange">Localistion </h3>
                             </div>
                             <div class="modal-header">
                                 <div class="col-md-offset-1 col-md-10 margin-top-20">
@@ -238,7 +238,7 @@ require_once 'functions.php';
                                             <img class="vertical-top  img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
                                         </div>
                                         <div class="col-md-10 padding-10">
-                                            A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+                                            This step is not mandatory but nevertheless important to improve your publication in our search engine.
                                         </div>
                                     </div>
 
@@ -252,7 +252,7 @@ require_once 'functions.php';
                                     <?php
                                     foreach ($counrty_array as $countryList):
                                         ?>
-                                                                                                                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                         <?php
                                     endforeach;
                                     ?>
@@ -283,9 +283,9 @@ require_once 'functions.php';
                         <div class="greybg padding-top-3per">
                             <div class="col-md-12 vertical-row">
                                 <div class="sub col-md-offset-1">
-                                    <h1 class="bold big-font col-md-12">Bor a savoir</h1>
+                                    <h1 class="bold big-font col-md-12">Bon à savoir</h1>
                                     <div class="col-md-7">
-                                        A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera la difference avec les autres utilisateurs.
+                                        Subscribers users can promote their publication at all times thanks to Promoted publications. Unsubscribed users can not enjoy it. 
                                     </div>
 
                                 </div>
@@ -351,7 +351,7 @@ require_once 'functions.php';
                             </div>
                             <div class=" col-md-6">
                                 <p>
-                                    A tout moment vous pouvez faire un portate de compte pour passer de l'offre gratuite a l'offre avec abonnement. Cela vous permettra de publier de sans plus aucune limitation de contenu et d'optenir un marquage visuel qui fera.
+                                    I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to be solely responsible for and agree that newsfid and its partners are not responsible at all.
                                 </p>
                             </div>
 
