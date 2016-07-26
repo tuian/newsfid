@@ -90,50 +90,53 @@ require 'functions.php';
                                             <div class="payment-img">
                                                 <img class="img img-responsive" src="../flatter/images/CreditCards.png">
                                             </div>
-                                            <input type="radio" name="payment" checked="true">
+                                            <input type="radio" class="payment-option" name="payment" value="payment-card" checked>
                                         </div>
                                         <div class="col-md-2 text-center">
                                             <div class="payment-img">
                                                 <img class="img img-responsive" src="../flatter/images/paypal.png">
                                             </div>
-                                            <input type="radio" name="payment" checked="true">
+                                            <input type="radio" class="payment-option" name="payment" value="paypal">
                                         </div>
                                         <div class="col-md-6 padding-3per bg-green-light">
                                             I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use 
                                         </div>
 
                                     </div>
-                                    <div class="col-md-offset-3 col-md-6">
+                                    <div class="col-md-offset-3 col-md-6" id="payment-card">
                                         <div class="col-md-12">
                                             <div class="blue_text bold">Mode de Paiement</div>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="Name de Carte">
+                                            <span class="card-icon"></span>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12">                                           
                                             <div class="margin-top-20">
-                                                <div class="col-md-5">
+                                                <div class="col-md-5 col-sm-5">
                                                     Expiration
                                                 </div>
-                                                <div class="col-md-offset-5 col-md-2">
-                                                    CVV ?
+                                                <div class="col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2">
+                                                    CVV<span class="circle-border"> ?</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 margin-top-20 vertical-row">
-                                            <div class="col-md-3 grey-border">
+                                        <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
+                                            <div class="col-md-3 col-sm-3 grey-border">
                                                 <input type="text" placeholder="MM">
+                                                
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 col-sm-1">
                                                 /
                                             </div>
-                                            <div class="col-md-3 grey-border">
+                                            <div class="col-md-3 col-sm-3 grey-border">
                                                 <input type="text" placeholder="AA">
                                             </div>
-                                            <div class="col-md-offset-2 col-md-3 grey-border">
+                                            <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
                                                 <input type="text" placeholder="Code">
                                             </div>
                                         </div>
+                                        <div class="clearfix"></div>
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <select>
                                                 <option>Select Country</option>
@@ -155,6 +158,14 @@ require 'functions.php';
                                             <input type="text" placeholder="CEDEX">
                                         </div>
                                     </div>
+                                    <div class="center-contant vertical-row none" id="paypal">
+                                        <div class="col-md-4">
+                                            <img class="img img-responsive" src="images/paypal-iphone.png">
+                                        </div>
+                                        <div class="col-md-8">
+                                            Vous allez etre redirige vers le site PayPal. 
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="breack-line"></div>
                                 <div class="col-md-12 padding-0 bg-white border-radius-10 padding-top-4per">
@@ -168,16 +179,16 @@ require 'functions.php';
                                         <div class="col-md-8"><h4 class=" bold">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</h4> </div>
                                     </div>
                                     <div class="col-md-offset-2 col-md-10 theme-modal-header">
-                                       
-                                            <div class="col-md-9">
-                                                I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use
-                                            </div>
-                                            <div class="col-md-9 margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision </div>
-                                            <div class="col-md-9 margin-top-20">
-                                                <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment">Activer mes 30 jours gartuit</button>
-                                                <div class="margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</div>
-                                            </div>
-                                        
+
+                                        <div class="col-md-9">
+                                            I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use
+                                        </div>
+                                        <div class="col-md-9 margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision </div>
+                                        <div class="col-md-9 margin-top-20">
+                                            <button type="submit" class="btn btn-lg button-orng btn-radius-0" data-toggle="modal" data-target="#payment">Activer mes 30 jours gartuit</button>
+                                            <div class="margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -281,3 +292,18 @@ require 'functions.php';
         </div>
         <!-- end profil cover -->
         <?php osc_current_web_theme_path('footer.php'); ?>
+        <script>
+            jQuery(document).ready(function ($) {
+                $('.payment-option').on('change', function () {
+                    $('.payment-option').each(function () {
+                        var remove = $(this).val();
+                        $('#' + remove).addClass('none');
+                    });
+
+                    var data = $(this).val();
+                    $('#' + data).removeClass('none');
+//                  $('.none').hide();
+//                  $('#' + data).show();
+                });
+            });
+        </script>

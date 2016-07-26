@@ -121,11 +121,12 @@
                             <?php //if(strpos('page=home', $parts)$parts) ?>
                             <?php
                             $active = '';
-                            if (empty($parts[0])):
-                                $active = 'active';
+                            if($protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://' .$_SERVER['HTTP_HOST'] .$_SERVER['REQUEST_URI'] == osc_base_url()):
+                             $active = 'active';
                             else:
                                 $active = '';
                             endif;
+                           
                             ?>
                             <li class="treeview <?php echo $active ?>">
                                 <a href="<?php echo osc_base_url() ?>">
@@ -182,7 +183,20 @@
                                         <i class="fa fa-pie-chart"></i>Réglage
                                     </a>
                                 </li>
-                                <li class="treeview">
+
+
+                                <?php
+                                $active = '';
+//                                if (empty($parts[0])):
+                                if (strpos($_SERVER['REQUEST_URI'], 'subscribe') !== false):
+                                    $active = 'active';
+                                else:
+                                    $active = '';
+                                endif;
+//                                endif;
+                                ?>
+
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
                                         <i class="fa fa-laptop"></i>m'abonner
                                     </a>

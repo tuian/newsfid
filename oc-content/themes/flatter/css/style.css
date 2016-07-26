@@ -2824,6 +2824,21 @@ select {
 .margin-top-10{
     margin-top: 10px;
 }
+.none{
+    display: none;
+}
+.btn-radius-0{
+    border-radius: 0 !important;
+}
+.card-icon{
+    background-image: url("../images/payment-card.png");
+    height: 28px;
+    width: 120px;
+    position: absolute;
+    background-size: cover;
+    right: 33px;
+    top: 5px;
+}
 /**********
 orange: ##f68935
 blue: #20a8e0
