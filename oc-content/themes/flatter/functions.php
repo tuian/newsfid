@@ -1538,7 +1538,6 @@ function get_user_watchlist_item($user_id) {
         $user_watchlist_array = $user_watchlist_result->result();
         if ($user_watchlist_array):
             $item_result = array_column($user_watchlist_array, 'item_id');
-
         endif;
     }
     return $item_result;

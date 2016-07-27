@@ -67,7 +67,7 @@ $user = get_user_data(osc_user_id());
                 <div class=" bg-white col-md-12 padding-0">
                     <?php
                     if ($user[0]['cover_picture_user_id']):
-                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user[0]['cover_picture_user_id'] . $user[0]['pic_ext'];
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user[0]['cover_picture_user_id'] . '.' . $user[0]['pic_ext'];
                     else:
                         $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
                     endif;
@@ -79,7 +79,17 @@ $user = get_user_data(osc_user_id());
                             </h3>
                             <h5 class="widget-user-desc">
                                 Web Designer
-                            </h5>
+                            </h5>      
+                            <?php if (osc_user_id() == osc_logged_user_id()): ?>
+                                <span class="profile_img_overlay">
+                                    <form class="cover_image_upload" method="post" enctype="multipart/form-data">
+                                        <span class="icon">
+                                            <i class="fa fa-camera"></i>
+                                        </span>
+                                        <input type="file" name="file" class="file user_cover_img">
+                                    </form>
+                                </span>
+                            <?php endif; ?>
                         </div>
                         <div class="widget-user-image">
                             <?php
@@ -91,7 +101,18 @@ $user = get_user_data(osc_user_id());
                             ?>
 
                             <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $user[0]['user_name'] ?>">
+                            <?php if (osc_user_id() == osc_logged_user_id()): ?>
+                                <span class="profile_img_overlay">
+                                    <form class="file_upload" method="post" enctype="multipart/form-data">
+                                        <span class="icon">
+                                            <i class="fa fa-camera"></i>
+                                        </span>
+                                        <input type="file" name="file" class="file user_profile_img">
+                                    </form>
+                                </span>
+                            <?php endif; ?>
                         </div>
+
                         <div class="box-footer">
                             <div class="row">
                                 <div class="col-sm-4 border-right">
@@ -229,11 +250,12 @@ $user = get_user_data(osc_user_id());
                             </div>
                         </div>
                     </div>
-                    <div class="user_info_container user_details tab-pane fade" id="user_info">
+
+                    <div class="user_info_container user_details tab-pane fade bg-white" id="user_info">
 
                         <div>	<?php osc_current_web_theme_path('user_info.php') ?> </div>
                     </div>
-                    <div class="user_watchlist_container user_details tab-pane fade" id="user_watchlist">
+                    <div class="user_watchlist_container user_details tab-pane fade bg-white" id="user_watchlist">
                         <?php osc_current_web_theme_path('user_watchlist.php') ?> 
                     </div>
                     <div class="user_follower_container user_details tab-pane fade" id="user_follower">
@@ -326,6 +348,7 @@ osc_add_hook('footer', 'custom_script');
 
 function custom_script() {
     ?>
+    <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>
     <script>
         var is_enable_ajax = true;
         var loading = false;
@@ -371,6 +394,36 @@ function custom_script() {
 
             });
 
+            $(document).on('change', '.user_profile_img', function (event) {
+                var options = {
+                    url: '<?php echo osc_current_web_theme_url('user_image_change.php'); ?>',
+                    type: 'post',
+                    data: {
+                        type: 'profile_image',
+                    },
+                    success: function (html, statusText, xhr, $form) {
+                        $('.widget-user-image .img-circle').attr('src', html);
+                    },
+                };
+                $('.file_upload').ajaxForm(options).submit();
+            });
+
+            $(document).on('change', '.user_cover_img', function (event) {
+                var options = {
+                    url: '<?php echo osc_current_web_theme_url('user_image_change.php'); ?>',
+                    type: 'post',
+                    data: {
+                        type: 'cover_image',
+                    },
+                    success: function (html, statusText, xhr, $form) {
+                        console.log(html);
+                        $('.widget-user-header').css({'background-image': ''});
+                        $('.widget-user-header').css({'background-image': 'url(' + html + ')'});
+                    },
+                };
+                $('.cover_image_upload').ajaxForm(options).submit();
+            });
+
             $(document).on('click', '.user_circle_container .circle-search-button', function () {
                 var search_name = $('.circle_search_text').val();
                 $.ajax({
@@ -405,7 +458,7 @@ function custom_script() {
                     $('.user_posts_container').css({'opacity': '0.2'});
                     setTimeout(fetch_user_posts, 1000);
                 }
-            });   
+            });
         });
         function fetch_user_posts() {
             var page_number = $('.user_posts_area .user_post_page_number').val();

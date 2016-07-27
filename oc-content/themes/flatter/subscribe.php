@@ -195,161 +195,163 @@ require 'functions.php';
             </div>
 
         </div>
-        <div class="contant bg-white col-md-12">
+    </div>
+    <div class="contant bg-white col-md-12">
 
-            <div class="col-md-12 text-center padding-top-4per ">
-                <h4 class="bold-600 margin-0 font-color-black">Beneficiez du service Newsfid incluant un essai gratuit pendent 30 jour</h4>
+        <div class="col-md-12 text-center padding-top-4per ">
+            <h4 class="bold-600 margin-0 font-color-black">Beneficiez du service Newsfid incluant un essai gratuit pendent 30 jour</h4>
+        </div>
+        <div class="sub-info col-md-12   margin-top-20">
+            <div class="col-md-5">
+                <img class="img img-responsive" src="../flatter/images/responsivei-img.png">
             </div>
-            <div class="sub-info col-md-12   margin-top-20">
-                <div class="col-md-5">
-                    <img class="img img-responsive" src="../flatter/images/responsivei-img.png">
+            <!------------table title Start-------------->
+            <div class="col-md-7">
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="font-color-black">Fonctionalites</div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3">
+                        <div class="font-color-black bold">Gratuit</div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3">
+                        <div class="font-color-black bold">Premium</div>
+                    </div>
                 </div>
-                <!------------table title Start-------------->
-                <div class="col-md-7">
-                    <div class="col-md-12 border-bottom  vertical-row">
-                        <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="font-color-black">Fonctionalites</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3">
-                            <div class="font-color-black bold">Gratuit</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3">
-                            <div class="font-color-black bold">Premium</div>
-                        </div>
+                <!--------------Table title End----------------->
+                <!------------------Table row Start-------1--------->
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="orange bold padding-top-4per">Publier un média audio</div>
                     </div>
-                    <!--------------Table title End----------------->
-                    <!------------------Table row Start-------1--------->
-                    <div class="col-md-12 border-bottom  vertical-row">
-                        <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Publier un média audio</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="white-round margin-left-15"></div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                        </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="white-round margin-left-15"></div>
                     </div>
-                    <!---------------Table Row End---------1-------->
-                    <!------------------Table row Start-------2--------->
-                    <div class="col-md-12 border-bottom  vertical-row">
-                        <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Publier une image animée au format GIF</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                        </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
                     </div>
-                    <!------------------Table row End-------2--------->
-                    <!------------------Table row Start-------3--------->
-                    <div class="col-md-12 border-bottom  vertical-row">
-                        <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Sponsoriser vos publications quand vous le voulez</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="white-round margin-left-15"></div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                        </div>
+                </div>
+                <!---------------Table Row End---------1-------->
+                <!------------------Table row Start-------2--------->
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="orange bold padding-top-4per">Publier une image animée au format GIF</div>
                     </div>
-                    <!------------------Table row End-------3--------->
-                    <!------------------Table row Start-------4--------->
-                    <div class="col-md-12 border-bottom  vertical-row">
-                        <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Publier un lien vidéo automatique ( youtube / Viméo / Dailymotion)</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                        </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
                     </div>
-                    <!------------------Table row End-------4--------->
-                    <!------------------Table row Start-------5--------->
-                    <div class="col-md-12 border-bottom  vertical-row">
-                        <div class="col-md-8 col-sm-8 col-xs-6">
-                            <div class="orange bold padding-top-4per">Obtenir un logo professionnel pour faire directement la différence avec les autres utilisateurs.</div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="white-round margin-left-15"></div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
-                            <div class="green-round margin-left-15"></div>
-                            <?php
-                            $id = '11';
-                            $description = 'test';
-                            $amount = '11';
-                            $tax = '0';
-                            $quantity = 1;
-                            //$extra = '';
-                            $k = 0;
-                            $items[$k]['id'] = $id;
-                            $items[$k]['description'] = $description;
-                            $items[$k]['amount'] = $amount;
-                            $items[$k]['tax'] = $tax;
-                            $items[$k]['quantity'] = $quantity;
-                            //$items['extra'] = $extra;
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
+                    </div>
+                </div>
+                <!------------------Table row End-------2--------->
+                <!------------------Table row Start-------3--------->
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="orange bold padding-top-4per">Sponsoriser vos publications quand vous le voulez</div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="white-round margin-left-15"></div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
+                    </div>
+                </div>
+                <!------------------Table row End-------3--------->
+                <!------------------Table row Start-------4--------->
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="orange bold padding-top-4per">Publier un lien vidéo automatique ( youtube / Viméo / Dailymotion)</div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
+                    </div>
+                </div>
+                <!------------------Table row End-------4--------->
+                <!------------------Table row Start-------5--------->
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="orange bold padding-top-4per">Obtenir un logo professionnel pour faire directement la différence avec les autres utilisateurs.</div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="white-round margin-left-15"></div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
+                        <?php
+                        $id = '11';
+                        $description = 'test';
+                        $amount = '11';
+                        $tax = '0';
+                        $quantity = 1;
+                        //$extra = '';
+                        $k = 0;
+                        $items[$k]['id'] = $id;
+                        $items[$k]['description'] = $description;
+                        $items[$k]['amount'] = $amount;
+                        $items[$k]['tax'] = $tax;
+                        $items[$k]['quantity'] = $quantity;
+                        //$items['extra'] = $extra;
 
-                            $paypal_btn = new PaypalPayment();
-                            $paypal_btn->standardButton($items);
+                        $paypal_btn = new PaypalPayment();
+                        $paypal_btn->standardButton($items);
 
 //                            $braintree_btn = new BraintreePayment();
 //                            $braintree_btn->button($items);
-                            ?>
-                        </div>
+                        ?>
                     </div>
-                    <!------------------Table row end-------5--------->
                 </div>
+                <!------------------Table row end-------5--------->
             </div>
         </div>
-        <!-- end profil cover -->
-        <?php osc_current_web_theme_path('footer.php'); ?>
-        <script>
-            jQuery(document).ready(function ($) {
-                $('.payment-option').on('change', function () {
-                    $('.payment-option').each(function () {
-                        var remove = $(this).val();
-                        $('#' + remove).addClass('none');
-                    });
-                    var data = $(this).val();
-                    $('#' + data).removeClass('none');
-                });
-
-                $('.payment_btn').click(function () {
-                    var selected_payment_method = $('.payment-option:checked').val();
-                    if (selected_payment_method == 'paypal') {
-                        $('.paypal-btn').trigger('click');
-                    }
-                    if (selected_payment_method == 'payment-card') {
-                        var braintree_number = $('.card_number').val();
-                        var braintree_cvv = $('.card_cvv_code').val();
-                        var amount = 10;
-                        var braintree_month = $('.expiry_month').val();
-                        var braintree_year = $('.expiry_year').val();
-                        $.ajax({
-                            url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
-                            data: {
-                                braintree_number: 'braintree_number',
-                                braintree_cvv: braintree_cvv,
-                                amount: amount,
-                                braintree_month: braintree_month,
-                                braintree_year: braintree_year,
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                if (data == 0) {
-                                    console.log('payment is not successful');
-                                }
-                                if (data == 1) {
-                                    console.log('payment is successful');
-                                }
-                            }
-                        });
-                    }
-                });
+    </div>
+</div>
+<!-- end profil cover -->
+<?php osc_current_web_theme_path('footer.php'); ?>
+<script>
+    jQuery(document).ready(function ($) {
+        $('.payment-option').on('change', function () {
+            $('.payment-option').each(function () {
+                var remove = $(this).val();
+                $('#' + remove).addClass('none');
             });
-        </script>
+            var data = $(this).val();
+            $('#' + data).removeClass('none');
+        });
+
+        $('.payment_btn').click(function () {
+            var selected_payment_method = $('.payment-option:checked').val();
+            if (selected_payment_method == 'paypal') {
+                $('.paypal-btn').trigger('click');
+            }
+            if (selected_payment_method == 'payment-card') {
+                var braintree_number = $('.card_number').val();
+                var braintree_cvv = $('.card_cvv_code').val();
+                var amount = 10;
+                var braintree_month = $('.expiry_month').val();
+                var braintree_year = $('.expiry_year').val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
+                    data: {
+                        braintree_number: 'braintree_number',
+                        braintree_cvv: braintree_cvv,
+                        amount: amount,
+                        braintree_month: braintree_month,
+                        braintree_year: braintree_year,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data == 0) {
+                            console.log('payment is not successful');
+                        }
+                        if (data == 1) {
+                            console.log('payment is successful');
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

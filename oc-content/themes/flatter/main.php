@@ -266,7 +266,7 @@
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                        <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -512,7 +512,9 @@ function footer_script() {
                     url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
                     //data: {page_number: pageNumber, },
                     success: function (data, textStatus, jqXHR) {
-                        $('.masonry_row').html(data);
+                        $('.masonry_row').append(data);
+                        $('.masonry_row').masonry('layout');
+                        $('.masonry_row').masonry('reloadItems');
                     }
                 });
                 $('#search_form a').click(function (e) {
@@ -602,27 +604,6 @@ function footer_script() {
                         }
                     });
                 });
-
-
-                $(document).on('click', '.watch_box', function () {
-
-                    var item_id = $(this).attr('data_item_id');
-                    var user_id = $(this).attr('data_user_id');
-                    var action = $(this).attr('data_action');
-                    $.ajax({
-                        url: '<?php echo osc_current_web_theme_url() . 'item_watchlist_ajax.php' ?>',
-                        data: {
-                            item_id: item_id,
-                            user_id: user_id,
-                            action: action
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            $('.item_watch_box' + user_id + item_id).replaceWith(data);
-                        }
-                    });
-                });
-
-
                 $(window).bind('scroll', function () {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
                         loading = true;
@@ -688,8 +669,11 @@ function footer_script() {
                         is_enable_ajax = false;
                         loading = false;
                     }
-                    $('.masonry_row').masonry('reloadItems');
+                    var el = $(data);
+                    //jQuery(".masonry_row").append(el).masonry( 'appended', el, true );
                     $('.masonry_row').masonry('layout');
+                    $('.masonry_row').masonry('reloadItems');
+
                 }
             });
         }

@@ -142,10 +142,18 @@ textarea.border-bottom-0{
     cursor: pointer;
     width: 100px;
 }
-.image iframe, 
-.image video,
-.image audio{
+.item .image iframe, 
+.item .image video,
+.item .image audio,
+.item .image img{
     max-width: 100% !important;
+    width: 100%;
+}
+.box iframe,
+.box video,
+.box audio,
+.box img{
+    max-width: 100%;
 }
 .modal iframe, 
 .modal video,
@@ -155,10 +163,84 @@ textarea.border-bottom-0{
 .buttons{
     display: none;
 }
+.edit_user_detail {
+    float: right;
+}
+.info_text{
+    color: 
+}
+.profile_img_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 50%;
+    vertical-align: middle;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.widget-user-image:hover .profile_img_overlay{
+    opacity: 1;
+}
+.file_upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 30px;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.file_upload .file {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.file_upload .icon{
+    position: absolute;
+    top: 37%;
+    left: 30%;
+}
+.widget-user-header{
+    position: relative;
+}
+.cover_image_upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 30px;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.cover_image_upload .file {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.cover_image_upload .icon{
+    position: absolute;
+    top: 37%;
+    left: 30%;
+}
 /**********
 orange: #f68935
 blue: #20a8e0
 grey: #c7c8cd
-
 
 ********/

@@ -97,5 +97,23 @@
             });
             return false;
         });
+
+        $(document).on('click', '.watch_box', function () {
+            var item_id = $(this).attr('data_item_id');
+            var user_id = $(this).attr('data_user_id');
+            var action = $(this).attr('data_action');
+            $.ajax({
+                url: '<?php echo osc_current_web_theme_url() . 'item_watchlist_ajax.php' ?>',
+                data: {
+                    item_id: item_id,
+                    user_id: user_id,
+                    action: action
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.item_watch_box' + user_id + item_id).replaceWith(data);
+                }
+            });
+        });
+
     });
 </script>
