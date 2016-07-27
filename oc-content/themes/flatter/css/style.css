@@ -2885,8 +2885,6 @@ select {
 }
 .menu-tabs ul li a:hover{
     background-color: #fff;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
 }
 .set{
     line-height: 40px;
@@ -2982,6 +2980,13 @@ select {
 }
 .padding-bottom-6per{
     padding-bottom: 6%;
+}
+.button-orng-box {
+    padding: 3% 13%;
+    background-color: #f68935;
+    color: white;
+    border: none;
+    border-radius: 0 !important;
 }
     /**********
     orange: ##f68935

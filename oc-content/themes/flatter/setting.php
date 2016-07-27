@@ -267,7 +267,7 @@ require 'functions.php';
                 </div>
                 <div class="col-md-offset-2 col-md-8 padding-top-4per">
                     <div class="onoffswitch">
-                        <input type="checkbox" name="accept" class="onoffswitch-checkbox" data_post_type="accept" id="media" value="accept">
+                        <input type="checkbox" name="accept" class="onoffswitch-checkbox" data_post_type="accept" id="accept" value="accept">
                         <label class="onoffswitch-label" for="accept"></label>
                     </div>
                 </div>
@@ -279,8 +279,8 @@ require 'functions.php';
                 </div>
                 <div class="col-md-offset-2 col-md-8 padding-top-4per">
                     <div class="onoffswitch">
-                        <input type="checkbox" name="accept" class="onoffswitch-checkbox" data_post_type="accept" checked="" id="media" value="accept">
-                        <label class="onoffswitch-label" for="accept"></label>
+                        <input type="checkbox" name="accept2" class="onoffswitch-checkbox" data_post_type="accept2" checked="" id="accept2" value="accept2">
+                        <label class="onoffswitch-label" for="accept2"></label>
                     </div>
                 </div>
             </div>
@@ -339,8 +339,8 @@ require 'functions.php';
                 </div>
                 <div class="col-md-2 padding-3per">
                     <div class="onoffswitch">
-                        <input type="checkbox" name="accept" class="onoffswitch-checkbox" data_post_type="accept" checked="" id="media" value="accept">
-                        <label class="onoffswitch-label" for="accept"></label>
+                        <input type="checkbox" name="parameter" class="onoffswitch-checkbox" data_post_type="parameter" checked="" id="parameter" value="parameter">
+                        <label class="onoffswitch-label" for="parameter"></label>
                     </div>
                 </div>
             </div>
@@ -403,7 +403,7 @@ require 'functions.php';
                 </div>
             </div>
             <div class="col-md-12 border-bottom-gray"></div>
-            <div class="col-md-12">
+            <div class="col-md-12 vertical-row">
                 <div class="col-md-3 text-right padding-top-4per font-light-gray">
                     <i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i>
                 </div>

@@ -435,7 +435,7 @@
                                         },
                                         success: function (data) {
                                             if (data == 1) {
-                                                window.location.href = '<?php echo osc_user_profile_url() ?>'
+                                                window.location.href = '<?php echo osc_current_web_theme_url() . 'setting.php' ?>'
                                             } else {
                                                 $('.alert_text').html('password is not correct');
                                             }
