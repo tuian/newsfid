@@ -2633,10 +2633,10 @@ select {
 }
 
 .masonry_row .image {
-    min-height: 240px;
+    //min-height: 240px;
 }
 .masonry_row .item .iteme_image{
-    min-height: 250px;
+    //min-height: 250px;
 }
 .t-chat{
     position: fixed;
@@ -2911,6 +2911,78 @@ select {
 .text-gray-dark {
     color: #8a8484 !important;
 }
+.edit-color-blue{
+    color:#6a8bc8;
+}
+.pointer{
+    cursor: pointer;
+}
+.border-bottom-gray{
+    border-bottom: 1px solid #e6ecf2; 
+}
+.border-left-orange{
+    border-left: 3px solid #f68935;
+}
+.padding-left-10{
+    padding-left: 10px;
+}
+.code-box .input-group-addon{
+    border-radius: 5px 0px 0px 5px !important;
+    background-color: #eaeff4 !important;
+}
+.grey-border-box input[type=text]{
+    border: 2px solid #eaeff4 !important;
+    border-radius: 0px 5px 5px 0px !important;
+    outline: 0 !important;
+}
+.red{
+    color: #DB0E15;
+}
+.padding-bottom-10{
+    padding-bottom: 10px;
+}
+.font-light-gray{
+    color: #cfd6da;
+}
+.border-left-gray{
+    border-left: 1px solid #e6ecf2;
+}
+.padding-20{
+    padding: 20px;
+}
+.button-blue{
+    padding: 1% 8%;
+    background-color: #20a8e0;
+    color: white;
+    border: none;
+}
+.block-dropdown select{
+    border: none;
+    box-shadow: none;
+    outline: 0;
+}
+.white-bg{
+    background-color: #fff;
+}
+.padding-left-8per{
+    padding-left: 8%;
+}
+.button-blue-box {
+    padding: 4% 18%;
+    background-color: #20a8e0;
+    color: white;
+    border: none;
+    border-radius: 0 !important;
+}
+.padding-7per{
+    padding: 7%;
+}
+.padding-left-7per{
+    padding-left: 7%;
+}
+.padding-bottom-6per{
+    padding-bottom: 6%;
+}
     /**********
     orange: ##f68935
     blue: #20a8e0
@@ -2921,4 +2993,7 @@ select {
     light green bg: #dbedd2
     grey border: #eaeff4
     page-bg: #f8fbfd
+    edit blue font: #6a8bc8
+    border-gray: #e6ecf2
+    font-light-gray: #cfd6da
     ********/

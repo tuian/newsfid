@@ -157,7 +157,7 @@ require_once 'functions.php';
                                             <div class="col-md-offset-1 col-md-4">
                                                 <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                 <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
-                                                    <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add yur embedding code here">
+                                                    <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here">
                                                 </div>
                                             </div>
                                         </div>
