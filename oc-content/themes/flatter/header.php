@@ -121,12 +121,11 @@
                             <?php //if(strpos('page=home', $parts)$parts) ?>
                             <?php
                             $active = '';
-                            if($protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://' .$_SERVER['HTTP_HOST'] .$_SERVER['REQUEST_URI'] == osc_base_url()):
-                             $active = 'active';
+                            if ($protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] == osc_base_url()):
+                                $active = 'active';
                             else:
                                 $active = '';
                             endif;
-                           
                             ?>
                             <li class="treeview <?php echo $active ?>">
                                 <a href="<?php echo osc_base_url() ?>">
@@ -135,15 +134,15 @@
                                 </a>
                             </li>
                             <?php
-                                $active = '';
-                                if (!empty($parts[0])):
-                                    if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=33') !== false):
-                                        $active = 'active';
-                                    else:
-                                        $active = '';
-                                    endif;
+                            $active = '';
+                            if (!empty($parts[0])):
+                                if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=33') !== false):
+                                    $active = 'active';
+                                else:
+                                    $active = '';
                                 endif;
-                                ?>
+                            endif;
+                            ?>
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
@@ -261,7 +260,7 @@
                                 endif;
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
-                                    <a href="<?php echo osc_base_url().'?page=page&id=34'?>">
+                                    <a href="<?php echo osc_base_url() . '?page=page&id=34' ?>">
                                         <i class="fa fa-book"></i>Terms
                                     </a>
                                 </li>
@@ -357,8 +356,9 @@
                                     Cette page contient des informations personelles,<br/>
                                     <span class="bold">confirmer votre mot de passe pour y accéder.</span>
                                 </div>
-                                <div class="input-text-area margin-top-20 left-border box-shadow-none width-60">
-                                    <input class="border-bottom-0 user_password_field" type="password" placeholder="Mot de passe">
+                                <div class="input-text-area margin-top-20 left-border box-shadow-none">
+                                    <input class="border-bottom-0 user_password_field width-60" type="password" placeholder="Mot de passe">
+                                    <image src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" id="setting_loader" class="hidden">
                                 </div>
                                 <div class="red_text alert_text"></div>
                             </div>
@@ -426,8 +426,14 @@
 //                                        }
 //                                    });
 //                                });
+                                $('.user_password_field').keypress(function (e) {                                    
+                                    if (e.which == 13) {//Enter key pressed
+                                        $('.user_password_check_btn').click();
+                                    }
+                                });
                                 $(document).on('click', '.user_password_check_btn', function () {
                                     var password = $('.user_password_field').val();
+                                    $('#setting_loader').removeClass();
                                     $.ajax({
                                         url: '<?php echo osc_current_web_theme_url() . 'password_check_ajax.php' ?>',
                                         data: {
@@ -437,6 +443,7 @@
                                             if (data == 1) {
                                                 window.location.href = '<?php echo osc_current_web_theme_url() . 'setting.php' ?>'
                                             } else {
+                                                $('#setting_loader').addClass('hidden');
                                                 $('.alert_text').html('password is not correct');
                                             }
                                         }

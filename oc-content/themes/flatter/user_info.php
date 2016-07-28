@@ -41,7 +41,7 @@ $roles = get_user_roles_array();
                 </span>
                 <select name="user_role_selector" id="user_role_selector" class="user_role_selector">
                     <?php foreach ($roles as $k => $role): ?>
-                        <option <?php if ($role['id'] == $user_data['role_id']) echo 'selected'; ?> value="<?php $role['id'] ?>"><?php echo $role['role_name']; ?></option>
+                        <option <?php if ($role['id'] == $user_data['role_id']) echo 'selected'; ?> value="<?php echo $role['id'] ?>"><?php echo $role['role_name']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </span>
@@ -101,29 +101,29 @@ function custom_map_script() {
             longitude = 4.8357
 
             var myLatLng = {lat: latitude, lng: longitude};
-
             var map = new google.maps.Map(document.getElementById('user_map'), {
                 zoom: 20,
                 center: myLatLng
             });
-
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
                 title: ''
             });
         }
-        google.maps.event.addDomListener(window, 'load', initMap);
-    </script>
+        google.maps.event.addDomListener(window, 'load', initMap);</script>
     <script>
         jQuery(document).ready(function ($) {
-
             $(document).on('click', '.user_info_edit', function () {
                 var text = $('.user_info .user_info_text').attr('data_text');
                 var input_box = '<input type="text" class="user_info_textbox" value="' + text + '">';
                 $('.user_info_text').html(input_box);
+                $('.user_info_textbox').keypress(function (e) {
+                    if (e.which == 13) {//Enter key pressed
+                        $('.user_info_textbox').focusout();
+                    }
+                });
             });
-
             $(document).on('blur', '.user_info_textbox', function () {
                 var new_text = $(this).val();
                 $.ajax({
@@ -137,14 +137,16 @@ function custom_map_script() {
                 });
                 $('.user_info_text').html(new_text).attr('data_text', new_text);
             });
-
-
             $(document).on('click', '.user_website_edit', function () {
                 var text = $('.user_website .user_website_text').attr('data_text');
                 var input_box = '<input type="text" class="user_website_textbox" value="' + text + '">';
                 $('.user_website_text').html(input_box);
+                $('.user_website_edit').keypress(function (e) {
+                    if (e.which == 13) {//Enter key pressed
+                        $('.user_website_edit').focusout();
+                    }
+                });
             });
-
             $(document).on('blur', '.user_website_textbox', function () {
                 var new_text = $(this).val();
                 $.ajax({
@@ -158,7 +160,6 @@ function custom_map_script() {
                 });
                 $('.user_website_text').html(new_text).attr('data_text', new_text);
             });
-
             $(document).on('click', '.user_type_edit', function () {
                 $('.user_role_selector').show();
                 $('.user_role_name').hide();
@@ -167,9 +168,8 @@ function custom_map_script() {
                 //                $('.user_website_text').html(input_box);
             });
 
-            $(document).on('change', '.user_role_selector', function () {
-                var role_id = this.value;
-                console.log(role_id);
+             $(document).on('change', '.user_role_selector', function () {
+                var role_id = $(this).val();
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
                     data: {
@@ -177,15 +177,14 @@ function custom_map_script() {
                         user_role_id: role_id,
                     },
                     success: function (data, textStatus, jqXHR) {
+                        if (data != 0) {
+                            $('.user_role_name').text(data);
+                        }
                         $('.user_role_selector').hide();
-                        $('.user_role_name').show().text(data);
-                        //$('.user_website_text').html(new_text).attr('data_text', new_text);
+                        $('.user_role_name').show();
                     }
                 });
-
             });
-
-
         });
     </script>
     <?php
