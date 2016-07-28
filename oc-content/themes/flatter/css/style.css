@@ -2291,7 +2291,7 @@ select {
 .en-savoir-plus-button-orng{
     padding: 6% 22%;
     background-color: #f68935;
-    color: white;
+    color: #fff !important;
     border: none;
 }
 @media only screen and (max-width: 1024px){
@@ -2988,17 +2988,31 @@ select {
     border: none;
     border-radius: 0 !important;
 }
-    /**********
-    orange: ##f68935
-    blue: #20a8e0
-    grey: #c7c8cd
-    light blue: #a6dded
-    royal blue: #0f0f43
-    light blue bg: #edf6fc
-    light green bg: #dbedd2
-    grey border: #eaeff4
-    page-bg: #f8fbfd
-    edit blue font: #6a8bc8
-    border-gray: #e6ecf2
-    font-light-gray: #cfd6da
-    ********/
+.star-img{
+    position: absolute;
+    top: 0;
+    width: 30%;
+    right: -20px;
+}
+.img-user{
+    position: relative;
+}
+
+.disable input[type=text]:disabled {
+    background: #dddddd;
+}
+
+/**********
+orange: ##f68935
+blue: #20a8e0
+grey: #c7c8cd
+light blue: #a6dded
+royal blue: #0f0f43
+light blue bg: #edf6fc
+light green bg: #dbedd2
+grey border: #eaeff4
+page-bg: #f8fbfd
+edit blue font: #6a8bc8
+border-gray: #e6ecf2
+font-light-gray: #cfd6da
+********/

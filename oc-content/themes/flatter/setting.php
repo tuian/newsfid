@@ -2,7 +2,10 @@
 require '../../../oc-load.php';
 require 'functions.php';
 ?>
-<?php osc_current_web_theme_path('header.php'); ?>
+<?php
+osc_current_web_theme_path('header.php');
+$user_info = get_user_data(osc_logged_user_id());
+?>
 <div id="setting" class="row margin-0"> 
     <div class="col-md-12 padding-bottom-6per">
         <div class="user-search">
@@ -26,125 +29,137 @@ require 'functions.php';
             </div>
             <div class="col-md-12 menu-tabs padding-0 ">      
                 <ul class="nav nav-tabs padding-top-4per padding-bottom-20">
-                    <li class="col-md-offset-1"><a href="#">Compte</a></li>
-                    <li><a href="#">Contenu</a></li>
-                    <li><a href="#">Moyen de Paiment</a></li>
-                    <li><a href="#">Compte bloques</a></li>
-                    <li><a href="#">Verouillage</a></li>
-                    <li><a href="#">Audio</a></li>
+                    <li class="col-md-offset-1"><a href="#compte">Compte</a></li>
+                    <li><a href="#contenu">Contenu</a></li>
+                    <li><a href="#moyen_de_paiement">Moyen de Paiment</a></li>
+                    <li><a href="#compte_bloques">Compte bloques</a></li>
+                    <li><a href="#verouillage">Verouillage</a></li>
+                    <li><a href="#audio">Audio</a></li>
                 </ul>
             </div>
-            <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange">
-                <div class='col-md-3'>
-                    <h1 class="bold blue_text">Compte</h1>
-                </div>
-                <div class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
-                </div>
-            </div>
-            <div class="border-bottom-gray col-md-12"></div>
-            <div class="row margin-0">
-                <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Nom d'utilisateur
+            <div id="compte">
+                <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange">
+                    <div class='col-md-3'>
+                        <h1 class="bold blue_text">Compte</h1>
                     </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="name" class="name">
-                    </div>
-                    <div class="col-md-1 col-sm-1 col-xs-1">
-                        <i class="fa fa-globe"></i>
+                    <div class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
                     </div>
                 </div>
-                <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Adresse email
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="email" class="email">
-                    </div>
-                    <div class="col-md-1 col-sm-1 col-xs-1">
-                        <i class="fa fa-lock"></i>
-                    </div>
-                </div>
-                <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Numero de telephone
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
-                        <div class="input-group code-box">
-                            <span class="input-group-addon" id="basic-addon1">+33</span>
-                            <input type="text" name="mobile" class="mobile form-control">
+                <div class="border-bottom-gray col-md-12"></div>
+                <div class="row margin-0">
+                    <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Nom d'utilisateur
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="name" class="name" value="<?php echo osc_logged_user_name(); ?>">
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <i class="fa fa-globe"></i>
                         </div>
                     </div>
-                    <div class="col-md-1 col-sm-1 col-xs-1">
-                        <i class="fa fa-lock"></i>
+                    <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Adresse email
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="email" class="email" value="<?php echo osc_logged_user_email(); ?>">
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Numero de telephone
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
+                            <div class="input-group code-box">
+                                <span class="input-group-addon" id="basic-addon1">+33</span>
+                                <input type="text" name="mobile" class="mobile form-control" value="<?php echo osc_logged_user_phone(); ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Reseaux Defaut
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+
+                            <select>
+                                <?php
+                                $counrtry_db = osc_get_countries();
+                               
+                                foreach ($counrtry_db as $key => $country) :
+                                    ?>
+                                    <option <?php if ($country['pk_c_code'] == $user_info[0]['fk_c_country_code']) echo 'selected'; ?> value="<?php $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Ville
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="s_city" class="form-control" id="s_city" placeholder="">
+                            <input type="hidden" name="cityId" class="form-control" id="cityId">
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <i class="fa fa-globe"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Reseaux Defaut
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <?php UserForm::country_select(osc_get_countries()); ?>
-                    </div>
-                </div>
-                <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Ville
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="s_city" class="form-control" id="s_city" placeholder="">
-                        <input type="hidden" name="cityId" class="form-control" id="cityId">
-                    </div>
-                    <div class="col-md-1 col-sm-1 col-xs-1">
-                        <i class="fa fa-globe"></i>
+                <div class="border-bottom-gray padding-top-4per"></div>
+                <div class="row margin-0">
+                    <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            User type
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="utype" class="utype">
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <i class="fa fa-globe"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="border-bottom-gray padding-top-4per"></div>
-            <div class="row margin-0">
-                <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        User type
+                <div class="border-bottom-gray padding-top-4per"></div>
+                <div class="row margin-0">
+                    <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Current Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="cpass" class="cpass">
+                        </div>
                     </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="utype" class="utype">
+                    <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            New Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="npass" class="npass">
+                        </div>
                     </div>
-                    <div class="col-md-1 col-sm-1 col-xs-1">
-                        <i class="fa fa-globe"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="border-bottom-gray padding-top-4per"></div>
-            <div class="row margin-0">
-                <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Current Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="cpass" class="cpass">
-                    </div>
-                </div>
-                <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        New Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="npass" class="npass">
-                    </div>
-                </div>
-                <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
-                    <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                        Confirm Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                        <input type="text" name="copass" class="copass">
+                    <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
+                        <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                            Confirm Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                            <input type="text" name="copass" class="copass">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breack-line"></div>
-        <div class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
+        <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
             <div class="col-md-12 vertical-row padding-bottom-10">
                 <div class='col-md-3'>
                     <h1 class="bold blue_text">Contenu</h1>
@@ -174,7 +189,7 @@ require 'functions.php';
             </div>
         </div>
         <div class="breack-line"></div>
-        <div class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
+        <div id="moyen_de_paiement" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
                     <h1 class="bold blue_text">Moyen de paiement</h1>
@@ -292,7 +307,7 @@ require 'functions.php';
             </div>
         </div>
         <div class="breack-line"></div>
-        <div class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
+        <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
                     <h1 class="bold blue_text">Compte bloques</h1>
@@ -323,7 +338,7 @@ require 'functions.php';
             </div>
         </div>
         <div class="breack-line"></div>
-        <div class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
+        <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
                     <h1 class="bold blue_text">Verouillage</h1>
@@ -362,7 +377,7 @@ require 'functions.php';
             </div>
         </div>
         <div class="breack-line"></div>
-        <div class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
+        <div id="audio" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
                     <h1 class="bold blue_text">Audio</h1>
@@ -396,7 +411,7 @@ require 'functions.php';
             </div>
         </div>
         <div class="breack-line"></div>
-        <div class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
+        <div id="delete-account" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
                     <h1 class="bold blue_text">Delete Account</h1>
@@ -413,12 +428,12 @@ require 'functions.php';
             </div>
             <div class="col-md-12">
                 <div class="col-md-offset-3 col-md-8 font-light-gray padding-top-4per">
-                   En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="col-md-offset-3 col-md-8 font-light-gray padding-top-8per padding-bottom-6per">
-                   <button class="en-savoir-plus-button-gry">Supprimer</button>
+                    <button class="en-savoir-plus-button-gry">Supprimer</button>
                 </div>
             </div>
         </div>
@@ -426,6 +441,31 @@ require 'functions.php';
 </div>
 <script>
     $(document).ready(function () {
+
+        // Add smooth scrolling to all links
+        $("#setting .nav-tabs a").on('click', function (event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 1200, function () {
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
+
+
         $('#s_city').typeahead({
             source: function (query, process) {
                 var $items = new Array;
