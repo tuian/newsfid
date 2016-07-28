@@ -5,6 +5,7 @@ require 'functions.php';
 <?php
 osc_current_web_theme_path('header.php');
 $user_info = get_user_data(osc_logged_user_id());
+$roles = get_user_roles_array();
 ?>
 <div id="setting" class="row margin-0"> 
     <div class="col-md-12 padding-bottom-6per">
@@ -42,7 +43,7 @@ $user_info = get_user_data(osc_logged_user_id());
                     <div class='col-md-3'>
                         <h1 class="bold blue_text">Compte</h1>
                     </div>
-                    <div class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
+                    <div id="edit" class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
                     </div>
                 </div>
@@ -53,7 +54,7 @@ $user_info = get_user_data(osc_logged_user_id());
                             Nom d'utilisateur
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="name" class="name" value="<?php echo osc_logged_user_name(); ?>">
+                            <input type="text" name="name" id="" class="name disabled" value="<?php echo osc_logged_user_name(); ?>" disabled>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
                             <i class="fa fa-globe"></i>
@@ -64,7 +65,7 @@ $user_info = get_user_data(osc_logged_user_id());
                             Adresse email
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="email" class="email" value="<?php echo osc_logged_user_email(); ?>">
+                            <input type="text" name="email" class="email disabled" value="<?php echo osc_logged_user_email(); ?>" disabled>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
                             <i class="fa fa-lock"></i>
@@ -77,7 +78,7 @@ $user_info = get_user_data(osc_logged_user_id());
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
                             <div class="input-group code-box">
                                 <span class="input-group-addon" id="basic-addon1">+33</span>
-                                <input type="text" name="mobile" class="mobile form-control" value="<?php echo osc_logged_user_phone(); ?>">
+                                <input type="text" name="mobile" class="mobile form-control disabled" value="<?php echo osc_logged_user_phone(); ?>" disabled>
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
@@ -89,25 +90,25 @@ $user_info = get_user_data(osc_logged_user_id());
                             Reseaux Defaut
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-
-                            <select>
+                            <select id="country_Id" class="disabled" disabled>
                                 <?php
                                 $counrtry_db = osc_get_countries();
-                               
                                 foreach ($counrtry_db as $key => $country) :
                                     ?>
-                                    <option <?php if ($country['pk_c_code'] == $user_info[0]['fk_c_country_code']) echo 'selected'; ?> value="<?php $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                                    <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
                                 <?php endforeach; ?>
                             </select>
-
                         </div>
                     </div>
                     <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                         <div class="col-md-3 col-sm-3 col-xs-5 text-right">
                             Ville
                         </div>
+                        <?php
+                        $city_data = City::newInstance()->findByPrimaryKey($user_info['fk_i_city_id']);
+                        ?>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="s_city" class="form-control" id="s_city" placeholder="">
+                            <input type="text" name="s_city" class="form-control disabled" id="s_city" placeholder="" value="<?php echo $city_data['s_name'] ?>" disabled>
                             <input type="hidden" name="cityId" class="form-control" id="cityId">
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
@@ -122,7 +123,11 @@ $user_info = get_user_data(osc_logged_user_id());
                             User type
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="utype" class="utype">
+                            <select name="user_role_selector" id="user_role_selector" class="user_type disabled" disabled>
+                                <?php foreach ($roles as $k => $role): ?>
+                                    <option <?php if ($role['id'] == $user_data['role_id']) echo 'selected'; ?> value="<?php echo $role['id'] ?>"><?php echo $role['role_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
                             <i class="fa fa-globe"></i>
@@ -133,26 +138,31 @@ $user_info = get_user_data(osc_logged_user_id());
                 <div class="row margin-0">
                     <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                         <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                            Current Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                            Current Password<span class="red star-alert">*</span>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="cpass" class="cpass">
+                            <input type="text" name="cpass" class="cpass disabled" disabled>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                         <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                            New Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                            New Password<span class="red star-alert">*</span>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="npass" class="npass">
+                            <input type="text" name="npass" class="npass disabled" disabled>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                         <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                            Confirm Password<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                            Confirm Password<span class="red star-alert">*</span>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="copass" class="copass">
+                            <input type="text" name="copass" class="copass disabled" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-5 col-md-7 padding-top-4per">
+                        <div class="col-md-4 none" id="save">
+                            <button type="submit" class="btn btn-lg button-blue-box">Save</button>
                         </div>
                     </div>
                 </div>
@@ -441,6 +451,23 @@ $user_info = get_user_data(osc_logged_user_id());
 </div>
 <script>
     $(document).ready(function () {
+        
+        $('#edit').click(function () {
+            if ($('.disabled').prop('disabled'))
+            {
+                $('.disabled').removeAttr('disabled');
+            }
+            else {
+                $('.disabled').attr('disabled', 'disabled')
+            }
+        });
+
+        $('#edit').click(function(){
+           $('#save').show().siblings().$('#edit').hide(); 
+        });
+        $('#save').click(function(){
+           $('#edit').show(); 
+        });
 
         // Add smooth scrolling to all links
         $("#setting .nav-tabs a").on('click', function (event) {
@@ -469,7 +496,8 @@ $user_info = get_user_data(osc_logged_user_id());
         $('#s_city').typeahead({
             source: function (query, process) {
                 var $items = new Array;
-                var c_id = $('#countryId').val();
+                var c_id = $('#country_Id').val();
+                console.log(c_id);
                 if (c_id) {
                     $items = [""];
                     $.ajax({

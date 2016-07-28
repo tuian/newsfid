@@ -2357,7 +2357,7 @@ select {
     box-shadow: none;
 }
 .width-60{
-    width: 60%;
+    width: 60% !important;
 }
 .width-90{
     width:90%;
@@ -3000,6 +3000,12 @@ select {
 
 .disable input[type=text]:disabled {
     background: #dddddd;
+}
+.star-alert{
+    position: absolute;
+    right: -4px;
+    top: 0px;
+    font-size: 21px;
 }
 
 /**********
