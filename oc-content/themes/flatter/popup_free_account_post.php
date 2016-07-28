@@ -34,8 +34,8 @@ require_once 'functions.php';
                                             <?php
                                             $current_user = get_user_data(osc_logged_user_id());
 
-                                            if (!empty($current_user[0]['s_path'])):
-                                                $img_path = osc_base_url() . '/' . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . '.' . $current_user[0]['s_extension'];
+                                            if (!empty($current_user['s_path'])):
+                                                $img_path = osc_base_url() . '/' . $current_user['s_path'] . $current_user['pk_i_id'] . '.' . $current_user['s_extension'];
                                             else:
                                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                             endif;
@@ -46,7 +46,7 @@ require_once 'functions.php';
                                         <div class="col-md-6 padding-top-3per">
                                             <div class="col-md-12 vertical-row">
                                                 <div class="col-md-4 padding-0">
-                                                    <h5><?php echo $current_user[0]['user_name'] ?></h5>
+                                                    <h5><?php echo $current_user['user_name'] ?></h5>
                                                 </div>
                                                 <div class="col-md-6 padding-0">
                                                     <img class="vertical-top col-md-1 star img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>">
@@ -54,14 +54,14 @@ require_once 'functions.php';
 
                                             </div>
                                             <div class="col-md-12 vertical-row">
-                                                <h5 class=" margin-0">You have  <span style="color:orangered"><?php echo get_user_posts_count($current_user[0]['user_id']) ?></span> publicaton </h5>
+                                                <h5 class=" margin-0">You have  <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publicaton </h5>
                                             </div>
 
 
                                         </div>
                                         <div class="col-md-4 padding-top-4per">
                                             <div class="col-md-offset-4">
-                                                <button class="en-savoir-plus-button-orng">En savoir plus</button>
+                                                <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> En savoir plus </a>
                                             </div>
                                         </div>
                                     </div>
@@ -303,8 +303,8 @@ require_once 'functions.php';
                                         <?php
                                         $current_user = get_user_data(osc_logged_user_id());
 
-                                        if (!empty($current_user[0]['s_path'])):
-                                            $img_path = osc_base_url() . '/' . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . '.' . $current_user[0]['s_extension'];
+                                        if (!empty($current_user['s_path'])):
+                                            $img_path = osc_base_url() . '/' . $current_user['s_path'] . $current_user['pk_i_id'] . '.' . $current_user['s_extension'];
                                         else:
                                             $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                         endif;

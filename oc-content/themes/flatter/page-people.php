@@ -23,8 +23,8 @@ $logged_user = get_user_data(osc_logged_user_id());
     <div class="location_filter_container pull-right pull-right-search">
         <ul class="nav">
             <li class="location_filter_tab" data_location_type="world" data_location_id=''><a href="#">WORLD</a></li>
-            <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#">NATIONAL</a></li>
-            <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#">LOCAL</a></li>
+            <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#">NATIONAL</a></li>
+            <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#">LOCAL</a></li>
         </ul>
         <div class="tab-content">
 

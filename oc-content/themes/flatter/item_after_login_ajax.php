@@ -63,8 +63,8 @@ if ($items):
             $item_id = osc_item_id();
             $user = get_user_data(osc_item_user_id());
 
-            if (!empty($user[0]['s_path'])):
-                $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
+            if (!empty($user['s_path'])):
+                $user_image_url = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . "_nav." . $user['s_extension'];
             else:
                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
             endif;
@@ -72,8 +72,8 @@ if ($items):
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user[0]['user_name'] ?>">
-                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user[0]['user_id']) ?>"><?php echo $user[0]['user_name'] ?></a></span>
+                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user['user_name'] ?>">
+                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
                         <span class="description"><?php echo $date_in_french ?></span>
                     </div>
                     <!-- /.user-block -->
@@ -144,8 +144,8 @@ if ($items):
                             ?>
                             <?php
                             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-                            if ($comment_user[0]['s_path']):
-                                $user_image_url = osc_base_url() . $comment_user[0]['s_path'] . $comment_user[0]['pk_i_id'] . "_nav." . $comment_user[0]['s_extension'];
+                            if ($comment_user['s_path']):
+                                $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
                             else:
                                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                             endif;
@@ -161,11 +161,11 @@ if ($items):
                                 <div class="box-footer box-comments">
                                     <div class="box-comment">
                                         <!-- User image -->
-                                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user[0]['user_name'] ?>">
+                                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user['user_name'] ?>">
 
                                         <div class="comment-text">
                                             <span class="username">
-                                                <?php echo $comment_user[0]['user_name'] ?>
+                                                <?php echo $comment_user['user_name'] ?>
                                                 <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span><!-- /.username -->
                                             <?php echo $comment_data['s_body']; ?>
@@ -193,13 +193,13 @@ if ($items):
                         $current_user = get_user_data(osc_logged_user_id());
                         $current_user_image_url = '';
 
-                        if ($current_user[0]['s_path']):
-                            $current_user_image_url = osc_base_url() . $current_user[0]['s_path'] . $current_user[0]['pk_i_id'] . "_nav." . $current_user[0]['s_extension'];
+                        if ($current_user['s_path']):
+                            $current_user_image_url = osc_base_url() . $current_user['s_path'] . $current_user['pk_i_id'] . "_nav." . $current_user['s_extension'];
                         else:
                             $current_user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                         endif;
                         ?>
-                        <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user[0]['user_name'] ?>">
+                        <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user['user_name'] ?>">
                         <!-- .img-push is used to add margin to elements next to floating images -->
                         <div class="img-push">
                             <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">

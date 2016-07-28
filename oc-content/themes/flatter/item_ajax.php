@@ -37,8 +37,8 @@ if ($items):
             $user_id = osc_item_user_id();
             $item_id = osc_item_id();
             $user = get_user_data($user_id);
-            if (!empty($user[0]['s_path'])):
-                $user_image_url = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . "_nav." . $user[0]['s_extension'];
+            if (!empty($user['s_path'])):
+                $user_image_url = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . "_nav." . $user['s_extension'];
             else:
                 $user_image_url = osc_current_web_theme_url('images/user_icon.jpg');
             endif;
@@ -64,10 +64,10 @@ if ($items):
                     <?php } ?>
                     <div class="description" >
                         <div class="col-md-9 padding-top-10">
-                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user[0]['user_name']) ? $user[0]['user_name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
+                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
                             <h3 class="item_title">
                                 <a style="item_link" href="<?php echo osc_item_url(); ?>">
-                                    <?php echo isset($user[0]['user_name']) ? $user[0]['user_name'] : osc_item_title(); ?>
+                                    <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
                                     <?php //echo osc_item_title();  ?>
                                 </a>
                             </h3>
@@ -88,7 +88,7 @@ if ($items):
                                     </span>
                                     <?php if (!empty($count_result)): ?>
                                         <span class="item_favourite_count">
-                                            <i class="fa fa-heart"></i> <?php echo $count_result[0]['total'] ?>
+                                            <i class="fa fa-heart"></i> <?php echo $count_result['total'] ?>
                                         </span>
                                     <?php endif; ?>
                                 </div>

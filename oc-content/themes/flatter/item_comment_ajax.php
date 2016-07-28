@@ -12,9 +12,9 @@ $user = get_user_data($comment_user_id);
 $comment_array = array();
 $comment_array['fk_i_item_id'] = $comment_item_id;
 $comment_array['s_body'] = $comment_text;
-$comment_array['fk_i_user_id'] = $user[0]['user_id'];
-$comment_array['s_author_name'] = $user[0]['user_name'];
-$comment_array['s_author_email'] = $user[0]['s_email'];
+$comment_array['fk_i_user_id'] = $user['user_id'];
+$comment_array['s_author_name'] = $user['user_name'];
+$comment_array['s_author_email'] = $user['s_email'];
 $comment_array['b_enabled'] = 1;
 $comment_array['b_active'] = 1;
 $comment_array['dt_pub_date'] = date("Y-m-d H:i:s");
@@ -49,8 +49,8 @@ $c_data = $comments_result->result();
             ?>
             <?php
             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-            if ($comment_user[0]['s_path']):
-                $user_image_url = osc_base_url() . $comment_user[0]['s_path'] . $comment_user[0]['pk_i_id'] . "_nav." . $comment_user[0]['s_extension'];
+            if ($comment_user['s_path']):
+                $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
             else:
                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
             endif;
@@ -65,11 +65,11 @@ $c_data = $comments_result->result();
                     <div class="box-comment">
                         <!-- User image -->
 
-                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user[0]['user_name'] ?>">
+                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user['user_name'] ?>">
 
                         <div class="comment-text">
                             <span class="username">
-                                <?php echo $comment_user[0]['user_name'] ?>
+                                <?php echo $comment_user['user_name'] ?>
                                 <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                             </span><!-- /.username -->
                             <?php echo $comment_data['s_body']; ?>

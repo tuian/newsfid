@@ -94,7 +94,7 @@
                         
                                                 <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
                                                     <h3 class="widget-user-username">
-                        <?php echo $logged_user[0]['user_name'] ?>
+                        <?php echo $logged_user['user_name'] ?>
                                                     </h3>
                                                     <h5 class="widget-user-desc">
                                                         Web Designer
@@ -102,14 +102,14 @@
                                                 </div>
                                                 <div class="widget-user-image">
                         <?php
-                        if (!empty($logged_user[0]['s_path'])):
-                            $img_path = osc_base_url() . '/' . $logged_user[0]['s_path'] . $logged_user[0]['pk_i_id'] . '.' . $logged_user[0]['s_extension'];
+                        if (!empty($logged_user['s_path'])):
+                            $img_path = osc_base_url() . '/' . $logged_user['s_path'] . $logged_user['pk_i_id'] . '.' . $logged_user['s_extension'];
                         else:
                             $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                         endif;
                         ?>
                         
-                                                    <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user[0]['user_name'] ?>">
+                                                    <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user['user_name'] ?>">
                                                 </div>
                                                 <div class="box-footer">
                                                     <div class="row">
@@ -220,7 +220,7 @@
                         <!-- /.box -->
                         <div class="suggested_user_div">
                             <?php
-                            $suggested_users = get_suggested_users($logged_user[0]['user_id'], 300);
+                            $suggested_users = get_suggested_users($logged_user['user_id'], 300);
                             if ($suggested_users):
                                 foreach ($suggested_users as $s_user):
                                     $suggested_user_array = get_user_data($s_user);
@@ -228,14 +228,14 @@
                                     <div class="col-md-12 margin-bottom-30">
                                         <div class="col-md-3 padding-right-0">
                                             <!-- /.direct-chat-info -->
-                                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $suggested_user_array[0]['user_name'] ?>">
-                                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $suggested_user_array[0]['user_name'] ?>" width="16px" height="16px">
+                                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $suggested_user_array['user_name'] ?>">
+                                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $suggested_user_array['user_name'] ?>" width="16px" height="16px">
                                         </div>
                                         <div class="col-md-9 padding-right-0">
-                                            <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array[0]['user_name'] ?></h4>                                
-                                            <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array[0]['user_id'])) ?></span>                                                            
+                                            <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>                                
+                                            <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                             <?php
-                                            user_follow_btn_box($logged_user[0]['user_id'], $suggested_user_array[0]['user_id']);
+                                            user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
                                             ?>
                                         </div>
                                     </div>    
@@ -284,8 +284,8 @@
                                             <div class="location_filter_container pull-right">
                                                 <ul class="nav">
                                                     <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
-                                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user[0]['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                                                    <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user[0]['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                                    <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
                                                 </ul>                            
                                             </div>
                                         </div>

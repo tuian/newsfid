@@ -1022,15 +1022,19 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 
 //osc_add_hook('admin_items_table', 'cust_admin_my_custom_items_column_header');
 //osc_add_filter('items_processing_row', 'cust_admin_my_custom_items_column_data');
-function get_user_data($user_id) {
-    $conn = DBConnectionClass::newInstance();
-    $data = $conn->getOsclassDb();
-    $comm = new DBCommandClass($data);
+function get_user_data($user_id) {    
     $db_prefix = DB_TABLE_PREFIX;
-//    $query = "SELECT user.*, user.pk_i_id as user_id, user.s_name as user_name, user2.* FROM `{$db_prefix}t_user` user INNER JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
-    $query = "SELECT user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path, user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext FROM `{$db_prefix}t_user` user LEFT JOIN `{$db_prefix}t_user_resource` user2 ON user.pk_i_id = user2.fk_i_user_id LEFT JOIN `{$db_prefix}t_profile_picture` user_cover_picture ON user.pk_i_id = user_cover_picture.user_id  WHERE user.pk_i_id={$user_id} GROUP BY user.pk_i_id LIMIT 1";
-    $result = $comm->query($query);
-    $user = $result->result();
+    $user_data = new DAO();
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path, user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
+    $user_data->dao->select('user_role.id as role_id, user_role.role_name');
+    $user_data->dao->from("{$db_prefix}t_user user");
+    $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
+    $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
+    $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
+    $user_data->dao->where("user.pk_i_id={$user_id}");
+    $user_data->dao->limit(1);
+    $result = $user_data->dao->get();
+    $user = $result->row();
     return $user;
 }
 
@@ -1724,5 +1728,16 @@ function get_suggested_users($user_id, $limit) {
     $rubric_user_id = array_column($suggest_user_array, 'user_id');
     $users = array_merge($theme_user_id, $rubric_user_id);
     return array_slice(array_unique($users), 0, $limit);
+}
+
+function get_user_roles_array() {
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_role_data = new DAO();
+    $user_role_data->dao->select("user_roles.*");
+    $user_role_data->dao->from("{$db_prefix}t_user_roles as user_roles");
+    $user_role_data->dao->orderBy("user_roles.role_name ASC");
+    $user_role_result = $user_role_data->dao->get();
+    $user_roles = $user_role_result->result();
+    return $user_roles;
 }
 ?>

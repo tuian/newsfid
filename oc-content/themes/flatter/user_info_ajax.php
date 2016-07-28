@@ -37,4 +37,17 @@ if ($_REQUEST['action'] == 'user_website'):
         echo 0;
     endif;
 endif;
+
+if ($_REQUEST['action'] == 'user_role'):
+    $text = $_REQUEST['user_role_id'];
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('user_role' => $text), array('pk_i_id' => $user_id));
+    print_r($text);
+    print_r($result);
+    if ($result):
+        $user_data = get_user_data($user_id);
+        echo $user_data['role_name'];
+    else:
+        echo 0;
+    endif;
+endif;
 ?>

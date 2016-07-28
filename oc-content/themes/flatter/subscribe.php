@@ -283,8 +283,8 @@ require 'functions.php';
                         <div class="green-round margin-left-15"></div>
                         <?php
                         $id = '11';
-                        $description = 'test';
-                        $amount = '11';
+                        $description = 'Subscription amount';
+                        $amount = '4.99';
                         $tax = '0';
                         $quantity = 1;
                         //$extra = '';
@@ -298,9 +298,6 @@ require 'functions.php';
 
                         $paypal_btn = new PaypalPayment();
                         $paypal_btn->standardButton($items);
-
-//                            $braintree_btn = new BraintreePayment();
-//                            $braintree_btn->button($items);
                         ?>
                     </div>
                 </div>

@@ -238,6 +238,9 @@ textarea.border-bottom-0{
     top: 37%;
     left: 30%;
 }
+.user_role_selector{
+    display: none;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

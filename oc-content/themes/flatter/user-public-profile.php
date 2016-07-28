@@ -66,8 +66,8 @@ $user = get_user_data(osc_user_id());
             <div class="col-md-4">
                 <div class=" bg-white col-md-12 padding-0">
                     <?php
-                    if ($user[0]['cover_picture_user_id']):
-                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user[0]['cover_picture_user_id'] . '.' . $user[0]['pic_ext'];
+                    if ($user['cover_picture_user_id']):
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
                     else:
                         $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
                     endif;
@@ -75,7 +75,7 @@ $user = get_user_data(osc_user_id());
                     <div class="box box-widget widget-user">
                         <div class="widget-user-header bg-black" style="background: url('<?php echo $cover_image_path ?>') center center;">
                             <h3 class="widget-user-username">
-                                <?php echo $user[0]['user_name'] ?>
+                                <?php echo $user['user_name'] ?>
                             </h3>
                             <h5 class="widget-user-desc">
                                 Web Designer
@@ -93,14 +93,14 @@ $user = get_user_data(osc_user_id());
                         </div>
                         <div class="widget-user-image">
                             <?php
-                            if (!empty($user[0]['s_path'])):
-                                $img_path = osc_base_url() . '/' . $user[0]['s_path'] . $user[0]['pk_i_id'] . '.' . $user[0]['s_extension'];
+                            if (!empty($user['s_path'])):
+                                $img_path = osc_base_url() . '/' . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
                             else:
                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                             endif;
                             ?>
 
-                            <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $user[0]['user_name'] ?>">
+                            <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $user['user_name'] ?>">
                             <?php if (osc_user_id() == osc_logged_user_id()): ?>
                                 <span class="profile_img_overlay">
                                     <form class="file_upload" method="post" enctype="multipart/form-data">
@@ -119,7 +119,7 @@ $user = get_user_data(osc_user_id());
                                     <div class="description-block">
                                         <h5 class="description-header">
                                             <?php
-                                            $user_following = get_user_following_data($user[0]['user_id']);
+                                            $user_following = get_user_following_data($user['user_id']);
                                             if ($user_following):
                                                 echo count($user_following);
                                             else:
@@ -136,7 +136,7 @@ $user = get_user_data(osc_user_id());
                                     <div class="description-block">
                                         <h5 class="description-header">
                                             <?php
-                                            $user_followers = get_user_follower_data($user[0]['user_id']);
+                                            $user_followers = get_user_follower_data($user['user_id']);
                                             if ($user_followers):
                                                 echo count($user_followers);
                                             else:
@@ -153,7 +153,7 @@ $user = get_user_data(osc_user_id());
                                     <div class="description-block">
                                         <h5 class="description-header">
                                             <?php
-                                            $user_likes = get_user_item_likes($user[0]['user_id']);
+                                            $user_likes = get_user_item_likes($user['user_id']);
                                             if ($user_likes):
                                                 echo count($user_likes);
                                             else:
@@ -416,7 +416,6 @@ function custom_script() {
                         type: 'cover_image',
                     },
                     success: function (html, statusText, xhr, $form) {
-                        console.log(html);
                         $('.widget-user-header').css({'background-image': ''});
                         $('.widget-user-header').css({'background-image': 'url(' + html + ')'});
                     },
