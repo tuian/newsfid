@@ -78,7 +78,7 @@ $user = get_user_data(osc_user_id());
                                 <?php echo $user['user_name'] ?>
                             </h3>
                             <h5 class="widget-user-desc">
-                                Web Designer
+                                <?php echo $user['role_name'] ?>
                             </h5>      
                             <?php if (osc_user_id() == osc_logged_user_id()): ?>
                                 <span class="profile_img_overlay">

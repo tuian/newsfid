@@ -51,7 +51,7 @@ if ($items):
                         <div class="image">
                             <div>
                                 <?php if (osc_count_item_resources()) { ?>
-                                    <a href="<?php echo osc_item_url(); ?>">
+                                    <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">
                                         <?php item_resources(osc_item_id()) ?>
                                     </a>
                                 <?php } else { ?>
@@ -66,7 +66,7 @@ if ($items):
                         <div class="col-md-9 padding-top-10">
                             <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
                             <h3 class="item_title">
-                                <a style="item_link" href="<?php echo osc_item_url(); ?>">
+                                <a style="item_link" class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
                                     <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
                                     <?php //echo osc_item_title();  ?>
                                 </a>

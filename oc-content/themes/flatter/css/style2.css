@@ -241,9 +241,23 @@ textarea.border-bottom-0{
 .user_role_selector{
     display: none;
 }
+.payment_result {
+    font-weight: bold;
+    padding: 10px 0;
+    font-size: 16px;
+}
+.payment_result.error {
+    color: #a94442;
+}
+.payment_result.success {
+    color: #3c763d;
+}
 /**********
 orange: #f68935
 blue: #20a8e0
 grey: #c7c8cd
+
+red color text: #a94442
+green color text: #3c763d
 
 ********/

@@ -182,6 +182,7 @@ require 'functions.php';
                                         <div class="col-md-9 margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision </div>
                                         <div class="col-md-9 margin-top-20">
                                             <button type="submit" class="btn btn-lg button-orng btn-radius-0 payment_btn">Activer mes 30 jours gartuit</button>
+                                            <div class="payment_result"></div>
                                             <div class="margin-top-20">Je Confirme avoir lu et accepte les Conditions Generales d'Utilision</div>
                                         </div>
 
@@ -333,18 +334,21 @@ require 'functions.php';
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
                     data: {
-                        braintree_number: 'braintree_number',
+                        braintree_number: braintree_number,
                         braintree_cvv: braintree_cvv,
                         amount: amount,
                         braintree_month: braintree_month,
                         braintree_year: braintree_year,
                     },
                     success: function (data, textStatus, jqXHR) {
-                        if (data == 0) {
-                            console.log('payment is not successful');
-                        }
+
                         if (data == 1) {
-                            console.log('payment is successful');
+                            $('.payment_result').empty().addClass('success').removeClass('error');
+                            $('.payment_result').text('Payment added successfully');
+                        } else {
+                            $('.payment_result').empty().addClass('error').removeClass('success');
+                            $('.payment_result').text('Payment not added successfully');
+                            $('.payment_result').text(data);
                         }
                     }
                 });

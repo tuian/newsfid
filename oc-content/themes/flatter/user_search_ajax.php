@@ -54,7 +54,7 @@ if ($user_search_array):
                             </h3>
                         </a>
                         <h5 class="widget-user-desc">
-                            Web Designer
+                            <?php echo $user['role_name'] ?>
                         </h5>
                     </div>
                     <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
