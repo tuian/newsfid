@@ -77,26 +77,26 @@
 
                             <div class="user-panel">
                                 <div class="pull-left image">
-                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
                                         <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">
                                     </a>
                                 </div>
                                 <div class="pull-left info">
-                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
                                         <p>
                                             <!--<i class="fa fa-circle text-success"></i> -->
-                                            <?php is_user_online(osc_logged_user_id()); ?> 
+                                            <?php is_user_online($user['user_id']); ?> 
                                         </p>
                                     </a>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div style="height: 10px;"></div>
                                 <div class="pull-left">
-                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
-                                        <p><?php echo osc_logged_user_name() ?></p>
+                                        <p><?php echo  $user['user_name'] ?></p>
                                     </a>                                
                                 </div>
                             </div>

@@ -53,8 +53,10 @@ $roles = get_user_roles_array();
                         <div class="col-md-3 col-sm-3 col-xs-5 text-right">
                             Nom d'utilisateur
                         </div>
-                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="name" id="" class="name disabled" value="<?php echo osc_logged_user_name(); ?>" disabled>
+                        <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row user">
+
+                            <input type="text" name="up_name" id="" class="user_name_textbox disabled" value="<?php echo $user_info['user_name']; ?>" disabled>
+
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
                             <i class="fa fa-globe"></i>
@@ -65,7 +67,7 @@ $roles = get_user_roles_array();
                             Adresse email
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="email" class="email disabled" value="<?php echo osc_logged_user_email(); ?>" disabled>
+                            <input type="text" name="up_email" class="user_email_textbox disabled" value="<?php echo $user_info['s_email']; ?>" disabled>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
                             <i class="fa fa-lock"></i>
@@ -78,7 +80,7 @@ $roles = get_user_roles_array();
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
                             <div class="input-group code-box">
                                 <span class="input-group-addon" id="basic-addon1">+33</span>
-                                <input type="text" name="mobile" class="mobile form-control disabled" value="<?php echo osc_logged_user_phone(); ?>" disabled>
+                                <input type="text" name="up_mobile" class="user_mobile_textbox form-control disabled" value="<?php echo $user_info['phone_number'] ?>" disabled>
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
@@ -90,7 +92,7 @@ $roles = get_user_roles_array();
                             Reseaux Defaut
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <select id="country_Id" class="disabled" disabled>
+                            <select id="country_Id" class="user_country_textbox disabled" name="up_country" disabled>
                                 <?php
                                 $counrtry_db = osc_get_countries();
                                 foreach ($counrtry_db as $key => $country) :
@@ -451,7 +453,7 @@ $roles = get_user_roles_array();
 </div>
 <script>
     $(document).ready(function () {
-        
+
         $('#edit').click(function () {
             if ($('.disabled').prop('disabled'))
             {
@@ -462,11 +464,14 @@ $roles = get_user_roles_array();
             }
         });
 
-        $('#edit').click(function(){
-           $('#save').show().siblings().$('#edit').hide(); 
+        $('#edit').click(function () {
+            $('#save').show();
+            $('#edit').hide();
         });
-        $('#save').click(function(){
-           $('#edit').show(); 
+        $('#save').click(function () {
+            $('#save').hide();
+            $('#edit').show();
+            $('.disabled').attr('disabled', 'disabled');
         });
 
         // Add smooth scrolling to all links
@@ -526,6 +531,79 @@ $roles = get_user_roles_array();
                 $('#cityId').val(obj.id);
             },
         });
+    });
+</script>
+<script>
+
+    jQuery(document).ready(function ($) {
+        /*name update start*/
+        $(document).on('blur', '.user_name_textbox', function () {
+            var new_text = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 'user_name',
+                    up_name: new_text,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
+            });
+           // $('.name').html(new_text).val('up_name', new_text);
+        });
+        /*name update end*/
+        /*email update start*/
+        $(document).on('blur', '.user_email_textbox', function () {
+            var new_text = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 's_email',
+                    up_email: new_text,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
+            });
+           // $('.name').html(new_text).val('name', new_text);
+        });
+        /*email update end */
+        $(document).on('blur', '.user_mobile_textbox', function () {
+            var new_text = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 's_phone_mobile',
+                    up_mobile: new_text,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
+            });
+           // $('.name').html(new_text).val('name', new_text);
+        });
+        $(document).on('blur', '.user_country_textbox', function () {
+            var new_text = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 'fk_c_country_code',
+                    up_country: new_text,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
+            });
+           // $('.name').html(new_text).val('name', new_text);
+        });
+        $(document).on('change', '.user_country_textbox', function () {
+                var country_code = $(this).val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                    data: {
+                        action: 'fk_c_country_code',
+                        up_country: country_code,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    }
+                });
+            });
     });
 </script>
 
