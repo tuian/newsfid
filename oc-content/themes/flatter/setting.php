@@ -23,9 +23,9 @@ $roles = get_user_roles_array();
             <div class="col-md-12 padding-0">      
                 <ul class="nav nav-tabs settings-li">
                     <span class="set bold font-30px font-color-black">Settings</span>
-                    <li><a href="#">Securite</a></li>
+                    <li><a href="#">Sécurité</a></li>
                     <li class="active"><a href="#">Social</a></li>
-                    <li><a href="#">General</a></li>
+                    <li><a href="#">Général</a></li>
                 </ul>
             </div>
             <div class="col-md-12 menu-tabs padding-0 ">      
@@ -33,8 +33,8 @@ $roles = get_user_roles_array();
                     <li class="col-md-offset-1"><a href="#compte">Compte</a></li>
                     <li><a href="#contenu">Contenu</a></li>
                     <li><a href="#moyen_de_paiement">Moyen de Paiment</a></li>
-                    <li><a href="#compte_bloques">Compte bloques</a></li>
-                    <li><a href="#verouillage">Verouillage</a></li>
+                    <li><a href="#compte_bloques">Compte bloqués</a></li>
+                    <li><a href="#verouillage">Verrouillage</a></li>
                     <li><a href="#audio">Audio</a></li>
                 </ul>
             </div>
@@ -110,7 +110,7 @@ $roles = get_user_roles_array();
                         $city_data = City::newInstance()->findByPrimaryKey($user_info['fk_i_city_id']);
                         ?>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="s_city" class="form-control disabled" id="s_city" placeholder="" value="<?php echo $city_data['s_name'] ?>" disabled>
+                            <input type="text" name="s_city" class="user_city_textbox form-control disabled" name="up_city" id="s_city" placeholder="" value="<?php echo $city_data['s_name'] ?>" disabled>
                             <input type="hidden" name="cityId" class="form-control" id="cityId">
                         </div>
                         <div class="col-md-1 col-sm-1 col-xs-1">
@@ -125,9 +125,9 @@ $roles = get_user_roles_array();
                             User type
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <select name="user_role_selector" id="user_role_selector" class="user_type disabled" disabled>
+                            <select name="user_role_selector" id="user_role_selector" class="user_type_textbox disabled" disabled>
                                 <?php foreach ($roles as $k => $role): ?>
-                                    <option <?php if ($role['id'] == $user_data['role_id']) echo 'selected'; ?> value="<?php echo $role['id'] ?>"><?php echo $role['role_name']; ?></option>
+                                    <option <?php if ($role['id'] == $user_info['role_id']) echo 'selected'; ?> value="<?php echo $role['id'] ?>"><?php echo $role['role_name']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -143,7 +143,7 @@ $roles = get_user_roles_array();
                             Current Password<span class="red star-alert">*</span>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="cpass" class="cpass disabled" disabled>
+                            <input type="text" id="pass" name="pass" class="pass disabled" disabled>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
@@ -151,7 +151,7 @@ $roles = get_user_roles_array();
                             New Password<span class="red star-alert">*</span>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="npass" class="npass disabled" disabled>
+                            <input type="text" id="npass" name="npass" class="npass disabled" disabled>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
@@ -159,12 +159,12 @@ $roles = get_user_roles_array();
                             Confirm Password<span class="red star-alert">*</span>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                            <input type="text" name="copass" class="copass disabled" disabled>
+                            <input type="text" id="cpass" name="cpass" class="cpass disabled" disabled>
                         </div>
                     </div>
                     <div class="col-md-offset-5 col-md-7 padding-top-4per">
                         <div class="col-md-4 none" id="save">
-                            <button type="submit" class="btn btn-lg button-blue-box">Save</button>
+                            <button type="submit" id="change-pass" class="btn btn-lg button-blue-box">Save</button>
                         </div>
                     </div>
                 </div>
@@ -300,17 +300,17 @@ $roles = get_user_roles_array();
                 </div>
             </div>
             <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
-            <div class="col-md-12 margin-top-20">
-                <div class="col-md-offset-2 col-md-8 font-light-gray">
-                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
-                </div>
-                <div class="col-md-offset-2 col-md-8 padding-top-4per">
-                    <div class="onoffswitch">
-                        <input type="checkbox" name="accept2" class="onoffswitch-checkbox" data_post_type="accept2" checked="" id="accept2" value="accept2">
-                        <label class="onoffswitch-label" for="accept2"></label>
-                    </div>
-                </div>
-            </div>
+            <!--            <div class="col-md-12 margin-top-20">
+                            <div class="col-md-offset-2 col-md-8 font-light-gray">
+                                En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                            </div>
+                            <div class="col-md-offset-2 col-md-8 padding-top-4per">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="accept2" class="onoffswitch-checkbox" data_post_type="accept2" checked="" id="accept2" value="accept2">
+                                    <label class="onoffswitch-label" for="accept2"></label>
+                                </div>
+                            </div>
+                        </div>-->
             <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
             <div class="col-md-12 padding-top-4per">
                 <div class="col-md-offset-3">
@@ -322,7 +322,7 @@ $roles = get_user_roles_array();
         <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
-                    <h1 class="bold blue_text">Compte bloques</h1>
+                    <h1 class="bold blue_text">Compte bloqués</h1>
                 </div>
                 <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -331,7 +331,7 @@ $roles = get_user_roles_array();
             <div class="border-bottom-gray col-md-12"></div>
             <div class="col-md-12 padding-top-8per padding-bottom-13per">
                 <div class="col-md-11 font-light-gray ">
-                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                    <!--                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  -->
                 </div>
             </div>
             <div class="border-bottom-gray col-md-12"></div>
@@ -342,10 +342,8 @@ $roles = get_user_roles_array();
                 <div class="col-md-5">
                     <h3 class="font-color-black bold"> Alex Crawford Sky</h3>
                 </div>
-                <div class="col-md-offset-2 col-md-3 block-dropdown">
-                    <select class="font-light-gray">
-                        <option>Bloque</option>
-                    </select>
+                <div class="col-md-offset-2 col-md-3">
+                    <button class="btn btn-disabled">Bloqués</button>
                 </div>
             </div>
         </div>
@@ -353,16 +351,17 @@ $roles = get_user_roles_array();
         <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
             <div class="col-md-12 vertical-row">
                 <div class='col-md-7'>
-                    <h1 class="bold blue_text">Verouillage</h1>
+                    <h1 class="bold blue_text">Verrouillage</h1>
                 </div>
             </div>
             <div class="col-md-offset-1 col-md-10 font-light-gray padding-3per">
-                En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
             </div>
             <div class="border-bottom-gray col-md-12 padding-top-8per"></div>
             <div class="col-md-12 padding-3per">
                 <div class="col-md-offset-1 col-md-8 padding-3per bold">
-                    Verouiller mes parametres
+                    Verrouiller mes paramétres
+
                 </div>
                 <div class="col-md-2 padding-3per">
                     <div class="onoffswitch">
@@ -398,7 +397,7 @@ $roles = get_user_roles_array();
             <div class="border-bottom-gray col-md-12"></div>
             <div class="col-md-12">
                 <div class="col-md-offset-3 padding-7per">
-                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                    <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
                 </div>
             </div>
             <div class="border-bottom-gray col-md-12"></div>
@@ -418,7 +417,7 @@ $roles = get_user_roles_array();
                     </div>
                 </div>
                 <div class="col-md-9 padding-3per padding-left-7per font-light-gray">
-                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                    <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
                 </div>
             </div>
         </div>
@@ -440,7 +439,7 @@ $roles = get_user_roles_array();
             </div>
             <div class="col-md-12">
                 <div class="col-md-offset-3 col-md-8 font-light-gray padding-top-4per">
-                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
+                    <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
                 </div>
             </div>
             <div class="col-md-12">
@@ -548,7 +547,7 @@ $roles = get_user_roles_array();
                 success: function (data, textStatus, jqXHR) {
                 }
             });
-           // $('.name').html(new_text).val('up_name', new_text);
+            // $('.name').html(new_text).val('up_name', new_text);
         });
         /*name update end*/
         /*email update start*/
@@ -563,7 +562,7 @@ $roles = get_user_roles_array();
                 success: function (data, textStatus, jqXHR) {
                 }
             });
-           // $('.name').html(new_text).val('name', new_text);
+            // $('.name').html(new_text).val('name', new_text);
         });
         /*email update end */
         $(document).on('blur', '.user_mobile_textbox', function () {
@@ -577,33 +576,58 @@ $roles = get_user_roles_array();
                 success: function (data, textStatus, jqXHR) {
                 }
             });
-           // $('.name').html(new_text).val('name', new_text);
+            // $('.name').html(new_text).val('name', new_text);
         });
-        $(document).on('blur', '.user_country_textbox', function () {
-            var new_text = $(this).val();
+        $(document).on('change', '.user_country_textbox', function () {
+            var country_name = $('.user_country_textbox option:selected').text();
+            var country_code = $(this).val();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
                 data: {
                     action: 'fk_c_country_code',
-                    up_country: new_text,
+                    up_country: country_code,
+                    up_country_name: country_name,
                 },
                 success: function (data, textStatus, jqXHR) {
                 }
             });
-           // $('.name').html(new_text).val('name', new_text);
+            // $('.name').html(new_text).val('name', new_text);
         });
-        $(document).on('change', '.user_country_textbox', function () {
-                var country_code = $(this).val();
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
-                    data: {
-                        action: 'fk_c_country_code',
-                        up_country: country_code,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                    }
-                });
+//        $(document).on('blur', '.user_city_textbox', function () {
+//            var city_name = $(this).text();
+//            var city_code = $(this).val();
+//            $.ajax({
+//                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+//                data: {
+//                    action: 'fk_i_city_id',
+//                    up_city_name: city_name,
+//                    up_city_code: city_code,
+//                },
+//                success: function (data, textStatus, jqXHR) {
+//                }
+//            });
+//            // $('.name').html(new_text).val('name', new_text);
+//        });
+
+        $(document).on('change', '.user_type_textbox', function () {
+            var role_id = $(this).val();
+            var role_name = $('.user_type_textbox option:selected').text();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 'user_role',
+                    user_role_id: role_id,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
             });
+        });
+        
+        $(document).on('submit', '#change-pass', function (){
+            
+        });
+
+
     });
 </script>
 

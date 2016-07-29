@@ -58,8 +58,7 @@ require_once 'functions.php';
                                         <div class="col-md-6 padding-top-3per">
                                             <div class="col-md-12 vertical-row">
                                                 <div class="col-md-4 padding-0">
-                                                    <h5><?php echo $current_user['user_name'] ?></h5>
-                                                </div>
+                                                    <h4 class="bold"><?php echo $current_user['user_name'] ?></h4>                                                </div>
                                                 <div class="col-md-6 padding-0">
                                                     <?php if ($current_user['user_type'] != 0): ?>
                                                         <img class="vertical-top col-md-1 star img img-responsive" src="<?php echo $user_type_image_path ?>">
@@ -68,7 +67,7 @@ require_once 'functions.php';
 
                                             </div>
                                             <div class="col-md-12 vertical-row">
-                                                <h5 class=" margin-0">You have  <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publicaton </h5>
+                                                <h5 class=" margin-0">Vous avez déjà <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publication </h5>
                                             </div>
 
 
@@ -82,8 +81,8 @@ require_once 'functions.php';
                                 </div>
                                 <div class="col-md-12 vertical-row">
                                     <div class="col-md-offset-1 col-md-11 padding-top-3per">
-                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
-                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+<!--                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +223,7 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6 text-bg-color">
                                         <div class="bold padding-10">
-                                            Your podcst must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
+                                            Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
 
                                         </div>
                                     </div>
@@ -266,7 +265,7 @@ require_once 'functions.php';
                                     <?php
                                     foreach ($counrty_array as $countryList):
                                         ?>
-                                                                                                                                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                                                                                        <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                         <?php
                                     endforeach;
                                     ?>
@@ -345,8 +344,8 @@ require_once 'functions.php';
                             </div>
                             <div class="col-md-12 vertical-row">
                                 <div class="col-md-offset-1 col-md-11 padding-top-3per">
-                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
-                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+<!--                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
                                 </div>
                             </div>
                         </div>
