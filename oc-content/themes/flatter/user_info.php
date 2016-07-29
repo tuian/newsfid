@@ -141,9 +141,9 @@ function custom_map_script() {
                 var text = $('.user_website .user_website_text').attr('data_text');
                 var input_box = '<input type="text" class="user_website_textbox" value="' + text + '">';
                 $('.user_website_text').html(input_box);
-                $('.user_website_edit').keypress(function (e) {
+                $('.user_website_textbox').keypress(function (e) {
                     if (e.which == 13) {//Enter key pressed
-                        $('.user_website_edit').focusout();
+                        $('.user_website_textbox').focusout();
                     }
                 });
             });
