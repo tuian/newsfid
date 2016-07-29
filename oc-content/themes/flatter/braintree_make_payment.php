@@ -37,6 +37,10 @@ if ($result->success) {
 
     $transaction_data = new DAO();
     $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
+    
+    $user_data = new DAO();
+    $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date("Y-m-d H:i:s")), array('pk_i_id' => $user['user_id']));
+    
     echo 1;
 } else {
     echo $result->_attributes[message];

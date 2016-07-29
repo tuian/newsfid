@@ -39,6 +39,18 @@ require_once 'functions.php';
                                             else:
                                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                             endif;
+
+                                            if ($current_user['user_type'] == 1):
+                                                $user_type_image_path = osc_current_web_theme_url() . 'images/Subscriber.png';
+                                            endif;
+
+                                            if ($current_user['user_type'] == 2):
+                                                $user_type_image_path = osc_current_web_theme_url() . 'images/Certified.png';
+                                            endif;
+
+                                            if ($current_user['user_type'] == 3):
+                                                $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
+                                            endif;
                                             ?>
 
                                             <img src="<?php echo $img_path; ?>" alt="user" class="img img-responsive">
@@ -49,7 +61,9 @@ require_once 'functions.php';
                                                     <h5><?php echo $current_user['user_name'] ?></h5>
                                                 </div>
                                                 <div class="col-md-6 padding-0">
-                                                    <img class="vertical-top col-md-1 star img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/start-box.png' ?>">
+                                                    <?php if ($current_user['user_type'] != 0): ?>
+                                                        <img class="vertical-top col-md-1 star img img-responsive" src="<?php echo $user_type_image_path ?>">
+                                                    <?php endif ?>
                                                 </div>
 
                                             </div>
@@ -252,7 +266,7 @@ require_once 'functions.php';
                                     <?php
                                     foreach ($counrty_array as $countryList):
                                         ?>
-                                                                                                                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                                         <?php
                                     endforeach;
                                     ?>

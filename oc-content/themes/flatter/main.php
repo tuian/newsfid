@@ -226,10 +226,8 @@
                                     $suggested_user_array = get_user_data($s_user);
                                     ?>
                                     <div class="col-md-12 margin-bottom-30">
-                                        <div class="col-md-3 padding-right-0">
-                                            <!-- /.direct-chat-info -->
-                                            <img class="direct-chat-img" src="<?php echo $img_path ?>" alt=" <?php echo $suggested_user_array['user_name'] ?>">
-                                            <img class="vertical-top" src="<?php echo osc_current_web_theme_url() . '/images/right.png' ?>" alt=" <?php echo $suggested_user_array['user_name'] ?>" width="16px" height="16px">
+                                        <div class="col-md-3 padding-left-0">
+                                            <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                         </div>
                                         <div class="col-md-9 padding-right-0">
                                             <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>                                

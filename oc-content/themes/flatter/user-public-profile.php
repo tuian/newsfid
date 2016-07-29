@@ -100,7 +100,8 @@ $user = get_user_data(osc_user_id());
                             endif;
                             ?>
 
-                            <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $user['user_name'] ?>">
+                            <?php get_user_profile_picture($user['user_id']) ?>
+
                             <?php if (osc_user_id() == osc_logged_user_id()): ?>
                                 <span class="profile_img_overlay">
                                     <form class="file_upload" method="post" enctype="multipart/form-data">

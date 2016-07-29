@@ -1022,10 +1022,12 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 
 //osc_add_hook('admin_items_table', 'cust_admin_my_custom_items_column_header');
 //osc_add_filter('items_processing_row', 'cust_admin_my_custom_items_column_data');
-function get_user_data($user_id) {    
+function get_user_data($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path, user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number');
+    $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
+    $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name');
     $user_data->dao->from("{$db_prefix}t_user user");
     $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
@@ -1739,5 +1741,37 @@ function get_user_roles_array() {
     $user_role_result = $user_role_data->dao->get();
     $user_roles = $user_role_result->result();
     return $user_roles;
+}
+
+function get_user_profile_picture($user_id) {
+    $user = get_user_data($user_id);
+    if (!empty($user['s_path'])):
+        $img_path = osc_base_url() . '/' . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+    else:
+        $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+    endif;
+    ?>
+    <div class="user_profile_img">
+        <img src="<?php echo $img_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
+        <?php
+        if ($user['user_type'] == 1):
+            $user_type_image_path = osc_current_web_theme_url() . 'images/Subscriber.png';
+        endif;
+
+        if ($user['user_type'] == 2):
+            $user_type_image_path = osc_current_web_theme_url() . 'images/Certified.png';
+        endif;
+
+        if ($user['user_type'] == 3):
+            $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
+        endif;
+        ?>
+        <?php if ($user['user_type'] != 0) : ?>
+            <div class="user_type_icon_image">
+                <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php
 }
 ?>

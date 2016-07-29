@@ -49,11 +49,7 @@ $c_data = $comments_result->result();
             ?>
             <?php
             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-            if ($comment_user['s_path']):
-                $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
-            else:
-                $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
-            endif;
+
             if ($k > 2 && !$load_more && count($c_data) > 3):
                 $load_more = 'load more';
                 ?>                
@@ -65,8 +61,9 @@ $c_data = $comments_result->result();
                     <div class="box-comment">
                         <!-- User image -->
 
-                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user['user_name'] ?>">
-
+                        <div class="comment_user_image">
+                            <?php get_user_profile_picture($comment_user['user_id']) ?>
+                        </div>
                         <div class="comment-text">
                             <span class="username">
                                 <?php echo $comment_user['user_name'] ?>

@@ -68,7 +68,7 @@
 }
 .cover{
     margin:0;
-    padding:0; no-repeat center fixed; 
+    padding:0;
     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover; /* version standardisée */
     background-color: black;
@@ -251,6 +251,47 @@ textarea.border-bottom-0{
 }
 .payment_result.success {
     color: #3c763d;
+}
+.user_profile_img{
+    position: relative;
+}
+.user_profile_img .user_type_icon_image {
+    position: absolute;
+    top: 0px;
+    right: -15px;
+    width: 15px;
+}
+.user-block .username,
+.user-block .description, 
+.user-block .comment{
+    margin-left: 75px;
+}
+.user_image{
+    position: relative;
+    width: 50px;
+}
+.user-block img {
+    width: 50px;
+    height: auto;
+    float: left;
+}
+.box-comments .box-comment img {
+    height: auto !important;
+    width: inherit !important;
+}
+.box-comments .comment-text{
+    margin-left: 60px;
+}
+.comment_user_image {
+    position: relative;
+    width: 35px;
+    float: left;
+}
+.comment_form .img-push {
+    margin-left: 55px;
+}
+.widget-user-image .user_profile_img{
+    width: 90px;
 }
 /**********
 orange: #f68935

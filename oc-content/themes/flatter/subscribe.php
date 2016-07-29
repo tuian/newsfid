@@ -4,7 +4,6 @@ require 'functions.php';
 ?>
 <?php osc_current_web_theme_path('header.php'); ?>
 
-<!-- profile cover -->
 <div class="subscribe-page">
     <div class="cover-img">
         <div class="container">
@@ -307,52 +306,60 @@ require 'functions.php';
         </div>
     </div>
 </div>
-<!-- end profil cover -->
-<?php osc_current_web_theme_path('footer.php'); ?>
-<script>
-    jQuery(document).ready(function ($) {
-        $('.payment-option').on('change', function () {
-            $('.payment-option').each(function () {
-                var remove = $(this).val();
-                $('#' + remove).addClass('none');
-            });
-            var data = $(this).val();
-            $('#' + data).removeClass('none');
-        });
+<?php osc_add_hook('footer', 'payment_script'); ?>
+<?php
 
-        $('.payment_btn').click(function () {
-            var selected_payment_method = $('.payment-option:checked').val();
-            if (selected_payment_method == 'paypal') {
-                $('.paypal-btn').trigger('click');
-            }
-            if (selected_payment_method == 'payment-card') {
-                var braintree_number = $('.card_number').val();
-                var braintree_cvv = $('.card_cvv_code').val();
-                var amount = 10;
-                var braintree_month = $('.expiry_month').val();
-                var braintree_year = $('.expiry_year').val();
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
-                    data: {
-                        braintree_number: braintree_number,
-                        braintree_cvv: braintree_cvv,
-                        amount: amount,
-                        braintree_month: braintree_month,
-                        braintree_year: braintree_year,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-
-                        if (data == 1) {
-                            $('.payment_result').empty().addClass('success').removeClass('error');
-                            $('.payment_result').text('Payment added successfully');
-                        } else {
-                            $('.payment_result').empty().addClass('error').removeClass('success');
-                            $('.payment_result').text('Payment not added successfully');
-                            $('.payment_result').text(data);
-                        }
-                    }
+function payment_script() {
+    ?>
+    <script>
+        jQuery(document).ready(function ($) {
+            $('.payment-option').on('change', function () {
+                $('.payment-option').each(function () {
+                    var remove = $(this).val();
+                    $('#' + remove).addClass('none');
                 });
-            }
+                var data = $(this).val();
+                $('#' + data).removeClass('none');
+            });
+
+            $('.payment_btn').click(function () {
+                var selected_payment_method = $('.payment-option:checked').val();
+                if (selected_payment_method == 'paypal') {
+                    $('.paypal-btn').trigger('click');
+                }
+                if (selected_payment_method == 'payment-card') {
+                    var braintree_number = $('.card_number').val();
+                    var braintree_cvv = $('.card_cvv_code').val();
+                    var amount = 4.99;
+                    var braintree_month = $('.expiry_month').val();
+                    var braintree_year = $('.expiry_year').val();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
+                        data: {
+                            braintree_number: braintree_number,
+                            braintree_cvv: braintree_cvv,
+                            amount: amount,
+                            braintree_month: braintree_month,
+                            braintree_year: braintree_year,
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            if (data == 1) {
+//                                $('.payment_result').empty().addClass('success').removeClass('error');
+//                                $('.payment_result').text('Payment added successfully');
+//                                data = '';
+                                <?php osc_add_flash_ok_message('Payment added successfully'); ?>
+                                window.location.href = "<?php echo osc_base_url(); ?>";
+                            } else {
+                                $('.payment_result').empty().addClass('error').removeClass('success');
+                                $('.payment_result').text('Payment not added successfully');
+                                $('.payment_result').text(data);
+                            }
+                        }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
+<?php } ?>
+<?php osc_current_web_theme_path('footer.php'); ?>
+
