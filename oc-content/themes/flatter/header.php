@@ -96,7 +96,7 @@
                                 <div class="pull-left">
                                     <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
-                                        <p><?php echo  $user['user_name'] ?></p>
+                                        <p><?php echo $user['user_name'] ?></p>
                                     </a>                                
                                 </div>
                             </div>
@@ -244,11 +244,13 @@
 //                                endif;
                                 ?>
 
-                                <li class="treeview <?php echo $active ?>">
-                                    <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
-                                        <i class="fa fa-laptop"></i>m'abonner
-                                    </a>
-                                </li>                            
+                                <?php if ($user['user_type'] == 0 || $user['user_type'] == 2): ?>
+                                    <li class="treeview <?php echo $active ?>">
+                                        <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
+                                            <i class="fa fa-laptop"></i>m'abonner
+                                        </a>
+                                    </li>   
+                                <?php endif; ?>
                                 <?php
                                 $active = '';
                                 if (!empty($parts[0])):
@@ -426,7 +428,7 @@
 //                                        }
 //                                    });
 //                                });
-                                $('.user_password_field').keypress(function (e) {                                    
+                                $('.user_password_field').keypress(function (e) {
                                     if (e.which == 13) {//Enter key pressed
                                         $('.user_password_check_btn').click();
                                     }

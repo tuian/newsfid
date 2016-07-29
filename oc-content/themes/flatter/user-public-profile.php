@@ -182,16 +182,15 @@ $user = get_user_data(osc_user_id());
                         </div>
                         <!-- /.box-header -->
 
-                        <!--<div class="box-body" style="display: block;">                             
-                            <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                <option>Podcast</option>                                
-                                <option>Podcast1</option>                                
-                                <option>Podcast2</option>                                
-                                <option>Podcast3</option>                                
-                                <option>Podcast4</option>                                
-                                <option>Podcast5</option>                                
+                        <div class="box-body" style="display: block;">                             
+                            <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                <option value="image">Image</option>                                
+                                <option value="video">Video</option>                                
+                                <option value="gif">Gif</option>                                
+                                <option value="music">Music</option>                                
+                                <option value="podcast">Podcast</option>                                
                             </select>
-                        </div> -->
+                        </div> 
 
                         <div class="box-body" style="display: block;">
                             <div class="category-dropdown left-border margin-top-20" style="display: block;">
@@ -262,7 +261,7 @@ $user = get_user_data(osc_user_id());
                     <div class="user_follower_container user_details tab-pane fade" id="user_follower">
 
                         <div class="row margin-0">
-                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
+<!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
                                 <div class="col-md-12">
 
                                     <div class="col-md-1 padding-0">
@@ -280,7 +279,7 @@ $user = get_user_data(osc_user_id());
                                 </div>
                                 <div class="clear"></div>
 
-                            </div>
+                            </div>-->
                             <div class="col-md-12 padding-0 search-box success-border">
                                 <div class="col-md-offset-1 col-md-10">
                                     <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
@@ -301,7 +300,7 @@ $user = get_user_data(osc_user_id());
                     </div>
                     <div class="user_circle_container user_details tab-pane fade" id="user_circle">
                         <div class="row margin-0">
-                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
+<!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
                                 <div class="col-md-12">
 
                                     <div class="col-md-1 padding-0">
@@ -319,7 +318,7 @@ $user = get_user_data(osc_user_id());
                                 </div>
                                 <div class="clear"></div>
 
-                            </div>
+                            </div>-->
                             <div class="col-md-12 padding-0 search-box success-border">
                                 <div class="col-md-offset-1 col-md-10">
                                     <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
@@ -351,8 +350,13 @@ function custom_script() {
     ?>
     <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>
     <script>
+        var user_id = '<?php echo osc_user_id() ?>'
         var is_enable_ajax = true;
         var loading = false;
+        var location_type = $('.filter_city').attr('data_location_type');
+        var location_id = $('.filter_city').attr('data_location_id');
+        var category_id = $('#sCategory').val();
+        var post_type = $('.post_type_filter').val();
         jQuery(document).ready(function ($) {
             fetch_user_posts();
 
@@ -360,7 +364,7 @@ function custom_script() {
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
                     data: {
-                        user_id: <?php echo osc_user_id() ?>,
+                        user_id: user_id,
                     },
                     success: function (data) {
                         $('.user_follower_container .user_follower_box').html(data);
@@ -373,7 +377,7 @@ function custom_script() {
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
                     data: {
-                        user_id: <?php echo osc_user_id() ?>,
+                        user_id: user_id,
                         search_name: search_name
                     },
                     success: function (data) {
@@ -386,7 +390,7 @@ function custom_script() {
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
                     data: {
-                        user_id: <?php echo osc_user_id() ?>,
+                        user_id: user_id,
                     },
                     success: function (data) {
                         $('.user_circle_container .user_circle_box').html(data);
@@ -429,7 +433,7 @@ function custom_script() {
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
                     data: {
-                        user_id: <?php echo osc_user_id() ?>,
+                        user_id: user_id,
                         search_name: search_name
                     },
                     success: function (data) {
@@ -438,18 +442,6 @@ function custom_script() {
                 });
             });
 
-            $(document).on('click', '.user_posts', function () {
-                var user_id = '<?php echo osc_user_id() ?>';
-                //                                            $.ajax({
-                //                                                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
-                //                                                data: {
-                //                                                    user_id: user_id,
-                //                                                },
-                //                                                success: function (data) {
-                //                                                    $('.user_posts_container').empty().append(data);
-                //                                                }
-                //                                            });
-            });
 
             $(window).bind('scroll', function () {
                 if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
@@ -458,6 +450,26 @@ function custom_script() {
                     $('.user_posts_container').css({'opacity': '0.2'});
                     setTimeout(fetch_user_posts, 1000);
                 }
+            });
+            $('.filter-button').click(function () {
+                $('.user_posts_area .loading').fadeIn(500);
+                $('.user_posts_container').css({'opacity': '0.2'});
+                reset_variables();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                    data: {
+                        user_id: user_id,
+                        location_type: location_type,
+                        location_id: location_id,
+                        category_id: category_id,
+                        post_type: post_type,
+                    },
+                    success: function (data) {
+                        $('.user_posts_container').empty().append(data);
+                        $('.user_posts_area .loading').fadeOut(1000);
+                        $('.user_posts_container').css({'opacity': '1'});
+                    }
+                });
             });
         });
         function fetch_user_posts() {
@@ -468,6 +480,10 @@ function custom_script() {
                 data: {
                     user_id: user_id,
                     page_number: page_number,
+                    location_type: location_type,
+                    location_id: location_id,
+                    category_id: category_id,
+                    post_type: post_type,
                 },
                 success: function (data) {
                     $('.user_posts_area .loading').fadeOut(1000);
@@ -483,6 +499,18 @@ function custom_script() {
                     }
                 }
             });
+        }
+        function reset_variables() {
+            is_enable_ajax = true;
+            loading = false;
+            if (!$('.filter_city').val()) {
+                $('.filter_city').attr('data_location_id', '');
+            }
+            location_type = $('.filter_city').attr('data_location_type');
+            location_id = $('.filter_city').attr('data_location_id');
+            category_id = $('#sCategory').val();
+            post_type = $('.post_type_filter').val();
+            $('.user_posts_area .user_post_page_number').val(0);
         }
     </script>
     <?php

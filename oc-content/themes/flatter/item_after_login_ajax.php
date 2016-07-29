@@ -34,6 +34,9 @@ if (isset($_REQUEST['location_type'])):
         endif;
     endif;
 endif;
+if (!empty($_REQUEST['post_type'])):
+    $data->dao->where('item.item_type', $_REQUEST['post_type']);
+endif;
 //$data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
 //if (empty($location_id) && empty($_REQUEST['category_id'])):
 //    $data->dao->orWhere(sprintf('item.fk_i_user_id = %s', osc_logged_user_id()));

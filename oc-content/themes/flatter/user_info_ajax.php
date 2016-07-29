@@ -48,4 +48,10 @@ if ($_REQUEST['action'] == 'user_role'):
         echo 0;
     endif;
 endif;
+
+if ($_REQUEST['action'] == 'user_type_change'):
+    $user_id = $_REQUEST['user_id'];
+    $user_type_value = $_REQUEST['user_type_value'];
+    echo $user_type_value;
+endif;
 ?>

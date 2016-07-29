@@ -179,16 +179,15 @@
                             </div>
                             <!-- /.box-header -->
 
-                            <!--<div class="box-body" style="display: block;">                             
-                                <select class="form-control select2" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                    <option>Podcast</option>                                
-                                    <option>Podcast1</option>                                
-                                    <option>Podcast2</option>                                
-                                    <option>Podcast3</option>                                
-                                    <option>Podcast4</option>                                
-                                    <option>Podcast5</option>                                
+                            <div class="box-body" style="display: block;">                             
+                                <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                    <option value="image">Image</option>                                
+                                    <option value="video">Video</option>                                
+                                    <option value="gif">Gif</option>                                
+                                    <option value="music">Music</option>                                
+                                    <option value="podcast">Podcast</option>                                
                                 </select>
-                            </div> -->
+                            </div> 
 
                             <div class="box-body" style="display: block;">
                                 <div class="category-dropdown left-border margin-top-20" style="display: block;">
@@ -264,7 +263,7 @@
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -461,6 +460,7 @@ function footer_script() {
         var location_type = $('.filter_city').attr('data_location_type');
         var location_id = $('.filter_city').attr('data_location_id');
         var category_id = $('#sCategory').val();
+        var post_type = $('.post_type_filter').val();
         $(document).ready(function () {
 
             $('.select2').each(function () {
@@ -593,7 +593,8 @@ function footer_script() {
                         data: {
                             location_type: location_type,
                             location_id: location_id,
-                            category_id: category_id
+                            category_id: category_id,
+                            post_type: post_type,
                         },
                         success: function (data) {
                             $('.user_related_posts').empty().append(data);
@@ -623,6 +624,7 @@ function footer_script() {
                     location_type: location_type,
                     location_id: location_id,
                     category_id: category_id,
+                    post_type: post_type,
                 },
                 success: function (data) {
                     if (data !== '0') {
@@ -685,6 +687,7 @@ function footer_script() {
             location_type = $('.filter_city').attr('data_location_type');
             location_id = $('.filter_city').attr('data_location_id');
             category_id = $('#sCategory').val();
+            post_type = $('.post_type_filter').val();
             $('#item_page_number').val(1);
         }
     </script>

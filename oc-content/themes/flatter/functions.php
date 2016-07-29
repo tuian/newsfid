@@ -1148,7 +1148,14 @@ function item_resources($item_id) {
             break;
 
         case 'video':
-            echo $post_resource_array['s_path'];
+            if (strpos($post_resource_array['s_path'], 'iframe') !== false):
+                echo $post_resource_array['s_path'];
+            else:
+                preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $post_resource_array['s_path'], $matches);
+                ?>
+                <iframe src="<?php echo 'https://www.youtube.com/embed/' . $matches[0]; ?>" width="854" height="480" frameborder="0" allowfullscreen ></iframe>
+            <?php
+            endif;
             break;
 
         case 'music':
@@ -1772,6 +1779,55 @@ function get_user_profile_picture($user_id) {
             </div>
         <?php endif; ?>
     </div>
+    <?php
+}
+
+function cust_admin_user_type_header($table) {
+    $table->addColumn('user_type', '<span>User Subscribe</span>');
+}
+
+function cust_admin_user_type_data($row, $aRow) {
+    if ($aRow['user_type'] == 1 || $aRow['user_type'] == 3):
+        $checked = 'checked';
+    else:
+        $checked = '';
+    endif;
+    
+    $user_subscribe_switch = '<div class="onoffswitch">
+                            <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
+                            <label class="onoffswitch-label" for="certified_box"></label>
+                        </div>';
+
+    $row['user_type'] = $user_subscribe_switch;
+    return $row;
+}
+
+osc_add_hook('admin_users_table', 'cust_admin_user_type_header');
+osc_add_filter("users_processing_row", "cust_admin_user_type_data");
+
+osc_add_hook('admin_footer', 'admin_footer_script');
+
+function admin_footer_script() {
+    ?>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(document).on('change', '.certified_box', function () {
+                var user_id = $(this).attr('data_user_id');
+                var user_type_value = $(this).val();
+                $.ajax({
+                    url: '<?php echo osc_current_web_theme_url('user_info_ajax.php') ?>',
+                    data: {
+                        action: 'user_type_change',
+                        user_id: user_id,
+                        user_type_value: user_type_value
+                    },
+                    success: function (data, textStatus, jqXHR) {
+
+                    }
+                });
+            });
+        });
+    </script>
     <?php
 }
 ?>

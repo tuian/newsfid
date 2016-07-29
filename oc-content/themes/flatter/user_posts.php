@@ -21,17 +21,31 @@ if (isset($_REQUEST['location_type'])):
     elseif ($_REQUEST['location_type'] == 'country'):
         $data->dao->where('item_location.fk_c_country_code', $location_id);
     elseif ($_REQUEST['location_type'] == 'city'):
-        $data->dao->where('item_location.fk_i_city_id', $location_id);
+        if (!empty($location_id)):
+            $data->dao->where('item_location.fk_i_city_id', $location_id);
+        endif;
     endif;
 endif;
-//$following_user = get_user_following_data($user_id);
-//if ($following_user):
-//    $data->dao->where(sprintf('item.fk_i_user_id IN (%s)', implode(',', $following_user)));
+if (!empty($_REQUEST['category_id'])):
+    $categories = $_REQUEST['category_id'];
+    if (Category::newInstance()->isRoot($_REQUEST['category_id'])):
+        $categories = array_column(Category::newInstance()->findSubcategories($_REQUEST['category_id']), 'pk_i_id');
+        $categories = implode(',', $categories);
+    endif;
+    $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
 //else:
-//    $data->dao->whereIn('item.fk_i_category_id', get_user_categories($user_id));
-//endif;
+//    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
+endif;
 
-if ($_REQUEST['user_id']):
+if (!empty($_REQUEST['post_type'])):
+    $data->dao->where('item.item_type', $_REQUEST['post_type']);
+endif;
+
+$following_user = get_user_following_data($user_id);
+if ($following_user):
+    $following_user[] = $user_id;
+    $data->dao->where(sprintf('item.fk_i_user_id IN (%s)', implode(',', $following_user)));
+else:
     $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
 endif;
 
@@ -86,7 +100,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);             ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);               ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
