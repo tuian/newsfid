@@ -48,20 +48,40 @@ if ($_REQUEST['action'] == 'fk_c_country_code'):
     endif;
 endif;
 
-//if ($_REQUEST['action'] == 'fk_i_city_id'):
-//    $city_code = $_REQUEST['up_city_name'];
-//    $city_name = $_REQUEST['up_city_code'];
-//    $result = $user_data->dao->update("{$db_prefix}t_user", array('fk_i_city_id' => $city_code, 's_city' => $city_name ), array('pk_i_id' => $user_id));
-//    if ($result):
-//         echo 1;
-//    else:
-//        echo 0;
-//    endif;
-//endif;
+if ($_REQUEST['action'] == 'change-city'):
+    $city_code = $_REQUEST['id'];
+    $city_name = $_REQUEST['name'];
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('fk_i_city_id' => $city_code, 's_city' => $city_name ), array('pk_i_id' => $user_id));
+    if ($result):
+         echo 1;
+    else:
+        echo 0;
+    endif;
+endif;
 
 if ($_REQUEST['action'] == 'user_role'):
     $user_type_id = $_REQUEST['user_role_id'];
     $result = $user_data->dao->update("{$db_prefix}t_user", array('user_role' => $user_type_id), array('pk_i_id' => $user_id));
+    if ($result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+endif;
+
+if ($_REQUEST['action'] == 'facebook'):
+    $text = $_REQUEST['facebook'];
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('facebook' => $text), array('pk_i_id' => $user_id));
+    if ($result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+endif;
+
+if ($_REQUEST['action'] == 'twitter'):
+    $text = $_REQUEST['twitter'];
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('twitter' => $text), array('pk_i_id' => $user_id));
     if ($result):
         echo 1;
     else:
