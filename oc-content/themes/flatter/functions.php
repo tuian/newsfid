@@ -1025,7 +1025,7 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 function get_user_data($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number');
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter');
     $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
     $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name');
@@ -1326,7 +1326,11 @@ function item_like_box($user_id, $item_id) {
     endif;
     ?>
     <span class="like_box <?php echo $like_class ?> item_like_box<?php echo $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $like ?>">
-        <?php echo get_item_likes_count($item_id) ?> &nbsp;
+        <?php
+            $like_count = get_item_likes_count($item_id);
+            if($like_count > 0)
+                echo $like_count;
+        ?> &nbsp;
         <span class="item_like">
             <i class="fa fa-thumbs-o-up"></i>
         </span>&nbsp;
@@ -1508,7 +1512,12 @@ function user_share_box($user_id, $item_id) {
     endif;
     ?>
     <span class="share_box <?php echo $share_class ?> item_share_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
-        <?php echo get_item_shares_count($item_id) ?> &nbsp;
+         <?php
+            $share_count = get_item_shares_count($item_id);
+            if($share_count > 0)
+                echo $share_count;
+        ?>
+        &nbsp;
         <span class="item_share">
             <i class="fa fa-retweet"></i>
         </span>&nbsp;
@@ -1679,7 +1688,7 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
             <label  class="col-md-4  search-list">User</label>
-            <label class="col-md-4 search-list">Articles</label>
+            <label class="col-md-4 search-list">Publication</label>
         </div>
         <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
@@ -1787,16 +1796,20 @@ function cust_admin_user_type_header($table) {
 }
 
 function cust_admin_user_type_data($row, $aRow) {
-    if ($aRow['user_type'] == 1 || $aRow['user_type'] == 3):
+    if ($aRow['user_type'] == 2 || $aRow['user_type'] == 3):
         $checked = 'checked';
     else:
         $checked = '';
     endif;
-    
-    $user_subscribe_switch = '<div class="onoffswitch">
-                            <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
-                            <label class="onoffswitch-label" for="certified_box"></label>
-                        </div>';
+
+    $user_subscribe_switch = '
+                        <div class="user_type_switch">                            
+                            <label class="switch">
+                                <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                        ';
 
     $row['user_type'] = $user_subscribe_switch;
     return $row;
@@ -1809,11 +1822,64 @@ osc_add_hook('admin_footer', 'admin_footer_script');
 
 function admin_footer_script() {
     ?>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {display:none;}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+
     <script>
         jQuery(document).ready(function ($) {
             $(document).on('change', '.certified_box', function () {
                 var user_id = $(this).attr('data_user_id');
-                var user_type_value = $(this).val();
+                console.log(user_id);
+                var user_type_value = 0;
+                if (this.checked) {
+                    user_type_value = 1;
+                }
                 $.ajax({
                     url: '<?php echo osc_current_web_theme_url('user_info_ajax.php') ?>',
                     data: {
@@ -1822,7 +1888,13 @@ function admin_footer_script() {
                         user_type_value: user_type_value
                     },
                     success: function (data, textStatus, jqXHR) {
-
+                        console.log(data);
+                        if (data == 1) {
+                            console.log('user type updated successfully');
+                        }
+                        if (data == 0) {
+                            console.log('user type not updated successfully');
+                        }
                     }
                 });
             });
@@ -1830,4 +1902,15 @@ function admin_footer_script() {
     </script>
     <?php
 }
+
+
+/*
+osc_current_web_theme_url(); // for gettiing path to current theme flatter
+
+osc_logged_user_id();
+
+$con =  Country::newInstance()-> // for accessing model
+
+*/
+
 ?>

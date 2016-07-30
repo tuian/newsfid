@@ -1,19 +1,20 @@
 <?php
 require '../../../oc-load.php';
 require 'functions.php';
-
+$db_prefix = DB_TABLE_PREFIX;
 $data = new DAO();
-$data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
-$data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
+$data->dao->select('item.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+$data->dao->from("{$db_prefix}t_item as item");
+$data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 $data->dao->orderBy('dt_pub_date', 'DESC');
-
 if ($_REQUEST['filter_value'] && !empty($_REQUEST['filter_value'])):
     $categories = get_category_array($_REQUEST['filter_value']);
     $data->dao->whereIn('fk_i_category_id', $categories);
 endif;
+$data->dao->where("item_user.has_private_post = 0 ");
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 9;
+$offset = 70;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 //$data->dao->offset(10);
@@ -33,7 +34,6 @@ if ($items):
             $date = osc_item_field("dt_pub_date");
             setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
             $date_in_french = time_elapsed_string(strtotime($date));
-
             $user_id = osc_item_user_id();
             $item_id = osc_item_id();
             $user = get_user_data($user_id);
@@ -42,8 +42,6 @@ if ($items):
             else:
                 $user_image_url = osc_current_web_theme_url('images/user_icon.jpg');
             endif;
-//            echo "<pre>";
-//            print_r($user);
             ?>
             <div class="item wow animated col-md-4 col-sm-4 col-lg-4">
                 <div class="list">
@@ -83,27 +81,28 @@ if ($items):
                         <div class="col-md-12">
                             <div class="item_counts">
                                 <div class="col-md-2 padding-0">
-                                    <span class="item_view_count">
-                                        <i class="fa fa-retweet"></i> <?php echo get_item_shares_count(osc_item_id()) ?>
-                                    </span>
-                                    <?php if (!empty($count_result)): ?>
-                                        <span class="item_favourite_count">
-                                            <i class="fa fa-heart"></i> <?php echo $count_result['total'] ?>
+                                    <?php
+                                    $share_count = get_item_shares_count(osc_item_id());
+                                    if ($share_count > 0):
+                                        ?>
+                                        <span class="item_view_count">
+                                            <i class="fa fa-retweet"></i> 
+                                            <?php echo $share_count; ?>
                                         </span>
-                                    <?php endif; ?>
-                                </div>
-
-                                <?php if (function_exists("watchlist")) { ?>
-                                    <div class="col-md-3 col-sm-3 col-xs-3 padding-0">
-                                        <div class="wishlist pull-right">
-                                            <?php if (osc_is_web_user_logged_in()) { ?>
-                                                <?php watchlist2(); ?>
-                                            <?php } else { ?>
-                                                <a title="<?php _e("Add to watchlist", 'watchlist'); ?>" rel="nofollow" href="<?php echo osc_user_login_url(); ?>"><i class="fa fa-heart fa-lg"></i></a>&nbsp;<?php echo get_item_watchlist_count(osc_item_id()) ?>
-                                            <?php } ?>                                                    
-                                        </div>
-                                    </div>
-                                <?php } ?>
+                                        <?php
+                                    endif;
+                                    ?>
+                                    <?php
+                                    $watchlist_count = get_item_watchlist_count(osc_item_id());
+                                    if ($watchlist_count > 0):
+                                        ?>
+                                        <span class="item_favourite_count">
+                                            <i class="fa fa-heart"></i> <?php echo $watchlist_count ?>
+                                        </span>
+                                        <?php
+                                    endif;
+                                    ?>
+                                </div>                                
                             </div>
                         </div>
                         <div class="row">

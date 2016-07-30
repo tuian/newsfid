@@ -1,7 +1,10 @@
 <?php
 // meta tag robots
 osc_add_hook('header', 'flatter_follow_construct');
-
+if (!osc_logged_user_id()):
+    osc_add_flash_error_message('You need to login to watch profile');
+    osc_redirect_to(osc_base_url());
+endif;
 $address = '';
 if (osc_user_address() != '') {
     if (osc_user_city_area() != '') {
@@ -228,8 +231,10 @@ $user = get_user_data(osc_user_id());
                     <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)">Post</a></li>
                     <li class="user_info"><a data-toggle="tab" data-target="#user_info" href="javascript:void(0)">Infos</a></li>
                     <li class="user_watchlist"><a data-toggle="tab" data-target="#user_watchlist" href="javascript:void(0)">Watchlist</a></li>
-                    <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)">Followers</a></li>
-                    <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
+                    <?php if (osc_user_id() == osc_logged_user_id()): ?>
+                        <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)">Followers</a></li>
+                        <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
+                    <?php endif; ?>
                 </ul>  
 
                 <div class="user_content col-md-12 padding-0 tab-content">
@@ -258,84 +263,88 @@ $user = get_user_data(osc_user_id());
                     <div class="user_watchlist_container user_details tab-pane fade bg-white" id="user_watchlist">
                         <?php osc_current_web_theme_path('user_watchlist.php') ?> 
                     </div>
-                    <div class="user_follower_container user_details tab-pane fade" id="user_follower">
+                    <?php if (osc_user_id() == osc_logged_user_id()): ?>
 
-                        <div class="row margin-0">
-<!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
-                                <div class="col-md-12">
+                        <div class="user_follower_container user_details tab-pane fade" id="user_follower">
 
-                                    <div class="col-md-1 padding-0">
-                                        <i class="fa fa-users fa-2x" aria-hidden="true" style="padding-top: 15px"></i>
-                                    </div>  
-                                    <div class="col-md-10">
-                                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.You should check in on some of those fields below. You should check in on<span class="bold" style="color:#000;"> some of those fields below.</span>
-                                    </div>
-                                    <div class="col-md-1 padding-0">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="clear"></div>
-
-                            </div>-->
-                            <div class="col-md-12 padding-0 search-box success-border">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
-                                        <div class="col-md-10  margin-bottom-20">
-                                            <input type="text" class="bold follower_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
+                            <div class="row margin-0">
+                                <!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
+                                                                <div class="col-md-12">
+                                
+                                                                    <div class="col-md-1 padding-0">
+                                                                        <i class="fa fa-users fa-2x" aria-hidden="true" style="padding-top: 15px"></i>
+                                                                    </div>  
+                                                                    <div class="col-md-10">
+                                                                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.You should check in on some of those fields below. You should check in on<span class="bold" style="color:#000;"> some of those fields below.</span>
+                                                                    </div>
+                                                                    <div class="col-md-1 padding-0">
+                                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                
+                                                                </div>
+                                                                <div class="clear"></div>
+                                
+                                                            </div>-->
+                                <div class="col-md-12 padding-0 search-box success-border">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
+                                            <div class="col-md-10  margin-bottom-20">
+                                                <input type="text" class="bold follower_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
+                                            </div>
+                                            <div class="follower-search-button search-button col-md-1">
+                                                <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                            </div>
                                         </div>
-                                        <div class="follower-search-button search-button col-md-1">
-                                            <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="user_follower_box"></div>
+
                             </div>
 
-                            <div class="user_follower_box"></div>
-
                         </div>
-
-                    </div>
-                    <div class="user_circle_container user_details tab-pane fade" id="user_circle">
-                        <div class="row margin-0">
-<!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
-                                <div class="col-md-12">
-
-                                    <div class="col-md-1 padding-0">
-                                        <i class="fa fa-users fa-2x" aria-hidden="true" style="padding-top: 15px"></i>
-                                    </div>  
-                                    <div class="col-md-10">
-                                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.You should check in on some of those fields below. You should check in on<span class="bold" style="color:#000;"> some of those fields below.</span>
-                                    </div>
-                                    <div class="col-md-1 padding-0">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="clear"></div>
-
-                            </div>-->
-                            <div class="col-md-12 padding-0 search-box success-border">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
-                                        <div class="col-md-10  margin-bottom-20">
-                                            <input type="text" class="bold circle_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
+                        <div class="user_circle_container user_details tab-pane fade" id="user_circle">
+                            <div class="row margin-0">
+                                <!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
+                                                                <div class="col-md-12">
+                                
+                                                                    <div class="col-md-1 padding-0">
+                                                                        <i class="fa fa-users fa-2x" aria-hidden="true" style="padding-top: 15px"></i>
+                                                                    </div>  
+                                                                    <div class="col-md-10">
+                                                                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.You should check in on some of those fields below. You should check in on<span class="bold" style="color:#000;"> some of those fields below.</span>
+                                                                    </div>
+                                                                    <div class="col-md-1 padding-0">
+                                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                
+                                                                </div>
+                                                                <div class="clear"></div>
+                                
+                                                            </div>-->
+                                <div class="col-md-12 padding-0 search-box success-border">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
+                                            <div class="col-md-10  margin-bottom-20">
+                                                <input type="text" class="bold circle_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
+                                            </div>
+                                            <div class="circle-search-button search-button col-md-1">
+                                                <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                            </div>
                                         </div>
-                                        <div class="circle-search-button search-button col-md-1">
-                                            <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="user_circle_box"></div>
+
                             </div>
-
-                            <div class="user_circle_box"></div>
-
                         </div>
-                    </div>
+
+                    <?php endif; ?>
                 </div>
 
             </div>

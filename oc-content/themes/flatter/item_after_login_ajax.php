@@ -2,8 +2,9 @@
 require '../../../oc-load.php';
 require 'functions.php';
 $data = new DAO();
-$data->dao->select('item.*, item_location.*');
+$data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
+$data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 $following_user = get_user_following_data(osc_logged_user_id());
@@ -37,6 +38,11 @@ endif;
 if (!empty($_REQUEST['post_type'])):
     $data->dao->where('item.item_type', $_REQUEST['post_type']);
 endif;
+
+$following_user = implode(',', $following_user);
+$data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ({$following_user}))");
+
+
 //$data->dao->where(sprintf('item.fk_i_user_id !=%s', osc_logged_user_id()));
 //if (empty($location_id) && empty($_REQUEST['category_id'])):
 //    $data->dao->orWhere(sprintf('item.fk_i_user_id = %s', osc_logged_user_id()));
@@ -71,142 +77,141 @@ if ($items):
             else:
                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
             endif;
-            ?>
-            <div class="box box-widget">
-                <div class="box-header with-border">
-                    <div class="user-block ">
-                        <div class="user_image">
-                            <?php get_user_profile_picture($user['user_id']); ?>
-                        </div>
-                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                        <span class="description"><?php echo $date_in_french ?></span>
-                    </div>
-                    <!-- /.user-block -->
-                    <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
-                            <i class="fa fa-circle-o"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                    <!-- /.box-tools -->
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
-
-                    <?php
-                    item_resources(osc_item_id());
-                    ?>
-
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);        ?></p>
-
-                    <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
-
-                    &nbsp;&nbsp;
-
-                    <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
-
-                    &nbsp;&nbsp;&nbsp;
-                    <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                        <?php echo 'Comments' ?>
-                    </span>
-                    &nbsp;&nbsp;
-                    <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
-
-                    &nbsp;&nbsp;
-                    <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
-
-                </div>
-                <!-- /.box-body -->
-
-                <div class="comments_container_<?php echo osc_item_id(); ?>">                    
-                    <?php
-                    $c_data;
-                    $comments_data = new DAO();
-                    $comments_data->dao->select(sprintf('%st_item_comment.*', DB_TABLE_PREFIX));
-                    $comments_data->dao->from(sprintf('%st_item_comment', DB_TABLE_PREFIX));
-                    $conditions = array('fk_i_item_id' => osc_item_id(),
-                        'b_active' => 1,
-                        'b_enabled' => 1);
-                    //$comments_data->dao->limit(3);
-                    $comments_data->dao->where($conditions);
-                    $comments_data->dao->orderBy('dt_pub_date', 'DESC');
-                    $comments_result = $comments_data->dao->get();
-                    $c_data = $comments_result->result();
-                    ?>
-                    <?php
-                    if ($c_data):
-                        ?>
-                        <?php if (count($c_data) > 3): ?>
-                            <div class="box-body">
-                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
-                                <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                ?>
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="user-block ">
+                            <div class="user_image">
+                                <?php get_user_profile_picture($user['user_id']); ?>
                             </div>
-                        <?php endif; ?>
+                            <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
+                            <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?></span>
+                        </div>
+                        <!-- /.user-block -->
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                                <i class="fa fa-circle-o"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
+
                         <?php
-                        foreach ($c_data as $k => $comment_data):
+                        item_resources(osc_item_id());
+                        ?>
+
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);         ?></p>
+
+                        <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
+
+                        &nbsp;&nbsp;
+
+                        <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
+
+                        &nbsp;&nbsp;&nbsp;
+                        <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
+                            <?php echo 'Comments' ?>
+                        </span>
+                        &nbsp;&nbsp;
+                        <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
+
+                        &nbsp;&nbsp;
+                        <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
+
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="comments_container_<?php echo osc_item_id(); ?>">                    
+                        <?php
+                        $c_data;
+                        $comments_data = new DAO();
+                        $comments_data->dao->select(sprintf('%st_item_comment.*', DB_TABLE_PREFIX));
+                        $comments_data->dao->from(sprintf('%st_item_comment', DB_TABLE_PREFIX));
+                        $conditions = array('fk_i_item_id' => osc_item_id(),
+                            'b_active' => 1,
+                            'b_enabled' => 1);
+                        //$comments_data->dao->limit(3);
+                        $comments_data->dao->where($conditions);
+                        $comments_data->dao->orderBy('dt_pub_date', 'DESC');
+                        $comments_result = $comments_data->dao->get();
+                        $c_data = $comments_result->result();
+                        ?>
+                        <?php
+                        if ($c_data):
                             ?>
+                            <?php if (count($c_data) > 3): ?>
+                                <div class="box-body">
+                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                    <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                                </div>
+                            <?php endif; ?>
                             <?php
-                            $comment_user = get_user_data($comment_data['fk_i_user_id']);
-                            
-                            ?>
-                            <?php
-                            if ($k > 2 && !$load_more && count($c_data) > 3):
-                                $load_more = 'load more';
-                                ?>                                
-                                <div class="load_more">
+                            foreach ($c_data as $k => $comment_data):
+                                ?>
+                                <?php
+                                $comment_user = get_user_data($comment_data['fk_i_user_id']);
+                                ?>
+                                <?php
+                                if ($k > 2 && !$load_more && count($c_data) > 3):
+                                    $load_more = 'load more';
+                                    ?>                                
+                                    <div class="load_more">
+                                        <?php
+                                    endif;
+                                    ?>
+                                    <div class="box-footer box-comments">
+                                        <div class="box-comment">
+                                            <!-- User image -->
+                                            <div class="comment_user_image">
+                                                <?php get_user_profile_picture($comment_user['user_id']) ?>
+                                            </div>
+                                            <div class="comment-text">
+                                                <span class="username">
+                                                    <?php echo $comment_user['user_name'] ?>
+                                                    <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                                                </span><!-- /.username -->
+                                                <?php echo $comment_data['s_body']; ?>
+                                            </div>
+                                            <!-- /.comment-text -->
+                                        </div>                       
+                                    </div>  
+                                    <?php
+                                    if ($k > 2 && $k == (count($c_data) - 1)):
+                                        unset($load_more);
+                                        ?>
+                                    </div>                                
                                     <?php
                                 endif;
-                                ?>
-                                <div class="box-footer box-comments">
-                                    <div class="box-comment">
-                                        <!-- User image -->
-                                        <div class="comment_user_image">
-                                            <?php get_user_profile_picture($comment_user['user_id']) ?>
-                                        </div>
-                                        <div class="comment-text">
-                                            <span class="username">
-                                                <?php echo $comment_user['user_name'] ?>
-                                                <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
-                                            </span><!-- /.username -->
-                                            <?php echo $comment_data['s_body']; ?>
-                                        </div>
-                                        <!-- /.comment-text -->
-                                    </div>                       
-                                </div>  
+                                ?>                            
                                 <?php
-                                if ($k > 2 && $k == (count($c_data) - 1)):
-                                    unset($load_more);
-                                    ?>
-                                </div>                                
-                                <?php
-                            endif;
-                            ?>                            
-                            <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </div>
-                <!-- /.box-footer -->
-                <div class="box-footer">
-                    <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                        <?php
-                        $current_user = get_user_data(osc_logged_user_id());
-                        $current_user_image_url = '';
+                            endforeach;
+                        endif;
                         ?>
-                        <div class="comment_user_image">
-                            <?php get_user_profile_picture($current_user['user_id']) ?>
-                        </div>
-                        <!-- .img-push is used to add margin to elements next to floating images -->
-                        <div class="img-push">
-                            <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
-                        </div>
-                    </form>
+                    </div>
+                    <!-- /.box-footer -->
+                    <div class="box-footer">
+                        <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
+                            <?php
+                            $current_user = get_user_data(osc_logged_user_id());
+                            $current_user_image_url = '';
+                            ?>
+                            <div class="comment_user_image">
+                                <?php get_user_profile_picture($current_user['user_id']) ?>
+                            </div>
+                            <!-- .img-push is used to add margin to elements next to floating images -->
+                            <div class="img-push">
+                                <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box-footer -->
                 </div>
-                <!-- /.box-footer -->
-            </div>
-            <?php
+                <?php
         endwhile;
     endforeach;
     ?>

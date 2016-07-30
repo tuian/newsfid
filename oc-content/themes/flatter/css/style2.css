@@ -300,6 +300,34 @@ textarea.border-bottom-0{
 .widget-user-image .user_profile_img{
     width: 90px;
 }
+#cookie_banner {
+    width: 100%;
+    margin: 0;
+    background-color: #ccc;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #000013;
+    z-index: 999;
+    padding: 10px;
+}
+#cookie_banner .cookie_btn {
+    margin-left: 15px;
+    cursor: pointer;
+    display: inline;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #bbb;
+    color: #444;
+}
+.sidebar-menu > li{
+    font-size: 14px;
+}
+.sidebar-menu > li >a {
+    padding: 10px 5px;
+}
 /**********
 orange: #f68935
 blue: #20a8e0

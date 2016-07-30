@@ -8,8 +8,9 @@ else:
     $user_id = osc_logged_user_id();
 endif;
 $data = new DAO();
-$data->dao->select('item.*, item_location.*');
+$data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
+$data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 
@@ -42,12 +43,22 @@ if (!empty($_REQUEST['post_type'])):
 endif;
 
 $following_user = get_user_following_data($user_id);
-if ($following_user):
-    $following_user[] = $user_id;
-    $data->dao->where(sprintf('item.fk_i_user_id IN (%s)', implode(',', $following_user)));
-else:
-    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
-endif;
+$following_user[] = $user_id;
+//$current_user_following_users = get_user_following_data(osc_logged_user_id());
+//if ($following_user):
+//    $following_user[] = $user_id;
+//    $data->dao->where(sprintf('item.fk_i_user_id IN (%s)', implode(',', $following_user)));
+//else:
+//    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
+//endif;
+//if ($current_user_following_users):
+//    $current_user_following_users = implode(',', $current_user_following_users);
+//    $data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($current_user_following_users))");
+//else:
+//    $data->dao->where("item_user.has_private_post = '0'");
+//endif;
+$following_user = implode(',', $following_user);
+$data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($following_user))");
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
@@ -100,7 +111,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);               ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                  ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
