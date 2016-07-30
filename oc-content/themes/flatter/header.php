@@ -130,7 +130,7 @@
                             <li class="treeview <?php echo $active ?>">
                                 <a href="<?php echo osc_base_url() ?>">
                                     <i class="fa fa-dashboard"></i>
-                                    Fil d'actualité
+                                    News Feed
                                 </a>
                             </li>
                             <?php
@@ -147,7 +147,7 @@
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
                                         <i class="fa fa-circle-o"></i>
-                                        Centres d'intérêt
+                                         center of interest
                                     </a>
                                 </li>
                                 <?php
@@ -160,7 +160,7 @@
                                     endif;
                                 endif;
                                 ?>
-                                <li class="add-item treeview <?php echo $active ?> active" >
+                                <li class="add-item treeview active" >
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
                                         <i class="fa fa-list-ul"></i>
@@ -199,26 +199,30 @@
                                         <i class="fa fa-th"></i>
                                         People
                                     </a>
-                                </li> 
+                                </li>                                 
 
-                                <?php
-                                $active = '';
-                                if (!empty($parts[0])):
-                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
-                                        $active = 'active';
-                                    else:
-                                        $active = '';
-                                    endif;
-                                endif;
-                                ?>    
-
-                                <li class="treeview <?php echo $active ?>">
-                                    <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
-                                        <i class="fa fa-th"></i>Compte
+                                <li class="treeview">
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-th"></i>
+                                        Compte
                                         <i class="fa fa-angle-left pull-right"></i>
-                                    </a>
-
+                                    </a>                                
                                     <ul class="treeview-menu">
+                                        <?php
+                                        $active = '';
+                                        if (!empty($parts[0])):
+                                            if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
+                                                $active = 'active';
+                                            else:
+                                                $active = '';
+                                            endif;
+                                        endif;
+                                        ?>   
+                                        <li>
+                                            <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
+                                                <i class="fa fa-th"></i>Compte
+                                            </a>
+                                        </li>
                                         <?php
                                         $active = '';
                                         if (!empty($parts[0])):
@@ -260,8 +264,10 @@
                                 <?php endif; ?>
 
                                 <li class="treeview">
-                                    <a href="javascript:void(0)">Informations</a>
-                                    <i class="fa fa-angle-left pull-right"></i>
+                                    <a href="javascript:void(0)">
+                                        Informations<i class="fa fa-angle-left pull-right"></i>
+                                    </a>
+
                                     <ul class="treeview-menu">
                                         <?php
                                         $active = '';

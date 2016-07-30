@@ -47,7 +47,23 @@
             });
         });
 
-
+        $(document).on('click', '.follow-user-btn', function () {
+            var user_id = $(this).attr('data_current_user_id');
+            var follow_user_id = $(this).attr('data_follow_user_id');
+            var action = $(this).attr('data_action');
+            $.ajax({
+                url: '<?php echo osc_current_web_theme_url() . 'user_follow_btn_ajax.php' ?>',
+                data: {
+                    user_id: user_id,
+                    follow_user_id: follow_user_id,
+                    action: action
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.follow_btn_box_' + user_id + follow_user_id).replaceWith(data);
+                }
+            });
+        });
+        
         $(document).on('click', '.share_box', function () {
             var item_id = $(this).attr('data_item_id');
             var user_id = $(this).attr('data_user_id');
