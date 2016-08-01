@@ -242,7 +242,7 @@
                             ?>
                         </div>
                         <div class="box box-default copyright_box">
-                            Copyright Newsfid - <span class="bold"> Eustache & Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
+                            Copyright Newsfid - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
                         </div>
                     </div>
                 </div>
@@ -350,7 +350,7 @@
                                         <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <span>(<?php echo osc_category_total_items(); ?>)</span>
+                                                <!--<span>(<?php //echo osc_category_total_items(); ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -371,7 +371,8 @@
                                     <?php foreach ($other_cat as $$k => $n): ?>
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
-                                                <?php echo $n['name']; ?><span>(<?php echo $n['count']; ?>)</span>
+                                                <?php echo $n['name']; ?>
+                                                <!--<span>(<?php //echo $n['count']; ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -413,27 +414,8 @@
             </div>
         </div>
     </div>
-    <div id="cover" class="cover">
-        <img src="images/bottom.main.jpg" class="img-responsive" />
-    <?php endif; ?>
-    <!-- bottom background -->
-
-    <?php if (osc_get_preference('position2_enable', 'flatter_theme') != '0') { ?>
-        <div id="position_widget" class="greybg<?php
-        if (osc_get_preference('position1_hide', 'flatter_theme') != '0') {
-            echo" hidden-xs";
-        }
-        ?>">
-            <div class="container">
-                <div class="dd-widget position_2">
-                    <?php echo osc_get_preference('position2_content', 'flatter_theme'); ?>
-                </div>
-            </div>
-        </div>
-        <!-- Homepage widget 2 -->
-    <?php } ?>
-</div>
-<?php if (!osc_is_web_user_logged_in()) : ?>
+<?php endif; ?>
+<?php /*if (!osc_is_web_user_logged_in()) : ?>
     <div class="section">
         <div class="postadspace">
             <div class="container">
@@ -443,7 +425,7 @@
             </div>
         </div>
     </div>
-<?php endif; ?>
+<?php endif; */?>
 
 <div class="popup"></div>
 
@@ -543,7 +525,7 @@ function footer_script() {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
                         loading = true;
                         $('.loading').fadeIn(500);
-                        $('.masonry_row').css({'opacity': '0.2'});
+//                        $('.masonry_row').css({'opacity': '0.2'});
                         setTimeout(make_item_ajax_call, 1000);
                     }
                 });
@@ -658,14 +640,14 @@ function footer_script() {
                     if (data !== '0') {
                         $(".masonry_row").append(data);
                         $('.loading').fadeOut(1000);
-                        $('.masonry_row').css({'opacity': '1'});
+//                        $('.masonry_row').css({'opacity': '1'});
                         var next_page = parseInt($('#page_number').val()) + 1;
                         $('#page_number').val(next_page);
                         loading = false;
                     } else {
                         $(".result_text").text('No More Data Found').show();
                         $('.loading').fadeOut(1000);
-                        $('.masonry_row').css({'opacity': '1'});
+//                        $('.masonry_row').css({'opacity': '1'});
                         is_enable_ajax = false;
                         loading = false;
                     }

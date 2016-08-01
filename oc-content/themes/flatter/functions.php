@@ -37,6 +37,17 @@ if (!osc_get_preference('landing_pop', 'flatter_theme')) {
     osc_set_preference('landing_pop', __('Popup content here', 'flatter'), 'flatter_theme');
 }
 
+//jaysukh
+//authoirize user
+if (!osc_logged_user_id()):
+    $allow = array('');
+
+//    osc_add_flash_error_message('You need to login to watch profile');
+//    osc_redirect_to(osc_base_url());
+endif;
+
+//end jaysukh
+
 /* Category Icons */
 
 function category_icons() {
@@ -371,15 +382,15 @@ if (!function_exists('flatter_draw_categories_list')) {
                             <a class="<?php echo osc_category_slug(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?> </a>
                         </h4>
                         <p class="hidden-xs"><?php echo osc_category_description(); ?></p>
-                        <?php if (osc_count_subcategories() > 0) { ?>
+                            <?php if (osc_count_subcategories() > 0) { ?>
                             <ul class="sub-categories">
-                                <?php while (osc_has_subcategories()) { ?>
+                <?php while (osc_has_subcategories()) { ?>
                                     <li>
                                         <a class="<?php echo osc_category_slug(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?> (<?php echo osc_category_total_items(); ?>)</a>
                                     </li>
-                                <?php } ?>
+                            <?php } ?>
                             </ul>
-                        <?php } ?>
+            <?php } ?>
                     </li>
                 </ul>
             </div>
@@ -899,7 +910,7 @@ function flatter_print_sidebar_category_search($aCategories, $current_category =
         <ul <?php echo $class; ?>>
             <?php if ($i == 1) { ?>
                 <li><a href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory' => null, 'iPage' => null))); ?>"><?php _e('All categories', 'flatter'); ?></a></li>
-            <?php } ?>
+        <?php } ?>
             <li>
                 <a id="cat_<?php echo osc_esc_html($c['pk_i_id']); ?>" href="<?php echo osc_esc_html(osc_update_search_url(array('sCategory' => $c['pk_i_id'], 'iPage' => null))); ?>">
                     <?php
@@ -910,10 +921,10 @@ function flatter_print_sidebar_category_search($aCategories, $current_category =
                     }
                     ?>
                 </a>
-                <?php flatter_print_sidebar_category_search($aCategories, $current_category, $i); ?>
+            <?php flatter_print_sidebar_category_search($aCategories, $current_category, $i); ?>
             </li>
             <?php if ($i == 1) { ?>
-            <?php } ?>
+        <?php } ?>
         </ul>
         <?php
     }
@@ -1327,14 +1338,14 @@ function item_like_box($user_id, $item_id) {
     ?>
     <span class="like_box <?php echo $like_class ?> item_like_box<?php echo $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $like ?>">
         <?php
-            $like_count = get_item_likes_count($item_id);
-            if($like_count > 0)
-                echo $like_count;
+        $like_count = get_item_likes_count($item_id);
+        if ($like_count > 0)
+            echo $like_count;
         ?> &nbsp;
         <span class="item_like">
             <i class="fa fa-thumbs-o-up"></i>
         </span>&nbsp;
-        <?php echo $like_text ?>
+    <?php echo $like_text ?>
     </span>
     <?php
 }
@@ -1512,16 +1523,16 @@ function user_share_box($user_id, $item_id) {
     endif;
     ?>
     <span class="share_box <?php echo $share_class ?> item_share_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
-         <?php
-            $share_count = get_item_shares_count($item_id);
-            if($share_count > 0)
-                echo $share_count;
+        <?php
+        $share_count = get_item_shares_count($item_id);
+        if ($share_count > 0)
+            echo $share_count;
         ?>
         &nbsp;
         <span class="item_share">
             <i class="fa fa-retweet"></i>
         </span>&nbsp;
-        <?php echo $share_text ?>
+    <?php echo $share_text ?>
     </span>
     <?php
 }
@@ -1581,7 +1592,7 @@ function user_watchlist_box($user_id, $item_id) {
     endif;
     ?>
     <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
-        <?php echo $watchlist_text ?>
+    <?php echo $watchlist_text ?>
     </span>
     <?php
 }
@@ -1680,38 +1691,38 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
         <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
         <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="Start typing...">
         <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>
-        <?php if (!$user_search_array): ?>
+    <?php if (!$user_search_array): ?>
             <h5> Your Search did not return any results. Please try again. </h5>
 
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
             <label  class="col-md-4  search-list">User</label>
             <label class="col-md-4 search-list">Publication</label>
         </div>
-        <?php if ($user_search_array): ?>
+    <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
                 <div class="col-md-4">
-                    <?php foreach ($user_search_array as $user) : ?>
+        <?php foreach ($user_search_array as $user) : ?>
                         <div class="col-md-12">
                             <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
-                                <?php echo $user['user_name']; ?>
+            <?php echo $user['user_name']; ?>
                             </a>
                         </div>
-                    <?php endforeach; ?>
+        <?php endforeach; ?>
                 </div>
                 <div class="col-md-4">
-                    <?php foreach ($item_search_array as $item) : ?>
+        <?php foreach ($item_search_array as $item) : ?>
                         <div class="col-md-12">
                             <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
-                                <?php echo $item['s_title']; ?>
+            <?php echo $item['s_title']; ?>
                             </a>
                         </div>
-                    <?php endforeach; ?> 
+        <?php endforeach; ?> 
                 </div>
             </div>   
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
 
     <?php
@@ -1782,11 +1793,11 @@ function get_user_profile_picture($user_id) {
             $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
         endif;
         ?>
-        <?php if ($user['user_type'] != 0) : ?>
+    <?php if ($user['user_type'] != 0) : ?>
             <div class="user_type_icon_image">
                 <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
             </div>
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <?php
 }
@@ -1903,14 +1914,45 @@ function admin_footer_script() {
     <?php
 }
 
+/*
+  osc_current_web_theme_url(); // for gettiing path to current theme flatter
+
+  osc_logged_user_id();
+
+  $con =  Country::newInstance()-> // for accessing model
+
+ */
 
 /*
-osc_current_web_theme_url(); // for gettiing path to current theme flatter
+ * jaysukh
+  client comments
+ * Centre d’interet 
+  - If user hasn’t selected center of interests choose these ones by default :
 
-osc_logged_user_id();
+  Theme=  news + entertainment  /
+  Rubrics = celebrity + news + international + entertainment
 
-$con =  Country::newInstance()-> // for accessing model
-
-*/
-
+  Important because 80 users already have profiles created before re-built of the site si they will not have selected centers of interest, and we don’t want them to get a blank newsfeed on publication of the new site.
+ * 
+ *  */
+// this code is not necessary once website live and old user update his interest
+$user_id = osc_logged_user_id();
+$interest_data = new DAO();
+$interest_data->dao->select("theme.theme_id");
+$interest_data->dao->from(DB_TABLE_PREFIX . 't_user_themes as theme');
+$interest_data->dao->where("theme.user_id = $user_id");
+$theme_list = $interest_data->dao->get();
+$user_selected_themes = $theme_list->result();
+if ($user_id != '0' && empty($user_selected_themes)):
+    $conn = getConnection();
+    $default_theme = array('1', '3'); // news, entertainment
+    foreach ($default_theme as $k => $v):
+        $conn->osc_dbExec("INSERT INTO %st_user_themes ( user_id, theme_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
+    endforeach;
+    $conn->osc_dbExec("DELETE FROM `%st_user_rubrics` WHERE `user_id` = %s", DB_TABLE_PREFIX, $user_id);
+    $default_rubrics = array('10', '13', '21', '117');
+    foreach ($default_rubrics as $k => $v):
+        $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
+    endforeach;
+endif;
 ?>

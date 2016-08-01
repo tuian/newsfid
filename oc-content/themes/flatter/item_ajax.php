@@ -42,6 +42,7 @@ if ($items):
             else:
                 $user_image_url = osc_current_web_theme_url('images/user_icon.jpg');
             endif;
+            if (osc_count_item_resources()) { //item without media should not allow
             ?>
             <div class="item wow animated col-md-4 col-sm-4 col-lg-4">
                 <div class="list">
@@ -64,7 +65,7 @@ if ($items):
                         <div class="col-md-9 padding-top-10">
                             <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
                             <h3 class="item_title">
-                                <a style="item_link" class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
+                                <a class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
                                     <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
                                     <?php //echo osc_item_title();  ?>
                                 </a>
@@ -119,6 +120,7 @@ if ($items):
                 </div>
             </div>
             <?php
+            }
         endwhile;
     endforeach;
     ?>

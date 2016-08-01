@@ -103,11 +103,9 @@ if ($items):
                 <!-- /.box-header -->
                 <div class="box-body">
                     <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
-
-                    <?php
-                    item_resources(osc_item_id());
-                    ?>
-
+                    <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
+                        <?php item_resources(osc_item_id()); ?>
+                    </div>
                     <p><?php //echo osc_highlight(osc_item_description(), 200);          ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>

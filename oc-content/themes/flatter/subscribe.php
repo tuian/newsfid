@@ -11,7 +11,7 @@ require 'functions.php';
                 <h3 class="font-color-white bold-600 margin-0">Decouvrez l'offre</h3>
                 <h1 class="font-color-white bold-600 font-65px margin-0">NEWSFID PRO</h1>
                 <div class="col-md-8 border-bottom"></div>
-                <h2 class="font-color-white bold-600">Liberte, Notoriete, diffrence et simplicite</h2>
+                <h2 class="font-color-white bold-600">Liberté, Notoriété, différence et simplicité</h2>
                 <div class="col-md-offset-1 margin-top-20">
                     <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment">Passez a Newsfid Premium gratuit pendant 30 jours</button>
                     <!-- Payment modal start -->
@@ -64,7 +64,7 @@ require 'functions.php';
                                                 </thead>
                                                 <tbody>
                                                     <tr class="border-bottom">
-                                                        <td class="font-color-black">1/25/2012</td>
+                                                        <td class="font-color-black"><?php echo date('d/m/Y'); ?></td>
                                                         <td class="font-color-black">Newsfid Premium (12 month Payment) 1 Month for free</td>
                                                         <td class="font-color-black">1</td>
                                                         <td class="font-color-black">$4.99</td>
@@ -96,7 +96,7 @@ require 'functions.php';
                                             <input type="radio" class="payment-option" name="payment" value="paypal">
                                         </div>
                                         <div class="col-md-6 padding-3per bg-green-light">
-                                            Vous en serai pas débiter avant la fin de votre période d’essai en date du .............. Vous pourrai annuler votre abonnement en ligne à tout moment.
+                                            Vous en serai pas débiter avant la fin de votre période d’essai en date du <?php echo date('d/m/Y'); ?> Vous pourrai annuler votre abonnement en ligne à tout moment.
                                         </div>
 
                                     </div>
@@ -199,7 +199,7 @@ require 'functions.php';
     <div class="contant bg-white col-md-12">
 
         <div class="col-md-12 text-center padding-top-4per ">
-            <h4 class="bold-600 margin-0 font-color-black">Beneficiez du service Newsfid incluant un essai gratuit pendent 30 jour</h4>
+            <h4 class="bold-600 margin-0 font-color-black">Beneficiez du service Newsfid incluant un essai gratuit pendant 30 jours</h4>
         </div>
         <div class="sub-info col-md-12   margin-top-20">
             <div class="col-md-5">
@@ -209,7 +209,7 @@ require 'functions.php';
             <div class="col-md-7">
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="font-color-black">Fonctionalites</div>
+                        <div class="font-color-black">Fonctionnalités</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3">
                         <div class="font-color-black bold">Gratuit</div>
