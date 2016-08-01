@@ -73,6 +73,7 @@
                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                             endif;
                             ?>
+
                             <!-- Sidebar user panel -->
 
                             <div class="user-panel">
@@ -80,25 +81,33 @@
                                     <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
                                         <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">
+                                        <div class="green-dot"></div>
                                     </a>
                                 </div>
-                                <div class="pull-left info">
+                                <div class="col-md-12">
                                     <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
-                                        <!--<a href="javascript:void(0)">-->
-                                        <p>
-                                            <!--<i class="fa fa-circle text-success"></i> -->
-                                            <?php is_user_online($user['user_id']); ?> 
-                                        </p>
-                                    </a>
+                                        <a href="javascript:void(0)">
+                                            <p><?php echo $user['user_name'] ?></p>
+                                        </a>                                
                                 </div>
-                                <div class="clearfix"></div>
-                                <div style="height: 10px;"></div>
-                                <div class="pull-left">
-                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
-                                        <!--<a href="javascript:void(0)">-->
-                                        <p><?php echo $user['user_name'] ?></p>
-                                    </a>                                
-                                </div>
+
+                                <!--                                <div class="pull-left info">
+                                                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
+                                                                        <a href="javascript:void(0)">
+                                                                        <p>
+                                                                            <i class="fa fa-circle text-success"></i> 
+                                <?php is_user_online($user['user_id']); ?> 
+                                                                        </p>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                <div style="height: 10px;"></div>
+                                                                <div class="pull-left">
+                                                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
+                                                                        <a href="javascript:void(0)">
+                                                                        <p><?php echo $user['user_name'] ?></p>
+                                                                    </a>                                
+                                                                </div>-->
                             </div>
 
                         <?php endif; ?>
@@ -147,7 +156,7 @@
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
                                         <i class="fa fa-circle-o"></i>
-                                         center of interest
+                                        center of interest
                                     </a>
                                 </li>
                                 <?php
@@ -492,7 +501,7 @@
                             });</script>
                         <script>
                             $(document).ready(function () {
-                                $(document).on('click', '.search-newsfid-btn', function () {
+                                var a = $(document).on('keyup', '.search-newsfid-text', function () {
                                     var search_newsfid_text = $('.search-newsfid-text').val();
                                     if (search_newsfid_text != '') {
                                         $.ajax({

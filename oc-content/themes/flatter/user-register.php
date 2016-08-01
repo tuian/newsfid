@@ -105,8 +105,14 @@ osc_current_web_theme_path('header.php');
                                 </div>
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" name="s_birthday" class="form-control" id="s_birthday" placeholder="<?php _e('Birthday', 'flatter'); ?>">
+                                        <div class="col-md-4 background-white padding-top-10">
+                                            <label>Birthday</label>
+                                        </div>
+                                        <div class="col-md-8 padding-0">
+                                            <div class="form-group">
+                                                <!--<input type="text" name="s_birthday" class="form-control" id="s_birthday" placeholder="<?php _e('Birthday', 'flatter'); ?>">-->
+                                                <input type="text" name="s_birthday" value="" class="dropdate s_birthday" id="s_birthday">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -133,8 +139,8 @@ osc_current_web_theme_path('header.php');
                         <div class="row">
                             <div class="col-md-2">
                             </div>
-                            <div class="col-md-4 col-sm-4 padding-0">
-                                <button type="submit" class="btn btn-clr theme-btn"><?php _e("Create", 'flatter'); ?></button>
+                            <div class="col-md-5 margin-l-m-10 padding-0 padding-top-10">
+                                <button type="submit" class="btn btn-clr theme-btn"><?php _e("Register", 'flatter'); ?></button>
                             </div>
                         </div>
 
@@ -163,6 +169,7 @@ osc_current_web_theme_path('header.php');
         </div>
     </div>
 </div>
+
 
 <?php
 
@@ -268,6 +275,20 @@ function new_footer() {
                 },
             });
         });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdate').dropdate({
+                dateFormat: 'yyyy/mm/dd'
+            });
+        });
+//        $(document).on('change', function (e) {
+//             var a = $('.dropdate').val();
+//             var d = new Date();
+//             var c = dateFormat(c,"yyyy/mm/dd");
+//             var d = c - a;
+//             console.log(d);
+//        });
     </script>
     <?php
 }

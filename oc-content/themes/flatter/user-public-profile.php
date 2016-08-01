@@ -65,6 +65,7 @@ $user = get_user_data(osc_user_id());
 ?>
 <div id="sections">
     <div class="user_area">
+
         <div class="row">
             <div class="col-md-4">
                 <div class=" bg-white col-md-12 padding-0">
@@ -237,7 +238,7 @@ $user = get_user_data(osc_user_id());
                     <?php endif; ?>
                 </ul>  
 
-                <div class="user_content col-md-12 padding-0 tab-content">
+                <div class="user_content col-md-12 padding-0 tab-content scroll-content">
                     <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                         <input type="hidden" value="0" class="user_post_page_number">
                         <div class="user_posts_container"></div>
@@ -349,9 +350,11 @@ $user = get_user_data(osc_user_id());
 
             </div>
         </div>
+
     </div>
 </div>
 <div class="popup"></div>
+
 <?php
 osc_add_hook('footer', 'custom_script');
 

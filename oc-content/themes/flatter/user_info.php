@@ -15,7 +15,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row success-border margin-0">
     <div class="col-md-4 col-sm-4">
-        <span class="user_info_header">A propos de moi</span>
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span class="user_info_header padding-left-10">A propos de moi</span>
     </div>
     <div class="col-md-8 col-sm-8 user_info">
         <span class="user_info_text info_text" data_text="<?php echo osc_user_info(); ?>">
@@ -31,7 +32,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
-        <span class="user_info_header">Type de compte</span>
+        <i class="fa fa-list" aria-hidden="true"></i>
+        <span class="user_info_header  padding-left-10">Type de compte</span>
     </div>
     <div class="col-md-8 col-sm-8">
         <span class="user_type_text info_text" data_role_id="<?php echo $user_data['role_id'] ?>">
@@ -56,7 +58,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
-        <span class="user_info_header">Website</span>
+        <i class="fa fa-globe" aria-hidden="true"></i>
+        <span class="user_info_header padding-left-10">Website</span>
     </div>
     <div class="col-md-8 col-sm-8 user_website">
         <span class="user_website_text info_text" data_text="<?php echo osc_user_website(); ?>">
@@ -72,7 +75,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
-        <span class="user_info_header">Localisation</span>
+        <i class="fa fa-map-marker" aria-hidden="true"></i>
+        <span class="user_info_header padding-left-10">Localisation</span>
     </div>
     <div class="col-md-8 col-sm-8">
         <span class="user_address_text"><?php echo $address; ?></span>
@@ -168,7 +172,7 @@ function custom_map_script() {
                 //                $('.user_website_text').html(input_box);
             });
 
-             $(document).on('change', '.user_role_selector', function () {
+            $(document).on('change', '.user_role_selector', function () {
                 var role_id = $(this).val();
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",

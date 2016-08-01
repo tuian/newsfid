@@ -88,4 +88,14 @@ if ($_REQUEST['action'] == 'twitter'):
         echo 0;
     endif;
 endif;
+
+if ($_REQUEST['action'] == 'date'):
+    $text = $_REQUEST['b_day'];
+    $result = $user_data->dao->insert("{$db_prefix}t_user", array('s_birthday' => $text), array('pk_i_id' => $user_id));
+    if ($result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+endif;
 ?>

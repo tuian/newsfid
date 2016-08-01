@@ -59,7 +59,7 @@ osc_current_web_theme_path('header.php');
                         </div>
 
                     </div>
-                    <div class="col-md-8 col-sm-8">
+                    <div class="col-md-8 col-sm-8 scroll-content">
                         <div class="row">
                             <?php
                             $data = new DAO();
