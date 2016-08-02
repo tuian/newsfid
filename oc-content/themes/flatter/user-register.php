@@ -98,7 +98,8 @@ osc_current_web_theme_path('header.php');
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <?php UserForm::country_select(osc_get_countries()); ?>
+                                            <?php                                           
+                                            UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                             <!--<input type="text" name="s_country" class="form-control" id="s_country" placeholder="<?php _e('Country', 'flatter'); ?>">-->
                                         </div>
                                     </div>
@@ -119,11 +120,13 @@ osc_current_web_theme_path('header.php');
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
                                         <div class="form-group form-control vertical-row">
-                                            <div class="col-md-4 padding-0">
-                                                <input type="radio" name="s_gender" class="s_gender"  id="female" value="female" checked> Female
+                                            <div class="col-md-4 background-white padding-top-10">
+                                                <label>Gender</label>
                                             </div>
-                                            <div class="col-md-4">
-                                                <input type="radio" name="s_gender" class="s_gender" id="male" value="male"> Male
+                                            <div class="col-md-8 padding-0">
+                                                <label><input type="radio" name="s_gender" class="s_gender"  id="female" value="female" checked> Female</label>
+                                           
+                                                <label><input type="radio" name="s_gender" class="s_gender margin-left-15" id="male" value="male"> Male</label>
                                             </div>
                                         </div>
                                     </div>

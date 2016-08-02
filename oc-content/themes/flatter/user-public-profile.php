@@ -76,6 +76,11 @@ $user = get_user_data(osc_user_id());
                         $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
                     endif;
                     ?>
+
+
+
+
+
                     <div class="box box-widget widget-user">
                         <div class="widget-user-header bg-black" style="background: url('<?php echo $cover_image_path ?>') center center;">
                             <h3 class="widget-user-username">
@@ -355,12 +360,33 @@ $user = get_user_data(osc_user_id());
 </div>
 <div class="popup"></div>
 
+<div class="modal fade" id="crop_profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><?php _e('Close', 'flatter'); ?></span></button>
+                <h4 class="modal-title" id="myModalLabel"><?php echo osc_get_preference('pop_heading', 'flatter_theme', "UTF-8"); ?></h4>
+            </div>
+            <div class="modal-body">
+                <img src="<?php echo $cover_image_path ?>" id="target" alt="[Jcrop Example]" />
+                <div id="preview-pane">
+                    <div class="preview-container">
+                        <img src="<?php echo $cover_image_path ?>" class="jcrop-preview" alt="Preview" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 osc_add_hook('footer', 'custom_script');
 
 function custom_script() {
     ?>
-    <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>
+    <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>    
+    <script src="<?php echo osc_current_web_theme_js_url('jquery.Jcrop.js') ?>"></script>
     <script>
         var user_id = '<?php echo osc_user_id() ?>'
         var is_enable_ajax = true;
@@ -524,6 +550,59 @@ function custom_script() {
             post_type = $('.post_type_filter').val();
             $('.user_posts_area .user_post_page_number').val(0);
         }
+    </script>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+
+    // Create variables (in this scope) to hold the API and image size
+            var jcrop_api,
+                    boundx,
+                    boundy,
+                    // Grab some information about the preview pane
+                    $preview = $('#preview-pane'),
+                    $pcnt = $('#preview-pane .preview-container'),
+                    $pimg = $('#preview-pane .preview-container img'),
+                    xsize = $pcnt.width(),
+                    ysize = $pcnt.height();
+
+            console.log('init', [xsize, ysize]);
+            $('#target').Jcrop({
+                onChange: updatePreview,
+                onSelect: updatePreview,
+                aspectRatio: xsize / ysize
+            }, function () {
+                // Use the API to get the real image size
+                var bounds = this.getBounds();
+                boundx = bounds[0];
+                boundy = bounds[1];
+                // Store the API in the jcrop_api variable
+                jcrop_api = this;
+
+                // Move the preview into the jcrop container for css positioning
+                $preview.appendTo(jcrop_api.ui.holder);
+            });
+
+            function updatePreview(c)
+            {
+                if (parseInt(c.w) > 0)
+                {
+                    var rx = xsize / c.w;
+                    var ry = ysize / c.h;
+
+                    $pimg.css({
+                        width: Math.round(rx * boundx) + 'px',
+                        height: Math.round(ry * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry * c.y) + 'px'
+                    });
+                }
+            }
+            ;
+
+        });
+
+
     </script>
     <?php
 }

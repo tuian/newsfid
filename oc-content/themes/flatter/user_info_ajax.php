@@ -63,22 +63,21 @@ if ($_REQUEST['action'] == 'user_type_change'):
 
     $new_user_type_value = 2;
 
-    if ($user_type_value == 1):
-        if ($user_array['user_type'] == 0):
+    if ($user_type_value == '1'):
+        if ($user_array['user_type'] == '0'):
             $new_user_type_value = 2;
         endif;
-        if ($user_array['user_type'] == 1):
+        if ($user_array['user_type'] == '1'):
             $new_user_type_value = 3;
         endif;
         
-    elseif ($user_type_value == 0):
-        if ($user_array['user_type'] == 2):
+    elseif ($user_type_value == '0'):
+        if ($user_array['user_type'] == '2'):
             $new_user_type_value = 0;
         endif;
-        if ($user_array['user_type'] == 3):
+        if ($user_array['user_type'] == '3'):
             $new_user_type_value = 1;
-        endif;
-        
+        endif;        
     endif;
 
     $result = $user_data->dao->update("{$db_prefix}t_user", array('user_type' => $new_user_type_value), array('pk_i_id' => $user_id));

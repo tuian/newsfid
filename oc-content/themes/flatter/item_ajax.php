@@ -11,7 +11,7 @@ if ($_REQUEST['filter_value'] && !empty($_REQUEST['filter_value'])):
     $categories = get_category_array($_REQUEST['filter_value']);
     $data->dao->whereIn('fk_i_category_id', $categories);
 endif;
-$data->dao->where("item_user.has_private_post = 0 ");
+$data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0");
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 70;

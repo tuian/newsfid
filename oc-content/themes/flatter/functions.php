@@ -1003,8 +1003,13 @@ $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
 osc_add_hook('user_register_completed', 'go_to_theme_select');
 
-function go_to_theme_select($user) {
-    Session::newInstance()->_set('user_id', $user);
+function go_to_theme_select($user) { 
+    if(isset( $_REQUEST['s_birthday']) && !empty( $_REQUEST['s_birthday'])):
+        $conn = getConnection();                
+        $conn->osc_dbExec("UPDATE `%st_user` SET `s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
+        //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
+    endif;
+    Session::newInstance()->_set('user_id', $user);   
     Session::newInstance()->_set('after_register', 'yes');
     osc_reset_static_pages();
     osc_get_static_page('interest');
@@ -1036,7 +1041,7 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 function get_user_data($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_birthday as s_birthday');
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter');
     $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
     $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name');
@@ -1240,21 +1245,6 @@ function time_elapsed_string($ptime) {
     if ($etime < 1) {
         return '0 seconds';
     }
-    $d = $etime / 3600;
-    if ($d > 0 && $d <= 24) {
-        $r = round($d);
-        return $r . ' h';
-    } else {
-        return strftime("%d %b", $ptime);
-    }
-}
-
-function get_time($ptime, $type='i') {
-    $etime = time() - $ptime;
-
-    if ($etime < 1) {
-        return '0 seconds';
-    }
 
     $a = array(365 * 24 * 60 * 60 => 'year',
         30 * 24 * 60 * 60 => 'month',
@@ -1270,16 +1260,15 @@ function get_time($ptime, $type='i') {
         'minute' => 'minutes',
         'second' => 'seconds'
     );
-
     foreach ($a as $secs => $str) {
         $d = $etime / $secs;
         if ($d >= 1) {
-            $r = round($d);
-            if($type == 'i'):
-                return $r;
-            else:
-                return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
-            endif;
+            if ($secs < 86400) {
+                $r = round($d);                
+                return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';        
+            } else {
+               return strftime("%d %b", $ptime);
+            }
         }
     }
 }
@@ -1838,7 +1827,7 @@ function get_user_profile_picture($user_id) {
 }
 
 function cust_admin_user_type_header($table) {
-    $table->addColumn('user_type', '<span>User Subscribe</span>');
+    $table->addColumn('user_type', '<span>Certify User</span>');
 }
 
 function cust_admin_user_type_data($row, $aRow) {

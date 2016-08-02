@@ -237,22 +237,22 @@ else:
 endif;
 ?>
 <script>
-     
-    $('.edit_cmnt').click(function() {
-        var text = $(this).attr('data_text');
-        var comment_id = $(this).attr('data_id');
-        var data_item_id = $(this).attr('data-item-id');
-        var input_box = '<input type="text" class="user_comment_textbox" data-item-id="'+data_item_id+'" data_id="' + comment_id + '" value="' + text + '">';
-        $('.comment_edt_'+comment_id).html(input_box);
-
-//        $('.user_comment_textbox').keypress(function (e) {
-//            if (e.which == 13) {//Enter key pressed
-//                $('.user_comment_textbox').focusout();
-//            }
-//        });
+    
+   $(window).ready(function(){
+        $('.edit_cmnt').click(function() {
+            var text = $(this).attr('data_text');
+            var comment_id = $(this).attr('data_id');
+            var data_item_id = $(this).attr('data-item-id');
+            var input_box = '<input type="text" class="user_comment_textbox" data-item-id="'+data_item_id+'" data_id="' + comment_id + '" value="' + text + '">';
+            $('.comment_edt_'+comment_id).html(input_box);
+        });
     });
-   $(window).load(function(){
-    $('.user_comment_textbox').blur(function() {   alert('a');     
+     $(document).on('keypress', '.user_comment_textbox', function (e) {
+        if (e.which == 13) {//Enter key pressed
+            $('.user_comment_textbox').blur()
+        }
+    });    
+    $(document).on('blur', '.user_comment_textbox', function() {    
         var new_text = $(this).val();
         var data_id = $(this).attr('data_id');
         var item_id = $(this).attr('data-item-id');
@@ -270,7 +270,4 @@ endif;
         });
         //$('.user_website_text').html(new_text).attr('data_text', new_text);
     });
-   
-    });
-   
 </script>

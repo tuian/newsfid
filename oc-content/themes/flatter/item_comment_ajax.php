@@ -74,11 +74,28 @@ $c_data = $comments_result->result();?>
                         <div class="comment_user_image">
                             <?php get_user_profile_picture($comment_user['user_id']) ?>
                         </div>
-                        <div class="comment-text">
+                        <div class="comment-area">
                             <span class="username">
                                 <?php echo $comment_user['user_name'] ?>
-                                <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
-                            </span><!-- /.username -->
+                                <div class="dropdown  pull-right">
+                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                        <li class="delete_cmnt"><a>Supprimer la publication</a></li>
+                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $comment_item_id; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>"><a>Modifier</a></li>
+                                        <li><a></a></li>
+                                        <li><a>Sponsoriser</a></li>
+                                        <li><a>Remonter en tête de liste</a></li>
+                                        <li><a></a></li>
+                                        <li><a>Signaler la publication</a></li>
+
+                                    </ul>
+                                </div>
+                            </span>
+                            <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>">
+                                <?php echo $comment_data['s_body']; ?>
+                            </span>
+                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                            
                             <?php echo $comment_data['s_body']; ?>
                         </div>
                         <!-- /.comment-text -->
