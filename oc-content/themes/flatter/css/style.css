@@ -3004,6 +3004,15 @@ select {
     position:relative;  
     background: #f1f0f0;
 }
+.sidebar-menu>li.active-menu>a {
+    color: #fff;
+    background: #1e282c;
+    border-left-color: #3c8dbc !important;
+}
+.sidebar-menu>li.active>a {
+    color: #f68935 !important;
+    background: #1e282c !important;
+    border-left-color: #3c8dbc !important;
 .user_related_posts, .user_theme_form {
     max-height:940px;    
     overflow-y:auto;
@@ -3042,6 +3051,7 @@ select {
     background-color: #fff !important;
     color: #f68935;
 }
+
 /**********
 orange: ##f68935
 blue: #20a8e0

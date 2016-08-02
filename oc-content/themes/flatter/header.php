@@ -169,7 +169,7 @@
                                     endif;
                                 endif;
                                 ?>
-                                <li class="add-item treeview active" >
+                                <li class="add-item treeview active-menu" >
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
                                         <i class="fa fa-list-ul"></i>
@@ -190,7 +190,7 @@
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>">
                                         <i class="fa fa-copy"></i>
-                                        Profil
+                                        Ma chine
                                     </a>
                                 </li>   
                                 <?php
