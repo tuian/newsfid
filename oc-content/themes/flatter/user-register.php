@@ -105,13 +105,25 @@ osc_current_web_theme_path('header.php');
                                 </div>
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
-                                        <div class="col-md-4 background-white padding-top-10">
-                                            <label>Birthday</label>
+                                        <div class="form-group">
+                                            <div class="col-md-4 background-white padding-top-10">
+                                                <label>Birthday</label>
+                                            </div>
+                                            <div class="col-md-8 padding-0">
+    <!--<input type="text" name="s_birthday" class="form-control" id="s_birthday" placeholder="<?php _e('Birthday', 'flatter'); ?>">-->
+                                                <input type="date" name="s_birthday" value="" class="dropdate s_birthday" id="s_birthday">
+                                            </div>
                                         </div>
-                                        <div class="col-md-8 padding-0">
-                                            <div class="form-group">
-                                                <!--<input type="text" name="s_birthday" class="form-control" id="s_birthday" placeholder="<?php _e('Birthday', 'flatter'); ?>">-->
-                                                <input type="text" name="s_birthday" value="" class="dropdate s_birthday" id="s_birthday">
+                                    </div>
+                                </div>
+                                <div class="row margin-bottom-5">
+                                    <div class="col-md-12">
+                                        <div class="form-group form-control vertical-row">
+                                            <div class="col-md-4 padding-0">
+                                                <input type="radio" name="s_gender" class="s_gender"  id="female" value="female" checked> Female
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="radio" name="s_gender" class="s_gender" id="male" value="male"> Male
                                             </div>
                                         </div>
                                     </div>
@@ -126,13 +138,13 @@ osc_current_web_theme_path('header.php');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row margin-bottom-5">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" name="s_age" class="form-control" id="s_age" placeholder="<?php _e('Age', 'flatter'); ?>">
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--                                <div class="row margin-bottom-5">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="s_age" class="form-control" id="s_age" placeholder="<?php _e('Age', 'flatter'); ?>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
                             </div>
                         </div>
 
@@ -140,7 +152,7 @@ osc_current_web_theme_path('header.php');
                             <div class="col-md-2">
                             </div>
                             <div class="col-md-5 margin-l-m-10 padding-0 padding-top-10">
-                                <button type="submit" class="btn btn-clr theme-btn"><?php _e("Register", 'flatter'); ?></button>
+                                <button type="submit" id="register" class="btn btn-clr theme-btn"><?php _e("Register", 'flatter'); ?></button>
                             </div>
                         </div>
 
@@ -281,14 +293,57 @@ function new_footer() {
             $('.dropdate').dropdate({
                 dateFormat: 'yyyy/mm/dd'
             });
+            $(document).on('click', '.s_gender', function () {
+                var new_text = $(this).val();
+                console.log(new_text);
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                    data: {
+                        action: 'gender',
+                        gender: new_text,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    }
+                });
+                // $('.name').html(new_text).val('name', new_text);
+            });
         });
-//        $(document).on('change', function (e) {
-//             var a = $('.dropdate').val();
-//             var d = new Date();
-//             var c = dateFormat(c,"yyyy/mm/dd");
-//             var d = c - a;
-//             console.log(d);
-//        });
+        $(document).on('change', function (e) {
+            var b_date = $('.dropdate').val();
+            var age = calculateAge(b_date);
+    //            if (age > 16) {
+    //                $(document).on('submit', '#register', function () {
+    //                    var b_date = $('.dropdate').val();
+    //                    console.log(b_date);
+    //                    $.ajax({
+    //                        url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+    //                        data: {
+    //                            action: 'b_date',
+    //                            birthday: b_date,
+    //                        },
+    //                        success: function (data, textStatus, jqXHR) {
+    //                        }
+    //                    });
+    //                });
+    //            }
+    //            else
+    //            {
+    //                alert("Your age is less then 16 you can't create an account");
+    //            }
+
+        });
+        $(document).on('submit', '#register', function () {
+            var b_date = $('.dropdate').val();
+            console.log(b_date);
+        });
+        var calculateAge = function (birthday) {
+            var now = new Date();
+            var past = new Date(birthday);
+            var nowYear = now.getFullYear();
+            var pastYear = past.getFullYear();
+            var age = nowYear - pastYear;
+            return age;
+        };
     </script>
     <?php
 }
