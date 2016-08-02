@@ -2,25 +2,36 @@
 require '../../../oc-load.php';
 require 'functions.php';
 
-$comment_user_id = $_REQUEST['user_id'];
+$comment_user_id = osc_logged_user_id();
 $comment_item_id = $_REQUEST['item_id'];
 $comment_text = $_REQUEST['comment_text'];
 $new_comment = new DAO();
 
 $user = get_user_data($comment_user_id);
+if (isset($_REQUEST['comment_id']) && !empty($_REQUEST['comment_id'])):
+    
+    $comment_comment_id = $_REQUEST['comment_id'];
+    $text = $_REQUEST['comment_text'];
+    $comments_data = new DAO();
+    $comments_result = $comments_data->dao->update("oc_t_item_comment", array('s_body' => $text), array('pk_i_id' => $comment_comment_id));
+    if ($comments_result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+else :
+    $comment_array = array();
+    $comment_array['fk_i_item_id'] = $comment_item_id;
+    $comment_array['s_body'] = $comment_text;
+    $comment_array['fk_i_user_id'] = $user['user_id'];
+    $comment_array['s_author_name'] = $user['user_name'];
+    $comment_array['s_author_email'] = $user['s_email'];
+    $comment_array['b_enabled'] = 1;
+    $comment_array['b_active'] = 1;
+    $comment_array['dt_pub_date'] = date("Y-m-d H:i:s");
 
-$comment_array = array();
-$comment_array['fk_i_item_id'] = $comment_item_id;
-$comment_array['s_body'] = $comment_text;
-$comment_array['fk_i_user_id'] = $user['user_id'];
-$comment_array['s_author_name'] = $user['user_name'];
-$comment_array['s_author_email'] = $user['s_email'];
-$comment_array['b_enabled'] = 1;
-$comment_array['b_active'] = 1;
-$comment_array['dt_pub_date'] = date("Y-m-d H:i:s");
-
-$comment_data = $new_comment->dao->insert(DB_TABLE_PREFIX . 't_item_comment', $comment_array);
-
+    $comment_data = $new_comment->dao->insert(DB_TABLE_PREFIX . 't_item_comment', $comment_array);
+endif;
 $c_data;
 $comments_data = new DAO();
 $comments_data->dao->select(sprintf('%st_item_comment.*', DB_TABLE_PREFIX));
@@ -32,8 +43,7 @@ $conditions = array('fk_i_item_id' => $comment_item_id,
 $comments_data->dao->where($conditions);
 $comments_data->dao->orderBy('dt_pub_date', 'DESC');
 $comments_result = $comments_data->dao->get();
-$c_data = $comments_result->result();
-?>
+$c_data = $comments_result->result();?>
 <div class="comments_container_<?php echo $comment_item_id; ?>"> 
     <?php
     if ($c_data):

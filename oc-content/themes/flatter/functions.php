@@ -1036,7 +1036,7 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 function get_user_data($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter');
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_birthday as s_birthday');
     $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
     $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name');

@@ -2998,21 +2998,6 @@ select {
     height: 1000px; 
     z-index: 1;
 }
-/**********
-orange: ##f68935
-blue: #20a8e0
-grey: #c7c8cd
-light blue: #a6dded
-royal blue: #0f0f43
-light blue bg: #edf6fc
-light green bg: #dbedd2
-grey border: #eaeff4
-page-bg: #f8fbfd
-edit blue font: #6a8bc8
-border-gray: #e6ecf2
-font-light-gray: #cfd6da
-********/
-
 .all_news{
     max-height:800px;    
     overflow-y:auto;
@@ -3047,3 +3032,27 @@ font-light-gray: #cfd6da
 .padding-5{
     padding: 5px;
 }
+.edit-arrow{
+    padding: 15px;
+}
+.edit-arrow li a{
+    padding-bottom: 0;
+}
+.edit-arrow li a:hover{
+    background-color: #fff !important;
+    color: #f68935;
+}
+/**********
+orange: ##f68935
+blue: #20a8e0
+grey: #c7c8cd
+light blue: #a6dded
+royal blue: #0f0f43
+light blue bg: #edf6fc
+light green bg: #dbedd2
+grey border: #eaeff4
+page-bg: #f8fbfd
+edit blue font: #6a8bc8
+border-gray: #e6ecf2
+font-light-gray: #cfd6da
+********/

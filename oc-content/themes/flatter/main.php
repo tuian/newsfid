@@ -213,8 +213,9 @@
                                 <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city name here' ?>">
                             </div>
                             <div class="box-body" style="display: block;">                            
-                                <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
-                            </div>
+                                    <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                                    <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
+                                </div>
                         </div>
                         <!-- /.box -->
                         <div class="suggested_user_div">
@@ -263,7 +264,7 @@
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                                            <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -350,7 +351,7 @@
                                         <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items(); ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();  ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -372,7 +373,7 @@
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count']; ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];  ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -415,17 +416,17 @@
         </div>
     </div>
 <?php endif; ?>
-<?php /*if (!osc_is_web_user_logged_in()) : ?>
-    <div class="section">
-        <div class="postadspace">
-            <div class="container">
-                <?php if (osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_post() )) : ?>
-                    <center> <h50 style=" margin:0 0 10px 0; font-weight:600; font-size: 32px; color: black;">  Join us for free now  </h50></center> <br>
-                    <a class="btn btn-sclr btn-lg" href=" <?php echo osc_register_account_url(); ?>"><?php _e(" Sign up for free ", 'flatter'); ?></a>                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-<?php endif; */?>
+<?php /* if (!osc_is_web_user_logged_in()) : ?>
+  <div class="section">
+  <div class="postadspace">
+  <div class="container">
+  <?php if (osc_users_enabled() || (!osc_users_enabled() && !osc_reg_user_post() )) : ?>
+  <center> <h50 style=" margin:0 0 10px 0; font-weight:600; font-size: 32px; color: black;">  Join us for free now  </h50></center> <br>
+  <a class="btn btn-sclr btn-lg" href=" <?php echo osc_register_account_url(); ?>"><?php _e(" Sign up for free ", 'flatter'); ?></a>                <?php endif; ?>
+  </div>
+  </div>
+  </div>
+  <?php endif; */ ?>
 
 <div class="popup"></div>
 
@@ -525,7 +526,7 @@ function footer_script() {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
                         loading = true;
                         $('.loading').fadeIn(500);
-//                        $('.masonry_row').css({'opacity': '0.2'});
+        //                        $('.masonry_row').css({'opacity': '0.2'});
                         setTimeout(make_item_ajax_call, 1000);
                     }
                 });
@@ -565,6 +566,46 @@ function footer_script() {
                         });
                     }
                 });
+                $('#sCategory').change(function () {
+                    $('.posts_container .loading').fadeIn(500);
+                    $('.user_related_posts').css({'opacity': '0.2'});
+                    reset_variable_after_login();
+                    //make_after_login_item_ajax_call();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            location_type: location_type,
+                            location_id: location_id,
+                            category_id: category_id,
+                            post_type: post_type,
+                        },
+                        success: function (data) {
+                            $('.user_related_posts').empty().append(data);
+                            $('.posts_container .loading').fadeOut(1000);
+                            $('.user_related_posts').css({'opacity': '1'});
+                        }
+                    });
+                });
+                $('.filter_city').keyup(function () {
+                    $('.posts_container .loading').fadeIn(500);
+                    $('.user_related_posts').css({'opacity': '0.2'});
+                    reset_variable_after_login();
+                    //make_after_login_item_ajax_call();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            location_type: location_type,
+                            location_id: location_id,
+                            category_id: category_id,
+                            post_type: post_type,
+                        },
+                        success: function (data) {
+                            $('.user_related_posts').empty().append(data);
+                            $('.posts_container .loading').fadeOut(1000);
+                            $('.user_related_posts').css({'opacity': '1'});
+                        }
+                    });
+                });
                 $('.filter-button').click(function () {
                     $('.posts_container .loading').fadeIn(500);
                     $('.user_related_posts').css({'opacity': '0.2'});
@@ -584,6 +625,10 @@ function footer_script() {
                             $('.user_related_posts').css({'opacity': '1'});
                         }
                     });
+                });
+                $('.reset-button').click(function(){
+                  window.location.reload();
+                   
                 });
                 $(window).bind('scroll', function () {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
@@ -640,14 +685,14 @@ function footer_script() {
                     if (data !== '0') {
                         $(".masonry_row").append(data);
                         $('.loading').fadeOut(1000);
-//                        $('.masonry_row').css({'opacity': '1'});
+    //                        $('.masonry_row').css({'opacity': '1'});
                         var next_page = parseInt($('#page_number').val()) + 1;
                         $('#page_number').val(next_page);
                         loading = false;
                     } else {
                         $(".result_text").text('No More Data Found').show();
                         $('.loading').fadeOut(1000);
-//                        $('.masonry_row').css({'opacity': '1'});
+    //                        $('.masonry_row').css({'opacity': '1'});
                         is_enable_ajax = false;
                         loading = false;
                     }

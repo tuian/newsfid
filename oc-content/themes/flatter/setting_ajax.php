@@ -88,10 +88,10 @@ if ($_REQUEST['action'] == 'twitter'):
         echo 0;
     endif;
 endif;
-
-if ($_REQUEST['action'] == 'date'):
-    $text = $_REQUEST['b_day'];
-    $result = $user_data->dao->insert("{$db_prefix}t_user", array('s_birthday' => $text), array('pk_i_id' => $user_id));
+$new_user = osc_user_id();
+if ($_REQUEST['action'] == 'gender'):
+    $text = $_REQUEST['gender'];
+    $result = $user_data->dao->insert("{$db_prefix}t_user", array('s_gender' => $text), array('pk_i_id' => 120));
     if ($result):
         echo 1;
     else:
