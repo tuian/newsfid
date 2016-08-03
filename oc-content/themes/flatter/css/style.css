@@ -2320,8 +2320,8 @@ select {
     border-bottom: 11px solid #ffffff;
 }
 .category-dropdown{
-    width: 220px;
-    border-bottom: 2px solid #777;
+    /*    width: 220px;*/
+    border-bottom: 2px solid #ccc;
     position: relative;
     height: 40px;
 }
@@ -2999,7 +2999,7 @@ select {
     z-index: 1;
 }
 .all_news{
-    max-height:800px;    
+    /*min-height:800px;*/    
     overflow-y:auto;
     position:relative;  
     background: #f1f0f0;
@@ -3013,6 +3013,7 @@ select {
     color: #f68935 !important;
     background: #1e282c !important;
     border-left-color: #3c8dbc !important;
+}
 .user_related_posts, .user_theme_form {
     max-height:940px;    
     overflow-y:auto;
@@ -3034,9 +3035,9 @@ select {
     font-size: 10px;
 }
 .scroll-content{
-     position: relative;
-     max-height: 600px;
-     overflow-y: auto;
+    position: relative;
+    max-height: 600px;
+    overflow-y: auto;
 }
 .padding-5{
     padding: 5px;
@@ -3047,22 +3048,11 @@ select {
 .edit-arrow li a{
     padding-bottom: 0;
 }
+
 .edit-arrow li a:hover{
     background-color: #fff !important;
     color: #f68935;
 }
-
-/**********
-orange: ##f68935
-blue: #20a8e0
-grey: #c7c8cd
-light blue: #a6dded
-royal blue: #0f0f43
-light blue bg: #edf6fc
-light green bg: #dbedd2
-grey border: #eaeff4
-page-bg: #f8fbfd
-edit blue font: #6a8bc8
-border-gray: #e6ecf2
-font-light-gray: #cfd6da
-********/
+.comment-area li a{
+    cursor: pointer;
+}

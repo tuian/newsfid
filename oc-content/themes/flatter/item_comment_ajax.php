@@ -9,15 +9,18 @@ $new_comment = new DAO();
 
 $user = get_user_data($comment_user_id);
 if (isset($_REQUEST['comment_id']) && !empty($_REQUEST['comment_id'])):
-    
     $comment_comment_id = $_REQUEST['comment_id'];
-    $text = $_REQUEST['comment_text'];
     $comments_data = new DAO();
-    $comments_result = $comments_data->dao->update("oc_t_item_comment", array('s_body' => $text), array('pk_i_id' => $comment_comment_id));
-    if ($comments_result):
-        echo 1;
+    if(isset($_REQUEST['delete']) && $_REQUEST['delete'] == '1'):
+        $comments_result = $comments_data->dao->delete("oc_t_item_comment", array('pk_i_id' => $comment_comment_id));    
     else:
-        echo 0;
+        $text = $_REQUEST['comment_text'];
+        $comments_result = $comments_data->dao->update("oc_t_item_comment", array('s_body' => $text), array('pk_i_id' => $comment_comment_id));
+        if ($comments_result):
+            echo 1;
+        else:
+            echo 0;
+        endif;
     endif;
 else :
     $comment_array = array();
@@ -29,7 +32,6 @@ else :
     $comment_array['b_enabled'] = 1;
     $comment_array['b_active'] = 1;
     $comment_array['dt_pub_date'] = date("Y-m-d H:i:s");
-
     $comment_data = $new_comment->dao->insert(DB_TABLE_PREFIX . 't_item_comment', $comment_array);
 endif;
 $c_data;
@@ -80,8 +82,8 @@ $c_data = $comments_result->result();?>
                                 <div class="dropdown  pull-right">
                                     <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                        <li class="delete_cmnt"><a>Supprimer la publication</a></li>
-                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $comment_item_id; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>"><a>Modifier</a></li>
+                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $comment_item_id; ?>)"><a>Supprimer la publication</a></li>
+                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $comment_item_id; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $comment_item_id; ?>)" ><a>Modifier</a></li>
                                         <li><a></a></li>
                                         <li><a>Sponsoriser</a></li>
                                         <li><a>Remonter en tête de liste</a></li>
@@ -91,12 +93,10 @@ $c_data = $comments_result->result();?>
                                     </ul>
                                 </div>
                             </span>
-                            <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>">
+                            <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                 <?php echo $comment_data['s_body']; ?>
                             </span>
-                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
-                            
-                            <?php echo $comment_data['s_body']; ?>
+                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                            
                         </div>
                         <!-- /.comment-text -->
                     </div>                       

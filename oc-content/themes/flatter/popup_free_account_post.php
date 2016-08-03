@@ -258,21 +258,9 @@ require_once 'functions.php';
                                 </div><div class="clear"></div>
                             </div>
                             <div class="col-md-offset-2 col-md-10 margin-top-20">
-                                <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">
-                                    <!--                                <?php $counrty_array = get_country_array(); ?>
-                                                                    <select id="country-list" style="box-shadow: none;">
-                                                                        <option value="Country">&nbsp;Country</option>
-                                    <?php
-                                    foreach ($counrty_array as $countryList):
-                                        ?>
-                                                                                                                                                                                                                                                                        <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
-                                        <?php
-                                    endforeach;
-                                    ?>
-                                                                    </select><i class="icon-chevron-down"></i>-->
-                                    <?php UserForm::country_select(osc_get_countries()); ?>
+                                <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">                                  
+                                    <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                 </div>
-
                                 <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
                                     <input type="text" id="s_region_name" name="s_region_name" placeholder="Region">
                                     <input type="hidden" id="s_region_id" name="s_region_id">

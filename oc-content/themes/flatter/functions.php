@@ -1267,7 +1267,8 @@ function time_elapsed_string($ptime) {
                 $r = round($d);                
                 return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';        
             } else {
-               return strftime("%d %b", $ptime);
+                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+               return utf8_decode(strftime("%d %b", $ptime));
             }
         }
     }

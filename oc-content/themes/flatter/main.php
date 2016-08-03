@@ -210,7 +210,7 @@
                             </div>
 
                             <div class="box-body" style="display: block;">
-                                <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city name here' ?>">
+                                <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city, country, state or county' ?>">
                             </div>
                             <div class="box-body" style="display: block;">                            
                                     <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
@@ -484,20 +484,20 @@ function footer_script() {
             });
 
     <?php if (!osc_is_web_user_logged_in()): ?>
-                $('.masonry_row').masonry({
-                    columnWidth: '.item',
-                    itemSelector: '.item',
-                });
-                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                    //data: {page_number: pageNumber, },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.masonry_row').append(data);
-                        $('.masonry_row').masonry('layout');
-                        $('.masonry_row').masonry('reloadItems');
-                    }
-                });
+//                $('.masonry_row').masonry({
+//                    columnWidth: '.item',
+//                    itemSelector: '.item',
+//                });
+//                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+//                $.ajax({
+//                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+//                    //data: {page_number: pageNumber, },
+//                    success: function (data, textStatus, jqXHR) {
+//                        $('.masonry_row').append(data);
+//                        $('.masonry_row').masonry('layout');
+//                        $('.masonry_row').masonry('reloadItems');
+//                    }
+//                });
                 $('#search_form a').click(function (e) {
                     $('#search_form li').removeClass('active');
                     $(this).parent().addClass('active');
@@ -514,8 +514,8 @@ function footer_script() {
                             $('.masonry_row').html(data);
                             is_enable_ajax = true;
                             $(".result_text").hide();
-                            $('.masonry_row').masonry('reloadItems');
-                            $('.masonry_row').masonry('layout');
+//                            $('.masonry_row').masonry('reloadItems');
+//                            $('.masonry_row').masonry('layout');
                             $('#page_number').val(1);
                         }
 
@@ -641,6 +641,22 @@ function footer_script() {
 
     <?php endif; ?>
         });
+        $(window).load(function(){
+//            $('.masonry_row').masonry({
+//                    columnWidth: '.item',
+//                    itemSelector: '.item',
+//                });
+//                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                    //data: {page_number: pageNumber, },
+                    success: function (data, textStatus, jqXHR) {
+                        $('.masonry_row').append(data);
+//                        $('.masonry_row').masonry('layout');
+//                        $('.masonry_row').masonry('reloadItems');
+                    }
+                });
+        });
 
         function make_after_login_item_ajax_call() {
             var page_number = $('#item_page_number').val();
@@ -696,10 +712,10 @@ function footer_script() {
                         is_enable_ajax = false;
                         loading = false;
                     }
-                    var el = $(data);
+//                    var el = $(data);
                     //jQuery(".masonry_row").append(el).masonry( 'appended', el, true );
-                    $('.masonry_row').masonry('layout');
-                    $('.masonry_row').masonry('reloadItems');
+//                    $('.masonry_row').masonry('layout');
+//                    $('.masonry_row').masonry('reloadItems');
 
                 }
             });

@@ -14,7 +14,7 @@ endif;
 $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0");
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 70;
+$offset = 15;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 //$data->dao->offset(10);
@@ -27,7 +27,10 @@ if ($result) {
 
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
-    $db_prefix = DB_TABLE_PREFIX;
+    $db_prefix = DB_TABLE_PREFIX; ?>
+<div class="col-md-12">
+    <?php 
+    $i = 1;
     foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
         while (osc_has_custom_items()):
@@ -44,7 +47,8 @@ if ($items):
             endif;
             if (osc_count_item_resources()) { //item without media should not allow
             ?>
-            <div class="item wow animated col-md-4 col-sm-4 col-lg-4">
+            <!--<div class="item1 wow animated col-md-4 col-sm-4 col-lg-4">-->
+            <div class="item animated col-md-4 col-sm-4 col-lg-4">
                 <div class="list">
                     <?php if (osc_images_enabled_at_items()) { ?>
                         <div class="image">
@@ -122,7 +126,15 @@ if ($items):
             <?php
             }
         endwhile;
+        if($i%3 == 0 && $i%15 !== 0):
+            echo "</div><div class='col-md-12'>";
+        endif;
+        if($i%15 == 0):
+            echo "</div><div class='load-more-content'></div><div class='col-md-12'>";
+        endif;
+        $i++;
     endforeach;
+    echo "</div>"; 
     ?>
     <?php
 else:
