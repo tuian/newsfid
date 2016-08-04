@@ -224,6 +224,24 @@ function RegisterValidation() {
     <script type="text/javascript">
         $(document).ready(function () {
             // Code for form validation
+            $.validator.addMethod("check_date_of_birth", function (value, element) {                
+                var dateOfBirth = value;
+                var arr_dateText = dateOfBirth.split("/");
+                day = arr_dateText[2];
+                month = arr_dateText[1];
+                year = arr_dateText[0];
+
+                var mydate = new Date();
+                mydate.setFullYear(year, month - 1, day);
+
+                var maxDate = new Date();
+                maxDate.setYear(maxDate.getFullYear() - 16);
+                if (maxDate < mydate) {
+                    $.validator.messages.check_date_of_birth = "Sorry, only persons over the age of 16 can be allowed";
+                    return false;
+                }
+                return true;
+            });
             $("form[name=register]").validate({
                 rules: {
                     s_firstname: {
@@ -250,6 +268,7 @@ function RegisterValidation() {
                     },
                     s_birthday: {
                         required: true,
+                        check_date_of_birth: true
                     },
                     cityId: {
                         required: true,
@@ -259,7 +278,7 @@ function RegisterValidation() {
                     },
                     terms_checkbox: {
                         required: true,
-                    },
+                    }
                 },
                 messages: {
                     s_firstname: {

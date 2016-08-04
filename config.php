@@ -8,6 +8,7 @@ define('MULTISITE', 0);
 /** MySQL database name for Osclass */
 define('DB_NAME', 'newsfid');
 
+
 /** MySQL database username */
 define('DB_USER', 'root');
 

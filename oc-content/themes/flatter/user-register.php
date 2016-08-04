@@ -98,14 +98,13 @@ osc_current_web_theme_path('header.php');
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <?php                                           
-                                            UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
+                                            <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                             <!--<input type="text" name="s_country" class="form-control" id="s_country" placeholder="<?php _e('Country', 'flatter'); ?>">-->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row margin-bottom-5">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 b_day">
                                         <div class="form-group">
                                             <div class="col-md-4 background-white padding-top-10">
                                                 <label>Birthday</label>
@@ -125,7 +124,7 @@ osc_current_web_theme_path('header.php');
                                             </div>
                                             <div class="col-md-8 padding-0">
                                                 <label><input type="radio" name="s_gender" class="s_gender"  id="female" value="female" checked> Female</label>
-                                           
+
                                                 <label><input type="radio" name="s_gender" class="s_gender margin-left-15" id="male" value="male"> Male</label>
                                             </div>
                                         </div>
@@ -134,7 +133,7 @@ osc_current_web_theme_path('header.php');
                                 <div class="row margin-bottom-5">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <?php //echo UserForm::city_select(array()); ?>
+                                            <?php //echo UserForm::city_select(array());  ?>
                                             <?php //UserForm::location_javascript(); ?>
                                             <input type="text" name="s_city" class="form-control" id="s_city" placeholder="<?php _e('City', 'flatter'); ?>">
                                             <input type="hidden" name="cityId" class="form-control" id="cityId">
@@ -296,57 +295,7 @@ function new_footer() {
             $('.dropdate').dropdate({
                 dateFormat: 'yyyy/mm/dd'
             });
-            $(document).on('click', '.s_gender', function () {
-                var new_text = $(this).val();
-                console.log(new_text);
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
-                    data: {
-                        action: 'gender',
-                        gender: new_text,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                    }
-                });
-                // $('.name').html(new_text).val('name', new_text);
-            });
-        });
-        $(document).on('change', function (e) {
-            var b_date = $('.dropdate').val();
-            var age = calculateAge(b_date);
-    //            if (age > 16) {
-    //                $(document).on('submit', '#register', function () {
-    //                    var b_date = $('.dropdate').val();
-    //                    console.log(b_date);
-    //                    $.ajax({
-    //                        url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
-    //                        data: {
-    //                            action: 'b_date',
-    //                            birthday: b_date,
-    //                        },
-    //                        success: function (data, textStatus, jqXHR) {
-    //                        }
-    //                    });
-    //                });
-    //            }
-    //            else
-    //            {
-    //                alert("Your age is less then 16 you can't create an account");
-    //            }
-
-        });
-        $(document).on('submit', '#register', function () {
-            var b_date = $('.dropdate').val();
-            console.log(b_date);
-        });
-        var calculateAge = function (birthday) {
-            var now = new Date();
-            var past = new Date(birthday);
-            var nowYear = now.getFullYear();
-            var pastYear = past.getFullYear();
-            var age = nowYear - pastYear;
-            return age;
-        };
+        });               
     </script>
     <?php
 }

@@ -3056,3 +3056,19 @@ select {
 .comment-area li a{
     cursor: pointer;
 }
+.preview-img img{
+    opacity: 0.2;
+}
+.bbody{
+    text-align: center !important;
+}
+.bbody input {
+    text-align: center;
+    width: 100%;
+}
+.step2, .error {
+    display: none;
+}
+.jcrop-holder {
+    display: inline-block;
+}
