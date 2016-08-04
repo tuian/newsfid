@@ -51,7 +51,7 @@ endif;
 //    $data->dao->orWhere(sprintf('item.fk_i_user_id = %s', osc_logged_user_id()));
 //endif;
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 10;
+$offset = 20;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 $result = $data->dao->get();
@@ -88,7 +88,7 @@ if ($items):
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>
                         <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                        <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?></span>
+                        <span class="description"><?php //echo time_elapsed_string(strtotime($date)); ?></span>
                     </div>
                     <!-- /.user-block -->
                     <div class="box-tools">

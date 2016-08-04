@@ -1267,8 +1267,9 @@ function time_elapsed_string($ptime) {
                 $r = round($d);                
                 return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';        
             } else {
-                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
-               return utf8_decode(strftime("%d %b", $ptime));
+//                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+               return date("d M", $ptime);
+//               return strftime("%d %b", $ptime);
             }
         }
     }
@@ -1684,7 +1685,8 @@ function get_comment_count($item_id) {
 
     $comments_data->dao->where($conditions);
     $comments_result = $comments_data->dao->get();
-    return count($comments_result->result());
+    $count = count($comments_result->result());
+    return $count>0?$count:'';
 }
 
 function get_user_last_post_resource($user_id) {

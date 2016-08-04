@@ -78,10 +78,7 @@ if ($items):
     $db_prefix = DB_TABLE_PREFIX;
     foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
-        while (osc_has_custom_items()):
-            $date = osc_item_field("dt_pub_date");
-            setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
-            $date_in_french = strftime("%d %B %Y ", strtotime($date));
+        while (osc_has_custom_items()):            
             $item_id = osc_item_id();
             $user = get_user_data(osc_item_user_id());
             ?>
@@ -91,7 +88,7 @@ if ($items):
                         <div class="user_image">
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                        <span class="description"><?php echo $date_in_french ?></span>
+                        <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?></span>
                     </div>
                     <!-- /.user-block -->
                     <div class="box-tools">

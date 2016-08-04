@@ -14,7 +14,7 @@ endif;
 $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0");
 
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
-$offset = 15;
+$offset = 75;
 $start_from = $page_number * $offset;
 $data->dao->limit($start_from, $offset);
 //$data->dao->offset(10);
@@ -126,10 +126,10 @@ if ($items):
             <?php
             }
         endwhile;
-        if($i%3 == 0 && $i%15 !== 0):
+        if($i%3 == 0 && $i%75 !== 0):
             echo "</div><div class='col-md-12'>";
         endif;
-        if($i%15 == 0):
+        if($i%75 == 0):
             echo "</div><div class='load-more-content'></div><div class='col-md-12'>";
         endif;
         $i++;
