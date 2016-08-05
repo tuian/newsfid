@@ -28,6 +28,22 @@ if ($_REQUEST['action'] == 'user_info'):
 endif;
 
 
+if ($_REQUEST['action'] == 'user_localisation'):    
+    $lat = $_REQUEST['lat'];
+    $lng = $_REQUEST['lng'];
+    $city = $_REQUEST['city'];
+    $country = $_REQUEST['country'];
+    
+    /*add city and country if not exist and also insert country id and city id*/
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('d_coord_lat' => $lat, 'd_coord_long' => $lng, 's_city' => $city, 's_country' => $country), array('pk_i_id' => $user_id));
+    if ($result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+    
+endif;
+
 if ($_REQUEST['action'] == 'user_website'):
     $text = $_REQUEST['user_website_text'];
     $result = $user_data->dao->update("{$db_prefix}t_user", array('s_website' => $text), array('pk_i_id' => $user_id));

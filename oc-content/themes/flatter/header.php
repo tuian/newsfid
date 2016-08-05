@@ -139,7 +139,7 @@
                             ?>
                             <li class="treeview <?php echo $active ?>">
                                 <a href="<?php echo osc_base_url() ?>">
-                                    <i class="fa fa-dashboard"></i>
+                                    <i class="fa fa-th"></i>
                                     News Feed
                                 </a>
                             </li>
@@ -206,14 +206,14 @@
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
-                                        <i class="fa fa-th"></i>
+                                        <i class="fa fa-users"></i>
                                         People
                                     </a>
                                 </li>                                 
 
                                 <li class="treeview">
                                     <a href="javascript:void(0)">
-                                        <i class="fa fa-th"></i>
+                                        <i class="fa fa-user"></i>
                                         Compte
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>                                
@@ -230,7 +230,7 @@
                                         ?>   
                                         <li>
                                             <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
-                                                <i class="fa fa-th"></i>Compte
+                                                <i class="fa fa-user"></i>Compte
                                             </a>
                                         </li>
                                         <?php
@@ -246,7 +246,7 @@
                                         <li class="user_settings treeview <?php echo $active ?>" data-toggle="modal" data-target="#user_confirm_password">
                                             <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="javascript:void(0)">
-                                                <i class="fa fa-pie-chart"></i>Réglage
+                                                <i class="fa fa-gear"></i>Réglage
                                             </a>
                                         </li>
                                     </ul>
@@ -268,14 +268,14 @@
                                 <?php if ($user['user_type'] == 0 || $user['user_type'] == 2): ?>
                                     <li class="treeview <?php echo $active ?>">
                                         <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
-                                            <i class="fa fa-laptop"></i>m'abonner
+                                            <i class="fa fa-money"></i>Subscribe now
                                         </a>
                                     </li>   
                                 <?php endif; ?>
 
                                 <li class="treeview">
                                     <a href="javascript:void(0)">
-                                        Informations<i class="fa fa-angle-left pull-right"></i>
+                                         <i class="fa fa-info"></i>Informations<i class="fa fa-angle-left pull-right"></i>
                                     </a>
 
                                     <ul class="treeview-menu">
@@ -307,7 +307,7 @@
                                         ?>
                                         <li class="treeview <?php echo $active ?>">                          
                                             <a href="<?php echo osc_contact_url(); ?>">
-                                                <i class="fa fa-table"></i>Contact
+                                                <i class="fa fa-phone"></i>Contact
                                             </a>
                                         </li>
                                     </ul>
@@ -328,7 +328,7 @@
                                     endif;
                                     ?>
                                     <a href="<?php echo osc_user_login_url() ?>">
-                                        <i class="fa fa-th"></i>Login
+                                        <i class="fa fa-sign-in"></i>Login
                                     </a>
                                 </li>
 
@@ -345,7 +345,7 @@
 
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_register_account_url() ?>">
-                                        <i class="fa fa-pie-chart"></i>Register
+                                        <i class="fa fa-user-plus"></i>Register
                                     </a>
                                 </li>
                             <?php endif; ?>
@@ -353,7 +353,7 @@
 
                                 <li class="treeview">
                                     <a href="<?php echo osc_user_logout_url() ?>">
-                                        <i class="fa fa-pie-chart"></i>Logout
+                                        <i class="fa fa-sign-out"></i>Logout
                                     </a>
                                 </li>
 
