@@ -3072,3 +3072,12 @@ select {
 .jcrop-holder {
     display: inline-block;
 }
+.edit_post{  
+    color: #fff;
+    width: 32px;
+    padding: 4px 0;
+    text-align: center;
+    display: block;
+    background: #FDAA14;
+    cursor: pointer;
+}

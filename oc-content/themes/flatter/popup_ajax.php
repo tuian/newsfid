@@ -98,8 +98,8 @@ while (osc_has_custom_items()):
                                         </div>
                                         <div class="col-md-6">
                                             <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
-                                                <div class="pull-right edit">
-                                                    <a class="whover" href="<?php echo osc_item_edit_url(); ?>"  rel="nofollow"><i class="fa fa-pencil"></i></a>
+                                                <div class="pull-right edit edit_post" >
+                                                    <i class="fa fa-pencil"></i>
                                                 </div>
                                             <?php } ?>
                                         </div>
@@ -221,3 +221,23 @@ while (osc_has_custom_items()):
         </div>
     </div>
 <?php endwhile; ?>
+<script>
+    
+    $(document).on('click', '.edit_post', function () {
+        var item_id = $(this).val();
+        console.log(item_id);
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'update_user_post.php?item_id=729'; ?>',
+            data: {
+                
+            },
+            success: function (data) {
+                $('.free-user-post').html(data);
+//                                            $('#popup-free-user-post').appendTo("body");
+               $('#popup-free-user-post').modal('show');
+                $('#popup-free-user-post').replaceWith('#item_popup_modal');
+               // $('#popup-free-user-post').appendTo('body');
+            }
+        });
+    });
+</script>

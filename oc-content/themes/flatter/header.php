@@ -46,7 +46,7 @@
         <?php osc_run_hook('header'); ?>
         <!-- /Header Hook -->
 
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.ias.min.js'); ?>"></script>
+        <!--<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.ias.min.js'); ?>"></script>-->
 
         <?php if (osc_get_preference('custom_css', 'flatter_theme', "UTF-8") != '') { ?>
             <style type="text/css">

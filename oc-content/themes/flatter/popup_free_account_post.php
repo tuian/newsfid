@@ -376,7 +376,6 @@ require_once 'functions.php';
 
                                             </div>
                                             </div>
-                                            </div>
                                             <!----free user post end------->
                                             <script>
                                                 $(document).ready(function () {
