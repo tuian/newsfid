@@ -78,8 +78,16 @@ $roles = get_user_roles_array();
         <i class="fa fa-map-marker" aria-hidden="true"></i>
         <span class="user_info_header padding-left-10">Localisation</span>
     </div>
-    <div class="col-md-8 col-sm-8">
-        <span class="user_address_text"><?php echo $address; ?></span>
+    <div class="col-md-8 col-sm-8 user_website">
+        <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city')." - ".osc_user_field('s_country'); ?>">
+            <?php echo osc_user_field('s_city')." - ".osc_user_field('s_country'); ?>
+        </span>   
+        <input type="text" class="hide" id="autocomplete">       
+        <?php if (osc_user_id() == osc_logged_user_id()): ?>
+            <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
+                <i class="fa fa-pencil-square-o"></i> Edit
+            </span>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -95,27 +103,62 @@ osc_add_hook('footer', 'custom_map_script');
 
 function custom_map_script() {
     ?>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
+<script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
     <script>
-        //initMap();
         function initMap() {
-            var latitude = <?php echo floatval($user_lat); ?>;
-            var longitude = <?php echo floatval($user_lng); ?>;
-            latitude = 45.7640;
-            longitude = 4.8357
-
-            var myLatLng = {lat: latitude, lng: longitude};
-            var map = new google.maps.Map(document.getElementById('user_map'), {
-                zoom: 20,
-                center: myLatLng
-            });
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: ''
-            });
+//            var latitude = <?php echo floatval($user_lat); ?>;
+//            var longitude = <?php echo floatval($user_lng); ?>;           
+//
+//            var myLatLng = {lat: latitude, lng: longitude};
+//            var map = new google.maps.Map(document.getElementById('user_map'), {
+//                zoom: 20,
+//                center: myLatLng
+//            });
+//            var marker = new google.maps.Marker({
+//                position: myLatLng,
+//                map: map,
+//                title: ''
+//            });
+        var map;     
+        map = new google.maps.Map(document.getElementById('user_map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });     
         }
-        google.maps.event.addDomListener(window, 'load', initMap);</script>
+       google.maps.event.addDomListener(window, 'load', initMap)
+       var goptions = {
+            map: '#user_map',
+            details: ".details",            
+            types: ['(cities)'],
+            basemap: 'gray',
+            mapOptions: {
+                    zoom: 10
+            },
+            marketOptions: {
+                    draggable: true
+            }
+        }
+     $('#autocomplete').geocomplete(goptions).bind("geocode:result", function(event, result){                        
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'user_localisation',
+                lat: result.geometry.location.lat,
+                lng: result.geometry.location.lng,
+                city: result.address_components['0'].long_name,
+                country: result.address_components['3'].long_name,
+            },
+            success: function (data, textStatus, jqXHR) {                
+                $('#autocomplete').addClass('hide');
+                $('.user_localisation_text').show();
+                $('.user_localisation_text').html(result.address_components['0'].long_name+" - "+result.address_components['3'].long_name);
+            }
+        });
+    });
+    </script>           
+
     <script>
         jQuery(document).ready(function ($) {
             $(document).on('click', '.user_info_edit', function () {
@@ -189,6 +232,13 @@ function custom_map_script() {
                     }
                 });
             });
+            
+             $(document).on('click', '.user_localisation_edit', function () {
+                var text = $('.user_localisation_text').attr('data_text');
+                $('#autocomplete').val(text);
+                $('.user_localisation_text').hide();
+                $('#autocomplete').removeClass('hide');
+            }); 
         });
     </script>
     <?php

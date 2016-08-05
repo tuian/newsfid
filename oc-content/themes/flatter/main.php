@@ -83,7 +83,7 @@
 <?php if (osc_is_web_user_logged_in()): ?>
     <?php
     $logged_in_user_id = osc_logged_user_id();
-    $logged_user = get_user_data($logged_in_user_id);
+    $logged_user = get_user_data($logged_in_user_id);    
     ?>
     <div id="sections">
         <div class="user_area">
@@ -220,10 +220,11 @@
                         <!-- /.box -->
                         <div class="suggested_user_div">
                             <?php
-                            $suggested_users = get_suggested_users($logged_user['user_id'], 300);
+                            $suggested_users = get_suggested_users($logged_user['user_id'], 300);                            
                             if ($suggested_users):
                                 foreach ($suggested_users as $s_user):
                                     $suggested_user_array = get_user_data($s_user);
+                                    if(!empty($suggested_user_array)):
                                     ?>
                                     <div class="col-md-12 margin-bottom-30">
                                         <div class="col-md-3 padding-left-0">
@@ -238,6 +239,7 @@
                                         </div>
                                     </div>    
                                     <?php
+                                    endif;
                                 endforeach;
                             endif;
                             ?>
@@ -247,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="col-md-8 padding-left-0">
 
                     <!--                    <div class="col-md-4 pull-right">
@@ -392,7 +394,7 @@
         <div class="container-fluid">
             <div class="row  effect-3">
                 <div class="col-md-12">
-                    <div class="masonry_row"></div>
+                   <div class="masonry_row"></div>
                 </div>
             </div>
 
