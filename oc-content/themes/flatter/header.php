@@ -40,7 +40,7 @@
         <link href="<?php echo osc_current_web_theme_url('plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/style2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/jquery.Jcrop.min.css'); ?>" rel="stylesheet" type="text/css" />
-        
+
 
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
@@ -210,8 +210,18 @@
                                         People
                                     </a>
                                 </li>                                 
-
-                                <li class="treeview">
+                                <?php
+                                $active = '';
+                                
+//                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
+                                    if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                               
+                                ?>   
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-user"></i>
                                         Compte
@@ -220,31 +230,29 @@
                                     <ul class="treeview-menu">
                                         <?php
                                         $active = '';
-                                        if (!empty($parts[0])):
-                                            if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
-                                                $active = 'active';
-                                            else:
-                                                $active = '';
-                                            endif;
+
+                                        if ((strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+
+                                            $active = 'active';
+                                        else:
+                                            $active = '';
                                         endif;
                                         ?>   
-                                        <li>
+                                        <li class="<?php echo $active ?>">
                                             <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                                 <i class="fa fa-user"></i>Compte
                                             </a>
                                         </li>
                                         <?php
                                         $active = '';
-                                        if (!empty($parts[0])):
-                                            if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=profile') !== false):
-                                                $active = 'active';
-                                            else:
-                                                $active = '';
-                                            endif;
+                                        if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false)):
+                                            $active = 'active';
+                                        else:
+                                            $active = '';
                                         endif;
-                                        ?>
+                                        ?> 
                                         <li class="user_settings treeview <?php echo $active ?>" data-toggle="modal" data-target="#user_confirm_password">
-                                            <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
+    <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="javascript:void(0)">
                                                 <i class="fa fa-gear"></i>Réglage
                                             </a>
@@ -272,10 +280,19 @@
                                         </a>
                                     </li>   
                                 <?php endif; ?>
-
-                                <li class="treeview">
+                                <?php
+                                $active = '';
+                                if (!empty($parts[0])):
+                                    if ((strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=34') !== false) || (strpos($parts[0], 'page=contact') !== false)):
+                                        $active = 'active';
+                                    else:
+                                        $active = '';
+                                    endif;
+                                endif;
+                                ?>
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
-                                         <i class="fa fa-info"></i>Informations<i class="fa fa-angle-left pull-right"></i>
+                                        <i class="fa fa-info"></i>Informations<i class="fa fa-angle-left pull-right"></i>
                                     </a>
 
                                     <ul class="treeview-menu">

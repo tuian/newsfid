@@ -7,6 +7,18 @@ require_once 'functions.php';
 $item_id = $_REQUEST['item_id'];
 osc_query_item(array('id' => $item_id));
 
+function get_item_location($item_id) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $item_data = new DAO();
+    $item_data->dao->select("item.*");
+    $item_data->dao->from("{$db_prefix}t_item_location AS item");
+    $item_data->dao->where("item.fk_i_item_id= {$item_id}");
+    $result = $item_data->dao->get();
+    $item = $result->row();
+    return $item;
+}
+
+$item_location = get_item_location($item_id);
 while (osc_has_custom_items()):
     ?>
     <!-- Modal -->
@@ -104,12 +116,12 @@ while (osc_has_custom_items()):
                                         <?php osc_goto_first_category(); ?>
                                         <?php if (osc_count_categories()) { ?>
                                             <select id="sCategory" class="form-control input-box" name="sCategory">
-                                                <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
+                                                <option <?php ?> value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
                                                 <?php while (osc_has_categories()) { ?>
-                                                    <option class="maincat bold" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                                    <option  class="maincat bold" <?php if (osc_category_id() == '1') echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
                                                     <?php if (osc_count_subcategories()) { ?>
                                                         <?php while (osc_has_subcategories()) { ?>
-                                                            <option class="subcat margin-left-30" value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
+                                                            <option class="subcat margin-left-30" <?php if (osc_category_id() == '143') echo 'selected'; ?> value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
                                                         <?php } ?>
                                                     <?php } ?>
                                                 <?php } ?>
@@ -265,31 +277,29 @@ while (osc_has_custom_items()):
                                 <div class="col-md-offset-2 col-md-10 margin-top-20">
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">                                  
                                         <select id="country_Id" class="user_country_textbox" name="up_country">
-                                        <?php
-                                        $counrtry_db = osc_get_countries();
-                                        $country_code = osc_item_country_code(osc_item_id());
-                                        print_r($country);
-                                        foreach ($counrtry_db as $key => $country) :
-                                            ?>
-                                            <option <?php if ($country['pk_c_code'] == $country_code['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                            <?php
+                                            $counrtry_db = osc_get_countries();
+                                            foreach ($counrtry_db as $key => $country) :
+                                                ?>
+                                                <option <?php if ($country['pk_c_code'] == $item_location['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
-                                    
+
 
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="Region" value="<?php ?>">
+                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="Region" value="<?php echo $item_location['s_region']; ?>">
                                         <input type="hidden" id="s_region_id" name="s_region_id">
                                     </div>
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City">
+                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City" value="<?php echo $item_location['s_city']; ?>">
                                         <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
                                     </div>
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name">
+                                        <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
                                     </div>
-                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" name="s_address" id="s_address" placeholder="Address">
+                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30" >
+                                        <input type="text" name="s_address" id="s_address" placeholder="Address" value="<?php echo $item_location['s_address']; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -396,7 +406,7 @@ while (osc_has_custom_items()):
                                             <!----free user post end------->
                                             <script>
                                                 $(document).ready(function () {
-                                                    $('#s_region_name').typeahead({
+                                                    $('#s_region_name').typeahead({                                                      
                                                         source: function (query, process) {
                                                             var $items = new Array;
                                                             var c_id = $('#countryId').val();

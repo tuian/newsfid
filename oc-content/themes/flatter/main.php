@@ -83,7 +83,7 @@
 <?php if (osc_is_web_user_logged_in()): ?>
     <?php
     $logged_in_user_id = osc_logged_user_id();
-    $logged_user = get_user_data($logged_in_user_id);    
+    $logged_user = get_user_data($logged_in_user_id);
     ?>
     <div id="sections">
         <div class="user_area">
@@ -213,32 +213,32 @@
                                 <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city, country, state or county' ?>">
                             </div>
                             <div class="box-body" style="display: block;">                            
-                                    <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
-                                    <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
-                                </div>
+                                <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                                <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
+                            </div>
                         </div>
                         <!-- /.box -->
                         <div class="suggested_user_div">
                             <?php
-                            $suggested_users = get_suggested_users($logged_user['user_id'], 300);                            
+                            $suggested_users = get_suggested_users($logged_user['user_id'], 300);
                             if ($suggested_users):
                                 foreach ($suggested_users as $s_user):
                                     $suggested_user_array = get_user_data($s_user);
-                                    if(!empty($suggested_user_array)):
-                                    ?>
-                                    <div class="col-md-12 margin-bottom-30">
-                                        <div class="col-md-3 padding-left-0">
-                                            <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                        </div>
-                                        <div class="col-md-9 padding-right-0">
-                                            <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>                                
-                                            <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                            <?php
-                                            user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
-                                            ?>
-                                        </div>
-                                    </div>    
-                                    <?php
+                                    if (!empty($suggested_user_array)):
+                                        ?>
+                                        <div class="col-md-12 margin-bottom-30">
+                                            <div class="col-md-3 padding-left-0">
+                                                <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                            </div>
+                                            <div class="col-md-9 padding-right-0">
+                                                <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>                                
+                                                <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
+                                                <?php
+                                                user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
+                                                ?>
+                                            </div>
+                                        </div>    
+                                        <?php
                                     endif;
                                 endforeach;
                             endif;
@@ -249,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-8 padding-left-0">
 
                     <!--                    <div class="col-md-4 pull-right">
@@ -266,7 +266,7 @@
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -353,7 +353,7 @@
                                         <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();  ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();   ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -369,13 +369,13 @@
                                 }
                                 ?> 
                             <?php } ?>
-                            <li class="show-more-li"><a href="#"><?php echo __('Show more') . "&nbsp;&nbsp;&nbsp;"; ?><i class="fa fa-angle-down vertical-bottom"></i></a>
+                            <li class="show-more-li show_more"><?php echo __('Show more') . "&nbsp;&nbsp;&nbsp;"; ?><i class="fa fa-angle-down vertical-bottom"></i>
                                 <ul class="">
                                     <?php foreach ($other_cat as $$k => $n): ?>
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];  ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];   ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -394,7 +394,7 @@
         <div class="container-fluid">
             <div class="row  effect-3">
                 <div class="col-md-12">
-                   <div class="masonry_row"></div>
+                    <div class="masonry_row"></div>
                 </div>
             </div>
 
@@ -486,20 +486,20 @@ function footer_script() {
             });
 
     <?php if (!osc_is_web_user_logged_in()): ?>
-//                $('.masonry_row').masonry({
-//                    columnWidth: '.item',
-//                    itemSelector: '.item',
-//                });
-//                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-//                $.ajax({
-//                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-//                    //data: {page_number: pageNumber, },
-//                    success: function (data, textStatus, jqXHR) {
-//                        $('.masonry_row').append(data);
-//                        $('.masonry_row').masonry('layout');
-//                        $('.masonry_row').masonry('reloadItems');
-//                    }
-//                });
+        //                $('.masonry_row').masonry({
+        //                    columnWidth: '.item',
+        //                    itemSelector: '.item',
+        //                });
+        //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+        //                $.ajax({
+        //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+        //                    //data: {page_number: pageNumber, },
+        //                    success: function (data, textStatus, jqXHR) {
+        //                        $('.masonry_row').append(data);
+        //                        $('.masonry_row').masonry('layout');
+        //                        $('.masonry_row').masonry('reloadItems');
+        //                    }
+        //                });
                 $('#search_form a').click(function (e) {
                     $('#search_form li').removeClass('active');
                     $(this).parent().addClass('active');
@@ -516,19 +516,21 @@ function footer_script() {
                             $('.masonry_row').html(data);
                             is_enable_ajax = true;
                             $(".result_text").hide();
-//                            $('.masonry_row').masonry('reloadItems');
-//                            $('.masonry_row').masonry('layout');
+        //                            $('.masonry_row').masonry('reloadItems');
+        //                            $('.masonry_row').masonry('layout');
                             $('#page_number').val(1);
                         }
 
                     });
                 });
-
+                $('#search_form li').click(function (e) {
+                    $(this).addClass('active');
+                });
                 $(window).bind('scroll', function () {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.masonry_row').offset().top + $('.masonry_row').outerHeight() - window.innerHeight)) {
                         loading = true;
                         $('.loading').fadeIn(500);
-        //                        $('.masonry_row').css({'opacity': '0.2'});
+                        //                        $('.masonry_row').css({'opacity': '0.2'});
                         setTimeout(make_item_ajax_call, 1000);
                     }
                 });
@@ -628,36 +630,36 @@ function footer_script() {
                         }
                     });
                 });
-                $('.reset-button').click(function(){
-                  window.location.reload();
-                   
+                $('.reset-button').click(function () {
+                    window.location.reload();
+
                 });
                 $(window).bind('scroll', function () {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
                         loading = true;
                         $('.posts_container .loading').fadeIn(500);
-//                        $('.user_related_posts').css({'opacity': '0.2'});
+        //                        $('.user_related_posts').css({'opacity': '0.2'});
                         setTimeout(make_after_login_item_ajax_call, 1000);
                     }
                 });
 
     <?php endif; ?>
         });
-        $(window).load(function(){
-//            $('.masonry_row').masonry({
-//                    columnWidth: '.item',
-//                    itemSelector: '.item',
-//                });
-//                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-                    //data: {page_number: pageNumber, },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.masonry_row').append(data);
-//                        $('.masonry_row').masonry('layout');
-//                        $('.masonry_row').masonry('reloadItems');
-                    }
-                });
+        $(window).load(function () {
+    //            $('.masonry_row').masonry({
+    //                    columnWidth: '.item',
+    //                    itemSelector: '.item',
+    //                });
+    //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                //data: {page_number: pageNumber, },
+                success: function (data, textStatus, jqXHR) {
+                    $('.masonry_row').append(data);
+    //                        $('.masonry_row').masonry('layout');
+    //                        $('.masonry_row').masonry('reloadItems');
+                }
+            });
         });
 
         function make_after_login_item_ajax_call() {
@@ -674,7 +676,7 @@ function footer_script() {
                 success: function (data) {
                     if (data !== '0') {
                         $('.posts_container .loading').fadeOut(1000);
-//                        $('.user_related_posts').css({'opacity': '1'});
+    //                        $('.user_related_posts').css({'opacity': '1'});
                         loading = false;
                         $(".user_related_posts").append(data);
                         var next_page = parseInt($('#item_page_number').val()) + 1;
@@ -703,21 +705,21 @@ function footer_script() {
                     if (data !== '0') {
                         $(".masonry_row").append(data);
                         $('.loading').fadeOut(1000);
-    //                        $('.masonry_row').css({'opacity': '1'});
+                        //                        $('.masonry_row').css({'opacity': '1'});
                         var next_page = parseInt($('#page_number').val()) + 1;
                         $('#page_number').val(next_page);
                         loading = false;
                     } else {
                         $(".result_text").text('No More Data Found').show();
                         $('.loading').fadeOut(1000);
-    //                        $('.masonry_row').css({'opacity': '1'});
+                        //                        $('.masonry_row').css({'opacity': '1'});
                         is_enable_ajax = false;
                         loading = false;
                     }
-//                    var el = $(data);
+    //                    var el = $(data);
                     //jQuery(".masonry_row").append(el).masonry( 'appended', el, true );
-//                    $('.masonry_row').masonry('layout');
-//                    $('.masonry_row').masonry('reloadItems');
+    //                    $('.masonry_row').masonry('layout');
+    //                    $('.masonry_row').masonry('reloadItems');
 
                 }
             });

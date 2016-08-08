@@ -2,7 +2,7 @@
 // meta tag robots
 osc_add_hook('header', 'flatter_follow_construct');
 if (!osc_logged_user_id()):
-    osc_add_flash_error_message('You need to login to watch profile');
+    osc_add_flash_error_message('Please login to continue.');
     osc_redirect_to(osc_base_url());
 endif;
 $address = '';
@@ -321,6 +321,7 @@ $user = get_user_data(osc_user_id());
                         </div>
                         <div class="box-body" style="display: block;">                            
                             <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                            <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
                         </div>
                     </div>
                     <!-- /.box -->                 
@@ -555,9 +556,49 @@ function custom_script() {
                                                                         if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
                                                                             loading = true;
                                                                             $('.user_posts_area .loading').fadeIn(500);
-                                                                           // $('.user_posts_container').css({'opacity': '0.2'});
+                                                                            // $('.user_posts_container').css({'opacity': '0.2'});
                                                                             setTimeout(fetch_user_posts, 1000);
                                                                         }
+                                                                    });
+                                                                    $('#sCategory').change(function () {
+                                                                        $('.user_posts_area .loading').fadeIn(500);
+                                                                        $('.user_posts_container').css({'opacity': '0.2'});
+                                                                        reset_variables();
+                                                                        $.ajax({
+                                                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                                            data: {
+                                                                                user_id: user_id,
+                                                                                location_type: location_type,
+                                                                                location_id: location_id,
+                                                                                category_id: category_id,
+                                                                                post_type: post_type,
+                                                                            },
+                                                                            success: function (data) {
+                                                                                $('.user_posts_container').empty().append(data);
+                                                                                $('.user_posts_area .loading').fadeOut(1000);
+                                                                                $('.user_posts_container').css({'opacity': '1'});
+                                                                            }
+                                                                        });
+                                                                    });
+                                                                    $('.filter_city').keyup(function () {
+                                                                        $('.user_posts_area .loading').fadeIn(500);
+                                                                        $('.user_posts_container').css({'opacity': '0.2'});
+                                                                        reset_variables();
+                                                                        $.ajax({
+                                                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                                            data: {
+                                                                                user_id: user_id,
+                                                                                location_type: location_type,
+                                                                                location_id: location_id,
+                                                                                category_id: category_id,
+                                                                                post_type: post_type,
+                                                                            },
+                                                                            success: function (data) {
+                                                                                $('.user_posts_container').empty().append(data);
+                                                                                $('.user_posts_area .loading').fadeOut(1000);
+                                                                                $('.user_posts_container').css({'opacity': '1'});
+                                                                            }
+                                                                        });
                                                                     });
                                                                     $('.filter-button').click(function () {
                                                                         $('.user_posts_area .loading').fadeIn(500);
@@ -578,6 +619,10 @@ function custom_script() {
                                                                                 $('.user_posts_container').css({'opacity': '1'});
                                                                             }
                                                                         });
+                                                                    });
+                                                                    $('.reset-button').click(function () {
+                                                                        window.location.reload();
+
                                                                     });
                                                                 });
                                                                 function fetch_user_posts() {

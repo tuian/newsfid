@@ -15,7 +15,7 @@
     };
 
 	function genselect(from, to, defaultValue){
-		var str = '<select class="col-md-4">';
+		var str = '<select class="col-md-4 pull-right">';
 		if(defaultValue){
 			str += '<option value="">'+defaultValue+'</option>';
 		}
