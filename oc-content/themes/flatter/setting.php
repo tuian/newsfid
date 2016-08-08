@@ -6,6 +6,15 @@ require 'functions.php';
 osc_current_web_theme_path('header.php');
 $user_info = get_user_data(osc_logged_user_id());
 $roles = get_user_roles_array();
+
+$user_data_info = new DAO();
+$db_prefix = DB_TABLE_PREFIX;
+$user_data_info->dao->select("user_info.*");
+$user_data_info->dao->from("{$db_prefix}t_user_description as user_info");
+$user_data_info->dao->where("user_info.fk_i_user_id", $user_id);
+$user_data_info->dao->limit(1);
+$user_result = $user_data_info->dao->get();
+$user_desc = $user_result->row();
 ?>
 <div id="setting" class="row margin-0"> 
     <div class="col-md-12 padding-bottom-6per">
@@ -42,8 +51,8 @@ $roles = get_user_roles_array();
                                 <span class="user_info_header">A propos de moi</span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_info">
-                                <span class="user_info_text info_text" data_text="<?php echo $user_data['s_name']; ?>">
-                                    <?php echo $user_data['s_name']; ?>
+                                <span class="user_info_text info_text" data_text="<?php echo $user_desc['s_info']; ?>">
+                                    <?php echo $user_desc['s_info']; ?>
                                 </span>
 
                                 <span class="edit_user_detail edit-color-blue pointer user_info_edit">
@@ -83,8 +92,8 @@ $roles = get_user_roles_array();
                                 <span class="user_info_header">Website</span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_website">
-                                <span class="user_website_text info_text" data_text="<?php echo osc_user_website(); ?>">
-                                    <?php echo osc_user_website(); ?>
+                                <span class="user_website_text info_text" data_text="<?php echo $user_info['s_website']; ?>">
+                                    <?php echo $user_info['s_website']; ?>
                                 </span>        
 
                                 <span class="edit_user_detail edit-color-blue pointer user_website_edit">
@@ -98,9 +107,24 @@ $roles = get_user_roles_array();
                             <div class="col-md-4 col-sm-4">
                                 <span class="user_info_header">Localisation</span>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <span class="user_address_text"><?php echo $address; ?></span>
+                            <div class="col-md-8 col-sm-8 user_website">
+                                <span class="user_localisation_text info_text" data_text=" <?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>">
+                                    <?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>
+                                </span>   
+                                <input type="text" class="hide" id="autocomplete">    
+
+
+                                <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
+                                    <i class="fa fa-pencil-square-o"></i> Edit
+                                </span>
+
                             </div>
+                        </div>
+                        <?php $user_lat = (osc_user_field('d_coord_lat')) ? osc_user_field('d_coord_lat') : '45.7640' ?>
+                        <?php $user_lng = (osc_user_field('d_coord_lng')) ? osc_user_field('d_coord_lng') : '4.8357' ?>
+
+                        <div class="row user_info_row margin-0 user_map_box">
+                            <div class="user_map" id="user_map"></div>
                         </div>
                     </div>
                 </div>
@@ -570,6 +594,69 @@ $roles = get_user_roles_array();
         </div>
     </div>
 </div>
+<?php
+osc_add_hook('footer', 'custom_map_script');
+
+function custom_map_script() {
+    ?>
+    <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
+    <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
+    <script>
+        function initMap() {
+    //            var latitude = <?php echo floatval($user_lat); ?>;
+    //            var longitude = <?php echo floatval($user_lng); ?>;           
+    //
+    //            var myLatLng = {lat: latitude, lng: longitude};
+    //            var map = new google.maps.Map(document.getElementById('user_map'), {
+    //                zoom: 20,
+    //                center: myLatLng
+    //            });
+    //            var marker = new google.maps.Marker({
+    //                position: myLatLng,
+    //                map: map,
+    //                title: ''
+    //            });
+            var map;
+            map = new google.maps.Map(document.getElementById('user_map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initMap)
+        var goptions = {
+            map: '#user_map',
+            details: ".details",
+            types: ['(cities)'],
+            basemap: 'gray',
+            mapOptions: {
+                zoom: 10
+            },
+            marketOptions: {
+                draggable: true
+            }
+        }
+        $('#autocomplete').geocomplete(goptions).bind("geocode:result", function (event, result) {
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                type: 'POST',
+                data: {
+                    action: 'user_localisation',
+                    lat: result.geometry.location.lat,
+                    lng: result.geometry.location.lng,
+                    city: result.address_components['0'].long_name,
+                    country: result.address_components['3'].long_name,
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('#autocomplete').addClass('hide');
+                    $('.user_localisation_text').show();
+                    $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
+                }
+            });
+        });
+    </script>           
+    <?php
+}
+?>
 <script>
     $(document).ready(function () {
 
@@ -591,7 +678,7 @@ $roles = get_user_roles_array();
             $('#edit').show();
             $('.disabled').attr('disabled', 'disabled');
         });
-        
+
         $('#edit-social').click(function () {
             if ($('.disabled').prop('disabled'))
             {
@@ -878,6 +965,12 @@ $roles = get_user_roles_array();
                 }
             });
             $('.user_website_text').html(new_text).attr('data_text', new_text);
+        });
+        $(document).on('click', '.user_localisation_edit', function () {
+            var text = $('.user_localisation_text').attr('data_text');
+            $('#autocomplete').val(text);
+            $('.user_localisation_text').hide();
+            $('#autocomplete').removeClass('hide');
         });
         $(document).on('click', '.user_type_edit', function () {
             $('.user_role_selector').show();

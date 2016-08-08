@@ -39,30 +39,22 @@ function sidebar() {
 ?>
 <?php osc_current_web_theme_path('header.php'); ?>
 
-
-<!-- profil cover -->
-
-<div id="cover" class="cover">
-    <?php
-    if (get_user_last_post_resource(osc_user_id()) !== FALSE):
-    //get_user_last_post_resource(osc_user_id());
-    else:
-        ?>
-        <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
-    <?php
-    endif;
-    ?>
-    <?php if (function_exists("profile_picture_show")) { ?>
-        <?php //profile_picture_show();   ?>
-
-    <?php } else { ?>
-        <img src="http://www.gravatar.com/avatar/<?php echo md5(strtolower(trim(osc_user_email()))); ?>?s=150&d=<?php echo osc_current_web_theme_url('images/user-default.jpg'); ?>" class="img-responsive" />
-    <?php } ?>
-</div>
-<!-- end profil cover -->
 <?php
 $user = get_user_data(osc_user_id());
 ?>
+<!-- profil cover -->
+<?php
+if ($user['cover_picture_user_id']):
+    $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
+else:
+    $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+endif;
+?>
+<div id="cover" class="cover">
+    <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
+</div>
+<!-- end profil cover -->
+
 <div id="sections">
     <div class="user_area">
 
@@ -219,7 +211,7 @@ $user = get_user_data(osc_user_id());
                         </div>
 
                         <div class="box-footer">
-                            <div class="row">
+                            <div class="col-md-12">
                                 <div class="col-sm-4 border-right">
                                     <div class="description-block">
                                         <h5 class="description-header">

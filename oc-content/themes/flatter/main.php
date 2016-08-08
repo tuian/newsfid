@@ -332,7 +332,7 @@
                         <a class="navbar-brand clr" href="<?php echo osc_base_url(); ?>"></a>
                     </div>
                     <div class="navbar-collapse collapse" id="home_primary_nav_wrap">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav show_more_li">
                             <?php /* $themes = get_all_themes_icon();
                               foreach ($themes as $k => $theme): ?>
                               <li>

@@ -1633,6 +1633,10 @@ select {
     padding-bottom: 15px;
     line-height: 20px;
 }
+.show_more:hover{
+    color: #FF9900!important;
+    cursor: pointer;
+}
 .custom_filter_navigation .navbar-nav > li {
     margin-right: 0;
     border-right: 1px solid #eee;    
@@ -1642,12 +1646,14 @@ select {
 }
 .custom_filter_navigation .navbar-nav > li.active{
     border-bottom: 2px solid #00ACED;
+    color: #555;
 }
 .custom_filter_navigation .navbar-nav > li ul li.active a{
     color: #555;
 }
 .custom_filter_navigation .navbar-nav > li ul li.active {
     border-bottom: 2px solid #00ACED;  
+    background-color: #e7e7e7;
 }
 .custom_filter_navigation .navbar-nav > li.active a{
     background-color: transparent;
@@ -1981,7 +1987,12 @@ select {
     float:none;
     width:200px
 }
-
+.show_more ul li{
+    float: none;
+    width: 200px;
+    padding: 11px 15px;
+    line-height: 120%;
+}
 #home_primary_nav_wrap ul ul a
 {
     line-height:120%;
