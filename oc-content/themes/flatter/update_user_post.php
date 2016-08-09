@@ -5,11 +5,9 @@ require_once 'functions.php';
 <!---- modal popup for free user post start------>
 <?php
 $item_id = $_REQUEST['item_id'];
-osc_query_item(array('id' => $item_id));
-
 function get_item_location($item_id) {
-    $db_prefix = DB_TABLE_PREFIX;
     $item_data = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
     $item_data->dao->select("item.*");
     $item_data->dao->from("{$db_prefix}t_item_location AS item");
     $item_data->dao->where("item.fk_i_item_id= {$item_id}");
@@ -19,6 +17,12 @@ function get_item_location($item_id) {
 }
 
 $item_location = get_item_location($item_id);
+
+$item_data = get_item_detail($item_id);
+echo "<pre>";
+print_r($item_data);
+die;
+osc_query_item(array('id' => $item_id, 'results_per_page' => 1));
 while (osc_has_custom_items()):
     ?>
     <!-- Modal -->
