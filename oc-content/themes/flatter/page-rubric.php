@@ -60,7 +60,7 @@ endif;
                     <div class="row">
                         <?php
                         $data = new DAO();
-                        $data->dao->select("a.*, b.*, c.i_num_items, d.*");
+                        $data->dao->select("a.*, b.*, c.i_num_items, d.bs_image_name"); // i take bs_image_name coz pk_i_id ambigues with icon table
                         $data->dao->from(DB_TABLE_PREFIX . 't_category as a');
                         $data->dao->join(DB_TABLE_PREFIX . 't_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
                         $data->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
@@ -70,7 +70,7 @@ endif;
                         $data->dao->where("b.fk_c_locale_code = 'en_US'");
                         $data->dao->orderBy('a.pk_i_id', 'ASC');
                         $result1 = $data->dao->get();
-                        $themes = $result1->result();
+                        $themes = $result1->result();                       
                         ?>
                         <?php foreach ($themes as $k => $theme): ?>
                             <div class="col-md-3 col-sm-3 margin-bottom-20">

@@ -126,18 +126,20 @@ if ($items):
             <?php
             }
         endwhile;
-        if($i%3 == 0 && $i%75 !== 0):
+        if($i%3 == 0):
             echo "</div><div class='col-md-12'>";
         endif;
-        if($i%75 == 0):
-            echo "</div><div class='load-more-content'></div><div class='col-md-12'>";
-        endif;
+//        if($i%75 == 0):
+//            echo "</div><div class='load-more-content'></div><div class='col-md-12'>";
+//        endif;
         $i++;
     endforeach;
     echo "</div>"; 
     ?>
     <?php
+elseif($page_number > 0):
+    echo '<h2 class="result_text">No More Data Found</h2> ';
 else:
-    echo '0';
+    echo '<h2 class="result_text">No Data Found</h2> ';
 endif;
 ?>

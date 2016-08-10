@@ -229,11 +229,11 @@ if ($items):
             </div>
             <?php
         endwhile;
-    endforeach;
-    ?>
-    <?php
+    endforeach;    
+elseif($page_number > 0):
+    echo '<h2 class="result_text">No More Data Found</h2> ';
 else:
-    echo '0';
+    echo '<h2 class="result_text">No Data Found</h2> ';
 endif;
 ?>
 <script>

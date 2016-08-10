@@ -348,7 +348,7 @@ function payment_script() {
 //                                $('.payment_result').text('Payment added successfully');
 //                                data = '';
                                 <?php // osc_add_flash_ok_message('Payment added successfully'); ?>
-                                <?php alert('Payment added successfully'); ?>
+                                 alert('Payment added successfully');
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {
                                 $('.payment_result').empty().addClass('error').removeClass('success');
