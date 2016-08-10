@@ -1,5 +1,32 @@
-<?php osc_current_web_theme_path('header.php'); ?>
+<?php
+osc_current_web_theme_path('header.php');
 
+$user_id = osc_logged_user_id();
+if (isset($user_id)) {
+    $user_categories = get_user_categories($user_id);
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_last_post_data = new DAO();
+    $user_last_post_data->dao->select("item.*");
+    $user_last_post_data->dao->from(DB_TABLE_PREFIX . "t_item AS item");
+    if (!empty($user_categories)):
+        $user_last_post_data->dao->where('item.fk_i_category_id  IN (' . implode(",", $user_categories) . ")");
+    endif;
+
+    $user_last_post_data->dao->orderBy('dt_pub_date', 'DESC');
+    $user_last_post_array = $user_last_post_data->dao->get();
+    $post = $user_last_post_array->row();
+    $post_details = array();
+    if (!empty($post)) {
+        $id_post = $post['pk_i_id'];
+        $item_description = new DAO();
+        $item_description->dao->select("item_desc.*");
+        $item_description->dao->from(DB_TABLE_PREFIX . "t_item_description AS item_desc");
+        $item_description->dao->where('fk_i_item_id', $id_post);
+        $item_desc = $item_description->dao->get();
+        $post_details = $item_desc->row();
+    }
+}
+?>
 <?php if (osc_get_preference('pop_enable', 'flatter_theme') != '0') { ?>
     <!-- Modal -->
     <div class="modal fade" id="promo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
@@ -38,19 +65,48 @@
 
 <?php if (osc_is_web_user_logged_in()) : ?>
     <?php if (function_exists("osc_slider")) { ?>
-        <?php //osc_slider(); ?>  
+        <?php //osc_slider();  ?>  
     <?php } ?>
     <div id="cover" class="cover">
-        <?php
-        if (get_user_last_post_resource(osc_logged_user_id()) !== false):
-        //get_user_last_post_resource(osc_logged_user_id());
-        else:
+        <div class="image-post">
+            <?php
+            if (get_user_last_post_resource(osc_logged_user_id()) !== false):
+            //get_user_last_post_resource(osc_logged_user_id());
+            else:
+                ?>
+                <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
+            <?php
+            endif;
             ?>
-            <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
-        <?php
-        endif;
-        ?>
+        </div>
+        <div class="last-post col-md-12">
+            <div class="col-md-8">
+                HEADLINES
+            </div>
+            <div class="col-md-8">
+                <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
+            </div>
+            <div class="col-md-8 padding-bottom-10">
+                <?php
+                $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
 
+                if (strlen($string) > 100) {
+
+                    // truncate string
+                    $stringCut = substr($string, 0, 100);
+
+                    // make sure it ends in a word so assassinate doesn't become ass...
+                    $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '<div class="col-md-12 green pointer padding-0"> Read More </div>';
+                }
+                ?> <i> <?php echo $string;
+                ?></i>
+            </div>
+
+
+
+
+
+        </div>
         <!-- Big Search Form --> 
     </div>
 
@@ -252,50 +308,50 @@
 
                 <div class="col-md-8 padding-left-0">
 
-                    <!--                    <div class="col-md-4 pull-right">
-                                            <div class="country_flag_box vertical_center pull-right">
-                                                <li>
+                    <!--                                        <div class="col-md-4 pull-right">
+                                                                <div class="country_flag_box vertical_center pull-right">
+                                                                    <li>
                     <?php echo 'Flux' ?>
-                                                </li>
-                                                <li>
-                                                    <img src=<?php echo osc_current_web_theme_url() . "images/flags/us.png" ?> width="50px" height="20px">
-                                                </li>
-                                                <li>
+                                                                    </li>
+                                                                    <li>
+                                                                        <img src=<?php echo osc_current_web_theme_url() . "images/flags/us.png" ?> width="50px" height="20px">
+                                                                    </li>
+                                                                    <li>
                     <?php $counrty_array = get_country_array(); ?>
-                                                    <select id="country-list">
+                                                                        <select id="country-list">
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
-                                                    </select>
-                                                </li>
-                                                <li>                                
-                                                    <img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">
-                                                    <i class="fa fa-ellipsis-v fa-2x"></i>
-                                                </li>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                    
-                                        <div class="col-md-8 pull-right">
-                                            <div class="location_filter_container pull-right">
-                                                <ul class="nav">
-                                                    <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
-                                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                                                    <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
-                                                </ul>                            
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>-->
+                                                                        </select>
+                                                                    </li>
+                                                                    <li>                                
+                                                                        <img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">
+                                                                        <i class="fa fa-ellipsis-v fa-2x"></i>
+                                                                    </li>
+                                                                </div>
+                                                            </div>-->
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-8 pull-right">
+                        <div class="location_filter_container pull-right">
+                            <ul class="nav">
+                                <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                            </ul>                            
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                     <div class="posts_container">
                         <input type="hidden" name="item_page_number" id="item_page_number" value="1">
                         <div class="user_related_posts">
 
                         </div>
-                        <h2 class="result_text"></h2>                
+
                         <div class="loading text-center">
                             <div class="cs-loader">
                                 <div class="cs-loader-inner">
@@ -353,7 +409,7 @@
                                         <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();   ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();         ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -375,7 +431,7 @@
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];   ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];         ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -401,7 +457,7 @@
             <div class="clearfix"></div>
 
             <div class="row">                
-                <h2 class="result_text"></h2>                
+
                 <div class="loading text-center">
                     <div class="cs-loader">
                         <div class="cs-loader-inner">
@@ -442,8 +498,8 @@ function footer_script() {
         var pageNumber = $('#page_number').val();
         var is_enable_ajax = true;
         var loading = false;
-        var location_type = $('.filter_city').attr('data_location_type');
-        var location_id = $('.filter_city').attr('data_location_id');
+        var location_type = $('.filter_city').attr('data_location_type') || $('.filter_region').attr('data_location_type') || $('.filter_country').attr('data_location_type');
+        var location_id = $('.filter_city').attr('data_location_id') || $('.filter_region').attr('data_location_id') || $('.filter_country').attr('data_location_id');
         var category_id = $('#sCategory').val();
         var post_type = $('.post_type_filter').val();
         $(document).ready(function () {
@@ -462,12 +518,14 @@ function footer_script() {
                         url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
                         dataType: "json",
                         type: "POST",
-                        data: {city_name: query},
+                        data: {city_name: query, region_name: query, country_name: query},
                         success: function (data) {
                             $.map(data, function (data) {
                                 var group;
                                 group = {
-                                    id: data.city_id,
+                                    city_id: data.city_id,
+                                    region_id: data.region_id,
+                                    country_id: data.country_id,
                                     name: data.city_name + '-' + data.region_name + '-' + data.country_name,
                                 };
                                 $items.push(group);
@@ -486,20 +544,20 @@ function footer_script() {
             });
 
     <?php if (!osc_is_web_user_logged_in()): ?>
-        //                $('.masonry_row').masonry({
-        //                    columnWidth: '.item',
-        //                    itemSelector: '.item',
-        //                });
-        //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
-        //                $.ajax({
-        //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
-        //                    //data: {page_number: pageNumber, },
-        //                    success: function (data, textStatus, jqXHR) {
-        //                        $('.masonry_row').append(data);
-        //                        $('.masonry_row').masonry('layout');
-        //                        $('.masonry_row').masonry('reloadItems');
-        //                    }
-        //                });
+                //                $('.masonry_row').masonry({
+                //                    columnWidth: '.item',
+                //                    itemSelector: '.item',
+                //                });
+                //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+                //                $.ajax({
+                //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                //                    //data: {page_number: pageNumber, },
+                //                    success: function (data, textStatus, jqXHR) {
+                //                        $('.masonry_row').append(data);
+                //                        $('.masonry_row').masonry('layout');
+                //                        $('.masonry_row').masonry('reloadItems');
+                //                    }
+                //                });
                 $('#search_form a').click(function (e) {
                     $('#search_form li').removeClass('active');
                     $(this).parent().addClass('active');
@@ -516,8 +574,8 @@ function footer_script() {
                             $('.masonry_row').html(data);
                             is_enable_ajax = true;
                             $(".result_text").hide();
-        //                            $('.masonry_row').masonry('reloadItems');
-        //                            $('.masonry_row').masonry('layout');
+                            //                            $('.masonry_row').masonry('reloadItems');
+                            //                            $('.masonry_row').masonry('layout');
                             $('#page_number').val(1);
                         }
 
@@ -590,7 +648,7 @@ function footer_script() {
                         }
                     });
                 });
-                $('.filter_city').keyup(function () {
+                $('.filter_city').change(function () {
                     $('.posts_container .loading').fadeIn(500);
                     $('.user_related_posts').css({'opacity': '0.2'});
                     reset_variable_after_login();
@@ -638,7 +696,7 @@ function footer_script() {
                     if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
                         loading = true;
                         $('.posts_container .loading').fadeIn(500);
-        //                        $('.user_related_posts').css({'opacity': '0.2'});
+                        //                        $('.user_related_posts').css({'opacity': '0.2'});
                         setTimeout(make_after_login_item_ajax_call, 1000);
                     }
                 });
@@ -646,18 +704,18 @@ function footer_script() {
     <?php endif; ?>
         });
         $(window).load(function () {
-    //            $('.masonry_row').masonry({
-    //                    columnWidth: '.item',
-    //                    itemSelector: '.item',
-    //                });
-    //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
+            //            $('.masonry_row').masonry({
+            //                    columnWidth: '.item',
+            //                    itemSelector: '.item',
+            //                });
+            //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
                 //data: {page_number: pageNumber, },
                 success: function (data, textStatus, jqXHR) {
                     $('.masonry_row').append(data);
-    //                        $('.masonry_row').masonry('layout');
-    //                        $('.masonry_row').masonry('reloadItems');
+                    //                        $('.masonry_row').masonry('layout');
+                    //                        $('.masonry_row').masonry('reloadItems');
                 }
             });
         });
@@ -674,18 +732,11 @@ function footer_script() {
                     post_type: post_type,
                 },
                 success: function (data) {
-                    if (data !== '0') {
-                        $('.posts_container .loading').fadeOut(1000);
-    //                        $('.user_related_posts').css({'opacity': '1'});
-                        loading = false;
+                    $('.posts_container .loading').fadeOut(1000);
+                    if ($('.result_text').size() < 1) {
                         $(".user_related_posts").append(data);
                         var next_page = parseInt($('#item_page_number').val()) + 1;
                         $('#item_page_number').val(next_page);
-                    } else {
-                        $(".result_text").text('No More Data Found').show();
-                        $('.posts_container .loading').fadeOut(1000);
-                        $('.user_related_posts').css({'opacity': '1'});
-                        is_enable_ajax = false;
                     }
 
                 }
@@ -702,26 +753,20 @@ function footer_script() {
                     filter_value: filter_value,
                 },
                 success: function (data) {
-                    if (data !== '0') {
+                    $('.loading').fadeOut(1000);
+
+                    if ($('.result_text').size() < 1) {
                         $(".masonry_row").append(data);
-                        $('.loading').fadeOut(1000);
-                        //                        $('.masonry_row').css({'opacity': '1'});
                         var next_page = parseInt($('#page_number').val()) + 1;
                         $('#page_number').val(next_page);
                         loading = false;
-                    } else {
-                        $(".result_text").text('No More Data Found').show();
-                        $('.loading').fadeOut(1000);
-                        //                        $('.masonry_row').css({'opacity': '1'});
-                        is_enable_ajax = false;
-                        loading = false;
                     }
-    //                    var el = $(data);
-                    //jQuery(".masonry_row").append(el).masonry( 'appended', el, true );
-    //                    $('.masonry_row').masonry('layout');
-    //                    $('.masonry_row').masonry('reloadItems');
-
                 }
+                //                    var el = $(data);
+                //jQuery(".masonry_row").append(el).masonry( 'appended', el, true );
+                //                    $('.masonry_row').masonry('layout');
+                //                    $('.masonry_row').masonry('reloadItems');
+
             });
         }
 
@@ -737,6 +782,7 @@ function footer_script() {
             post_type = $('.post_type_filter').val();
             $('#item_page_number').val(1);
         }
+
     </script>
     <?php
 }

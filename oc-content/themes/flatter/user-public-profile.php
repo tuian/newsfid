@@ -211,8 +211,8 @@ endif;
                         </div>
 
                         <div class="box-footer">
-                            <div class="col-md-12">
-                                <div class="col-sm-4 border-right">
+                            <div class="col-md-12 padding-0">
+                                <div class="col-sm-4 border-right padding-left-0">
                                     <div class="description-block">
                                         <h5 class="description-header">
                                             <?php
@@ -454,6 +454,8 @@ function custom_script() {
     ?>
     <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>    
     <script src="<?php echo osc_current_web_theme_js_url('jquery.Jcrop.js') ?>"></script>
+
+    <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
                                                                 var user_id = '<?php echo osc_user_id() ?>'
                                                                 var is_enable_ajax = true;
@@ -472,7 +474,41 @@ function custom_script() {
                                                                     //$('#crop-img').modal('show');
                                                                     $('#crop-cover-img').appendTo('body');
                                                                 });
-                                                                jQuery(document).ready(function ($) {
+                                                                $(document).ready(function () {
+                                                                    $('.filter_city').typeahead({
+                                                                        source: function (query, process) {
+                                                                            var $items = new Array;
+                                                                            $items = [""];
+                                                                            $.ajax({
+                                                                                url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                                                                                dataType: "json",
+                                                                                type: "POST",
+                                                                                data: {city_name: query, region_name: query, country_name: query},
+                                                                                success: function (data) {
+                                                                                    $.map(data, function (data) {
+                                                                                        var group;
+                                                                                        group = {
+                                                                                            city_id: data.city_id,
+                                                                                            region_id: data.region_id,
+                                                                                            country_id: data.country_id,
+                                                                                            name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                                                                                        };
+                                                                                        $items.push(group);
+                                                                                    });
+
+                                                                                    process($items);
+                                                                                }
+                                                                            });
+                                                                        },
+                                                                        afterSelect: function (obj) {
+                                                                            $('.filter_city').attr('data_location_id', obj.id);
+                                                                        },
+                                                                        //                updater:function (item) {
+                                                                        //                    console.log(item);
+                                                                        //                },
+                                                                    });
+                                                                });
+                                                                $(document).ready(function ($) {
                                                                     fetch_user_posts();
 
 
@@ -572,7 +608,7 @@ function custom_script() {
                                                                             }
                                                                         });
                                                                     });
-                                                                    $('.filter_city').keyup(function () {
+                                                                    $('.filter_city').change(function () {
                                                                         $('.user_posts_area .loading').fadeIn(500);
                                                                         $('.user_posts_container').css({'opacity': '0.2'});
                                                                         reset_variables();
@@ -663,5 +699,5 @@ function custom_script() {
     <?php
 }
 ?>
-
+<?php osc_current_web_theme_path('locationfind.php'); ?>
 <?php osc_current_web_theme_path('footer.php'); ?>

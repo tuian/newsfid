@@ -10,7 +10,7 @@ require_once 'functions.php';
         <div class="large-modal">
             <!-- Modal content-->
             <div class="modal-content">
-                <form method="post" action="<?php echo osc_current_web_theme_url('post_add.php'); ?>" enctype="multipart/form-data">
+                <form method="post" id="post_add" action="<?php echo osc_current_web_theme_url('post_add.php'); ?>" enctype="multipart/form-data">
                     <!--<input type="hidden" name="save" value="true">-->
                     <!-------------------------User Information Start---------------------------->
 
@@ -81,8 +81,8 @@ require_once 'functions.php';
                                 </div>
                                 <div class="col-md-12 vertical-row">
                                     <div class="col-md-offset-1 col-md-11 padding-top-3per">
-<!--                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
-                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
+                                        <!--                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                                                                <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
                                     </div>
                                 </div>
                             </div>
@@ -114,10 +114,10 @@ require_once 'functions.php';
 
                                 </div>
                                 <div class="input-text-area margin-top-20 left-border box-shadow-none width-60">
-                                    <input type="text" placeholder="Title" name="p_title">
+                                    <input type="text" placeholder="Title" name="p_title" class="p_title"><span class="error-title red">Post Title Required</span>
                                 </div>
                                 <div class="box-shadow-none width-90 description-box">
-                                    <textarea placeholder="Redigez la description ici..." name="p_disc"></textarea>
+                                    <textarea placeholder="Redigez la description ici..." name="p_disc" class="p_disc"></textarea><span class="error-desc red">Post Description Required</span>
                                 </div>
 
                             </div>
@@ -166,7 +166,7 @@ require_once 'functions.php';
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 padding-top-8per">
                                             <div class="col-md-offset-1 col-md-4">
                                                 <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                 <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
@@ -332,8 +332,8 @@ require_once 'functions.php';
                             </div>
                             <div class="col-md-12 vertical-row">
                                 <div class="col-md-offset-1 col-md-11 padding-top-3per">
-<!--                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
-                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
+                                    <!--                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
                                 </div>
                             </div>
                         </div>
@@ -355,6 +355,9 @@ require_once 'functions.php';
                                     I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to be solely responsible for and agree that newsfid and its partners are not responsible at all.
                                 </p>
                             </div>
+                            <div class="col-md-offset-1 col-md-11">
+                                <span class="error-term red">Please Accept Term & Condition</span>
+                            </div>
 
 
 
@@ -363,6 +366,9 @@ require_once 'functions.php';
                         <div class="modal-footer ">
                             <div class="en-savoir-plus publier col-md-offset-1 col-md-3">
                                 <button type="submit" class="en-savoir-plus-button publier-btn"><span class="bold">Publier<span></button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="error-btn red">Please Fill All Required Field</span>
                                             </div>
                                             </div>
 
@@ -377,6 +383,42 @@ require_once 'functions.php';
                                             </div>
                                             </div>
                                             <!----free user post end------->
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $('.error-desc').hide();
+                                                    $('.error-title').hide();
+                                                    $('.error-term').hide();
+                                                    $('.error-btn').hide();
+                                                    $('#post_add').submit(function () {
+                                                        var title = $('.p_title').val();
+                                                        var discription = $('.p_disc').val();
+                                                        if (title != '') {
+                                                            $('.error-title').hide();
+                                                        } else {
+                                                            $('.error-title').show();
+                                                            $('.error-btn').show();
+                                                            return false;
+                                                        }
+                                                        if (discription != '')
+                                                        {
+                                                            $('.error-desc').hide();
+                                                        }
+                                                        else {
+                                                            $('.error-desc').show();
+                                                            $('.error-btn').show();
+                                                            return false;
+                                                        }
+
+                                                        if (!$("#publier").is(":checked")) {
+                                                            $('.error-term').show();
+
+                                                            return false;
+                                                        }
+                                                        return true;
+
+                                                    });
+                                                });
+                                            </script>
                                             <script>
                                                 $(document).ready(function () {
                                                     $('#s_region_name').typeahead({

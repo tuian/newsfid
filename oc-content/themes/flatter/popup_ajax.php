@@ -104,7 +104,7 @@ while (osc_has_custom_items()):
                                             <ul class="social-share">
                                                 <li class="facebook">
                                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                                return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                                         <i class="fa fa-facebook"></i>
                                                     </a>
                                                 </li>
@@ -114,7 +114,7 @@ while (osc_has_custom_items()):
                                                 </li>
                                                 <li class="googleplus">
                                                     <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                                return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                                         <i class="fa fa-google-plus"></i>
                                                     </a>
                                                 </li>                                               
@@ -407,7 +407,7 @@ while (osc_has_custom_items()):
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 padding-top-8per">
                                                 <div class="col-md-offset-1 col-md-4">
                                                     <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                     <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
@@ -597,23 +597,27 @@ while (osc_has_custom_items()):
                             </div>
                             <div class=" col-md-12 border-bottom margin-top-20 margin-bottom-20">
                                 <div class="onoffswitch margin-top-20 col-md-offset-1 col-md-2">
-                                    <input type="checkbox" name="publier" class="onoffswitch-checkbox term" id="publier">
-                                    <label class="onoffswitch-label" for="publier"></label><span class="error-term red"> Accept Term</span>
+                                    <input type="checkbox" name="publier" class="onoffswitch-checkbox publier" id="publier">
+                                    <label class="onoffswitch-label" for="publier"></label>
                                 </div>
                                 <div class=" col-md-6">
                                     <p>
                                         I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to be solely responsible for and agree that newsfid and its partners are not responsible at all.
                                     </p>
                                 </div>
-
-
+                                <div class="col-md-offset-1 col-md-11">
+                                    <span class="error-term red">Please Accept Term & Condition</span>
+                                </div>
 
 
                             </div>
                             <div class="modal-footer ">
                                 <div class="en-savoir-plus publier col-md-offset-1 col-md-3">
-                                    <button type="submit" class="en-savoir-plus-button publier-btn"><span class="bold">Publier<span></button>
-                                                </div>
+                                    <button type="submit" class="en-savoir-plus-button publier-btn"><span class="bold">Publier<span></button> 
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="error-btn red">Please Fill All Required Field</span>
+                                </div>
                                                 </div>
 
 
@@ -632,24 +636,33 @@ while (osc_has_custom_items()):
                                                     $('.error-desc').hide();
                                                     $('.error-title').hide();
                                                     $('.error-term').hide();
+                                                    $('.error-btn').hide();
                                                     $('#post_update').submit(function () {
                                                         var title = $('.p_title').val();
                                                         var discription = $('.p_disc').val();
-                                                        if (title != '' && discription != '') {
+                                                        if (title != '') {
                                                             $('.error-title').hide();
-                                                            $('.error-desc').hide();
-                                                            return true;
                                                         } else {
                                                             $('.error-title').show();
-                                                            $('.error-desc').show();
+                                                            $('.error-btn').show();
                                                             return false;
                                                         }
-                                                        var term = $('.term').val();
-                                                        if (term != '') {
-                                                            $('.error-term').hide();
-                                                        } else {
-                                                            $('.error-term').show();
+                                                        if (discription != '')
+                                                        {
+                                                            $('.error-desc').hide();
                                                         }
+                                                        else {
+                                                            $('.error-desc').show();
+                                                            $('.error-btn').show();
+                                                            return false;
+                                                        }
+
+                                                        if (!$("#publier").is(":checked")) {
+                                                            $('.error-term').show();
+                                                           
+                                                            return false;
+                                                        }
+                                                        return true;
 
                                                     });
                                                 });
