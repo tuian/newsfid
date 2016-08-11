@@ -24,6 +24,15 @@ if (isset($user_id)) {
         $item_description->dao->where('fk_i_item_id', $id_post);
         $item_desc = $item_description->dao->get();
         $post_details = $item_desc->row();
+
+        $db_prefix = DB_TABLE_PREFIX;
+        $post_resource_data = new DAO();
+        $post_resource_data->dao->select("item_resource.*");
+        $post_resource_data->dao->from("{$db_prefix}t_item_resource AS item_resource");
+        $post_resource_data->dao->where("item_resource.fk_i_item_id", $id_post);
+        $post_resource_data->dao->limit(1);
+        $post_resource_data_result = $post_resource_data->dao->get();
+        $post_resource_array = $post_resource_data_result->row();
     }
 }
 ?>
@@ -67,18 +76,8 @@ if (isset($user_id)) {
     <?php if (function_exists("osc_slider")) { ?>
         <?php //osc_slider();  ?>  
     <?php } ?>
-    <div id="cover" class="cover">
-        <div class="image-post">
-            <?php
-            if (get_user_last_post_resource(osc_logged_user_id()) !== false):
-            //get_user_last_post_resource(osc_logged_user_id());
-            else:
-                ?>
-                <img src="<?php echo osc_current_web_theme_url() . "/images/cover_home_image.jpg" ?>" />
-            <?php
-            endif;
-            ?>
-        </div>
+
+    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;">
         <div class="last-post col-md-12">
             <div class="col-md-8">
                 HEADLINES
@@ -86,26 +85,21 @@ if (isset($user_id)) {
             <div class="col-md-8">
                 <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
             </div>
-            <div class="col-md-8 padding-bottom-10">
-                <?php
-                $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
+            <div class="col-md-8 padding-bottom-10"><i>
+                    <?php
+                    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
 
-                if (strlen($string) > 100) {
+                    if (strlen($string) > 100) {
 
-                    // truncate string
-                    $stringCut = substr($string, 0, 100);
+                        // truncate string
+                        $stringCut = substr($string, 0, 100);
 
-                    // make sure it ends in a word so assassinate doesn't become ass...
-                    $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '<div class="col-md-12 green pointer padding-0"> Read More </div>';
-                }
-                ?> <i> <?php echo $string;
-                ?></i>
+                        // make sure it ends in a word so assassinate doesn't become ass...
+                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '</i> <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
+                    }
+                    ?>  <?php echo $string;
+                    ?>
             </div>
-
-
-
-
-
         </div>
         <!-- Big Search Form --> 
     </div>
@@ -322,7 +316,7 @@ if (isset($user_id)) {
                     <?php
                     foreach ($counrty_array as $countryList):
                         ?>
-                                                                                                                                                                                                    <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
+                                                                                                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
                         <?php
                     endforeach;
                     ?>
@@ -409,7 +403,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();         ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                      ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -431,7 +425,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];         ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                      ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -524,8 +518,8 @@ function footer_script() {
                                 var group;
                                 group = {
                                     city_id: data.city_id,
-                                    region_id: data.region_id,
-                                    country_id: data.country_id,
+                                    region_id: data.r_id,
+                                    country_code: data.country_code,
                                     name: data.city_name + '-' + data.region_name + '-' + data.country_name,
                                 };
                                 $items.push(group);
@@ -536,7 +530,31 @@ function footer_script() {
                     });
                 },
                 afterSelect: function (obj) {
-                    $('.filter_city').attr('data_location_id', obj.id);
+                    console.log(obj);
+                    $('.posts_container .loading').fadeIn(500);
+                    $('.user_related_posts').css({'opacity': '0.2'});
+
+                    reset_variable_after_login();
+                    //make_after_login_item_ajax_call();
+                    var category_id = $('#sCategory').val();
+                    var post_type = $('.post_type_filter').val();
+                    $.ajax({
+                        type:'post',
+                        url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                        data: {
+                            search_by: 'city',
+                            city_id: obj.city_id,
+                            region_id: obj.region_id,
+                            country_code: obj.country_code,
+                            category_id: category_id,
+                            post_type: post_type,
+                        },
+                        success: function (data) {
+                            $('.user_related_posts').empty().append(data);
+                            $('.posts_container .loading').fadeOut(1000);
+                            $('.user_related_posts').css({'opacity': '1'});
+                        }
+                    });
                 },
                 //                updater:function (item) {
                 //                    console.log(item);
@@ -629,26 +647,6 @@ function footer_script() {
                     }
                 });
                 $('#sCategory').change(function () {
-                    $('.posts_container .loading').fadeIn(500);
-                    $('.user_related_posts').css({'opacity': '0.2'});
-                    reset_variable_after_login();
-                    //make_after_login_item_ajax_call();
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                        data: {
-                            location_type: location_type,
-                            location_id: location_id,
-                            category_id: category_id,
-                            post_type: post_type,
-                        },
-                        success: function (data) {
-                            $('.user_related_posts').empty().append(data);
-                            $('.posts_container .loading').fadeOut(1000);
-                            $('.user_related_posts').css({'opacity': '1'});
-                        }
-                    });
-                });
-                $('.filter_city').change(function () {
                     $('.posts_container .loading').fadeIn(500);
                     $('.user_related_posts').css({'opacity': '0.2'});
                     reset_variable_after_login();

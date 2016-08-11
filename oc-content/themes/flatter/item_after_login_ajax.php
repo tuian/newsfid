@@ -12,6 +12,15 @@ if ($following_user):
     $data->dao->where(sprintf('(item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s))', implode(',', get_user_categories(osc_logged_user_id())), implode(',', $following_user)));
 endif;
 
+if (isset($_REQUEST['search_by'])):
+    $city_id = $_REQUEST['country_code'];  
+    $region_id = $_REQUEST['region_id'];
+    $country_code = $_REQUEST['country_code'];
+    $data->dao->where('item_location.fk_c_country_code', $country_code);
+    $data->dao->where('item_location.fk_i_city_id', $city_id);
+    $data->dao->where('item_location.pk_i_id', $region_id);
+endif;
+
 if (!empty($_REQUEST['category_id'])):
     $categories = $_REQUEST['category_id'];
     if (Category::newInstance()->isRoot($_REQUEST['category_id'])):
@@ -174,7 +183,7 @@ if ($items):
                                         <div class="comment-area">
                                             <span class="username">
                                                 <?php echo $comment_user['user_name'] ?>
-                                                <div class="dropdown  pull-right">
+<!--                                                <div class="dropdown  pull-right">
                                                     <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                                                         <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Supprimer la publication</a></li>
@@ -186,7 +195,7 @@ if ($items):
                                                         <li><a>Signaler la publication</a></li>
 
                                                     </ul>
-                                                </div>
+                                                </div>-->
                                             </span><!-- /.username -->
                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                 <?php echo $comment_data['s_body']; ?>

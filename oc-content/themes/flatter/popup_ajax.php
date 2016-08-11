@@ -170,7 +170,7 @@ while (osc_has_custom_items()):
                                                                 <div class="comment-area">
                                                                     <span class="username">
                                                                         <?php echo $comment_user['user_name'] ?>
-                                                                        <div class="dropdown  pull-right">
+<!--                                                                        <div class="dropdown  pull-right">
                                                                             <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                                             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                                                                                 <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
@@ -182,7 +182,7 @@ while (osc_has_custom_items()):
                                                                                 <li><a>Signaler la publication</a></li>
 
                                                                             </ul>
-                                                                        </div>
+                                                                        </div>-->
                                                                     </span><!-- /.username -->
                                                                     <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                                         <?php echo $comment_data['s_body']; ?>
