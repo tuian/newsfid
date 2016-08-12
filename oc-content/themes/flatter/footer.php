@@ -1,4 +1,4 @@
-   
+  
 <span style="padding-bottom: 10px;"></span>
 
 
@@ -25,78 +25,147 @@
 <!-- / content -->
 
 <?php if (osc_is_web_user_logged_in()): ?>
+    <div class="tchat_profile col-md-5 hide">
+        <div class="background-white col-md-12 padding-bottom-14per padding-0 box-shadow-black">
+            <img src="images/sound_cloud.jpg" class="img img-responsive">
+            <div class="tchat_profile_pic vertical-row">
+                <img src="images/sound_cloud.jpg" height="130px" width="130px" class="background-white padding-10">
+                <div class="">
+                    <i class="fa fa-users" aria-hidden="true"></i> Abonnés <span class="bold padding-left-10"> 2,345</span><br>
+                    <i class="fa fa-play" aria-hidden="true"></i> Lectures <span class="bold padding-left-10"> 45</span>
+                </div>
+            </div>
+            <div class="col-md-12 tchat-user-name">
+                <span class="user_name bold blue_text"> User name </span>
+            </div>
+            <div class="center-contant">
+                Bristol- England
+                <div class="col-md-12 border-bottom-gray"></div>
+            </div>
+            <div class="user_desc center-contant">
+                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
+                    a
+                </div>
+                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
+                    a
+                </div>
+                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
+                    a
+                </div>
+                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
+                    a
+                </div>
+                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
+                    a
+                </div>
+               
+            </div>
+                 
+        </div>
+    </div>
     <div class="col-md-2 col-sm-2 padding-left-0">
         <div class="t-chat">
             <div class="chat-notification">
-                <div class="col-md-2 padding-left-0">
-                    <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
+                <div class="col-md-2 padding-left-0 pointer">
+                    <a href="<?php echo osc_base_url() ?>">
+                        <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
+                    </a>
                 </div>
-                <div class="col-md-2 padding-left-0">
+                <div class="col-md-2 padding-left-0 pointer">
                     <i class="fa fa-user" aria-hidden="true"></i>
                 </div>
-                <div class="col-md-2 padding-left-0">
-                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                <div class="col-md-2 padding-left-0 pointer">
+                    <a class="font-color-white" href="<?php echo osc_current_web_theme_url() . 't-chat.php' ?>">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </a>
                 </div>
-                <div class="col-md-2 padding-left-0">
+                <div class="col-md-2 padding-left-0 pointer">
                     <i class="fa fa-bell" aria-hidden="true"></i>
                 </div>    
             </div>
-            <div class="chat-dropdown">
-                <select class="orange">
-                    <option>Conversations du cercle</option>
-                </select>
+            <div class="chat-menu">
+                Conversations du cercle <span class="dropdown pull-right pointer"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i></i>
+                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                        <li><a> See all chats</a></li>
+                        <li><a> See only my circle chat</a></li>
+                        <li><a>Turn chat off</a></li>
+                    </ul>
+                </span>
             </div>
-            <div class="col-md-12 margin-top-20">
-                <div class="col-md-5 padding-left-0">
-                    <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
-                    <div class="green-dot"></div>            </div>
-                <div class="col-md-7 padding-left-0">
-                    <span class="bold chat-user">Maccini News</span>
-                </div>
+            <div class="chat-user-overflow">                
+                <?php
+                $users = get_chat_users();                
+                if(!empty($users)):
+                    foreach ($users as $u):                        
+                        if (!empty($u['s_path'])):
+                            $img_path = osc_base_url(). $u['s_path'] . $u['pk_i_id'] . '.' . $u['s_extension'];
+                        else:
+                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                        endif;?>
+                        <div class="col-md-12 margin-top-20">
+                            <div class="col-md-4 padding-left-0">
+                                <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">                                
+                                <div class="onlineuser">
+                                    <?php $user = User::newInstance()->findByPrimaryKey(63);     // change it                        
+                                        if(useronline_show_user_status($user['pk_i_id']) == 1) { ?>
+                                              <a class="chat_online_inline green-dot" id="onlineuser" href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'".$user['s_name']."'" ; ?>, <?php echo osc_item_user_id(); ?>)"></a>
+                                    <?php } else { ?>
+                                              <a class="chat_offline_inline" href="javascript:void(0)"></a>
+                                    <?php } ?>
+                                </div> 
+                            </div>
+                            <div class="col-md-8 padding-left-0">
+                                <span class="bold chat-user"><?php echo $u['user_name']; ?></span>
+                            </div>
+                        </div>                        
+                    <?php endforeach;
+                endif; ?>   
             </div>
-            <div class="col-md-12 margin-top-20">
-                <div class="col-md-5 padding-left-0">
-                    <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user1-128x128.jpg' ?>" width="50px">
+            <div class="col-md-12 padding-0 background-white">
+                <div class="chat-overflow">
+                    <div class="col-md-12 margin-top-10">
+                        <div class="col-md-12 padding-0 dropdown">
+                            <span class="bold chat-user on_chat_user">Maccini News</span> 
+                            <i class="fa fa-ellipsis-v pull-right dropdown-toggle" id="user_chat" data-toggle="dropdown" aria-hidden="true"></i></i>
+                            <ul class="dropdown-menu edit-arrow" aria-labelledby="user_chat">
+                                <li class="pointer"><a>Block this user</a></li>
+                                <li class="pointer"><a>Close this chat</a></li>
+                                <li class="pointer"><a>Turn chat off</a></li>
+                            </ul>
 
-                </div>
-                <div class="col-md-7 padding-left-0">
-                    <span class="bold chat-user">Maccini News</span>
-                    <p class="chat-text"> oung Muslim....</p>
-                </div>
-            </div>
-            <div class="col-md-12 margin-top-20">
-                <div class="col-md-5 padding-left-0">
-                    <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user4-128x128.jpg' ?>" width="50px">
+                        </div>
+                        <div class="col-md-4 padding-left-0">
+                            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
 
-                </div>
-                <div class="col-md-7 padding-left-0">
-                    <span class="bold chat-user">Maccini News</span>
-                    <p class="chat-text"> oung Muslim....</p>
-                </div>
-            </div>
-            <div class="col-md-12 margin-top-20">
-                <div class="col-md-5 padding-left-0">
-                    <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
+                        </div>
+                        <div class="col-md-8 padding-left-0"> 
+                            <p class="chat-text"> oung Muslim....</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-10 padding-right-0">
+                        <div class="col-md-12 padding-0"><span class="bold chat-user on_chat_user">Maccini News</span></div>
+                        <div class="col-md-4 padding-left-0">
 
-                </div>
-                <div class="col-md-7 padding-left-0">
-                    <span class="bold chat-user">Maccini News</span>
-                    <p class="chat-text"> oung Muslim....</p>
-                </div>
-            </div>
-            <div class="right-sidebar">
+                            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
 
-            <?php
-            //osc_run_hook('mdh_messenger_widget');
-            //mdh_messenger_widget();
-            ?>
-        </div>
+                        </div>
+                        <div class="col-md-8 padding-0">
+
+                            <p class="chat-text">  oung Muslimvvvoung Muslim oung Muslim oung Muslim oung Muslim </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-3 col-md-8 font-12 light_gray">user is typing....</div>
+                <div class="col-md-12 margin-top-10 replay_area">
+                    <textarea class="replay_area border-none outline-none color-white" placeholder="Write a replay..."></textarea>
+                </div>
+            </div>            
         </div>	
-        
+
     </div>	
 
 <?php endif; ?>
-</div> <!-- / wrapper -->
+<!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
         (function (i, s, o, g, r, a, m) {

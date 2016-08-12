@@ -2647,6 +2647,7 @@ select {
 }
 .chat-text{
     margin-left: -10px;
+    font-size: 12px;
 }
 .t-chat{
     position: fixed;
@@ -3144,11 +3145,122 @@ select {
 }
 @media only screen and (min-width:1800px){
     .last-post{
-    padding-top: 28%;
+        padding-top: 28%;
     }
 }
 @media only screen and (min-width:1900px){
     .last-post{
-    padding-top: 20%;
+        padding-top: 20%;
     }
 }
+.bg-tchat{
+    background-color: #fcfcfc;
+    padding-right: 0.5%;
+    padding-left: 3%;   
+    padding-bottom: 3%;
+}
+.border-top-gray{
+    border-top: 2px solid #f4f4f4;
+    box-shadow: 0px 1px 1px #888888;
+}
+.border-box-right{
+    border-right: 2px solid #f4f4f4;
+}
+.nav-font{
+    font-size: 12px;
+    font-weight: 700;
+}
+.icon-size .fa-reply, .icon-size .fa-check{
+    font-size: 10px;
+    font-weight: 100 !important;
+}
+.t_chat_overflow{
+    position: relative;
+    overflow-y: scroll;
+    max-height: 400px;
+}
+.active-t_chat{
+    background-color: #c9c9ca;
+}
+.t_chat_textarea{
+    box-shadow: none;
+    border: none;
+    outline: 0;
+}
+.search-box_tchat{
+    position: relative;
+}
+.search_icon{
+    position: absolute;
+    right: 25px;
+}
+.search-box_tchat input[type=text]{
+    box-shadow: none;
+}
+.msg_tab{
+    padding-bottom: 10px;
+    bottom: -10px;
+}
+.active_tab{
+    border-bottom: 2px solid red;
+}
+.tchat_tab ul li:hover{
+    color: orange;
+}
+.on_chat_user{
+    color: #777;
+}
+.font-12{
+    font-size: 12px;
+}
+.light_gray{
+    color: #d5d5d4;
+}
+.replay_area{
+    background-color: #222d32;
+}
+.border-none{
+    border: none;
+}
+.outline-none{
+    outline: none;
+}
+.chat-overflow{
+    position: relative;
+    overflow-y: scroll;
+    max-height: 185px;
+}
+.chat-user-overflow{
+    position: relative;
+    overflow: auto;
+    max-height: 270px;
+}
+.chat-menu{
+    background-color: white;
+    color: #f68935 !important;
+    padding: 3%;
+}
+.tchat_profile{
+    position: absolute;
+    z-index: 1;
+    /* left: 0; */
+    top: 0;
+    right: -15px;
+}
+.tchat_profile_pic{
+    top: -30px;
+    left: 25px;
+    position: relative
+}
+.tchat-user-name{
+    margin-top: -25px;
+    padding-left: 10%;
+}
+.padding-left-10per{
+    padding-left: 10%;
+}
+.box-shadow-black{
+    box-shadow: 1px 1px 2px black;
+}
+.chat_offline_inline{background:url(../images/offline.png) no-repeat;}
+.chat_online_inline,.chat_offline_inline{float:right; display: block; cursor:pointer;}
