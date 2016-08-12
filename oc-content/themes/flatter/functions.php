@@ -1127,7 +1127,7 @@ function item_resources_old($item_id) {
             if (empty($data)):
                 $img_path = osc_current_web_theme_url('images/no-image.jpg');
             else:
-                $img_path = osc_base_url() . '/' . $data[0]['s_path'] . $data[0]['pk_i_id'] . '_original.' . $data[0]['s_extension'];
+                $img_path = osc_base_url(). $data[0]['s_path'] . $data[0]['pk_i_id'] . '_original.' . $data[0]['s_extension'];
             endif;
             ?>
             <img src="<?php echo $img_path ?>" class="img img-responsive pad">
@@ -1800,7 +1800,7 @@ function get_user_roles_array() {
 function get_user_profile_picture($user_id) {
     $user = get_user_data($user_id);
     if (!empty($user['s_path'])):
-        $img_path = osc_base_url() . '/' . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+        $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
     else:
         $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
     endif;
@@ -1982,4 +1982,59 @@ if ($user_id != '0' && empty($user_selected_themes)):
         $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
     endforeach;
 endif;
+
+function pr($arr = array()){
+    echo "<pre>";
+    print_r($arr);
+    die('die');
+}
+
+/*
+get user for chat
+ * 
+ * my subscriber + follower
+ *  */
+
+
+function get_chat_users(){
+    $user_id = osc_logged_user_id();
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('user_id ='.$user_id.' OR follow_user_id ='.$user_id);
+    $user_like_data->dao->where('follow_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $followed_user = array_column($user_like_array, 'follow_user_id');    
+        $follow_user = array_column($user_like_array, 'user_id');    
+    endif;
+    $chat_user = array_unique(array_merge((array)$follow_user, (array)$followed_user)); // remove self user
+    if(($key = array_search($user_id, $chat_user)) !== false) {
+        unset($chat_user[$key]);
+    }
+    $item_result = array();
+    if(!empty($chat_user)):
+        $item_result = get_users_data($chat_user);    
+    endif;
+    return $item_result;
+}
+
+function get_users_data($users = array()) {
+    $users = implode(",", $users);
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_data = new DAO();
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website');
+    $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
+    $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
+    $user_data->dao->select('user_role.id as role_id, user_role.role_name');
+    $user_data->dao->from("{$db_prefix}t_user user");
+    $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
+    $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
+    $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
+    $user_data->dao->where("user.pk_i_id IN ({$users})");
+    $result = $user_data->dao->get();
+    $user = $result->result();
+    return $user;
+}
 ?>

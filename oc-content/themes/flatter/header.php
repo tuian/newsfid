@@ -40,7 +40,7 @@
         <link href="<?php echo osc_current_web_theme_url('plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/style2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/jquery.Jcrop.min.css'); ?>" rel="stylesheet" type="text/css" />
-
+        <!--<script src="<?php echo osc_current_web_theme_url('js/jquery/jquery-1.11.2.min.js'); ?>"></script>-->
 
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
@@ -57,6 +57,49 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+
+        <!--===========================FreiChat=======START=========================-->
+        <!--	For uninstalling ME , first remove/comment all FreiChat related code i.e below code
+                 Then remove FreiChat tables frei_session & frei_chat if necessary
+                 The best/recommended way is using the module for installation                         -->
+
+        <?php
+        $ses = osc_logged_user_id(); //tell freichat the userid of the current user
+        if($ses != 0) {
+            setcookie("freichat_user", "LOGGED_IN", time() + 3600, "/"); // *do not change -> freichat code
+        } else {
+            $ses = null; //tell freichat that the current user is a guest
+
+            setcookie("freichat_user", null, time() + 3600, "/"); // *do not change -> freichat code
+        }
+
+        if (!function_exists("freichatx_get_hash")) {
+
+            function freichatx_get_hash($ses) {
+
+                if (is_file(osc_base_path() . "/freichat/hardcode.php")) {
+
+                    require osc_base_path() . "/freichat/hardcode.php";
+
+                    $temp_id = $ses . $uid;
+
+                    return md5($temp_id);
+                } else {
+                    echo "<script>alert('module freichatx says: hardcode.php file not
+found!');</script>";
+                }
+
+                return 0;
+            }
+
+        }
+        ?>
+        <script type="text/javascript" language="javascipt" src="<?php echo osc_base_url(); ?>freichat/client/main.php?id=<?php echo $ses; ?>&xhash=<?php echo freichatx_get_hash($ses); ?>"></script>
+        <link rel="stylesheet" href="<?php echo osc_base_url(); ?>freichat/client/jquery/freichat_themes/freichatcss.php" type="text/css">
+        <!--===========================FreiChatX=======END=========================--> 
+
+
     </head>
     <body class="<?php flatter_body_class(); ?> skin-blue sidebar-mini" >
         <div class="wrapper row main_wrapper">
@@ -64,16 +107,16 @@
                 <aside class="main-sidebar">
                     <!-- sidebar: style can be found in sidebar.less -->
                     <section class="sidebar">
-                        <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
-                            <?php
-                            $user_id = osc_logged_user_id();
-                            $user = get_user_data($user_id);
-                            if (!empty($user['s_path'])):
-                                $img_path = osc_base_url() . '/' . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
-                            else:
-                                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                            endif;
-                            ?>
+<?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
+    <?php
+    $user_id = osc_logged_user_id();
+    $user = get_user_data($user_id);
+    if (!empty($user['s_path'])):
+        $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+    else:
+        $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+    endif;
+    ?>
 
                             <!-- Sidebar user panel -->
 
@@ -97,7 +140,7 @@
                                                                         <a href="javascript:void(0)">
                                                                         <p>
                                                                             <i class="fa fa-circle text-success"></i> 
-                                <?php is_user_online($user['user_id']); ?> 
+    <?php is_user_online($user['user_id']); ?> 
                                                                         </p>
                                                                     </a>
                                                                 </div>
@@ -111,7 +154,7 @@
                                                                 </div>-->
                             </div>
 
-                        <?php endif; ?>
+<?php endif; ?>
 
                         <!-- search form -->
                         <div class="input-group sidebar-form search-newsfid" >
@@ -124,10 +167,10 @@
                         <!-- sidebar menu: : style can be found in sidebar.less -->
                         <ul class="sidebar-menu">
                             <!--<li class="header">MAIN NAVIGATION</li>-->
-                            <?php
-                            $url = $_SERVER['QUERY_STRING']; //you will get last part of url from there
-                            $parts = explode('/', $url, 4);
-                            ?>
+<?php
+$url = $_SERVER['QUERY_STRING']; //you will get last part of url from there
+$parts = explode('/', $url, 4);
+?>
                             <?php //if(strpos('page=home', $parts)$parts) ?>
                             <?php
                             $active = '';
@@ -143,16 +186,16 @@
                                     News Feed
                                 </a>
                             </li>
-                            <?php
-                            $active = '';
-                            if (!empty($parts[0])):
-                                if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=33') !== false):
-                                    $active = 'active';
-                                else:
-                                    $active = '';
-                                endif;
-                            endif;
-                            ?>
+<?php
+$active = '';
+if (!empty($parts[0])):
+    if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=33') !== false):
+        $active = 'active';
+    else:
+        $active = '';
+    endif;
+endif;
+?>
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
@@ -160,16 +203,16 @@
                                         Center of interest
                                     </a>
                                 </li>
-                                <?php
-                                $active = '';
-                                if (!empty($parts[0])):
-                                    if (strpos($parts[0], 'page=item') !== false && strpos($parts[0], 'action=item_add') !== false):
-                                        $active = 'active';
-                                    else:
-                                        $active = '';
-                                    endif;
-                                endif;
-                                ?>
+    <?php
+    $active = '';
+    if (!empty($parts[0])):
+        if (strpos($parts[0], 'page=item') !== false && strpos($parts[0], 'action=item_add') !== false):
+            $active = 'active';
+        else:
+            $active = '';
+        endif;
+    endif;
+    ?>
                                 <li class="add-item treeview active-menu" >
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
@@ -178,49 +221,48 @@
                                     </a>
 
                                 </li> 
-                                <?php
-                                $active = '';
+    <?php
+    $active = '';
 //                                if (empty($parts[0])):
-                                if (strpos($_SERVER['REQUEST_URI'], 'soundpass') !== false):
-                                    $active = 'active';
-                                else:
-                                    $active = '';
-                                endif;
+    if (strpos($_SERVER['REQUEST_URI'], 'soundpass') !== false):
+        $active = 'active';
+    else:
+        $active = '';
+    endif;
 //                                endif;
-                                ?>
+    ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>">
                                         <i class="fa fa-copy"></i>
-                                        Ma chine
+                                        Ma chaîne
                                     </a>
                                 </li>   
-                                <?php
-                                $active = '';
-                                if (!empty($parts[0])):
-                                    if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=32') !== false):
-                                        $active = 'active';
-                                    else:
-                                        $active = '';
-                                    endif;
-                                endif;
-                                ?>
+    <?php
+    $active = '';
+    if (!empty($parts[0])):
+        if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=32') !== false):
+            $active = 'active';
+        else:
+            $active = '';
+        endif;
+    endif;
+    ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
                                         <i class="fa fa-users"></i>
                                         People
                                     </a>
                                 </li>                                 
-                                <?php
-                                $active = '';
-                                
+    <?php
+    $active = '';
+
 //                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
-                                    if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
-                                        $active = 'active';
-                                    else:
-                                        $active = '';
-                                    endif;
-                               
-                                ?>   
+    if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+        $active = 'active';
+    else:
+        $active = '';
+    endif;
+    ?>   
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-user"></i>
@@ -228,29 +270,29 @@
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>                                
                                     <ul class="treeview-menu">
-                                        <?php
-                                        $active = '';
+    <?php
+    $active = '';
 
-                                        if ((strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+    if ((strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
 
-                                            $active = 'active';
-                                        else:
-                                            $active = '';
-                                        endif;
-                                        ?>   
+        $active = 'active';
+    else:
+        $active = '';
+    endif;
+    ?>   
                                         <li class="<?php echo $active ?>">
                                             <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                                 <i class="fa fa-user"></i>Compte
                                             </a>
                                         </li>
-                                        <?php
-                                        $active = '';
-                                        if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false)):
-                                            $active = 'active';
-                                        else:
-                                            $active = '';
-                                        endif;
-                                        ?> 
+    <?php
+    $active = '';
+    if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false)):
+        $active = 'active';
+    else:
+        $active = '';
+    endif;
+    ?> 
                                         <li class="user_settings treeview <?php echo $active ?>" data-toggle="modal" data-target="#user_confirm_password">
     <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="javascript:void(0)">
@@ -262,16 +304,16 @@
 
 
 
-                                <?php
-                                $active = '';
+    <?php
+    $active = '';
 //                                if (empty($parts[0])):
-                                if (strpos($_SERVER['REQUEST_URI'], 'subscribe') !== false):
-                                    $active = 'active';
-                                else:
-                                    $active = '';
-                                endif;
+    if (strpos($_SERVER['REQUEST_URI'], 'subscribe') !== false):
+        $active = 'active';
+    else:
+        $active = '';
+    endif;
 //                                endif;
-                                ?>
+    ?>
 
                                 <?php if ($user['user_type'] == 0 || $user['user_type'] == 2): ?>
                                     <li class="treeview <?php echo $active ?>">
@@ -279,49 +321,49 @@
                                             <i class="fa fa-money"></i>Subscribe now
                                         </a>
                                     </li>   
-                                <?php endif; ?>
-                                <?php
-                                $active = '';
-                                if (!empty($parts[0])):
-                                    if ((strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=34') !== false) || (strpos($parts[0], 'page=contact') !== false)):
-                                        $active = 'active';
-                                    else:
-                                        $active = '';
-                                    endif;
-                                endif;
-                                ?>
+    <?php endif; ?>
+    <?php
+    $active = '';
+    if (!empty($parts[0])):
+        if ((strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=34') !== false) || (strpos($parts[0], 'page=contact') !== false)):
+            $active = 'active';
+        else:
+            $active = '';
+        endif;
+    endif;
+    ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-info"></i>Informations<i class="fa fa-angle-left pull-right"></i>
                                     </a>
 
                                     <ul class="treeview-menu">
-                                        <?php
-                                        $active = '';
-                                        if (!empty($parts[0])):
-                                            if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=34') !== false):
-                                                $active = 'active';
-                                            else:
-                                                $active = '';
-                                            endif;
-                                        endif;
-                                        ?>
+    <?php
+    $active = '';
+    if (!empty($parts[0])):
+        if (strpos($parts[0], 'page=page') !== false && strpos($parts[0], 'id=34') !== false):
+            $active = 'active';
+        else:
+            $active = '';
+        endif;
+    endif;
+    ?>
                                         <li class="treeview <?php echo $active ?>">
                                             <a href="<?php echo osc_base_url() . '?page=page&id=34' ?>">
                                                 <i class="fa fa-book"></i>Terms
                                             </a>
                                         </li>
 
-                                        <?php
-                                        $active = '';
-                                        if (!empty($parts[0])):
-                                            if (strpos($parts[0], 'page=contact') !== false):
-                                                $active = 'active';
-                                            else:
-                                                $active = '';
-                                            endif;
-                                        endif;
-                                        ?>
+    <?php
+    $active = '';
+    if (!empty($parts[0])):
+        if (strpos($parts[0], 'page=contact') !== false):
+            $active = 'active';
+        else:
+            $active = '';
+        endif;
+    endif;
+    ?>
                                         <li class="treeview <?php echo $active ?>">                          
                                             <a href="<?php echo osc_contact_url(); ?>">
                                                 <i class="fa fa-phone"></i>Contact
@@ -330,43 +372,43 @@
                                     </ul>
                                 </li>
 
-                            <?php endif; ?>
-                            <?php if (!osc_is_web_user_logged_in()): ?>
+<?php endif; ?>
+<?php if (!osc_is_web_user_logged_in()): ?>
 
                                 <li class="treeview <?php echo $active ?>">
-                                    <?php
-                                    $active = '';
-                                    if (!empty($parts[0])):
-                                        if (strpos($parts[0], 'page=login') !== false):
-                                            $active = 'active';
-                                        else:
-                                            $active = '';
-                                        endif;
-                                    endif;
-                                    ?>
-                                    <a href="<?php echo osc_user_login_url() ?>">
-                                        <i class="fa fa-sign-in"></i>Login
-                                    </a>
-                                </li>
-
                                 <?php
                                 $active = '';
                                 if (!empty($parts[0])):
-                                    if (strpos($parts[0], 'page=register') !== false):
+                                    if (strpos($parts[0], 'page=login') !== false):
                                         $active = 'active';
                                     else:
                                         $active = '';
                                     endif;
                                 endif;
                                 ?>
+                                    <a href="<?php echo osc_user_login_url() ?>">
+                                        <i class="fa fa-sign-in"></i>Login
+                                    </a>
+                                </li>
+
+    <?php
+    $active = '';
+    if (!empty($parts[0])):
+        if (strpos($parts[0], 'page=register') !== false):
+            $active = 'active';
+        else:
+            $active = '';
+        endif;
+    endif;
+    ?>
 
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_register_account_url() ?>">
                                         <i class="fa fa-user-plus"></i>Register
                                     </a>
                                 </li>
-                            <?php endif; ?>
-                            <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
+<?php endif; ?>
+<?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
 
                                 <li class="treeview">
                                     <a href="<?php echo osc_user_logout_url() ?>">
@@ -374,7 +416,7 @@
                                     </a>
                                 </li>
 
-                            <?php endif; ?>
+<?php endif; ?>
 
                         </ul>
                     </section>
@@ -420,29 +462,29 @@
                     </div>
                 </div>
             </div>
-            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-8 col-sm-8" : $class = "col-md-10 col-sm-10" ?>
+<?php (osc_is_web_user_logged_in()) ? $class = "col-md-8 col-sm-8" : $class = "col-md-10 col-sm-10" ?>
             <div class="<?php echo $class ?> padding-0">
                 <div class="content-wrapper">
                     <div class="content">
-                        <?php if (!isset($_COOKIE["cookie_banner"])) { ?>
+            <?php if (!isset($_COOKIE["cookie_banner"])) { ?>
                             <div id="cookie_banner">
                                 <span>
                                     By continuing the navigation you accept the use of cookies to deliver adapted content with your center of interest.
                                     <span class="cookie_btn" title="close_cookie">Accept</span>
                                 </span>
                             </div>
-                        <?php } ?>
-                        <?php osc_show_flash_message() ?>
+<?php } ?>
+<?php osc_show_flash_message() ?>
                         <a href="#" class="scrollToTop"><span class="fa fa-chevron-up fa-2x"></span></a>
                         <?php if (osc_show_flash_message()) { ?>
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 notification">
-                                        <?php osc_show_flash_message(); ?>
+                            <?php osc_show_flash_message(); ?>
                                     </div>
                                 </div>
                             </div>
-                        <?php } ?>
+                                    <?php } ?>
 
 
                         <script>

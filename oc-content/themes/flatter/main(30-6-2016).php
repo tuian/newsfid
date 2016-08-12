@@ -288,7 +288,7 @@
                         <div class="widget-user-image">
                             <?php
                             if (!empty($logged_user[0]['s_path'])):
-                                $img_path = osc_base_url() . '/' . $logged_user[0]['s_path'] . $logged_user[0]['pk_i_id'] . '.' . $logged_user[0]['s_extension'];
+                                $img_path = osc_base_url() . $logged_user[0]['s_path'] . $logged_user[0]['pk_i_id'] . '.' . $logged_user[0]['s_extension'];
                             else:
                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                             endif;
@@ -620,7 +620,7 @@
                         $result = $comm->query($query);
                         $user = $result->result();
 
-                        $img_path = osc_base_url() . '/' . $user[0]['s_path'] . $user[0]['pk_i_id'] . '.' . $user[0]['s_extension'];
+                        $img_path = osc_base_url() . $user[0]['s_path'] . $user[0]['pk_i_id'] . '.' . $user[0]['s_extension'];
 
                         $date = osc_item_field("dt_pub_date");
                         setlocale(LC_TIME, 'fr_FR.utf8', 'fra');

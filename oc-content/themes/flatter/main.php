@@ -153,7 +153,7 @@ if (isset($user_id)) {
                                                 <div class="widget-user-image">
                         <?php
                         if (!empty($logged_user['s_path'])):
-                            $img_path = osc_base_url() . '/' . $logged_user['s_path'] . $logged_user['pk_i_id'] . '.' . $logged_user['s_extension'];
+                            $img_path = osc_base_url() . $logged_user['s_path'] . $logged_user['pk_i_id'] . '.' . $logged_user['s_extension'];
                         else:
                             $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                         endif;

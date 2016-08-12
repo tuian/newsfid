@@ -12,7 +12,7 @@ if ($_REQUEST['type'] == 'profile_image'):
     Madhouse_Avatar_Actions::process($tmpName, $userId);
     $user_image_path = Madhouse_Avatar_Model::newInstance()->getResource($userId);
     if (!empty($user_image_path['s_path'])):
-        $img_path = osc_base_url() . '/' . $user_image_path['s_path'] . $user_image_path['pk_i_id'] . '.' . $user_image_path['s_extension'];
+        $img_path = osc_base_url() . $user_image_path['s_path'] . $user_image_path['pk_i_id'] . '.' . $user_image_path['s_extension'];
     else:
         $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
     endif;

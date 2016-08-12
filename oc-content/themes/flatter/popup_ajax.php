@@ -276,7 +276,7 @@ while (osc_has_custom_items()):
                                                 $current_user = get_user_data(osc_logged_user_id());
 
                                                 if (!empty($current_user['s_path'])):
-                                                    $img_path = osc_base_url() . '/' . $current_user['s_path'] . $current_user['pk_i_id'] . '.' . $current_user['s_extension'];
+                                                    $img_path = osc_base_url() . $current_user['s_path'] . $current_user['pk_i_id'] . '.' . $current_user['s_extension'];
                                                 else:
                                                     $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                                 endif;
@@ -555,7 +555,7 @@ while (osc_has_custom_items()):
                                             $current_user = get_user_data(osc_logged_user_id());
 
                                             if (!empty($current_user['s_path'])):
-                                                $img_path = osc_base_url() . '/' . $current_user['s_path'] . $current_user['pk_i_id'] . '.' . $current_user['s_extension'];
+                                                $img_path = osc_base_url() . $current_user['s_path'] . $current_user['pk_i_id'] . '.' . $current_user['s_extension'];
                                             else:
                                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                             endif;

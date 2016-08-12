@@ -61,7 +61,7 @@ if ($user_search_array):
                         <div class="widget-user-image">
                             <?php
                             if (!empty($user['s_path'])):
-                                $img_path = osc_base_url() . '/' . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+                                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
                             else:
                                 $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                             endif;
