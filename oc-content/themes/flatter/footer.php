@@ -25,43 +25,9 @@
 <!-- / content -->
 
 <?php if (osc_is_web_user_logged_in()): ?>
-    <div class="tchat_profile col-md-5 hide">
-        <div class="background-white col-md-12 padding-bottom-14per padding-0 box-shadow-black">
-            <img src="images/sound_cloud.jpg" class="img img-responsive">
-            <div class="tchat_profile_pic vertical-row">
-                <img src="images/sound_cloud.jpg" height="130px" width="130px" class="background-white padding-10">
-                <div class="">
-                    <i class="fa fa-users" aria-hidden="true"></i> Abonnés <span class="bold padding-left-10"> 2,345</span><br>
-                    <i class="fa fa-play" aria-hidden="true"></i> Lectures <span class="bold padding-left-10"> 45</span>
-                </div>
-            </div>
-            <div class="col-md-12 tchat-user-name">
-                <span class="user_name bold blue_text"> User name </span>
-            </div>
-            <div class="center-contant">
-                Bristol- England
-                <div class="col-md-12 border-bottom-gray"></div>
-            </div>
-            <div class="user_desc center-contant">
-                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                    a
-                </div>
-                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                    a
-                </div>
-                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                    a
-                </div>
-                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                    a
-                </div>
-                <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                    a
-                </div>
-               
-            </div>
-                 
-        </div>
+    <?php $users = get_chat_users(); ?>
+    <div class="tchat_profile col-md-5 padding-0 hide">
+
     </div>
     <div class="col-md-2 col-sm-2 padding-left-0">
         <div class="t-chat">
@@ -94,23 +60,26 @@
             </div>
             <div class="chat-user-overflow">                
                 <?php
-                $users = get_chat_users();                
-                if(!empty($users)):
-                    foreach ($users as $u):                        
+                if (!empty($users)):
+                    foreach ($users as $u):
+
                         if (!empty($u['s_path'])):
-                            $img_path = osc_base_url(). $u['s_path'] . $u['pk_i_id'] . '.' . $u['s_extension'];
+                            $img_path = osc_base_url() . $u['s_path'] . $u['pk_i_id'] . '.' . $u['s_extension'];
                         else:
                             $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                        endif;?>
+                        endif;
+                        ?>
                         <div class="col-md-12 margin-top-20">
                             <div class="col-md-4 padding-left-0">
-                                <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">                                
+                                <img src="<?php echo $img_path ?>" data_user_id="<?php echo $u['user_id'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                                 <div class="onlineuser">
-                                    <?php $user = User::newInstance()->findByPrimaryKey(63);     // change it                        
-                                        if(useronline_show_user_status($user['pk_i_id']) == 1) { ?>
-                                              <a class="chat_online_inline green-dot" id="onlineuser" href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'".$user['s_name']."'" ; ?>, <?php echo osc_item_user_id(); ?>)"></a>
+                                    <?php
+                                    $user = User::newInstance()->findByPrimaryKey($u['user_id']);     // change it                        
+                                    if (useronline_show_user_status($user['user_id']) == 1) {
+                                        ?>
+                                        <a class="chat_online_inline green-dot" id="onlineuser" href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $user['user_name'] . "'"; ?>, <?php echo osc_item_user_id(); ?>)"></a>
                                     <?php } else { ?>
-                                              <a class="chat_offline_inline" href="javascript:void(0)"></a>
+                                        <a class="chat_offline_inline" href="javascript:void(0)"></a>
                                     <?php } ?>
                                 </div> 
                             </div>
@@ -118,8 +87,10 @@
                                 <span class="bold chat-user"><?php echo $u['user_name']; ?></span>
                             </div>
                         </div>                        
-                    <?php endforeach;
-                endif; ?>   
+                        <?php
+                    endforeach;
+                endif;
+                ?>   
             </div>
             <div class="col-md-12 padding-0 background-white">
                 <div class="chat-overflow">
@@ -168,6 +139,29 @@
 <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
+        $(document).on('click', '.user_tchat', function () {
+            var user_id = $(this).attr('data_user_id');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat_user_data.php'; ?>",
+                method: 'post',
+                data: {
+                    user_id: user_id
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.tchat_profile').html(data);
+                    $('.tchat_profile').addClass('show');
+                    $('.tchat_profile').removeClass('hide');
+                }
+
+            });
+            $(document).on('click', '.tchat_profile', function () {
+                $('.tchat_profile').addClass('show');
+                $('.tchat_profile').removeClass('hide');
+            });
+            $('body').click(function () {
+                $('.tchat_profile').addClass('hide');
+            });
+        });
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
@@ -179,16 +173,13 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
         ga('create', '<?php echo osc_get_preference("g_analytics", "flatter_theme"); ?>', 'auto');
-        ga('send', 'pageview');
-    </script>
+        ga('send', 'pageview');</script>
 <?php } ?>
 <?php if (osc_get_preference('anim', 'flatter_theme') != '0') { ?>
     <script src="<?php echo osc_current_web_theme_url('js/wow.min.js'); ?>"></script>
     <script type="text/javascript">
-        new WOW().init();
-    </script>
+        new WOW().init();</script>
 <?php } ?>
 <?php osc_run_hook('footer'); ?>
 <?php if (osc_is_home_page() && !osc_is_web_user_logged_in()): ?>

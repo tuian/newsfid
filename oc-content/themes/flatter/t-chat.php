@@ -25,53 +25,53 @@ require 'functions.php';
                 <div class="col-md-12 background-white border-box-right t_chat_overflow">
                     <ul class="padding-0">
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a33438c216c.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user3-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 <label class="margin-0 bold font-color-black">abc</label>
                                 <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> knfjds</div>
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a87e9cbf530.jpg" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user1-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 <label class="margin-0 bold font-color-black">abc</label>
                                 <div class="icon-size"> <i class="fa fa-check" aria-hidden="true"></i> dgknvdfo odijfg </div>
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a32e12ca74a.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user4-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 <label class="margin-0 bold font-color-black">abc</label>
                                 <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> knfjds</div>
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a32e12ca74a.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user3-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 <label class="margin-0 bold font-color-black">abc</label>
                                 <div class="icon-size"> <i class="fa fa-check" aria-hidden="true"></i> dgknvdfo odijfg </div>
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a32e12ca74a.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user1-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 d
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a32e12ca74a.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user3-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 d
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a32e12ca74a.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user4-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 d
                             </div>
                         </li>
                         <li class="col-md-12 vertical-row padding-0 border-bottom-gray">
-                            <img src="images/57a3365f589e0.png" class="img img-responsive" style="width:25%; padding: 5px">
+                            <img src="images/user3-128x128.jpg" class="img img-responsive" style="width:25%; padding: 5px">
                             <div>
                                 d
                             </div>
@@ -85,7 +85,7 @@ require 'functions.php';
                     <div class="border-bottom-gray padding-0 col-md-12">
                         <div class="col-md-12 padding-0 vertical-row">
                             <div class="col-md-1 padding-0 padding-top-4per">
-                                <img src="images/57a33438c216c.png" class="img img-responsive" style="">
+                                <img src="images/user3-128x128.jpg" class="img img-responsive" style="">
                             </div>
                             <div class="col-md-11 padding-top-4per">
                                 <label class="bold font-color-black margin-0">abc</label>

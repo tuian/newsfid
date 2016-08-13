@@ -3241,16 +3241,20 @@ select {
     padding: 3%;
 }
 .tchat_profile{
-    position: absolute;
+    position: fixed;
     z-index: 1;
+    width: 25%;
     /* left: 0; */
     top: 0;
-    right: -15px;
+    max-height: 100%;
+    overflow-y: auto;
+    right: 15%;
 }
 .tchat_profile_pic{
-    top: -30px;
-    left: 25px;
-    position: relative
+    top: -60px;
+/*    left: 25px;*/
+    position: relative;
+    padding-left: 10%;
 }
 .tchat-user-name{
     margin-top: -25px;
@@ -3264,3 +3268,6 @@ select {
 }
 .chat_offline_inline{background:url(../images/offline.png) no-repeat;}
 .chat_online_inline,.chat_offline_inline{float:right; display: block; cursor:pointer;}
+.border-bottom-gray-2px{
+    border-bottom: 3px solid #e6ecf2;
+}
