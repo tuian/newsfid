@@ -40,8 +40,24 @@
         <link href="<?php echo osc_current_web_theme_url('plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/style2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/jquery.Jcrop.min.css'); ?>" rel="stylesheet" type="text/css" />
-        <!--<script src="<?php echo osc_current_web_theme_url('js/jquery/jquery-1.11.2.min.js'); ?>"></script>-->
+        <script src="<?php echo osc_current_web_theme_url('js/jquery/jquery-1.11.2.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('plugins/select2/select2.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-typeahead.min.js'); ?>"></script>
+        <script src="<?php echo osc_current_web_theme_url('js/jPushMenu.js'); ?>"></script>
+        <script src="<?php echo osc_current_web_theme_url('js/main.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/owl.carousel.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap.min.js'); ?>?ver=3.3.5"></script>  
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/placeholders.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-switch.min.js'); ?>"></script>
 
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery-dropdate.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/date.format.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.Jcrop.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/script.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_base_url().'oc-content/plugins/slider/responsiveslides.min.js'; ?>"></script>
+        
+        
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
         <!-- /Header Hook -->

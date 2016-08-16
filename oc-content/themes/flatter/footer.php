@@ -84,7 +84,7 @@
                                 </div> 
                             </div>
                             <div class="col-md-8 padding-left-0">
-                                <span class="bold chat-user"><?php echo $u['user_name']; ?></span>
+                                <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
                             </div>
                         </div>                        
                         <?php
@@ -190,18 +190,5 @@
     </style>
 <?php endif; ?>
 <?php osc_current_web_theme_path('script_code.php') ?>    
-<script src="<?php echo osc_current_web_theme_url('js/jPushMenu.js'); ?>"></script>
-<script src="<?php echo osc_current_web_theme_url('js/main.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/owl.carousel.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap.min.js'); ?>?ver=3.3.5"></script>  
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/placeholders.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-switch.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('plugins/select2/select2.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-typeahead.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery-dropdate.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/date.format.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.Jcrop.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/script.js'); ?>"></script>
 </body>
 </html>

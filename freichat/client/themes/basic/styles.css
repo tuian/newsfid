@@ -102,7 +102,7 @@
   padding: 0px;
   background: white;
 }
-#freichat {
+/*#freichat {
   position: fixed;
   right: 0px;
   bottom: 0px;
@@ -122,7 +122,30 @@
   border: none;
   line-height: 1.4em;
   margin: 0px;
+}*/
+#freichat {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  margin-right: 5px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+  visibility: hidden;
 }
+.freichat {
+  position: relative;
+  padding: 0px;
+  background-color: none;
+  color: #000000;
+  text-align: justify;
+  font-size: 14px;
+  width: 200px;
+  background-image: none;
+  border: none;
+  line-height: 1.4em;
+  margin: 0px;  
+}
+
 .freichat a:hover {
   text-decoration: none;
   background-color: white;
