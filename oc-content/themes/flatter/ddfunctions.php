@@ -222,111 +222,114 @@ function location() {
 function RegisterValidation() {
     ?>
     <script type="text/javascript">
-        $(document).ready(function () {
-            // Code for form validation
-            $.validator.addMethod("check_date_of_birth", function (value, element) {                
-                var dateOfBirth = value;
-                var arr_dateText = dateOfBirth.split("/");
-                day = arr_dateText[2];
-                month = arr_dateText[1];
-                year = arr_dateText[0];
+        jQuery.noConflict();
+        (function ($) {
+            $(document).ready(function () {
+                // Code for form validation
+                $.validator.addMethod("check_date_of_birth", function (value, element) {
+                    var dateOfBirth = value;
+                    var arr_dateText = dateOfBirth.split("/");
+                    day = arr_dateText[2];
+                    month = arr_dateText[1];
+                    year = arr_dateText[0];
 
-                var mydate = new Date();
-                mydate.setFullYear(year, month - 1, day);
+                    var mydate = new Date();
+                    mydate.setFullYear(year, month - 1, day);
 
-                var maxDate = new Date();
-                maxDate.setYear(maxDate.getFullYear() - 16);
-                if (maxDate < mydate) {
-                    $.validator.messages.check_date_of_birth = "Sorry, only persons over the age of 16 can be allowed";
-                    return false;
-                }
-                return true;
-            });
-            $("form[name=register]").validate({
-                rules: {
-                    s_firstname: {
-                        required: true
-                    },
-                    s_name: {
-                        required: true
-                    },
-                    s_password: {
-                        required: true,
-                        minlength: 5
-                    },
-                    s_password2: {
-                        required: true,
-                        minlength: 5,
-                        equalTo: "#s_password"
-                    },
-                    s_email: {
-                        required: true,
-                        email: true
-                    },
-                    countryId: {
-                        required: true,
-                    },
-                    s_birthday: {
-                        required: true,
-                        check_date_of_birth: true
-                    },
-                    cityId: {
-                        required: true,
-                    },
-                    s_age: {
-                        required: true,
-                    },
-                    terms_checkbox: {
-                        required: true,
+                    var maxDate = new Date();
+                    maxDate.setYear(maxDate.getFullYear() - 16);
+                    if (maxDate < mydate) {
+                        $.validator.messages.check_date_of_birth = "Sorry, only persons over the age of 16 can be allowed";
+                        return false;
                     }
-                },
-                messages: {
-                    s_firstname: {
-                        required: "<?php _e("First Name: this field is required"); ?>."
+                    return true;
+                });
+                $("form[name=register]").validate({
+                    rules: {
+                        s_firstname: {
+                            required: true
+                        },
+                        s_name: {
+                            required: true
+                        },
+                        s_password: {
+                            required: true,
+                            minlength: 5
+                        },
+                        s_password2: {
+                            required: true,
+                            minlength: 5,
+                            equalTo: "#s_password"
+                        },
+                        s_email: {
+                            required: true,
+                            email: true
+                        },
+                        countryId: {
+                            required: true,
+                        },
+                        s_birthday: {
+                            required: true,
+                            check_date_of_birth: true
+                        },
+                        cityId: {
+                            required: true,
+                        },
+                        s_age: {
+                            required: true,
+                        },
+                        terms_checkbox: {
+                            required: true,
+                        }
                     },
-                    s_name: {
-                        required: "<?php _e("Name: this field is required"); ?>."
+                    messages: {
+                        s_firstname: {
+                            required: "<?php _e("First Name: this field is required"); ?>."
+                        },
+                        s_name: {
+                            required: "<?php _e("Name: this field is required"); ?>."
+                        },
+                        s_password: {
+                            required: "<?php _e("Password: this field is required"); ?>.",
+                            minlength: "<?php _e("Password: enter at least 5 characters"); ?>."
+                        },
+                        s_password2: {
+                            required: "<?php _e("Second password: this field is required"); ?>.",
+                            minlength: "<?php _e("Second password: enter at least 5 characters"); ?>.",
+                            equalTo: "<?php _e("Passwords don't match"); ?>."
+                        },
+                        s_email: {
+                            required: "<?php _e("Email: this field is required"); ?>.",
+                            email: "<?php _e("Invalid email address"); ?>."
+                        },
+                        countryId: {
+                            required: "<?php _e("Country: this field is required"); ?>.",
+                        },
+                        s_birthday: {
+                            required: "<?php _e("Birthdate: this field is required"); ?>.",
+                        },
+                        cityId: {
+                            required: "<?php _e("City: this field is required"); ?>.",
+                        },
+                        s_age: {
+                            required: "<?php _e("Age: this field is required"); ?>.",
+                        },
+                        terms_checkbox: {
+                            required: "<?php _e("Terms: You must accept our terms"); ?>.",
+                        },
                     },
-                    s_password: {
-                        required: "<?php _e("Password: this field is required"); ?>.",
-                        minlength: "<?php _e("Password: enter at least 5 characters"); ?>."
+                    //errorLabelContainer: "#error_list",
+                    //wrapper: "li",
+                    invalidHandler: function (form, validator) {
+                        $('html,body').animate({scrollTop: $('h2').offset().top}, {duration: 250, easing: 'swing'});
                     },
-                    s_password2: {
-                        required: "<?php _e("Second password: this field is required"); ?>.",
-                        minlength: "<?php _e("Second password: enter at least 5 characters"); ?>.",
-                        equalTo: "<?php _e("Passwords don't match"); ?>."
-                    },
-                    s_email: {
-                        required: "<?php _e("Email: this field is required"); ?>.",
-                        email: "<?php _e("Invalid email address"); ?>."
-                    },
-                    countryId: {
-                        required: "<?php _e("Country: this field is required"); ?>.",
-                    },
-                    s_birthday: {
-                        required: "<?php _e("Birthdate: this field is required"); ?>.",
-                    },
-                    cityId: {
-                        required: "<?php _e("City: this field is required"); ?>.",
-                    },
-                    s_age: {
-                        required: "<?php _e("Age: this field is required"); ?>.",
-                    },
-                    terms_checkbox: {
-                        required: "<?php _e("Terms: You must accept our terms"); ?>.",
-                    },
-                },
-                //errorLabelContainer: "#error_list",
-                //wrapper: "li",
-                invalidHandler: function (form, validator) {
-                    $('html,body').animate({scrollTop: $('h2').offset().top}, {duration: 250, easing: 'swing'});
-                },
-                submitHandler: function (form) {
-                    $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
-                    form.submit();
-                }
+                    submitHandler: function (form) {
+                        $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                        form.submit();
+                    }
+                });
             });
-        });
+        })(jQuery);
     </script>
     <?php
 }

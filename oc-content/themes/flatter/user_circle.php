@@ -4,7 +4,7 @@ require 'functions.php';
 
 $search_name = $_REQUEST['search_name'];
 $user_id = $_REQUEST['user_id'];
-$follower_users = get_user_following_data($user_id);
+$follower_users = get_user_circle_data($user_id);
 
 if ($follower_users):
     $user_search_data = new DAO();
@@ -36,7 +36,7 @@ if ($follower_users):
                     if ($user['cover_picture_user_id']):
                         $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . $user['pic_ext'];
                     else:
-                        $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+                        $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
                     endif;
                     ?>
 
@@ -64,7 +64,7 @@ if ($follower_users):
                         </div>
                     </a>
                     <div class="box-footer">
-                        <div class="row">
+                        <div class="row margin-0">
                             <div class="col-sm-4 border-right">
                                 <div class="description-block">
                                     <h5 class="description-header">

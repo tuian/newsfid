@@ -52,13 +52,13 @@
             <div class="chat-menu">
                 Conversations du cercle <span class="dropdown pull-right pointer"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i></i>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                        <li><a> See all chats</a></li>
-                        <li><a> See only my circle chat</a></li>
-                        <li><a>Turn chat off</a></li>
+                        <li><a class="chat-filter" data-value="all"> See all chats</a></li>
+                        <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>
+                        <li><a class="chat-filter" data-value="off">Turn chat off</a></li>
                     </ul>
                 </span>
             </div>
-            <div class="chat-user-overflow">                
+            <div class="chat-user-overflow" id="chat-user-list">                
                 <?php
                 if (!empty($users)):
                     foreach ($users as $u):
@@ -92,7 +92,7 @@
                 endif;
                 ?>   
             </div>
-            <div class="col-md-12 padding-0 background-white">
+            <div class="col-md-12 padding-0 background-white active-chat-part">
                 <div class="chat-overflow">
                     <div class="col-md-12 margin-top-10">
                         <div class="col-md-12 padding-0 dropdown">
@@ -154,6 +154,7 @@
                 }
 
             });
+
             $(document).on('click', '.tchat_profile', function () {
                 $('.tchat_profile').addClass('show');
                 $('.tchat_profile').removeClass('hide');
@@ -162,6 +163,23 @@
                 $('.tchat_profile').addClass('hide');
             });
         });
+
+        $(document).on('click', '.chat-filter', function () {
+            var filter = $(this).attr('data-value');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'custom-function.php'; ?>",
+                method: 'post',
+                data: {
+                    action: 'chat-filter',
+                    filter: filter
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('#chat-user-list').html(data);                    
+                }
+            });
+        });
+
+
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {

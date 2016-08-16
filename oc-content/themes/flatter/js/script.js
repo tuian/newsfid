@@ -54,7 +54,7 @@ function fileSelectHandler() {
     }
 
     // check for file size
-    if (oFile.size > 250 * 1024) {
+    if (oFile.size > 2500 * 10240) {
         $('.error').html('You have selected too big file, please select a one smaller image file').show();
         return;
     }
@@ -136,7 +136,7 @@ function fileSelectHandlerCover() {
     }
 
     // check for file size
-    if (oFile.size > 250 * 1024) {
+    if (oFile.size > 2500 * 10240) {
         $('.error').html('You have selected too big file, please select a one smaller image file').show();
         return;
     }
@@ -160,7 +160,7 @@ function fileSelectHandlerCover() {
             var sResultFileSize = bytesToSize(oFile.size);
             $('#filesize_cover').val(sResultFileSize);
             $('#filetype_cover').val(oFile.type);
-            $('#filedim_cover').val(oImage.naturalWidth + ' x ' + oImage.naturalHeight);
+            $('#filedim_cover').val(oImage.naturalWidth + ' x ' + (2*(oImage.naturalHeight)));
 
             // destroy Jcrop if it is existed
             if (typeof jcrop_api != 'undefined') {
@@ -173,7 +173,7 @@ function fileSelectHandlerCover() {
             setTimeout(function () {
                 // initialize Jcrop
                 $('#preview_cover').Jcrop({
-                    minSize: [32, 32], // min crop size
+                    minSize: [32, 64], // min crop size
                     aspectRatio: 2, // keep aspect ratio 1:1
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity

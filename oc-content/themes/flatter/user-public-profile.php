@@ -47,7 +47,7 @@ $user = get_user_data(osc_user_id());
 if ($user['cover_picture_user_id']):
     $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
 else:
-    $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+    $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
 endif;
 ?>
 <div id="cover" class="cover">
@@ -65,7 +65,7 @@ endif;
                     if ($user['cover_picture_user_id']):
                         $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
                     else:
-                        $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+                        $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
                     endif;
                     ?>
                     <div class="box box-widget widget-user">
@@ -115,8 +115,8 @@ endif;
                                                                     <input type="hidden" id="filesize_cover" name="filesize" />
                                                                     <input type="hidden" id="filetype_cover" name="filetype" />
                                                                     <input type="hidden" id="filedim_cover" name="filedim" />
-                                                                    <input type="hidden" id="w_cover" name="w" />
-                                                                    <input type="hidden" id="h_cover" name="h" />
+                                                                    <input type="hidden" id="w_cover" name="w_cover" />
+                                                                    <input type="hidden" id="h_cover" name="h_cover" />
                                                                 </div>
                                                                 <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
                                                             </div>

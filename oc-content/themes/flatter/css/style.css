@@ -3248,10 +3248,10 @@ select {
     top: 0;
     max-height: 100%;
     overflow-y: auto;
-    right: 15%;
+    right: 16%;
 }
 .tchat_profile_pic{
-    top: -60px;
+    top: -40px;
 /*    left: 25px;*/
     position: relative;
     padding-left: 10%;
@@ -3270,4 +3270,8 @@ select {
 .chat_online_inline,.chat_offline_inline{float:right; display: block; cursor:pointer;}
 .border-bottom-gray-2px{
     border-bottom: 3px solid #e6ecf2;
+}
+.active-chat-part{
+    position: fixed;
+    bottom: 20px;
 }

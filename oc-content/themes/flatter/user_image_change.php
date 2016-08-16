@@ -51,7 +51,7 @@ if ($_REQUEST['type'] == 'cover_image'):
     if ($user_array):
         $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user_array['user_id'] . '.' . $user_array['pic_ext'];
     else:
-        $cover_image_path = osc_current_web_theme_url() . "/images/cover_image.jpg";
+        $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
     endif;
     echo $cover_image_path;
 endif;

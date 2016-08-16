@@ -142,7 +142,7 @@ if (isset($user_id)) {
                     <div class=" bg-white col-md-12 padding-0">
                         <!--                    <div class="box box-widget widget-user">
                         
-                                                <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover_image.jpg" ?>') center center;">
+                                                <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover-image.png" ?>') center center;">
                                                     <h3 class="widget-user-username">
                         <?php echo $logged_user['user_name'] ?>
                                                     </h3>

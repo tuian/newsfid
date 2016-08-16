@@ -207,7 +207,7 @@ function new_footer() {
                 'offText': '<?php echo __('No', 'flatter') ?>'
             });
 
-            $('#s_birthday').datepicker();
+            //$('#s_birthday').datepicker();
             //            $('#countryId').on('change', function () {
             //                var c_id = $(this).val();
             //                var result = '';

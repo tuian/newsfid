@@ -1003,13 +1003,13 @@ $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
 osc_add_hook('user_register_completed', 'go_to_theme_select');
 
-function go_to_theme_select($user) { 
-    if(isset( $_REQUEST['s_birthday']) && !empty( $_REQUEST['s_birthday'])):
-        $conn = getConnection();                
+function go_to_theme_select($user) {
+    if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
+        $conn = getConnection();
         $conn->osc_dbExec("UPDATE `%st_user` SET `s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
-        //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
+    //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
-    Session::newInstance()->_set('user_id', $user);   
+    Session::newInstance()->_set('user_id', $user);
     Session::newInstance()->_set('after_register', 'yes');
     osc_reset_static_pages();
     osc_get_static_page('interest');
@@ -1127,7 +1127,7 @@ function item_resources_old($item_id) {
             if (empty($data)):
                 $img_path = osc_current_web_theme_url('images/no-image.jpg');
             else:
-                $img_path = osc_base_url(). $data[0]['s_path'] . $data[0]['pk_i_id'] . '_original.' . $data[0]['s_extension'];
+                $img_path = osc_base_url() . $data[0]['s_path'] . $data[0]['pk_i_id'] . '_original.' . $data[0]['s_extension'];
             endif;
             ?>
             <img src="<?php echo $img_path ?>" class="img img-responsive pad">
@@ -1264,11 +1264,11 @@ function time_elapsed_string($ptime) {
         $d = $etime / $secs;
         if ($d >= 1) {
             if ($secs < 86400) {
-                $r = round($d);                
-                return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';        
+                $r = round($d);
+                return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
             } else {
 //                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
-               return date("d M", $ptime);
+                return date("d M", $ptime);
 //               return strftime("%d %b", $ptime);
             }
         }
@@ -1686,7 +1686,7 @@ function get_comment_count($item_id) {
     $comments_data->dao->where($conditions);
     $comments_result = $comments_data->dao->get();
     $count = count($comments_result->result());
-    return $count>0?$count:'';
+    return $count > 0 ? $count : '';
 }
 
 function get_user_last_post_resource($user_id) {
@@ -1983,41 +1983,70 @@ if ($user_id != '0' && empty($user_selected_themes)):
     endforeach;
 endif;
 
-function pr($arr = array()){
+function pr($arr = array()) {
     echo "<pre>";
     print_r($arr);
     die('die');
 }
 
 /*
-get user for chat
+  get user for chat
  * 
  * my subscriber + follower
  *  */
 
-
-function get_chat_users(){
+function get_chat_users($filter = 'all') {
     $user_id = osc_logged_user_id();
-    $user_like_data = new DAO();
-    $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
-    $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
-    $user_like_data->dao->where('user_id ='.$user_id.' OR follow_user_id ='.$user_id);
-    $user_like_data->dao->where('follow_value', '1');
-    $user_like_result = $user_like_data->dao->get();
-    $user_like_array = $user_like_result->result();
-    if ($user_like_array):
-        $followed_user = array_column($user_like_array, 'follow_user_id');    
-        $follow_user = array_column($user_like_array, 'user_id');    
-    endif;
-    $chat_user = array_unique(array_merge((array)$follow_user, (array)$followed_user)); // remove self user
-    if(($key = array_search($user_id, $chat_user)) !== false) {
-        unset($chat_user[$key]);
+    $chat_user = array();
+    if ($filter != 'circle') {
+        $user_like_data = new DAO();
+        $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
+        $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
+        $user_like_data->dao->where('(user_id =' . $user_id . ' OR follow_user_id =' . $user_id . ') AND follow_value=1');
+//    $user_like_data->dao->where('follow_value', '1');
+        $user_like_result = $user_like_data->dao->get();
+        $user_like_array = $user_like_result->result();
+        if ($user_like_array):
+            $followed_user = array_column($user_like_array, 'follow_user_id');
+            $follow_user = array_column($user_like_array, 'user_id');
+        endif;
+        $chat_user = array_unique(array_merge((array) $follow_user, (array) $followed_user)); // remove self user
+        if (($key = array_search($user_id, $chat_user)) !== false) {
+            unset($chat_user[$key]);
+        }
     }
+    //get user from circle
+    $user_circle_data = new DAO();
+    $user_circle_data->dao->select(sprintf('%st_user_circle.circle_user_id', DB_TABLE_PREFIX));
+    $user_circle_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
+    $user_circle_data->dao->where('user_id =' . $user_id);
+    $user_circle_result = $user_circle_data->dao->get();
+    $user_circle_array = $user_circle_result->result();
+//    pr($user_circle_array);
+    if ($user_circle_array):
+        $circle_user = array_column($user_circle_array, 'circle_user_id');
+        $chat_user = array_unique(array_merge($chat_user, $circle_user));
+    endif;
+
+    if ($filter == 'all' && empty($chat_user)):
+        //get dummy users
+        $user_circle_data->dao->select('user.pk_i_id as user_id');
+        $user_circle_data->dao->from(DB_TABLE_PREFIX . "t_user user");
+        $user_circle_data->dao->limit(10);
+        $result = $user_circle_data->dao->get();
+        $user_arr = $result->result();
+        if ($user_arr):
+            $circle_user = array_column($user_arr, 'user_id');
+            $chat_user = array_unique(array_merge($chat_user, $circle_user));
+        endif;
+    endif;
+
     $item_result = array();
-    if(!empty($chat_user)):
-        $item_result = get_users_data($chat_user);    
+    if (!empty($chat_user)):
+        $item_result = get_users_data($chat_user);
     endif;
     return $item_result;
+    
 }
 
 function get_users_data($users = array()) {
@@ -2036,5 +2065,29 @@ function get_users_data($users = array()) {
     $result = $user_data->dao->get();
     $user = $result->result();
     return $user;
+}
+
+function add_user_circle($logged_in_user_id, $follow_user_id = NULL) {
+    $follow_array['user_id'] = $logged_in_user_id;
+    $follow_array['circle_user_id'] = $follow_user_id;
+    $add_user_data = new DAO();
+    if ($follow_user_id):
+        $add_user_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
+    endif;
+}
+
+function get_user_circle_data($user_id) {
+    $user_circle_data = new DAO();
+    $user_circle_data->dao->select(sprintf('%st_user_circle.*', DB_TABLE_PREFIX));
+    $user_circle_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
+    $user_circle_data->dao->where('user_id', $user_id);
+    $user_circle_result = $user_circle_data->dao->get();
+    $user_circle_array = $user_circle_result->result();
+    if ($user_circle_array):
+        $item_result = array_column($user_circle_array, 'circle_user_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
 }
 ?>
