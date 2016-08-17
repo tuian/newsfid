@@ -78,7 +78,7 @@ if ($items):
     $db_prefix = DB_TABLE_PREFIX;
     foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
-        while (osc_has_custom_items()):            
+        while (osc_has_custom_items()):
             $item_id = osc_item_id();
             $user = get_user_data(osc_item_user_id());
             ?>
@@ -88,7 +88,19 @@ if ($items):
                         <div class="user_image">
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                        <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?></span>
+                        <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?>
+                            <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                                    <li class="delete_post" data-user-id='<?php echo $user['user_id']; ?>' data-post-id='<?php echo $item['pk_i_id']; ?>'><a>Supprimer la publication</a></li>
+                                    <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Modifier</a></li>
+                                    <li><a></a></li>
+                                    <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
+                                    <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                    <li><a></a></li>
+                                    <li><a>Signaler la publication</a></li>
+                                </ul>
+                            </button>
+                        </span>
                     </div>
                     <!-- /.user-block -->
                     <div class="box-tools">
@@ -108,7 +120,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                  ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                         ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -218,3 +230,22 @@ if ($items):
 else:
     echo '0';
 endif;
+?>
+<script>
+    $(document).on('click', '.delete_post', function () {
+        var user_id = $(this).attr('data-user-id');
+        var post_id = $(this).attr('data-post-id');
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'delete_update_post_ajax.php'; ?>",
+            type: 'post',
+            data: {
+                action: 'delete_post',
+                user_id: user_id,
+                post_id: post_id
+            },
+            success: function (data) {
+                alert('a');
+            }
+        });
+    });
+</script>

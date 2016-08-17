@@ -2046,7 +2046,6 @@ function get_chat_users($filter = 'all') {
         $item_result = get_users_data($chat_user);
     endif;
     return $item_result;
-    
 }
 
 function get_users_data($users = array()) {
@@ -2089,5 +2088,28 @@ function get_user_circle_data($user_id) {
         $item_result = false;
     endif;
     return $item_result;
+}
+
+function get_chat_message_data($user_id=null) {
+    $user_message_data = new DAO();
+    $user_message_data->dao->select('frei_chat.*');
+    $user_message_data->dao->from('frei_chat');
+    $user_message_data->dao->where('`from`', $user_id);
+    $user_message_data->dao->orderBy("time DESC");
+    $user_message_data->dao->groupBy('`to`');
+    $user_message_result = $user_message_data->dao->get();
+    $user_messge_array = $user_message_result->result();
+    return $user_messge_array;
+}
+
+function get_chat_conversion($user_id=null, $partner_user_id=null) {
+    $user_conversion_data = new DAO();
+    $user_conversion_data->dao->select('frei_chat.*');
+    $user_conversion_data->dao->from('frei_chat');
+    $user_conversion_data->dao->where('(`from` =' . $user_id . ' AND `to` =' . $partner_user_id . ') OR (`from` =' . $partner_user_id . ' AND `to` =' . $user_id . ')');
+    $user_conversion_data->dao->orderBy("sent ASC");
+    $user_conversion_result = $user_conversion_data->dao->get();
+    $user_conversion_array = $user_conversion_result->result();
+    return $user_conversion_array;
 }
 ?>
