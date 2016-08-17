@@ -102,16 +102,19 @@ require 'functions.php';
                                     </div>
                                     <div class="col-md-offset-3 col-md-6" id="payment-card">
                                         <div class="col-md-12">
-                                            <div class="blue_text bold">Mode de paiement</div>
+                                            <div class="blue_text bold"><?php echo __('Method of payment'); ?></div>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Name de Carte" required class="card_number">
+                                            <input type="text" placeholder="<?php echo __('Card holder'); ?>" required class="card_name">
                                             <span class="card-icon"></span>
+                                        </div>
+                                        <div class="col-md-12 margin-top-20 grey-border">
+                                            <input type="text" placeholder="<?php echo __('Card number'); ?>" required class="card_number">                                           
                                         </div>
                                         <div class="col-md-12">                                           
                                             <div class="margin-top-20">
                                                 <div class="col-md-5 col-sm-5">
-                                                    Expiration
+                                                    Expires end 
                                                 </div>
                                                 <div class="col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2">
                                                     CVV<span class="circle-border"> ?</span>
@@ -127,7 +130,7 @@ require 'functions.php';
                                                 /
                                             </div>
                                             <div class="col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="AA" required class="expiry_year">
+                                                <input type="text" placeholder="YY" required class="expiry_year">
                                             </div>
                                             <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
                                                 <input type="text" placeholder="Code" required class="card_cvv_code">
@@ -135,7 +138,7 @@ require 'functions.php';
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <?php UserForm::country_select(osc_get_countries()); ?>
+                                            <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="Ligne d'address 1">

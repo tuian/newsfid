@@ -44,6 +44,14 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('plugins/select2/select2.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-typeahead.min.js'); ?>"></script>
         <script src="<?php echo osc_current_web_theme_url('js/jPushMenu.js'); ?>"></script>
+        <?php 
+        
+        $user_id = osc_logged_user_id();
+        $user = get_user_data($user_id);
+        if (!empty($user['s_path'])):
+        
+            endif;
+        ?>
         <script src="<?php echo osc_current_web_theme_url('js/main.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/owl.carousel.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap.min.js'); ?>?ver=3.3.5"></script>  
