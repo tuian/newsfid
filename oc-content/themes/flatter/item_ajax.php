@@ -48,7 +48,7 @@ if ($items):
             if (osc_count_item_resources()) { //item without media should not allow
             ?>
             <!--<div class="item1 wow animated col-md-4 col-sm-4 col-lg-4">-->
-            <div class="item animated col-md-4 col-sm-4 col-lg-4">
+            <div class="item animated col-md-4 col-sm-4 col-lg-4 padding-lr-5">
                 <div class="list">
                     <?php if (osc_images_enabled_at_items()) { ?>
                         <div class="image">

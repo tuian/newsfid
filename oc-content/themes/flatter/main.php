@@ -23,7 +23,7 @@ if (isset($user_id)) {
         $item_description->dao->from(DB_TABLE_PREFIX . "t_item_description AS item_desc");
         $item_description->dao->where('fk_i_item_id', $id_post);
         $item_desc = $item_description->dao->get();
-        $post_details = $item_desc->row();
+        $post_details = $item_desc->row(); // currently we have hide this, we will replace this with slider
 
         $db_prefix = DB_TABLE_PREFIX;
         $post_resource_data = new DAO();
@@ -77,7 +77,7 @@ if (isset($user_id)) {
         <?php //osc_slider();  ?>  
     <?php } ?>
 
-    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;">
+<!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;">
         <div class="last-post col-md-12">
             <div class="col-md-8">
                 HEADLINES
@@ -100,9 +100,8 @@ if (isset($user_id)) {
                     ?>  <?php echo $string;
                     ?>
             </div>
-        </div>
-        <!-- Big Search Form --> 
-    </div>
+        </div>      
+    </div>-->
 
 <?php else : ?>
     <div class="section" >
@@ -240,7 +239,7 @@ if (isset($user_id)) {
                             </div> 
 
                             <div class="box-body" style="display: block;">
-                                <div class="category-dropdown left-border margin-top-20" style="display: block;">
+                                <div class="category-dropdown left-border" style="display: block;">
                                     <?php osc_goto_first_category(); ?>
                                     <?php if (osc_count_categories()) { ?>
                                         <select id="sCategory" class="form-control input-box" name="sCategory">
@@ -258,12 +257,18 @@ if (isset($user_id)) {
                                     <?php } ?>
                                 </div>
                             </div>
+                            <div class="box-body" style="display: block;">
+                                <div class="country-dropdown left-border" style="display: block;">
+                                    <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>                                
+                                </div>
+                            </div>
 
                             <div class="box-body" style="display: block;">
                                 <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city, country, state or county' ?>">
                             </div>
                             <div class="box-body" style="display: block;">                            
-                                <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Apply">Apply</button>
+                                <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
+                                    <img src=<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>>  Search</button> or 
                                 <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
                             </div>
                         </div>
@@ -400,7 +405,7 @@ if (isset($user_id)) {
                                 while (osc_has_categories()) {
                                     if ($i < 6):
                                         ?>
-                                        <li class="<?php echo osc_category_slug(); ?>" value="<?php echo osc_category_name() ?>">
+                                        <li class="<?php echo osc_category_slug(); ?> <?php echo $i=='1'?'active':'';?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
                                                 <!--<span>(<?php //echo osc_category_total_items();                      ?>)</span>-->
@@ -497,7 +502,7 @@ function footer_script() {
         var category_id = $('#sCategory').val();
         var post_type = $('.post_type_filter').val();
         $(document).ready(function () {
-
+             <?php if (osc_is_web_user_logged_in()):?>
             $('.select2').each(function () {
                 var placeholder = $(this).attr('title');
                 $(this).select2({
@@ -560,7 +565,7 @@ function footer_script() {
                 //                    console.log(item);
                 //                },
             });
-
+            <?php endif;?>
     <?php if (!osc_is_web_user_logged_in()): ?>
                 //                $('.masonry_row').masonry({
                 //                    columnWidth: '.item',
@@ -666,6 +671,24 @@ function footer_script() {
                         }
                     });
                 });
+                $('#countryId').change(function () {
+                    $('.posts_container .loading').fadeIn(500);
+                    $('.user_related_posts').css({'opacity': '0.2'});
+                    var country_id = $('#countryId').val();
+                    reset_variable_after_login();
+                    //make_after_login_item_ajax_call();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {                            
+                            country_id: country_id,                            
+                        },
+                        success: function (data) {
+                            $('.user_related_posts').empty().append(data);
+                            $('.posts_container .loading').fadeOut(1000);
+                            $('.user_related_posts').css({'opacity': '1'});
+                        }
+                    });
+                });
                 $('.filter-button').click(function () {
                     $('.posts_container .loading').fadeIn(500);
                     $('.user_related_posts').css({'opacity': '0.2'});
@@ -701,6 +724,7 @@ function footer_script() {
 
     <?php endif; ?>
         });
+        
         $(window).load(function () {
             //            $('.masonry_row').masonry({
             //                    columnWidth: '.item',
@@ -708,7 +732,7 @@ function footer_script() {
             //                });
             //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
             $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php' ?>",
+                url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",
                 //data: {page_number: pageNumber, },
                 success: function (data, textStatus, jqXHR) {
                     $('.masonry_row').append(data);
@@ -786,5 +810,5 @@ function footer_script() {
 }
 ?>
 
-<?php osc_current_web_theme_path('locationfind.php'); ?>
+<?php //osc_current_web_theme_path('locationfind.php'); ?>
 <?php osc_current_web_theme_path('footer.php'); ?>

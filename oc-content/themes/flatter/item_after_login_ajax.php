@@ -31,6 +31,11 @@ if (!empty($_REQUEST['category_id'])):
 else:
     $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
 endif;
+
+if (!empty($_REQUEST['country_id'])):    
+    $data->dao->where('item_location.fk_c_country_code', $_REQUEST['country_id']);
+endif;
+
 if (isset($_REQUEST['location_type'])):
     $location_type = $_REQUEST['location_type'];
     $location_id = isset($_REQUEST['location_id']) ? $_REQUEST['location_id'] : '';
@@ -100,13 +105,13 @@ if ($items):
                         <span class="description"><?php //echo time_elapsed_string(strtotime($date));  ?></span>
                     </div>
                     <!-- /.user-block -->
-                    <div class="box-tools">
+<!--                    <div class="box-tools">
                         <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
                             <i class="fa fa-circle-o"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
+                    </div>-->
                     <!-- /.box-tools -->
                 </div>
                 <!-- /.box-header -->
@@ -147,7 +152,7 @@ if ($items):
                         'b_enabled' => 1);
                     //$comments_data->dao->limit(3);
                     $comments_data->dao->where($conditions);
-                    $comments_data->dao->orderBy('dt_pub_date', 'DESC');
+                    $comments_data->dao->orderBy('dt_pub_date', 'ASC');
                     $comments_result = $comments_data->dao->get();
                     $c_data = $comments_result->result();
                     ?>
@@ -161,18 +166,18 @@ if ($items):
                             </div>
                         <?php endif; ?>
                         <?php
-                        foreach ($c_data as $k => $comment_data):
-                            ?>
-                            <?php
-                            $comment_user = get_user_data($comment_data['fk_i_user_id']);
-                            ?>
-                            <?php
-                            if ($k > 2 && !$load_more && count($c_data) > 3):
-                                $load_more = 'load more';
+                        $total_comment = count($c_data);
+                        foreach ($c_data as $k => $comment_data):                            
+                            $comment_user = get_user_data($comment_data['fk_i_user_id']); 
+                            if($total_comment>3 && $total_comment-3 > $k):
+                                continue;
+                            endif;
+//                            if ($k > 2 && !$load_more && count($c_data) > 3):
+//                                $load_more = 'load more';
                                 ?>                                
-                                <div class="load_more">
+                                <!--<div class="load_more">-->
                                     <?php
-                                endif;
+//                                endif;
                                 ?>
                                 <div class="box-footer box-comments">
                                     <div class="box-comment">
@@ -196,24 +201,23 @@ if ($items):
                                                 
                                                                                                     </ul>
                                                                                                 </div>-->
-                                            </span><!-- /.username -->
+                                            <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                                            </span>
                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                 <?php echo $comment_data['s_body']; ?>
                                             </span>
-                                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                                            
                                         </div>
                                         <!-- /.comment-text -->
                                     </div>                       
                                 </div>  
                                 <?php
-                                if ($k > 2 && $k == (count($c_data) - 1)):
-                                    unset($load_more);
+//                                if ($k > 2 && $k == (count($c_data) - 1)):
+//                                    unset($load_more);
                                     ?>
-                                </div>                                
+                                <!--</div>-->                                
                                 <?php
-                            endif;
-                            ?>                            
-                            <?php
+//                            endif;                           
                         endforeach;
                     endif;
                     ?>

@@ -1641,7 +1641,7 @@ select {
     margin-right: 0;
     border-right: 1px solid #eee;    
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     //width: 190px;
 }
 .custom_filter_navigation .navbar-nav > li.active{
@@ -1969,7 +1969,7 @@ select {
 }
 
 .custom_filter_navigation .container{    
-    padding: 15px !important;
+    padding: 0px !important;
 }
 
 #home_primary_nav_wrap ul ul
@@ -2032,7 +2032,7 @@ select {
     padding-top: 10px;
 }
 .filter-button{
-    color: #42c5e4 !important;
+    color: #97a0b3 !important;
     font-weight: bold;
 }
 .bg-white{
@@ -2114,7 +2114,7 @@ select {
 }
 .item_title_head {
     cursor: pointer;
-    font-size: 22px;
+    font-size: 16px;
 }
 .item_title_head:hover{
     color: #03A9F4;
@@ -2353,6 +2353,14 @@ select {
 .category-dropdown .form-control{
     border: 0;
     margin-left: 10px;
+}
+.country-dropdown {    
+    border-bottom: 2px solid #ccc;
+    position: relative;
+    height: 40px;
+}
+.country-dropdown select{
+    border-bottom: 2px solid #ccc;    
 }
 .input-box{
     border-bottom: 1px solid #f8f9f9;  
@@ -2798,7 +2806,7 @@ select {
     height: 16px;
 }
 .margin-left-15{
-    margin-left: 15px;
+    margin-left: 15px !important;
 }
 .font-color-light-blue{
     color: #a6dded;
@@ -3252,7 +3260,7 @@ select {
 }
 .tchat_profile_pic{
     top: -40px;
-/*    left: 25px;*/
+    /*    left: 25px;*/
     position: relative;
     padding-left: 10%;
 }
@@ -3292,24 +3300,40 @@ select {
     float: left;
 }
 ::-webkit-scrollbar {
-      width: 5px;
+    width: 5px;
 } /* this targets the default scrollbar (compulsory) */
 ::-webkit-scrollbar-track {
-      background-color: transparent;
-       
+    background-color: transparent;
+
 } /* the new scrollbar will have a flat appearance with the set background color */
- 
+
 ::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2); 
-      width: 7px;
-      border-radius: 30px;
-     } /* this will style the thumb, ignoring the track */
- 
+    background-color: rgba(0, 0, 0, 0.2); 
+    width: 7px;
+    border-radius: 30px;
+} /* this will style the thumb, ignoring the track */
+
 ::-webkit-scrollbar-button {
-      background-color: transparent;
-      height: 1px;
+    background-color: transparent;
+    height: 1px;
 } /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
- 
+
 ::-webkit-scrollbar-corner {
-      background-color: #D3D3D3;
+    background-color: #D3D3D3;
 } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+
+/*remove this*/ 
+.content {
+    min-height: 0px !important;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus {    
+    background-color: #fff !important;
+}
+.padding-lr-5{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.margin-left-5{
+    margin-left: 5px;
+}
+ 

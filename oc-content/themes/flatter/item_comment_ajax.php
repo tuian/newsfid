@@ -43,9 +43,10 @@ $conditions = array('fk_i_item_id' => $comment_item_id,
     'b_enabled' => 1);
 //$comments_data->dao->limit(3);
 $comments_data->dao->where($conditions);
-$comments_data->dao->orderBy('dt_pub_date', 'DESC');
+$comments_data->dao->orderBy('dt_pub_date', 'ASC');
 $comments_result = $comments_data->dao->get();
-$c_data = $comments_result->result();?>
+$c_data = $comments_result->result();
+?>
 <div class="comments_container_<?php echo $comment_item_id; ?>"> 
     <?php
     if ($c_data):
@@ -92,11 +93,11 @@ $c_data = $comments_result->result();?>
 
                                     </ul>
                                 </div>-->
+                           <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                             </span>
                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                 <?php echo $comment_data['s_body']; ?>
-                            </span>
-                            <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                            
+                            </span>                            
                         </div>
                         <!-- /.comment-text -->
                     </div>                       
