@@ -88,15 +88,15 @@ endif;
 ?>
 
 <div id="columns" class="user-interest">
-    <h3 class="col-md-9">Centre d'intérêt</h3>
+    <h3 class="col-md-9">Center of interest</h3>
     <div class="col-md-3 pull-right">
-        <input class="btn btn-blue btn-flat update_theme" type="submit" name="submit" value="Enregistrer" />
+        <input class="btn btn-blue btn-flat update_theme" type="submit" name="submit" value="Save" />
     </div>
     <div class="clearfix"></div>
     <div class="theme-interest-container">
         <ul class="nav">
             <li class="theme-interest-tab <?php echo $active == '1' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url(); ?>"> Themes</a></li>
-            <li class="theme-interest-tab <?php echo $active == '2' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url() . '&type=interest'; ?>">Rubriques</a></li>            
+            <li class="theme-interest-tab <?php echo $active == '2' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url() . '&type=interest'; ?>">Rubrics</a></li>            
         </ul> 
     </div>
     <?php if (isset($_GET['type']) && $_GET['type'] == 'interest'): ?>

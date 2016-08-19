@@ -306,43 +306,12 @@ if (isset($user_id)) {
                 </div>
 
                 <div class="col-md-8 padding-left-0">
-
-                    <!--                                        <div class="col-md-4 pull-right">
-                                                                <div class="country_flag_box vertical_center pull-right">
-                                                                    <li>
-                    <?php echo 'Flux' ?>
-                                                                    </li>
-                                                                    <li>
-                                                                        <img src=<?php echo osc_current_web_theme_url() . "images/flags/us.png" ?> width="50px" height="20px">
-                                                                    </li>
-                                                                    <li>
-                    <?php $counrty_array = get_country_array(); ?>
-                                                                        <select id="country-list">
-                    <?php
-                    foreach ($counrty_array as $countryList):
-                        ?>
-                                                                                                                                                                                                                <option  value="<?php echo $countryList['s_name']; ?>">  <?php echo $countryList['s_name']; ?> </option>
-                        <?php
-                    endforeach;
-                    ?>
-                                                                        </select>
-                                                                    </li>
-                                                                    <li>                                
-                                                                        <img class="dot_image" src="<?php echo osc_current_web_theme_url() . 'images/dots.png' ?>">
-                                                                        <i class="fa fa-ellipsis-v fa-2x"></i>
-                                                                    </li>
-                                                                </div>
-                                                            </div>-->
-                    <div class="clearfix"></div>
-
-                    <div class="col-md-8 pull-right">
-                        <div class="location_filter_container pull-right">
-                            <ul class="nav">
-                                <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
-                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
-                            </ul>                            
-                        </div>
+                    <div class="col-md-12 padding-0">                        
+                        <ul class="nav user_profile_navigation bg-white">
+                            <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                            <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                            <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                        </ul>                                                    
                     </div>
                     <div class="clearfix"></div>
                     <div class="posts_container">

@@ -55,11 +55,11 @@ $user_id = osc_logged_user_id();
             </div>
             <div class="col-md-8 border-top-gray border-bottom-gray background-white">
                 <div class="col-md-12 padding-top-3per">
-                    <div class="vertical-row">
+<!--                    <div class="vertical-row">
                         <span class="border-bottom-gray padding-top-4per separator1"></span>
                         <span class="padding-top-4per vertical-row separator2"><span>August</span><span>&nbsp;17</span></span>
                         <span class="border-bottom-gray padding-top-4per separator3"></span>
-                    </div>
+                    </div>-->
                     <div class="border-bottom-gray padding-0 col-md-12" id='chat-box'>
                         <?php
                         if (isset($msg[0]['to'])):
@@ -88,6 +88,7 @@ $user_id = osc_logged_user_id();
                                         </div>
                                         <div class="col-md-11 padding-top-4per" id="conv">
                                             <label class="bold font-color-black margin-0"><?php echo $msg['from_name']; ?></label>
+                                            <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($msg['sent'])) ?></span>
                                             <div class="icon-size">
                                                 <?php
                                                 $id = osc_logged_user_id();

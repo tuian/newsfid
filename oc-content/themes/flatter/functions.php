@@ -1470,14 +1470,14 @@ function user_follow_btn_box($logged_in_user_id, $follow_user_id) {
     $following = 'following';
     $action = 'unfollow';
     $fa_class = 'fa fa-user-times';
-    $follow_text = 'Se désabonner';
+    $follow_text = 'Unfollow';
     $user_following = get_user_following_data($logged_in_user_id);
 
     if (!($user_following && ( in_array($follow_user_id, $user_following)) )):
         $following = 'unfollowing';
         $action = 'follow';
         $fa_class = 'fa fa-user-plus';
-        $follow_text = "M'abonner";
+        $follow_text = "Follow";
     endif;
     ?>
     <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
@@ -2111,5 +2111,17 @@ function get_chat_conversion($user_id=null, $partner_user_id=null) {
     $user_conversion_result = $user_conversion_data->dao->get();
     $user_conversion_array = $user_conversion_result->result();
     return $user_conversion_array;
+}
+
+function get_pending_msg_cnt(){
+     $user_id = osc_logged_user_id();
+    $user_message_datacnt = new DAO();
+    $user_message_datacnt->dao->select('COUNT(*) as msg');
+    $user_message_datacnt->dao->from('frei_chat');
+    $user_message_datacnt->dao->where('`to`', $user_id);
+    $user_message_datacnt->dao->where('read_status', 0);    
+    $user_message_resultcnt = $user_message_datacnt->dao->get();
+    $user_messge_cnt = $user_message_resultcnt->row();
+    return $user_messge_cnt['msg'];    
 }
 ?>

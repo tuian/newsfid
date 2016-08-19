@@ -46,6 +46,14 @@ $comments_data->dao->where($conditions);
 $comments_data->dao->orderBy('dt_pub_date', 'ASC');
 $comments_result = $comments_data->dao->get();
 $c_data = $comments_result->result();
+
+//item detail
+$data = new DAO();
+$data->dao->select('item.*');
+$data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+$data->dao->where('item.pk_i_id', $comment_item_id);
+$result = $data->dao->get();
+$item = $result->row();
 ?>
 <div class="comments_container_<?php echo $comment_item_id; ?>"> 
     <?php
@@ -58,19 +66,14 @@ $c_data = $comments_result->result();
             </div>
         <?php endif; ?>
         <?php
-        foreach ($c_data as $k => $comment_data):
-            ?>
-            <?php
+        $total_comment = count($c_data);
+        foreach ($c_data as $k => $comment_data):           
             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-
-            if ($k > 2 && !$load_more && count($c_data) > 3):
+            if ($k < $total_comment-3 && !$load_more):
                 $load_more = 'load more';
-                ?>                
-                <div class="load_more">
-                    <?php
-                endif;
-                ?>
-                <div class="box-footer box-comments">
+                echo '<div class="load_more">';                            
+            endif; ?>
+                <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id']?'border-blue-left':''?>">
                     <div class="box-comment">
                         <!-- User image -->
 
@@ -103,14 +106,10 @@ $c_data = $comments_result->result();
                     </div>                       
                 </div>
                 <?php
-                if ($k > 2 && $k == (count($c_data) - 1)):
+                 if ($k == (count($c_data) - 4)):
                     unset($load_more);
-                    ?>
-                </div>                                
-                <?php
-            endif;
-            ?>       
-            <?php
+                  echo "</div>";                                
+                endif; 
         endforeach;
     endif;
     ?>

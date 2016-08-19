@@ -8,12 +8,12 @@ require 'functions.php';
     <div class="cover-img">
         <div class="container">
             <div class="col-md-8">
-                <h3 class="font-color-white bold-600 margin-0">Decouvrez l'offre</h3>
+                <h3 class="font-color-white bold-600 margin-0">Start now with</h3>
                 <h1 class="font-color-white bold-600 font-65px margin-0">NEWSFID PRO</h1>
                 <div class="col-md-8 border-bottom"></div>
-                <h2 class="font-color-white bold-600">Liberté, Notoriété, différence et simplicité</h2>
+                <h2 class="font-color-white bold-600">Freedom, Notoriety , Difference , Simplicity</h2>
                 <div class="col-md-offset-1 margin-top-20">
-                    <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment">Passez a Newsfid Premium gratuit pendant 30 jours</button>
+                    <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment">Get Newsfid pro with 30 days trials right now</button>
                     <!-- Payment modal start -->
                     <div id="payment" class="modal fade" role="dialog">
                         <div class="modal-dialog modal-lg">
@@ -96,7 +96,7 @@ require 'functions.php';
                                             <input type="radio" class="payment-option" name="payment" value="paypal">
                                         </div>
                                         <div class="col-md-6 padding-3per bg-green-light">
-                                            Vous en serai pas débiter avant la fin de votre période d’essai en date du <?php echo date('d/m/Y'); ?> Vous pourrai annuler votre abonnement en ligne à tout moment.
+                                            You will not be charged until the end of your trial period dated <?php echo date('d/m/Y', strtotime("+1 months", strtotime("NOW"))); ?>, You could cancel your membership online at any time.
                                         </div>
 
                                     </div>
@@ -202,7 +202,7 @@ require 'functions.php';
     <div class="contant bg-white col-md-12">
 
         <div class="col-md-12 text-center padding-top-4per ">
-            <h4 class="bold-600 margin-0 font-color-black">Beneficiez du service Newsfid incluant un essai gratuit pendant 30 jours</h4>
+            <h4 class="bold-600 margin-0 font-color-black">Start newsfid pro and get 30 days trial. You can stop it when you want.</h4>
         </div>
         <div class="sub-info col-md-12   margin-top-20">
             <div class="col-md-5">
@@ -212,10 +212,10 @@ require 'functions.php';
             <div class="col-md-7">
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="font-color-black">Fonctionnalités</div>
+                        <div class="font-color-black">Options</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3">
-                        <div class="font-color-black bold">Gratuit</div>
+                        <div class="font-color-black bold">Free</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3">
                         <div class="font-color-black bold">Premium</div>
@@ -225,7 +225,7 @@ require 'functions.php';
                 <!------------------Table row Start-------1--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Publier un média audio</div>
+                        <div class="orange bold padding-top-4per">Post an audio track</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="white-round margin-left-15"></div>
@@ -238,7 +238,7 @@ require 'functions.php';
                 <!------------------Table row Start-------2--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Publier une image animée au format GIF</div>
+                        <div class="orange bold padding-top-4per">Post GIF image</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="green-round margin-left-15"></div>
@@ -249,7 +249,7 @@ require 'functions.php';
                 </div>
                 <!------------------Table row End-------2--------->
                 <!------------------Table row Start-------3--------->
-                <div class="col-md-12 border-bottom  vertical-row">
+<!--                <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
                         <div class="orange bold padding-top-4per">Sponsoriser vos publications quand vous le voulez</div>
                     </div>
@@ -259,12 +259,12 @@ require 'functions.php';
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="green-round margin-left-15"></div>
                     </div>
-                </div>
+                </div>-->
                 <!------------------Table row End-------3--------->
                 <!------------------Table row Start-------4--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Publier un lien vidéo automatique ( youtube / Viméo / Dailymotion)</div>
+                        <div class="orange bold padding-top-4per">Post video link ( youtube / Vimeo / Dailymotion)</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="green-round margin-left-15"></div>
@@ -277,7 +277,7 @@ require 'functions.php';
                 <!------------------Table row Start-------5--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Obtenir un logo professionnel pour faire directement la différence avec les autres utilisateurs.</div>
+                        <div class="orange bold padding-top-4per">Get a professional logo to make difference with users.</div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="white-round margin-left-15"></div>

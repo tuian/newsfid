@@ -1,7 +1,8 @@
   
 <span style="padding-bottom: 10px;"></span>
 
-
+<?php if (osc_is_web_user_logged_in()): 
+     $users = get_chat_users();?>
 <div id="footer" >    
     <div class="footer-bottom">
         <div class="container">
@@ -24,10 +25,9 @@
 <!-- / Footer -->
 <!-- / content -->
 
-<?php if (osc_is_web_user_logged_in()): ?>
-    <?php $users = get_chat_users(); ?>
-    <div class="tchat_profile col-md-5 padding-0 hide">
 
+   
+    <div class="tchat_profile col-md-5 padding-0 hide">
     </div>
     <div class="col-md-2 col-sm-2 padding-left-0">
         <div class="t-chat">
@@ -43,6 +43,9 @@
                 <div class="col-md-2 padding-left-0 pointer">
                     <a class="font-color-white" href="<?php echo osc_current_web_theme_url() . 't-chat.php' ?>">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <?php if(get_pending_msg_cnt() > 0):?>
+                            <span class="label message-count"><?php echo get_pending_msg_cnt(); ?></span>
+                        <?php endif; ?>
                     </a>
                 </div>
                 <div class="col-md-2 padding-left-0 pointer">
@@ -50,7 +53,7 @@
                 </div>    
             </div>
             <div class="chat-menu">
-                Conversations du cercle <span class="dropdown pull-right pointer"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i></i>
+                Discuss with your circle <span class="dropdown pull-right pointer"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i></i>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                         <li><a class="chat-filter" data-value="all"> See all chats</a></li>
                         <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>
@@ -73,13 +76,12 @@
                             <div class="col-md-4 padding-left-0">
                                 <img src="<?php echo $img_path ?>" data_user_id="<?php echo $u['user_id'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                                 <div class="onlineuser">
-                                    <?php
-                                    $user = User::newInstance()->findByPrimaryKey($u['user_id']);     // change it                        
-                                    if (useronline_show_user_status($user['user_id']) == 1) {
+                                    <?php                                    
+                                    if (useronline_show_user_status($u['user_id']) == 1) {
                                         ?>
-                                        <a class="chat_online_inline green-dot" id="onlineuser" href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $user['user_name'] . "'"; ?>, <?php echo osc_item_user_id(); ?>)"></a>
+                                        <div class="green-dot"></div>                                        
                                     <?php } else { ?>
-                                        <a class="chat_offline_inline" href="javascript:void(0)"></a>
+                                        <!--<a class="chat_offline_inline" href="javascript:void(0)"></a>-->
                                     <?php } ?>
                                 </div> 
                             </div>
@@ -92,7 +94,7 @@
                 endif;
                 ?>   
             </div>
-            <div class="col-md-12 padding-0 background-white active-chat-part">
+<!--            <div class="col-md-12 padding-0 background-white active-chat-part">
                 <div class="chat-overflow">
                     <div class="col-md-12 margin-top-10">
                         <div class="col-md-12 padding-0 dropdown">
@@ -130,7 +132,7 @@
                 <div class="col-md-12 margin-top-10 replay_area">
                     <textarea class="replay_area border-none outline-none color-white" placeholder="Write a replay..."></textarea>
                 </div>
-            </div>            
+            </div>            -->
         </div>	
 
     </div>	

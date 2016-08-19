@@ -16,7 +16,7 @@ $roles = get_user_roles_array();
 <div class="row user_info_row success-border margin-0">
     <div class="col-md-4 col-sm-4">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <span class="user_info_header padding-left-10">A propos de moi</span>
+        <span class="user_info_header padding-left-10">About me</span>
     </div>
     <div class="col-md-8 col-sm-8 user_info">
         <span class="user_info_text info_text" data_text="<?php echo osc_user_info(); ?>">
@@ -33,7 +33,7 @@ $roles = get_user_roles_array();
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
         <i class="fa fa-list" aria-hidden="true"></i>
-        <span class="user_info_header  padding-left-10">Type de compte</span>
+        <span class="user_info_header  padding-left-10">Type of account</span>
     </div>
     <div class="col-md-8 col-sm-8">
         <span class="user_type_text info_text" data_role_id="<?php echo $user_data['role_id'] ?>">
@@ -102,7 +102,7 @@ osc_add_hook('footer', 'custom_map_script');
 function custom_map_script() {
     ?>
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
-    <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
+    
     <script>
         google.maps.event.addDomListener(window, 'load', initMap);
         function initMap() {

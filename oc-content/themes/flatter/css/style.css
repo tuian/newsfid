@@ -3062,9 +3062,7 @@ select {
 #item_popup_modal .description{
     font-size: 16px;
 }
-.subscribe-page .cover-img h1, .subscribe-page .cover-img h3, .subscribe-page .cover-img h2{
-    text-shadow: -2px -1px 3px rgba(0, 0, 0, 1);
-}
+
 .copyright_box{
     font-size: 10px;
 }
@@ -3299,28 +3297,28 @@ select {
     width: 80%;
     float: left;
 }
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     width: 5px;
-} /* this targets the default scrollbar (compulsory) */
+}  this targets the default scrollbar (compulsory) 
 ::-webkit-scrollbar-track {
     background-color: transparent;
 
-} /* the new scrollbar will have a flat appearance with the set background color */
+}  the new scrollbar will have a flat appearance with the set background color 
 
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2); 
     width: 7px;
     border-radius: 30px;
-} /* this will style the thumb, ignoring the track */
+}  this will style the thumb, ignoring the track 
 
 ::-webkit-scrollbar-button {
     background-color: transparent;
     height: 1px;
-} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+}  optionally, you can style the top and the bottom buttons (left and right for horizontal bars) 
 
 ::-webkit-scrollbar-corner {
     background-color: #D3D3D3;
-} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+}  if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
 
 /*remove this*/ 
 .content {
@@ -3336,4 +3334,14 @@ select {
 .margin-left-5{
     margin-left: 5px;
 }
- 
+.border-blue-left{
+    border-left: 2px solid #00aeef;
+}
+
+.message-count {
+    float: left;
+    margin-top: -29px;
+    margin-left: 6px;
+    padding: 2px 6px;
+    background-color: #f53939 !important;
+}

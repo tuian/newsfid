@@ -263,9 +263,9 @@ textarea.border-bottom-0{
     position: relative;
 }
 .user_profile_img .user_type_icon_image {
-    position: absolute;
-    top: 0px;
-    right: -5px;
+    position: absolute;     
+    top: -9px;
+    right: -8px;
     width: 15px;
 }
 .user-block .username,

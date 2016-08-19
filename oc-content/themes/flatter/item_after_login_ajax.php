@@ -1,15 +1,16 @@
 <?php
 require '../../../oc-load.php';
 require 'functions.php';
+$comment_user_id = osc_logged_user_id();
 $data = new DAO();
 $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
-$following_user = get_user_following_data(osc_logged_user_id());
+$following_user = get_user_following_data($comment_user_id);
 if ($following_user):
-    $data->dao->where(sprintf('(item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s))', implode(',', get_user_categories(osc_logged_user_id())), implode(',', $following_user)));
+    $data->dao->where(sprintf('(item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s))', implode(',', get_user_categories($comment_user_id)), implode(',', $following_user)));
 endif;
 
 if (isset($_REQUEST['search_by'])):
@@ -29,7 +30,7 @@ if (!empty($_REQUEST['category_id'])):
     endif;
     $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
 else:
-    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
+    $data->dao->whereIn('item.fk_i_category_id', get_user_categories($comment_user_id));
 endif;
 
 if (!empty($_REQUEST['country_id'])):    
@@ -167,19 +168,13 @@ if ($items):
                         <?php endif; ?>
                         <?php
                         $total_comment = count($c_data);
-                        foreach ($c_data as $k => $comment_data):                            
+                        foreach ($c_data as $k => $comment_data):                              
                             $comment_user = get_user_data($comment_data['fk_i_user_id']); 
-                            if($total_comment>3 && $total_comment-3 > $k):
-                                continue;
-                            endif;
-//                            if ($k > 2 && !$load_more && count($c_data) > 3):
-//                                $load_more = 'load more';
-                                ?>                                
-                                <!--<div class="load_more">-->
-                                    <?php
-//                                endif;
-                                ?>
-                                <div class="box-footer box-comments">
+                                if ($k < $total_comment-3 && !$load_more):
+                                    $load_more = 'load more';
+                                    echo '<div class="load_more">';                            
+                                endif; ?>
+                                <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id']?'border-blue-left':''?>">
                                     <div class="box-comment">
                                         <!-- User image -->
                                         <div class="comment_user_image">
@@ -211,13 +206,11 @@ if ($items):
                                         <!-- /.comment-text -->
                                     </div>                       
                                 </div>  
-                                <?php
-//                                if ($k > 2 && $k == (count($c_data) - 1)):
-//                                    unset($load_more);
-                                    ?>
-                                <!--</div>-->                                
-                                <?php
-//                            endif;                           
+                            <?php
+                                if ($k == (count($c_data) - 4)):
+                                    unset($load_more);
+                                  echo "</div>";                                
+                                endif;                           
                         endforeach;
                     endif;
                     ?>

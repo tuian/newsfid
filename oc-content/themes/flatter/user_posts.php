@@ -89,7 +89,7 @@ if ($items):
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
                         <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?>
-                            <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+<!--                            <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
                                     <li class="delete_post" data-user-id='<?php echo $user['user_id']; ?>' data-post-id='<?php echo $item['pk_i_id']; ?>'><a>Supprimer la publication</a></li>
                                     <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Modifier</a></li>
@@ -99,7 +99,7 @@ if ($items):
                                     <li><a></a></li>
                                     <li><a>Signaler la publication</a></li>
                                 </ul>
-                            </button>
+                            </button>-->
                         </span>
                     </div>
                     <!-- /.user-block -->
@@ -162,20 +162,14 @@ if ($items):
                             </div>
                         <?php endif; ?>
                         <?php
+                        $total_comment = count($c_data);
                         foreach ($c_data as $k => $comment_data):
-                            ?>
-                            <?php
                             $comment_user = get_user_data($comment_data['fk_i_user_id']);
-                            ?>
-                            <?php
-                            if ($k > 2 && !$load_more && count($c_data) > 3):
-                                $load_more = 'load more';
-                                ?>                                
-                                <div class="load_more">
-                                    <?php
-                                endif;
-                                ?>
-                                <div class="box-footer box-comments">
+                            if ($k < $total_comment-3 && !$load_more):
+                                    $load_more = 'load more';
+                                    echo '<div class="load_more">';                            
+                                endif; ?>
+                                <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id']?'border-blue-left':''?>">
                                     <div class="box-comment">
                                         <!-- User image -->
                                         <div class="comment_user_image">
@@ -184,7 +178,7 @@ if ($items):
                                         <div class="comment-text">
                                             <span class="username">
                                                 <?php echo $comment_user['user_name'] ?>
-                                                <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                                                <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span><!-- /.username -->
                                             <?php echo $comment_data['s_body']; ?>
                                         </div>
@@ -192,14 +186,10 @@ if ($items):
                                     </div>                       
                                 </div>  
                                 <?php
-                                if ($k > 2 && $k == (count($c_data) - 1)):
+                                if ($k == (count($c_data) - 4)):
                                     unset($load_more);
-                                    ?>
-                                </div>                                
-                                <?php
-                            endif;
-                            ?>                            
-                            <?php
+                                  echo "</div>";                                
+                                endif;  
                         endforeach;
                     endif;
                     ?>

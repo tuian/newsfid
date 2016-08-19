@@ -280,7 +280,7 @@ require_once 'functions.php';
                         <!-------------------------Location end------------------------------>
                         <div class="breack-line"></div></div>
                     <!-------------------------Reminder start------------------------------>
-                    <div class="col-md-12 padding-0 border-radius-10">
+<!--                    <div class="col-md-12 padding-0 border-radius-10">
                         <div class="greybg padding-top-3per">
                             <div class="col-md-12 vertical-row">
                                 <div class="sub col-md-offset-1">
@@ -332,14 +332,13 @@ require_once 'functions.php';
                             </div>
                             <div class="col-md-12 vertical-row">
                                 <div class="col-md-offset-1 col-md-11 padding-top-3per">
-                                    <!--                                    <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
-                                                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>-->
+                                                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
+                                                                        <h5>A tout moment vous pouvez faire un portate de compte pour passer</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-------------------------Reminder end------------------------------>
-                    <div class="breack-line"></div>
+                    <div class="breack-line"></div>-->                    
                     <!-------------------------Finalisation Start------------------------------>
                     <div class="finalisation-info border-radius-10 bg-white">
                         <div class="modal-header col-md-offset-1 margin-top-20">
@@ -445,9 +444,10 @@ require_once 'functions.php';
                                                                         process($items);
                                                                     }
                                                                 });
-                                                            } else {
-                                                                alert('Please select country first');
-                                                            }
+                                                            } 
+//                                                            else {
+//                                                                alert('Please select country first');
+//                                                            }
                                                         },
                                                         afterSelect: function (obj) {
                                                             $('#s_region_id').val(obj.id);
@@ -481,9 +481,10 @@ require_once 'functions.php';
                                                                         process($items);
                                                                     }
                                                                 });
-                                                            } else {
-                                                                alert('Please select region first');
-                                                            }
+                                                            } 
+//                                                            else {
+//                                                                alert('Please select region first');
+//                                                            }
                                                         },
                                                         afterSelect: function (obj) {
                                                             //$('#sRegion').val(obj.id);

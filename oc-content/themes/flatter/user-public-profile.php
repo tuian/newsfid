@@ -225,7 +225,7 @@ endif;
                                             ?>
                                         </h5>
                                         <span class="description-text">
-                                            ABONNEMENTS
+                                            Follow
                                         </span>
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@ endif;
                                             ?>
                                         </h5>
                                         <span class="description-text">
-                                            FOLLOWERS
+                                            Followers
                                         </span>
                                     </div>
                                 </div>
@@ -258,7 +258,7 @@ endif;
                                             endif;
                                             ?>
                                         </h5>
-                                        <span class="description-text">LIKES</span>
+                                        <span class="description-text">Likes</span>
                                     </div>
                                 </div>
                             </div>
@@ -390,7 +390,7 @@ endif;
                                     <div class="col-md-offset-1 col-md-10">
                                         <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
                                             <div class="col-md-10  margin-bottom-20">
-                                                <input type="text" class="bold follower_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
+                                                <input type="text" class="bold follower_search_text search_text" placeholder=" who are you looking for among your followers?">
                                             </div>
                                             <div class="follower-search-button search-button col-md-1">
                                                 <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -429,7 +429,7 @@ endif;
                                     <div class="col-md-offset-1 col-md-10">
                                         <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
                                             <div class="col-md-10  margin-bottom-20">
-                                                <input type="text" class="bold circle_search_text search_text" placeholder="Qui recherchez vous dans le cercle?">
+                                                <input type="text" class="bold circle_search_text search_text" placeholder="Who are you looking for among your circle?">
                                             </div>
                                             <div class="circle-search-button search-button col-md-1">
                                                 <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>

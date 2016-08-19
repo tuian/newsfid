@@ -9,9 +9,20 @@ if ($_REQUEST['submit'] == 'send-msg'):
     $msg_array['to_name'] = $_REQUEST['to_name'];
     $msg_array['message'] = $_REQUEST['msg'];
     $msg_array['sent'] = date('Y-m-d H:i:s');
+    
+    
+//    $user = User::newInstance()->findByPrimaryKey($u['user_id']);     // change it                        
+//    if (useronline_show_user_status($_REQUEST['user_id']) == 1) {        
+//        $msg_array['recd'] = 1;
+//    }
+//    else{            
+//        $msg_array['recd'] = 0;
+//    }
     $msg_array['recd'] = 0;
-    $msg_array['time'] = time();
-    $msg_array['GMT_time'] = time();
+    $msg_array['read_status'] = 0;
+    
+    $msg_array['time'] =  time() . str_replace(" ", "", microtime());
+    $msg_array['GMT_time'] = time();   
     $msg_array['message_type'] = 0;
     $msg_array['room_id'] = -1;
 //    pr($_REQUEST);
@@ -48,6 +59,7 @@ if ($_REQUEST['action'] == 'chat-converstion'):
                 </div>
                 <div class="col-md-11 padding-top-4per" id="conv">
                     <label class="bold font-color-black margin-0"><?php echo $msg['from_name']; ?></label>
+                    <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($msg['sent'])) ?></span>
                     <div class="icon-size">
                         <?php
                         $id = osc_logged_user_id();

@@ -68,7 +68,7 @@ osc_current_web_theme_path('header.php');
                                     </div>
 
                                     <div class="col-md-9 col-sm-9">
-                                        I agree to the <a class="clr" href="<?php echo osc_get_preference("terms_link", "flatter_theme"); ?>"><?php _e("terms", 'flatter'); ?></a>.
+                                        I agree to the <a class="clr" href="<?php echo osc_base_url() . '?page=page&id=34' ?>" target="_blank"><?php _e("terms", 'flatter'); ?></a>.
                                     </div>
                                 </div>
 

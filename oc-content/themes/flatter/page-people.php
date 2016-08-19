@@ -11,7 +11,7 @@ $logged_user = get_user_data(osc_logged_user_id());
 
         <ul>
             <li class="people-search col-md-11">
-                <input class="search_name" type="text" placeholder="Search for someone or a band">
+                <input class="search_name" type="text" placeholder="Search for someone or an organization">
             </li>
             <li class="search-button">
                 <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
