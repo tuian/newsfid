@@ -67,17 +67,16 @@ if ($items):
                     <?php } ?>
                     <div class="description" >
                         <div class="col-md-9 padding-top-10">
-                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="img-responsive item_image user_thumbnail">
-                            <h3 class="item_title">
+                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="col-md-3 padding-0 img-responsive item_image user_thumbnail">
+                            <h3 class="item_title col-md-9">
                                 <a class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
                                     <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
                                     <?php //echo osc_item_title();  ?>
                                 </a>
                             </h3>
+                            <span class="item_time col-md-9 padding-left-10"><?php echo $date_in_french; ?></span>                            
                         </div>
-                        <div class="col-md-3 text-right padding-top-10">
-                            <span class="item_time"><?php echo $date_in_french; ?></span>                            
-                        </div>
+                        
                         <div class="col-md-12">
                             <p class="item_description">
                                 <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>

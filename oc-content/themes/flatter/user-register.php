@@ -51,10 +51,10 @@ osc_current_web_theme_path('header.php');
                             <div class="col-md-5 margin-l-m-10">
                                 <div class="row background-white padding-top-13per padding-bottom-13per">
                                     <div class="col-md-12">
-                                        <h2>Créer un compte gratuitement</h2>
+                                        <h2> Create an account for free </h2>
                                         <span>
-                                            Newsfid est un service de cloud instantanée qui héberge des les news et publications.<br/>
-                                            concernant ce que vous êtes intéressant pour, vous pouvez maintenant suivre l'organisation et les gens et faire encore beaucoup plus.
+                                            Newsfid is an instant cloud service that hosts news and stories about what you are interesting for.  <br/><br/>
+                                            You can now follow organizations and  people and do even much more.
                                         </span>
                                     </div>
                                 </div>

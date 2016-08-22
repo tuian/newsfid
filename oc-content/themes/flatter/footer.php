@@ -130,7 +130,7 @@
                 </div>
                 <div class="col-md-offset-3 col-md-8 font-12 light_gray">user is typing....</div>
                 <div class="col-md-12 margin-top-10 replay_area">
-                    <textarea class="replay_area border-none outline-none color-white" placeholder="Write a replay..."></textarea>
+                    <textarea class="replay_area border-none outline-none color-white" placeholder="Write a reply..."></textarea>
                 </div>
             </div>            -->
         </div>	

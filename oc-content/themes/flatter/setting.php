@@ -32,23 +32,23 @@ $user_desc = $user_result->row();
             <div class="col-md-12 padding-0">      
                 <ul class="nav nav-tabs settings-li">
                     <span class="set bold font-30px font-color-black">Settings</span>
-                    <li ><a data-toggle="tab" href="#securite">Sécurité</a></li>
+                    <li ><a data-toggle="tab" href="#securite">Security</a></li>
                     <li ><a data-toggle="tab" href="#social">Social</a></li>
-                    <li class="active" ><a data-toggle="tab" href="#general">Général</a></li>
+                    <li class="active" ><a data-toggle="tab" href="#general">General </a></li>
                 </ul>
             </div>
             <div class="tab-content">
                 <div id="general" class="tab-pane fade in active">
                     <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange border-bottom-gray padding-bottom-10">
                         <div class='col-md-3'>
-                            <h2 class="bold blue_text">Général</h2>
+                            <h2 class="bold blue_text">General </h2>
                         </div>
 
                     </div>
                     <div class="col-md-12 padding-0">
                         <div class="row user_info_row success-border margin-0">
                             <div class="col-md-4 col-sm-4">
-                                <span class="user_info_header">A propos de moi</span>
+                                <span class="user_info_header">About me </span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_info">
                                 <span class="user_info_text info_text" data_text="<?php echo $user_desc['s_info']; ?>">
@@ -64,7 +64,7 @@ $user_desc = $user_result->row();
 
                         <div class="row user_info_row  margin-0">
                             <div class="col-md-4 col-sm-4">
-                                <span class="user_info_header">Type de compte</span>
+                                <span class="user_info_header">Type of account</span>
                             </div>
                             <div class="col-md-8 col-sm-8">
                                 <span class="user_type_text info_text" data_role_id="<?php echo $user_info['role_id'] ?>">
@@ -168,18 +168,18 @@ $user_desc = $user_result->row();
                 <div id="securite" class="tab-pane fade in">
                     <div class="col-md-12 menu-tabs padding-0 ">      
                         <ul class="nav nav-tabs padding-top-4per padding-bottom-20">
-                            <li class="col-md-offset-1"><a href="#compte">Compte</a></li>
-                            <li><a href="#contenu">Contenu</a></li>
-                            <li><a href="#moyen_de_paiement">Moyen de Paiment</a></li>
-                            <li><a href="#compte_bloques">Compte bloqués</a></li>
-                            <li><a href="#verouillage">Verrouillage</a></li>
+                            <li class="col-md-offset-1"><a href="#compte">Account</a></li>
+                            <li><a href="#contenu">Content</a></li>
+                            <li><a href="#moyen_de_paiement">Mean of payment</a></li>
+                            <li><a href="#compte_bloques">Bloqued account</a></li>
+                            <li><a href="#verouillage">Locking</a></li>
                             <li><a href="#audio">Audio</a></li>
                         </ul>
                     </div>
                     <div id="compte">
                         <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange">
                             <div class='col-md-3'>
-                                <h1 class="bold blue_text">Compte</h1>
+                                <h1 class="bold blue_text">Acount</h1>
                             </div>
                             <div id="edit" class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -189,7 +189,7 @@ $user_desc = $user_result->row();
                         <div class="row margin-0">
                             <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Nom d'utilisateur
+                                    Username
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row user">
 
@@ -202,7 +202,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Adresse email
+                                     Email address
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <input type="text" name="up_email" class="user_email_textbox disabled" value="<?php echo $user_info['s_email']; ?>" disabled>
@@ -213,7 +213,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Numero de telephone
+                                    Phone number
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
                                     <div class="input-group code-box">
@@ -227,7 +227,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Reseaux Defaut
+                                    Default network
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <select id="country_Id" class="user_country_textbox disabled" name="up_country" disabled>
@@ -315,7 +315,7 @@ $user_desc = $user_result->row();
                     <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row padding-bottom-10">
                             <div class='col-md-3'>
-                                <h1 class="bold blue_text">Contenu</h1>
+                                <h1 class="bold blue_text">Content</h1>
                             </div>
                         </div>
                         <div class="border-bottom-gray  col-md-12"></div>
@@ -324,7 +324,7 @@ $user_desc = $user_result->row();
                                 Medias
                             </div>
                             <div class="col-md-7 font-color-black">
-                                Tout le monde peut voir ce que je publie
+                                Everyone can see what I post
                             </div>
                         </div>
                         <div class="col-md-offset-1 col-md-12 padding-top-4per vertical-row">
@@ -336,7 +336,9 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-7">
                                 <div class="padding-left-10 font-light-gray">
-                                    dans le cas contraire seui vos aboness pourront consulter votre contenu
+                                    
+                                    Otherwise only followers can see my content
+
                                 </div>
                             </div>
                         </div>
@@ -345,7 +347,7 @@ $user_desc = $user_result->row();
                     <div id="moyen_de_paiement" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text">Moyen de paiement</h1>
+                                <h1 class="bold blue_text">Mean of payment</h1>
                             </div>
                             <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -358,7 +360,7 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-credit-card fa-2x"></i>
                                 </div>
                                 <div class="col-md-offset-1 col-md-9">
-                                    Ajouter une carte de paiement
+                                     Add a debit / Credit card
                                 </div>
 
                             </div>
@@ -367,7 +369,7 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-credit-card fa-2x"></i>
                                 </div>
                                 <div class="col-md-offset-1 col-md-9 font-light-gray">
-                                    Modifier ma carte de paiement
+                                    Change my payment card
                                 </div>
                             </div>
                         </div>
@@ -375,16 +377,16 @@ $user_desc = $user_result->row();
                         <div class="col-md-12 padding-top-4per">
                             <div class="col-md-offset-1 col-md-10" id="payment-card">
                                 <div class="col-md-12">
-                                    <div class="blue_text bold">Mode de paiement</div>
+                                    <div class="blue_text bold">Mean of payment </div>
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="Namero de Carte" required class="card_number">
+                                    <input type="text" placeholder="Card number" required class="card_number">
                                     <span class="card-icon"></span>
                                 </div>
                                 <div class="col-md-12">                                           
                                     <div class="margin-top-20">
                                         <div class="col-md-5 col-sm-5">
-                                            Expiration
+                                            Expiration date
                                         </div>
                                         <div class="col-md-offset-4 col-md-3 col-sm-offset-5 col-sm-2">
                                             CVV<span class="circle-border">?</span>
@@ -411,16 +413,16 @@ $user_desc = $user_result->row();
                                     <?php UserForm::country_select(osc_get_countries()); ?>
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="Ligne d'address 1">
+                                    <input type="text" placeholder=" Address ">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border" >
                                     <input type="text">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="Code Postal">
+                                    <input type="text" placeholder=" Zip code/ Post code">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="Ville">
+                                    <input type="text" placeholder="City">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
                                     <input type="text" placeholder="CEDEX">
@@ -431,7 +433,7 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
                         <div class="col-md-12 margin-top-20">
                             <div class="col-md-offset-2 col-md-8">
-                                En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les <span class="blue_text"> Conditions d'utilisation </span>et de <span class="blue_text"> confidentialite </span>des services Newsfid.  
+                                By continuing you add this payment method to your account and accept the  <span class="blue_text"> generals temrs of use </span> and <span class="blue_text"> privacy </span> of  Newsfid services.  
                             </div>
                             <div class="col-md-offset-2 col-md-8 padding-top-4per">
                                 <div class="onoffswitch">
@@ -455,7 +457,7 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
                         <div class="col-md-12 padding-top-4per">
                             <div class="col-md-offset-3">
-                                <button type="submit" class="btn btn-lg button-blue">Enregistrer</button>
+                                <button type="submit" class="btn btn-lg button-blue"> Save </button>
                             </div>
                         </div>
                     </div>
@@ -463,7 +465,7 @@ $user_desc = $user_result->row();
                     <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text">Compte bloqués</h1>
+                                <h1 class="bold blue_text"> Bloqued account</h1>
                             </div>
                             <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -484,7 +486,7 @@ $user_desc = $user_result->row();
                                 <h3 class="font-color-black bold"> Alex Crawford Sky</h3>
                             </div>
                             <div class="col-md-offset-2 col-md-3">
-                                <button class="btn btn-disabled">Bloqués</button>
+                                <button class="btn btn-disabled">Bloqued</button>
                             </div>
                         </div>
                     </div>
@@ -492,7 +494,7 @@ $user_desc = $user_result->row();
                     <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text">Verrouillage</h1>
+                                <h1 class="bold blue_text"> Locking </h1>
                             </div>
                         </div>
                         <div class="col-md-offset-1 col-md-10 font-light-gray padding-3per">
@@ -501,7 +503,7 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12 padding-top-8per"></div>
                         <div class="col-md-12 padding-3per">
                             <div class="col-md-offset-1 col-md-8 padding-3per bold">
-                                Verrouiller mes paramétres
+                                Lock my settings now
 
                             </div>
                             <div class="col-md-2 padding-3per">
@@ -515,7 +517,7 @@ $user_desc = $user_result->row();
                         <div class="col-md-12">
                             <div class="col-md-12">
                                 <div class="padding-3per">
-                                    Confirmer votre mot de passe
+                                     Confirm your password
                                 </div>
                             </div>
                             <div class="col-md-8 padding-left-8per">
@@ -524,7 +526,7 @@ $user_desc = $user_result->row();
                                 </div>
                             </div>
                             <div class="col-md-4 padding-3per">
-                                <button type="submit" class="btn btn-lg button-blue-box">Enregistrer</button>
+                                <button type="submit" class="btn btn-lg button-blue-box">Save</button>
                             </div>
                         </div>
                     </div>
@@ -544,10 +546,10 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12"></div>
                         <div class="col-md-12">
                             <div class="col-md-3 padding-3per font-color-black">
-                                Confidentialite
+                                Privacy
                             </div>
                             <div class="col-md-9 padding-3per padding-left-7per font-color-black">
-                                Tout le monde peut voir
+                                   Everyone can see
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -575,7 +577,7 @@ $user_desc = $user_result->row();
                                 <i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i>
                             </div>
                             <div class="col-md-7">
-                                <h2 class="bold">Voulez vous vraiment deja nous quitter?</h2>
+                                <h2 class="bold"> Do you wanna leave us already?  </h2>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -585,7 +587,7 @@ $user_desc = $user_result->row();
                         </div>
                         <div class="col-md-12">
                             <div class="col-md-offset-3 col-md-8 font-light-gray padding-top-8per padding-bottom-6per">
-                                <button class="en-savoir-plus-button-gry">Supprimer</button>
+                                <button class="en-savoir-plus-button-gry">Delete my account</button>
                             </div>
                         </div>
                     </div>
