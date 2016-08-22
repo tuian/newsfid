@@ -4,8 +4,8 @@ require 'functions.php';
 $user_id = osc_logged_user_id();
 
 $comment_comment_id = $_REQUEST['comment_id'];
-    $update_message = new DAO();    
-    $res = $update_message->dao->update("frei_chat", array('read_status' => 1), array('`to`' => $user_id));    
+$update_message = new DAO();
+$res = $update_message->dao->update("frei_chat", array('read_status' => 1), array('`to`' => $user_id));
 ?>
 <?php osc_current_web_theme_path('header.php'); ?>
 
@@ -24,20 +24,20 @@ $comment_comment_id = $_REQUEST['comment_id'];
                     </ul>
                 </div>
                 <div class="col-md-12 background-white border-box-right padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
-                    <input type="text" name="q" class="form-control search-tchat-text" placeholder="Search...">
+                    <input type="text" name="search_name" class="form-control search-tchat-text search_name" placeholder="Search...">
                     <i class="fa fa-search search_icon pointer padding-10"></i>                 
                 </div>
                 <?php
                 $msg = get_chat_message_data($user_id);
                 ?>
                 <div class="col-md-12 background-white border-box-right t_chat_overflow">
-                    <ul class="padding-0">
+                    <ul class="padding-0" id="user_list">
                         <?php
                         $user = $msg['from'];
                         foreach ($msg as $k => $data):
 
                             $id = $data['to'];
-                            $user = get_user_data($id);                            
+                            $user = get_user_data($id);
                             if (!empty($user['s_path'])):
                                 $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
                             else:
@@ -59,15 +59,16 @@ $comment_comment_id = $_REQUEST['comment_id'];
             </div>
             <div class="col-md-8 border-top-gray border-bottom-gray background-white">
                 <div class="col-md-12 padding-top-3per">
-<!--                    <div class="vertical-row">
-                        <span class="border-bottom-gray padding-top-4per separator1"></span>
-                        <span class="padding-top-4per vertical-row separator2"><span>August</span><span>&nbsp;17</span></span>
-                        <span class="border-bottom-gray padding-top-4per separator3"></span>
-                    </div>-->
+                    <!--                    <div class="vertical-row">
+                                            <span class="border-bottom-gray padding-top-4per separator1"></span>
+                                            <span class="padding-top-4per vertical-row separator2"><span>August</span><span>&nbsp;17</span></span>
+                                            <span class="border-bottom-gray padding-top-4per separator3"></span>
+                                        </div>-->
                     <div class="border-bottom-gray padding-0 col-md-12" id='chat-box'>
                         <?php
                         if (isset($msg[0]['to'])):
-                            $conv = get_chat_conversion($user_id, $msg[0]['to']);?>
+                            $conv = get_chat_conversion($user_id, $msg[0]['to']);
+                            ?>
                             <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $msg[0]['from'] ?>" from-user-name="<?php echo $msg[0]['from_name'] ?>" to-user-id="<?php echo $msg[0]['to'] ?>" to-user-name="<?php echo $msg[0]['to_name'] ?>"/>
                             <?php foreach ($conv as $k => $msg):
                                 ?>
@@ -117,7 +118,7 @@ $comment_comment_id = $_REQUEST['comment_id'];
                     </div>
 
                     <div class="col-md-12 padding-0 padding-top-13per">
-                        <textarea class="t_chat_textarea" placeholder="Write a Replay...."></textarea>
+                        <textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>
                     </div>
                     <div class="col-md-12 padding-0 padding-bottom-13per padding-top-4per">
                         <button class="btn btn-default send_msg">Send</button>
@@ -135,7 +136,7 @@ $comment_comment_id = $_REQUEST['comment_id'];
         $(this).addClass('active_tab');
     });
     $(document).ready(function () {
-       $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500); 
+        $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
     });
     $(document).on('click', '.send_msg', function () {
         var msg = $('.t_chat_textarea').val();
@@ -155,7 +156,7 @@ $comment_comment_id = $_REQUEST['comment_id'];
                 to_name: to_name,
                 msg: msg
             },
-            success: function (data) {                
+            success: function (data) {
                 $('#chat-box').html(data);
                 $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
                 $('.t_chat_textarea').val('');
@@ -171,11 +172,27 @@ $comment_comment_id = $_REQUEST['comment_id'];
                 action: 'chat-converstion',
                 user_id: id
             },
-            success: function (data) {                
+            success: function (data) {
                 $('#chat-box').html(data);
-                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500); 
+                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
             }
         });
     });
+
+   $(document).on('keyup','.search_name',function (){
+        var search = $(this).val();
+        $.ajax({
+           type: 'post',
+           url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+           data: {
+               search_action: 'search-action',
+               search_text: search
+           },
+           success: function (data) {
+                $('.t_chat_overflow').html(data);
+               // $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+            }
+        });
+   });
 </script>
 <?php osc_current_web_theme_path('footer.php'); ?>

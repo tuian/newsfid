@@ -34,7 +34,7 @@ if ($item_id) {
     $item_location['s_city_area'] = $_REQUEST['s_city_area_name'];
 
     $item_data->dao->update("{$db_prefix}t_item_location", $item_location, array('fk_i_item_id' => $item_id));
-    osc_redirect_to(osc_base_url());
+    osc_redirect_to(osc_user_public_profile_url(osc_logged_user_id()));
     die;
 }
 ?>

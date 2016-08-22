@@ -9,8 +9,8 @@ if ($_REQUEST['submit'] == 'send-msg'):
     $msg_array['to_name'] = $_REQUEST['to_name'];
     $msg_array['message'] = $_REQUEST['msg'];
     $msg_array['sent'] = date('Y-m-d H:i:s');
-    
-    
+
+
 //    $user = User::newInstance()->findByPrimaryKey($u['user_id']);     // change it                        
 //    if (useronline_show_user_status($_REQUEST['user_id']) == 1) {        
 //        $msg_array['recd'] = 1;
@@ -20,9 +20,9 @@ if ($_REQUEST['submit'] == 'send-msg'):
 //    }
     $msg_array['recd'] = 0;
     $msg_array['read_status'] = 0;
-    
-    $msg_array['time'] =  time() . str_replace(" ", "", microtime());
-    $msg_array['GMT_time'] = time();   
+
+    $msg_array['time'] = time() . str_replace(" ", "", microtime());
+    $msg_array['GMT_time'] = time();
     $msg_array['message_type'] = 0;
     $msg_array['room_id'] = -1;
 //    pr($_REQUEST);
@@ -32,10 +32,11 @@ endif;
 if ($_REQUEST['action'] == 'chat-converstion'):
     $partner_id = $_REQUEST['user_id'];
     $user = get_user_data($user_id);
-    $partner = get_user_data($partner_id);    
-    $conv = get_chat_conversion($user_id, $partner_id);?>
+    $partner = get_user_data($partner_id);
+    $conv = get_chat_conversion($user_id, $partner_id);
+    ?>
     <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $user['user_id'] ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner['user_id'] ?>" to-user-name="<?php echo $partner['user_name'] ?>"/>
-    <?php 
+    <?php
     foreach ($conv as $k => $msg):
         ?>
         <div class="conversion">
@@ -79,6 +80,43 @@ if ($_REQUEST['action'] == 'chat-converstion'):
         </div>
         <?php
     endforeach;
+endif;
+if ($_REQUEST['search_action'] == 'search-action'):
+    $search = $_REQUEST['search_text'];
+    $user_conversion_data = new DAO();
+    $user_conversion_data->dao->select('frei_chat.*');
+    $user_conversion_data->dao->from('frei_chat');
+    $user_conversion_data->dao->where("`from` = " . $user_id . " AND `to_name` LIKE '%" . $search . "%'");
+    $user_conversion_data->dao->groupBy('`to`');
+    $user_result = $user_conversion_data->dao->get();
+    $result = $user_result->result();
+    $msg = $result;
+    ?>
+    <ul class="padding-0" id="user_list">
+        <?php
+        $result = $msg['from'];
+        foreach ($msg as $k => $data):
+
+            $id = $data['to'];
+            $user = get_user_data($id);
+            if (!empty($user['s_path'])):
+                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+            else:
+                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
+            ?>
+            <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
+                <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
+                <div>
+                    <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
+                    <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
+                </div>
+            </li>
+            <?php
+        endforeach;
+        ?>
+    </ul>
+    <?php
 endif;
 ?>
 

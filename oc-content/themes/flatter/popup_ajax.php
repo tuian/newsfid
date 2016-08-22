@@ -120,7 +120,7 @@ while (osc_has_custom_items()):
 
                                                 <li class="facebook margin-left-15">
                                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                                return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                                         <i class="fa fa-facebook"></i>
                                                     </a>
                                                 </li>
@@ -130,13 +130,13 @@ while (osc_has_custom_items()):
                                                 </li>
                                                 <li class="googleplus">
                                                     <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                                return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                                         <i class="fa fa-google-plus"></i>
                                                     </a>
                                                 </li> 
                                                 <li> 
                                                     <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
-                                                        <div class="edit edit_post" >
+                                                        <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
                                                             <i class="fa fa-pencil"></i>
                                                         </div>
                                                     <?php } ?>
@@ -169,7 +169,7 @@ while (osc_has_custom_items()):
                                                                 <div class="comment-area">
                                                                     <span class="username">
                                                                         <?php echo $comment_user['user_name'] ?>
-                                                                        <!--                                                                        <div class="dropdown  pull-right">
+<!--                                                                                                                                                <div class="dropdown  pull-right">
                                                                                                                                                     <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                                                                                                                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                                                                                                                                                         <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
@@ -279,8 +279,23 @@ while (osc_has_custom_items()):
 
         });
     });
-    $(".edit_post").click(function () {
-        $('#popup-free-user-post').modal('show');
+    $(document).on('click', '.edit_post', function () {
+        var item_id = $(this).attr('item_id');
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'update_user_post.php'; ?>',
+            type: 'post',
+            data: {
+                action: 'update_post',
+                item_id: item_id
+            },
+            success: function (data) {
+                $('.free-user-post').html(data);
+//                                            $('#popup-free-user-post').appendTo("body");
+                $('#popup-free-user-post').modal('show');
+                $('#popup-free-user-post').replaceWith('#item_popup_modal');
+                // $('#popup-free-user-post').appendTo('body');
+            }
+        });
     });
 </script>
 <script>

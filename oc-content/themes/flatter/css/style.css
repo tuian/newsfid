@@ -1880,9 +1880,7 @@ select {
     display: none;
     position: relative;
 }
-.result_text{
-
-    position: relative;
+.result_text{  
     color: #3498db;
 }
 .cat-image{
@@ -3347,4 +3345,15 @@ select {
 }
 .chat-user a{
     color:#fff !important;
+}
+.communication-tab .btn{
+    padding: 2px 0px;
+    margin-right: 2px;
+    width: 32.4%;
+}
+.last_btn{
+    margin: 0;
+}
+.masonry_row .user_thumbnail{
+    width: 60px;
 }
