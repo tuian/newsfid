@@ -105,7 +105,7 @@ require 'functions.php';
                                             <div class="blue_text bold"><?php echo __('Method of payment'); ?></div>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="<?php echo __('Card holder'); ?>" required class="card_name">
+                                            <input type="text" placeholder="<?php echo __("Cardholder's name"); ?>" required class="card_name">
                                             <span class="card-icon"></span>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
@@ -114,7 +114,7 @@ require 'functions.php';
                                         <div class="col-md-12">                                           
                                             <div class="margin-top-20">
                                                 <div class="col-md-5 col-sm-5">
-                                                    Expires end 
+                                                    Expiration date
                                                 </div>
                                                 <div class="col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2">
                                                     CVV<span class="circle-border"> ?</span>
@@ -141,13 +141,13 @@ require 'functions.php';
                                             <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Ligne d'address 1">
+                                            <input type="text" placeholder="Address">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border" >
                                             <input type="text">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Code Postal">
+                                            <input type="text" placeholder="Zip code">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="Ville">

@@ -698,7 +698,7 @@ function custom_script() {
                         var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
                         $('.user_posts_area .user_post_page_number').val(next_page);
                     } else {
-                        $(".user_posts_area .result_text").text('No More Data Found').show();
+                        $(".user_posts_area .result_text").text('Ends of results').show();
                         is_enable_ajax = false;
                     }
                 }

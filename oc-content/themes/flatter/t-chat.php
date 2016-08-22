@@ -2,6 +2,10 @@
 require '../../../oc-load.php';
 require 'functions.php';
 $user_id = osc_logged_user_id();
+
+$comment_comment_id = $_REQUEST['comment_id'];
+    $update_message = new DAO();    
+    $res = $update_message->dao->update("frei_chat", array('read_status' => 1), array('`to`' => $user_id));    
 ?>
 <?php osc_current_web_theme_path('header.php'); ?>
 

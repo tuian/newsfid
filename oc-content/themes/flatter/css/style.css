@@ -9,7 +9,7 @@
 
 @import url(font-awesome.min.css);
 @import url(iconmoon.css);
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,greek-ext,greek,vietnamese,cyrillic,cyrillic-ext,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,greek-ext,greek,vietnamese,cyrillic,cyrillic-ext,latin-ext);
 body {
     font:15px/1.5 "Roboto",Helvetica,Arial,sans-serif;
     font-weight:300;
@@ -3344,4 +3344,7 @@ select {
     margin-left: 6px;
     padding: 2px 6px;
     background-color: #f53939 !important;
+}
+.chat-user a{
+    color:#fff !important;
 }

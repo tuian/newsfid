@@ -42,8 +42,9 @@ if (!empty($_REQUEST['post_type'])):
     $data->dao->where('item.item_type', $_REQUEST['post_type']);
 endif;
 
-$following_user = get_user_following_data($user_id);
-$following_user[] = $user_id;
+//$following_user = get_user_following_data($user_id);
+//$following_user[] = $user_id;
+
 //$current_user_following_users = get_user_following_data(osc_logged_user_id());
 //if ($following_user):
 //    $following_user[] = $user_id;
@@ -57,9 +58,11 @@ $following_user[] = $user_id;
 //else:
 //    $data->dao->where("item_user.has_private_post = '0'");
 //endif;
-$following_user = implode(',', $following_user);
-$data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($following_user))");
 
+//$following_user = implode(',', $following_user);
+//$data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($following_user))");
+
+$data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
 $start_from = $page_number * $offset;
@@ -70,6 +73,7 @@ if ($result) {
 } else {
     $items = array();
 }
+
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
     $conn = DBConnectionClass::newInstance();
@@ -148,7 +152,7 @@ if ($items):
                         'b_enabled' => 1);
                     //$comments_data->dao->limit(3);
                     $comments_data->dao->where($conditions);
-                    $comments_data->dao->orderBy('dt_pub_date', 'DESC');
+                    $comments_data->dao->orderBy('dt_pub_date', 'ASC');
                     $comments_result = $comments_data->dao->get();
                     $c_data = $comments_result->result();
                     ?>

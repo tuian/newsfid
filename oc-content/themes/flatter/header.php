@@ -258,7 +258,7 @@ found!');</script>";
                                 endif;
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
-                                    <a href="<?php // echo osc_current_web_theme_url() . 'soundpass.php' ?>">
+                                    <!--<a href="<?php  echo osc_current_web_theme_url() . 'soundpass.php' ?>">-->
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                         <i class="fa fa-copy"></i>
                                         My profile
@@ -323,7 +323,7 @@ found!');</script>";
                                         <li class="user_settings treeview <?php echo $active ?>" data-toggle="modal" data-target="#user_confirm_password">
     <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="javascript:void(0)">
-                                                <i class="fa fa-gear"></i>Réglage
+                                                <i class="fa fa-gear"></i>Center of settings
                                             </a>
                                         </li>
                                     </ul>

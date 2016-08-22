@@ -140,6 +140,6 @@ if ($items):
 //elseif($page_number > 0):
 //    echo '<h2 class="result_text">No More Data Found</h2> ';
 else:
-    echo '<h2 class="result_text">No Data Found</h2> ';
+    echo '<h2 class="result_text">Nothing to show off for now. Thanks to try later</h2> ';
 endif;
 ?>

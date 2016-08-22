@@ -1296,7 +1296,7 @@ function get_user_themes($user_id) {
     $user_theme_data->dao->where('user_id', $user_id);
     $user_theme_result = $user_theme_data->dao->get();
     $user_theme_array = $user_theme_result->result();
-    $theme_id_array = array_column($user_theme_array, 'theme_id');
+    $theme_id_array = custom_array_column($user_theme_array, 'theme_id');
     return $theme_id_array;
 }
 
@@ -1320,7 +1320,7 @@ function get_user_item_likes($user_id) {
     $user_like_result = $user_like_data->dao->get();
     $user_like_array = $user_like_result->result();
     if ($user_like_array):
-        $item_result = array_column($user_like_array, 'item_id');
+        $item_result = custom_array_column($user_like_array, 'item_id');
     else:
         $item_result = false;
     endif;
@@ -1411,7 +1411,7 @@ function get_user_following_data($user_id) {
     $user_like_result = $user_like_data->dao->get();
     $user_like_array = $user_like_result->result();
     if ($user_like_array):
-        $item_result = array_column($user_like_array, 'follow_user_id');
+        $item_result = custom_array_column($user_like_array, 'follow_user_id');
     else:
         $item_result = false;
     endif;
@@ -1427,7 +1427,7 @@ function get_user_follower_data($user_id) {
     $user_like_result = $user_like_data->dao->get();
     $user_like_array = $user_like_result->result();
     if ($user_like_array):
-        $item_result = array_column($user_like_array, 'user_id');
+        $item_result = custom_array_column($user_like_array, 'user_id');
     else:
         $item_result = false;
     endif;
@@ -1515,7 +1515,7 @@ function get_user_shared_item($user_id) {
     $user_share_result = $user_share_data->dao->get();
     $user_share_array = $user_share_result->result();
     if ($user_share_array):
-        $item_result = array_column($user_share_array, 'item_id');
+        $item_result = custom_array_column($user_share_array, 'item_id');
     else:
         $item_result = false;
     endif;
@@ -1596,7 +1596,7 @@ function get_user_watchlist_item($user_id) {
     if ($user_watchlist_result) {
         $user_watchlist_array = $user_watchlist_result->result();
         if ($user_watchlist_array):
-            $item_result = array_column($user_watchlist_array, 'item_id');
+            $item_result = custom_array_column($user_watchlist_array, 'item_id');
         endif;
     }
     return $item_result;
@@ -1770,9 +1770,8 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_data->dao->where("user_themes.user_id != {$user_id}");
     $suggest_user_data->dao->limit($limit);
     $suggest_user_result = $suggest_user_data->dao->get();
-    $suggest_user_array = $suggest_user_result->result();
-    $theme_user_id = array_column($suggest_user_array, 'user_id');
-
+    $suggest_user_array = $suggest_user_result->result();   
+    $theme_user_id = custom_array_column($suggest_user_array, 'user_id');    
     $suggest_user_data->dao->select("user_rubrics.*");
     $suggest_user_data->dao->from("{$db_prefix}t_user_rubrics as user_rubrics");
     $suggest_user_data->dao->where("user_rubrics.rubric_id IN ({$themes})");
@@ -1781,7 +1780,7 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_result = $suggest_user_data->dao->get();
     $suggest_user_array = $suggest_user_result->result();
 
-    $rubric_user_id = array_column($suggest_user_array, 'user_id');
+    $rubric_user_id = custom_array_column($suggest_user_array, 'user_id');
     $users = array_merge($theme_user_id, $rubric_user_id);
     return array_slice(array_unique($users), 0, $limit);
 }
@@ -2007,8 +2006,8 @@ function get_chat_users($filter = 'all') {
         $user_like_result = $user_like_data->dao->get();
         $user_like_array = $user_like_result->result();
         if ($user_like_array):
-            $followed_user = array_column($user_like_array, 'follow_user_id');
-            $follow_user = array_column($user_like_array, 'user_id');
+            $followed_user = custom_array_column($user_like_array, 'follow_user_id');
+            $follow_user = custom_array_column($user_like_array, 'user_id');
         endif;
         $chat_user = array_unique(array_merge((array) $follow_user, (array) $followed_user)); // remove self user
         if (($key = array_search($user_id, $chat_user)) !== false) {
@@ -2024,7 +2023,7 @@ function get_chat_users($filter = 'all') {
     $user_circle_array = $user_circle_result->result();
 //    pr($user_circle_array);
     if ($user_circle_array):
-        $circle_user = array_column($user_circle_array, 'circle_user_id');
+        $circle_user = custom_array_column($user_circle_array, 'circle_user_id');
         $chat_user = array_unique(array_merge($chat_user, $circle_user));
     endif;
 
@@ -2036,7 +2035,7 @@ function get_chat_users($filter = 'all') {
         $result = $user_circle_data->dao->get();
         $user_arr = $result->result();
         if ($user_arr):
-            $circle_user = array_column($user_arr, 'user_id');
+            $circle_user = custom_array_column($user_arr, 'user_id');
             $chat_user = array_unique(array_merge($chat_user, $circle_user));
         endif;
     endif;
@@ -2083,14 +2082,14 @@ function get_user_circle_data($user_id) {
     $user_circle_result = $user_circle_data->dao->get();
     $user_circle_array = $user_circle_result->result();
     if ($user_circle_array):
-        $item_result = array_column($user_circle_array, 'circle_user_id');
+        $item_result = custom_array_column($user_circle_array, 'circle_user_id');
     else:
         $item_result = false;
     endif;
     return $item_result;
 }
 
-function get_chat_message_data($user_id=null) {
+function get_chat_message_data($user_id = null) {
     $user_message_data = new DAO();
     $user_message_data->dao->select('frei_chat.*');
     $user_message_data->dao->from('frei_chat');
@@ -2102,7 +2101,7 @@ function get_chat_message_data($user_id=null) {
     return $user_messge_array;
 }
 
-function get_chat_conversion($user_id=null, $partner_user_id=null) {
+function get_chat_conversion($user_id = null, $partner_user_id = null) {
     $user_conversion_data = new DAO();
     $user_conversion_data->dao->select('frei_chat.*');
     $user_conversion_data->dao->from('frei_chat');
@@ -2113,15 +2112,23 @@ function get_chat_conversion($user_id=null, $partner_user_id=null) {
     return $user_conversion_array;
 }
 
-function get_pending_msg_cnt(){
-     $user_id = osc_logged_user_id();
+function get_pending_msg_cnt() {
+    $user_id = osc_logged_user_id();
     $user_message_datacnt = new DAO();
     $user_message_datacnt->dao->select('COUNT(*) as msg');
     $user_message_datacnt->dao->from('frei_chat');
     $user_message_datacnt->dao->where('`to`', $user_id);
-    $user_message_datacnt->dao->where('read_status', 0);    
+    $user_message_datacnt->dao->where('read_status', 0);
     $user_message_resultcnt = $user_message_datacnt->dao->get();
     $user_messge_cnt = $user_message_resultcnt->row();
-    return $user_messge_cnt['msg'];    
+    return $user_messge_cnt['msg'];
+}
+
+function custom_array_column($input = array(), $columnKey = null) {   
+    $resultArray = array();
+    foreach ($input as $k=>$v):
+        $resultArray[$k] = $v[$columnKey];
+    endforeach;
+    return $resultArray;
 }
 ?>
