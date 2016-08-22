@@ -104,12 +104,12 @@ if (isset($user_id)) {
     </div>-->
 
 <?php else : ?>
-    <div class="section" >
+<!--    <div class="section" >
         <span class="home-slider-text"> Newsfid </span>
         <div id="cover" classe="cover home-slider-img">
             <img src="images/top.main.jpg" class="img-responsive" />
         </div>
-    </div>
+    </div>-->
 
     <div class="section">
         <div class="postadspace">
