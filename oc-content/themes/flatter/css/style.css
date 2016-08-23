@@ -3387,3 +3387,13 @@ select {
         display: block !important;
     }
 }
+.usepost_no_record{
+    min-height: 100px;
+    background: #fff;
+    padding-left: 20px;
+    color: #ccc;
+    padding-top: 20px;
+}
+.usepost_no_record .result_text{
+    color: #ccc;
+}
