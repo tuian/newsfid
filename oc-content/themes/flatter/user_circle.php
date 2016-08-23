@@ -34,7 +34,7 @@ if ($follower_users):
 
                     <?php
                     if ($user['cover_picture_user_id']):
-                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . $user['pic_ext'];
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] .'.'. $user['pic_ext'];
                     else:
                         $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
                     endif;

@@ -3347,7 +3347,7 @@ select {
     color:#fff !important;
 }
 .communication-tab .btn{
-    padding: 2px 0px;
+    padding: 5px 0px;
     margin-right: 2px;
     width: 32.4%;
 }
@@ -3356,4 +3356,34 @@ select {
 }
 .masonry_row .user_thumbnail{
     width: 60px;
+}
+.communication-tab .follow-user-btn.unfollowing, .communication-tab .follow-user-btn.following {
+    color: #444 !important;
+    background-color: #f4f4f4 !important;
+}
+.communication-tab .follow-user-btn.unfollowing:hover, .communication-tab .follow-user-btn.following:hover {
+    background-color: #f7f7f7 !important;
+}
+.remove_circle{
+    font-size: 11px;
+    padding: 6px 0px !important;
+    text-align: center;
+}
+.add_circle{
+    font-size: 12px;
+}
+@media only screen and (max-width:1024px) and (min-width:1024px){
+    .user_info_area{
+       font-size: 10px;
+    }
+    .remove_circle{
+        font-size: 8px;
+        padding: 8px 0px !important;
+    }
+    
+}
+@media only screen and (max-width:768px) and (min-width:768px){
+    .communication-tab.vertical-row{
+        display: block !important;
+    }
 }

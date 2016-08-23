@@ -63,7 +63,7 @@ endif;
                 <div class=" bg-white col-md-12 padding-0">
                     <?php
                     if ($user['cover_picture_user_id']):
-                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
                     else:
                         $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
                     endif;
@@ -95,12 +95,12 @@ endif;
                                                     <div class="bbody">
 
                                                         <!-- upload form -->
-                                                        <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkForm()">
+                                                        <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkFormCover()">
                                                             <!-- hidden crop params -->
-                                                            <input type="hidden" id="x1_cover" name="x1" />
-                                                            <input type="hidden" id="y1_cover" name="y1" />
-                                                            <input type="hidden" id="x2_cover" name="x2" />
-                                                            <input type="hidden" id="y2_cover" name="y2" />
+                                                            <input type="hidden" id="x1_cover" name="x1_cover" />
+                                                            <input type="hidden" id="y1_cover" name="y1_cover" />
+                                                            <input type="hidden" id="x2_cover" name="x2_cover" />
+                                                            <input type="hidden" id="y2_cover" name="y2_cover" />
 
                                                             <h4>Step1: Please select image file</h4>
                                                             <div class="choose-file"><input type="file" name="file_cover_img" id="image_file_cover" onchange="fileSelectHandlerCover()" /></div>
@@ -115,8 +115,9 @@ endif;
                                                                     <input type="hidden" id="filesize_cover" name="filesize" />
                                                                     <input type="hidden" id="filetype_cover" name="filetype" />
                                                                     <input type="hidden" id="filedim_cover" name="filedim" />
-                                                                    <input type="hidden" id="w_cover" name="w_cover" />
-                                                                    <input type="hidden" id="h_cover" name="h_cover" />
+                                                                    <input type="hidden" id="w_cover" name="w" />
+                                                                    <input type="hidden" id="h_cover" name="h" />
+                                                                    
                                                                 </div>
                                                                 <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
                                                             </div>
@@ -171,8 +172,8 @@ endif;
                                                         <!-- upload form -->
                                                         <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkForm()">
                                                             <!-- hidden crop params -->
-                                                            <input type="hidden" id="x1" name="x1" />
-                                                            <input type="hidden" id="y1" name="y1" />
+                                                            <input type="hidden" id="x1" name="x" />
+                                                            <input type="hidden" id="y1" name="y" />
                                                             <input type="hidden" id="x2" name="x2" />
                                                             <input type="hidden" id="y2" name="y2" />
 
@@ -211,7 +212,7 @@ endif;
                         </div>
 
                         <div class="box-footer">
-                            <div class="col-md-12 padding-0">
+                            <div class="col-md-12 padding-0 user_info_area">
                                 <div class="col-sm-4 border-right padding-left-0">
                                     <div class="description-block">
                                         <h5 class="description-header">
@@ -229,7 +230,7 @@ endif;
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 border-right">
+                                <div class="col-sm-4 col-md-5 border-right">
                                     <div class="description-block">
                                         <h5 class="description-header">
                                             <?php
@@ -246,7 +247,7 @@ endif;
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-md-3">
                                     <div class="description-block">
                                         <h5 class="description-header">
                                             <?php
@@ -262,11 +263,28 @@ endif;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 padding-0 communication-tab vertical-row">
-                                <button class="btn btn-default col-md-4 padding-0">Follow</button>
-                                <button class="btn btn-default col-md-4 padding-0" onClick="FreiChat.create_chat_window(<?php echo "'" . $user['user_name'] . "'"; ?>, <?php echo $user['user_id']; ?>)"><?php echo $u['user_name']; ?>Tchat</button>
-                                <button class="btn btn-default col-md-4 padding-0 last_btn add_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>">Add to circle</button>
-                            </div>
+                            <?php if (osc_logged_user_id() != $user['user_id']): ?>
+                                <div class="col-md-12 padding-0 communication-tab vertical-row">
+                                    <?php
+                                    $user_id = osc_logged_user_id();
+                                    $follow_user_id = $user['user_id'];
+                                    ?>
+                                    <?php user_follow_btn_box($user_id, $follow_user_id) ?>
+                                    <button class="btn btn-default bold font-12 col-md-4 padding-0" onClick="FreiChat.create_chat_window(<?php echo "'" . $user['user_name'] . "'"; ?>, <?php echo $user['user_id']; ?>)"><?php echo $u['user_name']; ?>Tchat</button>
+                                    <?php
+                                    $circle_data = get_user_circle_data($user_id);
+                                    if (in_array($follow_user_id, $circle_data)):
+                                        ?>
+                                        <button class="btn btn-default bold col-md-4 padding-0 last_btn remove_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>">Remove to circle</button>
+                                        <?php
+                                    else:
+                                        ?>
+                                        <button class="btn btn-default bold col-md-4 padding-0 last_btn add_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>">Add to circle</button>
+                                    <?php
+                                    endif;
+                                    ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -334,9 +352,11 @@ endif;
                 <ul class="nav nav-tabs user_profile_navigation bg-white">
                     <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)">Post</a></li>
                     <li class="user_info"><a data-toggle="tab" data-target="#user_info" href="javascript:void(0)">Infos</a></li>
-                    <li class="user_watchlist"><a data-toggle="tab" data-target="#user_watchlist" href="javascript:void(0)">Watchlist</a></li>
                     <?php if (osc_user_id() == osc_logged_user_id()): ?>
-                        <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)">Followers</a></li>
+                        <li class="user_watchlist"><a data-toggle="tab" data-target="#user_watchlist" href="javascript:void(0)">Watchlist</a></li>
+                    <?php endif; ?>
+                    <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)">Follows</a></li>
+                    <?php if (osc_user_id() == osc_logged_user_id()): ?>
                         <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
                     <?php endif; ?>
                 </ul>  
@@ -364,51 +384,52 @@ endif;
 
                         <div>	<?php osc_current_web_theme_path('user_info.php') ?> </div>
                     </div>
-                    <div class="user_watchlist_container user_details tab-pane fade bg-white" id="user_watchlist">
-                        <?php osc_current_web_theme_path('user_watchlist.php') ?> 
-                    </div>
                     <?php if (osc_user_id() == osc_logged_user_id()): ?>
+                        <div class="user_watchlist_container user_details tab-pane fade bg-white" id="user_watchlist">
+                            <?php osc_current_web_theme_path('user_watchlist.php') ?> 
+                        </div>
+                    <?php endif; ?>
+                    <div class="user_follower_container user_details tab-pane fade" id="user_follower">
 
-                        <div class="user_follower_container user_details tab-pane fade" id="user_follower">
-
-                            <div class="row margin-0">
-                                <!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
-                                                                <div class="col-md-12">
-                                
-                                                                    <div class="col-md-1 padding-0">
-                                                                        <i class="fa fa-users fa-2x" aria-hidden="true" style="padding-top: 15px"></i>
-                                                                    </div>  
-                                                                    <div class="col-md-10">
-                                                                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.You should check in on some of those fields below. You should check in on<span class="bold" style="color:#000;"> some of those fields below.</span>
-                                                                    </div>
-                                                                    <div class="col-md-1 padding-0">
-                                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                
+                        <div class="row margin-0">
+                            <!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
+                                                            <div class="col-md-12">
+                            
+                                                                <div class="col-md-1 padding-0">
+                                                                    <i class="fa fa-users fa-2x" aria-hidden="true" style="padding-top: 15px"></i>
+                                                                </div>  
+                                                                <div class="col-md-10">
+                                                                    <strong>Holy guacamole!</strong> You should check in on some of those fields below.You should check in on some of those fields below. You should check in on<span class="bold" style="color:#000;"> some of those fields below.</span>
                                                                 </div>
-                                                                <div class="clear"></div>
-                                
-                                                            </div>-->
-                                <div class="col-md-12 padding-0 search-box success-border">
-                                    <div class="col-md-offset-1 col-md-10">
-                                        <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
-                                            <div class="col-md-10  margin-bottom-20">
-                                                <input type="text" class="bold follower_search_text search_text" placeholder=" who are you looking for among your followers?">
-                                            </div>
-                                            <div class="follower-search-button search-button col-md-1">
-                                                <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                            </div>
+                                                                <div class="col-md-1 padding-0">
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                            
+                                                            </div>
+                                                            <div class="clear"></div>
+                            
+                                                        </div>-->
+                            <div class="col-md-12 padding-0 search-box success-border">
+                                <div class="col-md-offset-1 col-md-10">
+                                    <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
+                                        <div class="col-md-10  margin-bottom-20">
+                                            <input type="text" class="bold follower_search_text search_text" placeholder=" who are you looking for among your followers?">
+                                        </div>
+                                        <div class="follower-search-button search-button col-md-1">
+                                            <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="user_follower_box"></div>
-
                             </div>
 
+                            <div class="user_follower_box"></div>
+
                         </div>
+
+                    </div>
+                    <?php if (osc_user_id() == osc_logged_user_id()): ?>
                         <div class="user_circle_container user_details tab-pane fade" id="user_circle">
                             <div class="row margin-0">
                                 <!--                            <div class="alert alert-warning alert-dismissible fade in alert-custom" role="alert">
@@ -447,8 +468,8 @@ endif;
 
                             </div>
                         </div>
-
                     <?php endif; ?>
+
                 </div>
 
             </div>
@@ -465,280 +486,295 @@ function custom_script() {
     <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>    
     <script src="<?php echo osc_current_web_theme_js_url('jquery.Jcrop.js') ?>"></script>
     <script>
-                                                                $(document).on('click', '.add_circle', function () {
-                                                                    var follow_user_id = $(this).attr('follow-user-id');
-                                                                    var logged_in_user_id = $(this).attr('user-id');
-                                                                    console.log(follow_user_id);
-                                                                    $.ajax({
-                                                                        url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
-                                                                        type: 'post',
-                                                                        data: {
-                                                                            action: 'add_circle',
-                                                                            follow_user_id: follow_user_id,
-                                                                            logged_in_user_id: logged_in_user_id
-                                                                        },
-                                                                        success: function () {
-                                                                            $(location).attr('href', '<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>');
-                                                                        }
-                                                                    })
-                                                                });
+                                        $(document).on('click', '.add_circle', function () {
+                                            var follow_user_id = $(this).attr('follow-user-id');
+                                            var logged_in_user_id = $(this).attr('user-id');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
+                                                type: 'post',
+                                                data: {
+                                                    action: 'add_circle',
+                                                    follow_user_id: follow_user_id,
+                                                    logged_in_user_id: logged_in_user_id
+                                                },
+                                                success: function () {
+                                                    $(location).attr('href', '<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>');
+                                                }
+                                            })
+                                        });
+                                        $(document).on('click', '.remove_circle', function () {
+                                            var follow_user_id = $(this).attr('follow-user-id');
+                                            var logged_in_user_id = $(this).attr('user-id');
+                                            $.ajax({
+                                                url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
+                                                type: 'post',
+                                                data: {
+                                                    remove_circle: 'remove_circle',
+                                                    follow_user_id: follow_user_id,
+                                                    logged_in_user_id: logged_in_user_id
+                                                },
+                                                success: function () {
+                                                    $(location).attr('href', '<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>');
+                                                }
+                                            })
+                                        });
     </script>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-                                                                var user_id = '<?php echo osc_user_id() ?>'
-                                                                var is_enable_ajax = true;
-                                                                var loading = false;
-                                                                var location_type = $('.filter_city').attr('data_location_type');
-                                                                var location_id = $('.filter_city').attr('data_location_id');
-                                                                var category_id = $('#sCategory').val();
-                                                                var post_type = $('.post_type_filter').val();
-                                                                $(document).on('click', '.file_upload', function () {
+                                        var user_id = '<?php echo osc_user_id() ?>'
+                                        var is_enable_ajax = true;
+                                        var loading = false;
+                                        var location_type = $('.filter_city').attr('data_location_type');
+                                        var location_id = $('.filter_city').attr('data_location_id');
+                                        var category_id = $('#sCategory').val();
+                                        var post_type = $('.post_type_filter').val();
+                                        $(document).on('click', '.file_upload', function () {
 
-                                                                    //$('#crop-img').modal('show');
-                                                                    $('#crop-img').appendTo('body');
-                                                                });
-                                                                $(document).on('click', '.file_upload_cover', function () {
+                                            //$('#crop-img').modal('show');
+                                            $('#crop-img').appendTo('body');
+                                        });
+                                        $(document).on('click', '.file_upload_cover', function () {
 
-                                                                    //$('#crop-img').modal('show');
-                                                                    $('#crop-cover-img').appendTo('body');
-                                                                });
-                                                                $(document).ready(function () {
-                                                                    $('.filter_city').typeahead({
-                                                                        source: function (query, process) {
-                                                                            var $items = new Array;
-                                                                            $items = [""];
-                                                                            $.ajax({
-                                                                                url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
-                                                                                dataType: "json",
-                                                                                type: "POST",
-                                                                                data: {city_name: query, region_name: query, country_name: query},
-                                                                                success: function (data) {
-                                                                                    $.map(data, function (data) {
-                                                                                        var group;
-                                                                                        group = {
-                                                                                            city_id: data.city_id,
-                                                                                            region_id: data.region_id,
-                                                                                            country_id: data.country_id,
-                                                                                            name: data.city_name + '-' + data.region_name + '-' + data.country_name,
-                                                                                        };
-                                                                                        $items.push(group);
-                                                                                    });
+                                            //$('#crop-img').modal('show');
+                                            $('#crop-cover-img').appendTo('body');
+                                        });
+                                        $(document).ready(function () {
+                                            $('.filter_city').typeahead({
+                                                source: function (query, process) {
+                                                    var $items = new Array;
+                                                    $items = [""];
+                                                    $.ajax({
+                                                        url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                                                        dataType: "json",
+                                                        type: "POST",
+                                                        data: {city_name: query, region_name: query, country_name: query},
+                                                        success: function (data) {
+                                                            $.map(data, function (data) {
+                                                                var group;
+                                                                group = {
+                                                                    city_id: data.city_id,
+                                                                    region_id: data.region_id,
+                                                                    country_id: data.country_id,
+                                                                    name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                                                                };
+                                                                $items.push(group);
+                                                            });
 
-                                                                                    process($items);
-                                                                                }
-                                                                            });
-                                                                        },
-                                                                        afterSelect: function (obj) {
-                                                                            $('.filter_city').attr('data_location_id', obj.id);
-                                                                        },
-                                                                        //                updater:function (item) {
-                                                                        //                    console.log(item);
-                                                                        //                },
-                                                                    });
-                                                                });
-                                                                $(document).ready(function ($) {
-                                                                    fetch_user_posts();
-
-
-                                                                    $(document).on('click', '.user_profile_navigation .user_follower', function () {
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_follower_container .user_follower_box').html(data);
-                                                                            }
-                                                                        });
-                                                                    });
-
-                                                                    $(document).on('click', '.user_follower_container .follower-search-button', function () {
-                                                                        var search_name = $('.follower_search_text').val();
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                                search_name: search_name
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_follower_container .user_follower_box').html(data);
-                                                                            }
-                                                                        });
-                                                                    });
-
-                                                                    $(document).on('click', '.user_profile_navigation .user_circle', function () {
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_circle_container .user_circle_box').html(data);
-                                                                            }
-                                                                        });
-
-                                                                    });
-
-                                                                    $(document).on('change', '.user_cover_img', function (event) {
-                                                                        var options = {
-                                                                            url: '<?php echo osc_current_web_theme_url('user_image_change.php'); ?>',
-                                                                            type: 'post',
-                                                                            data: {
-                                                                                type: 'cover_image',
-                                                                            },
-                                                                            success: function (html, statusText, xhr, $form) {
-                                                                                $('.widget-user-header').css({'background-image': ''});
-                                                                                $('.widget-user-header').css({'background-image': 'url(' + html + ')'});
-                                                                            },
-                                                                        };
-                                                                        $('.cover_image_upload').ajaxForm(options).submit();
-                                                                    });
-                                                                    $(document).on('click', '.user_circle_container .circle-search-button', function () {
-                                                                        var search_name = $('.circle_search_text').val();
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                                search_name: search_name
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_circle_container .user_circle_box').html(data);
-                                                                            }
-                                                                        });
-                                                                    });
+                                                            process($items);
+                                                        }
+                                                    });
+                                                },
+                                                afterSelect: function (obj) {
+                                                    $('.filter_city').attr('data_location_id', obj.id);
+                                                },
+                                                //                updater:function (item) {
+                                                //                    console.log(item);
+                                                //                },
+                                            });
+                                        });
+                                        $(document).ready(function ($) {
+                                            fetch_user_posts();
 
 
-                                                                    $(window).bind('scroll', function () {
-                                                                        if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
-                                                                            loading = true;
-                                                                            $('.user_posts_area .loading').fadeIn(500);
-                                                                            // $('.user_posts_container').css({'opacity': '0.2'});
-                                                                            setTimeout(fetch_user_posts, 1000);
-                                                                        }
-                                                                    });
-                                                                    $('#sCategory').change(function () {
-                                                                        $('.user_posts_area .loading').fadeIn(500);
-                                                                        $('.user_posts_container').css({'opacity': '0.2'});
-                                                                        reset_variables();
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                                location_type: location_type,
-                                                                                location_id: location_id,
-                                                                                category_id: category_id,
-                                                                                post_type: post_type,
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_posts_container').empty().append(data);
-                                                                                $('.user_posts_area .loading').fadeOut(1000);
-                                                                                $('.user_posts_container').css({'opacity': '1'});
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                    $('.country-dropdown #countryId').change(function () {
-                                                                        $('.posts_container .loading').fadeIn(500);
-                                                                        $('.user_related_posts').css({'opacity': '0.2'});
-                                                                        var country_id = $('#countryId').val();
-                                                                        reset_variables();
-                                                                        //make_after_login_item_ajax_call();
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                                                            data: {
-                                                                                country_id: country_id,
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_posts_container').empty().append(data);
-                                                                                $('.user_posts_area .loading').fadeOut(1000);
-                                                                                $('.user_posts_container').css({'opacity': '1'});
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                    $('.filter_city').change(function () {
-                                                                        $('.user_posts_area .loading').fadeIn(500);
-                                                                        $('.user_posts_container').css({'opacity': '0.2'});
-                                                                        reset_variables();
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                                location_type: location_type,
-                                                                                location_id: location_id,
-                                                                                category_id: category_id,
-                                                                                post_type: post_type,
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_posts_container').empty().append(data);
-                                                                                $('.user_posts_area .loading').fadeOut(1000);
-                                                                                $('.user_posts_container').css({'opacity': '1'});
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                    $('.filter-button').click(function () {
-                                                                        $('.user_posts_area .loading').fadeIn(500);
-                                                                        $('.user_posts_container').css({'opacity': '0.2'});
-                                                                        reset_variables();
-                                                                        $.ajax({
-                                                                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                                                            data: {
-                                                                                user_id: user_id,
-                                                                                location_type: location_type,
-                                                                                location_id: location_id,
-                                                                                category_id: category_id,
-                                                                                post_type: post_type,
-                                                                            },
-                                                                            success: function (data) {
-                                                                                $('.user_posts_container').empty().append(data);
-                                                                                $('.user_posts_area .loading').fadeOut(1000);
-                                                                                $('.user_posts_container').css({'opacity': '1'});
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                    $('.reset-button').click(function () {
-                                                                        window.location.reload();
+                                            $(document).on('click', '.user_profile_navigation .user_follower', function () {
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_follower_container .user_follower_box').html(data);
+                                                    }
+                                                });
+                                            });
 
-                                                                    });
-                                                                });
-                                                                function fetch_user_posts() {
-                                                                    var page_number = $('.user_posts_area .user_post_page_number').val();
-                                                                    var user_id = '<?php echo osc_user_id() ?>';
-                                                                    $.ajax({
-                                                                        url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
-                                                                        data: {
-                                                                            user_id: user_id,
-                                                                            page_number: page_number,
-                                                                            location_type: location_type,
-                                                                            location_id: location_id,
-                                                                            category_id: category_id,
-                                                                            post_type: post_type,
-                                                                        },
-                                                                        success: function (data) {
-                                                                            $('.user_posts_area .loading').fadeOut(1000);
-                                                                            $('.user_posts_container').css({'opacity': '1'});
-                                                                            if (data !== '0') {
-                                                                                loading = false;
-                                                                                $(".user_posts_container").append(data);
-                                                                                var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
-                                                                                $('.user_posts_area .user_post_page_number').val(next_page);
-                                                                            } else {
-                                                                                $(".user_posts_area .result_text").text('Ends of results').show();
-                                                                                is_enable_ajax = false;
-                                                                            }
-                                                                        }
-                                                                    });
-                                                                }
-                                                                function reset_variables() {
-                                                                    is_enable_ajax = true;
-                                                                    loading = false;
-                                                                    if (!$('.filter_city').val()) {
-                                                                        $('.filter_city').attr('data_location_id', '');
-                                                                    }
-                                                                    location_type = $('.filter_city').attr('data_location_type');
-                                                                    location_id = $('.filter_city').attr('data_location_id');
-                                                                    category_id = $('#sCategory').val();
-                                                                    post_type = $('.post_type_filter').val();
-                                                                    $('.user_posts_area .user_post_page_number').val(0);
-                                                                }
+                                            $(document).on('click', '.user_follower_container .follower-search-button', function () {
+                                                var search_name = $('.follower_search_text').val();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                        search_name: search_name
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_follower_container .user_follower_box').html(data);
+                                                    }
+                                                });
+                                            });
+
+                                            $(document).on('click', '.user_profile_navigation .user_circle', function () {
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_circle_container .user_circle_box').html(data);
+                                                    }
+                                                });
+
+                                            });
+
+                                            $(document).on('change', '.user_cover_img', function (event) {
+                                                var options = {
+                                                    url: '<?php echo osc_current_web_theme_url('user_image_change.php'); ?>',
+                                                    type: 'post',
+                                                    data: {
+                                                        type: 'cover_image',
+                                                    },
+                                                    success: function (html, statusText, xhr, $form) {
+                                                        $('.widget-user-header').css({'background-image': ''});
+                                                        $('.widget-user-header').css({'background-image': 'url(' + html + ')'});
+                                                    },
+                                                };
+                                                $('.cover_image_upload').ajaxForm(options).submit();
+                                            });
+                                            $(document).on('click', '.user_circle_container .circle-search-button', function () {
+                                                var search_name = $('.circle_search_text').val();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                        search_name: search_name
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_circle_container .user_circle_box').html(data);
+                                                    }
+                                                });
+                                            });
+
+
+                                            $(window).bind('scroll', function () {
+                                                if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
+                                                    loading = true;
+                                                    $('.user_posts_area .loading').fadeIn(500);
+                                                    // $('.user_posts_container').css({'opacity': '0.2'});
+                                                    setTimeout(fetch_user_posts, 1000);
+                                                }
+                                            });
+                                            $('#sCategory').change(function () {
+                                                $('.user_posts_area .loading').fadeIn(500);
+                                                $('.user_posts_container').css({'opacity': '0.2'});
+                                                reset_variables();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                        location_type: location_type,
+                                                        location_id: location_id,
+                                                        category_id: category_id,
+                                                        post_type: post_type,
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_posts_container').empty().append(data);
+                                                        $('.user_posts_area .loading').fadeOut(1000);
+                                                        $('.user_posts_container').css({'opacity': '1'});
+                                                    }
+                                                });
+                                            });
+                                            $('.country-dropdown #countryId').change(function () {
+                                                $('.posts_container .loading').fadeIn(500);
+                                                $('.user_related_posts').css({'opacity': '0.2'});
+                                                var country_id = $('#countryId').val();
+                                                reset_variables();
+                                                //make_after_login_item_ajax_call();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                    data: {
+                                                        country_id: country_id,
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_posts_container').empty().append(data);
+                                                        $('.user_posts_area .loading').fadeOut(1000);
+                                                        $('.user_posts_container').css({'opacity': '1'});
+                                                    }
+                                                });
+                                            });
+                                            $('.filter_city').change(function () {
+                                                $('.user_posts_area .loading').fadeIn(500);
+                                                $('.user_posts_container').css({'opacity': '0.2'});
+                                                reset_variables();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                        location_type: location_type,
+                                                        location_id: location_id,
+                                                        category_id: category_id,
+                                                        post_type: post_type,
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_posts_container').empty().append(data);
+                                                        $('.user_posts_area .loading').fadeOut(1000);
+                                                        $('.user_posts_container').css({'opacity': '1'});
+                                                    }
+                                                });
+                                            });
+                                            $('.filter-button').click(function () {
+                                                $('.user_posts_area .loading').fadeIn(500);
+                                                $('.user_posts_container').css({'opacity': '0.2'});
+                                                reset_variables();
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                    data: {
+                                                        user_id: user_id,
+                                                        location_type: location_type,
+                                                        location_id: location_id,
+                                                        category_id: category_id,
+                                                        post_type: post_type,
+                                                    },
+                                                    success: function (data) {
+                                                        $('.user_posts_container').empty().append(data);
+                                                        $('.user_posts_area .loading').fadeOut(1000);
+                                                        $('.user_posts_container').css({'opacity': '1'});
+                                                    }
+                                                });
+                                            });
+                                            $('.reset-button').click(function () {
+                                                window.location.reload();
+
+                                            });
+                                        });
+                                        function fetch_user_posts() {
+                                            var page_number = $('.user_posts_area .user_post_page_number').val();
+                                            var user_id = '<?php echo osc_user_id() ?>';
+                                            $.ajax({
+                                                url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
+                                                data: {
+                                                    user_id: user_id,
+                                                    page_number: page_number,
+                                                    location_type: location_type,
+                                                    location_id: location_id,
+                                                    category_id: category_id,
+                                                    post_type: post_type,
+                                                },
+                                                success: function (data) {
+                                                    $('.user_posts_area .loading').fadeOut(1000);
+                                                    $('.user_posts_container').css({'opacity': '1'});
+                                                    if (data !== '0') {
+                                                        loading = false;
+                                                        $(".user_posts_container").append(data);
+                                                        var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
+                                                        $('.user_posts_area .user_post_page_number').val(next_page);
+                                                    } else {
+                                                        $(".user_posts_area .result_text").text('Ends of results').show();
+                                                        is_enable_ajax = false;
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        function reset_variables() {
+                                            is_enable_ajax = true;
+                                            loading = false;
+                                            if (!$('.filter_city').val()) {
+                                                $('.filter_city').attr('data_location_id', '');
+                                            }
+                                            location_type = $('.filter_city').attr('data_location_type');
+                                            location_id = $('.filter_city').attr('data_location_id');
+                                            category_id = $('#sCategory').val();
+                                            post_type = $('.post_type_filter').val();
+                                            $('.user_posts_area .user_post_page_number').val(0);
+                                        }
     </script>
 
 

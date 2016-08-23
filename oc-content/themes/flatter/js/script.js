@@ -33,7 +33,6 @@ function clearInfo() {
     $('.info #w').val('');
     $('.info #h').val('');
 }
-;
 
 // Create variables (in this scope) to hold the Jcrop API and image size
 var jcrop_api, boundx, boundy;
@@ -91,7 +90,7 @@ function fileSelectHandler() {
             setTimeout(function () {
                 // initialize Jcrop
                 $('#preview').Jcrop({
-                    minSize: [32, 32], // min crop size
+                    minSize: [100, 100], // min crop size
                     aspectRatio: 1, // keep aspect ratio 1:1
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity
@@ -119,7 +118,27 @@ function fileSelectHandler() {
     // read selected file as DataURL
     oReader.readAsDataURL(oFile);
 }
-
+function checkFormCover() {
+    if (parseInt($('#w_cover').val()))
+        return true;
+    $('.error').html('Please select a crop region and then press Upload').show();
+    return false;
+}
+;
+function updateInfoCover(e) {
+    $('#x1_cover').val(e.x);
+    $('#y1_cover').val(e.y);
+    $('#x2_cover').val(e.x2);
+    $('#y2_cover').val(e.y2);
+    $('#w_cover').val(e.w);
+    $('#h_cover').val(e.h);
+}
+;
+function clearInfoCover() {
+    $('.info #w_cover').val('');
+    $('.info #h_cover').val('');
+}
+;
 function fileSelectHandlerCover() {
 
     // get selected file
@@ -160,7 +179,7 @@ function fileSelectHandlerCover() {
             var sResultFileSize = bytesToSize(oFile.size);
             $('#filesize_cover').val(sResultFileSize);
             $('#filetype_cover').val(oFile.type);
-            $('#filedim_cover').val(oImage.naturalWidth + ' x ' + (2*(oImage.naturalHeight)));
+            $('#filedim_cover').val(oImage.naturalWidth + ' x ' + (2 * (oImage.naturalHeight)));
 
             // destroy Jcrop if it is existed
             if (typeof jcrop_api != 'undefined') {
@@ -177,9 +196,9 @@ function fileSelectHandlerCover() {
                     aspectRatio: 2, // keep aspect ratio 1:1
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity
-                    onChange: updateInfo,
-                    onSelect: updateInfo,
-                    onRelease: clearInfo
+                    onChange: updateInfoCover,
+                    onSelect: updateInfoCover,
+                    onRelease: clearInfoCover
                 }, function () {
 
                     // use the Jcrop API to get the real image size

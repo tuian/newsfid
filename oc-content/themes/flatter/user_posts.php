@@ -123,7 +123,7 @@ if ($items):
                         item_resources(osc_item_id());
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                        ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                           ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 

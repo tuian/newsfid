@@ -56,6 +56,6 @@ if ($_REQUEST['action'] == 'delete_post'):
     $delete_user_post->dao->delete("{$db_prefix}t_item", "pk_i_id= $post_id AND fk_i_user_id = $user_id");
     $post_result = $delete_user_post->dao->get();
     
-    
+     osc_add_flash_ok_message('Your Post Succsessfully Deleted...!!'); 
 endif;
 ?>

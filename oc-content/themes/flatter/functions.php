@@ -1043,7 +1043,7 @@ function get_user_data($user_id) {
     $user_data = new DAO();
     $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website');
     $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
-    $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
+    $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext, user_cover_picture.cover_pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name');
     $user_data->dao->from("{$db_prefix}t_user user");
     $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
@@ -1770,8 +1770,8 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_data->dao->where("user_themes.user_id != {$user_id}");
     $suggest_user_data->dao->limit($limit);
     $suggest_user_result = $suggest_user_data->dao->get();
-    $suggest_user_array = $suggest_user_result->result();   
-    $theme_user_id = custom_array_column($suggest_user_array, 'user_id');    
+    $suggest_user_array = $suggest_user_result->result();
+    $theme_user_id = custom_array_column($suggest_user_array, 'user_id');
     $suggest_user_data->dao->select("user_rubrics.*");
     $suggest_user_data->dao->from("{$db_prefix}t_user_rubrics as user_rubrics");
     $suggest_user_data->dao->where("user_rubrics.rubric_id IN ({$themes})");
@@ -2124,9 +2124,9 @@ function get_pending_msg_cnt() {
     return $user_messge_cnt['msg'];
 }
 
-function custom_array_column($input = array(), $columnKey = null) {   
+function custom_array_column($input = array(), $columnKey = null) {
     $resultArray = array();
-    foreach ($input as $k=>$v):
+    foreach ($input as $k => $v):
         $resultArray[$k] = $v[$columnKey];
     endforeach;
     return $resultArray;
