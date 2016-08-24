@@ -28,7 +28,7 @@ if ($result) {
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
     $db_prefix = DB_TABLE_PREFIX; ?>
-<div class="col-md-12">
+<!--<div class="col-md-12">-->
     <?php 
     $i = 1;
     foreach ($item_result as $k => $item):
@@ -125,15 +125,15 @@ if ($items):
             <?php
             }
         endwhile;
-        if($i%3 == 0):
-            echo "</div><div class='col-md-12'>";
-        endif;
+//        if($i%3 == 0):
+//            echo "</div><div class='col-md-12'>";
+//        endif;
 //        if($i%75 == 0):
 //            echo "</div><div class='load-more-content'></div><div class='col-md-12'>";
 //        endif;
         $i++;
     endforeach;
-    echo "</div>"; 
+//    echo "</div>"; 
     ?>
     <?php
 //elseif($page_number > 0):

@@ -223,7 +223,7 @@ if ($items):
     ?>
     <?php
 else:
-    echo '0';
+    echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
 endif;
 ?>
 <script>

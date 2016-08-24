@@ -137,7 +137,7 @@ if (isset($user_id)) {
     <div id="sections">
         <div class="user_area">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class=" bg-white col-md-12 padding-0">
                         <!--                    <div class="box box-widget widget-user">
                         
@@ -305,7 +305,7 @@ if (isset($user_id)) {
                     </div>
                 </div>
 
-                <div class="col-md-8 padding-left-0">
+                <div class="col-md-9 padding-left-0">
                     <div class="col-md-12 padding-0">                        
                         <ul class="nav user_profile_navigation bg-white">
                             <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
@@ -425,7 +425,7 @@ if (isset($user_id)) {
             <div class="clearfix"></div>
 
             <div class="row">                
-
+                <div class="result_message"></div>
                 <div class="loading text-center">
                     <div class="cs-loader">
                         <div class="cs-loader-inner">
@@ -562,13 +562,14 @@ function footer_script() {
                         data: {
                             filter_value: filter_value
                         },
-                        success: function (data, textStatus, jqXHR) {
+                        success: function (data, textStatus, jqXHR) {                                                 
                             $('.masonry_row').html(data);
                             is_enable_ajax = true;
-                            $(".result_text").hide();
-                            //                            $('.masonry_row').masonry('reloadItems');
-                            //                            $('.masonry_row').masonry('layout');
+//                            $(".result_text").hide();
+                            $('.masonry_row').masonry('reloadItems');
+                            $('.masonry_row').masonry('layout');
                             $('#page_number').val(1);
+                               
                         }
 
                     });
@@ -695,18 +696,19 @@ function footer_script() {
         });
         
         $(window).load(function () {
-            //            $('.masonry_row').masonry({
-            //                    columnWidth: '.item',
-            //                    itemSelector: '.item',
-            //                });
+           
             //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",
                 //data: {page_number: pageNumber, },
                 success: function (data, textStatus, jqXHR) {
                     $('.masonry_row').append(data);
-                    //                        $('.masonry_row').masonry('layout');
-                    //                        $('.masonry_row').masonry('reloadItems');
+                    $('.masonry_row').masonry({
+                        columnWidth: '.item',
+                        itemSelector: '.item',
+                    });
+                    $('.masonry_row').masonry('layout');
+                    $('.masonry_row').masonry('reloadItems');
                 }
             });
         });
@@ -745,12 +747,20 @@ function footer_script() {
                 },
                 success: function (data) {
                     $('.loading').fadeOut(1000);
-
-                    if ($('.result_text').size() < 1) {
+                    if (data.indexOf("Nothing to show") >= 0){
+                        if(page_number == 1){
+                            $('.result_message').html('<h2 class="result_text">Ends of results</h2>');
+                        }else{
+                            $('.result_message').html(data);                            
+                        }
+                    }
+                    else {
                         $(".masonry_row").append(data);
                         var next_page = parseInt($('#page_number').val()) + 1;
                         $('#page_number').val(next_page);
                         loading = false;
+                        $('.masonry_row').masonry('layout');
+                        $('.masonry_row').masonry('reloadItems');
                     }
                 }
                 //                    var el = $(data);

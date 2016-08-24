@@ -85,7 +85,7 @@ FreiChat.init_HTML_freichatX = function() {
     var freichathtml = document.createElement("div");
     freichathtml.id = "friechtahtml";
     freichathtml.innerHTML = main_str;
-    document.body.appendChild(freichathtml);
+    document.getElementById("chat-box-footer").appendChild(freichathtml);
     $jn("#frei_option_bar_rtl").hide();
     FreiChat.divfrei = $jn('#frei');
     FreiChat.chatbox_container = $jn('#frei_super_minimize');

@@ -29,7 +29,7 @@
    
     <div class="tchat_profile col-md-5 padding-0 hide">
     </div>
-    <div class="col-md-2 col-sm-2 padding-left-0">
+    
         <div class="t-chat">
             <div class="chat-notification">
                 <div class="col-md-2 padding-left-0 pointer">
@@ -73,7 +73,7 @@
                         endif;
                         ?>
                         <div class="col-md-12 margin-top-20">
-                            <div class="col-md-4 padding-left-0">
+                            <div class="col-md-3 padding-left-0">
                                 <img src="<?php echo $img_path ?>" data_user_id="<?php echo $u['user_id'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                                 <div class="onlineuser">
                                     <?php                                    
@@ -85,7 +85,7 @@
                                     <?php } ?>
                                 </div> 
                             </div>
-                            <div class="col-md-8 padding-left-0">
+                            <div class="col-md-7 padding-left-0">
                                 <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
                             </div>
                         </div>                        
@@ -94,7 +94,8 @@
                 endif;
                 ?>   
             </div>
-<!--            <div class="col-md-12 padding-0 background-white active-chat-part">
+            <div id="chat-box-footer"></div>
+            <div class="col-md-12 padding-0 background-white active-chat-part">
                 <div class="chat-overflow">
                     <div class="col-md-12 margin-top-10">
                         <div class="col-md-12 padding-0 dropdown">
@@ -132,10 +133,10 @@
                 <div class="col-md-12 margin-top-10 replay_area">
                     <textarea class="replay_area border-none outline-none color-white" placeholder="Write a reply..."></textarea>
                 </div>
-            </div>            -->
+            </div>            
         </div>	
 
-    </div>	
+    	
 
 <?php endif; ?>
 <!-- / wrapper -->

@@ -64,7 +64,7 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/script.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_base_url() . 'oc-content/plugins/slider/responsiveslides.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
-
+ <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
         <!-- /Header Hook -->
@@ -284,7 +284,8 @@ found!');</script>";
                                 $active = '';
 
 //                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
-                                if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+//                                if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+                                if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false)):
                                     $active = 'active';
                                 else:
                                     $active = '';
@@ -298,20 +299,20 @@ found!');</script>";
                                     </a>                                
                                     <ul class="treeview-menu">
                                         <?php
-                                        $active = '';
-
-                                        if ((strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
-
-                                            $active = 'active';
-                                        else:
-                                            $active = '';
-                                        endif;
+//                                        $active = '';
+//
+//                                        if ((strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+//
+//                                            $active = 'active';
+//                                        else:
+//                                            $active = '';
+//                                        endif;
                                         ?>   
-                                        <li class="<?php echo $active ?>">
+<!--                                        <li class="<?php echo $active ?>">
                                             <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                                 <i class="fa fa-user"></i> <?php echo __('Account'); ?>
                                             </a>
-                                        </li>
+                                        </li>-->
                                         <?php
                                         $active = '';
                                         if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false)):
@@ -489,7 +490,7 @@ found!');</script>";
                     </div>
                 </div>
             </div>
-            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-8 col-sm-8" : $class = "col-md-10 col-sm-10" ?>
+            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-7  main_content" ?>
             <div class="<?php echo $class ?> padding-0">
                 <div class="content-wrapper">
                     <div class="content">

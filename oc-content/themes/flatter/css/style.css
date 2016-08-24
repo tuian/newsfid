@@ -2660,7 +2660,7 @@ select {
     top: 0px;
     right:0px;
     bottom: 0px;
-    width: 16%;
+    width: 21.6%;
     overflow-y: auto;
 }
 .alert.alert-custom{
@@ -3295,28 +3295,31 @@ select {
     width: 80%;
     float: left;
 }
-/*::-webkit-scrollbar {
+.skin-blue ::-webkit-scrollbar {
     width: 5px;
-}  this targets the default scrollbar (compulsory) 
+} 
+/*::-webkit-scrollbar {
+    width: 10px;
+}*/
 ::-webkit-scrollbar-track {
     background-color: transparent;
 
-}  the new scrollbar will have a flat appearance with the set background color 
+}  
 
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2); 
     width: 7px;
     border-radius: 30px;
-}  this will style the thumb, ignoring the track 
+}  
 
 ::-webkit-scrollbar-button {
     background-color: transparent;
     height: 1px;
-}  optionally, you can style the top and the bottom buttons (left and right for horizontal bars) 
+}  
 
 ::-webkit-scrollbar-corner {
     background-color: #D3D3D3;
-}  if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+}  
 
 /*remove this*/ 
 .content {
@@ -3396,4 +3399,16 @@ select {
 }
 .usepost_no_record .result_text{
     color: #ccc;
+}
+#onfreioffline{
+    display: none !important;
+}
+#chat-box-footer .freicontain{
+    width: 400px;
+}
+#chat-box-footer .freicontain0{
+    right: 0px;
+}
+.main_content{
+    width: 61.2%;
 }

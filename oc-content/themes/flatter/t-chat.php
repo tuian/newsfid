@@ -16,7 +16,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                 <div class="col-md-12 border-top-gray background-white border-box-right border-bottom-gray tchat_tab">
                     <ul class="nav margin-top-20 nav-font">
                         <li id="message" class="col-md-7 pointer active_tab">
-                            <div class="msg msg_tab">Nouveaux messages</div>
+                            <div class="msg msg_tab">New messages</div>
                         </li>
                         <li id="archive" class="col-md-5 pointer">
                             <div class="msg msg_tab  text-center">Archives</div>
