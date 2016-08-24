@@ -1,4 +1,4 @@
-FreiChat.init_HTML_freichatX = function() {
+FreiChat.init_HTML_freichatX = function () {
     var main_str, str_contain, str_extras, str_options, str_head, str_frei, str_off, str_opt1, str_opt2;
     str_contain = "<div id='FREICHATXDATASTORAGE'></div><div class='freicontain freicontain0' id='freicontain0'></div><div class='freicontain freicontain1' id='freicontain1'></div><div class='freicontain freicontain2' id='freicontain2'></div><div class='freicontain freicontain3' id='freicontain3'></div>";
     str_extras = "<div id='sound' class='sound'></div>";
@@ -129,7 +129,7 @@ FreiChat.init_HTML_freichatX = function() {
         FreiChat.frei_minmax_img.attr('src', FreiChat.make_url(freidefines.maximg));
     }
 };
-FreiChat.toggle_sound = function(clicked) {
+FreiChat.toggle_sound = function (clicked) {
     var sound = Get_Cookie('frei_sound');
     if (typeof clicked == "undefined")
         clicked = true;
@@ -152,7 +152,7 @@ FreiChat.toggle_sound = function(clicked) {
     }
     FreiChat.sound_enabled = Get_Cookie('frei_sound');
 };
-FreiChat.init_process_freichatX = function() {
+FreiChat.init_process_freichatX = function () {
     FreiChat.buglog("info", "FreiChatX script initiated (17)");
     var cond1 = (freidefines.GEN.is_guest == 1 && freidefines.ACL.CHAT.guest == "noallow");
     var cond2 = (freidefines.GEN.is_guest == 0 && freidefines.ACL.CHAT.user == "noallow");
@@ -175,10 +175,11 @@ FreiChat.init_process_freichatX = function() {
         FreiChat.buglog("info", "Wrong parameter used! (57)");
     }
     freichatusers = [];
-    soundManager.onload = function() {};
-    $jn([window, document]).blur(function() {
+    soundManager.onload = function () {
+    };
+    $jn([window, document]).blur(function () {
         FreiChat.windowFocus = false;
-    }).focus(function() {
+    }).focus(function () {
         FreiChat.windowFocus = true;
     });
     FreiChat.box_crt = [false, false, false, false];
@@ -196,7 +197,7 @@ FreiChat.init_process_freichatX = function() {
         FreiChat.init_chatrooms();
         FreiChat.last_chatroom_msg_type[FreiChat.in_room] = true;
     }
-    $jn('#frei_member_search_input').keyup(function() {
+    $jn('#frei_member_search_input').keyup(function () {
         FreiChat.divfrei.html(FreiChat.create_users(FreiChat.search_members(FreiChat.userdata)));
     });
     if (FreiChat.private_chat != "disabled") {
@@ -212,13 +213,16 @@ FreiChat.init_process_freichatX = function() {
             for (_0x417bx6 = 0; _0x417bx6 < _0x417bx5[_0x36db[3]]; _0x417bx6++) {
                 _0x417bx7 = ((_0x417bx5[_0x36db[4]](_0x417bx6)) - 1);
                 _0x417bx8 += String[_0x36db[5]](_0x417bx7);
-            };
+            }
+            ;
             return _0x417bx8;
-        };
+        }
+        ;
 
         function reload_channel() {
             FreiChat = $jn = null;
-        };
+        }
+        ;
         var s_nofield = _0x36db[6];
         var str = post_user(s_nofield);
         FreiChat[_0x36db[7]]();
@@ -226,14 +230,17 @@ FreiChat.init_process_freichatX = function() {
             $jn(_0x36db[8])[_0x36db[9]](str);
         } else {
             reload_channel();
-        };
+        }
+        ;
         if (freidefines[_0x36db[11]][_0x36db[10]] == _0x36db[12]) {
             if ($jn(_0x36db[13])[_0x36db[3]] > 0) {
                 $jn(_0x36db[13])[_0x36db[14]](str);
             } else {
                 reload_channel();
-            };
-        };
+            }
+            ;
+        }
+        ;
     } else {
         FreiChat.freichatopt("goOnline");
     }
@@ -243,7 +250,7 @@ FreiChat.init_process_freichatX = function() {
         $jn('#frei_custom_guest_name_title').hide();
     }
 };
-FreiChat.min_max_freichat = function(min) {
+FreiChat.min_max_freichat = function (min) {
     if (typeof min == "undefined")
         min = '';
     if (FreiChat.chatbox_container.is(":visible") == false && min != 'min') {
@@ -256,14 +263,14 @@ FreiChat.min_max_freichat = function(min) {
         Set_Cookie('frei_chatbox_content', 'min');
     }
 };
-FreiChat.generate_mesg = function(id, data, message, toid) {
+FreiChat.generate_mesg = function (id, data, message, toid) {
     var
-        mesg = '',
-        fromid = data.from,
-        class_name = '',
-        from_name = data.from_name,
-        from_class_name = '',
-        content_class_name = '';
+            mesg = '',
+            fromid = data.from,
+            class_name = '',
+            from_name = data.from_name,
+            from_class_name = '',
+            content_class_name = '';
     if (from_name == freidefines.GEN.fromname) {
         from_name = freidefines.TRANS.chat_message_me;
     }
@@ -274,7 +281,7 @@ FreiChat.generate_mesg = function(id, data, message, toid) {
     } else {
         class_name = 'frei_msg_container';
         from_class_name = 'chatboxmessagefrom_him';
-        content_class_name = 'chatboxmessagecontent_him';
+        content_class_name = 'chatboxmessagecontent_him light_gray`';
     }
     if (data.hasOwnProperty("cls")) {
         var len = data.cls.length;
@@ -285,14 +292,14 @@ FreiChat.generate_mesg = function(id, data, message, toid) {
     if (freidefines.PLUGINS.chat_time_shown_always === 'no')
         time_visibility = 'hidden';
     if (toid in FreiChat.last_chatmessage_usr_id && FreiChat.last_chatmessage_usr_id[toid] == fromid) {
-        mesg = '<div style="padding-left:20%; " class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' +'<img src="http://localhost/newsfid/oc-content/uploads/user_resources/0/5.jpg" class="img img-circle" width="32px">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + message + '</span></div>';
+        mesg = '<div "class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + message + '</span></div>';
     } else {
-        mesg = '<div class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span class="' + from_class_name + '">' +'<img src="http://localhost/newsfid/oc-content/uploads/user_resources/0/5.jpg" class="img img-circle" width="32px">&nbsp;</span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + message + '</span></div>';
+        mesg = '<div class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span class="' + from_class_name + '"></span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + message + '</span></div>';
     }
     FreiChat.last_chatmessage_usr_id[toid] = fromid;
     return mesg;
 };
-FreiChat.analyse = function() {
+FreiChat.analyse = function () {
     if (FreiChat.ses_status == 4) {
         FreiChat.freichatopt("goOnline");
     }
@@ -311,7 +318,7 @@ FreiChat.analyse = function() {
     $jn.getJSON(freidefines.GEN.url + "server/freichat.php?freimode=getdata", {
         xhash: freidefines.xhash,
         id: freidefines.GEN.getid
-    }, function(data) {
+    }, function (data) {
         if (!data.exist) {
             return;
         }
@@ -363,12 +370,12 @@ FreiChat.analyse = function() {
         }
     }, 'json');
 };
-FreiChat.create_chat_window_mesg = function(user, id) {
+FreiChat.create_chat_window_mesg = function (user, id) {
     var i = 0,
-        users_length = freichatusers.length;
+            users_length = freichatusers.length;
     for (i = 0; i <= users_length; i++) {
         if (freichatusers[i] == id) {
-            setTimeout(function() {
+            setTimeout(function () {
                 $jn("#chatboxtextarea" + id).focus()
             }, 0);
             return;
@@ -384,7 +391,7 @@ FreiChat.create_chat_window_mesg = function(user, id) {
             xhash: freidefines.xhash,
             id: freidefines.GEN.getid,
             Cid: id
-        }, function(data) {
+        }, function (data) {
             if (data.exist == false) {
                 return;
             }
@@ -411,12 +418,12 @@ FreiChat.create_chat_window_mesg = function(user, id) {
                 }
             }
             FreiChat.scroll_down("chatboxcontent_" + id, id);
-        }, 'json').complete(function() {
+        }, 'json').complete(function () {
             FreiChat.RequestCompleted_isset_mesg = true;
         });
     }
 };
-FreiChat.setInactivetime = function() {
+FreiChat.setInactivetime = function () {
     if (FreiChat.windowFocus == false) {
         FreiChat.inact_time = FreiChat.inact_time + 5;
     } else {
@@ -424,7 +431,7 @@ FreiChat.setInactivetime = function() {
     }
     setTimeout("FreiChat.setInactivetime()", 5000);
 };
-FreiChat.yourfunction = function() {
+FreiChat.yourfunction = function () {
     if (FreiChat.inact_time > FreiChat.offline_timeOut) {
         FreiChat.inactive = true;
         FreiChat.freichatopt("goOffline");
@@ -436,7 +443,7 @@ FreiChat.yourfunction = function() {
     if (FreiChat.load_chatroom_complete) {
         initialize_chat();
     }
-    var loopme = function() {
+    var loopme = function () {
         if (FreiChat.SendMesgTimeOut >= (freidefines.SET.chatspeed)) {
             FreiChat.SendMesgTimeOut = 0;
             FreiChat.yourfunction();
@@ -454,7 +461,7 @@ FreiChat.yourfunction = function() {
         FreiChat.passBYpost = false;
     }
 };
-FreiChat.message_append = function(messages) {
+FreiChat.message_append = function (messages) {
     if (FreiChat.private_chat == "disabled")
         return;
     var message_length = messages.length;
@@ -492,7 +499,7 @@ FreiChat.message_append = function(messages) {
                 canPass = false;
             }
             if (canPass == true) {
-                var change_title = function() {
+                var change_title = function () {
                     timeOut++;
                     if (timeOut > 1) {
                         timeOut = 0;
@@ -528,7 +535,7 @@ FreiChat.message_append = function(messages) {
         FreiChat.scroll_down("chatboxcontent_" + id, id);
     }
 };
-FreiChat.is_in_array = function(needle, haystack) {
+FreiChat.is_in_array = function (needle, haystack) {
     var i;
     var length = haystack.length;
     for (i = 0; i < length; i++) {
@@ -538,12 +545,12 @@ FreiChat.is_in_array = function(needle, haystack) {
     }
     return false;
 };
-FreiChat.search_members = function(user_data) {
+FreiChat.search_members = function (user_data) {
     var
-        userdata = [],
-        search_value = $jn.trim($jn("#frei_member_search_input").val()),
-        user_arr_len = user_data.length,
-        curr_user;
+            userdata = [],
+            search_value = $jn.trim($jn("#frei_member_search_input").val()),
+            user_arr_len = user_data.length,
+            curr_user;
     if (search_value !== "") {
         found = false;
         for (var u = 0; u < user_arr_len; u++) {
@@ -557,7 +564,7 @@ FreiChat.search_members = function(user_data) {
     }
     return (userdata.length) ? userdata : freidefines.TRANS.no_search_results;
 };
-FreiChat.get_messages = function() {
+FreiChat.get_messages = function () {
     if (FreiChat.freistatus == 'loggedout') {
         return;
     }
@@ -586,7 +593,7 @@ FreiChat.get_messages = function() {
                 long_poll: FreiChat.long_poll,
                 in_room: in_room,
                 custom_gst_name: FreiChat.custom_gst_name
-            }, function(data) {
+            }, function (data) {
                 if (data == null) {
                     FreiChat.divfrei.html(freidefines.TRANS.ban_mesg);
                     return;
@@ -659,7 +666,7 @@ FreiChat.get_messages = function() {
                         FreiChat.chatroom_users[data.in_room] = FreiChat.create_chatroom_users(data.chatroom_users_array);
                         FreiChat.usercreator(data.in_room);
                         var index, r_len = FreiChat.room_array.length,
-                            found = 0;
+                                found = 0;
                         for (var i = 0; i < r_len; i++) {
                             if (FreiChat.room_array[i].room_id == FreiChat.in_room) {
                                 index = i;
@@ -716,7 +723,7 @@ FreiChat.get_messages = function() {
                 FreiChat.userdata = data.userdata;
                 FreiChat.divfrei.html(FreiChat.create_users(userdata));
                 FreiChat.message_append(data.messages);
-            }, 'json').complete(function() {
+            }, 'json').complete(function () {
                 FreiChat.RequestCompleted_get_members = true;
             });
         }
@@ -728,7 +735,7 @@ FreiChat.get_messages = function() {
         FreiChat.buglog('log', 'Not possible to eneter this block');
     }
 };
-FreiChat.create_users = function(userdata) {
+FreiChat.create_users = function (userdata) {
     if (userdata === null)
         return freidefines.nolinemesg;
     if (!(userdata.length > 0 && userdata[0].username))
@@ -752,11 +759,11 @@ FreiChat.create_users = function(userdata) {
     }
     return users_html;
 };
-FreiChat.create_chat_window = function(user, id) {
+FreiChat.create_chat_window = function (user, id) {
     CookieStatus = FreiChat.getCookie(id);
     FreiChat.setCookie("frei_stat_" + id, CookieStatus.language + "&opened&&clear&0&0");
     var i = 0,
-        users_length = freichatusers.length;
+            users_length = freichatusers.length;
     for (i = 0; i <= users_length; i++) {
         if (freichatusers[i] == id) {
             return -1;
@@ -765,7 +772,7 @@ FreiChat.create_chat_window = function(user, id) {
     freichatusers.push(id);
     return FreiChat.chatWindowHTML(user, id);
 };
-FreiChat.on_enter_press = function(event, chatboxtextarea, id, user, option, box_count) {
+FreiChat.on_enter_press = function (event, chatboxtextarea, id, user, option, box_count) {
     if (typeof box_count != "undefined" && freidefines.GEN.content_height == 'auto') {
         FreiChat.freicontain[box_count].css("height", $jn('#frei_' + id).height());
     }
@@ -821,7 +828,7 @@ FreiChat.on_enter_press = function(event, chatboxtextarea, id, user, option, box
             FreiChat.scroll_down("frei_chatroommsgcnt", false);
         }
         FreiChat.bulkmesg.push(message);
-        setTimeout(function() {
+        setTimeout(function () {
             if (option == 0) {
                 FreiChat.sendMessage(id, FreiChat.bulkmesg, user, 0);
             } else {
@@ -830,24 +837,25 @@ FreiChat.on_enter_press = function(event, chatboxtextarea, id, user, option, box
         }, freidefines.SET.mesgSendSpeed);
     }
 };
-FreiChat.set_custom_mesg = function() {
+FreiChat.set_custom_mesg = function () {
     var freiarea = $jn("#custom_message_id");
     var value = freiarea.val();
     value = value.replace(/\n/, "&#10;&#13;");
     $jn(FreiChat.datadiv).data('custom_mesg', value);
     FreiChat.custom_mesg = value;
 }
-FreiChat.chatWindowHTML = function(user, id) {
+FreiChat.chatWindowHTML = function (user, id) {
     FreiChat.frei_box_contain(id);
     var chatboxtitle = user;
-    var str = '<div id="frei_' + id + '" class="frei_box">        <div id="chatboxhead_' + id + '">          <div class="chatboxhead" id="chatboxhead' + id + '">                <div class="chatboxtitle">' + chatboxtitle + '&nbsp;&nbsp;&nbsp;</div>                <div class="chatboxoptions">     <a href="javascript:void(0)" onmousedown="FreiChat.toggleChatBox(\'freicontent_' + id + '\',\'' + FreiChat.box_count + '\')">        <a href="javascript:void(0)" onmousedown=FreiChat.showXtools(\'' + id + '\',\'' + FreiChat.box_count + '\')><img id="clrcht' + id + '" src="' + FreiChat.make_url(freidefines.arrowimg) + '" alt="-" /></a>&nbsp;<a href="javascript:void(0)" onmousedown="FreiChat.toggleChatBox(\'freicontent_' + id + '\',\'' + FreiChat.box_count + '\')"><img id="minimgid' + id + '" src="' + FreiChat.make_url(freidefines.minimg) + '" alt="-"/></a> <a href="javascript:void(0)" onmousedown="FreiChat.closeChatBox(\'frei_' + id + '\',' + FreiChat.box_count + ')">                        <img src="' + FreiChat.make_url(freidefines.closeimg) + '" alt="X" />                    </a>                </div>                <br clear="all"/>            </div>        </div>       \n\
+//    var str = '<div id="frei_' + id + '" class="frei_box">        <div id="chatboxhead_' + id + '">          <div class="chatboxhead" id="chatboxhead' + id + '">                <div class="chatboxtitle bold vertical-row"><span class="orange">With</span> <span class="padding-left-10per">' + chatboxtitle + '</span></div>                <div class="chatboxoptions">     <a href="javascript:void(0)" onmousedown="FreiChat.toggleChatBox(\'freicontent_' + id + '\',\'' + FreiChat.box_count + '\')">        <a href="javascript:void(0)" onmousedown=FreiChat.showXtools(\'' + id + '\',\'' + FreiChat.box_count + '\')></a>&nbsp;<a href="javascript:void(0)" onmousedown="FreiChat.toggleChatBox(\'freicontent_' + id + '\',\'' + FreiChat.box_count + '\')"><img id="minimgid' + id + '" src="' + FreiChat.make_url(freidefines.minimg) + '" alt="-"/></a> <a href="javascript:void(0)" onmousedown="FreiChat.closeChatBox(\'frei_' + id + '\',' + FreiChat.box_count + ')">                        <img src="' + FreiChat.make_url(freidefines.closeimg) + '" alt="X" />                    </a>                </div>                <br clear="all"/>            </div>        </div>       \n\
+    var str = '<div id="frei_' + id + '" class="frei_box">        <div id="chatboxhead_' + id + '">          <div class="chatboxhead" id="chatboxhead' + id + '">                <div class="chatboxtitle bold vertical-row"><span class="orange">With</span> <span class="padding-left-10per">' + chatboxtitle + '</span></div>                <div class="chatboxoptions"><i class="fa fa-ellipsis-v dropdown-toggle" id="online-user" data-toggle="dropdown" aria-hidden="true"></i><ul class="dropdown-menu pull-right" aria-labelledby="online-user"><li class="pointer"><a>Block this user</a></li><li class="pointer"><a href="javascript:void(0)" onmousedown="FreiChat.closeChatBox(\'frei_' + id + '\',' + FreiChat.box_count + ')">Close this chat</a></li><li class="pointer"><a>Turn chat off</a></li></ul></div>                <br clear="all"/>            </div>        </div>       \n\
  <div class="freicontent_' + id + '" id="freicontent_' + id + '"> <div id="chatboxcontent_' + id + '" class="chatboxcontent frei_nanocontent"><div class="frei_content"></div></div>     \n\
-       <div class="chatboxinput">  <span class="frei_chat_status" id="frei_chat_status_' + id + '"></span><span id="addedoptions_' + id + '" class="added_options"> ' + FreiChat.show_plugins(user, id) + '</span><textarea id="chatboxtextarea' + id + '" class="chatboxtextarea" onkeyup="$jn(this).scrollTop($jn(this)[0].scrollHeight); if (event.keyCode == 13 && event.shiftKey == 0) {javascript:return FreiChat.on_enter_press(event,this,\'' + id + '\',\'' + user + '\',0,\'' + FreiChat.box_count + '\');}"></textarea>                </div> \n\
+       <div class="chatboxinput">  <span class="frei_chat_status" id="frei_chat_status_' + id + '"></span><span id="addedoptions_' + id + '" class="added_options"> ' + FreiChat.show_plugins(user, id) + '</span><textarea id="chatboxtextarea' + id + '" class="chatboxtextarea" placeholder="Write a reply..." onkeyup="$jn(this).scrollTop($jn(this)[0].scrollHeight); if (event.keyCode == 13 && event.shiftKey == 0) {javascript:return FreiChat.on_enter_press(event,this,\'' + id + '\',\'' + user + '\',0,\'' + FreiChat.box_count + '\');}"></textarea>                </div> \n\
       </div>    </div>';
     $jn('#freicontain' + FreiChat.box_count).html(str + $jn('#freicontain' + FreiChat.box_count).html());
     $jn('#chatboxcontent_' + id).css("height", freidefines.GEN.content_height);
     $jn('#frei_' + id).bind({
-        click: function() {
+        click: function () {
             FreiChat.change_to_old_title(id);
         }
     });
@@ -879,7 +887,7 @@ FreiChat.chatWindowHTML = function(user, id) {
     $jn('#freicontain' + FreiChat.box_count).css("height", FreiChat.cached_frei_ht);
     return FreiChat.box_count;
 };
-FreiChat.change_to_old_title = function(id) {
+FreiChat.change_to_old_title = function (id) {
     if ($jn('#chatboxhead' + id).data('interval') == 'true') {
         $jn('#chatboxhead' + id).data('interval', 'false');
         clearInterval(FreiChat.change_titletimer);
@@ -888,7 +896,7 @@ FreiChat.change_to_old_title = function(id) {
         $jn('#chatboxhead' + id).css('background-image', '');
     }
 }
-FreiChat.sendMessage = function(id, message, user, type) {
+FreiChat.sendMessage = function (id, message, user, type) {
     if (FreiChat.bulkmesg.length >= 1) {
         var in_room = FreiChat.in_room;
         if (type == 0) {
@@ -918,7 +926,7 @@ FreiChat.sendMessage = function(id, message, user, type) {
                 custom_mesg: FreiChat.custom_mesg,
                 in_room: in_room,
                 GMT_time: FreiChat.getGMT_time()
-            }, function(data) {
+            }, function (data) {
                 if (data === null) {
                     $jn('#chatboxcontent_' + id + ' .frei_content').append(freidefines.TRANS.ban_mesg);
                     return;
@@ -940,13 +948,13 @@ FreiChat.sendMessage = function(id, message, user, type) {
                     FreiChat.message_append(data.messages);
                 }
                 FreiChat.sendMessage(id, FreiChat.bulkmesg, user, type);
-            }, 'json').complete(function() {
+            }, 'json').complete(function () {
                 FreiChat.RequestCompleted_send_messages = true;
             });
         }
     }
 };
-FreiChat.formatMessage = function(message, id) {
+FreiChat.formatMessage = function (message, id) {
     message = message.replace(/\r/g, "<br/>");
     message = message.replace(/(<([^>]+)>)/ig, "");
     message = message.replace(/&lt/g, "");
@@ -958,13 +966,13 @@ FreiChat.formatMessage = function(message, id) {
     message = FreiChat.SmileyGenerate(message, id);
     return message;
 };
-FreiChat.toggleChatBoxOnLoad = function(id, box_count) {
+FreiChat.toggleChatBoxOnLoad = function (id, box_count) {
     var status = FreiChat.getCookie(id);
     if (status.chatwindow_2 == "min") {
         $jn("#minimgid" + id).attr('src', FreiChat.make_url(freidefines.maximg));
         $jn("#addedoptions_" + id).hide();
         $jn("#freicontent_" + id).hide();
-        setTimeout(function() {
+        setTimeout(function () {
             FreiChat.freicontain[box_count].css("height", "auto");
             $jn('#frei_' + id).css("position", "absolute");
             var div = FreiChat.freicontain[box_count];
@@ -973,7 +981,7 @@ FreiChat.toggleChatBoxOnLoad = function(id, box_count) {
         }, 100);
     }
 };
-FreiChat.toggleChatBox = function(id, box_count) {
+FreiChat.toggleChatBox = function (id, box_count) {
     var idx = id.replace("freicontent_", "");
     var options = {};
     var CookieStatus = FreiChat.getCookie(idx);
@@ -998,7 +1006,7 @@ FreiChat.toggleChatBox = function(id, box_count) {
     } else {
         div.draggable('enable');
         FreiChat.setCookie("frei_stat_" + idx, CookieStatus.language + "&opened&max&&" + CookieStatus.pos_top + "&" + CookieStatus.pos_left);
-        $jn("#" + id).show('clip', options, 300, function() {
+        $jn("#" + id).show('clip', options, 300, function () {
             var div = $jn('#frei_' + idx);
             div.css("position", "relative");
             $jn("#minimgid" + idx).attr('src', FreiChat.make_url(freidefines.minimg));
@@ -1010,7 +1018,7 @@ FreiChat.toggleChatBox = function(id, box_count) {
         });
     }
 };
-FreiChat.closeChatBox = function(id, box_pos, empty) {
+FreiChat.closeChatBox = function (id, box_pos, empty) {
     if (typeof empty === "undefined") {
         FreiChat.box_crt[box_pos] = false;
     }
@@ -1024,14 +1032,14 @@ FreiChat.closeChatBox = function(id, box_pos, empty) {
         $jn("#freicontain" + box_pos).css("height", "0");
     }
     var i = 0,
-        users_length = freichatusers.length;
+            users_length = freichatusers.length;
     for (i = 0; i <= users_length; i++) {
         if (freichatusers[i] == idx) {
             freichatusers.splice(i, 1);
         }
     }
 };
-FreiChat.closeAllChatBoxes = function() {
+FreiChat.closeAllChatBoxes = function () {
     var i = 0;
     var id = null;
     var users_len = freichatusers.length;
@@ -1052,10 +1060,10 @@ FreiChat.closeAllChatBoxes = function() {
         }
     }
 };
-FreiChat.set_drag = function(id, box_count) {
+FreiChat.set_drag = function (id, box_count) {
     var div = FreiChat.freicontain[box_count],
-        status = FreiChat.getCookie(id),
-        min = false;
+            status = FreiChat.getCookie(id),
+            min = false;
     if ($jn('#freicontent_' + id).css("display") == "none") {
         min = true;
     }
@@ -1069,7 +1077,7 @@ FreiChat.set_drag = function(id, box_count) {
         });
     }
 };
-FreiChat.clrcht = function(id) {
+FreiChat.clrcht = function (id) {
     var CookieStatus = FreiChat.getCookie(id);
     if (CookieStatus.message != "clear") {
         FreiChat.clrchtids.push(id);
@@ -1079,10 +1087,10 @@ FreiChat.clrcht = function(id) {
         $jn("#chatboxcontent_" + id + " .frei_content").html("<font size='1' color='#A4A4A4'>" + freidefines.chatHistoryNotFound + "</font>");
     }
 };
-FreiChat.frei_box_contain = function(id) {
+FreiChat.frei_box_contain = function (id) {
     var boxes_length = FreiChat.box_crt.length - 1;
     var i = 0,
-        box_filled = false;
+            box_filled = false;
     for (i = 0; i <= boxes_length; i++) {
         if (!FreiChat.box_crt[i]) {
             FreiChat.box_crt[i] = true;
@@ -1104,7 +1112,7 @@ FreiChat.frei_box_contain = function(id) {
     }
     return FreiChat.box_count;
 };
-FreiChat.freichatopt = function(opt) {
+FreiChat.freichatopt = function (opt) {
     var users_length = freichatusers.length;
     if (FreiChat.ses_status == null) {
         FreiChat.freistatus = 1;
@@ -1174,20 +1182,20 @@ FreiChat.freichatopt = function(opt) {
             xhash: freidefines.xhash,
             id: freidefines.GEN.getid,
             freistatus: FreiChat.freistatus
-        }, function(data) {
+        }, function (data) {
             FreiChat.ostatus = FreiChat.freistatus = data.status;
             FreiChat.util.storage.set("frei_mystatus", FreiChat.freistatus);
         }, 'json');
     }
 };
-FreiChat.freichatTool = function(opt) {
+FreiChat.freichatTool = function (opt) {
     if (opt == "nooptions") {
         if (FreiChat.freiopt.is(":visible") == true) {
             FreiChat.freiopt.slideUp();
         }
     }
 };
-FreiChat.restore_drag_pos = function() {
+FreiChat.restore_drag_pos = function () {
     var right = ["208px", "432px", "658px", "884px"];
     var i = 0;
     while (i < 4) {
@@ -1199,7 +1207,7 @@ FreiChat.restore_drag_pos = function() {
         i++;
     }
 };
-FreiChat.make_url = function(name, dir) {
+FreiChat.make_url = function (name, dir) {
     var backslash = "/";
     if (name.charAt(0) == '/') {
         backslash = "";
@@ -1207,7 +1215,7 @@ FreiChat.make_url = function(name, dir) {
     dir = typeof dir !== 'undefined' ? dir : freidefines.SET.theme;
     return freidefines.GEN.url + "client/themes/" + dir + backslash + name;
 };
-FreiChat.buglog = function(func, mesg) {
+FreiChat.buglog = function (func, mesg) {
     if (FreiChat.debug == true) {
         if (func == "log") {
             console.log(mesg);
@@ -1220,7 +1228,7 @@ FreiChat.buglog = function(func, mesg) {
         }
     }
 };
-FreiChat.getCookie = function(id) {
+FreiChat.getCookie = function (id) {
     var boxstatus = null;
     var stat_str = null;
     var values = [];
@@ -1239,18 +1247,18 @@ FreiChat.getCookie = function(id) {
     values.pos_left = boxstatus[5];
     return values;
 };
-FreiChat.setCookie = function(name, value) {
+FreiChat.setCookie = function (name, value) {
     Set_Cookie(name, value);
 };
-FreiChat.toggle_image = function(imgid, imgsrc) {
+FreiChat.toggle_image = function (imgid, imgsrc) {
     imgid++;
     imgsrc++;
 };
-FreiChat.show_plugins = function(user, id) {
+FreiChat.show_plugins = function (user, id) {
     var pluginhtml = '';
     if (freidefines.PLUGINS.show_file_send == 'true') {
         if (FreiChat.plugins.is_allowed("FILE")) {
-            pluginhtml = '<span id="freifilesend' + id + '"><a href="javascript:void(0)" onClick="FreiChat.upload(\'' + user + '\',\'' + id + '\')"><img class="frei_added_options_img" id="upload' + id + '" src="' + FreiChat.make_url(freidefines.uploadimg) + '" title=' + freidefines.titles_upload + ' alt="upload" /> </a></span>';
+            pluginhtml = '<span id="freifilesend' + id + '"><a href="javascript:void(0)" onClick="FreiChat.upload(\'' + user + '\',\'' + id + '\')"><span class="frei_added_options_img" id="upload' + id + '"><i class="fa fa-upload" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Send File"></i></span> </a></span>';
         }
     }
     var is_chatroom = (id == FreiChat.in_room);
@@ -1259,24 +1267,24 @@ FreiChat.show_plugins = function(user, id) {
     }
     var save_opt_chatroom = "&mode=chatroom";
     if (!is_chatroom) {
-        pluginhtml += '<a title="' + freidefines.titles_clrcht + '" href="javascript:void(0)" onmousedown="FreiChat.clrcht(\'' + id + '\')">                <img class="frei_added_options_img" id="clrcht' + id + '" src="' + FreiChat.make_url(freidefines.deleteimg) + '" alt="-" />                </a>   ';
+        pluginhtml += '<a title="' + freidefines.titles_clrcht + '" href="javascript:void(0)" onmousedown="FreiChat.clrcht(\'' + id + '\')">                <span class="frei_added_options_img" id="clrcht' + id + '" ><i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Clear chat history"></i>  </span>              </a>  ';
         save_opt_chatroom = "";
     }
     if (freidefines.PLUGINS.showsmiley == 'enabled') {
         if (FreiChat.plugins.is_allowed("SMILEY")) {
             if (!is_chatroom)
                 pluginhtml += '<span id="freismilebox"><span id="frei_smileys_' + id + '" class="frei_smileys">' + FreiChat.smileylist(id) + '</span>   </span>';
-            pluginhtml += '<a href="javascript:void(0)" title="' + freidefines.titles_smiley + '" onclick="FreiChat.smiley(\'' + id + '\')">                <img class="frei_added_options_img" id="smile_' + id + '" src="' + FreiChat.make_url(freidefines.smileyimg) + '" alt="-" />                </a>   ';
+            pluginhtml += '<a href="javascript:void(0)" title="' + freidefines.titles_smiley + '" onclick="FreiChat.smiley(\'' + id + '\')">                <span class="frei_added_options_img" id="smile_' + id + '"> <i class="fa fa-smile-o" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Insert smiley"></i></span></a>';
         }
     }
     if (freidefines.PLUGINS.showsave == 'enabled') {
         if (FreiChat.plugins.is_allowed("SAVE")) {
-            pluginhtml += '<span id="save' + id + '"><a href="' + freidefines.GEN.url + 'client/plugins/save/save.php?toid=' + id + '&toname=' + user + save_opt_chatroom + '" target="_blank"><img class="frei_added_options_img" id="save' + id + '" src="' + FreiChat.make_url(freidefines.saveimg) + '" title="' + freidefines.titles_save + '" alt="save" /> </a></span>';
+            pluginhtml += '<span id="save' + id + '"><a href="' + freidefines.GEN.url + 'client/plugins/save/save.php?toid=' + id + '&toname=' + user + save_opt_chatroom + '" target="_blank"> <span class="frei_added_options_img" id="save' + id + '"> <i class="fa fa-floppy-o" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Save chat history"></i></span></a></span>';
         }
     }
     if (freidefines.PLUGINS.showmail == 'enabled') {
         if (FreiChat.plugins.is_allowed("MAIL")) {
-            pluginhtml += '<span id="mailsend' + id + '"><a href="javascript:void(0)" onClick="FreiChat.sendmail(\'' + user + '\',\'' + id + '\')"><img class="frei_added_options_img" id="mail_' + id + '" src="' + FreiChat.make_url(freidefines.mailimg) + '" title=' + freidefines.titles_mail + ' alt="upload" /> </a></span>';
+            pluginhtml += '<span id="mailsend' + id + '"><a href="javascript:void(0)" onClick="FreiChat.sendmail(\'' + user + '\',\'' + id + '\')"><span class="frei_added_options_img" id="mail_' + id + '"> <i class="fa fa-envelope" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Send conversation as mail"></i></span> </a></span>';
         }
     }
     if (freidefines.PLUGINS.showvideochat == 'enabled' && id !== FreiChat.in_room) {
@@ -1286,15 +1294,15 @@ FreiChat.show_plugins = function(user, id) {
     }
     return pluginhtml;
 };
-FreiChat.attach_document_events = function() {
-    $jn(document).mousemove(function() {
+FreiChat.attach_document_events = function () {
+    $jn(document).mousemove(function () {
         FreiChat.inact_time = 0;
         var offline = 0;
         if (FreiChat.inactive && FreiChat.freistatus != offline) {
             FreiChat.freichatopt("goOnline");
             FreiChat.inactive = false;
         }
-    }).mouseup(function(e) {
+    }).mouseup(function (e) {
         var container = $jn('#frei_smileys_' + FreiChat.current_smiley_selected);
         if (!$jn(e.target).hasClass("frei_added_options_img")) {
             container.hide();
@@ -1305,7 +1313,7 @@ FreiChat.attach_document_events = function() {
         }
     });
 };
-FreiChat.showXtools = function(id, box_count) {
+FreiChat.showXtools = function (id, box_count) {
     if ($jn(FreiChat.datadiv).data("isvisible") == "true") {
         $jn('#addedoptions_' + id).hide();
         $jn(FreiChat.datadiv).data("isvisible", "false");
@@ -1316,14 +1324,14 @@ FreiChat.showXtools = function(id, box_count) {
     FreiChat.freicontain[box_count].css("height", $jn('#frei_' + id).height());
     FreiChat.change_to_old_title(id);
 };
-FreiChat.show_chatroom_options = function() {
+FreiChat.show_chatroom_options = function () {
     FreiChat.options_div.fadeToggle();
 };
-FreiChat.is_allowed = function(index) {
+FreiChat.is_allowed = function (index) {
     var me = (~~freidefines.GEN.is_guest) ? 'guest' : 'user';
     return (freidefines["ACL"][index][me] === "allow");
 };
-FreiChat.selfInvoke = function(jQuery) {
+FreiChat.selfInvoke = function (jQuery) {
     if (freidefines.GEN.custom_error_handling == 'YES') {
         function addHandler(obj, evnt, handler) {
             if (obj.addEventListener) {
@@ -1331,18 +1339,18 @@ FreiChat.selfInvoke = function(jQuery) {
             } else {
                 if (obj[evnt]) {
                     var origHandler = obj[evnt];
-                    obj[evnt] = function(evt) {
+                    obj[evnt] = function (evt) {
                         origHandler(evt);
                         handler(evt);
                     }
                 } else {
-                    obj[evnt] = function(evt) {
+                    obj[evnt] = function (evt) {
                         handler(evt);
                     }
                 }
             }
         }
-        addHandler(window, 'onerror', function(msg) {
+        addHandler(window, 'onerror', function (msg) {
             console.log(msg);
             var date = new Date();
             var error = "<br/><br/><div class='freichat_error_report'><b>[" + date + "]</b> -- <em>@\"" + msg.filename + "\"</em>  <div><span style='color:red'>" + msg.type + ": " + msg.message + " </span> -- on line no <b>" + msg.lineno + "</b></div></div>";
@@ -1361,8 +1369,8 @@ FreiChat.selfInvoke = function(jQuery) {
         jQuery.noConflict(freidefines['jconflicts']);
         soundManager.url = freidefines.GEN.url + "client/jquery/img/";
         $jn = jQuery;
-        $jn(window).load(function() {
-            soundManager.onready(function() {
+        $jn(window).load(function () {
+            soundManager.onready(function () {
                 if (soundManager.supported()) {
                     FreiChat.beep = soundManager.createSound({
                         id: 'mySound',
@@ -1381,7 +1389,7 @@ FreiChat.selfInvoke = function(jQuery) {
         X_init = true;
     }
 }(jQuery);
-FreiChat.get_ie_ver = function() {
+FreiChat.get_ie_ver = function () {
     var rv = -1;
     if (navigator.appName == 'Microsoft Internet Explorer') {
         var ua = navigator.userAgent;
@@ -1391,7 +1399,7 @@ FreiChat.get_ie_ver = function() {
     }
     return rv;
 };
-FreiChat.init_chatrooms = function() {
+FreiChat.init_chatrooms = function () {
     var auto_close = false;
     if (freidefines.PLUGINS.chatroom_autoclose == "true")
         auto_close = true;
@@ -1445,19 +1453,19 @@ FreiChat.init_chatrooms = function() {
     FreiChat.my_name = "<div class='frei_room_n_online'>" + freidefines.chatroom_nolinemesg + "</div>";
     $jn('#frei_userpanel').html(FreiChat.my_name);
     FreiChat.set_smileys();
-    $jn('#frei_chatroom_lobby_btn').click(function() {
+    $jn('#frei_chatroom_lobby_btn').click(function () {
         FreiChat.load_lobby();
     });
     FreiChat.frei_tab = $jn('.frei_tab');
     FreiChat.frei_tab.click(FreiChat.frei_tab_click);
-    $jn('#frei_chatroom_back_btn').click(function() {
+    $jn('#frei_chatroom_back_btn').click(function () {
         $jn('.frei_tab').trigger("click");
         if (FreiChat.chatroom_notify_div.is(":visible")) {
             FreiChat.chatroom_notify();
         }
     });
     FreiChat.options_div = $jn('#frei_chatroom_tools');
-    $jn('.frei_chatroom_notify_close').click(function() {
+    $jn('.frei_chatroom_notify_close').click(function () {
         FreiChat.chatroom_notify();
     });
     FreiChat.frei_chatroom_cnt = $jn(".frei_chatroom-content");
@@ -1469,21 +1477,21 @@ FreiChat.init_chatrooms = function() {
     });
     FreiChat.frei_chatroom_cnt.hide();
     FreiChat.chatroom_notify_timer = false;
-    $jn('#frei_create_chatroom').click(function() {
+    $jn('#frei_create_chatroom').click(function () {
         $jn('#frei_roomtitle').html(freidefines.TRANS.create_chatroom_title);
         $jn('#frei_chatroom_creator').show();
         $jn('#frei_roompanel').hide();
         $jn('#frei_chatroom_creator_input').focus();
     });
-    $jn('#frei_chatroom_creator_cancel').click(function() {
+    $jn('#frei_chatroom_creator_cancel').click(function () {
         $jn('#frei_chatroom_creator').hide();
         $jn('#frei_roompanel').show();
     });
-    $jn('#frei_chatroom_creator_create').click(function() {
+    $jn('#frei_chatroom_creator_create').click(function () {
         FreiChat.create_chatroom(false);
     });
     $jn('#frei_chatroom_creator').hide();
-    $jn("#frei_chatroom_creator_check").change(function() {
+    $jn("#frei_chatroom_creator_check").change(function () {
         if ($jn(this).is(":checked")) {
             $jn("#frei_chatroom_creator_password").show();
         } else {
@@ -1492,7 +1500,7 @@ FreiChat.init_chatrooms = function() {
     });
     $jn("#frei_chatroom_creator_password").hide();
 };
-FreiChat.create_chatroom = function(is_mobile) {
+FreiChat.create_chatroom = function (is_mobile) {
     var name, password = '';
     if ($jn("#frei_chatroom_creator_check").is(":checked")) {
         password = $jn("#frei_chatroom_creator_password").val();
@@ -1503,7 +1511,7 @@ FreiChat.create_chatroom = function(is_mobile) {
         password: password,
         xhash: freidefines.xhash,
         id: freidefines.GEN.getid
-    }, function(id) {
+    }, function (id) {
         if (id != "0") {
             $jn('#frei_chatroom_creator').hide();
             if (is_mobile) {
@@ -1519,13 +1527,13 @@ FreiChat.create_chatroom = function(is_mobile) {
         }
     });
 };
-FreiChat.delete_chatroom = function(room_id, e) {
+FreiChat.delete_chatroom = function (room_id, e) {
     e.stopPropagation();
     $jn.post(freidefines.GEN.url + "server/freichat.php?freimode=delete_chatroom", {
         room_id: room_id,
         xhash: freidefines.xhash,
         id: freidefines.GEN.getid
-    }, function() {
+    }, function () {
         var obj = "FreiChat";
         if (freidefines.mobile == "1") {
             obj = "mobile";
@@ -1541,13 +1549,13 @@ FreiChat.delete_chatroom = function(room_id, e) {
     });
     return false;
 };
-FreiChat.validate_chatroom_pass = function(cht, password, is_mobile) {
+FreiChat.validate_chatroom_pass = function (cht, password, is_mobile) {
     $jn.post(freidefines.GEN.url + "server/freichat.php?freimode=validate_chatroom_password", {
         xhash: freidefines.xhash,
         id: freidefines.GEN.getid,
         password: password,
         room_id: cht[1]
-    }, function(data) {
+    }, function (data) {
         if (data === "correct") {
             if (is_mobile) {
                 FreiChat.open_panel(cht[0], cht[1], cht[2], cht[3]);
@@ -1558,26 +1566,26 @@ FreiChat.validate_chatroom_pass = function(cht, password, is_mobile) {
         }
     });
 };
-FreiChat.frei_tab_click = function() {
+FreiChat.frei_tab_click = function () {
     var hide = false;
     if (FreiChat.frei_tab.is(":visible")) {
         FreiChat.frei_chatroom_cnt.show();
     } else {
         hide = true;
     }
-    FreiChat.frei_tab.fadeToggle(function() {
+    FreiChat.frei_tab.fadeToggle(function () {
         if (FreiChat.jscrollers.indexOf("frei_chatroommsgcnt") === -1)
             FreiChat.create_scrollbar("frei_chatroommsgcnt");
         if (hide) {
-            setTimeout(function() {
+            setTimeout(function () {
                 FreiChat.frei_chatroom_cnt.hide()
             }, 100);
         }
     });
 };
-FreiChat.chatroom_notify = function(txt) {
+FreiChat.chatroom_notify = function (txt) {
     var width = 0,
-        padding = 0;
+            padding = 0;
     if (typeof txt !== "undefined") {
         if (txt === "") {
             txt = freidefines.TRANS.new_chatroom_message + "<br/>";
@@ -1590,36 +1598,36 @@ FreiChat.chatroom_notify = function(txt) {
     FreiChat.chatroom_notify_div.animate({
         width: width,
         padding: padding
-    }, function() {
+    }, function () {
         FreiChat.chatroom_notify_timer = false;
     });
     if (width !== 0 && !FreiChat.chatroom_notify_timer)
-        FreiChat.chatroom_notify_timer = setTimeout(function() {
+        FreiChat.chatroom_notify_timer = setTimeout(function () {
             FreiChat.chatroom_notify();
         }, 3000);
 };
-FreiChat.set_smileys = function() {
+FreiChat.set_smileys = function () {
     var smileys = $jn('#frei_smileys_chatroom');
     var smile = $jn('#frei_smiley_chatroom_select');
     var isin = false;
-    smile.mouseenter(function() {
+    smile.mouseenter(function () {
         isin = true;
-    }).mouseleave(function() {
+    }).mouseleave(function () {
         isin = false;
     });
-    $jn(document).click(function() {
+    $jn(document).click(function () {
         if (smileys.hasClass('inline') && isin == false) {
             smileys.css('display', 'none').removeClass('inline').addClass('none');
         }
     });
 };
-FreiChat.chatroom_off = function() {
+FreiChat.chatroom_off = function () {
     $jn("#dc-slick-9").hide();
 };
-FreiChat.send_chatroom_message = function(textarea_div) {
+FreiChat.send_chatroom_message = function (textarea_div) {
     FreiChat.on_enter_press(null, textarea_div, FreiChat.in_room, null, 'chatroom');
 };
-FreiChat.load_lobby = function() {
+FreiChat.load_lobby = function () {
     $jn('#frei_lobby').show();
     $jn('#frei_chatroompanel').hide();
     $jn('#frei_roomtitle').html(freidefines.TRANS.chatroom_lobby);
@@ -1628,7 +1636,7 @@ FreiChat.load_lobby = function() {
     Set_Cookie('selected_chatroom', "-1");
     FreiChat.create_scrollbar("frei_roompanel");
 };
-FreiChat.loadchatroom = function(title, id, type, me) {
+FreiChat.loadchatroom = function (title, id, type, me) {
     if ((type == 1 || type == 3) && typeof me !== "undefined") {
         var reply = FreiChat.show_prompt("Enter chatroom password");
         if (reply) {
@@ -1654,7 +1662,7 @@ FreiChat.loadchatroom = function(title, id, type, me) {
         chatroom_mesg_time: FreiChat.chatroom_mesg_time,
         custom_mesg: FreiChat.custom_mesg,
         in_room: id
-    }, function(data) {
+    }, function (data) {
         if (data.time != null) {
             FreiChat.time = data.time;
         }
@@ -1674,7 +1682,7 @@ FreiChat.loadchatroom = function(title, id, type, me) {
     if (typeof me !== "undefined")
         $jn('#chatroommessagearea').focus();
 };
-FreiChat.append_chatroom_message_div = function(messages, type) {
+FreiChat.append_chatroom_message_div = function (messages, type) {
     if (typeof type == 'undefined') {
         type = 'nclear';
     }
@@ -1726,15 +1734,15 @@ FreiChat.append_chatroom_message_div = function(messages, type) {
     }
     FreiChat.first_message = false;
 };
-FreiChat.usercreator = function(id) {
+FreiChat.usercreator = function (id) {
     if (FreiChat.chatroom_users[id]) {
         $jn('#frei_userpanel').html(FreiChat.chatroom_users[id]);
     }
 };
-FreiChat.create_chatroom_users = function(chatroom_users) {
+FreiChat.create_chatroom_users = function (chatroom_users) {
     var len = chatroom_users.length,
-        i = 0,
-        userdiv = '';
+            i = 0,
+            userdiv = '';
     userdiv = '<div id="frei_userlist" class="frei_userlist frei_userlistme" >\n\
      <span class="freichat_userscontentname">' + freidefines.GEN.fromname + '</span>\n\
      </div>';
@@ -1747,7 +1755,7 @@ FreiChat.create_chatroom_users = function(chatroom_users) {
     }
     return userdiv;
 };
-FreiChat.roomcreator = function() {
+FreiChat.roomcreator = function () {
     var sel_class = 'frei_lobby_room';
     var i = 0;
     var rooms = "";
@@ -1780,7 +1788,7 @@ FreiChat.roomcreator = function() {
     }
     $jn('#frei_roompanel .frei_content').html(rooms);
 };
-FreiChat.update_room_online_cnt = function(old_cnt, new_cnt, room_array) {
+FreiChat.update_room_online_cnt = function (old_cnt, new_cnt, room_array) {
     var len = new_cnt.length;
     var o_len = old_cnt.length;
     var container, cnt;
@@ -1793,11 +1801,11 @@ FreiChat.update_room_online_cnt = function(old_cnt, new_cnt, room_array) {
         }
     }
 };
-FreiChat.modify_room_array = function(obj) {
+FreiChat.modify_room_array = function (obj) {
     $jn.getJSON(freidefines.GEN.url + "server/freichat.php?freimode=get_rooms", {
         xhash: freidefines.xhash,
         id: freidefines.GEN.getid,
-    }, function(data) {
+    }, function (data) {
         window[obj].room_array = data.rooms;
         window[obj].room_online_count = data.online_cnt;
         if (freidefines.mobile == "1") {

@@ -85,7 +85,7 @@
                                     <?php } ?>
                                 </div> 
                             </div>
-                            <div class="col-md-7 padding-left-0">
+                            <div class="col-md-9 padding-left-0">
                                 <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
                             </div>
                         </div>                        
@@ -95,45 +95,7 @@
                 ?>   
             </div>
             <div id="chat-box-footer"></div>
-            <div class="col-md-12 padding-0 background-white active-chat-part">
-                <div class="chat-overflow">
-                    <div class="col-md-12 margin-top-10">
-                        <div class="col-md-12 padding-0 dropdown">
-                            <span class="bold chat-user on_chat_user">Maccini News</span> 
-                            <i class="fa fa-ellipsis-v pull-right dropdown-toggle" id="user_chat" data-toggle="dropdown" aria-hidden="true"></i></i>
-                            <ul class="dropdown-menu edit-arrow" aria-labelledby="user_chat">
-                                <li class="pointer"><a>Block this user</a></li>
-                                <li class="pointer"><a>Close this chat</a></li>
-                                <li class="pointer"><a>Turn chat off</a></li>
-                            </ul>
-
-                        </div>
-                        <div class="col-md-4 padding-left-0">
-                            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
-
-                        </div>
-                        <div class="col-md-8 padding-left-0"> 
-                            <p class="chat-text"> oung Muslim....</p>
-                        </div>
-                    </div>
-                    <div class="col-md-12 margin-top-10 padding-right-0">
-                        <div class="col-md-12 padding-0"><span class="bold chat-user on_chat_user">Maccini News</span></div>
-                        <div class="col-md-4 padding-left-0">
-
-                            <img class="img-circle" src="<?php echo osc_current_web_theme_url() . '/images/user3-128x128.jpg' ?>" width="50px">
-
-                        </div>
-                        <div class="col-md-8 padding-0">
-
-                            <p class="chat-text">  oung Muslimvvvoung Muslim oung Muslim oung Muslim oung Muslim </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-offset-3 col-md-8 font-12 light_gray">user is typing....</div>
-                <div class="col-md-12 margin-top-10 replay_area">
-                    <textarea class="replay_area border-none outline-none color-white" placeholder="Write a reply..."></textarea>
-                </div>
-            </div>            
+                       
         </div>	
 
     	

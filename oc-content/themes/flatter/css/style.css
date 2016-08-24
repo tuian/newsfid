@@ -3218,7 +3218,7 @@ select {
     font-size: 12px;
 }
 .light_gray{
-    color: #d5d5d4;
+    color: #d5d5d4 !important;
 }
 .replay_area{
     background-color: #222d32;
@@ -3298,10 +3298,17 @@ select {
 .skin-blue ::-webkit-scrollbar {
     width: 5px;
 } 
+.skin-blue ::-moz-scrollbar {
+    width: 5px;
+} 
 /*::-webkit-scrollbar {
     width: 10px;
 }*/
 ::-webkit-scrollbar-track {
+    background-color: transparent;
+
+}  
+::-moz-scrollbar-track {
     background-color: transparent;
 
 }  
@@ -3311,13 +3318,25 @@ select {
     width: 7px;
     border-radius: 30px;
 }  
+::-moz-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); 
+    width: 7px;
+    border-radius: 30px;
+}  
 
 ::-webkit-scrollbar-button {
     background-color: transparent;
     height: 1px;
 }  
+::-moz-scrollbar-button {
+    background-color: transparent;
+    height: 1px;
+}  
 
 ::-webkit-scrollbar-corner {
+    background-color: #D3D3D3;
+}  
+::-moz-scrollbar-corner {
     background-color: #D3D3D3;
 }  
 
@@ -3404,7 +3423,7 @@ select {
     display: none !important;
 }
 #chat-box-footer .freicontain{
-    width: 400px;
+    width: 21.5%;
 }
 #chat-box-footer .freicontain0{
     right: 0px;
