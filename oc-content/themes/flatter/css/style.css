@@ -3237,7 +3237,7 @@ select {
 .chat-user-overflow{
     position: relative;
     overflow: auto;
-    max-height: 360px;
+    max-height: 215px;
 }
 .chat-menu{
     background-color: white;

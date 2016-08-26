@@ -185,7 +185,7 @@ if (!function_exists('flatter_theme_install')) {
 if (!function_exists('flatter_theme_update')) {
 
     function flatter_theme_update() {
-        //osc_set_preference('version', FLATTER_THEME_VERSION, 'flatter_theme');
+//osc_set_preference('version', FLATTER_THEME_VERSION, 'flatter_theme');
         osc_delete_preference('default_logo', 'flatter_theme');
 
         $logo_prefence = osc_get_preference('logo', 'flatter_theme');
@@ -208,7 +208,7 @@ if (!function_exists('check_install_flatter_theme')) {
 
     function check_install_flatter_theme() {
         $current_version = osc_get_preference('version', 'flatter_theme');
-        //check if current version is installed or need an update<
+//check if current version is installed or need an update<
         if (!$current_version) {
             flatter_theme_install();
         } else if ($current_version < FLATTER_THEME_VERSION) {
@@ -351,7 +351,7 @@ if (!function_exists('flatter_draw_categories_list')) {
     function flatter_draw_categories_list() {
         ?>
         <?php
-        //cell_3
+//cell_3
         $total_categories = osc_count_categories();
         $col1_max_cat = ceil($total_categories / 4);
 
@@ -627,7 +627,7 @@ if (!function_exists('user_info_js')) {
 }
 
 function theme_flatter_actions_admin() {
-    //if(OC_ADMIN)
+//if(OC_ADMIN)
     switch (Params::getParam('action_specific')) {
         case('settings'):
             $googleCode = Params::getParam('google_analytics');
@@ -849,11 +849,11 @@ function flatter_sidebar_category_search($catId = null) {
     if ($catId == null) {
         $aCategories[] = Category::newInstance()->findRootCategoriesEnabled();
     } else {
-        // if parent category, only show parent categories
+// if parent category, only show parent categories
         $aCategories = Category::newInstance()->toRootTree($catId);
         end($aCategories);
         $cat = current($aCategories);
-        // if is parent of some category
+// if is parent of some category
         $childCategories = Category::newInstance()->findSubcategoriesEnabled($cat['pk_i_id']);
         if (count($childCategories) > 0) {
             $aCategories[] = $childCategories;
@@ -1007,7 +1007,7 @@ function go_to_theme_select($user) {
     if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
         $conn = getConnection();
         $conn->osc_dbExec("UPDATE `%st_user` SET `s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
-    //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
+//UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
     Session::newInstance()->_set('user_id', $user);
     Session::newInstance()->_set('after_register', 'yes');
@@ -1606,14 +1606,14 @@ function user_watchlist_box($user_id, $item_id) {
 
     $watchlist_class = 'remove_from_watchlist';
     $action = 'remove_watchlist';
-    //$fa_class = 'fa fa-user-times';
+//$fa_class = 'fa fa-user-times';
     $watchlist_text = 'Remove from watchlist';
     $user_share = get_user_watchlist_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
         $watchlist_class = 'add_watchlist';
         $action = 'add_watchlist';
-        //$fa_class = 'fa fa-user-plus';
+//$fa_class = 'fa fa-user-plus';
         $watchlist_text = 'Add to watchlist';
     endif;
     ?>
@@ -2014,7 +2014,7 @@ function get_chat_users($filter = 'all') {
             unset($chat_user[$key]);
         }
     }
-    //get user from circle
+//get user from circle
     $user_circle_data = new DAO();
     $user_circle_data->dao->select(sprintf('%st_user_circle.circle_user_id', DB_TABLE_PREFIX));
     $user_circle_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
@@ -2028,7 +2028,7 @@ function get_chat_users($filter = 'all') {
     endif;
 
     if ($filter == 'all' && empty($chat_user)):
-        //get dummy users
+//get dummy users
         $user_circle_data->dao->select('user.pk_i_id as user_id');
         $user_circle_data->dao->from(DB_TABLE_PREFIX . "t_user user");
         $user_circle_data->dao->limit(10);
@@ -2130,5 +2130,17 @@ function custom_array_column($input = array(), $columnKey = null) {
         $resultArray[$k] = $v[$columnKey];
     endforeach;
     return $resultArray;
+}
+
+function get_block_user_data() {
+    $user_id = osc_logged_user_id();
+    $db_prefix = DB_TABLE_PREFIX;
+    $block_user_data = new DAO();
+    $block_user_data->dao->select("block.*");
+    $block_user_data->dao->from("{$db_prefix}t_user_access as block");
+    $block_user_data->dao->where('user_id', $user_id);
+    $block_user = $block_user_data->dao->get();
+    $block = $block_user->result();
+    return $block;
 }
 ?>

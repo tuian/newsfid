@@ -39,6 +39,7 @@ class Custom extends driver_base {
             $_SESSION[$this->uid . 'usr_name'] = $_SESSION[$this->uid . 'gst_nam'];
             $_SESSION[$this->uid . 'usr_ses_id'] = $_SESSION[$this->uid . 'gst_ses_id'];
         }
+        $_SESSION[$this->uid . 'usr_img_ses_id'] = 90;
 
         if (($_SESSION[$this->uid . 'time'] < $this->online_time || isset($_SESSION[$this->uid . 'usr_name']) == false || $first == 'false') && $_SESSION[$this->uid . 'is_guest'] == 0) { //To consume less resources , now the query is made only once in 15 seconds
             if ($this->pdo_driver == "sqlsrv") {

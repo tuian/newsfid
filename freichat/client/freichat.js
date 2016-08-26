@@ -182,7 +182,8 @@ FreiChat.init_process_freichatX = function () {
     }).focus(function () {
         FreiChat.windowFocus = true;
     });
-    FreiChat.box_crt = [false, false, false, false];
+//    FreiChat.box_crt = [false, false, false, false];
+    FreiChat.box_crt = [false];
     var i = 0;
     for (i = 0; i <= 50; i++) {
         FreiChat.last_chatroom_msg_type[i] = true;
@@ -263,25 +264,34 @@ FreiChat.min_max_freichat = function (min) {
         Set_Cookie('frei_chatbox_content', 'min');
     }
 };
+
 FreiChat.generate_mesg = function (id, data, message, toid) {
     var
             mesg = '',
             fromid = data.from,
             class_name = '',
+            from_image = '',
             from_name = data.from_name,
             from_class_name = '',
+            image = '',
             content_class_name = '';
+    
+           
+           
     if (from_name == freidefines.GEN.fromname) {
         from_name = freidefines.TRANS.chat_message_me;
     }
-    if (freidefines.GEN.fromid == fromid) {
+    if (freidefines.GEN.fromid == fromid) { 
         class_name = 'frei_msg_container';
         from_class_name = 'chatboxmessagefrom_me';
-        content_class_name = 'chatboxmessagecontent_me';
+        image = freidefines.GEN.image_mid;
+        from_image = '<img src="./oc-content/uploads/user_resources/1/'+image+'.jpg" class="pull-right" width="32px">',           
+        content_class_name = 'chatboxmessagecontent_me col-md-12 text-right';
     } else {
         class_name = 'frei_msg_container';
+        from_image = '<img src="./oc-content/uploads/user_resources/1/63.jpg" width="32px">',
         from_class_name = 'chatboxmessagefrom_him';
-        content_class_name = 'chatboxmessagecontent_him light_gray`';
+        content_class_name = 'chatboxmessagecontent_him col-md-12';
     }
     if (data.hasOwnProperty("cls")) {
         var len = data.cls.length;
@@ -291,10 +301,11 @@ FreiChat.generate_mesg = function (id, data, message, toid) {
     var time_visibility = 'visible';
     if (freidefines.PLUGINS.chat_time_shown_always === 'no')
         time_visibility = 'hidden';
-    if (toid in FreiChat.last_chatmessage_usr_id && FreiChat.last_chatmessage_usr_id[toid] == fromid) {
-        mesg = '<div "class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + message + '</span></div>';
+//    if (toid in FreiChat.last_chatmessage_usr_id && FreiChat.last_chatmessage_usr_id[toid] == fromid) {
+    if (toid in FreiChat.last_chatmessage_usr_id) {
+        mesg = '<div "class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + from_image + '  ' + message + '</span></div>';
     } else {
-        mesg = '<div class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span class="' + from_class_name + '"></span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + message + '</span></div>';
+        mesg = '<div class="' + class_name + '" onmouseover="FreiChat.show_time(' + id + ')"  onmouseout="FreiChat.hide_time(' + id + ')" id=msg_' + id + ' class="chatboxmessage"><span style="visibility:' + time_visibility + ';" class="freichat_time" id="freichat_time_' + id + '">' + FreiChat.getlocal_time(data.GMT_time) + '</span><span class="' + from_class_name + '"></span><span onmouseout="FreiChat.hide_original_text_onout(' + id + ')" onmouseover="FreiChat.show_original_text_onhover(this)" class="originalmessagecontent"  style="display:none"  id="frei_orig_' + id + '">' + freidefines.plugin_trans_orig + '<br/>' + message + '</span><span onmouseout="FreiChat.hide_original_text(' + id + ')" onmouseover="FreiChat.show_original_text(this,' + id + ')" class="' + content_class_name + '">' + from_image + '  ' + message + '</span></div>';
     }
     FreiChat.last_chatmessage_usr_id[toid] = fromid;
     return mesg;
@@ -403,6 +414,7 @@ FreiChat.create_chat_window_mesg = function (user, id) {
                 idto = data.messages[j].to;
                 idfrom = data.messages[j].from;
                 reidfrom = freidefines.GEN.reidfrom;
+                
                 message = data.messages[j].message;
                 from_name = data.messages[j].from_name;
                 divToappend = $jn("#chatboxcontent_" + id + " .frei_content");
@@ -848,7 +860,7 @@ FreiChat.chatWindowHTML = function (user, id) {
     FreiChat.frei_box_contain(id);
     var chatboxtitle = user;
 //    var str = '<div id="frei_' + id + '" class="frei_box">        <div id="chatboxhead_' + id + '">          <div class="chatboxhead" id="chatboxhead' + id + '">                <div class="chatboxtitle bold vertical-row"><span class="orange">With</span> <span class="padding-left-10per">' + chatboxtitle + '</span></div>                <div class="chatboxoptions">     <a href="javascript:void(0)" onmousedown="FreiChat.toggleChatBox(\'freicontent_' + id + '\',\'' + FreiChat.box_count + '\')">        <a href="javascript:void(0)" onmousedown=FreiChat.showXtools(\'' + id + '\',\'' + FreiChat.box_count + '\')></a>&nbsp;<a href="javascript:void(0)" onmousedown="FreiChat.toggleChatBox(\'freicontent_' + id + '\',\'' + FreiChat.box_count + '\')"><img id="minimgid' + id + '" src="' + FreiChat.make_url(freidefines.minimg) + '" alt="-"/></a> <a href="javascript:void(0)" onmousedown="FreiChat.closeChatBox(\'frei_' + id + '\',' + FreiChat.box_count + ')">                        <img src="' + FreiChat.make_url(freidefines.closeimg) + '" alt="X" />                    </a>                </div>                <br clear="all"/>            </div>        </div>       \n\
-    var str = '<div id="frei_' + id + '" class="frei_box">        <div id="chatboxhead_' + id + '">          <div class="chatboxhead" id="chatboxhead' + id + '">                <div class="chatboxtitle bold vertical-row"><span class="orange">With</span> <span class="padding-left-10per">' + chatboxtitle + '</span></div>                <div class="chatboxoptions"><i class="fa fa-ellipsis-v dropdown-toggle" id="online-user" data-toggle="dropdown" aria-hidden="true"></i><ul class="dropdown-menu pull-right" aria-labelledby="online-user"><li class="pointer"><a>Block this user</a></li><li class="pointer"><a href="javascript:void(0)" onmousedown="FreiChat.closeChatBox(\'frei_' + id + '\',' + FreiChat.box_count + ')">Close this chat</a></li><li class="pointer"><a>Turn chat off</a></li></ul></div>                <br clear="all"/>            </div>        </div>       \n\
+    var str = '<div id="frei_' + id + '" class="frei_box">        <div id="chatboxhead_' + id + '">          <div class="chatboxhead" id="chatboxhead' + id + '">                <div class="chatboxtitle bold vertical-row"><span class="orange">With</span> <span class="padding-left-10per">' + chatboxtitle + '</span></div>                <div class="chatboxoptions"><i class="fa fa-ellipsis-v dropdown-toggle" id="online-user" data-toggle="dropdown" aria-hidden="true"></i><ul class="dropdown-menu pull-right" aria-labelledby="online-user"><li class="pointer block_user" user_id="' + id + '"><a>Block this user</a></li><li class="pointer"><a href="javascript:void(0)" onmousedown="FreiChat.closeChatBox(\'frei_' + id + '\',' + FreiChat.box_count + ')">Close this chat</a></li><li class="pointer"><a>Turn chat off</a></li></ul></div>                <br clear="all"/>            </div>        </div>       \n\
  <div class="freicontent_' + id + '" id="freicontent_' + id + '"> <div id="chatboxcontent_' + id + '" class="chatboxcontent frei_nanocontent"><div class="frei_content"></div></div>     \n\
        <div class="chatboxinput">  <span class="frei_chat_status" id="frei_chat_status_' + id + '"></span><span id="addedoptions_' + id + '" class="added_options"> ' + FreiChat.show_plugins(user, id) + '</span><textarea id="chatboxtextarea' + id + '" class="chatboxtextarea" placeholder="Write a reply..." onkeyup="$jn(this).scrollTop($jn(this)[0].scrollHeight); if (event.keyCode == 13 && event.shiftKey == 0) {javascript:return FreiChat.on_enter_press(event,this,\'' + id + '\',\'' + user + '\',0,\'' + FreiChat.box_count + '\');}"></textarea>                </div> \n\
       </div>    </div>';
@@ -1101,7 +1113,7 @@ FreiChat.frei_box_contain = function (id) {
         }
     }
     if (!box_filled) {
-        if (FreiChat.cnt >= 4) {
+        if (FreiChat.cnt >= 1) {
             FreiChat.cnt = 0;
         }
         FreiChat.closeChatBox("frei_" + FreiChat.box_crt_id[FreiChat.cnt], FreiChat.cnt, false);
@@ -1198,7 +1210,7 @@ FreiChat.freichatTool = function (opt) {
 FreiChat.restore_drag_pos = function () {
     var right = ["208px", "432px", "658px", "884px"];
     var i = 0;
-    while (i < 4) {
+    while (i < 1) {
         $jn("#freicontain" + i).dragx({
             restore: true,
             id: freichatusers,
@@ -1815,4 +1827,21 @@ FreiChat.modify_room_array = function (obj) {
         }
     }, 'json');
 };
+$(document).on('click', '.block_user', function () {
+    var user_id = $(this).attr('user_id');
+    if (confirm('Are Sure Want To Block This User')) {
+        $.ajax({
+            type: 'post',
+            url: freidefines.GEN.url + '../oc-content/themes/flatter/block_user.php',
+            data: {
+                action: 'block_user',
+                user_id: user_id,
+            },
+            success: function () {
+                window.location.reload();
+            }
+        })
+    }
+});
+
 /* Updated 9 January 2014 8:26 am FreiChatX  V.9.6 */

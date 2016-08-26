@@ -43,6 +43,7 @@ if (!Get_Cookie('selected_chatroom_color')) {
 }
 
 /*-----------------------Definitions--------------------------------------------*/
+
 freidefines = {
     // GEN => GENERAL   CONFIGURATION
     GEN: {
@@ -55,6 +56,7 @@ freidefines = {
         custom_mesg: Get_Cookie('frei_custom_mesg'),
         time: Get_Cookie('frei_time'),
         fromid: '<?php echo $_SESSION[$uid . "usr_ses_id"]; ?>',
+        image_mid: '<?php echo $_SESSION[$uid."usr_img_ses_id"] ?>',
         referer: window.location.href,
         rtl: '<?php echo $_SESSION[$uid."rtl"]; ?>',
         content_height: '<?php echo $cvs->content_height; ?>',

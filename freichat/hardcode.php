@@ -1,6 +1,6 @@
 <?php
 /* Data base details */
-$dsn='mysql:host=localhost;dbname=newsfid3'; //DSN
+$dsn='mysql:host=localhost;dbname=newsfid'; //DSN
 $db_user='root'; //DB username 
 $db_pass=''; //DB password 
 $driver='Custom'; //Integration driver
