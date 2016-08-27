@@ -18,9 +18,25 @@ class Custom extends driver_base {
         }
 
         if ($_SESSION[$this->uid . 'xhash'] == null)
-            $_SESSION[$this->uid . 'xhash'] = md5( $_COOKIE[$this->use_cookie] . $this->uid );
+            $_SESSION[$this->uid . 'xhash'] = md5($_COOKIE[$this->use_cookie] . $this->uid);
 
         return $id;
+    }
+
+//------------------------------------------------------------------------------
+    function get_user_img() {
+
+        //do not delete below comment
+        //CUSTOM_GUESTS_QUERY_START
+        $query = "SELECT DISTINCT f.pk_i_id,f.s_extension
+                   FROM oc_t_user_resource AS f 
+                  WHERE f.fk_i_user_id= 104";
+
+//CUSTOM_GUESTS_QUERY_END
+        //do not delete above comment
+
+        $list = $this->db->query($query)->fetchAll();
+        return $list;
     }
 
 //------------------------------------------------------------------------------
@@ -39,8 +55,33 @@ class Custom extends driver_base {
             $_SESSION[$this->uid . 'usr_name'] = $_SESSION[$this->uid . 'gst_nam'];
             $_SESSION[$this->uid . 'usr_ses_id'] = $_SESSION[$this->uid . 'gst_ses_id'];
         }
-        $_SESSION[$this->uid . 'usr_img_ses_id'] = 90;
-
+        if ($session_id != null) {
+            $query = "SELECT *
+                  FROM oc_t_user_resource AS f 
+                  WHERE f.fk_i_user_id=" . $session_id . "";
+            $list = $this->db->query($query)->fetchAll();
+            $list = $this->db->prepare($query);
+            $list->execute(); // var_dump($res_obj);
+            $list = $list->fetchAll();
+            if (!($list[0][2] == NULL)) {
+                $_SESSION[$this->uid . 'usr_img_ses_id'] = $list[0][0];
+                $_SESSION[$this->uid . 'usr_img_ses_ext'] = $list[0][2];
+            } else {
+                $_SESSION[$this->uid . 'usr_img_ses_id'] = 'user-default';
+                $_SESSION[$this->uid . 'usr_img_ses_ext'] = 'jpg';
+            }
+        }
+        if ($session_id != null) {
+            $query = "SELECT *
+                  FROM oc_t_user_resource AS f 
+                  WHERE f.fk_i_user_id=" . $session_id . "";
+            $list = $this->db->query($query)->fetchAll();
+            $list = $this->db->prepare($query);
+            $list->execute(); // var_dump($res_obj);
+            $list = $list->fetchAll();
+            $_SESSION[$this->uid . 'usr_img_ses_to'] = $list[0][0];
+            $_SESSION[$this->uid . 'usr_img_ses_to_ext'] = $list[0][2];
+        }
         if (($_SESSION[$this->uid . 'time'] < $this->online_time || isset($_SESSION[$this->uid . 'usr_name']) == false || $first == 'false') && $_SESSION[$this->uid . 'is_guest'] == 0) { //To consume less resources , now the query is made only once in 15 seconds
             if ($this->pdo_driver == "sqlsrv") {
                 $query = "SELECT DISTINCT TOP 1 " . $this->row_username . "," . $this->row_userid . "
@@ -71,8 +112,8 @@ class Custom extends driver_base {
                 }
             }
         }/* else {
-            $this->freichat_debug("Wrong method defined!");
-        }*/
+          $this->freichat_debug("Wrong method defined!");
+          } */
     }
 
 //------------------------------------------------------------------------------
@@ -92,20 +133,22 @@ class Custom extends driver_base {
 
 //------------------------------------------------------------------------------
     //AVATAR_URL_START
-        public function avatar_url($res) {
-            $root = 'http://localhost/j3/images/comprofiler';
-            $avatar = $res[$this->avatar_field_name];
-            $avatar = str_replace(' ','%20',$avatar);
+    public function avatar_url($res) {
+        $root = 'http://localhost/j3/images/comprofiler';
+        $avatar = $res[$this->avatar_field_name];
+        $avatar = str_replace(' ', '%20', $avatar);
         if (strpos($avatar, 'http://') === FALSE && strpos($avatar, 'https://') === FALSE) {
-                $slash = '/';
-                if($avatar[0] == '/') $slash = '';
-        
-                return $root.$slash.$avatar;
-            }else{
-                return $avatar;
-            }
+            $slash = '/';
+            if ($avatar[0] == '/')
+                $slash = '';
+
+            return $root . $slash . $avatar;
+        }else {
+            return $avatar;
         }
-        //AVATAR_URL_END
+    }
+
+    //AVATAR_URL_END
 //------------------------------------------------------------------------------
     public function getList() {
 
@@ -117,8 +160,7 @@ class Custom extends driver_base {
             $user_list = $this->get_users();
         } else if ($this->show_name == 'buddy') {
             $user_list = $this->get_buddies();
-        }
-        else {
+        } else {
             $this->freichat_debug('USER parameters for show_name are wrong.');
         }
         return $user_list;
@@ -129,7 +171,7 @@ class Custom extends driver_base {
 
         //do not delete below comment
         //CUSTOM_GUESTS_QUERY_START
-            $query = "SELECT DISTINCT f.status_mesg,f.username,f.session_id,f.status,f.guest,f.in_room
+        $query = "SELECT DISTINCT f.status_mesg,f.username,f.session_id,f.status,f.guest,f.in_room
                    FROM frei_session AS f 
                   WHERE f.time>" . $this->online_time2 . "
                    AND f.session_id!=" . $_SESSION[$this->uid . 'usr_ses_id'] . "
@@ -147,7 +189,7 @@ class Custom extends driver_base {
 
         //do not delete below comment
         //CUSTOM_USERS_QUERY_START
-            $query = "SELECT DISTINCT f.status_mesg,f.username,f.session_id,f.status,f.guest,f.in_room
+        $query = "SELECT DISTINCT f.status_mesg,f.username,f.session_id,f.status,f.guest,f.in_room
                    FROM frei_session AS f
                   WHERE f.time>" . $this->online_time2 . "
                    AND f.session_id!=" . $_SESSION[$this->uid . 'usr_ses_id'] . "
@@ -166,7 +208,7 @@ class Custom extends driver_base {
 
         //do not delete below comment
         //CUSTOM_BUDDIES_QUERY_START
-            $query = "SELECT DISTINCT f.status_mesg,f.username,f.session_id,f.status,f.guest,f.in_room
+        $query = "SELECT DISTINCT f.status_mesg,f.username,f.session_id,f.status,f.guest,f.in_room
                    FROM frei_session AS f
                   WHERE f.time>" . $this->online_time2 . "
                    AND f.session_id!=" . $_SESSION[$this->uid . 'usr_ses_id'] . "
