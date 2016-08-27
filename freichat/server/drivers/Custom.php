@@ -23,21 +23,6 @@ class Custom extends driver_base {
         return $id;
     }
 
-//------------------------------------------------------------------------------
-    function get_user_img() {
-
-        //do not delete below comment
-        //CUSTOM_GUESTS_QUERY_START
-        $query = "SELECT DISTINCT f.pk_i_id,f.s_extension
-                   FROM oc_t_user_resource AS f 
-                  WHERE f.fk_i_user_id= 104";
-
-//CUSTOM_GUESTS_QUERY_END
-        //do not delete above comment
-
-        $list = $this->db->query($query)->fetchAll();
-        return $list;
-    }
 
 //------------------------------------------------------------------------------
     public function getDBdata($session_id, $first) {
@@ -71,17 +56,7 @@ class Custom extends driver_base {
                 $_SESSION[$this->uid . 'usr_img_ses_ext'] = 'jpg';
             }
         }
-        if ($session_id != null) {
-            $query = "SELECT *
-                  FROM oc_t_user_resource AS f 
-                  WHERE f.fk_i_user_id=" . $session_id . "";
-            $list = $this->db->query($query)->fetchAll();
-            $list = $this->db->prepare($query);
-            $list->execute(); // var_dump($res_obj);
-            $list = $list->fetchAll();
-            $_SESSION[$this->uid . 'usr_img_ses_to'] = $list[0][0];
-            $_SESSION[$this->uid . 'usr_img_ses_to_ext'] = $list[0][2];
-        }
+        
         if (($_SESSION[$this->uid . 'time'] < $this->online_time || isset($_SESSION[$this->uid . 'usr_name']) == false || $first == 'false') && $_SESSION[$this->uid . 'is_guest'] == 0) { //To consume less resources , now the query is made only once in 15 seconds
             if ($this->pdo_driver == "sqlsrv") {
                 $query = "SELECT DISTINCT TOP 1 " . $this->row_username . "," . $this->row_userid . "

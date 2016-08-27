@@ -276,25 +276,27 @@ FreiChat.generate_mesg = function (id, data, message, toid) {
             image_from = '',
             image_from_ext = '',
             content_class_name = '';
-    
-           
-           
+
+
+
     if (from_name == freidefines.GEN.fromname) {
         from_name = freidefines.TRANS.chat_message_me;
     }
-    if (freidefines.GEN.fromid == fromid) { 
+    if (freidefines.GEN.fromid == fromid) {
         class_name = 'frei_msg_container';
         from_class_name = 'chatboxmessagefrom_me';
         image_from = freidefines.GEN.image_mid;
         image_from_ext = freidefines.GEN.image_ext;
-        from_image = '<img src="./oc-content/uploads/user_resources/1/'+image_from+'.'+ image_from_ext+'" class="pull-right" width="32px">',           
-        content_class_name = 'chatboxmessagecontent_me col-md-12 text-right';
+//        /*local link*/      from_image = '<img src="' + window.location.origin + '/newsfid/oc-content/uploads/user_resources/1/' + image_from + '.' + image_from_ext + '" class="pull-right" style="padding-left:5px" width="32px">',
+ /*server link*/       from_image = '<img src="' + window.location.origin + '/oc-content/uploads/user_resources/0/' + image_from + '.' + image_from_ext + '" class="pull-right" style="padding-left:5px" width="32px">',
+                content_class_name = 'chatboxmessagecontent_me col-md-12 text-right';
     } else {
         class_name = 'frei_msg_container';
-        image_from = freidefines.GEN.image_to;
-        image_from_ext = freidefines.GEN.image_to_ext;
-        from_image = '<img src="./oc-content/uploads/user_resources/1/'+toid+'.'+ image_from_ext+'" width="32px">',
-        from_class_name = 'chatboxmessagefrom_him';
+        image_from = freidefines.GEN.image_mid;
+        image_from_ext = freidefines.GEN.image_ext;
+//        /*local link*/ from_image = '<img src="' + window.location.origin + '/newsfid/oc-content/uploads/user_resources/1/' + image_from + '.' + image_from_ext + '" style="padding-right:5px" width="32px">',
+                /*server link*/ from_image = '<img src="' + window.location.origin + '/oc-content/uploads/user_resources/0/' + image_from + '.' + image_from_ext + '" style="padding-right:5px" width="32px">',
+                from_class_name = 'chatboxmessagefrom_him';
         content_class_name = 'chatboxmessagecontent_him col-md-12';
     }
     if (data.hasOwnProperty("cls")) {
@@ -418,7 +420,7 @@ FreiChat.create_chat_window_mesg = function (user, id) {
                 idto = data.messages[j].to;
                 idfrom = data.messages[j].from;
                 reidfrom = freidefines.GEN.reidfrom;
-                
+
                 message = data.messages[j].message;
                 from_name = data.messages[j].from_name;
                 divToappend = $jn("#chatboxcontent_" + id + " .frei_content");

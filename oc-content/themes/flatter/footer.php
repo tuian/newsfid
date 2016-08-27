@@ -89,7 +89,7 @@ if (osc_is_web_user_logged_in()):
                             </div> 
                         </div>
                         <div class="col-md-9 padding-left-0">
-                            <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>, <?php echo $u['pk_i_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
+                            <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
                         </div>
                     </div>                        
                     <?php
