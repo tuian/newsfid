@@ -52,6 +52,9 @@ if (osc_is_web_user_logged_in()):
             </div>
             <div class="col-md-2 padding-left-0 pointer">
                 <i class="fa fa-bell notification" aria-hidden="true"></i>
+                <?php if (get_pending_notification_cnt() > 0): ?>
+                    <span class="label message-count"><?php echo get_pending_notification_cnt(); ?></span>
+                <?php endif; ?>
             </div>    
         </div>
         <div class="notification-area"></div>

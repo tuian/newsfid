@@ -2165,6 +2165,17 @@ function get_pending_msg_cnt() {
     $user_messge_cnt = $user_message_resultcnt->row();
     return $user_messge_cnt['msg'];
 }
+function get_pending_notification_cnt() {
+    $user_id = osc_logged_user_id();
+    $user_message_datacnt = new DAO();
+    $user_message_datacnt->dao->select('COUNT(*) as msg');
+    $user_message_datacnt->dao->from(sprintf('%st_user_notifications', DB_TABLE_PREFIX));
+    $user_message_datacnt->dao->where('to_user_id', $user_id);
+    $user_message_datacnt->dao->where('read_status', 0);
+    $user_message_resultcnt = $user_message_datacnt->dao->get();
+    $user_messge_cnt = $user_message_resultcnt->row();
+    return $user_messge_cnt['msg'];
+}
 
 function custom_array_column($input = array(), $columnKey = null) {
     $resultArray = array();
