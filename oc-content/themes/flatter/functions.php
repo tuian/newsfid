@@ -185,7 +185,7 @@ if (!function_exists('flatter_theme_install')) {
 if (!function_exists('flatter_theme_update')) {
 
     function flatter_theme_update() {
-//osc_set_preference('version', FLATTER_THEME_VERSION, 'flatter_theme');
+        //osc_set_preference('version', FLATTER_THEME_VERSION, 'flatter_theme');
         osc_delete_preference('default_logo', 'flatter_theme');
 
         $logo_prefence = osc_get_preference('logo', 'flatter_theme');
@@ -208,7 +208,7 @@ if (!function_exists('check_install_flatter_theme')) {
 
     function check_install_flatter_theme() {
         $current_version = osc_get_preference('version', 'flatter_theme');
-//check if current version is installed or need an update<
+        //check if current version is installed or need an update<
         if (!$current_version) {
             flatter_theme_install();
         } else if ($current_version < FLATTER_THEME_VERSION) {
@@ -351,7 +351,7 @@ if (!function_exists('flatter_draw_categories_list')) {
     function flatter_draw_categories_list() {
         ?>
         <?php
-//cell_3
+        //cell_3
         $total_categories = osc_count_categories();
         $col1_max_cat = ceil($total_categories / 4);
 
@@ -627,7 +627,7 @@ if (!function_exists('user_info_js')) {
 }
 
 function theme_flatter_actions_admin() {
-//if(OC_ADMIN)
+    //if(OC_ADMIN)
     switch (Params::getParam('action_specific')) {
         case('settings'):
             $googleCode = Params::getParam('google_analytics');
@@ -849,11 +849,11 @@ function flatter_sidebar_category_search($catId = null) {
     if ($catId == null) {
         $aCategories[] = Category::newInstance()->findRootCategoriesEnabled();
     } else {
-// if parent category, only show parent categories
+        // if parent category, only show parent categories
         $aCategories = Category::newInstance()->toRootTree($catId);
         end($aCategories);
         $cat = current($aCategories);
-// if is parent of some category
+        // if is parent of some category
         $childCategories = Category::newInstance()->findSubcategoriesEnabled($cat['pk_i_id']);
         if (count($childCategories) > 0) {
             $aCategories[] = $childCategories;
@@ -1007,7 +1007,7 @@ function go_to_theme_select($user) {
     if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
         $conn = getConnection();
         $conn->osc_dbExec("UPDATE `%st_user` SET `s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
-//UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
+    //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
     Session::newInstance()->_set('user_id', $user);
     Session::newInstance()->_set('after_register', 'yes');
@@ -1346,7 +1346,18 @@ function update_item_like($user_id, $item_id, $like_value) {
     else:
         $like_reult = $like_data->dao->insert(sprintf('%st_item_likes', DB_TABLE_PREFIX), $like_array);
     endif;
-
+    //insert notification for author
+    if ($like_value == 1):
+        $message = 'liked your post';
+        //item detail
+        $data = new DAO();
+        $data->dao->select('item.*');
+        $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+        $data->dao->where('item.pk_i_id', $item_id);
+        $result = $data->dao->get();
+        $item = $result->row();
+        set_user_notification($user_id, $item['fk_i_user_id'], $message);
+    endif;
     return $like_reult;
 }
 
@@ -1489,7 +1500,6 @@ function update_user_following($logged_in_user_id, $follow_user_id, $follow_valu
     $follow_array['user_id'] = $logged_in_user_id;
     $follow_array['follow_user_id'] = $follow_user_id;
     $follow_array['follow_value'] = $follow_value;
-
     $user_follow_data = new DAO();
     $user_follow_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
     $user_follow_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
@@ -1503,6 +1513,10 @@ function update_user_following($logged_in_user_id, $follow_user_id, $follow_valu
         $user_follow_data->dao->update(sprintf('%st_user_follow', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
     else:
         $user_follow_data->dao->insert(sprintf('%st_user_follow', DB_TABLE_PREFIX), $follow_array);
+    endif;
+    if ($follow_value == 1):
+        $message = 'is now following you';
+        set_user_notification($logged_in_user_id, $follow_user_id, $message);
     endif;
 }
 
@@ -1583,6 +1597,18 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     else:
         $user_follow_data->dao->insert(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array);
     endif;
+    //insert notification for author
+    if ($share_value == 1):
+        $message = 'shared your post';
+        //item detail
+        $data = new DAO();
+        $data->dao->select('item.*');
+        $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+        $data->dao->where('item.pk_i_id', $item_id);
+        $result = $data->dao->get();
+        $item = $result->row();
+        set_user_notification($user_id, $item['fk_i_user_id'], $message);
+    endif;
 }
 
 function get_user_watchlist_item($user_id) {
@@ -1606,14 +1632,14 @@ function user_watchlist_box($user_id, $item_id) {
 
     $watchlist_class = 'remove_from_watchlist';
     $action = 'remove_watchlist';
-//$fa_class = 'fa fa-user-times';
+    //$fa_class = 'fa fa-user-times';
     $watchlist_text = 'Remove from watchlist';
     $user_share = get_user_watchlist_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
         $watchlist_class = 'add_watchlist';
         $action = 'add_watchlist';
-//$fa_class = 'fa fa-user-plus';
+        //$fa_class = 'fa fa-user-plus';
         $watchlist_text = 'Add to watchlist';
     endif;
     ?>
@@ -1641,6 +1667,18 @@ function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
         $user_watchlist_data->dao->update(sprintf('%st_item_watchlist', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
     else:
         $user_watchlist_data->dao->insert(sprintf('%st_item_watchlist', DB_TABLE_PREFIX), $follow_array);
+    endif;
+    //insert notification for author
+    if ($watchlist_value == 1):
+        $message = 'added your post to his/her watchlist';
+        //item detail
+        $data = new DAO();
+        $data->dao->select('item.*');
+        $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+        $data->dao->where('item.pk_i_id', $item_id);
+        $result = $data->dao->get();
+        $item = $result->row();
+        set_user_notification($user_id, $item['fk_i_user_id'], $message);
     endif;
 }
 
@@ -2014,7 +2052,7 @@ function get_chat_users($filter = 'all') {
             unset($chat_user[$key]);
         }
     }
-//get user from circle
+    //get user from circle
     $user_circle_data = new DAO();
     $user_circle_data->dao->select(sprintf('%st_user_circle.circle_user_id', DB_TABLE_PREFIX));
     $user_circle_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
@@ -2028,7 +2066,7 @@ function get_chat_users($filter = 'all') {
     endif;
 
     if ($filter == 'all' && empty($chat_user)):
-//get dummy users
+        //get dummy users
         $user_circle_data->dao->select('user.pk_i_id as user_id');
         $user_circle_data->dao->from(DB_TABLE_PREFIX . "t_user user");
         $user_circle_data->dao->limit(10);
@@ -2071,6 +2109,10 @@ function add_user_circle($logged_in_user_id, $follow_user_id = NULL) {
     $add_user_data = new DAO();
     if ($follow_user_id):
         $add_user_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
+        //insert notification for author    
+        $message = 'added you to his/her circle';
+        set_user_notification($logged_in_user_id, $follow_user_id, $message);
+
     endif;
 }
 
@@ -2142,5 +2184,40 @@ function get_block_user_data() {
     $block_user = $block_user_data->dao->get();
     $block = $block_user->result();
     return $block;
+}
+
+function set_user_notification($from_user_id = null, $to_user_id = null, $message = null) {
+    if ($from_user_id):
+        $created = date('Y-m-d H:i:s');
+        $conn = getConnection();
+        $conn->osc_dbExec("INSERT INTO %st_user_notifications (from_user_id, to_user_id, message, created) VALUES (%s, %s, '%s','%s')", DB_TABLE_PREFIX, $from_user_id, $to_user_id, $message, $created);
+        return 1;
+    endif;
+}
+
+function get_user_notification() {
+    $user_id = osc_logged_user_id();
+    if ($user_id):
+        $db_prefix = DB_TABLE_PREFIX;
+        $notification_data = new DAO();
+        $notification_data->dao->select("noti.*");
+        $notification_data->dao->from("{$db_prefix}t_user_notifications as noti");
+        $notification_data->dao->where('to_user_id', $user_id);
+        $notification_data->dao->orderBy('created DESC');
+        $notifications = $notification_data->dao->get();
+        $notifications = $notifications->result();
+        if(!empty($notifications)):
+            foreach ($notifications as $k => $n):
+                $user = get_user_data($n['to_user_id']);
+                $notifications[$k]['user_name'] = $user['user_name'];;
+                if(!empty($user['s_path'])):
+                    $notifications[$k]['user_image'] = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];;
+                else:
+                    $notifications[$k]['user_image'] = osc_current_web_theme_url() . '/images/user-default.jpg';
+                endif;
+            endforeach;
+        endif;
+        return $notifications;
+    endif;
 }
 ?>

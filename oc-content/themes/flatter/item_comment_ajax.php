@@ -6,8 +6,16 @@ $comment_user_id = osc_logged_user_id();
 $comment_item_id = $_REQUEST['item_id'];
 $comment_text = $_REQUEST['comment_text'];
 $new_comment = new DAO();
-
 $user = get_user_data($comment_user_id);
+
+//item detail
+$data = new DAO();
+$data->dao->select('item.*');
+$data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+$data->dao->where('item.pk_i_id', $comment_item_id);
+$result = $data->dao->get();
+$item = $result->row();
+
 if (isset($_REQUEST['comment_id']) && !empty($_REQUEST['comment_id'])):
     $comment_comment_id = $_REQUEST['comment_id'];
     $comments_data = new DAO();
@@ -33,6 +41,11 @@ else :
     $comment_array['b_active'] = 1;
     $comment_array['dt_pub_date'] = date("Y-m-d H:i:s");
     $comment_data = $new_comment->dao->insert(DB_TABLE_PREFIX . 't_item_comment', $comment_array);
+    
+    //insert notification for author
+    $message = 'commented your post';
+    set_user_notification($comment_user_id, $item['fk_i_user_id'], $message);    
+    
 endif;
 $c_data;
 $comments_data = new DAO();
@@ -47,13 +60,7 @@ $comments_data->dao->orderBy('dt_pub_date', 'ASC');
 $comments_result = $comments_data->dao->get();
 $c_data = $comments_result->result();
 
-//item detail
-$data = new DAO();
-$data->dao->select('item.*');
-$data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-$data->dao->where('item.pk_i_id', $comment_item_id);
-$result = $data->dao->get();
-$item = $result->row();
+
 ?>
 <div class="comments_container_<?php echo $comment_item_id; ?>"> 
     <?php

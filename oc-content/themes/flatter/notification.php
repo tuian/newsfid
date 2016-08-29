@@ -3,12 +3,7 @@ require '../../../oc-load.php';
 require 'functions.php';
 
 if ($_REQUEST['notification'] == 'notification'):
-    $users = get_chat_users();
-    if (!empty($users['s_path'])):
-        $img_path = osc_base_url() . $users['s_path'] . $users['pk_i_id'] . '.' . $users['s_extension'];
-    else:
-        $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-    endif;
+    $notifications = get_user_notification();
     ?>
     <div class="notification_dropdown border-bottom-gray">
         <span class="bold font-color-black">  Marquer to comme lu</span> <span class="dropdown pull-right pointer padding-left-10"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i></i>
@@ -20,14 +15,19 @@ if ($_REQUEST['notification'] == 'notification'):
         </span>
     </div>
     <div class="background-white notification_list border-bottom-gray">
-        <div class="col-md-12 margin-top-20">
-            <div class="col-md-3 padding-left-0">
-                <img src="<?php echo $img_path ?>" data_user_id="<?php echo $users['user_id'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
+        <?php foreach ($notifications as $n):?>
+            <div class="col-md-12 margin-top-20">
+                <div class="col-md-3 padding-0">
+                    <img src="<?php echo $n['user_image'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
+                </div>
+                <div class="col-md-9 padding-0 color-blue">
+                    <?php echo $n['user_name'] ?>
+                </div>
+                <div class="col-md-9 padding-0">
+                    <?php echo $n['message'] ?>
+                </div>
             </div>
-            <div class="col-md-9 padding-left-0">
-                user notification
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
     
     <?php

@@ -273,7 +273,7 @@ endif;
                                     <button class="btn btn-default bold font-12 col-md-4 padding-0" onClick="FreiChat.create_chat_window(<?php echo "'" . $user['user_name'] . "'"; ?>, <?php echo $user['user_id']; ?>)"><?php echo $u['user_name']; ?>Tchat</button>
                                     <?php
                                     $circle_data = get_user_circle_data($user_id);
-                                    if (in_array($follow_user_id, $circle_data)):
+                                    if (!empty($circle_data) && in_array($follow_user_id, $circle_data)):
                                         ?>
                                         <button class="btn btn-default bold col-md-4 padding-0 last_btn remove_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>">Remove to circle</button>
                                         <?php
