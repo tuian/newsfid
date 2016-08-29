@@ -16,14 +16,14 @@ if ($_REQUEST['notification'] == 'notification'):
     </div>
     <div class="background-white notification_list border-bottom-gray">
         <?php foreach ($notifications as $n):?>
-            <div class="col-md-12 margin-top-20">
+            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10">
                 <div class="col-md-3 padding-0">
                     <img src="<?php echo $n['user_image'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                 </div>
-                <div class="col-md-9 padding-0 color-blue">
+                <div class="col-md-9 padding-0 bold">
                     <?php echo $n['user_name'] ?>
                 </div>
-                <div class="col-md-9 padding-0">
+                <div class="col-md-9 padding-0 light_gray">
                     <?php echo $n['message'] ?>
                 </div>
             </div>

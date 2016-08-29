@@ -119,6 +119,7 @@ if (osc_is_web_user_logged_in()):
                     $('.notification-area').html(data);
                     $('.chat-menu').hide();
                     $('#chat-user-list').hide();
+                    $('.freicontain').hide();
                 }
 
             });

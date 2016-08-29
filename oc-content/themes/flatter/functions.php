@@ -2208,7 +2208,7 @@ function get_user_notification() {
         $notifications = $notifications->result();
         if(!empty($notifications)):
             foreach ($notifications as $k => $n):
-                $user = get_user_data($n['to_user_id']);
+                $user = get_user_data($n['from_user_id']);
                 $notifications[$k]['user_name'] = $user['user_name'];;
                 if(!empty($user['s_path'])):
                     $notifications[$k]['user_image'] = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];;
