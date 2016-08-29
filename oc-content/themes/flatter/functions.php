@@ -2165,6 +2165,17 @@ function get_pending_msg_cnt() {
     $user_messge_cnt = $user_message_resultcnt->row();
     return $user_messge_cnt['msg'];
 }
+function get_pending_notification_cnt() {
+    $user_id = osc_logged_user_id();
+    $user_message_datacnt = new DAO();
+    $user_message_datacnt->dao->select('COUNT(*) as msg');
+    $user_message_datacnt->dao->from(sprintf('%st_user_notifications', DB_TABLE_PREFIX));
+    $user_message_datacnt->dao->where('to_user_id', $user_id);
+    $user_message_datacnt->dao->where('read_status', 0);
+    $user_message_resultcnt = $user_message_datacnt->dao->get();
+    $user_messge_cnt = $user_message_resultcnt->row();
+    return $user_messge_cnt['msg'];
+}
 
 function custom_array_column($input = array(), $columnKey = null) {
     $resultArray = array();
@@ -2208,7 +2219,7 @@ function get_user_notification() {
         $notifications = $notifications->result();
         if(!empty($notifications)):
             foreach ($notifications as $k => $n):
-                $user = get_user_data($n['to_user_id']);
+                $user = get_user_data($n['from_user_id']);
                 $notifications[$k]['user_name'] = $user['user_name'];;
                 if(!empty($user['s_path'])):
                     $notifications[$k]['user_image'] = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];;
