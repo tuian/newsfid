@@ -3494,6 +3494,15 @@ select {
     }
     .menu-button{
         display: block;
+        color: white;
+        z-index: 9999;
+        position: absolute;
+        left: 28px;
+        top: 5px;
+        font-size: 28px;
+    }
+    .main_content{
+        width: 100%;
     }
     .t-chat{
         display: none;
@@ -3501,5 +3510,11 @@ select {
     .box-widget{
         padding-left: 2%;
     }
-
+    .img-responsive{
+        width: 40px;
+    }
+    #sections{
+        max-height: 480px;
+        overflow-x: auto;
+    }
 }

@@ -137,7 +137,7 @@ if (isset($user_id)) {
     <div id="sections">
         <div class="user_area">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-3">
                     <div class=" bg-white col-md-12 padding-0">
                         <!--                    <div class="box box-widget widget-user">
                         
@@ -282,7 +282,7 @@ if (isset($user_id)) {
                                     if (!empty($suggested_user_array)):
                                         ?>
                                         <div class="col-md-12 margin-bottom-30">
-                                            <div class="col-md-3 padding-left-0">
+                                            <div class="col-md-3 padding-0">
                                                 <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                             </div>
                                             <div class="col-md-9 padding-right-0">
@@ -305,7 +305,7 @@ if (isset($user_id)) {
                     </div>
                 </div>
 
-                <div class="col-md-9 padding-left-0">
+                <div class="col-md-9 col-sm-9 padding-left-0">
                     <div class="col-md-12 padding-0">                        
                         <ul class="nav user_profile_navigation bg-white">
                             <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>

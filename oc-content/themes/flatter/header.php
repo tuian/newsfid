@@ -126,11 +126,11 @@ found!');</script>";
     </head>
     <body class="<?php flatter_body_class(); ?> skin-blue sidebar-mini" >
         <div class="wrapper row main_wrapper">
-            <div class="col-md-2 col-sm-3 padding-0">       
+            <div class="col-md-2 col-sm-0 padding-0">       
 
                 <aside class="main-sidebar" >
                     <!-- sidebar: style can be found in sidebar.less -->
-                    <section class="sidebar sidenav" id="mySidenav">
+                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) :?> padding-top-4per <?php endif; ?>" id="mySidenav">
                         <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
                             <?php
                             $user_id = osc_logged_user_id();
@@ -464,7 +464,7 @@ found!');</script>";
                     </div>
                 </div>                
             </div>
-            <span class="menu-button" onclick="openNav()">open</span>
+            <span class="menu-button" onclick="openNav()">&#9776;</span>
             <div class="user_passwor_popup_container">
                 <div id="user_confirm_password" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -548,8 +548,10 @@ found!');</script>";
 
                             $(document).on('click', '.closebtn', function () {
                                 $('#mySidenav').css("width", "0px");
+                                $('.menu-button').show();
                             });
                             $(document).on('click', '.menu-button', function () {
+                                $('.menu-button').hide();
                                 $('#mySidenav').css("width", "250px");
                                 $('.sidenav').css("transition", "0.5s");
                                 $('#mySidenav').css("display", "block");
