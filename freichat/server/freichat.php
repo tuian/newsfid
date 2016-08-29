@@ -26,8 +26,8 @@ require '../arg.php';
 
 
 $video_req = array("video", "create_video_session", "get_video_offers", "get_video_details", "video_req", "gen_room_id",
-        "get_video", "post_video");
-$arr = array("post","post_video",  "video", "create_video_session", "update_status", "create_chatroom", "delete_chatroom", "validate_chatroom_password");
+    "get_video", "post_video");
+$arr = array("post", "post_video", "video", "create_video_session", "update_status", "create_chatroom", "delete_chatroom", "validate_chatroom_password");
 
 if (in_array($_REQUEST['freimode'], $arr)) {
     $id = $_POST['id'];
@@ -56,7 +56,9 @@ if (md5($id . $uid) != $xhash) {
 class freichat_data {
     
 }
-
+$a = "select * from oc_t_profile_picture where user_id=104";
+print_r($a);
+die();
 class Conn extends FreiChat {
 
     public $userdata;
@@ -149,8 +151,7 @@ class Conn extends FreiChat {
                 if (is_string($a)) {
                     static $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
                     return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $a) . '"';
-                }
-                else
+                } else
                     return $a;
             }
             $isList = true;
@@ -239,9 +240,9 @@ class Conn extends FreiChat {
 //----------------------------------------------------------------------
     public function update_messages($active_room) {
 
-        if($active_room != -1) {
+        if ($active_room != -1) {
             $active_room = "OR room_id=" . $active_room;
-        }else{
+        } else {
             $active_room = "";
         }
         $update_mesg_query = "UPDATE frei_chat set recd = 1 WHERE (frei_chat.\"to\" = " . $this->frm_id . " $active_room) AND recd = 0";
@@ -272,9 +273,9 @@ class Conn extends FreiChat {
         if ($_SESSION[$this->uid . 'custom_mesg'] != $options['custom_mesg'] || $_SESSION[$this->uid . 'in_room'] != $options['in_room']) {
             $update_usr_info = true;
         }
-        
-        if(isset($options['custom_gst_name'])) {
-            if($_SESSION[$this->uid . 'usr_name'] != $options['custom_gst_name'] && $_SESSION[$this->uid . 'is_guest'] == 1) {
+
+        if (isset($options['custom_gst_name'])) {
+            if ($_SESSION[$this->uid . 'usr_name'] != $options['custom_gst_name'] && $_SESSION[$this->uid . 'is_guest'] == 1) {
                 $_SESSION[$this->uid . 'usr_name'] = $options['custom_gst_name'];
                 $_SESSION[$this->uid . 'gst_nam'] = $_SESSION[$this->uid . 'usr_name'];
                 $update_usr_info = true;
@@ -361,7 +362,7 @@ class Conn extends FreiChat {
         $custom_mesg = htmlspecialchars($_GET['custom_mesg'], ENT_QUOTES, "UTF-8");
         $custom_gst_name = htmlspecialchars($_GET['custom_gst_name'], ENT_QUOTES, "UTF-8");
 
-        
+
         if ($_GET['custom_mesg'] != 'i am null') {
             $_SESSION[$this->uid . 'custom_mesg'] = $custom_mesg;
         }
@@ -390,17 +391,18 @@ class Conn extends FreiChat {
         $chatroom_user_array = array();
 
         $user_ids = array();
-        
+
         foreach ($result as $res) {
 
-            if(in_array($res['session_id'], $user_ids)) continue;
-            
+            if (in_array($res['session_id'], $user_ids))
+                continue;
+
             $guest = str_replace("amp;", "", $res['username']);
-            
+
             $guest = strlen($guest) > 30 ? $this->msubstr($guest, 0, 16) . "..." : $guest;
             $img_url = $this->get_statusimg_url($res['status'], $onlineimg, $busyimg);
             $profile_link = '';
-            
+
             if ($this->linkprofile == 'enabled' && $res['guest'] == 0 && $_SESSION[$this->uid . "is_guest"] == 0) {
                 $profile_link = $object->linkprofile_url($res, $path, $profile_img);
                 $guest = strlen($guest) > 18 ? $this->msubstr($guest, 0, 12) . "..." : $guest;
@@ -435,19 +437,20 @@ class Conn extends FreiChat {
 
             $user_ids[] = $res['session_id'];
         }
-        
+
         $cres = $object->get_guests();
         $user_ids = array();
-        
-        foreach($cres as $res) {
-        
-            if(in_array($res['session_id'], $user_ids)) continue;
-            
+
+        foreach ($cres as $res) {
+
+            if (in_array($res['session_id'], $user_ids))
+                continue;
+
             $guest = htmlspecialchars($res['username']);
             $guest = strlen($guest) > 30 ? $this->msubstr($guest, 0, 16) . "..." : $guest;
             $img_url = $this->get_statusimg_url($res['status'], $onlineimg, $busyimg);
             $profile_link = '';
-            
+
             if ($this->linkprofile == 'enabled' && $res['guest'] == 0 && $_SESSION[$this->uid . "is_guest"] == 0) {
                 $profile_link = $object->linkprofile_url($res, $path, $profile_img);
                 $guest = strlen($guest) > 18 ? $this->msubstr($guest, 0, 12) . "..." : $guest;
@@ -473,8 +476,8 @@ class Conn extends FreiChat {
             if ((isset($res['in_room']) && $active_room == $res['in_room']) && $this->show_chatroom_plugin == 'enabled') {
                 $chatroom_user_array[] = array("username" => $guest, "userid" => $res['session_id'], "avatar" => $avatar_url, "img_url" => $img_url);
             }
-            
-            $user_ids[] = $res['session_id'];        
+
+            $user_ids[] = $res['session_id'];
         }
 //}
 
@@ -593,15 +596,15 @@ class Conn extends FreiChat {
 
 //-------------------------------------------------------------------
     public function post() {
-        
+
         $freichat = new freichat_data();
-        
-        if(isset($_SESSION[$this->uid . 'is_banned']) && $_SESSION[$this->uid . 'is_banned']) {
-            
+
+        if (isset($_SESSION[$this->uid . 'is_banned']) && $_SESSION[$this->uid . 'is_banned']) {
+
             //echo json_encode($freichat);
             exit;
         }
-        
+
         $frm_id = $this->frm_id;
         $usr_name = str_replace("'", "", $this->frm_name);
         $room_id = -1;
@@ -664,12 +667,12 @@ class Conn extends FreiChat {
             $time = time() . str_replace(" ", "", microtime());
             if ($message_type == 0 || $message_type == 2) {
                 $chatroom_mesg_time = $_POST['chatroom_mesg_time'];
-                $this->insert_mesg_query->execute(array($frm_id, $usr_name, $to, $to_name, $message, $this->mysql_now,0, $time, $message_type, '-1', $GMT_time));
+                $this->insert_mesg_query->execute(array($frm_id, $usr_name, $to, $to_name, $message, $this->mysql_now, 0, $time, $message_type, '-1', $GMT_time));
             } else if ($this->show_chatroom_plugin == 'enabled') {
                 //$chatroom_mesg_time = $time;
                 $message = $this->parseBBcode($message);
                 $chatroom_mesg_time = $_POST['chatroom_mesg_time'];
-                $this->insert_mesg_query->execute(array($frm_id, $usr_name, $room_id, $room_id, $message, $this->mysql_now,0, $time, $message_type, $room_id, $GMT_time));
+                $this->insert_mesg_query->execute(array($frm_id, $usr_name, $room_id, $room_id, $message, $this->mysql_now, 0, $time, $message_type, $room_id, $GMT_time));
                 $this->update_chatroom_activity($room_id);
             } else {
                 $this->freichat_debug("undefined message post req");

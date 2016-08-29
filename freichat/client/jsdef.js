@@ -57,9 +57,7 @@ freidefines = {
         time: Get_Cookie('frei_time'),
         fromid: '<?php echo $_SESSION[$uid . "usr_ses_id"]; ?>',
         image_mid: '<?php echo $_SESSION[$uid."usr_img_ses_id"]; ?>',
-        image_to: '<?php echo $_SESSION[$uid."usr_img_ses_to"]; ?>',
         image_ext: '<?php echo $_SESSION[$uid."usr_img_ses_ext"]; ?>',
-        image_to_ext: '<?php echo $_SESSION[$uid."usr_img_ses_to_ext"]; ?>',
         referer: window.location.href,
         rtl: '<?php echo $_SESSION[$uid."rtl"]; ?>',
         content_height: '<?php echo $cvs->content_height; ?>',
@@ -78,7 +76,7 @@ freidefines = {
         mesgSendSpeed: '<?php echo $cvs->msgSendSpeed; ?>',
         addedoptions_visibility: '<?php echo $cvs->addedoptions_visibility; ?>',
         show_avatar: '<?php echo $cvs->show_avatar; ?>',
-        allow_guest_name_change: '<?php echo $cvs->allow_guest_name_change; ?>'   },
+        allow_guest_name_change: '<?php echo $cvs->allow_guest_name_change; ?>'},
     STATUS: {
         IMG: {
             online: '<?php echo $frei_trans["go_online"]; ?>',
@@ -122,7 +120,6 @@ freidefines = {
         custom_guest_name_exists: '<?php echo $frei_trans["custom_guest_name_exists"]; ?>',
         chatroom_tools_toggle: '<?php echo $frei_trans["chatroom_tools_toggle"]; ?>',
         search_placeholder: '<?php echo $frei_trans["search_placeholder"]; ?>',
-        
         custom_name_title: '<?php echo $frei_trans["custom_name_title"]; ?>',
         status_title: '<?php echo $frei_trans["status_title"]; ?>',
         MAIL: {
@@ -142,7 +139,7 @@ freidefines = {
             inotice: '<?php echo $frei_trans["file_inotice"]; ?>',
             inotice2: '<?php echo $frei_trans["file_inotice2"]; ?>',
             inotice3: '<?php echo $frei_trans["file_inotice3"]; ?>',
-            change: '<?php echo $frei_trans["file_change"]; ?>'            
+            change: '<?php echo $frei_trans["file_change"]; ?>'
         }
     },
     language: '<?php echo $cvs->lang; ?>',
@@ -229,7 +226,7 @@ freidefines = {
         chatroom_rotate: '<?php echo $chatroom_rotate; ?>',
         chatroom_override_positions: '<?php echo $cvs->chatroom_override_positions; ?>',
         chat_time_shown_always: '<?php echo $cvs->chat_time_shown_always; ?>'
-  },
+    },
     JSdebug: '<?php echo $cvs->JSdebug; ?>',
     playsound: '<?php echo $cvs->playsound ?>',
     busy_timeOut: '<?php echo $cvs->busy_timeOut; ?>',
