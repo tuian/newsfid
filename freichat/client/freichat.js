@@ -287,15 +287,15 @@ FreiChat.generate_mesg = function (id, data, message, toid) {
         from_class_name = 'chatboxmessagefrom_me';
         image_from = freidefines.GEN.image_mid;
         image_from_ext = freidefines.GEN.image_ext;
-        /*local link*/      from_image = '<img src="' + window.location.origin + '/newsfid/oc-content/uploads/user_resources/1/' + image_from + '.' + image_from_ext + '" class="pull-right" style="padding-left:5px" width="32px">',
-// /*server link*/       from_image = '<img src="' + window.location.origin + '/oc-content/uploads/user_resources/0/' + image_from + '.' + image_from_ext + '" class="pull-right" style="padding-left:5px" width="32px">',
+//        /*local link*/      from_image = '<img src="' + window.location.origin + '/newsfid/oc-content/uploads/user_resources/1/' + image_from + '.' + image_from_ext + '" class="pull-right" style="padding-left:5px" width="32px">',
+ /*server link*/       from_image = '<img src="' + window.location.origin + '/oc-content/uploads/user_resources/0/' + image_from + '.' + image_from_ext + '" class="pull-right" style="padding-left:5px" width="32px">',
                 content_class_name = 'chatboxmessagecontent_me col-md-12 text-right';
     } else {
         class_name = 'frei_msg_container';
         image_from = freidefines.GEN.image_mid;
         image_from_ext = freidefines.GEN.image_ext;
-        /*local link*/ from_image = '<img src="' + window.location.origin + '/newsfid/oc-content/uploads/user_resources/1/' + image_from + '.' + image_from_ext + '" style="padding-right:5px" width="32px">',
-//                /*server link*/ from_image = '<img src="' + window.location.origin + '/oc-content/uploads/user_resources/0/' + image_from + '.' + image_from_ext + '" style="padding-right:5px" width="32px">',
+//        /*local link*/ from_image = '<img src="' + window.location.origin + '/newsfid/oc-content/uploads/user_resources/1/' + image_from + '.' + image_from_ext + '" style="padding-right:5px" width="32px">',
+                /*server link*/ from_image = '<img src="' + window.location.origin + '/oc-content/uploads/user_resources/0/' + image_from + '.' + image_from_ext + '" style="padding-right:5px" width="32px">',
                 from_class_name = 'chatboxmessagefrom_him';
         content_class_name = 'chatboxmessagecontent_him col-md-12';
     }
@@ -387,7 +387,7 @@ FreiChat.analyse = function () {
         }
     }, 'json');
 };
-FreiChat.create_chat_window_mesg = function (user, id, to_id) {
+FreiChat.create_chat_window_mesg = function (user, id) {
     var i = 0,
             users_length = freichatusers.length;
     for (i = 0; i <= users_length; i++) {
@@ -407,8 +407,7 @@ FreiChat.create_chat_window_mesg = function (user, id, to_id) {
         $jn.getJSON(freidefines.GEN.url + "server/freichat.php?freimode=isset_mesg", {
             xhash: freidefines.xhash,
             id: freidefines.GEN.getid,
-            Cid: id,
-            to_td: to_id
+            Cid: id
         }, function (data) {
             if (data.exist == false) {
                 return;

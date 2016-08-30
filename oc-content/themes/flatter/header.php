@@ -130,7 +130,7 @@ found!');</script>";
 
                 <aside class="main-sidebar" >
                     <!-- sidebar: style can be found in sidebar.less -->
-                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) :?> padding-top-4per <?php endif; ?>" id="mySidenav">
+                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) : ?> padding-top-4per <?php endif; ?>" id="mySidenav">
                         <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
                             <?php
                             $user_id = osc_logged_user_id();
@@ -548,12 +548,15 @@ found!');</script>";
 
                             $(document).on('click', '.closebtn', function () {
                                 $('#mySidenav').css("width", "0px");
+                                $('#mySidenav').css("height", "0px");
+                                $('.sidenav').css("transition", "0.9s");
                                 $('.menu-button').show();
                             });
                             $(document).on('click', '.menu-button', function () {
                                 $('.menu-button').hide();
                                 $('#mySidenav').css("width", "250px");
-                                $('.sidenav').css("transition", "0.5s");
+                                $('#mySidenav').css("height", "720px");
+                                $('.sidenav').css("transition", "0.9s");
                                 $('#mySidenav').css("display", "block");
                             });
                             /* Set the width of the side navigation to 0 */

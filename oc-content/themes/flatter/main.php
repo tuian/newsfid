@@ -281,11 +281,11 @@ if (isset($user_id)) {
                                     $suggested_user_array = get_user_data($s_user);
                                     if (!empty($suggested_user_array)):
                                         ?>
-                                        <div class="col-md-12 margin-bottom-30">
-                                            <div class="col-md-3 padding-0">
+                                        <div class="col-md-12 col-xs-12 margin-bottom-30">
+                                            <div class="col-md-3 col-xs-2 padding-0">
                                                 <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                             </div>
-                                            <div class="col-md-9 padding-right-0">
+                                            <div class="col-md-9 col-xs-10 padding-right-0">
                                                 <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>                                
                                                 <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                                 <?php

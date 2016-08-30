@@ -39,7 +39,7 @@ $('document').ready(function() {
  <br/></div></span></span></div>";
 
     str_opt2 = /*<span class='label additional_options_label'>additional options</span>*/"\n\
-<div class='frei_option_bar asdfsdfsdf' id='frei_option_bar'><div class='frei_option_bar_status' id='frei_option_bar_status'><div class='frei_option_bar_arrow'></div>\n\
+<div class='frei_option_bar' id='frei_option_bar'><div class='frei_option_bar_status' id='frei_option_bar_status'><div class='frei_option_bar_arrow'></div>\n\
 <div class='frei_option_bar_status_txt' id='frei_option_bar_status_txt'>i am available</div></div>\n\
 <div class='frei_chatbox_options'><div class='frei_option_bar_reset'><div class='frei_option_bar_reset_bg'></div></div><div id='frei_option_bar_rtl' class='frei_option_bar_rtl'><div class='frei_option_bar_rtl_bg'></div></div><div class='frei_option_bar_sound'><div class='frei_option_bar_sound_bg frei_option_bar_sound_bg_on'></div></div><div class='frei_option_bar_sound'><div class='frei_option_bar_sound_bg frei_option_bar_sound_bg_off'></div></div></div></div>"
 

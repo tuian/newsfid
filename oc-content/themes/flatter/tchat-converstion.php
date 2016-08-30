@@ -31,11 +31,16 @@ if ($_REQUEST['submit'] == 'send-msg'):
 endif;
 if ($_REQUEST['action'] == 'chat-converstion'):
     $partner_id = $_REQUEST['user_id'];
+    $old_msg_cnt = $_REQUEST['old_msg_cnt'];
     $user = get_user_data($user_id);
     $partner = get_user_data($partner_id);
     $conv = get_chat_conversion($user_id, $partner_id);
+    $new_msg_cnt = count(get_chat_conversion($user_id, $partner_id));
+    if($old_msg_cnt == $new_msg_cnt):
+        die('same as old');
+    endif;
     ?>
-    <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $user['user_id'] ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner['user_id'] ?>" to-user-name="<?php echo $partner['user_name'] ?>"/>
+    <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $user_id ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id ?>" to-user-name="<?php echo $partner['user_name']?>" old_msg_cnt="<?php echo $new_msg_cnt; ?>"/>    
     <?php
     foreach ($conv as $k => $msg):
         ?>

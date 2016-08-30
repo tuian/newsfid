@@ -69,7 +69,8 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                         if (isset($msg[0]['to'])):
                             $conv = get_chat_conversion($user_id, $msg[0]['to']);
                             ?>
-                            <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $msg[0]['from'] ?>" from-user-name="<?php echo $msg[0]['from_name'] ?>" to-user-id="<?php echo $msg[0]['to'] ?>" to-user-name="<?php echo $msg[0]['to_name'] ?>"/>
+                        
+                            <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $msg[0]['from'] ?>" from-user-name="<?php echo $msg[0]['from_name'] ?>" to-user-id="<?php echo $msg[0]['to'] ?>" to-user-name="<?php echo $msg[0]['to_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $msg[0]['to'])); ?>"/>
                             <?php foreach ($conv as $k => $msg):
                                 ?>
                                 <div class="conversion">
@@ -130,7 +131,34 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        var msg = <?php echo get_pending_msg_cnt(); ?>;
 
+        setInterval(ajaxCall, 1000); //300000 MS == 5 minutes
+
+        function ajaxCall() {
+            var to_id = $('#hidden-user-data').attr('to-user-id');
+            var old_msg_cnt = $('#hidden-user-data').attr('old_msg_cnt');
+            console.log(old_msg_cnt);
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    action: 'chat-converstion',
+                    flag: 'recrsive',
+                    old_msg_cnt: old_msg_cnt,
+                    user_id: to_id
+                },
+                success: function (data) {
+                    if(data != 'same as old'){
+                        $('#chat-box').html(data);
+                        $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+                    }
+                }
+            });
+        }
+
+    });
     $('.nav').on('click', 'li', function () {
         $('.nav li.active_tab').removeClass('active_tab');
         $(this).addClass('active_tab');
@@ -179,20 +207,20 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         });
     });
 
-   $(document).on('keyup','.search_name',function (){
+    $(document).on('keyup', '.search_name', function () {
         var search = $(this).val();
         $.ajax({
-           type: 'post',
-           url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
-           data: {
-               search_action: 'search-action',
-               search_text: search
-           },
-           success: function (data) {
+            type: 'post',
+            url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+            data: {
+                search_action: 'search-action',
+                search_text: search
+            },
+            success: function (data) {
                 $('.t_chat_overflow').html(data);
-               // $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+                // $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
             }
         });
-   });
+    });
 </script>
 <?php osc_current_web_theme_path('footer.php'); ?>

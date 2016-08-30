@@ -2136,7 +2136,7 @@ function get_chat_message_data($user_id = null) {
     $user_message_data->dao->select('frei_chat.*');
     $user_message_data->dao->from('frei_chat');
     $user_message_data->dao->where('`from`', $user_id);
-    $user_message_data->dao->orderBy("time DESC");
+    $user_message_data->dao->orderBy("sent DESC");
     $user_message_data->dao->groupBy('`to`');
     $user_message_result = $user_message_data->dao->get();
     $user_messge_array = $user_message_result->result();

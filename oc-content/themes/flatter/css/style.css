@@ -3031,7 +3031,7 @@ select {
     z-index: 1;
 }
 .all_news{
-    /*min-height:800px;*/    
+    max-height:600px;    
     overflow-y:auto;
     position:relative;  
     background: #f1f0f0;
@@ -3464,7 +3464,7 @@ select {
 }
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 
-@media only screen and (max-width: 768px){
+@media only screen and (min-width: 768px) and (max-width: 960px){
     .sidenav {
         height: 100%; /* 100% Full-height */
         //width: 0; /* 0 width - change this with JavaScript */
@@ -3504,17 +3504,138 @@ select {
     .main_content{
         width: 100%;
     }
-    .t-chat{
+    .t-chat {
+        position: absolute;
+        top: -50px;
+        right: 0px;
+        width: 21.6%;
+        background-color: #222d32;
+        z-index: 999;
         display: none;
+    }
+    .t_chat_open{
+        color: #fff;
+        position: absolute;
+        z-index: 999999;
+        top: -35px;
+        right: 20px;
     }
     .box-widget{
         padding-left: 2%;
     }
     .img-responsive{
-        width: 40px;
+        width: 40%;
     }
     #sections{
         max-height: 480px;
         overflow-x: auto;
+    }
+    .t_chat_menu .closebtn {
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        display: block;
+        color: #fff;
+    }
+    .chat-user {
+        margin-left: -5px;
+    }
+    #chat-box-footer .freicontain {
+        width: 31.9%;
+    }
+    .chatboxcontent {
+        max-height: 120px !important;
+    }
+}
+@media only screen and (min-width: 480px) and (max-width: 767px){
+    .frei_tab{
+        display: none;
+    }
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        //width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0;
+        left: 0;
+        display: none;
+        background-color: #222d32;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    }
+    /* The navigation menu links */
+    .sidenav a {
+        display: block;
+        transition: 0.3s
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        display: block;
+    }
+    .menu-button {
+        display: block;
+        /* color: antiquewhite; */
+        z-index: 999;
+        position: absolute;
+        top: 10px;
+        font-size: 32px;
+        left: 30px;
+        color: white;
+    }
+    .main_content{
+        width: 100%;
+    }
+    .sidebar {
+        position: relative;
+        top: -50px;
+        left: 48%;
+        bottom: 0px;
+
+    }
+    .t-chat {
+        position: absolute;
+        top: -50px;
+        right: 0px;
+        width: 21.6%;
+        background-color: #222d32;
+        z-index: 999;
+        display: none;
+    }
+    .t_chat_open{
+        color: #fff;
+        position: absolute;
+        z-index: 999999;
+        top: -80px;
+        right: 20px;
+    }
+    .box-widget{
+        padding-left: 5%;
+    }
+    
+    #sections{
+        max-height: 480px;
+        overflow-x: auto;
+    }
+    .t_chat_menu .closebtn {
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        display: block;
+        color: #fff;
+    }
+    .chat-user {
+        margin-left: -5px;
+    }
+    #chat-box-footer .freicontain {
+        width: 31.9%;
+    }
+    .chatboxcontent {
+        max-height: 120px !important;
     }
 }
