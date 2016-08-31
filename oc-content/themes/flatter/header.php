@@ -551,8 +551,10 @@ found!');</script>";
                                 $('#mySidenav').css("height", "0px");
                                 $('.sidenav').css("transition", "0.9s");
                                 $('.menu-button').show();
+                                $('.closebtn').hide();
                             });
                             $(document).on('click', '.menu-button', function () {
+                                $('.closebtn').show();
                                 $('.menu-button').hide();
                                 $('#mySidenav').css("width", "250px");
                                 $('#mySidenav').css("height", "720px");

@@ -56,7 +56,7 @@ endif;
 
 if ($following_user):
     $following_user = implode(',', $following_user);
-    $data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ({$following_user}))");
+    $data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 0 AND item.fk_i_user_id IN ({$following_user}))");
 else:
     $data->dao->where("item_user.has_private_post = 0");
 endif;
@@ -177,7 +177,7 @@ if ($items):
                                 <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id']?'border-blue-left':''?>">
                                     <div class="box-comment">
                                         <!-- User image -->
-                                        <div class="comment_user_image">
+                                        <div class="comment_user_image margin-right-10">
                                             <?php get_user_profile_picture($comment_user['user_id']) ?>
                                         </div>
                                         <div class="comment-area">

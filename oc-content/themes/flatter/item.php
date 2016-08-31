@@ -114,7 +114,7 @@
                 
                 <div class="row item-bottom">
                 	<div class="col-md-6">
-                    <ul class="social-share">
+                    <ul class="social-share padding-bottom-20">
                         <li class="facebook">
                            <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575'); return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                             <i class="fa fa-facebook"></i>

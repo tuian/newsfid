@@ -27,9 +27,10 @@ if ($result) {
 
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
-    $db_prefix = DB_TABLE_PREFIX; ?>
-<!--<div class="col-md-12">-->
-    <?php 
+    $db_prefix = DB_TABLE_PREFIX;
+    ?>
+    <!--<div class="col-md-12">-->
+    <?php
     $i = 1;
     foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
@@ -46,83 +47,106 @@ if ($items):
                 $user_image_url = osc_current_web_theme_url('images/user_icon.jpg');
             endif;
             if (osc_count_item_resources()) { //item without media should not allow
-            ?>
-            <!--<div class="item1 wow animated col-md-4 col-sm-4 col-lg-4">-->
-            <div class="item animated col-md-4 col-sm-4 col-lg-4 padding-lr-5">
-                <div class="list">
-                    <?php if (osc_images_enabled_at_items()) { ?>
-                        <div class="image">
-                            <div>
-                                <?php if (osc_count_item_resources()) { ?>
-                                    <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">
-                                        <?php item_resources(osc_item_id()) ?>
-                                    </a>
-                                <?php } else { ?>
-                                    <a href="<?php echo osc_item_url(); ?>">
-                                        <img src="<?php echo osc_current_web_theme_url('images/no-image.jpg'); ?>" alt="<?php echo osc_item_title(); ?>" class="img-responsive item_image">
-                                    </a>
-                                <?php } ?>
+                ?>
+                <!--<div class="item1 wow animated col-md-4 col-sm-4 col-lg-4">-->
+                <div class="item animated col-md-4 col-sm-4 col-lg-4 padding-lr-5">
+                    <div class="list">
+                        <?php if (osc_images_enabled_at_items()) { ?>
+                            <div class="image">
+                                <div>
+                                    <?php if (osc_count_item_resources()) { ?>
+                                        <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">
+                                            <?php item_resources(osc_item_id()) ?>
+                                        </a>
+                                    <?php } else { ?>
+                                        <a href="<?php echo osc_item_url(); ?>">
+                                            <img src="<?php echo osc_current_web_theme_url('images/no-image.jpg'); ?>" alt="<?php echo osc_item_title(); ?>" class="img-responsive item_image">
+                                        </a>
+                                    <?php } ?>
+                                </div>
                             </div>
-                        </div>
-                    <?php } ?>
-                    <div class="description" >
-                        <div class="col-md-9 padding-top-10">
-                            <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="col-md-3 padding-0 img-responsive item_image user_thumbnail">
-                            <h3 class="item_title col-md-9">
-                                <a class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
-                                    <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
-                                    <?php //echo osc_item_title();  ?>
-                                </a>
-                            </h3>
-                            <span class="item_time col-md-9 padding-left-10"><?php echo $date_in_french; ?></span>                            
-                        </div>
-                        
-                        <div class="col-md-12">
-                            <p class="item_description">
-                                <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>
-                            </p>                            
-                        </div>
-                        <div class="col-md-12">
-                            <div class="item_counts">
-                                <div class="col-md-2 padding-0">
-                                    <?php
-                                    $share_count = get_item_shares_count(osc_item_id());
-                                    if ($share_count > 0):
-                                        ?>
-                                        <span class="item_view_count">
-                                            <i class="fa fa-retweet"></i> 
-                                            <?php echo $share_count; ?>
-                                        </span>
-                                        <?php
-                                    endif;
-                                    ?>
-                                    <?php
-                                    $watchlist_count = get_item_watchlist_count(osc_item_id());
-                                    if ($watchlist_count > 0):
-                                        ?>
-                                        <span class="item_favourite_count">
-                                            <i class="fa fa-heart"></i> <?php echo $watchlist_count ?>
-                                        </span>
-                                        <?php
-                                    endif;
-                                    ?>
-                                </div>                                
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <?php if (osc_price_enabled_at_items()) { ?>
-                                    <span class="price sclr">
-                                        <?php echo osc_format_price(osc_item_price()); ?>
-                                    </span>
-                                <?php } ?>
+                        <?php } ?>
+                        <div class="description" >
+                            <div class="col-md-9 padding-top-10">
+                                <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="col-md-3 padding-0 img-responsive item_image user_thumbnail">
+                                <h3 class="item_title col-md-9">
+                                    <a class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
+                                        <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
+                                        <?php //echo osc_item_title();   ?>
+                                    </a>
+                                </h3>
+                                <span class="item_time col-md-9 padding-left-10"><?php echo $date_in_french; ?></span>                            
                             </div>
 
+                            <div class="col-md-12">
+                                <p class="item_description">
+                                    <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>
+                                </p>                            
+                            </div>
+                            <div class="col-md-12">
+                                <div class="item_counts">
+                                    <div class="col-md-5 padding-0">
+
+                                        <?php
+                                        $like_count = get_item_likes_count(osc_item_id());
+                                        if ($like_count > 0):
+                                            ?>
+                                            <span class="item_view_count padding-right-10">
+                                                <?php echo $like_count; ?>
+                                                <i class="fa fa-thumbs-o-up"></i> 
+                                            </span>
+                                            <?php
+                                        endif;
+                                        $share_count = get_item_shares_count(osc_item_id());
+                                        if ($share_count > 0):
+                                            ?>
+                                            <span class="item_view_count padding-right-10">
+                                                <?php echo $share_count; ?>
+                                                <i class="fa fa-retweet"></i> 
+                                            </span>
+                                            <?php
+                                        endif;
+                                        $comment_count = get_comment_count(osc_item_id());
+                                        if ($comment_count > 0):
+                                            ?>                                                                                                                           
+                                            <span class="comment_text">
+                                                <i class="fa fa-comments"></i>
+                                                <?php echo $comment_count; ?>
+                                            </span>
+                                            <?php
+                                        endif;
+                                        $watchlist_count = get_item_watchlist_count(osc_item_id());
+                                        if ($watchlist_count > 0):
+                                            ?>
+                                            <span class="item_favourite_count">
+                                                <i class="fa fa-heart"></i> <?php echo $watchlist_count ?>
+                                            </span>
+                                            <?php
+                                        endif;
+                                        ?>
+                                    </div>  
+                                    <div class="col-md-5 blue_text text-right pull-right">
+                                        <?php
+//                                        $post = osc_item_category();
+//                                        echo $post;
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <?php if (osc_price_enabled_at_items()) { ?>
+                                        <span class="price sclr">
+                                            <?php echo osc_format_price(osc_item_price()); ?>
+                                        </span>
+                                    <?php } ?>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php
+                <?php
             }
         endwhile;
 //        if($i%3 == 0):

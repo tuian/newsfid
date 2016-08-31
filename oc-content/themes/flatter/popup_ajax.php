@@ -101,7 +101,7 @@ while (osc_has_custom_items()):
                                     </div><!-- Item Content End -->
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <ul class="social-share">
+                                            <ul class="social-share padding-bottom-20">
                                                 <li>
                                                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?></li>
 
@@ -151,10 +151,23 @@ while (osc_has_custom_items()):
                                                 <?php
                                                 $c_data = get_item_comments(osc_item_id());
                                                 if ($c_data):
+                                                    if (count($c_data) > 3):
+                                                        ?>
+                                                        <div class="box-body">
+                                                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                                            <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                                                        </div>
+                                                        <?php
+                                                    endif;
+                                                    $total_comment = count($c_data);
                                                     foreach ($c_data as $k => $comment_data):
+                                                        $comment_user = get_user_data($comment_data['fk_i_user_id']);
+                                                        if ($k < $total_comment - 3 && !$load_more):
+                                                            $load_more = 'load more';
+                                                            echo '<div class="load_more">';
+                                                        endif;
                                                         ?>
                                                         <?php
-                                                        $comment_user = get_user_data($comment_data['fk_i_user_id']);
                                                         if ($comment_user['s_path']):
                                                             $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
                                                         else:
@@ -164,34 +177,38 @@ while (osc_has_custom_items()):
                                                         <div class="box-footer box-comments">
                                                             <div class="box-comment">
                                                                 <!-- User image -->
-                                                                <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user['user_name'] ?>">
+                                                                <img class="img-circle col-md-2" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user['user_name'] ?>">
 
-                                                                <div class="comment-area">
+                                                                <div class="comment-area col-md-10 padding-0">
                                                                     <span class="username">
                                                                         <?php echo $comment_user['user_name'] ?>
-<!--                                                                                                                                                <div class="dropdown  pull-right">
-                                                                                                                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                                                                                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                                                                                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
-                                                                                                                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Modifier</a></li>
-                                                                                                                                                        <li><a></a></li>
-                                                                                                                                                        <li><a>Sponsoriser</a></li>
-                                                                                                                                                        <li><a>Remonter en tête de liste</a></li>
-                                                                                                                                                        <li><a></a></li>
-                                                                                                                                                        <li><a>Signaler la publication</a></li>
-                                                                        
-                                                                                                                                                    </ul>
-                                                                                                                                                </div>-->
+                                                                        <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
+                                                                        <!--                                                                                                                                                <div class="dropdown  pull-right">
+                                                                                                                                                                                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                                                                                                                                                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                                                                                                                                                                    <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
+                                                                                                                                                                                                                    <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Modifier</a></li>
+                                                                                                                                                                                                                    <li><a></a></li>
+                                                                                                                                                                                                                    <li><a>Sponsoriser</a></li>
+                                                                                                                                                                                                                    <li><a>Remonter en tête de liste</a></li>
+                                                                                                                                                                                                                    <li><a></a></li>
+                                                                                                                                                                                                                    <li><a>Signaler la publication</a></li>
+                                                                                                                                                
+                                                                                                                                                                                                                    </ul>
+                                                                                                                                                                                                                    </div>-->
                                                                     </span><!-- /.username -->
                                                                     <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                                         <?php echo $comment_data['s_body']; ?>
                                                                     </span>
-                                                                    <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
                                                                 </div>
                                                                 <!-- /.comment-text -->
                                                             </div>                       
                                                         </div>                  
                                                         <?php
+                                                        if ($k == (count($c_data) - 4)):
+                                                            unset($load_more);
+                                                            echo "</div>";
+                                                        endif;
                                                     endforeach;
                                                 endif;
                                                 ?>
@@ -217,7 +234,9 @@ while (osc_has_custom_items()):
                                                         </div>
                                                     </form>
                                                 </div>
-                                            <?php endif; ?>
+                                                <?php
+                                            endif;
+                                            ?>
                                         </div>
                                     </div>
 

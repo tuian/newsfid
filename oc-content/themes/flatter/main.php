@@ -77,39 +77,39 @@ if (isset($user_id)) {
         <?php //osc_slider();  ?>  
     <?php } ?>
 
-<!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;">
-        <div class="last-post col-md-12">
-            <div class="col-md-8">
-                HEADLINES
-            </div>
-            <div class="col-md-8">
-                <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
-            </div>
-            <div class="col-md-8 padding-bottom-10"><i>
-                    <?php
-                    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
+                                <!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;">
+                                        <div class="last-post col-md-12">
+                                            <div class="col-md-8">
+                                                HEADLINES
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
+                                            </div>
+                                            <div class="col-md-8 padding-bottom-10"><i>
+    <?php
+    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
 
-                    if (strlen($string) > 100) {
+    if (strlen($string) > 100) {
 
-                        // truncate string
-                        $stringCut = substr($string, 0, 100);
+// truncate string
+        $stringCut = substr($string, 0, 100);
 
-                        // make sure it ends in a word so assassinate doesn't become ass...
-                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '</i> <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
-                    }
-                    ?>  <?php echo $string;
-                    ?>
-            </div>
-        </div>      
-    </div>-->
+// make sure it ends in a word so assassinate doesn't become ass...
+        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '</i> <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
+    }
+    ?>  <?php echo $string;
+    ?>
+                                            </div>
+                                        </div>      
+                                    </div>-->
 
 <?php else : ?>
-<!--    <div class="section" >
-        <span class="home-slider-text"> Newsfid </span>
-        <div id="cover" classe="cover home-slider-img">
-            <img src="images/top.main.jpg" class="img-responsive" />
-        </div>
-    </div>-->
+    <!--    <div class="section" >
+            <span class="home-slider-text"> Newsfid </span>
+            <div id="cover" classe="cover home-slider-img">
+                <img src="images/top.main.jpg" class="img-responsive" />
+            </div>
+        </div>-->
 
     <div class="section">
         <div class="postadspace">
@@ -137,203 +137,221 @@ if (isset($user_id)) {
     <div id="sections">
         <div class="user_area">
             <div class="row">
-                <div class="col-md-3 col-sm-3">
-                    <div class=" bg-white col-md-12 padding-0">
-                        <!--                    <div class="box box-widget widget-user">
-                        
-                                                <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover-image.png" ?>') center center;">
-                                                    <h3 class="widget-user-username">
-                        <?php echo $logged_user['user_name'] ?>
-                                                    </h3>
-                                                    <h5 class="widget-user-desc">
-                                                        Web Designer
-                                                    </h5>
-                                                </div>
-                                                <div class="widget-user-image">
-                        <?php
-                        if (!empty($logged_user['s_path'])):
-                            $img_path = osc_base_url() . $logged_user['s_path'] . $logged_user['pk_i_id'] . '.' . $logged_user['s_extension'];
-                        else:
-                            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                        endif;
-                        ?>
-                        
-                                                    <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user['user_name'] ?>">
-                                                </div>
-                                                <div class="box-footer">
-                                                    <div class="row">
-                                                        <div class="col-sm-4 border-right">
-                                                            <div class="description-block">
-                                                                <h5 class="description-header">
-                        <?php
-                        $user_following = get_user_following_data(osc_logged_user_id());
-                        if ($user_following):
-                            echo count($user_following);
-                        else:
-                            echo 0;
-                        endif;
-                        ?>
-                                                                </h5>
-                                                                <span class="description-text">
-                                                                    ABONNEMENTS
-                                                                </span>
+                <div class="box_fix">
+                    <div class="col-md-3 col-sm-3">
+                        <div class=" bg-white col-md-12 padding-0">
+                            <!--                    <div class="box box-widget widget-user">
+                            
+                                                    <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover-image.png" ?>') center center;">
+                                                        <h3 class="widget-user-username">
+                            <?php echo $logged_user['user_name'] ?>
+                                                        </h3>
+                                                        <h5 class="widget-user-desc">
+                                                            Web Designer
+                                                        </h5>
+                                                    </div>
+                                                    <div class="widget-user-image">
+                            <?php
+                            if (!empty($logged_user['s_path'])):
+                                $img_path = osc_base_url() . $logged_user['s_path'] . $logged_user['pk_i_id'] . '.' . $logged_user['s_extension'];
+                            else:
+                                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                            endif;
+                            ?>
+                            
+                                                        <img class="img-circle" src="<?php echo $img_path ?>" alt=" <?php echo $logged_user['user_name'] ?>">
+                                                    </div>
+                                                    <div class="box-footer">
+                                                        <div class="row">
+                                                            <div class="col-sm-4 border-right">
+                                                                <div class="description-block">
+                                                                    <h5 class="description-header">
+                            <?php
+                            $user_following = get_user_following_data(osc_logged_user_id());
+                            if ($user_following):
+                                echo count($user_following);
+                            else:
+                                echo 0;
+                            endif;
+                            ?>
+                                                                    </h5>
+                                                                    <span class="description-text">
+                                                                        ABONNEMENTS
+                                                                    </span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-4 border-right">
-                                                            <div class="description-block">
-                                                                <h5 class="description-header">
-                        <?php
-                        $user_followers = get_user_follower_data(osc_logged_user_id());
-                        if ($user_followers):
-                            echo count($user_followers);
-                        else:
-                            echo 0;
-                        endif;
-                        ?>
-                                                                </h5>
-                                                                <span class="description-text">
-                                                                    FOLLOWERS
-                                                                </span>
+                                                            <div class="col-sm-4 border-right">
+                                                                <div class="description-block">
+                                                                    <h5 class="description-header">
+                            <?php
+                            $user_followers = get_user_follower_data(osc_logged_user_id());
+                            if ($user_followers):
+                                echo count($user_followers);
+                            else:
+                                echo 0;
+                            endif;
+                            ?>
+                                                                    </h5>
+                                                                    <span class="description-text">
+                                                                        FOLLOWERS
+                                                                    </span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="description-block">
-                                                                <h5 class="description-header">
-                        <?php
-                        $user_likes = get_user_item_likes(osc_logged_user_id());
-                        if ($user_likes):
-                            echo count($user_likes);
-                        else:
-                            echo 0;
-                        endif;
-                        ?>
-                                                                </h5>
-                                                                <span class="description-text">LIKES</span>
+                                                            <div class="col-sm-4">
+                                                                <div class="description-block">
+                                                                    <h5 class="description-header">
+                            <?php
+                            $user_likes = get_user_item_likes(osc_logged_user_id());
+                            if ($user_likes):
+                                echo count($user_likes);
+                            else:
+                                echo 0;
+                            endif;
+                            ?>
+                                                                    </h5>
+                                                                    <span class="description-text">LIKES</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>-->
+                                                </div>-->
 
 
-                        <div class="box box-default">
-                            <div class="box-header with-border">
+                            <div class="box box-default no-border">
+                                <div class="box-header with-border">
 
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                    </button>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <span> What are you looking for?</span>
+                                    <!-- /.box-tools -->
                                 </div>
-                                <span> What are you looking for?</span>
-                                <!-- /.box-tools -->
-                            </div>
-                            <!-- /.box-header -->
+                                <!-- /.box-header -->
 
-                            <div class="box-body" style="display: block;">                             
-                                <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                    <option value="image">Image</option>                                
-                                    <option value="video">Video</option>                                
-                                    <option value="gif">Gif</option>                                
-                                    <option value="music">Music</option>                                
-                                    <option value="podcast">Podcast</option>                                
-                                </select>
-                            </div> 
+                                <div class="box-body" style="display: block;">                             
+                                    <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                        <option value="image">Image</option>                                
+                                        <option value="video">Video</option>                                
+                                        <option value="gif">Gif</option>                                
+                                        <option value="music">Music</option>                                
+                                        <option value="podcast">Podcast</option>                                
+                                    </select>
+                                </div> 
 
-                            <div class="box-body" style="display: block;">
-                                <div class="category-dropdown left-border" style="display: block;">
-                                    <?php osc_goto_first_category(); ?>
-                                    <?php if (osc_count_categories()) { ?>
-                                        <select id="sCategory" class="form-control input-box" name="sCategory">
-                                            <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
-                                            <?php while (osc_has_categories()) { ?>
-                                                <option class="maincat bold" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                                <?php if (osc_count_subcategories()) { ?>
-                                                    <?php while (osc_has_subcategories()) { ?>
-                                                        <option class="subcat margin-left-30" value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
+                                <div class="box-body" style="display: block;">
+                                    <div class="category-dropdown left-border" style="display: block;">
+                                        <?php osc_goto_first_category(); ?>
+                                        <?php if (osc_count_categories()) { ?>
+                                            <select id="sCategory" class="form-control input-box" name="sCategory">
+                                                <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
+                                                <?php while (osc_has_categories()) { ?>
+                                                    <option class="maincat bold" value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
+                                                    <?php if (osc_count_subcategories()) { ?>
+                                                        <?php while (osc_has_subcategories()) { ?>
+                                                            <option class="subcat margin-left-30" value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
+                                                        <?php } ?>
                                                     <?php } ?>
                                                 <?php } ?>
-                                            <?php } ?>
 
-                                        </select>
-                                    <?php } ?>
+                                            </select>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="box-body" style="display: block;">
+                                    <div class="country-dropdown left-border" style="display: block;">
+                                        <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>                                
+                                    </div>
+                                </div>
+
+                                <div class="box-body" style="display: block;">
+                                    <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city, country, state or county' ?>">
+                                </div>
+                                <div class="box-body" style="display: block;">                            
+                                    <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
+                                        <img src=<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>>  Search</button> or 
+                                    <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
                                 </div>
                             </div>
-                            <div class="box-body" style="display: block;">
-                                <div class="country-dropdown left-border" style="display: block;">
-                                    <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>                                
-                                </div>
-                            </div>
-
-                            <div class="box-body" style="display: block;">
-                                <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city, country, state or county' ?>">
-                            </div>
-                            <div class="box-body" style="display: block;">                            
-                                <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
-                                    <img src=<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>>  Search</button> or 
-                                <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
-                            </div>
-                        </div>
-                        <!-- /.box -->
-                        <div class="suggested_user_div">
-                            <?php
-                            $suggested_users = get_suggested_users($logged_user['user_id'], 300);
-                            if ($suggested_users):
-                                foreach ($suggested_users as $s_user):
-                                    $suggested_user_array = get_user_data($s_user);
-                                    if (!empty($suggested_user_array)):
-                                        ?>
-                                        <div class="col-md-12 col-xs-12 margin-bottom-30">
-                                            <div class="col-md-3 col-xs-2 padding-0">
-                                                <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                            </div>
-                                            <div class="col-md-9 col-xs-10 padding-right-0">
-                                                <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>                                
-                                                <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                                <?php
-                                                user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
+                            <!-- /.box -->
+                            <div class="suggested_user_div">
+                                <?php
+                                $suggested_users = get_suggested_users($logged_user['user_id'], 1000);
+                                $follow_user = get_user_following_data($logged_user['user_id']);
+                                $suggested_users_result = array_diff($suggested_users, $follow_user);
+                                if ($suggested_users_result):
+                                    $i=0;
+                                    foreach ($suggested_users_result as $s_user):
+                                        if (+$i > 5)
+                                            break;
+                                        $suggested_user_array = get_user_data($s_user);
+                                        if (!empty($suggested_user_array)):
+                                            if ((get_user_follower_data($suggested_user_array['user_id']))):
                                                 ?>
-                                            </div>
-                                        </div>    
-                                        <?php
-                                    endif;
-                                endforeach;
-                            endif;
-                            ?>
-                        </div>
-                        <div class="box box-default copyright_box">
-                            Copyright Newsfid - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
-                        </div>
-                    </div>
-                </div>
+                                                <div class="col-md-12 col-xs-12 margin-bottom-10">
+                                                    <div class="col-md-3 col-xs-2 padding-0">
+                    <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                    </div>
+                                                    <div class="col-md-9 col-xs-10 padding-right-0">
+                                                        <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>  
 
-                <div class="col-md-9 col-sm-9 padding-left-0">
-                    <div class="col-md-12 padding-0">                        
-                        <ul class="nav user_profile_navigation bg-white">
-                            <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
-                            <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                            <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
-                        </ul>                                                    
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="posts_container">
-                        <input type="hidden" name="item_page_number" id="item_page_number" value="1">
-                        <div class="user_related_posts">
-
-                        </div>
-
-                        <div class="loading text-center">
-                            <div class="cs-loader">
-                                <div class="cs-loader-inner">
-                                    <label>	●</label>
-                                    <label>	●</label>
-                                    <label>	●</label>
-                                    <label>	●</label>
-                                    <label>	●</label>
-                                    <label>	●</label>
-                                </div>
+                                                        <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
+                                                        <?php
+                                                        user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
+                                                        ?>
+                                                    </div>
+                                                </div>    
+                                                <?php
+                                            endif;
+                                        endif;
+                                        $i++;
+                                    endforeach;
+                                else:
+                                    ?>
+                                    <div class="col-md-12 col-xs-12 margin-bottom-10">                                
+                                        no
+                                    </div> 
+                                <?php
+                                endif;
+                                ?>
+                            </div>
+                            <div class="box box-default copyright_box">
+                                Copyright Newsfid - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="box_post">
+                    <div class="col-md-9 col-sm-9 padding-left-0">
+                        <div class="col-md-12 padding-0">                        
+                            <ul class="nav user_profile_navigation bg-white">
+                                <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                            </ul>                                                    
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="posts_container">
+                            <input type="hidden" name="item_page_number" id="item_page_number" value="1">
+                            <div class="user_related_posts">
+
+                            </div>
+
+                            <div class="loading text-center">
+                                <div class="cs-loader">
+                                    <div class="cs-loader-inner">
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -374,10 +392,10 @@ if (isset($user_id)) {
                                 while (osc_has_categories()) {
                                     if ($i < 6):
                                         ?>
-                                        <li class="<?php echo osc_category_slug(); ?> <?php echo $i=='1'?'active':'';?>" value="<?php echo osc_category_name() ?>">
+                                        <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
-                                                <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                      ?>)</span>-->
+                <?php echo osc_category_name(); ?>
+                                                <!--<span>(<?php //echo osc_category_total_items();                               ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -392,17 +410,17 @@ if (isset($user_id)) {
                                     $i++;
                                 }
                                 ?> 
-                            <?php } ?>
+    <?php } ?>
                             <li class="show-more-li show_more"><?php echo __('Show more') . "&nbsp;&nbsp;&nbsp;"; ?><i class="fa fa-angle-down vertical-bottom"></i>
                                 <ul class="">
-                                    <?php foreach ($other_cat as $$k => $n): ?>
+    <?php foreach ($other_cat as $$k => $n): ?>
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
-                                                <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                      ?>)</span>-->
+        <?php echo $n['name']; ?>
+                                                <!--<span>(<?php //echo $n['count'];                               ?>)</span>-->
                                             </a>
                                         </li>
-                                    <?php endforeach; ?>                            
+    <?php endforeach; ?>                            
                                 </ul>  
                             </li>
                         </ul>                                    
@@ -471,70 +489,70 @@ function footer_script() {
         var category_id = $('#sCategory').val();
         var post_type = $('.post_type_filter').val();
         $(document).ready(function () {
-             <?php if (osc_is_web_user_logged_in()):?>
-            $('.select2').each(function () {
-                var placeholder = $(this).attr('title');
-                $(this).select2({
-                    placeholder: 'placeholder'
+    <?php if (osc_is_web_user_logged_in()): ?>
+                $('.select2').each(function () {
+                    var placeholder = $(this).attr('title');
+                    $(this).select2({
+                        placeholder: 'placeholder'
+                    });
                 });
-            });
-            $('.filter_city').typeahead({
-                source: function (query, process) {
-                    var $items = new Array;
-                    $items = [""];
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
-                        dataType: "json",
-                        type: "POST",
-                        data: {city_name: query, region_name: query, country_name: query},
-                        success: function (data) {
-                            $.map(data, function (data) {
-                                var group;
-                                group = {
-                                    city_id: data.city_id,
-                                    region_id: data.r_id,
-                                    country_code: data.country_code,
-                                    name: data.city_name + '-' + data.region_name + '-' + data.country_name,
-                                };
-                                $items.push(group);
-                            });
+                $('.filter_city').typeahead({
+                    source: function (query, process) {
+                        var $items = new Array;
+                        $items = [""];
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                            dataType: "json",
+                            type: "POST",
+                            data: {city_name: query, region_name: query, country_name: query},
+                            success: function (data) {
+                                $.map(data, function (data) {
+                                    var group;
+                                    group = {
+                                        city_id: data.city_id,
+                                        region_id: data.r_id,
+                                        country_code: data.country_code,
+                                        name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                                    };
+                                    $items.push(group);
+                                });
 
-                            process($items);
-                        }
-                    });
-                },
-                afterSelect: function (obj) {
-                    console.log(obj);
-                    $('.posts_container .loading').fadeIn(500);
-                    $('.user_related_posts').css({'opacity': '0.2'});
+                                process($items);
+                            }
+                        });
+                    },
+                    afterSelect: function (obj) {
+                        console.log(obj);
+                        $('.posts_container .loading').fadeIn(500);
+                        $('.user_related_posts').css({'opacity': '0.2'});
 
-                    reset_variable_after_login();
-                    //make_after_login_item_ajax_call();
-                    var category_id = $('#sCategory').val();
-                    var post_type = $('.post_type_filter').val();
-                    $.ajax({
-                        type:'post',
-                        url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
-                        data: {
-                            search_by: 'city',
-                            city_id: obj.city_id,
-                            region_id: obj.region_id,
-                            country_code: obj.country_code,
-                            category_id: category_id,
-                            post_type: post_type,
-                        },
-                        success: function (data) {
-                            $('.user_related_posts').empty().append(data);
-                            $('.posts_container .loading').fadeOut(1000);
-                            $('.user_related_posts').css({'opacity': '1'});
-                        }
-                    });
-                },
-                //                updater:function (item) {
-                //                    console.log(item);
-                //                },
-            });
-            <?php endif;?>
+                        reset_variable_after_login();
+                        //make_after_login_item_ajax_call();
+                        var category_id = $('#sCategory').val();
+                        var post_type = $('.post_type_filter').val();
+                        $.ajax({
+                            type: 'post',
+                            url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                            data: {
+                                search_by: 'city',
+                                city_id: obj.city_id,
+                                region_id: obj.region_id,
+                                country_code: obj.country_code,
+                                category_id: category_id,
+                                post_type: post_type,
+                            },
+                            success: function (data) {
+                                $('.user_related_posts').empty().append(data);
+                                $('.posts_container .loading').fadeOut(1000);
+                                $('.user_related_posts').css({'opacity': '1'});
+                            }
+                        });
+                    },
+                    //                updater:function (item) {
+                    //                    console.log(item);
+                    //                },
+                });
+    <?php endif; ?>
     <?php if (!osc_is_web_user_logged_in()): ?>
                 //                $('.masonry_row').masonry({
                 //                    columnWidth: '.item',
@@ -562,14 +580,14 @@ function footer_script() {
                         data: {
                             filter_value: filter_value
                         },
-                        success: function (data, textStatus, jqXHR) {                                                 
+                        success: function (data, textStatus, jqXHR) {
                             $('.masonry_row').html(data);
                             is_enable_ajax = true;
-//                            $(".result_text").hide();
+                            //                            $(".result_text").hide();
                             $('.masonry_row').masonry('reloadItems');
                             $('.masonry_row').masonry('layout');
                             $('#page_number').val(1);
-                               
+
                         }
 
                     });
@@ -649,8 +667,8 @@ function footer_script() {
                     //make_after_login_item_ajax_call();
                     $.ajax({
                         url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                        data: {                            
-                            country_id: country_id,                            
+                        data: {
+                            country_id: country_id,
                         },
                         success: function (data) {
                             $('.user_related_posts').empty().append(data);
@@ -694,9 +712,9 @@ function footer_script() {
 
     <?php endif; ?>
         });
-        
+
         $(window).load(function () {
-           
+
             //                var targetOffset = $(".loading").offset().top + $('.masonry_row').outerHeight();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",
@@ -747,11 +765,11 @@ function footer_script() {
                 },
                 success: function (data) {
                     $('.loading').fadeOut(1000);
-                    if (data.indexOf("Nothing to show") >= 0){
-                        if(page_number == 1){
+                    if (data.indexOf("Nothing to show") >= 0) {
+                        if (page_number == 1) {
                             $('.result_message').html('<h2 class="result_text">Ends of results</h2>');
-                        }else{
-                            $('.result_message').html(data);                            
+                        } else {
+                            $('.result_message').html(data);
                         }
                     }
                     else {

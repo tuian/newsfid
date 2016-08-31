@@ -1396,9 +1396,9 @@ function get_item_comments($item_id) {
         'b_active' => 1,
         'b_enabled' => 1
     );
-    $comments_data->dao->limit(3);
+//    $comments_data->dao->limit(3);
     $comments_data->dao->where($conditions);
-    $comments_data->dao->orderBy('dt_pub_date', 'DESC');
+    $comments_data->dao->orderBy('dt_pub_date', 'ASC');
     $comments_result = $comments_data->dao->get();
     $comments = $comments_result->result();
     return $comments;
@@ -1806,7 +1806,7 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_data->dao->from("{$db_prefix}t_user_themes as user_themes");
     $suggest_user_data->dao->where("user_themes.theme_id IN ({$themes})");
     $suggest_user_data->dao->where("user_themes.user_id != {$user_id}");
-    $suggest_user_data->dao->limit($limit);
+    $suggest_user_data->dao->limit(4);
     $suggest_user_result = $suggest_user_data->dao->get();
     $suggest_user_array = $suggest_user_result->result();
     $theme_user_id = custom_array_column($suggest_user_array, 'user_id');

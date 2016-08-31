@@ -34,15 +34,15 @@ if (osc_is_web_user_logged_in()):
     <div class="t-chat t_chat_menu" id="t_chat_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="chat-notification">
-            <div class="col-md-2 col-sm-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
                 <a href="<?php echo osc_base_url() ?>">
                     <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
                 </a>
             </div>
-            <div class="col-md-2 col-sm-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <div class="col-md-2 col-sm-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
                 <a class="font-color-white" href="<?php echo osc_current_web_theme_url() . 't-chat.php' ?>">
                     <i class="fa fa-envelope" aria-hidden="true"></i>
                     <?php if (get_pending_msg_cnt() > 0): ?>
@@ -50,7 +50,7 @@ if (osc_is_web_user_logged_in()):
                     <?php endif; ?>
                 </a>
             </div>
-            <div class="col-md-2 col-sm-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
                 <i class="fa fa-bell notification" aria-hidden="true"></i>
                 <?php if (get_pending_notification_cnt() > 0): ?>
                     <span class="label message-count"><?php echo get_pending_notification_cnt(); ?></span>
@@ -79,8 +79,8 @@ if (osc_is_web_user_logged_in()):
                         $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                     endif;
                     ?>
-                    <div class="col-md-12 col-sm-12 margin-top-20">
-                        <div class="col-md-3 col-sm-3 padding-left-0">
+                    <div class="col-md-12 col-sm-12 col-xs-12 margin-top-20">
+                        <div class="col-md-3 col-sm-3 col-xs-3 padding-left-0">
                             <img src="<?php echo $img_path ?>" data_user_id="<?php echo $u['user_id'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                             <div class="onlineuser">
                                 <?php
@@ -92,7 +92,7 @@ if (osc_is_web_user_logged_in()):
                                 <?php } ?>
                             </div> 
                         </div>
-                        <div class="col-md-9 col-sm-9 padding-left-0">
+                        <div class="col-md-9 col-sm-9 col-xs-9 padding-left-0">
                             <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
                         </div>
                     </div>                        
@@ -113,7 +113,7 @@ if (osc_is_web_user_logged_in()):
     <script>
 
         $(document).on('click', '.closebtn', function () {
-            $('#t_chat_menu').css("width", "0px");
+            $('#t_chat_menu').css("display", "none");
             $('.t_chat_menu').css("transition", "0.9s");
             $('.t_chat_open').show();
         });

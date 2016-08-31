@@ -84,10 +84,10 @@ $c_data = $comments_result->result();
                     <div class="box-comment">
                         <!-- User image -->
 
-                        <div class="comment_user_image">
+                        <div class="comment_user_image col-md-2">
                             <?php get_user_profile_picture($comment_user['user_id']) ?>
                         </div>
-                        <div class="comment-area">
+                        <div class="comment-area col-md-10 padding-0">
                             <span class="username">
                                 <?php echo $comment_user['user_name'] ?>
 <!--                                <div class="dropdown  pull-right">
