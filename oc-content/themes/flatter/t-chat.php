@@ -8,7 +8,10 @@ $update_message = new DAO();
 $res = $update_message->dao->update("frei_chat", array('read_status' => 1), array('`to`' => $user_id));
 ?>
 <?php osc_current_web_theme_path('header.php'); ?>
-
+<style>
+    .content-wrapper{
+        background-color: #fff !important;
+    }</style>
 <div class="col-md-12 bg-tchat">
     <div class="border-box ">
         <div class="row margin-0 padding-top-3per ">
@@ -69,7 +72,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                         if (isset($msg[0]['to'])):
                             $conv = get_chat_conversion($user_id, $msg[0]['to']);
                             ?>
-                        
+
                             <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $msg[0]['from'] ?>" from-user-name="<?php echo $msg[0]['from_name'] ?>" to-user-id="<?php echo $msg[0]['to'] ?>" to-user-name="<?php echo $msg[0]['to_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $msg[0]['to'])); ?>"/>
                             <?php foreach ($conv as $k => $msg):
                                 ?>
@@ -100,17 +103,14 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                                 $id = osc_logged_user_id();
                                                 if ($msg['from'] != $id):
                                                     ?>
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                    <i class="fa fa-check" aria-hidden="true"></i> <?php echo $msg['message'] ?>
                                                 <?php else:
                                                     ?>
-                                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                                    <i class="fa fa-reply" aria-hidden="true"></i> <?php echo $msg['message'] ?>
                                                 <?php endif; ?>                                                 
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-10 col-md-offset-2 padding-0">
-                                        <?php echo $msg['message'] ?>
-                                    </div>
+                                    </div>                                   
                                 </div>
                                 <?php
                             endforeach;
@@ -139,7 +139,6 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         function ajaxCall() {
             var to_id = $('#hidden-user-data').attr('to-user-id');
             var old_msg_cnt = $('#hidden-user-data').attr('old_msg_cnt');
-            console.log(old_msg_cnt);
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
                 type: 'post',
@@ -150,7 +149,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     user_id: to_id
                 },
                 success: function (data) {
-                    if(data != 'same as old'){
+                    if (data != 'same as old') {
                         $('#chat-box').html(data);
                         $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
                     }
@@ -172,6 +171,9 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         var from_name = $('#hidden-user-data').attr('from-user-name');
         var to_id = $('#hidden-user-data').attr('to-user-id');
         var to_name = $('#hidden-user-data').attr('to-user-name');
+        if (!msg) {
+            return false;
+        }
         $.ajax({
             url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
             type: 'post',
@@ -190,6 +192,36 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                 $('.t_chat_textarea').val('');
             }
         });
+    });
+    $(document).bind('keypress', function (e) {
+        if (e.which === 13) {
+            var msg = $('.t_chat_textarea').val();
+            var from_id = $('#hidden-user-data').attr('from-user-id');
+            var from_name = $('#hidden-user-data').attr('from-user-name');
+            var to_id = $('#hidden-user-data').attr('to-user-id');
+            var to_name = $('#hidden-user-data').attr('to-user-name');
+            if (!msg) {
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    submit: 'send-msg',
+                    action: 'chat-converstion',
+                    from_id: from_id,
+                    from_name: from_name,
+                    user_id: to_id,
+                    to_name: to_name,
+                    msg: msg
+                },
+                success: function (data) {
+                    $('#chat-box').html(data);
+                    $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+                    $('.t_chat_textarea').val('');
+                }
+            });
+        }
     });
     $(document).on('click', '.user_list', function () {
         var id = $(this).attr('data-id');

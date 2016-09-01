@@ -3795,3 +3795,28 @@ select {
 .box.box-default.no-border{
     border: none;
 }
+.search-button{
+    background-color: #337ab7;
+    color: white;
+    border-radius: 50%;
+    border: none;    
+}
+.btn-secondary{
+    color: #0275d8;
+    padding: 2px 10px;
+    background-image: none;
+    background-color: transparent;
+    border-color: #03A9F4 !important;
+}
+.morecontent span {
+	display: none;
+}
+.morelink{
+    color: #03A9F4;
+}
+.morelink:hover{
+    color: #0275d8;
+}
+.morelink:focus{
+    color: #0275d8;
+}

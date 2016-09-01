@@ -88,8 +88,8 @@ while (osc_has_custom_items()):
                                         <?php item_resources(osc_item_id()) ?>
 
                                         <div id="itemdetails" class="clearfix">
-                                            <div class="description">
-                                                <?php echo osc_item_description(); ?>
+                                            <div class="description comment more">
+                                                <?php echo osc_item_description(); ?>                                              
                                             </div>                                            
 
                                             <div id="extra-fields">
@@ -120,7 +120,7 @@ while (osc_has_custom_items()):
 
                                                 <li class="facebook margin-left-15">
                                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                                return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                                         <i class="fa fa-facebook"></i>
                                                     </a>
                                                 </li>
@@ -130,7 +130,7 @@ while (osc_has_custom_items()):
                                                 </li>
                                                 <li class="googleplus">
                                                     <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                                return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                                         <i class="fa fa-google-plus"></i>
                                                     </a>
                                                 </li> 
@@ -264,6 +264,40 @@ while (osc_has_custom_items()):
     </div>
 <?php endwhile; ?>
 <script>
+    $(document).ready(function () {
+        var showChar = 200;
+        var ellipsestext = "";
+        var moretext = "Read More";
+        var lesstext = "Read Less";
+        $('.more').each(function () {
+            var content = $(this).html();
+
+            if (content.length > showChar) {
+
+                var c = content.substr(0, showChar);
+                var h = content.substr(showChar - 0, content.length - showChar);
+
+                var html = c + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + h + '</span><div><button class="morelink btn margin-top-20 btn-secondary">' + moretext + '</button></div></span>';
+
+                $(this).html(html);
+            }
+
+        });
+
+        $(".morelink").click(function () {
+        //$('.moreellipses').hide();
+            if ($(this).hasClass("less")) {
+                $(this).removeClass("less");
+                $(this).html(moretext);
+            } else {
+                $(this).addClass("less");
+                $(this).html(lesstext);
+            }
+            $(this).parent().prev().toggle();
+            $(this).prev().toggle();
+            return false;
+        });
+    });
     $(document).ready(function () {
         $('.error-desc').hide();
         $('.error-title').hide();

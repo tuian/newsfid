@@ -42,6 +42,15 @@ if (!empty($_REQUEST['post_type'])):
     $data->dao->where('item.item_type', $_REQUEST['post_type']);
 endif;
 
+//get_share_post
+$share_array = get_user_shared_item($user_id);
+if ($share_array):
+    $share_pk_id = implode(',', $share_array);
+    $data->dao->where(sprintf('item.pk_i_id IN (%s) OR item.fk_i_user_id =%s', $share_pk_id, $user_id));
+else:
+    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
+endif;
+
 //$following_user = get_user_following_data($user_id);
 //$following_user[] = $user_id;
 //$current_user_following_users = get_user_following_data(osc_logged_user_id());
@@ -59,8 +68,7 @@ endif;
 //endif;
 //$following_user = implode(',', $following_user);
 //$data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($following_user))");
-
-$data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
+//$data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
 $start_from = $page_number * $offset;
@@ -123,7 +131,7 @@ if ($items):
                         item_resources(osc_item_id());
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                           ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                               ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 

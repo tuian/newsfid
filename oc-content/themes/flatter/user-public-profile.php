@@ -297,7 +297,7 @@ endif;
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <span> What are you looking for?</span>
+                                <span class="bold"> Filters </span>
                                 <!-- /.box-tools -->
                             </div>
                             <!-- /.box-header -->
@@ -341,7 +341,7 @@ endif;
                             </div>
                             <div class="box-body" style="display: block;">                            
                                 <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
-                                    <img src=<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>>  Search</button> or 
+                                    <img src="<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>" width="20px">  Search</button> or 
                                 <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
                             </div>
                         </div>

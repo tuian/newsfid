@@ -71,17 +71,14 @@ if ($_REQUEST['action'] == 'chat-converstion'):
                         $id = osc_logged_user_id();
                         if ($msg['from'] != $id):
                             ?>
-                            <i class="fa fa-check" aria-hidden="true"></i>
+                            <i class="fa fa-check" aria-hidden="true"></i>  <?php echo $msg['message'] ?>
                         <?php else:
                             ?>
-                            <i class="fa fa-reply" aria-hidden="true"></i>
+                            <i class="fa fa-reply" aria-hidden="true"></i>  <?php echo $msg['message'] ?>
                         <?php endif; ?>                                                 
                     </div>
                 </div>
-            </div>
-            <div class="col-md-10 col-md-offset-2 padding-0">
-                <?php echo $msg['message'] ?>
-            </div>
+            </div>            
         </div>
         <?php
     endforeach;

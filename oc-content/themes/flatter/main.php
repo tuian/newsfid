@@ -224,7 +224,7 @@ if (isset($user_id)) {
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <span> What are you looking for?</span>
+                                    <span class="bold"> Filters </span>
                                     <!-- /.box-tools -->
                                 </div>
                                 <!-- /.box-header -->
@@ -269,8 +269,8 @@ if (isset($user_id)) {
                                 </div>
                                 <div class="box-body" style="display: block;">                            
                                     <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
-                                        <img src=<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>>  Search</button> or 
-                                    <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
+                                        <img src="<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>" width="20px">  Search</button> or 
+                                    <button type="reset" class="btn btn-box-tool reset-button bold" data-toggle="tooltip" title="Reset">Reset</button>
                                 </div>
                             </div>
                             <!-- /.box -->
@@ -293,7 +293,7 @@ if (isset($user_id)) {
                     <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                                     </div>
                                                     <div class="col-md-9 col-xs-10 padding-right-0">
-                                                        <h4 class="direct-chat-name  margin-0"><?php echo $suggested_user_array['user_name'] ?></h4>  
+                                                        <h4 class="direct-chat-name  margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h4>  
 
                                                         <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                                         <?php
@@ -325,9 +325,9 @@ if (isset($user_id)) {
                     <div class="col-md-9 col-sm-9 padding-left-0">
                         <div class="col-md-12 padding-0">                        
                             <ul class="nav user_profile_navigation bg-white">
-                                <li class="location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                                <li class="active location_filter_tab"><a href="#tab_1">WORLD</a></li>
                                 <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                                <li class="active location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                                <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
                             </ul>                                                    
                         </div>
                         <div class="clearfix"></div>

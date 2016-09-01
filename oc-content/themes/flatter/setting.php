@@ -41,7 +41,7 @@ $user_desc = $user_result->row();
                 <div id="general" class="tab-pane fade in active">
                     <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange border-bottom-gray padding-bottom-10">
                         <div class='col-md-3'>
-                            <h2 class="bold blue_text">General </h2>
+                            <h3 class="bold blue_text">General </h3>
                         </div>
 
                     </div>
@@ -132,7 +132,7 @@ $user_desc = $user_result->row();
                     <div class="row margin-0">
                         <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange border-bottom-gray">
                             <div class='col-md-3'>
-                                <h2 class="bold blue_text">Social</h2>
+                                <h3 class="bold blue_text">Social</h3>
                             </div>
                             <div id="edit-social" class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -177,9 +177,9 @@ $user_desc = $user_result->row();
                         </ul>
                     </div>
                     <div id="compte">
-                        <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange">
+                        <div class="col-md-12 vertical-row padding-bottom-10 border-left-orange">
                             <div class='col-md-3'>
-                                <h1 class="bold blue_text">Acount</h1>
+                                <h3 class="bold blue_text">Acount</h3>
                             </div>
                             <div id="edit" class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -315,7 +315,7 @@ $user_desc = $user_result->row();
                     <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row padding-bottom-10">
                             <div class='col-md-3'>
-                                <h1 class="bold blue_text">Content</h1>
+                                <h3 class="bold blue_text">Content</h3>
                             </div>
                         </div>
                         <div class="border-bottom-gray  col-md-12"></div>
@@ -347,7 +347,7 @@ $user_desc = $user_result->row();
                     <div id="moyen_de_paiement" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text">Mean of payment</h1>
+                                <h3 class="bold blue_text">Mean of payment</h3>
                             </div>
                             <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -465,7 +465,7 @@ $user_desc = $user_result->row();
                     <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text"> Bloqued account</h1>
+                                <h3 class="bold blue_text"> Bloqued account</h3>
                             </div>
                             <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
@@ -494,7 +494,7 @@ $user_desc = $user_result->row();
                     <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text"> Locking </h1>
+                                <h3 class="bold blue_text"> Locking </h3>
                             </div>
                         </div>
                         <div class="col-md-offset-1 col-md-10 font-light-gray padding-3per">
@@ -534,7 +534,7 @@ $user_desc = $user_result->row();
                     <div id="audio" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text">Audio</h1>
+                                <h3 class="bold blue_text">Audio</h3>
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12"></div>
@@ -568,7 +568,7 @@ $user_desc = $user_result->row();
                     <div id="delete-account" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h1 class="bold blue_text">Delete Account</h1>
+                                <h3 class="bold blue_text">Delete Account</h3>
                             </div>
                         </div>
                         <div class="col-md-12 border-bottom-gray"></div>
@@ -577,7 +577,7 @@ $user_desc = $user_result->row();
                                 <i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i>
                             </div>
                             <div class="col-md-7">
-                                <h2 class="bold"> Do you wanna leave us already?  </h2>
+                                <h3 class="bold"> Do you wanna leave us already?  </h3>
                             </div>
                         </div>
                         <div class="col-md-12">
