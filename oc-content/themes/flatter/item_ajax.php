@@ -85,7 +85,7 @@ if ($items):
                             </div>
                             <div class="col-md-12">
                                 <div class="item_counts">
-                                    <div class="col-md-5 padding-0">
+                                    <div class="col-md-6 padding-0">
 
                                         <?php
                                         $like_count = get_item_likes_count(osc_item_id());
@@ -109,7 +109,7 @@ if ($items):
                                         $comment_count = get_comment_count(osc_item_id());
                                         if ($comment_count > 0):
                                             ?>                                                                                                                           
-                                            <span class="comment_text">
+                                            <span class="comment_text padding-right-10">
                                                 <i class="fa fa-comments"></i>
                                                 <?php echo $comment_count; ?>
                                             </span>
@@ -125,9 +125,9 @@ if ($items):
                                         endif;
                                         ?>
                                     </div>  
-                                    <div class="col-md-5 blue_text text-right pull-right">
+                                    <div class="col-md-6 blue_text text-right pull-right">
                                         <?php
-//                                        $post = osc_item_category();
+//                                        $post = osc_has_categories();
 //                                        echo $post;
                                         ?>
                                     </div>

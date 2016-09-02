@@ -1169,7 +1169,7 @@ function item_resources($item_id) {
             else:
                 preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $post_resource_array['s_path'], $matches);
                 ?>
-                <iframe src="<?php echo 'https://www.youtube.com/embed/' . $matches[0]; ?>" width="854" height="480" frameborder="0" allowfullscreen ></iframe>
+                <iframe src="<?php echo 'https://www.youtube.com/embed/' . $matches[0]; ?>" width="854" height="190" frameborder="0" allowfullscreen ></iframe>
             <?php
             endif;
             break;
@@ -1177,7 +1177,7 @@ function item_resources($item_id) {
         case 'music':
             if ($post_resource_array['s_extension'] == 'mp3'):
                 ?>
-                <audio controls>
+                <audio controls class="audio">
                     <source src="<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension'] ?>" />
                 </audio>
                 <?php

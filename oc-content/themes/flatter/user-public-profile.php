@@ -45,22 +45,22 @@ $user = get_user_data(osc_user_id());
 <!-- profil cover -->
 <?php
 if ($user['cover_picture_user_id']):
-    $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
+    $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
 else:
     $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
 endif;
 ?>
-<!--<div id="cover" class="cover">
+<div id="cover" class="cover">
     <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
-</div>-->
+</div>
 <!-- end profil cover -->
 
 <div id="sections">
     <div class="user_area">
 
-        <div class="row">
-            <div class="box_fix2">
-                <div class="col-md-4">
+        <div class="row wrap">
+            <div class="">
+                <div class="col-md-4"  id="wrap">
                     <div class=" bg-white col-md-12 padding-0">
                         <?php
                         if ($user['cover_picture_user_id']):
@@ -349,7 +349,7 @@ endif;
                     </div>
                 </div>
             </div>
-            <div class="box_post2">
+            <div class="box_post2" id="box_post2">
                 <div class="col-md-8 padding-left-0">
                     <ul class="nav nav-tabs user_profile_navigation bg-white">
                         <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)">Post</a></li>
@@ -489,6 +489,19 @@ function custom_script() {
     <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>    
     <script src="<?php echo osc_current_web_theme_js_url('jquery.Jcrop.js') ?>"></script>
     <script>
+    //                                           
+                                            $(window).scroll(function (event) {
+                                                var scroll = $(window).scrollTop();
+                                                if (scroll > 450){  
+                                                        $('#wrap').addClass("box_fix2");
+                                                        $('#box_post2').addClass("box_post3");
+                                                        
+                                                    } else {
+                                                        $('#wrap').removeClass("box_fix2");
+                                                        $('#box_post2').removeClass("box_post3");
+                                                    }
+                                                    
+                                            });
                                             $(document).on('click', '.add_circle', function () {
                                                 var follow_user_id = $(this).attr('follow-user-id');
                                                 var logged_in_user_id = $(this).attr('user-id');

@@ -2254,7 +2254,7 @@ select {
 }
 .greybg{
     background-color: #c2c2c2;
-    height: 300px;
+    height: 65px;
 
 }
 @media only screen and (max-width:767px){
@@ -2326,7 +2326,7 @@ select {
     padding-top: 15px;
 }
 .breack-line{
-    height: 10px;
+    height: 2px;
     clear: both;
 }
 .orange{
@@ -2386,12 +2386,29 @@ select {
     width:90%;
 }
 .description-box{
-    margin-top: 35px;
+    //margin-top: 35px;
 
 }
 .description-box textarea{
-    background-color: #f9fafb;
+    //background-color: #f9fafb;
     height: 90px;
+    outline: 0;
+    border: none;
+    box-shadow: none;
+    resize: none;
+}
+.post .close{
+    font-size: 40px;
+    position: absolute;
+    right: -15px;
+    color: #fff;
+    opacity: 0.9;
+    top: 20px;
+}
+.description-box ::-webkit-input-placeholder {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ccc;
 }
 .media-info,.location-info{
     background-color: white;
@@ -2709,8 +2726,9 @@ select {
     margin-left: 15%;
 }
 .star{
-    padding: 0;
-    width: 7%;
+    margin-left: 7px;
+    margin-top: 2px;
+    width: 10%;
 }
 .padding-top-3per{
     padding-top: 3%;
@@ -2720,7 +2738,9 @@ select {
 }
 .bg-white{
     background-color: #ffffff;
-    padding-bottom: 5%;
+}
+.width-50{
+    width: 50%
 }
 #popup-free-user-post .modal-content {
     background-color: transparent;
@@ -3479,10 +3499,15 @@ select {
 }
 .box_fix2{
     position: fixed;
-    left: 15.8%;
-    width: 65%;
+    left: 15.96%;
+    width: 20.92%;
+    top: 2%;
 }
 .box_post2{
+    /*left: 33.5%;*/
+    position: relative;
+}
+.box_post3 {
     left: 33.5%;
     position: relative;
 }
@@ -3494,6 +3519,14 @@ select {
 }
 .comment-area.col-md-10.padding-0{
     border-bottom: 1px solid #c9c9c9;
+}
+.description .item_description{
+    min-height: 65px;
+}
+.audio{
+    min-height: 193px;
+    background-image: url(../images/audio.jpg);
+    background-size: cover;
 }
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 
@@ -3809,7 +3842,7 @@ select {
     border-color: #03A9F4 !important;
 }
 .morecontent span {
-	display: none;
+    display: none;
 }
 .morelink{
     color: #03A9F4;
