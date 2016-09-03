@@ -3266,13 +3266,13 @@ select {
 }
 .tchat_profile{
     position: fixed;
-    z-index: 1;
+    z-index: 9;
     width: 25%;
     /* left: 0; */
     top: 0;
     max-height: 100%;
     overflow-y: auto;
-    right: 16%;
+    right: 21.5%;
 }
 .tchat_profile_pic{
     top: -40px;
@@ -3494,7 +3494,7 @@ select {
     width: 65%;
 }
 .box_post{
-    left: 25.2%;
+    /*left: 25.2%;*/
     position: relative;
 }
 .box_fix2{
@@ -3503,12 +3503,23 @@ select {
     width: 20.92%;
     top: 2%;
 }
+.box_fix_main{
+    position: fixed;
+   // left: 15%;
+    width: 15.65%;
+    top: 2%;
+}
+
 .box_post2{
     /*left: 33.5%;*/
     position: relative;
 }
 .box_post3 {
     left: 33.5%;
+    position: relative;
+}
+.box_post_main {
+    left: 25%;
     position: relative;
 }
 .margin-right-20{
@@ -3828,12 +3839,12 @@ select {
 .box.box-default.no-border{
     border: none;
 }
-.search-button{
+/*.search-button{
     background-color: #337ab7;
     color: white;
     border-radius: 50%;
     border: none;    
-}
+}*/
 .btn-secondary{
     color: #0275d8;
     padding: 2px 10px;

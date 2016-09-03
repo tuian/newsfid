@@ -70,7 +70,7 @@ endif;
                         endif;
                         ?>
                         <div class="box box-widget widget-user">
-                            <div class="widget-user-header bg-black" style="background: url('<?php echo $cover_image_path ?>') center center;">
+                            <div class="widget-user-header bg-black" style="background: url('<?php echo $cover_image_path ?>') center center; max-height: 500px;">
                                 <h3 class="widget-user-username">
                                     <?php echo $user['user_name'] ?>
                                 </h3>

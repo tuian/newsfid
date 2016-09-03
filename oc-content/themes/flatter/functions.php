@@ -2170,7 +2170,7 @@ function get_pending_notification_cnt() {
     $user_message_datacnt = new DAO();
     $user_message_datacnt->dao->select('COUNT(*) as msg');
     $user_message_datacnt->dao->from(sprintf('%st_user_notifications', DB_TABLE_PREFIX));
-    $user_message_datacnt->dao->where('to_user_id', $user_id);
+    $user_message_datacnt->dao->where('from_user_id', $user_id);
     $user_message_datacnt->dao->where('read_status', 0);
     $user_message_resultcnt = $user_message_datacnt->dao->get();
     $user_messge_cnt = $user_message_resultcnt->row();

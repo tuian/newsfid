@@ -52,8 +52,10 @@ if (osc_is_web_user_logged_in()):
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
                 <i class="fa fa-bell notification" aria-hidden="true"></i>
-                <?php if (get_pending_notification_cnt() > 0): ?>
-                    <span class="label message-count"><?php echo get_pending_notification_cnt(); ?></span>
+                <?php if (get_pending_notification_cnt() > 0): 
+                    $pending_msg_cnt = get_pending_notification_cnt();
+                    ?>
+                <span class="label message-count user_notification" data-pending-message="<?php echo $pending_msg_cnt ?>"><?php echo $pending_msg_cnt ?></span>
                 <?php endif; ?>
             </div>    
         </div>

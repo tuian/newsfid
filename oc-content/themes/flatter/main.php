@@ -74,42 +74,42 @@ if (isset($user_id)) {
 
 <?php if (osc_is_web_user_logged_in()) : ?>
     <?php if (function_exists("osc_slider")) { ?>
-        <?php //osc_slider();  ?>  
+        <?php // osc_slider();  ?>  
     <?php } ?>
 
-                                <!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;">
-                                        <div class="last-post col-md-12">
-                                            <div class="col-md-8">
-                                                HEADLINES
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
-                                            </div>
-                                            <div class="col-md-8 padding-bottom-10"><i>
-    <?php
-    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
+    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;max-height: 500px;">
+        <div class="last-post col-md-12">
+            <div class="col-md-8">
+                HEADLINES
+            </div>
+            <div class="col-md-8">
+                <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
+            </div>
+            <div class="col-md-8 padding-bottom-10"><i>
+                    <?php
+                    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
 
-    if (strlen($string) > 100) {
+                    if (strlen($string) > 100) {
 
 // truncate string
-        $stringCut = substr($string, 0, 100);
+                        $stringCut = substr($string, 0, 100);
 
 // make sure it ends in a word so assassinate doesn't become ass...
-        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '</i> <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
-    }
-    ?>  <?php echo $string;
-    ?>
-                                            </div>
-                                        </div>      
-                                    </div>-->
+                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '</i> <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
+                    }
+                    ?>  <?php echo $string;
+                    ?>
+            </div>
+        </div>      
+    </div>
 
 <?php else : ?>
-    <!--    <div class="section" >
-            <span class="home-slider-text"> Newsfid </span>
-            <div id="cover" classe="cover home-slider-img">
-                <img src="images/top.main.jpg" class="img-responsive" />
-            </div>
-        </div>-->
+    <div class="section" >
+        <span class="home-slider-text"> Newsfid </span>
+        <div id="cover" classe="cover home-slider-img">
+            <img src="images/top.main.jpg" class="img-responsive" />
+        </div>
+    </div>
 
     <div class="section">
         <div class="postadspace">
@@ -136,9 +136,9 @@ if (isset($user_id)) {
     ?>
     <div id="sections">
         <div class="user_area">
-            <div class="row">
-                <div class="box_fix">
-                    <div class="col-md-3 col-sm-3">
+            <div class="row wrap">
+                <div class="">
+                    <div class="col-md-3 col-sm-3" id="wrap">
                         <div class=" bg-white col-md-12 padding-0">
                             <!--                    <div class="box box-widget widget-user">
                             
@@ -277,10 +277,10 @@ if (isset($user_id)) {
                             <div class="suggested_user_div">
                                 <?php
                                 $suggested_users = get_suggested_users($logged_user['user_id'], 1000);
-                                $follow_user = get_user_following_data($logged_user['user_id']);
+                                $follow_user = (array)get_user_following_data($logged_user['user_id']);
                                 $suggested_users_result = array_diff($suggested_users, $follow_user);
                                 if ($suggested_users_result):
-                                    $i=0;
+                                    $i = 0;
                                     foreach ($suggested_users_result as $s_user):
                                         if (+$i > 5)
                                             break;
@@ -290,7 +290,7 @@ if (isset($user_id)) {
                                                 ?>
                                                 <div class="col-md-12 col-xs-12 margin-bottom-10">
                                                     <div class="col-md-3 col-xs-2 padding-0">
-                    <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                        <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                                     </div>
                                                     <div class="col-md-9 col-xs-10 padding-right-0">
                                                         <h4 class="direct-chat-name  margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h4>  
@@ -394,8 +394,8 @@ if (isset($user_id)) {
                                         ?>
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
-                <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                               ?>)</span>-->
+                                                <?php echo osc_category_name(); ?>
+                                                <!--<span>(<?php //echo osc_category_total_items();                                ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -410,17 +410,17 @@ if (isset($user_id)) {
                                     $i++;
                                 }
                                 ?> 
-    <?php } ?>
+                            <?php } ?>
                             <li class="show-more-li show_more"><?php echo __('Show more') . "&nbsp;&nbsp;&nbsp;"; ?><i class="fa fa-angle-down vertical-bottom"></i>
                                 <ul class="">
-    <?php foreach ($other_cat as $$k => $n): ?>
+                                    <?php foreach ($other_cat as $$k => $n): ?>
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
-        <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                               ?>)</span>-->
+                                                <?php echo $n['name']; ?>
+                                                <!--<span>(<?php //echo $n['count'];                                ?>)</span>-->
                                             </a>
                                         </li>
-    <?php endforeach; ?>                            
+                                    <?php endforeach; ?>                            
                                 </ul>  
                             </li>
                         </ul>                                    
@@ -490,6 +490,19 @@ function footer_script() {
         var post_type = $('.post_type_filter').val();
         $(document).ready(function () {
     <?php if (osc_is_web_user_logged_in()): ?>
+
+                $(window).scroll(function (event) {
+                    var scroll = $(window).scrollTop();
+                    if (scroll > 500) {
+                        $('#wrap').addClass("box_fix_main");
+                        $('.box_post').addClass("box_post_main");
+
+                    } else {
+                        $('#wrap').removeClass("box_fix_main");
+                        $('.box_post').removeClass("box_post_main");
+                    }
+
+                });
                 $('.select2').each(function () {
                     var placeholder = $(this).attr('title');
                     $(this).select2({

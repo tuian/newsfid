@@ -4,6 +4,32 @@ require 'functions.php';
 ?>
 
 <?php
+if ($_REQUEST['mark_all'] == 'mark_all'):
+    $db_prefix = DB_TABLE_PREFIX;
+    $read_status['read_status'] = '1';
+    $user['from_user_id']= 104;
+    $user_id = osc_logged_user_id();
+    $mark_all = new DAO();
+    $mark_all->dao->update("{$db_prefix}t_user_notifications", $read_status, $user);    
+endif;
+if ($_REQUEST['mark_read'] == 'mark_read'):
+    $db_prefix = DB_TABLE_PREFIX;
+    $read_status['read_status'] = '1';
+    $user['created'] = $_REQUEST['mark_time'];    
+    $mark_all = new DAO();
+    $mark_all->dao->update("{$db_prefix}t_user_notifications", $read_status, $user);    
+endif;
+
+if ($_REQUEST['mark_unread'] == 'mark_unread'):
+    $db_prefix = DB_TABLE_PREFIX;
+    $read_status['read_status'] = '0';
+    $user['created'] = $_REQUEST['mark_time'];    
+    $mark_all = new DAO();    
+    $mark_all->dao->update("{$db_prefix}t_user_notifications", $read_status, $user);    
+    echo "add";
+    die;
+endif;
+
 $user_id = $_REQUEST['user_id'];
 $user = get_user_data($user_id);
 $follow_user_id = $user['user_id'];

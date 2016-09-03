@@ -126,10 +126,9 @@ if ($items):
                                         ?>
                                     </div>  
                                     <div class="col-md-6 blue_text text-right pull-right">
-                                        <?php
-//                                        $post = osc_has_categories();
-//                                        echo $post;
-                                        ?>
+
+                                        <?php echo osc_item_category(); ?>
+
                                     </div>
                                 </div>
                             </div>

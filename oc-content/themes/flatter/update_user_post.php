@@ -107,12 +107,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                                 <select id="sCategory" class="form-control input-box" name="sCategory">
                                                     <option <?php ?> value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
                                                     <?php while (osc_has_categories()) { ?>
-                                                        <option  class="maincat bold" <?php if (osc_category_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>
-                                                        <?php if (osc_count_subcategories()) { ?>
-                                                            <?php while (osc_has_subcategories()) { ?>
-                                                                <option class="subcat margin-left-30" <?php if (osc_category_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
-                                                            <?php } ?>
-                                                        <?php } ?>
+                                                    <option  class="maincat bold" <?php if (osc_category_parent_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>                                                        
                                                     <?php } ?>
 
                                                 </select>
