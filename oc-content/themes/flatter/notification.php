@@ -17,7 +17,7 @@ if ($_REQUEST['notification'] == 'notification'):
     <div class="background-white notification_list border-bottom-gray">
 
         <?php foreach ($notifications as $n): ?>
-            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10">
+            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 <?php if($n['read_status']== '0'): echo 'bg-blue-light'; endif; ?>">
                 <div class="col-md-3 padding-0">
                     <!--<img src="<?php echo $n['user_image'] ?>" class="img-circle user-icon" alt="User Image">-->
                     <img src="<?php echo $n['user_image'] ?>" data_user_id="<?php echo $n['from_user_id']; ?>" class="img-circle user-icon user_tchat" alt="User Image">                                

@@ -244,10 +244,14 @@ function RegisterValidation() {
                     }
                     return true;
                 });
+                jQuery.validator.addMethod("lettersonly", function (value, element) {
+                    return this.optional(element) || /^[a-z]+$/i.test(value);
+                }, "Letters only please");
                 $("form[name=register]").validate({
                     rules: {
                         s_firstname: {
-                            required: true
+                            required: true,
+                            lettersonly: true
                         },
                         s_name: {
                             required: true
@@ -284,7 +288,8 @@ function RegisterValidation() {
                     },
                     messages: {
                         s_firstname: {
-                            required: "<?php _e("First Name: this field is required"); ?>."
+                            required: "<?php _e("First Name: this field is required"); ?>.",
+                            lettersonly: "<?php _e("First Name: this field allow letters only"); ?>."
                         },
                         s_name: {
                             required: "<?php _e("Name: this field is required"); ?>."

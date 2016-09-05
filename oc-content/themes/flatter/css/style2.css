@@ -61,7 +61,7 @@
     color: #c7c8cd;
 }
 .search_text {
-    padding: 10px 30px !important;
+    padding: 10px 0px !important;
 }
 .search_text:focus{
     outline: 0;

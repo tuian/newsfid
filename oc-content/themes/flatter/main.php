@@ -95,10 +95,10 @@ if (isset($user_id)) {
                         $stringCut = substr($string, 0, 100);
 
 // make sure it ends in a word so assassinate doesn't become ass...
-                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . '</i> <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
+                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
                     }
                     ?>  <?php echo $string;
-                    ?>
+                    ?></i>
             </div>
         </div>      
     </div>
@@ -293,7 +293,7 @@ if (isset($user_id)) {
                                                         <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                                     </div>
                                                     <div class="col-md-9 col-xs-10 padding-right-0">
-                                                        <h4 class="direct-chat-name  margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h4>  
+                                                        <h5 class="direct-chat-name  margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
                                                         <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                                         <?php

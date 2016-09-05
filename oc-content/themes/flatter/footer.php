@@ -29,7 +29,7 @@ if (osc_is_web_user_logged_in()):
 
 
     <span class="t_chat_open" onclick="openNav()">T-Chat</span>
-    <div class="tchat_profile col-md-5 padding-0 hide">
+    <div class="tchat_profile col-md-6 padding-0 hide">
     </div>
     <div class="t-chat t_chat_menu" id="t_chat_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

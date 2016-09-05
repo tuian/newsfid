@@ -363,11 +363,45 @@ endif;
                         <?php endif; ?>
                     </ul>  
 
-                    <div class="user_content col-md-12 padding-0 tab-content scroll-content">
+<?php 
+$user_id = osc_logged_user_id();
+$post = get_user_posts_count($user_id);
+//pr($post);
+if($post == 1):?>
+<!--                    <div class="col-md-12 padding-0 search-box success-border">
+                        <div class="col-md-offset-1 col-md-10">
+                            <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
+                                <div class="col-md-10  margin-bottom-20">
+                                    <input type="text" class="bold circle_search_text search_text" placeholder="What are you looking for?">
+                                </div>
+                                <div class="circle-search-button search-button col-md-1">
+                                    <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-bottom-gray col-md-12"></div>
+                    <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
+                        <div class="col-md-4 padding-0">
+                            <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
+                        </div>
+                        <div class="col-md-7 padding-0">
+                            <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
+                            <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
+                            <div class="col-md-12">
+                                <a href="javascript:void(0)" class="free_account" >
+                                    <button class="btn btn-info border-radius-0">Publish Something</button>
+                                </a>
+                            </div>
+                        </div>                                
+                    </div> 
+                    <div class="border-bottom-gray col-md-12"></div>-->
+                    <?php endif; ?>
+                    <div class="user_content col-md-12 padding-0 tab-content scroll-content background-white">
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" class="user_post_page_number">
                             <div class="user_posts_container"></div>
-                            <h2 class="result_text"></h2>                
+                            <div class="result_text"></div> 
                             <div class="loading text-center">
                                 <div class="cs-loader">
                                     <div class="cs-loader-inner">
@@ -425,9 +459,24 @@ endif;
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 border-bottom-gray"></div>
 
                                 <div class="user_follower_box"></div>
-
+                                <?php
+                                $user_id = osc_logged_user_id();
+                                $follower_users = get_user_follower_data($user_id);
+                                if (!$follower_users):
+                                    ?>
+                                    <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per">
+                                        <div class="col-md-4 padding-0">
+                                            <img src="<?php echo osc_current_web_theme_url() . "images/follow_user.png" ?>" class="post_icon">
+                                        </div>
+                                        <div class="col-md-7 padding-0">
+                                            <div class="col-md-12 light_gray bold padding-bottom-10"> No user found</div>
+                                            <div class="col-md-12 font-color-black padding-bottom-13per">When people are following you ther are display just right here then you can better manage them and see who likes you.  </div>
+                                        </div>                                
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                         </div>
@@ -465,7 +514,24 @@ endif;
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12 border-bottom-gray"></div>
 
+                                    <div class="user_follower_box"></div>
+                                    <?php
+                                    $user_id = osc_logged_user_id();
+                                    $circle_users = get_user_circle_data($user_id);
+                                    if (!$circle_users):
+                                        ?>
+                                        <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per">
+                                            <div class="col-md-4 padding-0">
+                                                <img src="<?php echo osc_current_web_theme_url() . "images/user.png" ?>" class="post_icon">
+                                            </div>
+                                            <div class="col-md-7 padding-0">
+                                                <div class="col-md-12 light_gray bold padding-bottom-10"> No user found</div>
+                                                <div class="col-md-12 font-color-black padding-bottom-13per">You can add people to your circle at anytime. That's the quicker and easier way to find back people you like to discuss with.</div>
+                                            </div>                                
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="user_circle_box"></div>
 
                                 </div>
@@ -489,18 +555,18 @@ function custom_script() {
     <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>    
     <script src="<?php echo osc_current_web_theme_js_url('jquery.Jcrop.js') ?>"></script>
     <script>
-    //                                           
+                                           
                                             $(window).scroll(function (event) {
                                                 var scroll = $(window).scrollTop();
-                                                if (scroll > 450){  
-                                                        $('#wrap').addClass("box_fix2");
-                                                        $('#box_post2').addClass("box_post3");
-                                                        
-                                                    } else {
-                                                        $('#wrap').removeClass("box_fix2");
-                                                        $('#box_post2').removeClass("box_post3");
-                                                    }
-                                                    
+                                                if (scroll > 500) {
+                                                    $('#wrap').addClass("box_fix2");
+                                                    $('#box_post2').addClass("box_post3");
+
+                                                } else {
+                                                    $('#wrap').removeClass("box_fix2");
+                                                    $('#box_post2').removeClass("box_post3");
+                                                }
+
                                             });
                                             $(document).on('click', '.add_circle', function () {
                                                 var follow_user_id = $(this).attr('follow-user-id');
@@ -772,7 +838,9 @@ function custom_script() {
                                                             $(".user_posts_container").append(data);
                                                             var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
                                                             $('.user_posts_area .user_post_page_number').val(next_page);
+                                                            
                                                         } else {
+                                                           
                                                             $(".user_posts_area .result_text").text('Ends of results').show();
                                                             is_enable_ajax = false;
                                                         }

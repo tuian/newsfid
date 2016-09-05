@@ -11,9 +11,7 @@ osc_current_web_theme_path('header.php');
         <div class="row">
             <div class="col-sm-12">
                 <div class="login-register register_container">
-
                     <br>
-
                     <div class="col-md-12">
                         <ul id="error_list"></ul>
                     </div>

@@ -7,7 +7,17 @@ endif;
 
 $users_watchlist = get_user_watchlist_item($user_id);
 if (!$users_watchlist):
-    echo 'No watchlist item found';
+    ?>
+    <div class="result_text col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per">
+        <div class="col-md-4 padding-0">
+            <img src="<?php echo osc_current_web_theme_url() . "images/documentation.png" ?>" class="post_icon">
+        </div>
+        <div class="col-md-7 padding-0">
+            <div class="col-md-12 light_gray bold padding-bottom-10"> No watchlist posts found</div>
+            <div class="col-md-12 font-color-black padding-bottom-13per">Add to watchlist any posts you wish to read later. That is a good way to keep things if you need to hurry up because of something else to do in ruch</div>
+        </div>                                
+    </div> 
+    <?php
     return;
 endif;
 
@@ -67,7 +77,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                  ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                   ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 

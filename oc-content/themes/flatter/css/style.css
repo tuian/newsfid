@@ -3267,7 +3267,7 @@ select {
 .tchat_profile{
     position: fixed;
     z-index: 9;
-    width: 25%;
+    /*width: 25%;*/
     /* left: 0; */
     top: 0;
     max-height: 100%;
@@ -3278,11 +3278,27 @@ select {
     top: -40px;
     /*    left: 25px;*/
     position: relative;
-    padding-left: 10%;
+    padding-left: 5%;
 }
 .tchat-user-name{
-    margin-top: -25px;
-    padding-left: 10%;
+    margin-top: -55px;
+    padding-left: 21%;
+}
+#chat-user-list::-webkit-scrollbar {
+    width: 6px;
+}
+ 
+#chat-user-list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); 
+    border-radius: 15px;
+}
+ 
+#chat-user-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.9); 
+}
+.user_name{
+    color: #fff !important;
 }
 .padding-left-10per{
     padding-left: 10%;
@@ -3411,9 +3427,6 @@ select {
     padding: 6px 0px !important;
     text-align: center;
 }
-.add_circle{
-    font-size: 12px;
-}
 @media only screen and (max-width:1024px) and (min-width:1024px){
     .user_info_area{
         font-size: 10px;
@@ -3464,7 +3477,11 @@ select {
 }
 .notification_list{
     max-height: 565px;
+    min-height: 120px;
     overflow-y: auto;
+}
+.post_icon{
+    width: 100%;
 }
 .notification-area{
     max-height: 100%;
@@ -3505,7 +3522,7 @@ select {
 }
 .box_fix_main{
     position: fixed;
-   // left: 15%;
+    // left: 15%;
     width: 15.65%;
     top: 2%;
 }
