@@ -264,7 +264,7 @@ textarea.border-bottom-0{
 }
 .user_profile_img .user_type_icon_image {
     position: absolute;     
-    top: -9px;
+    top: 1px;
     right: -8px;
     width: 15px;
 }

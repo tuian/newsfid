@@ -3531,9 +3531,9 @@ select {
 .comment-area.col-md-10.padding-0{
     border-bottom: 1px solid #c9c9c9;
 }
-.description .item_description{
+/*.description .item_description{
     min-height: 65px;
-}
+}*/
 .audio{
     min-height: 193px;
     background-image: url(../images/audio.jpg);
