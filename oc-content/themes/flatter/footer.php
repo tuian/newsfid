@@ -52,10 +52,11 @@ if (osc_is_web_user_logged_in()):
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
                 <i class="fa fa-bell notification" aria-hidden="true"></i>
-                <?php if (get_pending_notification_cnt() > 0): 
+                <?php
+                if (get_pending_notification_cnt() > 0):
                     $pending_msg_cnt = get_pending_notification_cnt();
                     ?>
-                <span class="label message-count user_notification" data-pending-message="<?php echo $pending_msg_cnt ?>"><?php echo $pending_msg_cnt ?></span>
+                    <span class="label message-count user_notification" data-pending-message="<?php echo $pending_msg_cnt ?>"><?php echo $pending_msg_cnt ?></span>
                 <?php endif; ?>
             </div>    
         </div>
@@ -153,6 +154,10 @@ if (osc_is_web_user_logged_in()):
                 success: function (data, textStatus, jqXHR) {
                     $('.tchat_profile').html(data);
                     $('.tchat_profile').addClass('show');
+                    $(".tchat_profile").animate({
+                        width: '700px',
+                       
+                    });
                     $('.tchat_profile').removeClass('hide');
                 }
 
@@ -163,7 +168,11 @@ if (osc_is_web_user_logged_in()):
                 $('.tchat_profile').removeClass('hide');
             });
             $('body').click(function () {
-                $('.tchat_profile').addClass('hide');
+               
+                 $(".tchat_profile").animate({
+                        width: '0px',
+                       
+                    });
             });
         });
 

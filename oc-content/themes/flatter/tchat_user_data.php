@@ -14,7 +14,7 @@ endif;
 if ($_REQUEST['mark_read'] == 'mark_read'):
     $db_prefix = DB_TABLE_PREFIX;
     $read_status['read_status'] = '1';
-    $user['created'] = $_REQUEST['mark_time'];
+    $user['id'] = $_REQUEST['mark_time'];
     $mark_all = new DAO();
     $mark_all->dao->update("{$db_prefix}t_user_notifications", $read_status, $user);
 endif;
@@ -22,7 +22,7 @@ endif;
 if ($_REQUEST['mark_unread'] == 'mark_unread'):
     $db_prefix = DB_TABLE_PREFIX;
     $read_status['read_status'] = '0';
-    $user['created'] = $_REQUEST['mark_time'];
+    $user['id'] = $_REQUEST['mark_time'];
     $mark_all = new DAO();
     $mark_all->dao->update("{$db_prefix}t_user_notifications", $read_status, $user);
     echo "add";
@@ -44,7 +44,7 @@ $logged_in_user_id = osc_logged_user_id();
     ?>
     <img src="<?php echo $cover_image_path ?>" class="img img-responsive">
     <div class="col-md-12 tchat-user-name pull-right">
-        <span><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><h3 class="user_name bold-600"><?php echo $user['user_name']; ?></h3></a></span>
+        <span><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><h3 class="bold-600"><span class="user_name"><?php echo $user['user_name']; ?></span></h3></a></span>
     </div>
     <div class="tchat_profile_pic vertical-row">
         <?php

@@ -124,6 +124,6 @@ if ($user_search_array):
 
 <?php else: ?>
     <div class = "col-md-12 no-of-result">
-        <p class = "people-result-text">No 1follower found</p>
+        <p class = "people-result-text">No follower found</p>
     </div>
 <?php endif; ?>

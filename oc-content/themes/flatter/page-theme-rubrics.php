@@ -41,7 +41,7 @@ if (isset($_GET['type']) && $_GET['type'] == 'interest'):
     $intrest_data->dao->orderBy('a.pk_i_id', 'ASC');
     $result = $intrest_data->dao->get();
     $interest = $result->result();
-   
+
     $rdata = new DAO();
     $rdata->dao->select("rubric.rubric_id");
     $rdata->dao->from(DB_TABLE_PREFIX . 't_user_rubrics as rubric');
@@ -63,7 +63,7 @@ if ($_POST):
             $conn->osc_dbExec("DELETE FROM `%st_user_rubrics` WHERE `user_id` = %s", DB_TABLE_PREFIX, $user_id);
             foreach ($_REQUEST['cat_id'] as $k => $v):
                 $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
-            endforeach;           
+            endforeach;
             osc_add_flash_info_message(_m('Rubriques updated successfully'));
             header("Location: " . $_SERVER['REQUEST_URI']);
         else:
@@ -84,14 +84,10 @@ if ($_POST):
         endif;
     endif;
 endif;
-
 ?>
 
 <div id="columns" class="user-interest">
     <h3 class="col-md-9">Center of interest</h3>
-    <div class="col-md-3 pull-right">
-        <input class="btn btn-blue btn-flat update_theme" type="submit" name="submit" value="Save" />
-    </div>
     <div class="clearfix"></div>
     <div class="theme-interest-container">
         <ul class="nav">
@@ -137,14 +133,14 @@ endif;
             </div>
         </form>
     <?php else: ?>    
-        <form action="<?php echo osc_static_page_url(); ?>" method="post"  class="user_theme_form">       
+        <form action="<?php echo osc_static_page_url(); ?>" method="post"  class="user_theme_form_interest">       
             <div class="container">
                 <div class="row">                 
                     <div class="col-md-12 col-sm-12">
                         <div class="row">                         
                             <?php foreach ($themes as $k => $theme): ?>
                                 <div class="col-md-2 col-sm-2 margin-bottom-20">
-                                    <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'selected' : '' ?>" data-id="<?php echo $theme['pk_i_id'] ?>">
+                                    <div title="<?php echo $theme['s_name']; ?>" class="category_box1 <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'selected' : '' ?>" data-id="<?php echo $theme['pk_i_id'] ?>">
                                         <div class="category_image">
                                             <?php
                                             if ($theme['bs_image_name']) :
@@ -161,7 +157,7 @@ endif;
                                             <input type="checkbox" name="cat_id[]" value="<?php echo $theme['pk_i_id'] ?>" class="cat_checkbox" <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'checked="checked"' : '' ?> style="display: none">
                                         </div>
                                         <div class="category_title">
-                                            <?php echo osc_highlight($theme['s_name'], 13); ?>
+                                            <?php echo osc_highlight($theme['s_name'], 10); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -181,12 +177,18 @@ function new_footer() {
     ?>
     <script>
         $(document).ready(function () {
+            $('.category_box1').click(function () {
+                $(this).toggleClass('selected');
+                var checkbox = $(this).find('.cat_checkbox');
+                checkbox.attr("checked", !checkbox.attr("checked"));
+                $('.user_theme_form_interest').submit();
+            });
+        });
+        $(document).ready(function () {
             $('.category_box').click(function () {
                 $(this).toggleClass('selected');
                 var checkbox = $(this).find('.cat_checkbox');
                 checkbox.attr("checked", !checkbox.attr("checked"));
-            });
-            $('.update_theme').click(function (e) {
                 $('.user_theme_form').submit();
             });
         });

@@ -282,7 +282,7 @@ if (isset($user_id)) {
                                 if ($suggested_users_result):
                                     $i = 0;
                                     foreach ($suggested_users_result as $s_user):
-                                        if (+$i > 5)
+                                        if (+$i > 4)
                                             break;
                                         $suggested_user_array = get_user_data($s_user);
                                         if (!empty($suggested_user_array)):
@@ -779,7 +779,7 @@ function footer_script() {
                 success: function (data) {
                     $('.loading').fadeOut(1000);
                     if (data.indexOf("Nothing to show") >= 0) {
-                        if (page_number == 1) {
+                        if (page_number === 1) {
                             $('.result_message').html('<h2 class="result_text">Ends of results</h2>');
                         } else {
                             $('.result_message').html(data);

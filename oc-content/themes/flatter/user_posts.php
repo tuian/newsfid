@@ -1,7 +1,7 @@
 <?php
 require '../../../oc-load.php';
 require 'functions.php';
-
+$search_name = $_REQUEST['search_name'];
 if ($_REQUEST['user_id']):
     $user_id = $_REQUEST['user_id'];
 else:
@@ -12,6 +12,7 @@ $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, 
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 
 if (isset($_REQUEST['location_type'])):
@@ -131,7 +132,7 @@ if ($items):
                         item_resources(osc_item_id());
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                               ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -231,7 +232,9 @@ if ($items):
     ?>
     <?php
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
+   
+        echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
+ 
 endif;
 ?>
 <script>

@@ -43,7 +43,7 @@ $roles = get_user_roles_array();
                 </span>
                 <select name="user_role_selector" id="user_role_selector" class="user_role_selector">
                     <?php foreach ($roles as $k => $role): ?>
-                        <option <?php if ($role['id'] == $user_data['role_id']) echo 'selected'; ?> value="<?php echo $role['id'] ?>"><?php echo $role['role_name']; ?></option>
+                        <option <?php if ($role['id'] == $user_data['role_id']) echo 'selected'; ?> value="<?php echo $role['id'] ?>"><?php echo $role['role_name_eng']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </span>

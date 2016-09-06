@@ -254,7 +254,8 @@ function RegisterValidation() {
                             lettersonly: true
                         },
                         s_name: {
-                            required: true
+                            required: true,
+                            lettersonly: true
                         },
                         s_password: {
                             required: true,
@@ -292,7 +293,8 @@ function RegisterValidation() {
                             lettersonly: "<?php _e("First Name: this field allow letters only"); ?>."
                         },
                         s_name: {
-                            required: "<?php _e("Name: this field is required"); ?>."
+                            required: "<?php _e("Name: this field is required"); ?>.",
+                            lettersonly: "<?php _e("Name: this field allow letters only"); ?>."
                         },
                         s_password: {
                             required: "<?php _e("Password: this field is required"); ?>.",

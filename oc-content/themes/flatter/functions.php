@@ -1828,7 +1828,8 @@ function get_user_roles_array() {
     $user_role_data = new DAO();
     $user_role_data->dao->select("user_roles.*");
     $user_role_data->dao->from("{$db_prefix}t_user_roles as user_roles");
-    $user_role_data->dao->orderBy("user_roles.role_name ASC");
+//    $user_role_data->dao->orderBy("user_roles.role_name ASC");
+    $user_role_data->dao->orderBy("user_roles.role_name_eng ASC");
     $user_role_result = $user_role_data->dao->get();
     $user_roles = $user_role_result->result();
     return $user_roles;

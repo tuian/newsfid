@@ -6,7 +6,7 @@ $search_name = $_REQUEST['search_name'];
 $user_id = $_REQUEST['user_id'];
 $follower_users = get_user_circle_data($user_id);
 
-if ($follower_users):
+//if ($follower_users):
     $user_search_data = new DAO();
     $user_search_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code');
     $user_search_data->dao->select('user_resource.pk_i_id, user_resource.fk_i_user_id, user_resource.s_extension, user_resource.s_path');
@@ -20,8 +20,7 @@ if ($follower_users):
     $user_search_data->dao->orderBy('user.s_name', 'ASC');
     $user_search_result = $user_search_data->dao->get();
     $user_search_array = $user_search_result->result();
-
-//if ($user_search_array):
+if ($user_search_array):
     ?>
     <div class="col-md-12 padding-0">
         <div class="user_found_text bg-white"><?php echo 'We found <span class="result_count_text blue_text">' . count($user_search_array) . '</span> results'; ?></div>
