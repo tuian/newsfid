@@ -3070,14 +3070,27 @@ select {
     height: 1000px; 
     z-index: 1;
 }
+.all_news_nav_fix{
+    position: fixed;
+    top: 0;
+    left:15.35%;
+    background-color: #fff;
+    width: 85%;
+}
 .all_news{
-    max-height:600px;    
-    overflow-y:auto;
-    position:relative;  
     background: #f1f0f0;
+}
+
+.skin-blue .sidebar-menu>li>.treeview-menu {
+    background-color: #d3d7e2 !important;
 }
 .sidebar-menu>li.active-menu>a {
     color: #fff;
+    background: #1e282c;
+    border-left-color: #3c8dbc !important;
+}
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a{
+    color: #f68935 !important;
     background: #1e282c;
     border-left-color: #3c8dbc !important;
 }
@@ -3152,9 +3165,17 @@ select {
     cursor: pointer;
 }
 .sidebar-menu>li>ul>li.active>a {
-    color: #f68935 !important;
-    background: #1e282c !important;
+     color: #f68935 !important;
+    background: #d3d7e2 !important;
     border-left-color: #3c8dbc !important;
+}
+.sidebar-menu>li>ul>li:hover>a {
+     color: #f68935 !important;
+    background: #b1b9cb !important;
+    border-left-color: #3c8dbc !important;
+}
+.font-22px{
+    font-size: 22px;
 }
 .last-post{
     padding-top: 35%;
@@ -3459,8 +3480,8 @@ textarea.msg_textarea{
 }
 .overflow-chat{
     overflow-y: auto;
-    max-height: 135px;
-    min-height: 135px;
+    max-height: 150px;
+    min-height: 150px;
 }
 .after_logging{
     left:16% !important;
@@ -3607,7 +3628,16 @@ textarea.msg_textarea{
     position: fixed;
     // left: 15%;
     width: 22.9%;
+    top: 2%;
+}
+.unreadunread-notification{
+    background-color: #cacfdb;
+}
+.fix_nav{
+    position: fixed !important;
     top: 0%;
+    z-index: 1;
+    width: 44.5% !important;
 }
 
 .box_post2{

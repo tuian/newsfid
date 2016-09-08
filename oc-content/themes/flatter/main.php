@@ -277,7 +277,7 @@ if (isset($user_id)) {
                             <div class="suggested_user_div">
                                 <?php
                                 $suggested_users = get_suggested_users($logged_user['user_id'], 1000);
-                                $follow_user = (array)get_user_following_data($logged_user['user_id']);
+                                $follow_user = (array) get_user_following_data($logged_user['user_id']);
                                 $suggested_users_result = array_diff($suggested_users, $follow_user);
                                 if ($suggested_users_result):
                                     $i = 0;
@@ -395,7 +395,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                   ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -417,7 +417,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                   ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -489,6 +489,15 @@ function footer_script() {
         var category_id = $('#sCategory').val();
         var post_type = $('.post_type_filter').val();
         $(document).ready(function () {
+            $(window).scroll(function (event) {
+                var scroll = $(window).scrollTop();
+                if (scroll > 650) {
+                    $('#home_primary_nav_wrap').addClass("all_news_nav_fix");
+                } else {
+                    $('#home_primary_nav_wrap').removeClass("all_news_nav_fix");
+                }
+
+            });
     <?php if (osc_is_web_user_logged_in()): ?>
 
                 $(window).scroll(function (event) {
@@ -496,10 +505,12 @@ function footer_script() {
                     if (scroll > 500) {
                         $('#wrap').addClass("box_fix_main");
                         $('.box_post').addClass("box_post_main");
+                        $('.user_profile_navigation').addClass("fix_nav");
 
                     } else {
                         $('#wrap').removeClass("box_fix_main");
                         $('.box_post').removeClass("box_post_main");
+                        $('.user_profile_navigation').removeClass("fix_nav");
                     }
 
                 });

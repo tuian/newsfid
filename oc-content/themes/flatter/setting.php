@@ -113,16 +113,11 @@ $user_desc = $user_result->row();
                                 </span>   
                                 <input type="text" class="hide" id="autocomplete">    
 
-
                                 <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
                                     <i class="fa fa-pencil-square-o"></i> Edit
                                 </span>
-
                             </div>
                         </div>
-                        <?php $user_lat = (osc_user_field('d_coord_lat')) ? osc_user_field('d_coord_lat') : '45.7640' ?>
-                        <?php $user_lng = (osc_user_field('d_coord_lng')) ? osc_user_field('d_coord_lng') : '4.8357' ?>
-
                         <div class="row user_info_row margin-0 user_map_box">
                             <div class="user_map" id="user_map"></div>
                         </div>
@@ -202,7 +197,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                     Email address
+                                    Email address
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <input type="text" name="up_email" class="user_email_textbox disabled" value="<?php echo $user_info['s_email']; ?>" disabled>
@@ -336,7 +331,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-7">
                                 <div class="padding-left-10 font-light-gray">
-                                    
+
                                     Otherwise only followers can see my content
 
                                 </div>
@@ -360,7 +355,7 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-credit-card fa-2x"></i>
                                 </div>
                                 <div class="col-md-offset-1 col-md-9">
-                                     Add a debit / Credit card
+                                    Add a debit / Credit card
                                 </div>
 
                             </div>
@@ -517,7 +512,7 @@ $user_desc = $user_result->row();
                         <div class="col-md-12">
                             <div class="col-md-12">
                                 <div class="padding-3per">
-                                     Confirm your password
+                                    Confirm your password
                                 </div>
                             </div>
                             <div class="col-md-8 padding-left-8per">
@@ -549,7 +544,7 @@ $user_desc = $user_result->row();
                                 Privacy
                             </div>
                             <div class="col-md-9 padding-3per padding-left-7per font-color-black">
-                                   Everyone can see
+                                Everyone can see
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -604,27 +599,33 @@ function custom_map_script() {
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
     <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
     <script>
+        google.maps.event.addDomListener(window, 'load', initMap);
         function initMap() {
-    //            var latitude = <?php echo floatval($user_lat); ?>;
-    //            var longitude = <?php echo floatval($user_lng); ?>;           
-    //
-    //            var myLatLng = {lat: latitude, lng: longitude};
-    //            var map = new google.maps.Map(document.getElementById('user_map'), {
-    //                zoom: 20,
-    //                center: myLatLng
-    //            });
-    //            var marker = new google.maps.Marker({
-    //                position: myLatLng,
-    //                map: map,
-    //                title: ''
-    //            });
-            var map;
-            map = new google.maps.Map(document.getElementById('user_map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
+            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
+            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
+
+            var myLatLng = {lat: latitude, lng: longitude};
+            var map = new google.maps.Map(document.getElementById('user_map'), {
+                zoom: 10,
+                center: myLatLng
+            });
+            //add the code here, after the map variable has been instantiated
+            var tab = jQuery('ul.user_profile_navigation li')[1]
+            jQuery(tab).one('click', function () {
+                setTimeout(function () {
+                    google.maps.event.trigger(map, 'resize');
+                    map.setCenter(myLatLng)
+                    google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: 'My City'
+                    });
+                }, 1000);
+
             });
         }
-        google.maps.event.addDomListener(window, 'load', initMap)
+
+        //       
         var goptions = {
             map: '#user_map',
             details: ".details",
@@ -638,24 +639,34 @@ function custom_map_script() {
             }
         }
         $('#autocomplete').geocomplete(goptions).bind("geocode:result", function (event, result) {
+            var lat = result.geometry.location.lat;
+            var lng = result.geometry.location.lng;
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
                 type: 'POST',
                 data: {
                     action: 'user_localisation',
-                    lat: result.geometry.location.lat,
-                    lng: result.geometry.location.lng,
+                    lat: lat,
+                    lng: lng,
                     city: result.address_components['0'].long_name,
                     country: result.address_components['3'].long_name,
+                    scountry: result.address_components['3'].short_name,
                 },
                 success: function (data, textStatus, jqXHR) {
                     $('#autocomplete').addClass('hide');
                     $('.user_localisation_text').show();
                     $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
+
+                    //not work fix it
+                    //                    var myLatLng = new google.maps.LatLng(lat, lng);
+                    //                    var map = new google.maps.Map(document.getElementById('user_map'), {
+                    //                        zoom: 10,                        
+                    //                    });    
+                    //                    map.setCenter(myLatLng)                       
                 }
             });
         });
-    </script>           
+    </script>          
     <?php
 }
 ?>

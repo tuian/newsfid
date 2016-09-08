@@ -377,23 +377,23 @@ endif;
                     <div class="user_content col-md-12 padding-0 tab-content scroll-content background-white">
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number">  
-                                                        <div class="no-user-post">
-                                                            <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
-                                                                <div class="col-md-4 padding-0">
-                                                                    <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
-                                                                </div>
-                                                                <div class="col-md-7 padding-0">
-                                                                    <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
-                                                                    <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
-                                                                    <div class="col-md-12">
-                                                                        <a href="javascript:void(0)" class="free_account" >
-                                                                            <button class="btn btn-info border-radius-0">Publish Something</button>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>                                
-                                                            </div> 
-                                                            <div class="border-bottom-gray col-md-12"></div>
-                                                        </div>
+                            <div class="no-user-post">
+<!--                                <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
+                                    <div class="col-md-4 padding-0">
+                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
+                                    </div>
+                                    <div class="col-md-7 padding-0">
+                                        <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
+                                        <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
+                                        <div class="col-md-12">
+                                            <a href="javascript:void(0)" class="free_account" >
+                                                <button class="btn btn-info border-radius-0">Publish Something</button>
+                                            </a>
+                                        </div>
+                                    </div>                                
+                                </div> -->
+                                <div class="border-bottom-gray col-md-12"></div>
+                            </div>
                             <div class="user_posts_container"></div>
                             <div class="result_text"></div> 
                             <div class="loading text-center">
@@ -552,13 +552,16 @@ function custom_script() {
 
                                             $(window).scroll(function (event) {
                                                 var scroll = $(window).scrollTop();
-                                                if (scroll > 500) {
+                                                if (scroll > 450) {
                                                     $('#wrap').addClass("box_fix2");
                                                     $('#box_post2').addClass("box_post3");
+                                                    $('.user_profile_navigation').addClass("fix_nav");
 
                                                 } else {
                                                     $('#wrap').removeClass("box_fix2");
                                                     $('#box_post2').removeClass("box_post3");
+                                                    $('.user_profile_navigation').removeClass("fix_nav");
+
                                                 }
 
                                             });

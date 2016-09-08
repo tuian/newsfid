@@ -101,6 +101,7 @@ if ($items):
                                 <?php get_user_profile_picture($user['user_id']); ?>
                             </div>                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
                             <span class="description"><?php echo time_elapsed_string(strtotime($date)); ?>
+                                <?php if(osc_logged_user_id() == $user['user_id']): ?>
                                 <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
                                         <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
@@ -112,6 +113,7 @@ if ($items):
                                                                                         <li><a>Signaler la publication</a></li>-->
                                     </ul>
                                 </button>
+                                <?php endif; ?>
                             </span>
                         </div>
                         <!-- /.user-block -->
@@ -132,7 +134,7 @@ if ($items):
                         item_resources(osc_item_id());
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                 ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -232,9 +234,9 @@ if ($items):
     ?>
     <?php
 else:
-   
-        echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
- 
+
+    echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
+
 endif;
 ?>
 <script>

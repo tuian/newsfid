@@ -100,8 +100,13 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
             </div>
             <div  class="col-md-12 border-bottom-gray"></div>
             <div class="col-md-12 background-white">
-                <span class="vertical-row pull-right">
-                    <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v pull-right" aria-hidden="true"></i>
+                <span class="dropdown vertical-row pull-right">
+                    <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                <li class="pointer"><a>Block this user</a></li>
+                                <li class="close_chat pointer"><a> Close this chat</a></li>
+                                <li class="pointer"><a>Turn chat off</a></li>
+                            </ul>
                 </span>
             </div>
 
@@ -133,7 +138,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
-            <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>
+            <!--<div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
             <div class="textarea">
                 <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>

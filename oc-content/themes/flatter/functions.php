@@ -2166,6 +2166,7 @@ function get_pending_msg_cnt() {
     $user_messge_cnt = $user_message_resultcnt->row();
     return $user_messge_cnt['msg'];
 }
+
 function get_pending_notification_cnt() {
     $user_id = osc_logged_user_id();
     $user_message_datacnt = new DAO();
@@ -2218,12 +2219,14 @@ function get_user_notification() {
         $notification_data->dao->orderBy('created DESC');
         $notifications = $notification_data->dao->get();
         $notifications = $notifications->result();
-        if(!empty($notifications)):
+        if (!empty($notifications)):
             foreach ($notifications as $k => $n):
                 $user = get_user_data($n['from_user_id']);
-                $notifications[$k]['user_name'] = $user['user_name'];;
-                if(!empty($user['s_path'])):
-                    $notifications[$k]['user_image'] = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];;
+                $notifications[$k]['user_name'] = $user['user_name'];
+                ;
+                if (!empty($user['s_path'])):
+                    $notifications[$k]['user_image'] = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+                    ;
                 else:
                     $notifications[$k]['user_image'] = osc_current_web_theme_url() . '/images/user-default.jpg';
                 endif;
@@ -2231,5 +2234,14 @@ function get_user_notification() {
         endif;
         return $notifications;
     endif;
+}
+
+$page = Params::getParam('page');
+$action = Params::getParam('action');
+if ($page == 'user' && $action == 'profile') {
+    if (ob_get_length() > 0) {
+        ob_end_flush();
+    }
+    header("Location: " . osc_base_url());
 }
 ?>

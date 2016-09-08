@@ -104,7 +104,43 @@ if (osc_is_web_user_logged_in()):
             endif;
             ?>   
         </div>
-        <div id="online-chat"></div>
+        <div id="online-chat">
+            <div class="chat_box">
+
+                <div class="background-white col-md-12 padding-10">
+                    <div class="bold">
+                        <div class="col-md-2 padding-0 orange padding-right-10"> With</div>
+                        <div class="col-md-10 dropdown"> 
+                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                <li class="pointer"><a>Block this user</a></li>
+                                <li class="close_chat pointer"><a> Close this chat</a></li>
+                                <li class="pointer"><a>Turn chat off</a></li>
+                            </ul>
+                        </div>
+                    </div>            
+                </div>
+                <div  class="col-md-12 border-bottom-gray"></div>
+                <?php
+                $user_id = osc_logged_user_id();
+                $user = get_user_data($user_id);
+                if (!empty($user['s_path'])):
+                    $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+                else:
+                    $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                endif;
+                ?>
+                <div class="msg col-md-12 background-white overflow-chat"> 
+                    <!--<img src="<?php echo osc_current_web_theme_url() . '/images/msg.png' ?>" width="20px">-->
+                </div>
+                <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
+
+                <div class="textarea">
+                    <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>
+                    <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
+                </div>
+            </div>
+        </div>
         <div id="chat-box-footer"></div>
 
     </div>	
@@ -115,6 +151,7 @@ if (osc_is_web_user_logged_in()):
 <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
+
         $(document).on('click', '.chat-user', function () {
             var id = $(this).attr('to-user-id');
             $.ajax({
@@ -126,10 +163,15 @@ if (osc_is_web_user_logged_in()):
                 },
                 success: function (data) {
                     $('#online-chat').html(data);
+                     $('#online-chat').css('display','block'); 
                     $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 500);
                 }
             });
         });
+        $(document).on('click', '.close_chat', function () {
+            $('#online-chat').css('display','none');            
+        });
+
         $(document).on('click', '.closebtn', function () {
             $('#t_chat_menu').css("display", "none");
             $('.t_chat_menu').css("transition", "0.9s");

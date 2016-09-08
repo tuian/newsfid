@@ -20,8 +20,13 @@ if ($_REQUEST['action'] == "chat-converstion"):
             </div>
             <div  class="col-md-12 border-bottom-gray"></div>
             <div class="col-md-12 background-white">
-                <span class="vertical-row pull-right">
-                    <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v pull-right" aria-hidden="true"></i>
+                <span class="dropdown vertical-row pull-right">
+                    <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                <li class="pointer"><a>Block this user</a></li>
+                                <li class="close_chat pointer"><a> Close this chat</a></li>
+                                <li class="pointer"><a>Turn chat off</a></li>
+                            </ul>
                 </span>
             </div>
             
@@ -44,16 +49,16 @@ if ($_REQUEST['action'] == "chat-converstion"):
                 ?>
                     <?php if ($msg['from'] != $user_id): ?>        
                         <div class="col-md-12 padding-0 msg_him">
-                            <img src="<?php echo $img_path_to; ?>" class="img-circle" width="30px"> <span class="padding-left-10"><?php echo $msg['message']; ?></span>
+                            <div class="pull-left"> <img src="<?php echo $img_path_to; ?>" class="img-circle" width="30px"></div> <span class="col-md-10 padding-left-10"><?php echo $msg['message']; ?></span>
                         </div>
                     <?php else : ?>
                         <div class="col-md-12 padding-0 padding-5 msg_me font-color-black">
-                            <img src="<?php echo $img_path; ?>" class="img-circle" width="20px"><span class="padding-left-10"> <?php echo $msg['message']; ?> </span>
+                            <div class="pull-left"> <img src="<?php echo $img_path; ?>" class="img-circle" width="20px"></div><span class="col-md-10 padding-left-10"> <?php echo $msg['message']; ?> </span>
                         </div>  
                     <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
-                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>
+<!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
             
             <div class="textarea">
                 <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>
@@ -66,7 +71,6 @@ endif;
 ?>
 <script>
     $(document).bind('keypress','.textarea.msg_textarea', function (e) { 
-        alert('a');
         if (e.which === 13) { 
             var msg = $('.msg_textarea').val();
             console.log(msg);
