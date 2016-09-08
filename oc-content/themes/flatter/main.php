@@ -138,7 +138,7 @@ if (isset($user_id)) {
         <div class="user_area">
             <div class="row wrap">
                 <div class="">
-                    <div class="col-md-3 col-sm-3" id="wrap">
+                    <div class="col-md-4 col-sm-4" id="wrap">
                         <div class=" bg-white col-md-12 padding-0">
                             <!--                    <div class="box box-widget widget-user">
                             
@@ -322,7 +322,7 @@ if (isset($user_id)) {
                     </div>
                 </div>
                 <div class="box_post">
-                    <div class="col-md-9 col-sm-9 padding-left-0">
+                    <div class="col-md-8 col-sm-8 padding-left-0">
                         <div class="col-md-12 padding-0">                        
                             <ul class="nav user_profile_navigation bg-white">
                                 <li class="active location_filter_tab"><a href="#tab_1">WORLD</a></li>

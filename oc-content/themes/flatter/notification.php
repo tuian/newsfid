@@ -17,7 +17,8 @@ if ($_REQUEST['notification'] == 'notification'):
     <div class="background-white notification_list border-bottom-gray">
 
         <?php foreach ($notifications as $n): ?>
-            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 <?php if($n['read_status']== '0'): echo 'unread-notification'; endif; ?>">
+            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 unread<?php if ($n['read_status'] == '0'): echo 'unread-notification';
+        endif; ?>">
                 <div class="col-md-3 padding-0">
                     <!--<img src="<?php echo $n['user_image'] ?>" class="img-circle user-icon" alt="User Image">-->
                     <img src="<?php echo $n['user_image'] ?>" data_user_id="<?php echo $n['from_user_id']; ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
@@ -29,11 +30,13 @@ if ($_REQUEST['notification'] == 'notification'):
                         <li><a class="pointer unmark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"> Unmark as not read</a></li>                       
                     </ul>
                 </div>
-                <div class="col-md-9 padding-0 <?php if($n['read_status']== '0'): echo 'font-color-black'; else: echo "light-gray"; endif; ?> ">
-                    <?php echo $n['message']; ?>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
+                <div class="col-md-9 padding-0 <?php if ($n['read_status'] == '0'): echo 'font-color-black';
+        else: echo "light-gray";
+        endif; ?> ">
+            <?php echo $n['message']; ?>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
                 </div>
             </div>
-        <?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 
     <?php
@@ -63,9 +66,9 @@ endif;
                 user_id: to_id
             },
             success: function (data) {
-               var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
-               var no = exist_cnt - 1;
-               console.log(no);
+                var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
+                var no = exist_cnt - 1;
+                console.log(no);
                 $('.user_notification').attr('data-pending-message', no);
                 $('.user_notification').html(no);
             }
@@ -83,9 +86,9 @@ endif;
                 user_id: to_id
             },
             success: function (data) {
-               var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
-               var no = exist_cnt + 1;
-               console.log(no);
+                var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
+                var no = exist_cnt + 1;
+                console.log(no);
                 $('.user_notification').attr('data-pending-message', no);
                 $('.user_notification').html(no);
             }

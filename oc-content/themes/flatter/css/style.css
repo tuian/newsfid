@@ -2525,12 +2525,13 @@ select {
     top: 0px;
     left: 0px;
     bottom: 0px;
-    width: 15.7%;
+    width: 14%;
     overflow-y: auto;
 }
 .chat-notification{
     padding: 10px;
     padding-bottom: 30px; 
+    background-color: #222d32;
 }
 .green-dot{ 
     border: 2px solid #fff;
@@ -2685,10 +2686,10 @@ select {
 }
 .chat-user{
     color:#fff;
-    margin-left: -10px;
+    margin-left: 10px;
 }
 .chat-text{
-    margin-left: -10px;
+    margin-left: 10px;
     font-size: 12px;
 }
 .t-chat{
@@ -2696,7 +2697,7 @@ select {
     top: 0px;
     right:0px;
     bottom: 0px;
-    width: 21.6%;
+    width: 18%;
     /*overflow-y: auto;*/
 }
 .alert.alert-custom{
@@ -3276,7 +3277,7 @@ select {
 .chat-user-overflow{
     position: relative;
     overflow: auto;
-    max-height: 215px;
+    max-height: 275px;
 }
 .chat-menu{
     background-color: white;
@@ -3446,6 +3447,68 @@ select {
     padding: 6px 0px !important;
     text-align: center;
 }
+.msg{
+    height: 120px;
+    overflow: auto;
+}
+textarea.msg_textarea{
+    resize: none;
+    outline: 0;
+    background-color: #222d32;
+    height: 80px;
+}
+.overflow-chat{
+    overflow-y: auto;
+    max-height: 135px;
+    min-height: 135px;
+}
+.after_logging{
+    left:16% !important;
+}
+.typing{
+    padding-left: 27%;
+}
+.user_chat_photo{
+    position: relative;
+    /* top: 170px; */
+    bottom: 95px;
+    left: 10px;
+}
+.msg_textarea{
+    padding-left: 60px;
+}
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{
+    background-color: #d3d7e2 !important;
+}
+.sidebar-menu {
+    background-color: #cacfdb;
+}
+.sidebar-menu>li.active>a {
+    color: #f68935 !important;
+    background-color: #b1b9cb !important;
+    border-left-color: #3c8dbc !important;   
+}
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a{
+    background-color: #b1b9cb !important;
+}
+.sidebar-menu>li.active-menu>a{
+    background-color: #b1b9cb !important;
+}
+.skin-blue .sidebar a {
+    color: #fff !important;
+}
+.skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn {
+    background-color: #b1b9cb !important;
+}
+.skin-blue .sidebar-form {  
+    border:none !important;    
+}
+.chat-user-overflow {
+    background-color: #e9ebee;
+}
+.chat-user a{
+    color: #000 !important;
+}
 @media only screen and (max-width:1024px) and (min-width:1024px){
     .user_info_area{
         font-size: 10px;
@@ -3483,7 +3546,8 @@ select {
     right: 0px;
 }
 .main_content{
-    width: 61.2%;
+    width: 67%;
+    left:14.4%;
 }
 
 #chat-box-footer .frei_box, #chat-box-footer .chatboxhead, #chat-box-footer .chatboxcontent{
@@ -3535,15 +3599,15 @@ select {
 }
 .box_fix2{
     position: fixed;
-    left: 15.96%;
-    width: 20.92%;
+    /*left: 15.96%;*/
+    width: 22.92%;
     top: 2%;
 }
 .box_fix_main{
     position: fixed;
     // left: 15%;
-    width: 15.65%;
-    top: 2%;
+    width: 22.9%;
+    top: 0%;
 }
 
 .box_post2{
@@ -3555,7 +3619,7 @@ select {
     position: relative;
 }
 .box_post_main {
-    left: 25%;
+    left: 33.4%;
     position: relative;
 }
 .margin-right-20{

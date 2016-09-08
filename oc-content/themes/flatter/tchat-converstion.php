@@ -36,11 +36,11 @@ if ($_REQUEST['action'] == 'chat-converstion'):
     $partner = get_user_data($partner_id);
     $conv = get_chat_conversion($user_id, $partner_id);
     $new_msg_cnt = count(get_chat_conversion($user_id, $partner_id));
-    if($old_msg_cnt == $new_msg_cnt):
+    if ($old_msg_cnt == $new_msg_cnt):
         die('same as old');
     endif;
     ?>
-    <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $user_id ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id ?>" to-user-name="<?php echo $partner['user_name']?>" old_msg_cnt="<?php echo $new_msg_cnt; ?>"/>    
+    <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $user_id ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id ?>" to-user-name="<?php echo $partner['user_name'] ?>" old_msg_cnt="<?php echo $new_msg_cnt; ?>"/>    
     <?php
     foreach ($conv as $k => $msg):
         ?>
@@ -83,6 +83,68 @@ if ($_REQUEST['action'] == 'chat-converstion'):
         <?php
     endforeach;
 endif;
+if ($_REQUEST['action'] == "online-chat-converstion"):
+    $user = get_user_data($user_id);
+    $to_user_id = $_REQUEST['user_id'];
+    $user_to = get_user_data($to_user_id);
+    $msg = get_chat_message_data($user_id);
+    if (isset($to_user_id)):
+        $conv = get_chat_conversion($user_id, $to_user_id);
+        ?>
+        <input type="hidden" id="hidden-data" from-id="<?php echo $user_id ?>" from-name="<?php echo $user['user_name'] ?>" to-id="<?php echo $to_user_id ?>" to-name="<?php echo $user_to['user_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $to_user_id)); ?>"/>
+        <div class="chat_box">
+            <div class="background-white padding-10">
+                <div class="bold">
+                    <span class="orange padding-right-10"> With</span> <?php echo $user_to['user_name']; ?>
+                </div>            
+            </div>
+            <div  class="col-md-12 border-bottom-gray"></div>
+            <div class="col-md-12 background-white">
+                <span class="vertical-row pull-right">
+                    <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v pull-right" aria-hidden="true"></i>
+                </span>
+            </div>
+
+            <?php
+            if (!empty($user['s_path'])):
+                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+            else:
+                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
+
+
+            if (!empty($user_to['s_path'])):
+                $img_path_to = osc_base_url() . $user_to['s_path'] . $user_to['pk_i_id'] . '.' . $user_to['s_extension'];
+            else:
+                $img_path_to = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
+            ?>
+            <div class="msg col-md-12 background-white overflow-chat"> 
+                <?php foreach ($conv as $k => $msg):
+                    ?>
+                    <?php if ($msg['from'] != $user_id): ?>        
+                        <div class="col-md-12 padding-0 msg_him">
+                            <img src="<?php echo $img_path_to; ?>" class="img-circle" width="30px"> <span class="padding-left-10"><?php echo $msg['message']; ?></span>
+                        </div>
+                    <?php else : ?>
+                        <div class="col-md-12 padding-0 padding-5 msg_me font-color-black">
+                            <img src="<?php echo $img_path; ?>" class="img-circle" width="20px"><span class="padding-left-10"> <?php echo $msg['message']; ?> </span>
+                        </div>  
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>
+
+            <div class="textarea">
+                <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>
+                <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
+            </div>
+        </div>
+        <?php
+    endif;
+endif;
+?>
+<?php
 if ($_REQUEST['search_action'] == 'search-action'):
     $search = $_REQUEST['search_text'];
     $user_conversion_data = new DAO();

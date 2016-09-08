@@ -96,7 +96,7 @@ if (osc_is_web_user_logged_in()):
                             </div> 
                         </div>
                         <div class="col-md-9 col-sm-9 col-xs-9 padding-left-0">
-                            <span class="bold chat-user"><a href="javascript:void(0)" onClick="FreiChat.create_chat_window(<?php echo "'" . $u['user_name'] . "'"; ?>, <?php echo $u['user_id']; ?>)"><?php echo $u['user_name']; ?></a></span>
+                            <span class="bold chat-user" to-user-id="<?php echo $u['user_id']; ?>"><a href="javascript:void(0)"><?php echo $u['user_name']; ?></a></span>
                         </div>
                     </div>                        
                     <?php
@@ -104,6 +104,7 @@ if (osc_is_web_user_logged_in()):
             endif;
             ?>   
         </div>
+        <div id="online-chat"></div>
         <div id="chat-box-footer"></div>
 
     </div>	
@@ -114,7 +115,21 @@ if (osc_is_web_user_logged_in()):
 <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
-
+        $(document).on('click', '.chat-user', function () {
+            var id = $(this).attr('to-user-id');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    action: 'chat-converstion',
+                    user_id: id
+                },
+                success: function (data) {
+                    $('#online-chat').html(data);
+                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 500);
+                }
+            });
+        });
         $(document).on('click', '.closebtn', function () {
             $('#t_chat_menu').css("display", "none");
             $('.t_chat_menu').css("transition", "0.9s");
@@ -156,7 +171,6 @@ if (osc_is_web_user_logged_in()):
                     $('.tchat_profile').addClass('show');
                     $(".tchat_profile").animate({
                         width: '700px',
-                       
                     });
                     $('.tchat_profile').removeClass('hide');
                 }
@@ -168,11 +182,10 @@ if (osc_is_web_user_logged_in()):
                 $('.tchat_profile').removeClass('hide');
             });
             $('body').click(function () {
-               
-                 $(".tchat_profile").animate({
-                        width: '0px',
-                       
-                    });
+
+                $(".tchat_profile").animate({
+                    width: '0px',
+                });
             });
         });
 

@@ -126,11 +126,11 @@ found!');</script>";
     </head>
     <body class="<?php flatter_body_class(); ?> skin-blue sidebar-mini" >
         <div class="wrapper row main_wrapper">
-            <div class="col-md-2 col-sm-0 padding-0">       
+            <div class="col-md-2 sidebar col-sm-0 padding-0">       
 
                 <aside class="main-sidebar" >
                     <!-- sidebar: style can be found in sidebar.less -->
-                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) : ?> padding-top-4per <?php endif; ?>" id="mySidenav">
+                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) : ?> padding-top-4per <?php endif; ?>" id="mySidenav" <?php if (!osc_is_web_user_logged_in()) : ?>  style="width: 15.4%" <?php endif; ?>>
                         <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
                             <?php
                             $user_id = osc_logged_user_id();
@@ -494,7 +494,7 @@ found!');</script>";
                     </div>
                 </div>
             </div>
-            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-10  " ?>
+            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-10 after_logging  " ?>
             <div class="<?php echo $class ?> padding-0 " id="main">
                 <div class="content-wrapper">
                     <div class="content">

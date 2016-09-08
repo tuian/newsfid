@@ -134,7 +134,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
     $(document).ready(function () {
         var msg = <?php echo get_pending_msg_cnt(); ?>;
 
-        setInterval(ajaxCall, 1000); //300000 MS == 5 minutes
+       //300000 MS == 5 minutes
 
         function ajaxCall() {
             var to_id = $('#hidden-user-data').attr('to-user-id');
