@@ -34,15 +34,15 @@ if (osc_is_web_user_logged_in()):
     <div class="t-chat t_chat_menu" id="t_chat_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="chat-notification">
-            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
                 <a href="<?php echo osc_base_url() ?>">
                     <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
                 </a>
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer">
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
                 <a class="font-color-white" href="<?php echo osc_current_web_theme_url() . 't-chat.php' ?>">
                     <i class="fa fa-envelope" aria-hidden="true"></i>
                     <?php if (get_pending_msg_cnt() > 0): ?>
@@ -193,9 +193,7 @@ if (osc_is_web_user_logged_in()):
                 },
                 success: function (data, textStatus, jqXHR) {
                     $('.notification-area').html(data);
-                    $('.chat-menu').hide();
-                    $('#chat-user-list').hide();
-                    $('.freicontain').hide();
+                    $('.notification-area').toggle();
                 }
 
             });

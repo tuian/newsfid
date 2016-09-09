@@ -118,8 +118,8 @@ $user_desc = $user_result->row();
                                 </span>
                             </div>
                         </div>
-                        <div class="row user_info_row margin-0 user_map_box">
-                            <div class="user_map" id="user_map"></div>
+                        <div class="row user_info_row margin-0 user_map_box"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <div class="user_map" id="user_map_profile"></div>
                         </div>
                     </div>
                 </div>
@@ -605,7 +605,7 @@ function custom_map_script() {
             var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
 
             var myLatLng = {lat: latitude, lng: longitude};
-            var map = new google.maps.Map(document.getElementById('user_map'), {
+            var map = new google.maps.Map(document.getElementById('user_map_profile'), {
                 zoom: 10,
                 center: myLatLng
             });
@@ -625,9 +625,23 @@ function custom_map_script() {
             });
         }
 
-        //       
+        function updateMap(latitude, longitude) {             
+            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+            console.log(myLatLng);
+            var map = new google.maps.Map(document.getElementById('user_map'), {
+                zoom: 10,
+                center: myLatLng
+            });           
+            google.maps.event.trigger(map, 'resize');
+            map.setCenter(myLatLng)
+            google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'My City'
+            });               
+        }      
         var goptions = {
-            map: '#user_map',
+            map: '#user_map_profile',
             details: ".details",
             types: ['(cities)'],
             basemap: 'gray',
@@ -652,17 +666,12 @@ function custom_map_script() {
                     country: result.address_components['3'].long_name,
                     scountry: result.address_components['3'].short_name,
                 },
+                dataType: "json", 
                 success: function (data, textStatus, jqXHR) {
                     $('#autocomplete').addClass('hide');
                     $('.user_localisation_text').show();
                     $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
-
-                    //not work fix it
-                    //                    var myLatLng = new google.maps.LatLng(lat, lng);
-                    //                    var map = new google.maps.Map(document.getElementById('user_map'), {
-                    //                        zoom: 10,                        
-                    //                    });    
-                    //                    map.setCenter(myLatLng)                       
+                    updateMap(data.lat, data.lng);    
                 }
             });
         });

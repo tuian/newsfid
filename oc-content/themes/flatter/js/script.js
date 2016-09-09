@@ -192,7 +192,7 @@ function fileSelectHandlerCover() {
             setTimeout(function () {
                 // initialize Jcrop
                 $('#preview_cover').Jcrop({
-                    minSize: [32, 64], // min crop size
+                    minSize: [400, 600], // min crop size
                     aspectRatio: 2, // keep aspect ratio 1:1
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity

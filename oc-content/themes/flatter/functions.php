@@ -625,7 +625,18 @@ if (!function_exists('user_info_js')) {
 
     osc_add_hook('header', 'user_info_js');
 }
-
+    if( !OC_ADMIN ) {
+        if( !function_exists('add_close_button_action') ) {
+            function add_close_button_action(){
+                echo '<script type="text/javascript">';
+                    echo '$(".flashmessage .ico-close").click(function(){';
+                        echo '$(this).parent().hide();';
+                    echo '});';
+                echo '</script>';
+            }
+            osc_add_hook('footer', 'add_close_button_action') ;
+        }
+    }
 function theme_flatter_actions_admin() {
     //if(OC_ADMIN)
     switch (Params::getParam('action_specific')) {

@@ -231,6 +231,7 @@ if (isset($user_id)) {
 
                                 <div class="box-body" style="display: block;">                             
                                     <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                        <option value="all">All</option> 
                                         <option value="image">Image</option>                                
                                         <option value="video">Video</option>                                
                                         <option value="gif">Gif</option>                                
@@ -326,17 +327,47 @@ if (isset($user_id)) {
                         <div class="col-md-12 padding-0">                        
                             <ul class="nav user_profile_navigation bg-white">
                                 <li class="active location_filter_tab"><a href="#tab_1">WORLD</a></li>
-                                <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
-                                <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li>
+                                <?php if (!empty($logged_user['fk_c_country_code'])): ?>
+                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                <?php else: ?>
+                                    <li><a data-toggle="modal" data-target="#myModal">NATIONAL</a></li>                                     
+                                <?php endif; ?>
+                                <?php if (!empty($logged_user['fk_i_city_id'])): ?>
+                                    <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li> 
+                                <?php else: ?>
+                                    <li><a data-toggle="modal" data-target="#myModal">LOCAL</a></li>                                     
+                                <?php endif; ?>
+                                <div id="myModal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Please enter your City and Country name to use this tab</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="col-md-12 col-sm-12 user_website">
+                                                    <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+                                                        <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
+                                                    </span>   
+                                                    <input type="text" class="" id="autocomplete_main">       
+                                                    <div class="user_info_row margin-0 user_map_box">
+                                                        <div class="user_map" id="user_map"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </ul>                                                    
-                        </div>
+                        </div>                                                   
                         <div class="clearfix"></div>
                         <div class="posts_container">
                             <input type="hidden" name="item_page_number" id="item_page_number" value="1">
-                            <div class="user_related_posts">
-
-                            </div>
-
+                            <div class="user_related_posts"></div>
                             <div class="loading text-center">
                                 <div class="cs-loader">
                                     <div class="cs-loader-inner">
@@ -395,7 +426,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                   ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                   ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -417,7 +448,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                   ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                   ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -479,8 +510,75 @@ osc_add_hook('footer', 'footer_script');
 
 function footer_script() {
     ?>
+
+    <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
+    
+    <script>
+        google.maps.event.addDomListener(window, 'load', initMap);
+        function initMap() {
+            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
+            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
+
+            var myLatLng = {lat: latitude, lng: longitude};
+            var map = new google.maps.Map(document.getElementById('user_map'), {
+                zoom: 10,
+                center: myLatLng
+            });
+            //add the code here, after the map variable has been instantiated
+            var tab = jQuery('ul.user_profile_navigation li')[1]
+            jQuery(tab).one('click', function () {
+                setTimeout(function () {
+                    google.maps.event.trigger(map, 'resize');
+                    map.setCenter(myLatLng)
+                    google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: 'My City'
+                    });
+                }, 1000);
+
+            });
+        }
+
+        //       
+        var goptions = {
+            map: '#user_map',
+            details: ".details",
+            types: ['(cities)'],
+            basemap: 'gray',
+            mapOptions: {
+                zoom: 10
+            },
+            marketOptions: {
+                draggable: true
+            }
+        }
+        $('#autocomplete_main').geocomplete(goptions).bind("geocode:result", function (event, result) {
+            var lat = result.geometry.location.lat;
+            var lng = result.geometry.location.lng;
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                type: 'POST',
+                data: {
+                    action: 'user_localisation',
+                    lat: lat,
+                    lng: lng,
+                    city: result.address_components['0'].long_name,
+                    country: result.address_components['3'].long_name,
+                    scountry: result.address_components['3'].short_name,
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
+
+                    location.reload();                    
+                }
+            });
+        });
+    </script> 
+
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
+        
         var pageNumber = $('#page_number').val();
         var is_enable_ajax = true;
         var loading = false;
@@ -501,8 +599,27 @@ function footer_script() {
     <?php if (osc_is_web_user_logged_in()): ?>
 
                 $(window).scroll(function (event) {
+                    var screen = $(window).height();
                     var scroll = $(window).scrollTop();
-                    if (scroll > 500) {
+                    if (screen > 900) {
+                        var fix = 500;
+                    }
+                    else if (screen > 800) {
+                        var fix = 440;
+                    }
+                    else if (screen > 700) {
+                        var fix = 500;
+                    }
+                    else if (screen > 600) {
+                        var fix = 500;
+                    }
+                    else if (screen > 480) {
+                        var fix = 450;
+                    }
+                    else if (screen > 400) {
+                        var fix = 400;
+                    }
+                    if (scroll > fix) {
                         $('#wrap').addClass("box_fix_main");
                         $('.box_post').addClass("box_post_main");
                         $('.user_profile_navigation').addClass("fix_nav");
@@ -825,7 +942,6 @@ function footer_script() {
             post_type = $('.post_type_filter').val();
             $('#item_page_number').val(1);
         }
-
     </script>
     <?php
 }

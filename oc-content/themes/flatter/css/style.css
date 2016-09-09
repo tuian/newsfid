@@ -3165,12 +3165,12 @@ select {
     cursor: pointer;
 }
 .sidebar-menu>li>ul>li.active>a {
-     color: #f68935 !important;
+    color: #f68935 !important;
     background: #d3d7e2 !important;
     border-left-color: #3c8dbc !important;
 }
 .sidebar-menu>li>ul>li:hover>a {
-     color: #f68935 !important;
+    color: #f68935 !important;
     background: #b1b9cb !important;
     border-left-color: #3c8dbc !important;
 }
@@ -3668,6 +3668,23 @@ textarea.msg_textarea{
     min-height: 193px;
     background-image: url(../images/audio.jpg);
     background-size: cover;
+}
+input#post_media{
+    width: 380%;
+}
+.pac-container.pac-logo {
+    z-index: 9999;
+}
+.file_upload_cover .icon{  
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-size: 22px;
+    color:#fff;
+}
+.file_upload_cover .icon:hover{
+    color: #000;
+    cursor: pointer;
 }
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 

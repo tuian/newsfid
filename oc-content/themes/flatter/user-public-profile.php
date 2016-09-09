@@ -50,9 +50,16 @@ else:
     $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
 endif;
 ?>
-<div id="cover" class="cover">
-    <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
-</div>
+
+    <div id="cover" class="cover">
+        <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
+            <span class ="icon">
+                <i class="fa fa-camera"></i>
+            </span>
+        </div>
+        <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
+    </div>
+
 <!-- end profil cover -->
 
 <div id="sections">
@@ -78,67 +85,62 @@ endif;
                                     <?php echo $user['role_name'] ?>
                                 </h5>      
                                 <?php if (osc_user_id() == osc_logged_user_id()): ?>
-                                    <span class="profile_img_overlay">
-                                        <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
-                                            <span class ="icon">
-                                                <i class="fa fa-camera"></i>
-                                            </span>
-                                        </div>
 
-                                        <div id="crop-cover-img" class="modal  fade" role="dialog">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h3 class="modal-title">Upload Image</h3>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="bbody">
 
-                                                            <!-- upload form -->
-                                                            <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkFormCover()">
-                                                                <!-- hidden crop params -->
-                                                                <input type="hidden" id="x1_cover" name="x1_cover" />
-                                                                <input type="hidden" id="y1_cover" name="y1_cover" />
-                                                                <input type="hidden" id="x2_cover" name="x2_cover" />
-                                                                <input type="hidden" id="y2_cover" name="y2_cover" />
+                                    <div id="crop-cover-img" class="modal  fade" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h3 class="modal-title">Upload Image</h3>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="bbody">
 
-                                                                <h4>Step1: Please select image file</h4>
-                                                                <div class="choose-file"><input type="file" name="file_cover_img" id="image_file_cover" onchange="fileSelectHandlerCover()" /></div>
+                                                        <!-- upload form -->
+                                                        <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkFormCover()">
+                                                            <!-- hidden crop params -->
+                                                            <input type="hidden" id="x1_cover" name="x1_cover" />
+                                                            <input type="hidden" id="y1_cover" name="y1_cover" />
+                                                            <input type="hidden" id="x2_cover" name="x2_cover" />
+                                                            <input type="hidden" id="y2_cover" name="y2_cover" />
 
-                                                                <div class="error"></div>
-                                                                <div id="loader-icon_cover" style="display:none;"><img src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" /></div>
-                                                                <div class="step2">
-                                                                    <h4>Step2: Please select a crop region</h4>
-                                                                    <img id="preview_cover" />
+                                                            <h4>Step1: Please select image file</h4>
+                                                            <div class="choose-file"><input type="file" name="file_cover_img" id="image_file_cover" onchange="fileSelectHandlerCover()" /></div>
 
-                                                                    <div class="info">
-                                                                        <input type="hidden" id="filesize_cover" name="filesize" />
-                                                                        <input type="hidden" id="filetype_cover" name="filetype" />
-                                                                        <input type="hidden" id="filedim_cover" name="filedim" />
-                                                                        <input type="hidden" id="w_cover" name="w" />
-                                                                        <input type="hidden" id="h_cover" name="h" />
+                                                            <div class="error"></div>
+                                                            <div id="loader-icon_cover" style="display:none;"><img src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" /></div>
+                                                            <div class="step2">
+                                                                <h4>Step2: Please select a crop region</h4>
+                                                                <img id="preview_cover" />
 
-                                                                    </div>
-                                                                    <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
+                                                                <div class="info">
+                                                                    <input type="hidden" id="filesize_cover" name="filesize" />
+                                                                    <input type="hidden" id="filetype_cover" name="filetype" />
+                                                                    <input type="hidden" id="filedim_cover" name="filedim" />
+                                                                    <input type="hidden" id="w_cover" name="w" />
+                                                                    <input type="hidden" id="h_cover" name="h" />
+
                                                                 </div>
-                                                            </form>
-                                                        </div>
+                                                                <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <div class="clear"></div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--                                    <form class="cover_image_upload" method="post" enctype="multipart/form-data">
-                                                                                <span class="icon">
-                                                                                    <i class="fa fa-camera"></i>
-                                                                                </span>
-                                                                                <input type="file" name="file" class="file user_cover_img">
-                                                                            </form>-->
-                                    </span>
+                                    </div>
+                                    <!--                                    <form class="cover_image_upload" method="post" enctype="multipart/form-data">
+                                                                            <span class="icon">
+                                                                                <i class="fa fa-camera"></i>
+                                                                            </span>
+                                                                            <input type="file" name="file" class="file user_cover_img">
+                                                                        </form>-->
+
                                 <?php endif; ?>
                             </div>
                             <div class="widget-user-image">
@@ -304,6 +306,7 @@ endif;
 
                             <div class="box-body" style="display: block;">                             
                                 <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                    <option value="all">All</option> 
                                     <option value="image">Image</option>                                
                                     <option value="video">Video</option>                                
                                     <option value="gif">Gif</option>                                
@@ -378,20 +381,20 @@ endif;
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number">  
                             <div class="no-user-post">
-<!--                                <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
-                                    <div class="col-md-4 padding-0">
-                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
-                                    </div>
-                                    <div class="col-md-7 padding-0">
-                                        <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
-                                        <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
-                                        <div class="col-md-12">
-                                            <a href="javascript:void(0)" class="free_account" >
-                                                <button class="btn btn-info border-radius-0">Publish Something</button>
-                                            </a>
-                                        </div>
-                                    </div>                                
-                                </div> -->
+                                <!--                                <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
+                                                                    <div class="col-md-4 padding-0">
+                                                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
+                                                                    </div>
+                                                                    <div class="col-md-7 padding-0">
+                                                                        <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
+                                                                        <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
+                                                                        <div class="col-md-12">
+                                                                            <a href="javascript:void(0)" class="free_account" >
+                                                                                <button class="btn btn-info border-radius-0">Publish Something</button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>                                
+                                                                </div> -->
                                 <div class="border-bottom-gray col-md-12"></div>
                             </div>
                             <div class="user_posts_container"></div>
@@ -551,8 +554,27 @@ function custom_script() {
     <script>
 
                                             $(window).scroll(function (event) {
+                                                var screen = $(window).height();
                                                 var scroll = $(window).scrollTop();
-                                                if (scroll > 450) {
+                                                if (screen > 900) {
+                                                    var fix = 610;
+                                                }
+                                                else if (screen > 800) {
+                                                    var fix = 600;
+                                                }
+                                                else if (screen > 700) {
+                                                    var fix = 570;
+                                                }
+                                                else if (screen > 600) {
+                                                    var fix = 500;
+                                                }
+                                                else if (screen > 480) {
+                                                    var fix = 450;
+                                                }
+                                                else if (screen > 400) {
+                                                    var fix = 380;
+                                                }
+                                                if (scroll > fix) {
                                                     $('#wrap').addClass("box_fix2");
                                                     $('#box_post2').addClass("box_post3");
                                                     $('.user_profile_navigation').addClass("fix_nav");
