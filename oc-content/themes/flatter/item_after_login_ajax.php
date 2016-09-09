@@ -51,12 +51,14 @@ if (isset($_REQUEST['location_type'])):
     endif;
 endif;
 if (!empty($_REQUEST['post_type'])):
-    $data->dao->where('item.item_type', $_REQUEST['post_type']);
+    if($_REQUEST['post_type'] != 'all'):
+        $data->dao->where('item.item_type', $_REQUEST['post_type']);
+    endif;
 endif;
 
 if ($following_user):
     $following_user = implode(',', $following_user);
-    $data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 0 AND item.fk_i_user_id IN ({$following_user}))");
+    $data->dao->where("(item_user.has_private_post = 0 OR (item_user.has_private_post = 0 AND item.fk_i_user_id IN ({$following_user})))");
 else:
     $data->dao->where("item_user.has_private_post = 0");
 endif;

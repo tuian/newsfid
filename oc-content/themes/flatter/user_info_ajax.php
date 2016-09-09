@@ -53,7 +53,9 @@ if ($_REQUEST['action'] == 'user_localisation'):
     
     $result = $user_data->dao->update("{$db_prefix}t_user", array('d_coord_lat' => $lat, 'd_coord_long' => $lng, 's_city' => $city, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
     if ($result):
-        echo 1;
+        $data['lat'] = $lat;
+        $data['lng'] = $lng;
+        echo json_encode($data);
     else:
         echo 0;
     endif;

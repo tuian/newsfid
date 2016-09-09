@@ -108,7 +108,7 @@ function custom_map_script() {
         function initMap() {
             var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
             var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
-
+            
             var myLatLng = {lat: latitude, lng: longitude};
             var map = new google.maps.Map(document.getElementById('user_map'), {
                 zoom: 10,
@@ -128,6 +128,20 @@ function custom_map_script() {
                 }, 1000);
 
             });
+        }
+        function updateMap(latitude, longitude) {             
+            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};            
+            var map = new google.maps.Map(document.getElementById('user_map'), {
+                zoom: 10,
+                center: myLatLng
+            });           
+            google.maps.event.trigger(map, 'resize');
+            map.setCenter(myLatLng)
+            google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'My City'
+            });               
         }
 
         //       
@@ -157,17 +171,13 @@ function custom_map_script() {
                     country: result.address_components['3'].long_name,
                     scountry: result.address_components['3'].short_name,
                 },
-                success: function (data, textStatus, jqXHR) {
+                dataType: "json",    
+                success: function (data, textStatus, jqXHR) {                   
                     $('#autocomplete').addClass('hide');
                     $('.user_localisation_text').show();
                     $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
-
-                    //not work fix it
-//                    var myLatLng = new google.maps.LatLng(lat, lng);
-//                    var map = new google.maps.Map(document.getElementById('user_map'), {
-//                        zoom: 10,                        
-//                    });    
-//                    map.setCenter(myLatLng)                       
+                    $('.user_localisation_text').attr('data_text', result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
+                    updateMap(data.lat, data.lng);                    
                 }
             });
         });
