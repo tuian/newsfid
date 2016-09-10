@@ -44,7 +44,9 @@ else :
     
     //insert notification for author
     $message = 'commented your post';
-    set_user_notification($comment_user_id, $item['fk_i_user_id'], $message);    
+    if($comment_user_id != $item['fk_i_user_id']):
+        set_user_notification($comment_user_id, $item['fk_i_user_id'], $message);    
+    endif;
     
 endif;
 $c_data;

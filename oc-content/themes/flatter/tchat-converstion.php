@@ -102,11 +102,11 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
             <div class="col-md-12 background-white">
                 <span class="dropdown vertical-row pull-right">
                     <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                                <li class="pointer"><a>Block this user</a></li>
-                                <li class="close_chat pointer"><a> Close this chat</a></li>
-                                <li class="pointer"><a>Turn chat off</a></li>
-                            </ul>
+                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                        <li class="pointer"><a>Block this user</a></li>
+                        <li class="close_chat pointer"><a> Close this chat</a></li>
+                        <li class="pointer"><a>Turn chat off</a></li>
+                    </ul>
                 </span>
             </div>
 
@@ -141,7 +141,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
             <!--<div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
             <div class="textarea">
-                <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>
+                <textarea class="msg_textarea" placeholder="Press enter to reply" id="messageBox1"></textarea>
                 <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
             </div>
         </div>
@@ -189,3 +189,40 @@ if ($_REQUEST['search_action'] == 'search-action'):
 endif;
 ?>
 
+<script>
+    document.getElementById("messageBox1").onkeypress = function enterKey(e)
+    {
+        var key = e.which || e.keyCode;
+        if (key == 13)
+        {
+            var msg = $('.msg_textarea').val();
+            var from_id = $('#hidden-data').attr('from-id');
+            var from_name = $('#hidden-data').attr('from-name');
+            var to_id = $('#hidden-data').attr('to-id');
+            var to_name = $('#hidden-data').attr('to-name');
+            if (!msg) {
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    submit: 'send-msg',
+                    action: 'online-chat-converstion',
+                    from_id: from_id,
+                    from_name: from_name,
+                    user_id: to_id,
+                    to_name: to_name,
+                    msg: msg
+                },
+                success: function (data) {
+                    $('#online-chat').html(data);
+                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                    $('textarea.msg_textarea').val('');
+                    $('textarea.msg_textarea').focus();
+                }
+            });
+        }
+    };
+
+</script>

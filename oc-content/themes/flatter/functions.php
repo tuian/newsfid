@@ -1180,7 +1180,7 @@ function item_resources($item_id) {
             else:
                 preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $post_resource_array['s_path'], $matches);
                 ?>
-                <iframe src="<?php echo 'https://www.youtube.com/embed/' . $matches[0]; ?>" width="854" height="190" frameborder="0" allowfullscreen ></iframe>
+                <iframe src="<?php echo 'https://www.youtube.com/embed/' . $matches[0]; ?>" width="854" height="350" frameborder="0" allowfullscreen ></iframe>
             <?php
             endif;
             break;
@@ -1358,15 +1358,15 @@ function update_item_like($user_id, $item_id, $like_value) {
         $like_reult = $like_data->dao->insert(sprintf('%st_item_likes', DB_TABLE_PREFIX), $like_array);
     endif;
     //insert notification for author
-    if ($like_value == 1):
+    //item detail
+    $data = new DAO();
+    $data->dao->select('item.*');
+    $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+    $data->dao->where('item.pk_i_id', $item_id);
+    $result = $data->dao->get();
+    $item = $result->row();
+    if ($like_value == 1 && $user_id != $item['fk_i_user_id']):
         $message = 'liked your post';
-        //item detail
-        $data = new DAO();
-        $data->dao->select('item.*');
-        $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-        $data->dao->where('item.pk_i_id', $item_id);
-        $result = $data->dao->get();
-        $item = $result->row();
         set_user_notification($user_id, $item['fk_i_user_id'], $message);
     endif;
     return $like_reult;
@@ -1501,9 +1501,9 @@ function user_follow_btn_box($logged_in_user_id, $follow_user_id) {
         $fa_class = 'fa fa-user-plus';
         $follow_text = "Follow";
     endif;
-    ?>
-    <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
-    <?php
+    ?>   
+    <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" user-data=".user-<?php echo $follow_user_id ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
+        <?php
 }
 
 function update_user_following($logged_in_user_id, $follow_user_id, $follow_value) {
@@ -1609,15 +1609,15 @@ function update_user_share_item($user_id, $item_id, $share_value) {
         $user_follow_data->dao->insert(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array);
     endif;
     //insert notification for author
-    if ($share_value == 1):
+    //item detail
+    $data = new DAO();
+    $data->dao->select('item.*');
+    $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+    $data->dao->where('item.pk_i_id', $item_id);
+    $result = $data->dao->get();
+    $item = $result->row();
+    if ($share_value == 1 && $user_id != $item['fk_i_user_id']):
         $message = 'shared your post';
-        //item detail
-        $data = new DAO();
-        $data->dao->select('item.*');
-        $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-        $data->dao->where('item.pk_i_id', $item_id);
-        $result = $data->dao->get();
-        $item = $result->row();
         set_user_notification($user_id, $item['fk_i_user_id'], $message);
     endif;
 }
@@ -1680,15 +1680,15 @@ function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
         $user_watchlist_data->dao->insert(sprintf('%st_item_watchlist', DB_TABLE_PREFIX), $follow_array);
     endif;
     //insert notification for author
-    if ($watchlist_value == 1):
+    //item detail
+    $data = new DAO();
+    $data->dao->select('item.*');
+    $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+    $data->dao->where('item.pk_i_id', $item_id);
+    $result = $data->dao->get();
+    $item = $result->row();
+    if ($watchlist_value == 1 && $user_id != $item['fk_i_user_id']):
         $message = 'added your post to his/her watchlist';
-        //item detail
-        $data = new DAO();
-        $data->dao->select('item.*');
-        $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-        $data->dao->where('item.pk_i_id', $item_id);
-        $result = $data->dao->get();
-        $item = $result->row();
         set_user_notification($user_id, $item['fk_i_user_id'], $message);
     endif;
 }

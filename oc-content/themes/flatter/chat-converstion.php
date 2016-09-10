@@ -22,31 +22,31 @@ if ($_REQUEST['action'] == "chat-converstion"):
             <div class="col-md-12 background-white">
                 <span class="dropdown vertical-row pull-right">
                     <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                                <li class="pointer"><a>Block this user</a></li>
-                                <li class="close_chat pointer"><a> Close this chat</a></li>
-                                <li class="pointer"><a>Turn chat off</a></li>
-                            </ul>
+                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                        <li class="pointer"><a>Block this user</a></li>
+                        <li class="close_chat pointer"><a> Close this chat</a></li>
+                        <li class="pointer"><a>Turn chat off</a></li>
+                    </ul>
                 </span>
             </div>
-            
-                <?php
-                if (!empty($user['s_path'])):
-                    $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
-                else:
-                    $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                endif;
+
+            <?php
+            if (!empty($user['s_path'])):
+                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+            else:
+                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
 
 
-                if (!empty($user_to['s_path'])):
-                    $img_path_to = osc_base_url() . $user_to['s_path'] . $user_to['pk_i_id'] . '.' . $user_to['s_extension'];
-                else:
-                    $img_path_to = osc_current_web_theme_url() . '/images/user-default.jpg';
-                endif;
-                ?>
-                <div class="msg col-md-12 background-white overflow-chat"> 
-                    <?php foreach ($conv as $k => $msg):
-                ?>
+            if (!empty($user_to['s_path'])):
+                $img_path_to = osc_base_url() . $user_to['s_path'] . $user_to['pk_i_id'] . '.' . $user_to['s_extension'];
+            else:
+                $img_path_to = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
+            ?>
+            <div class="msg col-md-12 background-white overflow-chat"> 
+                <?php foreach ($conv as $k => $msg):
+                    ?>
                     <?php if ($msg['from'] != $user_id): ?>        
                         <div class="col-md-12 padding-0 msg_him">
                             <div class="pull-left"> <img src="<?php echo $img_path_to; ?>" class="img-circle" width="30px"></div> <span class="col-md-10 padding-left-10"><?php echo $msg['message']; ?></span>
@@ -56,12 +56,12 @@ if ($_REQUEST['action'] == "chat-converstion"):
                             <div class="pull-left"> <img src="<?php echo $img_path; ?>" class="img-circle" width="20px"></div><span class="col-md-10 padding-left-10"> <?php echo $msg['message']; ?> </span>
                         </div>  
                     <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-<!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
-            
+                <?php endforeach; ?>
+            </div>
+            <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
+
             <div class="textarea">
-                <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>
+                <textarea class="msg_textarea" placeholder="Press enter to reply" id="messageBox"></textarea>
                 <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
             </div>
         </div>
@@ -70,10 +70,12 @@ if ($_REQUEST['action'] == "chat-converstion"):
 endif;
 ?>
 <script>
-    $(document).bind('keypress','.textarea.msg_textarea', function (e) { 
-        if (e.which === 13) { 
+    document.getElementById("messageBox").onkeypress = function enterKey(e)
+    {
+        var key = e.which || e.keyCode;
+        if (key == 13)
+        {
             var msg = $('.msg_textarea').val();
-            console.log(msg);
             var from_id = $('#hidden-data').attr('from-id');
             var from_name = $('#hidden-data').attr('from-name');
             var to_id = $('#hidden-data').attr('to-id');
@@ -95,11 +97,12 @@ endif;
                 },
                 success: function (data) {
                     $('#online-chat').html(data);
-                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 500);
+                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
                     $('textarea.msg_textarea').val('');
                     $('textarea.msg_textarea').focus();
                 }
             });
         }
-    });
+    };
+
 </script>
