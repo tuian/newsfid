@@ -3104,9 +3104,6 @@ select {
     overflow-y:auto;
     position:relative;  
 }
-.masonry_row .item{
-    min-height: 432px;
-}
 #item_popup_modal #columns{
     background: #fff;
 }
@@ -3298,7 +3295,11 @@ select {
 .chat-user-overflow{
     position: relative;
     overflow: auto;
-    max-height: 275px;
+    max-height: 300px;
+    min-height: 300px;
+}
+.msg_him {
+    padding: 2px 0px;
 }
 .chat-menu{
     background-color: white;
@@ -3313,7 +3314,7 @@ select {
     top: 0;
     max-height: 100%;
     overflow-y: auto;
-    right: 21.5%;
+    right: 18%;
 }
 .tchat_profile_pic{
     top: -40px;
@@ -3378,6 +3379,9 @@ select {
 .skin-blue ::-moz-scrollbar {
     width: 5px;
 } 
+.cmnt .box-footer{
+    padding: 0px 10px;
+}
 /*::-webkit-scrollbar {
     width: 10px;
 }*/
@@ -3681,11 +3685,9 @@ input#post_media{
     left: 10px;
     font-size: 22px;
     color:#fff;
+    display: none;
 }
-.file_upload_cover .icon:hover{
-    color: #000;
-    cursor: pointer;
-}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 
 @media only screen and (min-width: 768px) and (max-width: 960px){

@@ -105,7 +105,7 @@ if ($items):
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>
                         <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                        <span class="description"><?php //echo time_elapsed_string(strtotime($date));  ?></span>
+                        <span class="description"><?php echo time_elapsed_string(strtotime($item['dt_pub_date'])); ?></span>
                     </div>
                     <!-- /.user-block -->
 <!--                    <div class="box-tools">
@@ -144,7 +144,7 @@ if ($items):
                 </div>
                 <!-- /.box-body -->
 
-                <div class="comments_container_<?php echo osc_item_id(); ?>">                    
+                <div class="cmnt comments_container_<?php echo osc_item_id(); ?>">                    
                     <?php
                     $c_data;
                     $comments_data = new DAO();

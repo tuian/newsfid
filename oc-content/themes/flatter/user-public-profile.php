@@ -51,14 +51,14 @@ else:
 endif;
 ?>
 
-    <div id="cover" class="cover">
-        <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
-            <span class ="icon">
-                <i class="fa fa-camera"></i>
-            </span>
-        </div>
-        <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
+<div id="cover" class="cover">
+    <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
+        <span class ="icon">
+            <i class="fa fa-camera"></i>
+        </span>
     </div>
+    <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
+</div>
 
 <!-- end profil cover -->
 
@@ -675,8 +675,14 @@ function custom_script() {
                                             });
                                             $(document).ready(function ($) {
                                                 fetch_user_posts();
-
-
+                                                
+                                                
+                                                 $('#cover .img').hover(function () {
+                                                    $('.file_upload_cover .icon').show();
+                                                },
+                                                function() {
+                                                        $('.file_upload_cover .icon').hide();
+                                                        });
                                                 $(document).on('click', '.user_profile_navigation .user_follower', function () {
                                                     $.ajax({
                                                         url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",

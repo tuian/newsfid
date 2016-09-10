@@ -147,7 +147,7 @@ while (osc_has_custom_items()):
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="comments_container_<?php echo osc_item_id(); ?>">
+                                            <div class="cmnt comments_container_<?php echo osc_item_id(); ?>">
                                                 <?php
                                                 $c_data = get_item_comments(osc_item_id());
                                                 if ($c_data):

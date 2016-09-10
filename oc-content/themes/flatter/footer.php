@@ -44,7 +44,15 @@ if (osc_is_web_user_logged_in()):
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
                 <a class="font-color-white" href="<?php echo osc_current_web_theme_url() . 't-chat.php' ?>">
-                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <?php
+                    $active = '';
+                    if ((strpos($_SERVER['REQUEST_URI'], 't-chat') !== false)):
+                        $active = 'orange';
+                    else:
+                        $active = '';
+                    endif;
+                    ?> 
+                    <i class="fa fa-envelope <?php echo $active;?>" aria-hidden="true"></i>
                     <?php if (get_pending_msg_cnt() > 0): ?>
                         <span class="label message-count"><?php echo get_pending_msg_cnt(); ?></span>
                     <?php endif; ?>
@@ -163,13 +171,13 @@ if (osc_is_web_user_logged_in()):
                 },
                 success: function (data) {
                     $('#online-chat').html(data);
-                     $('#online-chat').css('display','block'); 
-                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 500);
+                    $('#online-chat').css('display', 'block');
+                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
                 }
             });
         });
         $(document).on('click', '.close_chat', function () {
-            $('#online-chat').css('display','none');            
+            $('#online-chat').css('display', 'none');
         });
 
         $(document).on('click', '.closebtn', function () {
@@ -184,6 +192,10 @@ if (osc_is_web_user_logged_in()):
             $('#t_chat_menu').css("display", "block");
         });
         $(document).on('click', '.notification', function () {
+            $('.notification').addClass('notification1');
+            $('.notification').addClass('orange');
+            $('.notification').removeClass('notification');
+            $('.notification-area').show();
 
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'notification.php'; ?>",
@@ -193,11 +205,24 @@ if (osc_is_web_user_logged_in()):
                 },
                 success: function (data, textStatus, jqXHR) {
                     $('.notification-area').html(data);
-                    $('.notification-area').toggle();
+                    $('.chat-menu').hide();
+                    $('#chat-user-list').hide();
+                    $('#online-chat').hide();
+
                 }
 
             });
         });
+        $(document).on('click', '.notification1', function () {
+            $('.notification1').addClass('notification');
+            $('.notification1').removeClass('orange');
+            $('.notification1').removeClass('notification1');
+            $('.notification-area').hide();
+            $('.chat-menu').show();
+            $('#chat-user-list').show();
+            $('#online-chat').show();
+        });
+
         $(document).on('click', '.user_tchat', function () {
             var user_id = $(this).attr('data_user_id');
             $.ajax({
@@ -216,7 +241,6 @@ if (osc_is_web_user_logged_in()):
                 }
 
             });
-
             $(document).on('click', '.tchat_profile', function () {
                 $('.tchat_profile').addClass('show');
                 $('.tchat_profile').removeClass('hide');
@@ -228,7 +252,6 @@ if (osc_is_web_user_logged_in()):
                 });
             });
         });
-
         $(document).on('click', '.chat-filter', function () {
             var filter = $(this).attr('data-value');
             $.ajax({
@@ -243,8 +266,6 @@ if (osc_is_web_user_logged_in()):
                 }
             });
         });
-
-
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {

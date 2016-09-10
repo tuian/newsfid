@@ -94,7 +94,7 @@ if ($items):
                 </div>
                 <!-- /.box-body -->
 
-                <div class="comments_container_<?php echo osc_item_id(); ?>">                    
+                <div class="cmnt comments_container_<?php echo osc_item_id(); ?>">                    
                     <?php
                     $c_data;
                     $comments_data = new DAO();

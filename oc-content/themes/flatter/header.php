@@ -65,6 +65,7 @@
         <script type="text/javascript" src="<?php echo osc_base_url() . 'oc-content/plugins/slider/responsiveslides.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
+        <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
         <!-- /Header Hook -->
@@ -76,6 +77,44 @@
     <?php echo osc_get_preference('custom_css', 'flatter_theme', "UTF-8"); ?>
             </style>
         <?php } ?>
+            <?php if (!osc_is_web_user_logged_in()) : ?>
+        <style>
+            .skin-blue .sidebar-menu>li>.treeview-menu {
+                background-color: #222d32 !important;
+            }
+            .sidebar-menu>li.active-menu>a {
+                color: #fff;
+                background: #222d32 !important;
+                border-left-color: #3c8dbc;
+            }
+            .skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a{
+                color: #f68935 !important;
+                background: #1e282c !important;
+                border-left-color: #3c8dbc;
+            }
+            .sidebar-menu>li.active>a {
+                color: #f68935 !important;
+                background: #1e282c !important;
+                border-left-color: #3c8dbc;
+            }
+            .sidebar-menu>li>ul>li.active>a {
+                color: #f68935;
+                background: #222d32 !important;
+                border-left-color: #3c8dbc;
+            }
+            .sidebar-menu>li>ul>li:hover>a {
+                color: #f68935;
+                background: #222d32 !important;
+                border-left-color: #3c8dbc;
+            }
+            .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side, .sidebar-menu {
+                background-color: #222d32 !important;
+            }
+            .skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn {
+                background-color:#374850 !important;
+            }
+        </style>
+        <?php endif; ?>
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -130,7 +169,7 @@ found!');</script>";
 
                 <aside class="main-sidebar" >
                     <!-- sidebar: style can be found in sidebar.less -->
-                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) : ?> padding-top-4per <?php endif; ?>" id="mySidenav" <?php if (!osc_is_web_user_logged_in()) : ?>  style="width: 15.4%" <?php endif; ?>>
+                    <section class="sidebar sidenav  <?php if (!osc_is_web_user_logged_in()) : ?> padding-top-4per <?php endif; ?>" id="mySidenav">
                         <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>
                             <?php
                             $user_id = osc_logged_user_id();
@@ -405,7 +444,7 @@ found!');</script>";
                             <?php endif; ?>
                             <?php if (!osc_is_web_user_logged_in()): ?>
 
-                                <li class="treeview <?php echo $active ?>">
+                                
                                     <?php
                                     $active = '';
                                     if (!empty($parts[0])):
@@ -416,6 +455,7 @@ found!');</script>";
                                         endif;
                                     endif;
                                     ?>
+                                <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_user_login_url() ?>">
                                         <i class="fa fa-sign-in"></i>Login
                                     </a>
