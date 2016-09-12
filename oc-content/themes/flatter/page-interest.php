@@ -38,15 +38,19 @@ osc_current_web_theme_path('header.php');
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="titlebox background-white padding-10">
-                            <h2>Centre d'intérêt</h2>
+                            <h2>Center of interest</h2>
+                            <!--                            <h2>Centre d'intérêt</h2>-->
                             <h1>
-                                Choisissez les sujets qui vous intéresse
+                                Choose topics that you are interested
+                                <!--Choisissez les sujets qui vous intéresse-->
                             </h1>
                             <span>
-                                Cette étape nous permet simplement de vous faire des suggestions de sujet auquel vous êtes intéressé(e).
+                                <!--Cette étape nous permet simplement de vous faire des suggestions de sujet auquel vous êtes intéressé(e).-->
+                                This step simply allows us to make you suggestions about which you are interested.
                                 <br/>
                                 <br/>
-                                Prenez le temps de faire votre choix. Vous pourrai le modifier plus tard. 
+                                <!--                                Prenez le temps de faire votre choix. Vous pourrai le modifier plus tard. -->
+                                Take time to make your choice. You could change it later.
                             </span>
                         </div>
 
@@ -54,7 +58,8 @@ osc_current_web_theme_path('header.php');
 
                         <div class="col-md-12 padding-10 background-white">
                             <div class="pull-right">
-                                <input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="Poursuivre" />
+                                <!--<input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="Poursuivre" />-->
+                                <input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="Continue" />
                             </div>
                         </div>
 

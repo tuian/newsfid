@@ -34,6 +34,7 @@ if ($_REQUEST['action'] == 'update_post'):
                     <form method="post" id="post_update" action="<?php echo osc_current_web_theme_url('post_update.php'); ?>" enctype="multipart/form-data">
                         <!--<input type="hidden" name="save" value="true">-->
                         <input type="hidden" name="item_id" id="item_id" value="<?php echo $item_id; ?>">
+                        <input type="hidden" name="redirect" id="redirect" value="<?php echo $_REQUEST['redirect'] ?>">
                         <!-------------------------User Information Start---------------------------->
 
                         <div class="modal-body padding-0">
@@ -83,7 +84,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                         </div>
                                         <div class="col-md-4 padding-top-4per">
                                             <div class="col-md-offset-4">
-                                                <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> En savoir plus </a>
+                                                <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> Get more details </a>
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +108,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                                 <select id="sCategory" class="form-control input-box" name="sCategory">
                                                     <option <?php ?> value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
                                                     <?php while (osc_has_categories()) { ?>
-                                                    <option  class="maincat bold" <?php if (osc_category_parent_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>                                                        
+                                                    <option  class="maincat bold" <?php if (osc_category_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>                                                        
                                                     <?php } ?>
 
                                                 </select>

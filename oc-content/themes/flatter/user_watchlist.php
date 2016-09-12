@@ -172,7 +172,7 @@ if ($items):
                                 <?php get_user_profile_picture($current_user['user_id']) ?>
                             </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                             <div class="img-push">
-                                <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
+                                <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
                             </div>
                         </form>
                     </div>

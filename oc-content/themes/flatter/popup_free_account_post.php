@@ -67,7 +67,7 @@ require_once 'functions.php';
                             </div>
                             <div class="col-md-4 padding-top-4per">
                                 <div class="col-md-offset-4">
-                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> En savoir plus </a>
+                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> Get more details </a>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ require_once 'functions.php';
                                         <?php } ?>
                                     </select>
                                 <?php } ?>
-                            </div>
+                            </div><span class="error-mcat red">Please select category</span>
                             <div class="category-dropdown left-border width-50 margin-top-10" style="display: block;">
                                 <?php osc_goto_first_category(); ?>
                                 <?php if (osc_count_categories()) { ?>
@@ -109,7 +109,7 @@ require_once 'functions.php';
                                     </select>
                                 <?php } ?>
 
-                            </div>
+                            </div><span class="error-scat red">Please select rubrics</span>
                             <div class="input-text-area margin-top-10 padding-bottom-20 left-border box-shadow-none width-50">
                                 <input type="text" placeholder="Title" name="p_title" class="p_title"><span class="error-title red">Post Title Required</span>
                             </div>
@@ -144,7 +144,7 @@ require_once 'functions.php';
                                         <div class="col-md-12 vertical-row center-contant">
                                             <div class="col-md-2"> <span class="bold">Image</span>
                                                 <div class="onoffswitch">
-                                                    <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" checked value="image">
+                                                    <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" value="image">
                                                     <label class="onoffswitch-label" for="image"></label>
                                                 </div>
                                             </div>
@@ -308,21 +308,53 @@ require_once 'functions.php';
 <!----free user post end------->
 <script>
     $(document).ready(function () {
+        $(document).on('change', '#mCategory', function () {
+            var cat = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('popup_ajax.php') ?>",
+                type: 'post',
+                data: {
+                    maincategory: 'maincategory',
+                    cat_id: cat
+                },
+                success: function (data) {
+                    $('#sCategory').html(data);
+                }
+            });
+        });
         $('.error-desc').hide();
         $('.error-title').hide();
         $('.error-term').hide();
         $('.error-btn').hide();
+        $('.error-scat').hide();
+        $('.error-mcat').hide();
         $('#post_add').submit(function () {
             var title = $('.p_title').val();
             var discription = $('.p_disc').val();
-            if (title != '') {
+            var mcat = $('#mCategory option:selected').val();
+            var scat = $('#sCategory option:selected').val();
+            if (mcat !== '') {
+                $('.error-mcat').hide();
+            } else {
+                $('.error-mcat').show();
+                $('.error-btn').show();
+                return false;
+            }
+            if (scat !== '') {
+                $('.error-scat').hide();
+            } else {
+                $('.error-scat').show();
+                $('.error-btn').show();
+                return false;
+            }
+            if (title !== '') {
                 $('.error-title').hide();
             } else {
                 $('.error-title').show();
                 $('.error-btn').show();
                 return false;
             }
-            if (discription != '')
+            if (discription !== '')
             {
                 $('.error-desc').hide();
             }

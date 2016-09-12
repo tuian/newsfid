@@ -33,7 +33,7 @@ else:
     $data->dao->whereIn('item.fk_i_category_id', get_user_categories($comment_user_id));
 endif;
 
-if (!empty($_REQUEST['country_id'])):    
+if (!empty($_REQUEST['country_id'])):
     $data->dao->where('item_location.fk_c_country_code', $_REQUEST['country_id']);
 endif;
 
@@ -51,7 +51,7 @@ if (isset($_REQUEST['location_type'])):
     endif;
 endif;
 if (!empty($_REQUEST['post_type'])):
-    if($_REQUEST['post_type'] != 'all'):
+    if ($_REQUEST['post_type'] != 'all'):
         $data->dao->where('item.item_type', $_REQUEST['post_type']);
     endif;
 endif;
@@ -104,18 +104,32 @@ if ($items):
                         <div class="user_image">
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>
-                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                        <span class="description"><?php echo time_elapsed_string(strtotime($item['dt_pub_date'])); ?></span>
+                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
+                            <?php if (osc_logged_user_id() == $user['user_id']): ?>
+                                <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                    <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                                        <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
+                                        <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
+                                        <!--                                    <li><a></a></li>
+                                                                                        <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
+                                                                                        <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                                                                        <li><a></a></li>
+                                                                                        <li><a>Signaler la publication</a></li>-->
+                                    </ul>
+                                </button>
+                            <?php endif; ?>
+                        </span>
+                        <span class="description"><?php echo time_elapsed_string(strtotime($item['dt_pub_date'])); ?></span>                        
                     </div>
-                    <!-- /.user-block -->
-<!--                    <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
-                            <i class="fa fa-circle-o"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>-->
-                    <!-- /.box-tools -->
+                    <!--                     /.user-block 
+                                        <div class="box-tools">
+                                            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                                                <i class="fa fa-circle-o"></i></button>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                        </div>
+                                         /.box-tools -->
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -123,7 +137,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                     ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                            ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -170,49 +184,50 @@ if ($items):
                         <?php endif; ?>
                         <?php
                         $total_comment = count($c_data);
-                        foreach ($c_data as $k => $comment_data):                              
-                            $comment_user = get_user_data($comment_data['fk_i_user_id']); 
-                                if ($k < $total_comment-3 && !$load_more):
-                                    $load_more = 'load more';
-                                    echo '<div class="load_more">';                            
-                                endif; ?>
-                                <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id']?'border-blue-left':''?>">
-                                    <div class="box-comment">
-                                        <!-- User image -->
-                                        <div class="comment_user_image margin-right-10">
-                                            <?php get_user_profile_picture($comment_user['user_id']) ?>
-                                        </div>
-                                        <div class="comment-area">
-                                            <span class="username">
-                                                <?php echo $comment_user['user_name'] ?>
-                                                <!--                                                <div class="dropdown  pull-right">
-                                                                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Supprimer la publication</a></li>
-                                                                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Modifier</a></li>
-                                                                                                        <li><a></a></li>
-                                                                                                        <li><a>Sponsoriser</a></li>
-                                                                                                        <li><a>Remonter en tête de liste</a></li>
-                                                                                                        <li><a></a></li>
-                                                                                                        <li><a>Signaler la publication</a></li>
-                                                
-                                                                                                    </ul>
-                                                                                                </div>-->
-                                            <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
-                                            </span>
-                                            <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
-                                                <?php echo $comment_data['s_body']; ?>
-                                            </span>
+                        foreach ($c_data as $k => $comment_data):
+                            $comment_user = get_user_data($comment_data['fk_i_user_id']);
+                            if ($k < $total_comment - 3 && !$load_more):
+                                $load_more = 'load more';
+                                echo '<div class="load_more">';
+                            endif;
+                            ?>
+                            <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id'] ? 'border-blue-left' : '' ?>">
+                                <div class="box-comment">
+                                    <!-- User image -->
+                                    <div class="comment_user_image col-md-2">
+                                        <?php get_user_profile_picture($comment_user['user_id']) ?>
+                                    </div>
+                                    <div class="comment-area col-md-10">
+                                        <span class="username">
+                                            <?php echo $comment_user['user_name'] ?>
+                                            <!--                                                <div class="dropdown  pull-right">
+                                                                                                <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                                                                <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                                                    <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Supprimer la publication</a></li>
+                                                                                                    <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a>Modifier</a></li>
+                                                                                                    <li><a></a></li>
+                                                                                                    <li><a>Sponsoriser</a></li>
+                                                                                                    <li><a>Remonter en tête de liste</a></li>
+                                                                                                    <li><a></a></li>
+                                                                                                    <li><a>Signaler la publication</a></li>
                                             
-                                        </div>
-                                        <!-- /.comment-text -->
-                                    </div>                       
-                                </div>  
+                                                                                                </ul>
+                                                                                            </div>-->
+                                            <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
+                                        </span>
+                                        <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
+                                            <?php echo $comment_data['s_body']; ?>
+                                        </span>
+
+                                    </div>
+                                    <!-- /.comment-text -->
+                                </div>                       
+                            </div>  
                             <?php
-                                if ($k == (count($c_data) - 4)):
-                                    unset($load_more);
-                                  echo "</div>";                                
-                                endif;                           
+                            if ($k == (count($c_data) - 4)):
+                                unset($load_more);
+                                echo "</div>";
+                            endif;
                         endforeach;
                     endif;
                     ?>
@@ -229,7 +244,7 @@ if ($items):
                         </div>
                         <!-- .img-push is used to add margin to elements next to floating images -->
                         <div class="img-push">
-                            <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
+                            <textarea type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
                         </div>
                     </form>
                 </div>
@@ -245,7 +260,40 @@ else:
 endif;
 ?>
 <script>
-
+    $(document).on('click', '.delete_post', function () {
+        var user_id = $(this).attr('data-user-id');
+        var post_id = $(this).attr('data-post-id');
+        if (confirm('Are Sure Want To Delete This Post')) {
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'delete_post_ajax.php'; ?>",
+                type: 'post',
+                data: {
+                    action: 'delete_post',
+                    user_id: user_id,
+                    post_id: post_id
+                },
+                success: function () {
+                    $(location).attr('href', '<?php echo osc_base_url(); ?>');
+                }
+            });
+        }
+    });
+    $(document).on('click', '.edit_user_post', function () {
+        var item_id = $(this).attr('item_id');
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'update_user_post.php'; ?>',
+            type: 'post',
+            data: {
+                action: 'update_post',
+                redirect: 'homepage',
+                item_id: item_id
+            },
+            success: function (data) {
+                $('.free-user-post').html(data);
+                $('#popup-free-user-post').modal('show');
+            }
+        });
+    });
 //   $(window).ready(function(){
 //        $('.edit_cmnt').click(function() { 
 //           
@@ -265,6 +313,9 @@ endif;
         var new_text = $(this).val();
         var data_id = $(this).attr('data_id');
         var item_id = $(this).attr('data-item-id');
+        if (!new_text) {
+            return false;
+        }
         $.ajax({
             url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
             method: 'post',

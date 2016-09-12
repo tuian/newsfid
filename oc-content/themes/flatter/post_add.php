@@ -8,48 +8,53 @@ $db_prefix = DB_TABLE_PREFIX;
 $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
 
 $item_type = $_REQUEST['post_type'];
-if ($item_type == 'image'):
-    $file_name = $_FILES['post_media']['name'];
-    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
-    $image_extensions = array('png', 'jpg');
-    if (!in_array($extension, $image_extensions)):
-        osc_add_flash_error_message(__("Please choose png or jpg format image", 'flatter'));
-        osc_redirect_to(osc_base_url());
-        die;
-    endif;
-endif;
+if ($item_type):
+    if ($item_type == 'image'):
+        $file_name = $_FILES['post_media']['name'];
+        $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+//        $image_extensions = array('png', 'jpg', 'jpeg', 'bmp', 'tiff', 'svg', 'gif', 'jfif', 'PNG', 'JPG', 'JPEG', 'BMP', 'TIFF', 'SVG', 'JFIF', 'GIF');
+//        if (!in_array($extension, $image_extensions)):
+//            osc_add_flash_error_message(__("Please choose valid format image", 'flatter'));
+//            osc_redirect_to(osc_base_url());
+//            die;
+//        endif;
 
-if ($item_type == 'gif'):
-    $file_name = $_FILES['post_media']['name'];
-    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
-    $image_extensions = array('gif');
-    if (!in_array($extension, $image_extensions)):
-        osc_add_flash_error_message(__("Please choose gif format image", 'flatter'));
-        osc_redirect_to(osc_base_url());
-        die;
     endif;
-endif;
 
-if ($item_type == 'music'):
-    $file_name = $_FILES['post_media']['name'];
-    $extension = pathinfo($file_name, PATHINFO_EXTENSION);
-    $image_extensions = array('mp3', 'mp4');
-
-    if (!in_array($extension, $image_extensions)):
-        osc_add_flash_error_message(__("Please choose mp3 or mp4 format file", 'flatter'));
-        osc_redirect_to(osc_base_url());
-        die;
+    if ($item_type == 'gif'):
+        $file_name = $_FILES['post_media']['name'];
+        $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+        $image_extensions = array('gif');
+        if (!in_array($extension, $image_extensions)):
+            osc_add_flash_error_message(__("Please choose gif format image", 'flatter'));
+            osc_redirect_to(osc_base_url());
+            die;
+        endif;
     endif;
-    if ($_FILES['post_media']['size'] > 10000000):
-        osc_add_flash_error_message(__("Please choose file less than or equal to 10 mb", 'flatter'));
-        osc_redirect_to(osc_base_url());
-        die;
+
+    if ($item_type == 'music'):
+        $file_name = $_FILES['post_media']['name'];
+        $extension = pathinfo($file_name, PATHINFO_EXTENSION);
+        $image_extensions = array('mp3', 'mp4');
+
+        if (!in_array($extension, $image_extensions)):
+            osc_add_flash_error_message(__("Please choose mp3 or mp4 format file", 'flatter'));
+            osc_redirect_to(osc_base_url());
+            die;
+        endif;
+        if ($_FILES['post_media']['size'] > 10000000):
+            osc_add_flash_error_message(__("Please choose file less than or equal to 10 mb", 'flatter'));
+            osc_redirect_to(osc_base_url());
+            die;
+        endif;
     endif;
 endif;
 
 $item_array['fk_i_user_id'] = $user['pk_i_id'];
 $item_array['fk_i_category_id'] = $_REQUEST['sCategory'];
-$item_array['item_type'] = $item_type;
+if ($item_type):
+    $item_array['item_type'] = $item_type;
+endif;
 $item_array['dt_pub_date'] = date("Y-m-d H:i:s");
 $item_array['dt_mod_date'] = date("Y-m-d H:i:s");
 $item_array['s_contact_name'] = $user['s_name'];

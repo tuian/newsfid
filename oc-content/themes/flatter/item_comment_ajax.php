@@ -64,7 +64,7 @@ $c_data = $comments_result->result();
 
 
 ?>
-<div class="comments_container_<?php echo $comment_item_id; ?>"> 
+<div class="cmnt comments_container_<?php echo $comment_item_id; ?>"> 
     <?php
     if ($c_data):
         ?>

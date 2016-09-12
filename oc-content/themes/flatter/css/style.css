@@ -3246,7 +3246,7 @@ select {
 }
 .t_chat_textarea{
     box-shadow: none;
-    border: none;
+    border: 1px solid #ccc;
     outline: 0;
 }
 .search-box_tchat{
@@ -3472,8 +3472,8 @@ select {
     padding: 6px 0px !important;
     text-align: center;
 }
-.msg{
-    height: 120px;
+#archive .msg, #message .msg{
+    height: 30px;
     overflow: auto;
 }
 textarea.msg_textarea{
@@ -3662,9 +3662,9 @@ textarea.msg_textarea{
 .margin-right-10{
     margin-right: 10px;
 }
-.comment-area.col-md-10.padding-0{
+/*.comment-area.col-md-10.padding-0{
     border-bottom: 1px solid #c9c9c9;
-}
+}*/
 /*.description .item_description{
     min-height: 65px;
 }*/
@@ -3685,7 +3685,16 @@ input#post_media{
     left: 10px;
     font-size: 22px;
     color:#fff;
-    display: none;
+
+}
+textarea.comment_text{  
+    display:block;
+    overflow:hidden;
+    resize: none;
+    border: none;
+    padding: 5px;
+    border-bottom: solid 2px #c9c9c9;
+
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -4012,4 +4021,15 @@ input#post_media{
 }
 .morelink:focus{
     color: #0275d8;
+}
+.bg-tchat .user_list{
+    min-height: 300px;
+}
+.bg-tchat .user_list .dropdown-menu {
+    box-shadow: none;
+    border-color: #ccc;
+}
+.bg-tchat .user_list .edit-arrow {
+    padding-top: 5px;
+    padding-bottom: 15px;
 }

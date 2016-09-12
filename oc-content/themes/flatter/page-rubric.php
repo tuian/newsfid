@@ -38,12 +38,15 @@ endif;
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <div class="titlebox background-white padding-10">
-                        <h2>Centre d'intérêt</h2>
+                        <h2>Center of interest</h2>
+                        <!--<h2>Centre d'intérêt</h2>-->
                         <h1>
-                            Choisissez un ou plusieurs sujets qui vous intéressent
+                            Choose one or more topics that interest you
+                            <!--Choisissez un ou plusieurs sujets qui vous intéressent-->
                         </h1>
                         <span>
-                            Quel genre de sujets vous intéresse? Vous devez en sélectionner au moins un d'entre eux. Cela nous permettra de vous connecter à personnes et l'organisation qu ont les même centre d'intérêts que vous.
+                            What kind of topics interest you? You must select at least four of them. This will allow us to connect to people and organization that have the same interests as you center.
+                            <!--Quel genre de sujets vous intéresse? Vous devez en sélectionner au moins un d'entre eux. Cela nous permettra de vous connecter à personnes et l'organisation qu ont les même centre d'intérêts que vous.-->
                         </span>
                     </div>
 
@@ -51,7 +54,8 @@ endif;
 
                     <div class="col-md-12 padding-10 background-white">
                         <div class="pull-right">
-                            <input class="btn btn-blue btn-flat add_rubric" type="submit" name="submit" value="Poursuivre" />
+                            <!--<input class="btn btn-blue btn-flat add_rubric" type="submit" name="submit" value="Poursuivre" />-->
+                            <input class="btn btn-blue btn-flat add_rubric" type="submit" name="submit" value="Continue" />
                         </div>
                     </div>
 
