@@ -215,7 +215,7 @@ endif;
                             </div>
 
                             <div class="box-footer">
-                                <div class="col-md-12 padding-0 user_info_area">
+                                <div class="col-md-12 padding-0 user_info_area font-12">
                                     <div class="col-sm-4 border-right padding-left-0">
                                         <div class="description-block">
                                             <h5 class="description-header">
@@ -381,24 +381,24 @@ endif;
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number">  
                             <div class="no-user-post">
-                                <!--                                <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
-                                                                    <div class="col-md-4 padding-0">
-                                                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
-                                                                    </div>
-                                                                    <div class="col-md-7 padding-0">
-                                                                        <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
-                                                                        <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
-                                                                        <div class="col-md-12">
-                                                                            <a href="javascript:void(0)" class="free_account" >
-                                                                                <button class="btn btn-info border-radius-0">Publish Something</button>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>                                
-                                                                </div> -->
+                                <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
+                                    <div class="col-md-4 padding-0">
+                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
+                                    </div>
+                                    <div class="col-md-7 padding-0">
+                                        <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
+                                        <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
+                                        <div class="col-md-12">
+                                            <a href="javascript:void(0)" class="free_account" >
+                                                <button class="btn btn-info border-radius-0">Publish Something</button>
+                                            </a>
+                                        </div>
+                                    </div>                                
+                                </div>
                                 <div class="border-bottom-gray col-md-12"></div>
                             </div>
                             <div class="user_posts_container"></div>
-                            <div class="result_text"></div> 
+                            <div class="result_text_message"></div> 
                             <div class="loading text-center">
                                 <div class="cs-loader">
                                     <div class="cs-loader-inner">
@@ -675,14 +675,21 @@ function custom_script() {
                                             });
                                             $(document).ready(function ($) {
                                                 fetch_user_posts();
-                                                
-                                                
-                                                 $('#cover .img').hover(function () {
-                                                    $('.file_upload_cover .icon').show();
-                                                },
-                                                function() {
+
+
+                                                $('#cover .img').hover(function () {
+                                                        $('.file_upload_cover .icon').show();
+                                                    },
+                                                    function () {
                                                         $('.file_upload_cover .icon').hide();
-                                                        });
+                                                });
+                                                
+                                                $('.file_upload_cover .icon').hover(function () {
+                                                        $('.file_upload_cover .icon').show();
+                                                    },
+                                                    function () {
+                                                        $('.file_upload_cover .icon').hide();
+                                                });
                                                 $(document).on('click', '.user_profile_navigation .user_follower', function () {
                                                     $.ajax({
                                                         url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
@@ -874,17 +881,33 @@ function custom_script() {
                                                     success: function (data) {
                                                         $('.user_posts_area .loading').fadeOut(1000);
                                                         $('.user_posts_container').css({'opacity': '1'});
-                                                        if (data !== '0') {
+                                                        if (data.indexOf("Nothing to show") >= 0) {
+                                                            if (page_number === 1) {
+                                                                $('.result_text_message').html('<h2 class="result_text">Ends of results</h2>');
+                                                            } else if ($('.usepost_no_record').size() < 1) {
+                                                                $('.result_text_message').html(data);
+                                                            }
+                                                            is_enable_ajax = false;
+                                                        }
+                                                        else {
                                                             loading = false;
+                                                            $(".no-user-post").hide();
                                                             $(".user_posts_container").append(data);
                                                             var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
                                                             $('.user_posts_area .user_post_page_number').val(next_page);
 
-                                                        } else {
-
-                                                            $(".user_posts_area .result_text").text('Ends of results').show();
-                                                            is_enable_ajax = false;
                                                         }
+                                                        //                                                        else {
+                                                        //                                                            if (data.indexOf("Nothing to show") >= 0) {
+                                                        //                                                                if (page_number === 1) {
+                                                        //                                                                    $('.user_posts_area .result_text').html('<h2 class="result_text">Ends of results</h2>');
+                                                        //                                                                } else if ($('.result_text').size() < 1) {
+                                                        //                                                                    $('.user_posts_area .result_text').html(data);
+                                                        //                                                                }
+                                                        //                                                            }
+                                                        ////                                                            $(".user_posts_area .result_text").text('Ends of results').show();
+                                                        //                                                            is_enable_ajax = false;
+                                                        //                                                        }
                                                     }
                                                 });
                                             }

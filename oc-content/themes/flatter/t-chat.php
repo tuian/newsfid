@@ -37,6 +37,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     <ul class="padding-0" id="user_list">
                         <?php
                         $user = $msg['from'];
+                        
                         foreach ($msg as $k => $data):
 
                             $id = $data['to'];
@@ -52,6 +53,13 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                 <div>
                                     <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
                                     <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
+                                </div>
+                                <div class="col-md-6 dropdown"> 
+                                    <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                        <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
+                                        <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
+                                    </ul>
                                 </div>
                             </li>
                             <?php
@@ -132,11 +140,31 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
 </div>
 <script>
     $(document).ready(function () {
-        var msg = <?php echo get_pending_msg_cnt(); ?>;
-
+        $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
        //300000 MS == 5 minutes
-
-        function ajaxCall() {
+       
+       //archives chat
+       $('.archive_chat').click(function(){
+           var to_id = $(this).attr('data-id');
+            $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+            type: 'post',
+            data: {                
+                action:'archive_chat',
+                to_id: to_id,                
+            },
+            success: function (data) {
+                $('#chat-box').html('');                
+            }
+        });
+       });
+       
+       //delete chat
+       $('.delete_chat').click(function(){
+           
+       });
+       
+    function ajaxCall() {
             var to_id = $('#hidden-user-data').attr('to-user-id');
             var old_msg_cnt = $('#hidden-user-data').attr('old_msg_cnt');
             $.ajax({
@@ -162,10 +190,8 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         $('.nav li.active_tab').removeClass('active_tab');
         $(this).addClass('active_tab');
     });
-    $(document).ready(function () {
-        $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-    });
-    $(document).on('click', '.send_msg', function () {
+    
+    $(document).on('click', '.send_msg', function () {  
         var msg = $('.t_chat_textarea').val();
         var from_id = $('#hidden-user-data').attr('from-user-id');
         var from_name = $('#hidden-user-data').attr('from-user-name');
@@ -188,39 +214,14 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             },
             success: function (data) {
                 $('#chat-box').html(data);
-                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-                $('.t_chat_textarea').val('');
+                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);               
+                $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>');
             }
         });
     });
-    $(document).bind('keypress', function (e) {
+    $('.t_chat_textarea').bind('keypress', function (e) {
         if (e.which === 13) {
-            var msg = $('.t_chat_textarea').val();
-            var from_id = $('#hidden-user-data').attr('from-user-id');
-            var from_name = $('#hidden-user-data').attr('from-user-name');
-            var to_id = $('#hidden-user-data').attr('to-user-id');
-            var to_name = $('#hidden-user-data').attr('to-user-name');
-            if (!msg) {
-                return false;
-            }
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
-                type: 'post',
-                data: {
-                    submit: 'send-msg',
-                    action: 'chat-converstion',
-                    from_id: from_id,
-                    from_name: from_name,
-                    user_id: to_id,
-                    to_name: to_name,
-                    msg: msg
-                },
-                success: function (data) {
-                    $('#chat-box').html(data);
-                    $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-                    $('.t_chat_textarea').val('');
-                }
-            });
+            $('.send_msg').click();
         }
     });
     $(document).on('click', '.user_list', function () {

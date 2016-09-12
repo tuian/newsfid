@@ -679,7 +679,7 @@ function footer_script() {
     ?>
     
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
-
+    <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
     <script>
         google.maps.event.addDomListener(window, 'load', initMap);
         function initMap() {

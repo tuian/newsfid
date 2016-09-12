@@ -131,7 +131,9 @@ if ($items):
                         <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
 
                         <?php
-                        item_resources(osc_item_id());
+                         if ($item['item_type']):
+                             item_resources(osc_item_id());
+                         endif;
                         ?>
 
                         <p><?php //echo osc_highlight(osc_item_description(), 200);                                                 ?></p>
@@ -220,7 +222,7 @@ if ($items):
                                     <?php get_user_profile_picture($current_user['user_id']) ?>
                                 </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
-                                    <input type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment">
+                                    <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -234,9 +236,7 @@ if ($items):
     ?>
     <?php
 else:
-
     echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
-
 endif;
 ?>
 <script>

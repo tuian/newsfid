@@ -148,6 +148,34 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
         <?php
     endif;
 endif;
+if ($_REQUEST['action'] == "archive_chat"):    
+    $to_user_id = $_REQUEST['to_id'];    
+    if (isset($to_user_id)):
+        $conversion = get_chat_conversion($user_id, $to_user_id);
+        if(!empty($conversion)):
+            $msg_data = new DAO();
+            foreach ($conversion as $c): 
+                $msg_array['`from`'] = $c['from'];
+                $msg_array['from_name'] = $c['from_name'];
+                $msg_array['`to`'] = $c['to'];
+                $msg_array['to_name'] = $c['to_name'];
+                $msg_array['message'] = $c['message'];
+                $msg_array['sent'] = $c['sent'];
+                $msg_array['recd'] = 0;
+                $msg_array['read_status'] = 0;
+
+                $msg_array['time'] = time() . str_replace(" ", "", microtime());
+                $msg_array['GMT_time'] = time();
+                $msg_array['message_type'] = 0;
+                $msg_array['room_id'] = -1;
+                $msg_data->dao->insert("`frei_chat`", $msg_array);
+                die;
+            endforeach;
+        endif;
+    endif;
+endif;
+
+
 ?>
 <?php
 if ($_REQUEST['search_action'] == 'search-action'):
@@ -187,8 +215,10 @@ if ($_REQUEST['search_action'] == 'search-action'):
     </ul>
     <?php
 endif;
-?>
 
+
+if ($_REQUEST['action'] == "online-chat-converstion"):
+?>
 <script>
     document.getElementById("messageBox1").onkeypress = function enterKey(e)
     {
@@ -226,3 +256,4 @@ endif;
     };
 
 </script>
+<?php endif;?>
