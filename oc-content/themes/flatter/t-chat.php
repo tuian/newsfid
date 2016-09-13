@@ -17,55 +17,106 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         <div class="row margin-0 padding-top-3per ">
             <div class="col-md-4 padding-0">
                 <div class="col-md-12 border-top-gray background-white border-box-right border-bottom-gray tchat_tab">
-                    <ul class="nav margin-top-20 nav-font">
-                        <li id="message" class="col-md-7 pointer active_tab">
-                            <div class="msg msg_tab">New messages</div>
+                    <ul class="nav nav-tabs margin-top-20 nav-font">
+                        <li class="col-md-7 pointer active_tab">
+                            <div class="msg msg_tab" data-toggle="tab" data-target="#message">
+                                New messages
+                            </div>
                         </li>
-                        <li id="archive" class="col-md-5 pointer">
-                            <div class="msg msg_tab  text-center">Archives</div>
+                        <li class="col-md-5 pointer">
+                            <div class="msg msg_tab archives text-center" data-toggle="tab" data-target="#archive">
+                                Archives
+                            </div>
                         </li>
                     </ul>
-                </div>
-                <div class="col-md-12 background-white border-box-right padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
-                    <input type="text" name="search_name" class="form-control search-tchat-text search_name" placeholder="Search...">
-                    <i class="fa fa-search search_icon pointer padding-10"></i>                 
-                </div>
-                <?php
-                $msg = get_chat_message_data($user_id);
-                ?>
-                <div class="col-md-12 background-white border-box-right t_chat_overflow">
-                    <ul class="padding-0" id="user_list">
-                        <?php
-                        $user = $msg['from'];
-                        
-                        foreach ($msg as $k => $data):
+                </div>                
+                <div class="tab-content">
+                    <?php
+                    $msg = get_chat_message_data($user_id);
+                    ?>
+                    <div id="message" class="tab-pane fade in active ">
+                        <div class="col-md-12 background-white padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
+                            <input type="text" name="search_name" class="form-control search-tchat-text search_name" placeholder="Search...">
+                            <i class="fa fa-search search_icon pointer padding-10"></i>                 
+                        </div>
+                        <div class="col-md-12 background-white border-box-right t_chat_overflow">                        
+                            <ul class="padding-0" id="user_list">
+                                <?php
+                                $user = $msg['from'];
 
-                            $id = $data['to'];
-                            $user = get_user_data($id);
-                            if (!empty($user['s_path'])):
-                                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
-                            else:
-                                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-                            endif;
-                            ?>
-                            <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
-                                <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
-                                <div class="col-md-7">
-                                    <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
-                                    <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
-                                </div>
-                                <div class="col-md-5 dropdown"> 
-                                    <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
-                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                                        <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
-                                        <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
-                                    </ul>
-                                </div>
-                            </li>
-                            <?php
-                        endforeach;
-                        ?>
-                    </ul>
+                                foreach ($msg as $k => $data):
+
+                                    $id = $data['to'];
+                                    $user = get_user_data($id);
+                                    if (!empty($user['s_path'])):
+                                        $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+                                    else:
+                                        $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                                    endif;
+                                    ?>
+                                    <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
+                                        <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
+                                        <div class="col-md-7">
+                                            <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
+                                            <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
+                                        </div>
+                                        <div class="col-md-5 dropdown"> 
+                                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
+                                                <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <?php
+                                endforeach;
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                    $msg = get_archives_message_data($user_id);
+                    ?>
+                    <div id="archive" class="tab-pane fade">                        
+                        <div class="col-md-12 background-white padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
+                            <input type="text" name="search_name" class="form-control search-tchat-text search_archive" placeholder="Search...">
+                            <i class="fa fa-search search_icon pointer padding-10"></i>                 
+                        </div>
+                        <div class="col-md-12 background-white border-box-right t_chat_overflow">                        
+                            <ul class="padding-0" id="user_list">
+                                <?php
+                                $user = $msg['from'];
+
+                                foreach ($msg as $k => $data):
+
+                                    $id = $data['to'];
+                                    $user = get_user_data($id);
+                                    if (!empty($user['s_path'])):
+                                        $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+                                    else:
+                                        $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                                    endif;
+                                    ?>
+                                    <li class="col-md-12 vertical-row padding-0 border-bottom-gray arc_user_list pointer" data-id='<?php echo $data['to']; ?>'>
+                                        <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
+                                        <div class="col-md-7">
+                                            <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
+                                            <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
+                                        </div>
+                                        <div class="col-md-5 dropdown"> 
+                                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
+                                                <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <?php
+                                endforeach;
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8 border-top-gray border-bottom-gray background-white">
@@ -141,41 +192,41 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
 <script>
     $(document).ready(function () {
         $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-       //300000 MS == 5 minutes
-       
-       //archives chat
-       $('.archive_chat').click(function(){
-           var to_id = $(this).attr('data-id');
+        //300000 MS == 5 minutes
+
+        //archives chat
+        $('.archive_chat').click(function () {
+            var to_id = $(this).attr('data-id');
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
                 type: 'post',
-                data: {                
-                    action:'archive_chat',
-                    to_id: to_id,                
+                data: {
+                    action: 'archive_chat',
+                    to_id: to_id,
                 },
                 success: function (data) {
-                     location.reload();             
+                    location.reload();
                 }
             });
-       });
-       
-       //delete chat
-       $('.delete_chat').click(function(){
-           var to_id = $(this).attr('data-id');
+        });
+
+        //delete chat
+        $('.delete_chat').click(function () {
+            var to_id = $(this).attr('data-id');
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
                 type: 'post',
-                data: {                
-                    action:'delete_chat',
-                    to_id: to_id,                
+                data: {
+                    action: 'delete_chat',
+                    to_id: to_id,
                 },
                 success: function (data) {
-                     location.reload();               
+                    location.reload();
                 }
             });
-       });
-       
-    function ajaxCall() {
+        });
+
+        function ajaxCall() {
             var to_id = $('#hidden-user-data').attr('to-user-id');
             var old_msg_cnt = $('#hidden-user-data').attr('old_msg_cnt');
             $.ajax({
@@ -201,8 +252,8 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         $('.nav li.active_tab').removeClass('active_tab');
         $(this).addClass('active_tab');
     });
-    
-    $(document).on('click', '.send_msg', function () {  
+
+    $(document).on('click', '.send_msg', function () {
         var msg = $('.t_chat_textarea').val();
         var from_id = $('#hidden-user-data').attr('from-user-id');
         var from_name = $('#hidden-user-data').attr('from-user-name');
@@ -225,7 +276,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             },
             success: function (data) {
                 $('#chat-box').html(data);
-                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);               
+                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
                 $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>');
             }
         });
@@ -250,6 +301,21 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             }
         });
     });
+    $(document).on('click', '.arc_user_list', function () {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+            type: 'post',
+            data: {
+                action: 'archives-converstion',
+                user_id: id
+            },
+            success: function (data) {
+                $('#chat-box').html(data);
+                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+            }
+        });
+    });
 
     $(document).on('keyup', '.search_name', function () {
         var search = $(this).val();
@@ -258,6 +324,21 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
             data: {
                 search_action: 'search-action',
+                search_text: search
+            },
+            success: function (data) {
+                $('.t_chat_overflow').html(data);
+                // $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+            }
+        });
+    });
+    $(document).on('keyup', '.search_archive', function () {
+        var search = $(this).val();
+        $.ajax({
+            type: 'post',
+            url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+            data: {
+                search_archive: 'search-archive',
                 search_text: search
             },
             success: function (data) {

@@ -684,6 +684,9 @@ found!');</script>";
                                             },
                                             success: function (data) {
                                                 $('.search-newsfid-popup .modal-content').empty().append(data);
+                                                $('.search_newsfid_text').focus();                                                 
+                                                $('.search_newsfid_text').val(search_newsfid_text);                                                 
+                                                
                                             }
                                         })
                                     }

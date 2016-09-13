@@ -185,7 +185,7 @@ if (!function_exists('flatter_theme_install')) {
 if (!function_exists('flatter_theme_update')) {
 
     function flatter_theme_update() {
-        //osc_set_preference('version', FLATTER_THEME_VERSION, 'flatter_theme');
+//osc_set_preference('version', FLATTER_THEME_VERSION, 'flatter_theme');
         osc_delete_preference('default_logo', 'flatter_theme');
 
         $logo_prefence = osc_get_preference('logo', 'flatter_theme');
@@ -208,7 +208,7 @@ if (!function_exists('check_install_flatter_theme')) {
 
     function check_install_flatter_theme() {
         $current_version = osc_get_preference('version', 'flatter_theme');
-        //check if current version is installed or need an update<
+//check if current version is installed or need an update<
         if (!$current_version) {
             flatter_theme_install();
         } else if ($current_version < FLATTER_THEME_VERSION) {
@@ -351,7 +351,7 @@ if (!function_exists('flatter_draw_categories_list')) {
     function flatter_draw_categories_list() {
         ?>
         <?php
-        //cell_3
+//cell_3
         $total_categories = osc_count_categories();
         $col1_max_cat = ceil($total_categories / 4);
 
@@ -625,20 +625,23 @@ if (!function_exists('user_info_js')) {
 
     osc_add_hook('header', 'user_info_js');
 }
-    if( !OC_ADMIN ) {
-        if( !function_exists('add_close_button_action') ) {
-            function add_close_button_action(){
-                echo '<script type="text/javascript">';
-                    echo '$(".flashmessage .ico-close").click(function(){';
-                        echo '$(this).parent().hide();';
-                    echo '});';
-                echo '</script>';
-            }
-            osc_add_hook('footer', 'add_close_button_action') ;
+if (!OC_ADMIN) {
+    if (!function_exists('add_close_button_action')) {
+
+        function add_close_button_action() {
+            echo '<script type="text/javascript">';
+            echo '$(".flashmessage .ico-close").click(function(){';
+            echo '$(this).parent().hide();';
+            echo '});';
+            echo '</script>';
         }
+
+        osc_add_hook('footer', 'add_close_button_action');
     }
+}
+
 function theme_flatter_actions_admin() {
-    //if(OC_ADMIN)
+//if(OC_ADMIN)
     switch (Params::getParam('action_specific')) {
         case('settings'):
             $googleCode = Params::getParam('google_analytics');
@@ -860,11 +863,11 @@ function flatter_sidebar_category_search($catId = null) {
     if ($catId == null) {
         $aCategories[] = Category::newInstance()->findRootCategoriesEnabled();
     } else {
-        // if parent category, only show parent categories
+// if parent category, only show parent categories
         $aCategories = Category::newInstance()->toRootTree($catId);
         end($aCategories);
         $cat = current($aCategories);
-        // if is parent of some category
+// if is parent of some category
         $childCategories = Category::newInstance()->findSubcategoriesEnabled($cat['pk_i_id']);
         if (count($childCategories) > 0) {
             $aCategories[] = $childCategories;
@@ -1018,7 +1021,7 @@ function go_to_theme_select($user) {
     if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
         $conn = getConnection();
         $conn->osc_dbExec("UPDATE `%st_user` SET `s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
-    //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
+//UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
     Session::newInstance()->_set('user_id', $user);
     Session::newInstance()->_set('after_register', 'yes');
@@ -1357,8 +1360,8 @@ function update_item_like($user_id, $item_id, $like_value) {
     else:
         $like_reult = $like_data->dao->insert(sprintf('%st_item_likes', DB_TABLE_PREFIX), $like_array);
     endif;
-    //insert notification for author
-    //item detail
+//insert notification for author
+//item detail
     $data = new DAO();
     $data->dao->select('item.*');
     $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
@@ -1503,7 +1506,7 @@ function user_follow_btn_box($logged_in_user_id, $follow_user_id) {
     endif;
     ?>   
     <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" user-data=".user-<?php echo $follow_user_id ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
-        <?php
+    <?php
 }
 
 function update_user_following($logged_in_user_id, $follow_user_id, $follow_value) {
@@ -1608,8 +1611,8 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     else:
         $user_follow_data->dao->insert(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array);
     endif;
-    //insert notification for author
-    //item detail
+//insert notification for author
+//item detail
     $data = new DAO();
     $data->dao->select('item.*');
     $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
@@ -1643,14 +1646,14 @@ function user_watchlist_box($user_id, $item_id) {
 
     $watchlist_class = 'remove_from_watchlist';
     $action = 'remove_watchlist';
-    //$fa_class = 'fa fa-user-times';
+//$fa_class = 'fa fa-user-times';
     $watchlist_text = 'Remove from watchlist';
     $user_share = get_user_watchlist_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
         $watchlist_class = 'add_watchlist';
         $action = 'add_watchlist';
-        //$fa_class = 'fa fa-user-plus';
+//$fa_class = 'fa fa-user-plus';
         $watchlist_text = 'Add to watchlist';
     endif;
     ?>
@@ -1679,8 +1682,8 @@ function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
     else:
         $user_watchlist_data->dao->insert(sprintf('%st_item_watchlist', DB_TABLE_PREFIX), $follow_array);
     endif;
-    //insert notification for author
-    //item detail
+//insert notification for author
+//item detail
     $data = new DAO();
     $data->dao->select('item.*');
     $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
@@ -1758,6 +1761,7 @@ function get_user_last_post_resource($user_id) {
     endif;
 }
 
+
 function get_search_popup($search_newsfid, $item_search_array, $user_search_array) {
     ?>
     <!-- Modal content-->
@@ -1766,39 +1770,39 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
         <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
         <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
         <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="Start typing...">
-        <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>
+    <!--        <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>-->
         <?php if (!$user_search_array): ?>
             <h5> Your Search did not return any results. Please try again. </h5>
 
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
             <label  class="col-md-4  search-list">User</label>
             <label class="col-md-4 search-list">Publication</label>
         </div>
-        <?php if ($user_search_array): ?>
+                <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
                 <div class="col-md-4">
-                    <?php foreach ($user_search_array as $user) : ?>
+                            <?php foreach ($user_search_array as $user) : ?>
                         <div class="col-md-12">
                             <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
-                                <?php echo $user['user_name']; ?>
+                        <?php echo $user['user_name']; ?>
                             </a>
                         </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="col-md-4">
-                    <?php foreach ($item_search_array as $item) : ?>
+                            <?php foreach ($item_search_array as $item) : ?>
                         <div class="col-md-12">
                             <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
-                                <?php echo $item['s_title']; ?>
+                        <?php echo $item['s_title']; ?>
                             </a>
                         </div>
-                    <?php endforeach; ?> 
+            <?php endforeach; ?> 
                 </div>
             </div>   
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
 
     <?php
@@ -1869,11 +1873,11 @@ function get_user_profile_picture($user_id) {
             $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
         endif;
         ?>
-        <?php if ($user['user_type'] != 0) : ?>
+    <?php if ($user['user_type'] != 0) : ?>
             <div class="user_type_icon_image">
                 <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
             </div>
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <?php
 }
@@ -2064,7 +2068,7 @@ function get_chat_users($filter = 'all') {
             unset($chat_user[$key]);
         }
     }
-    //get user from circle
+//get user from circle
     $user_circle_data = new DAO();
     $user_circle_data->dao->select(sprintf('%st_user_circle.circle_user_id', DB_TABLE_PREFIX));
     $user_circle_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
@@ -2078,7 +2082,7 @@ function get_chat_users($filter = 'all') {
     endif;
 
     if ($filter == 'all' && empty($chat_user)):
-        //get dummy users
+//get dummy users
         $user_circle_data->dao->select('user.pk_i_id as user_id');
         $user_circle_data->dao->from(DB_TABLE_PREFIX . "t_user user");
         $user_circle_data->dao->limit(10);
@@ -2121,7 +2125,7 @@ function add_user_circle($logged_in_user_id, $follow_user_id = NULL) {
     $add_user_data = new DAO();
     if ($follow_user_id):
         $add_user_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
-        //insert notification for author    
+//insert notification for author    
         $message = 'added you to his/her circle';
         set_user_notification($logged_in_user_id, $follow_user_id, $message);
 
@@ -2154,6 +2158,17 @@ function get_chat_message_data($user_id = null) {
     $user_messge_array = $user_message_result->result();
     return $user_messge_array;
 }
+function get_archives_message_data($user_id = null) {
+    $user_message_data = new DAO();
+    $user_message_data->dao->select('frei_chat_archives.*');
+    $user_message_data->dao->from('frei_chat_archives');
+    $user_message_data->dao->where('`from`', $user_id);
+    $user_message_data->dao->orderBy("sent DESC");
+    $user_message_data->dao->groupBy('`to`');
+    $user_message_result = $user_message_data->dao->get();
+    $user_messge_array = $user_message_result->result();
+    return $user_messge_array;
+}
 
 function get_chat_conversion($user_id = null, $partner_user_id = null) {
     $user_conversion_data = new DAO();
@@ -2165,10 +2180,21 @@ function get_chat_conversion($user_id = null, $partner_user_id = null) {
     $user_conversion_array = $user_conversion_result->result();
     return $user_conversion_array;
 }
+function get_archive_conversion($user_id = null, $partner_user_id = null) {
+    $user_conversion_data = new DAO();
+    $user_conversion_data->dao->select('frei_chat_archives.*');
+    $user_conversion_data->dao->from('frei_chat_archives');
+    $user_conversion_data->dao->where('(`from` =' . $user_id . ' AND `to` =' . $partner_user_id . ') OR (`from` =' . $partner_user_id . ' AND `to` =' . $user_id . ')');
+    $user_conversion_data->dao->orderBy("sent ASC");
+    $user_conversion_result = $user_conversion_data->dao->get();
+    $user_conversion_array = $user_conversion_result->result();
+    return $user_conversion_array;
+}
+
 function delete_chat_conversion($user_id = null, $partner_user_id = null) {
-    $user_conversion_data = new DAO();        
-    $user_conversion_data->dao->delete('frei_chat', '(`from` =' . $user_id . ' AND `to` =' . $partner_user_id . ') OR (`from` =' . $partner_user_id . ' AND `to` =' . $user_id . ')');    
-    $user_conversion_result = $user_conversion_data->dao->get();    
+    $user_conversion_data = new DAO();
+    $user_conversion_data->dao->delete('frei_chat', '(`from` =' . $user_id . ' AND `to` =' . $partner_user_id . ') OR (`from` =' . $partner_user_id . ' AND `to` =' . $user_id . ')');
+    $user_conversion_result = $user_conversion_data->dao->get();
     return 1;
 }
 
@@ -2260,5 +2286,14 @@ if ($page == 'user' && $action == 'profile') {
         ob_end_flush();
     }
     header("Location: " . osc_base_url());
+}
+
+function custom_echo($x, $length) {
+    if (strlen($x) <= $length) {
+        echo $x;
+    } else {
+        $y = substr($x, 0, $length) . '...';
+        echo $y;
+    }
 }
 ?>

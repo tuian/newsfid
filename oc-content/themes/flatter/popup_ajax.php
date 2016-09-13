@@ -28,26 +28,82 @@ if ($item_id):
         $item_data = $result->row();
         return $item_data;
     }
+    ?>
 
-    $item = get_item($item_id);
+    <!-- Modal -->
+    <div id="item_popup_modal" class="modal fade item_modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <?php
+                $item = get_item($item_id);
 
-    osc_query_item(array('id' => $item_id, 'results_per_page' => 1));
-    while (osc_has_custom_items()):
-        ?>
+                osc_query_item(array('id' => $item_id, 'results_per_page' => 1));
+                while (osc_has_custom_items()):
+                    ?>
+                    <div class="col-md-12 padding-0">
+                        <div class="col-md-12 background-white">
+                            <div class="col-md-12 padding-top-4per">
+                                <div class="popup">
+                                    <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
+                                    <div class="user-block">
+                                        <?php
+                                        $user = get_user_data(osc_item_user_id());
+                                        if (!empty($user['s_path'])):
+                                            $user_image_url = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . "_nav." . $user['s_extension'];
+                                        else:
+                                            $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
+                                        endif;
+                                        ?>
+                                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user['user_name'] ?>">
+                                        <span class="username">
+                                            <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
+                                            <div class="">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                                <span class="padding-left-10"> 
+                                                    <?php
+                                                    $user_followers = get_user_follower_data($user['user_id']);
+                                                    if ($user_followers):
+                                                        echo count($user_followers);
+                                                    else:
+                                                        echo 0;
+                                                    endif;
+                                                    ?>
+                                                </span>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-5 padding-0 padding-top-10 padding-bottom-10">
+                                    <?php item_resources(osc_item_id()) ?>
+                                    <span class="padding-top-10"> Promoted posts </span>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="bold"> <?php echo osc_item_title(); ?> </div>                                   
+                                    <?php $desc = osc_item_description(); ?>   
+                                    <?php custom_echo($desc, 100); ?> <br/>
+                                    <button class="get_more">Get more details</button>
+                                </div>
+                            </div>
+                            <div class='col-md-12 border-bottom-gray'></div>
+                        </div>
+                    </div>
+                    <?php
+                endwhile;
+                $item = get_item($item_id);
 
-        <!-- Modal -->
-        <div id="item_popup_modal" class="modal fade item_modal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-
+                osc_query_item(array('id' => $item_id, 'results_per_page' => 1));
+                while (osc_has_custom_items()):
+                    ?>
                     <div class="box-body">
-                        <?php //osc_item($item_id);   ?>
+                        <?php //osc_item($item_id);    ?>
                         <div id="columns">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 padding-top-10">
                                         <div class="popup">
                                             <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
                                             <div class="user-block">
@@ -94,7 +150,7 @@ if ($item_id):
                                                 </div>                                            
 
                                                 <div id="extra-fields">
-                                                    <?php //osc_run_hook('item_detail', osc_item());   ?>
+                                                    <?php //osc_run_hook('item_detail', osc_item());    ?>
                                                 </div>
 
                                             </div> <!-- Description End -->
@@ -175,12 +231,14 @@ if ($item_id):
                                                                 $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                                                             endif;
                                                             ?>
-                                                            <div class="box-footer box-comments">
+                                                            <div class="box-footer box-comments border-blue-left">
                                                                 <div class="box-comment">
                                                                     <!-- User image -->
-                                                                    <img class="img-circle col-md-2" src="<?php echo $user_image_url ?>" alt="<?php echo $comment_user['user_name'] ?>">
+                                                                    <div class="comment_user_image col-md-1 padding-0">
+                                                                        <?php get_user_profile_picture($comment_user['user_id']) ?>
+                                                                    </div>
 
-                                                                    <div class="comment-area col-md-10 padding-0">
+                                                                    <div class="comment-area col-md-10">
                                                                         <span class="username">
                                                                             <?php echo $comment_user['user_name'] ?>
                                                                             <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
@@ -218,17 +276,9 @@ if ($item_id):
                                                 <?php if (osc_is_web_user_logged_in()): ?>
                                                     <div class="box-footer">
                                                         <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                                                            <?php
-                                                            $current_user = get_user_data(osc_logged_user_id());
-                                                            $current_user_image_url = '';
-
-                                                            if ($current_user['s_path']):
-                                                                $current_user_image_url = osc_base_url() . $current_user['s_path'] . $current_user['pk_i_id'] . "_nav." . $current_user['s_extension'];
-                                                            else:
-                                                                $current_user_image_url = osc_current_web_theme_url('images/user-default.jpg');
-                                                            endif;
-                                                            ?>
-                                                            <img class="img-responsive img-circle img-sm" src="<?php echo $current_user_image_url ?>" alt="<?php echo $current_user['user_name'] ?>">
+                                                            <div class="comment_user_image col-md-1 padding-0">
+                                                                <?php get_user_profile_picture($comment_user['user_id']) ?>
+                                                            </div>
                                                             <!-- .img-push is used to add margin to elements next to floating images -->
                                                             <div class="img-push">
                                                                 <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
@@ -272,19 +322,15 @@ if ($item_id):
             var lesstext = "Read Less";
             $('.more').each(function () {
                 var content = $(this).html();
-
                 if (content.length > showChar) {
 
                     var c = content.substr(0, showChar);
                     var h = content.substr(showChar - 0, content.length - showChar);
-
                     var html = c + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + h + '</span><div><button class="morelink btn margin-top-20 btn-secondary">' + moretext + '</button></div></span>';
-
                     $(this).html(html);
                 }
 
             });
-
             $(".morelink").click(function () {
                 //$('.moreellipses').hide();
                 if ($(this).hasClass("less")) {
@@ -326,11 +372,9 @@ if ($item_id):
 
                 if (!$("#publier").is(":checked")) {
                     $('.error-term').show();
-
                     return false;
                 }
                 return true;
-
             });
         });
         $(document).on('click', '.edit_post', function () {
@@ -350,8 +394,7 @@ if ($item_id):
                     // $('#popup-free-user-post').appendTo('body');
                 }
             });
-        });
-    </script>
+        });</script>
     <script>
         $(document).ready(function () {
             $('#s_region_name').typeahead({
@@ -375,7 +418,6 @@ if ($item_id):
                                     };
                                     $items.push(group);
                                 });
-
                                 process($items);
                             }
                         });
@@ -387,8 +429,7 @@ if ($item_id):
                     $('#s_region_id').val(obj.id);
                 },
             });
-        });
-    </script>
+        });</script>
     <script>
         $(document).ready(function () {
             $('#s_city_name').typeahead({
@@ -411,7 +452,6 @@ if ($item_id):
                                     };
                                     $items.push(group);
                                 });
-
                                 process($items);
                             }
                         });
@@ -423,8 +463,7 @@ if ($item_id):
                     //$('#sRegion').val(obj.id);
                 },
             });
-        });
-    </script>
+        });</script>
     <script>
         $(".post_type_switch").on('click', function () {
             var $box = $(this);
@@ -436,7 +475,6 @@ if ($item_id):
                 $box.prop("checked", false);
             }
             var selected_post_type = $('.post_type_switch').filter(':checked');
-
             if (selected_post_type.attr('data_post_type') == 'music' || selected_post_type.attr('data_post_type') == 'podcast') {
                 var duplicate_post_media = $('#post_media').clone();
                 $('#post_media').remove();
@@ -458,8 +496,7 @@ if ($item_id):
             } else {
                 $('#post_media').attr('type', 'file');
             }
-        });
-    </script>
+        });</script>
     <script>
         $(document).on('change', '.user_role_selector', function () {
             $.ajax({
@@ -484,12 +521,11 @@ endif;
 if ($_REQUEST['maincategory'] == 'maincategory'):
     $Id = $_REQUEST['cat_id'];
     $aSubCategories = Category::newInstance()->findSubcategories($Id);
-    
+
     foreach ($aSubCategories as $cat):
-        
         ?>
-    <option class="subcat margin-left-30" value="<?php echo $cat['fk_i_category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $cat['s_name']; ?></option>
-    <?php
+        <option class="subcat margin-left-30" value="<?php echo $cat['fk_i_category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $cat['s_name']; ?></option>
+        <?php
     endforeach;
 endif;
 ?>

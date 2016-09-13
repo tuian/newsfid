@@ -118,7 +118,7 @@ $user_desc = $user_result->row();
                                 </span>
                             </div>
                         </div>
-                        <div class="row user_info_row margin-0 user_map_box"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <div class="row user_info_row margin-0 user_map_box">
                             <div class="user_map" id="user_map_profile"></div>
                         </div>
                     </div>

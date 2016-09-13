@@ -160,7 +160,8 @@ require_once 'functions.php';
                                             <div class="col-md-offset-1 col-md-4">
                                                 <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                 <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
-                                                    <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                    <input type="file" name="post_media" accept="image/*"  onchange="showimage(this)" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                    <img id="thumbnil" src="" alt="image"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -307,6 +308,23 @@ require_once 'functions.php';
 
 <!----free user post end------->
 <script>
+    $('#thumbnil').hide();
+    function showimage(fileInput) {
+        var files = fileInput.files;
+        $('#thumbnil').show();
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var img = document.getElementById("thumbnil");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
     $(document).ready(function () {
         $(document).on('change', '#mCategory', function () {
             var cat = $(this).val();

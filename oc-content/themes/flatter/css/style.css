@@ -2166,12 +2166,12 @@ select {
     font-weight: 600;
 }
 .modal-header .search-modal-textbox{
-    border: 1px solid #f3f3f2;
+    border: 2px solid #ccc;
     background-color: #f3f3f2;
-    width: auto;
+    width: 35%;
     box-shadow: none;
     margin-left: -5px;
-    margin-top: -10px;
+    border-radius: 5px;
 }
 .location_filter_container .location_filter_tab {
     display: inline-block;
@@ -3090,9 +3090,13 @@ select {
     border-left-color: #3c8dbc !important;
 }
 .skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a{
-    color: #f68935 !important;
+    color: #000 !important;
     background: #1e282c;
     border-left-color: #3c8dbc !important;
+}
+.skin-blue .sidebar-menu>li:hover>a .fa, .skin-blue .sidebar-menu>li.active>a .fa{
+    color: #f68935 !important;
+
 }
 .sidebar-menu>li.active>a {
     color: #f68935 !important;
@@ -3162,14 +3166,31 @@ select {
     cursor: pointer;
 }
 .sidebar-menu>li>ul>li.active>a {
-    color: #f68935 !important;
-    background: #d3d7e2 !important;
+    color: #000 !important;
+    background: #b1b9cb !important;
     border-left-color: #3c8dbc !important;
 }
-.sidebar-menu>li>ul>li:hover>a {
+.sidebar-menu>li>ul>li.active>a .fa{
     color: #f68935 !important;
     background: #b1b9cb !important;
     border-left-color: #3c8dbc !important;
+}
+.sidebar-menu>li>ul>li:hover>a {
+    color: #000 !important;
+    background: #b1b9cb !important;
+    border-left-color: #3c8dbc !important;
+}
+.sidebar-menu>li>ul>li:hover>a .fa{
+    color: #f68935 !important;
+    background: #b1b9cb !important;
+    border-left-color: #3c8dbc !important;
+}
+.get_more {
+    padding: 9px 25px;
+    background-color: #c3c3c3;
+    margin-top: 10px;
+    color: white;
+    border: none;
 }
 .font-22px{
     font-size: 22px;
@@ -3484,8 +3505,8 @@ textarea.msg_textarea{
 }
 .overflow-chat{
     overflow-y: auto;
-    max-height: 150px;
-    min-height: 150px;
+    max-height: 140px;
+    min-height: 140px;
 }
 .after_logging{
     left:16% !important;
@@ -3503,7 +3524,7 @@ textarea.msg_textarea{
     padding-left: 60px;
 }
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{
-    background-color: #d3d7e2 !important;
+    background-color: #cacfdb !important;
 }
 .sidebar-menu {
     background-color: #cacfdb;
@@ -3520,7 +3541,7 @@ textarea.msg_textarea{
     background-color: #b1b9cb !important;
 }
 .skin-blue .sidebar a {
-    color: #fff !important;
+    color: #777 !important;
 }
 .skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn {
     background-color: #b1b9cb !important;

@@ -282,9 +282,13 @@ textarea.border-bottom-0{
     height: auto;
     float: left;
 }
-.box-comments .box-comment img {
+.box-comments .box-comment img {   
     height: auto !important;
     width: inherit !important;
+}
+img .user_profile_img{
+    height: 35px !important;
+    width: 35px !important;
 }
 .box-comments .comment-text{
     margin-left: 60px;
@@ -295,7 +299,7 @@ textarea.border-bottom-0{
     float: left;
 }
 .comment_user_image.col-md-2{
-    width: 15%;
+    width: 12%;
 }
 .comment_form .img-push {
     margin-left: 55px;

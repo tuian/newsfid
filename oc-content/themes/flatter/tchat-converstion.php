@@ -83,6 +83,53 @@ if ($_REQUEST['action'] == 'chat-converstion'):
         <?php
     endforeach;
 endif;
+if ($_REQUEST['action'] == 'archives-converstion'):
+    $partner_id = $_REQUEST['user_id'];
+    $old_msg_cnt = $_REQUEST['old_msg_cnt'];
+    $user = get_user_data($user_id);
+    $partner = get_user_data($partner_id);
+    $conv = get_archive_conversion($user_id, $partner_id);
+    foreach ($conv as $k => $msg):
+        ?>
+        <div class="conversion">
+            <div class="col-md-12 padding-0 vertical-row">
+                <div class="col-md-1 padding-0 padding-top-4per">
+                    <?php
+                    $id = osc_logged_user_id();
+                    if ($msg['from'] != $id):
+                        $id = $msg['from'];
+                    endif;
+                    $user = get_user_data($id);
+                    ?>
+                    <?php
+                    if (!empty($user['s_path'])):
+                        $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+                    else:
+                        $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+                    endif;
+                    ?>
+                    <img src="<?php echo $img_path ?>" class="img img-responsive" style="">
+                </div>
+                <div class="col-md-11 padding-top-4per" id="conv">
+                    <label class="bold font-color-black margin-0"><?php echo $msg['from_name']; ?></label>
+                    <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($msg['sent'])) ?></span>
+                    <div class="icon-size">
+                        <?php
+                        $id = osc_logged_user_id();
+                        if ($msg['from'] != $id):
+                            ?>
+                            <i class="fa fa-check" aria-hidden="true"></i>  <?php echo $msg['message'] ?>
+                        <?php else:
+                            ?>
+                            <i class="fa fa-reply" aria-hidden="true"></i>  <?php echo $msg['message'] ?>
+                        <?php endif; ?>                                                 
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <?php
+    endforeach;
+endif;
 if ($_REQUEST['action'] == "online-chat-converstion"):
     $user = get_user_data($user_id);
     $to_user_id = $_REQUEST['user_id'];
@@ -148,34 +195,32 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
         <?php
     endif;
 endif;
-if ($_REQUEST['action'] == "archive_chat"):    
-    $to_user_id = $_REQUEST['to_id'];    
+if ($_REQUEST['action'] == "archive_chat"):
+    $to_user_id = $_REQUEST['to_id'];
     if (isset($to_user_id)):
         $conversion = get_chat_conversion($user_id, $to_user_id);
-        if(!empty($conversion)):
+        if (!empty($conversion)):
             $msg_data = new DAO();
-            foreach ($conversion as $c): 
+            foreach ($conversion as $c):
                 $msg_array = $c;
                 $msg_array['`from`'] = $c['from'];
                 $msg_array['`to`'] = $c['to'];
                 unset($msg_array['from']);
                 unset($msg_array['to']);
-                $msg_data->dao->insert("`frei_chat_archives`", $msg_array);               
+                $msg_data->dao->insert("`frei_chat_archives`", $msg_array);
             endforeach;
-            $conversion = delete_chat_conversion($user_id, $to_user_id);   
+            $conversion = delete_chat_conversion($user_id, $to_user_id);
             return $conversion;
         endif;
     endif;
 endif;
-if ($_REQUEST['action'] == "delete_chat"):    
-    $to_user_id = $_REQUEST['to_id'];    
+if ($_REQUEST['action'] == "delete_chat"):
+    $to_user_id = $_REQUEST['to_id'];
     if (isset($to_user_id)):
-        $conversion = delete_chat_conversion($user_id, $to_user_id);   
+        $conversion = delete_chat_conversion($user_id, $to_user_id);
         return $conversion;
     endif;
 endif;
-
-
 ?>
 <?php
 if ($_REQUEST['search_action'] == 'search-action'):
@@ -190,18 +235,18 @@ if ($_REQUEST['search_action'] == 'search-action'):
     $msg = $result;
     ?>
     <ul class="padding-0" id="user_list">
-        <?php
-        $result = $msg['from'];
-        foreach ($msg as $k => $data):
+    <?php
+    $result = $msg['from'];
+    foreach ($msg as $k => $data):
 
-            $id = $data['to'];
-            $user = get_user_data($id);
-            if (!empty($user['s_path'])):
-                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
-            else:
-                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-            endif;
-            ?>
+        $id = $data['to'];
+        $user = get_user_data($id);
+        if (!empty($user['s_path'])):
+            $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+        else:
+            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+        endif;
+        ?>
             <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
                 <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
                 <div>
@@ -209,51 +254,88 @@ if ($_REQUEST['search_action'] == 'search-action'):
                     <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
                 </div>
             </li>
-            <?php
-        endforeach;
-        ?>
+        <?php
+    endforeach;
+    ?>
     </ul>
+        <?php
+    endif;
+    if ($_REQUEST['search_archive'] == 'search-archive'):
+        $search = $_REQUEST['search_text'];
+        $user_conversion_data = new DAO();
+        $user_conversion_data->dao->select('frei_chat_archives.*');
+        $user_conversion_data->dao->from('frei_chat_archives');
+        $user_conversion_data->dao->where("`from` = " . $user_id . " AND `to_name` LIKE '%" . $search . "%'");
+        $user_conversion_data->dao->groupBy('`to`');
+        $user_result = $user_conversion_data->dao->get();
+        $result = $user_result->result();
+        $msg = $result;
+        ?>
+    <ul class="padding-0" id="user_list">
     <?php
-endif;
+    $result = $msg['from'];
+    foreach ($msg as $k => $data):
+
+        $id = $data['to'];
+        $user = get_user_data($id);
+        if (!empty($user['s_path'])):
+            $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+        else:
+            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+        endif;
+        ?>
+            <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
+                <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
+                <div>
+                    <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
+                    <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
+                </div>
+            </li>
+        <?php
+    endforeach;
+    ?>
+    </ul>
+        <?php
+    endif;
 
 
-if ($_REQUEST['action'] == "online-chat-converstion"):
-?>
-<script>
-    document.getElementById("messageBox1").onkeypress = function enterKey(e)
-    {
-        var key = e.which || e.keyCode;
-        if (key == 13)
+    if ($_REQUEST['action'] == "online-chat-converstion"):
+        ?>
+    <script>
+        document.getElementById("messageBox1").onkeypress = function enterKey(e)
         {
-            var msg = $('.msg_textarea').val();
-            var from_id = $('#hidden-data').attr('from-id');
-            var from_name = $('#hidden-data').attr('from-name');
-            var to_id = $('#hidden-data').attr('to-id');
-            var to_name = $('#hidden-data').attr('to-name');
-            if (!msg) {
-                return false;
-            }
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
-                type: 'post',
-                data: {
-                    submit: 'send-msg',
-                    action: 'online-chat-converstion',
-                    from_id: from_id,
-                    from_name: from_name,
-                    user_id: to_id,
-                    to_name: to_name,
-                    msg: msg
-                },
-                success: function (data) {
-                    $('#online-chat').html(data);
-                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
-                    $('textarea.msg_textarea').val('');
-                    $('textarea.msg_textarea').focus();
+            var key = e.which || e.keyCode;
+            if (key == 13)
+            {
+                var msg = $('.msg_textarea').val();
+                var from_id = $('#hidden-data').attr('from-id');
+                var from_name = $('#hidden-data').attr('from-name');
+                var to_id = $('#hidden-data').attr('to-id');
+                var to_name = $('#hidden-data').attr('to-name');
+                if (!msg) {
+                    return false;
                 }
-            });
-        }
-    };
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                    type: 'post',
+                    data: {
+                        submit: 'send-msg',
+                        action: 'online-chat-converstion',
+                        from_id: from_id,
+                        from_name: from_name,
+                        user_id: to_id,
+                        to_name: to_name,
+                        msg: msg
+                    },
+                    success: function (data) {
+                        $('#online-chat').html(data);
+                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                        $('textarea.msg_textarea').val('');
+                        $('textarea.msg_textarea').focus();
+                    }
+                });
+            }
+        };
 
-</script>
-<?php endif;?>
+    </script>
+<?php endif; ?>

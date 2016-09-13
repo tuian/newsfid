@@ -52,7 +52,7 @@ if (osc_is_web_user_logged_in()):
                         $active = '';
                     endif;
                     ?> 
-                    <i class="fa fa-envelope <?php echo $active;?>" aria-hidden="true"></i>
+                    <i class="fa fa-envelope <?php echo $active; ?>" aria-hidden="true"></i>
                     <?php if (get_pending_msg_cnt() > 0): ?>
                         <span class="label message-count"><?php echo get_pending_msg_cnt(); ?></span>
                     <?php endif; ?>
@@ -138,8 +138,13 @@ if (osc_is_web_user_logged_in()):
                     $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                 endif;
                 ?>
-                <div class="msg col-md-12 background-white overflow-chat"> 
-                    <!--<img src="<?php echo osc_current_web_theme_url() . '/images/msg.png' ?>" width="20px">-->
+                <div class="msg col-md-12 background-white overflow-chat vertical-row"> 
+                    <div class="col-md-4 padding-0">
+                        <img src="<?php echo osc_current_web_theme_url() . '/images/msg.png' ?>">
+                    </div>
+                    <div class="col-md-8">
+                        no ongoing conversation history
+                    </div>
                 </div>
                 <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
