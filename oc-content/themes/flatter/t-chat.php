@@ -50,11 +50,11 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                             ?>
                             <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
                                 <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
-                                <div>
+                                <div class="col-md-7">
                                     <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
                                     <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
                                 </div>
-                                <div class="col-md-6 dropdown"> 
+                                <div class="col-md-5 dropdown"> 
                                     <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
                                         <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
@@ -147,21 +147,32 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
        $('.archive_chat').click(function(){
            var to_id = $(this).attr('data-id');
             $.ajax({
-            url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
-            type: 'post',
-            data: {                
-                action:'archive_chat',
-                to_id: to_id,                
-            },
-            success: function (data) {
-                $('#chat-box').html('');                
-            }
-        });
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {                
+                    action:'archive_chat',
+                    to_id: to_id,                
+                },
+                success: function (data) {
+                     location.reload();             
+                }
+            });
        });
        
        //delete chat
        $('.delete_chat').click(function(){
-           
+           var to_id = $(this).attr('data-id');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {                
+                    action:'delete_chat',
+                    to_id: to_id,                
+                },
+                success: function (data) {
+                     location.reload();               
+                }
+            });
        });
        
     function ajaxCall() {

@@ -155,23 +155,23 @@ if ($_REQUEST['action'] == "archive_chat"):
         if(!empty($conversion)):
             $msg_data = new DAO();
             foreach ($conversion as $c): 
+                $msg_array = $c;
                 $msg_array['`from`'] = $c['from'];
-                $msg_array['from_name'] = $c['from_name'];
                 $msg_array['`to`'] = $c['to'];
-                $msg_array['to_name'] = $c['to_name'];
-                $msg_array['message'] = $c['message'];
-                $msg_array['sent'] = $c['sent'];
-                $msg_array['recd'] = 0;
-                $msg_array['read_status'] = 0;
-
-                $msg_array['time'] = time() . str_replace(" ", "", microtime());
-                $msg_array['GMT_time'] = time();
-                $msg_array['message_type'] = 0;
-                $msg_array['room_id'] = -1;
-                $msg_data->dao->insert("`frei_chat`", $msg_array);
-                die;
+                unset($msg_array['from']);
+                unset($msg_array['to']);
+                $msg_data->dao->insert("`frei_chat_archives`", $msg_array);               
             endforeach;
+            $conversion = delete_chat_conversion($user_id, $to_user_id);   
+            return $conversion;
         endif;
+    endif;
+endif;
+if ($_REQUEST['action'] == "delete_chat"):    
+    $to_user_id = $_REQUEST['to_id'];    
+    if (isset($to_user_id)):
+        $conversion = delete_chat_conversion($user_id, $to_user_id);   
+        return $conversion;
     endif;
 endif;
 

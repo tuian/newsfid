@@ -2165,6 +2165,12 @@ function get_chat_conversion($user_id = null, $partner_user_id = null) {
     $user_conversion_array = $user_conversion_result->result();
     return $user_conversion_array;
 }
+function delete_chat_conversion($user_id = null, $partner_user_id = null) {
+    $user_conversion_data = new DAO();        
+    $user_conversion_data->dao->delete('frei_chat', '(`from` =' . $user_id . ' AND `to` =' . $partner_user_id . ') OR (`from` =' . $partner_user_id . ' AND `to` =' . $user_id . ')');    
+    $user_conversion_result = $user_conversion_data->dao->get();    
+    return 1;
+}
 
 function get_pending_msg_cnt() {
     $user_id = osc_logged_user_id();

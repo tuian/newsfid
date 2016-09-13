@@ -4022,14 +4022,14 @@ textarea.comment_text{
 .morelink:focus{
     color: #0275d8;
 }
-.bg-tchat .user_list{
+.bg-tchat #user_list{
     min-height: 300px;
 }
-.bg-tchat .user_list .dropdown-menu {
+.bg-tchat #user_list .dropdown-menu {
     box-shadow: none;
     border-color: #ccc;
 }
-.bg-tchat .user_list .edit-arrow {
+.bg-tchat #user_list .edit-arrow {
     padding-top: 5px;
     padding-bottom: 15px;
 }
