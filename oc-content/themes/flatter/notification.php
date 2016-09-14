@@ -8,7 +8,7 @@ if ($_REQUEST['notification'] == 'notification'):
     <div class="notification_dropdown border-bottom-gray">
         <span class="bold font-color-black">  Marquer to comme lu</span> <span class="dropdown pull-right pointer padding-left-10"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i>
             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                <li><a class="mark_all"> Mark all as read</a></li>
+                <li><a class="mark_all" user-id="<?php echo osc_logged_user_id(); ?>"> Mark all as read</a></li>
                 <!--                <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>
                                 <li><a class="chat-filter" data-value="off">Turn chat off</a></li>-->
             </ul>
@@ -17,8 +17,10 @@ if ($_REQUEST['notification'] == 'notification'):
     <div class="background-white notification_list border-bottom-gray">
 
         <?php foreach ($notifications as $n): ?>
-            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 unread<?php if ($n['read_status'] == '0'): echo 'unread-notification';
-        endif; ?>">
+            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 unread<?php
+            if ($n['read_status'] == '0'): echo 'unread-notification';
+            endif;
+            ?>">
                 <div class="col-md-3 padding-0">
                     <!--<img src="<?php echo $n['user_image'] ?>" class="img-circle user-icon" alt="User Image">-->
                     <img src="<?php echo $n['user_image'] ?>" data_user_id="<?php echo $n['from_user_id']; ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
@@ -30,13 +32,15 @@ if ($_REQUEST['notification'] == 'notification'):
                         <li><a class="pointer unmark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"> Unmark as not read</a></li>                       
                     </ul>
                 </div>
-                <div class="col-md-9 padding-0 <?php if ($n['read_status'] == '0'): echo 'font-color-black';
-        else: echo "light-gray";
-        endif; ?> ">
-            <?php echo $n['message']; ?>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
+                <div class="col-md-9 padding-0 <?php
+                if ($n['read_status'] == '0'): echo 'font-color-black';
+                else: echo "light-gray";
+                endif;
+                ?> ">
+                    <?php echo $n['message']; ?>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
                 </div>
             </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
     </div>
 
     <?php
@@ -45,11 +49,26 @@ endif;
 
 <script>
     $(document).on('click', '.mark_all', function () {
+        var user = $(this).attr('user-id');
         $.ajax({
             url: "<?php echo osc_current_web_theme_url() . 'tchat_user_data.php'; ?>",
             type: 'post',
             data: {
-                mark_all: 'mark_all'
+                mark_all: 'mark_all',
+                user_id: user
+            },
+            success: function (data) {
+                $('.unreadunread-notification').css('background-color', '#fff');
+                var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
+                var no = 0;
+                console.log(no);
+                if (no !== 0) {
+                    $('.user_notification').attr('data-pending-message', no);
+                    $('.user_notification').html(no);
+                } else {
+                    $('.user_notification').hide();
+                }
+
             }
         });
     });
@@ -66,6 +85,7 @@ endif;
                 user_id: to_id
             },
             success: function (data) {
+                $('.user_notification').show();
                 var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
                 var no = exist_cnt - 1;
                 console.log(no);
@@ -91,6 +111,7 @@ endif;
                 console.log(no);
                 $('.user_notification').attr('data-pending-message', no);
                 $('.user_notification').html(no);
+                $('.user_notification').show();
             }
 
         });

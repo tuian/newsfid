@@ -101,18 +101,176 @@ if ($items):
                                 <?php get_user_profile_picture($user['user_id']); ?>
                             </div>                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
                             <span class="description"><?php echo time_elapsed_string(strtotime($item['dt_pub_date'])); ?>
-                                <?php if(osc_logged_user_id() == $user['user_id']): ?>
-                                <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
-                                    <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
-                                        <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
-                                        <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
-                                        <!--                                    <li><a></a></li>
-                                                                                        <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
-                                                                                        <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
-                                                                                        <li><a></a></li>
-                                                                                        <li><a>Signaler la publication</a></li>-->
-                                    </ul>
-                                </button>
+                                <?php if (osc_logged_user_id() == $user['user_id']): ?>
+                                    <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                        <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                                            <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
+                                            <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
+                                            <li class="premium" data-toggle="modal" data-target="#premium"><a> Premium</a></li>
+                                            <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
+                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                                                  <li><a></a></li>
+                                                                  <li><a>Signaler la publication</a></li>-->
+                                        </ul>
+                                    </button>
+                                    <div id="premium" class="modal fade" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content bg-transperent">
+
+                                                <div class="payment-section-2 bg-white col-md-12 border-radius-10 padding-0">
+                                                    <button type="button" class="close premium_close" data-dismiss="modal">&times;</button>
+                                                    <div class="col-md-12 theme-modal-header">
+                                                        <div class="col-md-offset-1">
+                                                            <h2 class="bold margin-0"> Select payment mode </h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="container">
+                                                        <div class="col-md-12 margin-top-20">
+                                                            <table class="table margin-0">
+                                                                <thead>
+                                                                    <tr class="bg-blue-light">
+                                                                        <th class="border-right-white font-color-black">Date</th>
+                                                                        <th class="border-right-white font-color-black">Description</th>
+                                                                        <th class="border-right-white font-color-black">Quantity</th>
+                                                                        <th class="border-right-white font-color-black">Unit Price</th>
+                                                                        <th>Amount</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="border-bottom">
+                                                                        <td class="font-color-black"><?php echo date('d/m/Y'); ?></td>
+                                                                        <td class="font-color-black">Newsfid Premium (12 month Payment) 1 Month for free</td>
+                                                                        <td class="font-color-black">1</td>
+                                                                        <td class="font-color-black">$4.99</td>
+                                                                        <td class="font-color-black">4.99$</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="font-color-black"><h1 class="bold">TOTAL</h1></td>
+                                                                        <td class="font-color-black"></td>
+                                                                        <td class="font-color-black"></td>
+                                                                        <td class="font-color-black"></td>
+                                                                        <td class="font-color-black">4.99$</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="theme-modal-footer"></div> 
+                                                    <div class="col-md-12 bg-white">
+                                                        <div class="col-md-offset-1 col-md-2 text-center">
+                                                            <div class="payment-img">
+                                                                <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/CreditCards.png">
+                                                            </div>
+                                                            <input type="radio" class="payment-option" name="payment" value="payment-card" checked>
+                                                        </div>
+                                                        <div class="col-md-2 text-center">
+                                                            <div class="payment-img">
+                                                                <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/paypal.png">
+                                                            </div>
+                                                            <input type="radio" class="payment-option" name="payment" value="paypal">
+                                                        </div>
+                                                        <div class="col-md-6 padding-3per bg-green-light">
+                                                            You will not be charged until the end of your trial period dated <?php echo date('d/m/Y', strtotime("+1 months", strtotime("NOW"))); ?>, You could cancel your membership online at any time.
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-offset-3 col-md-6" id="payment-card">
+                                                        <div class="col-md-12">
+                                                            <div class="blue_text bold"><?php echo __('Method of payment'); ?></div>
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <input type="text" placeholder="<?php echo __("Cardholder's name"); ?>" required class="card_name">
+                                                            <span class="card-icon"></span>
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <input type="text" placeholder="<?php echo __('Card number'); ?>" required class="card_number">                                           
+                                                        </div>
+                                                        <div class="col-md-12">                                           
+                                                            <div class="margin-top-20">
+                                                                <div class="col-md-5 col-sm-5">
+                                                                    Expiration date
+                                                                </div>
+                                                                <div class="col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2">
+                                                                    CVV<span class="circle-border"> ?</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
+                                                            <div class="col-md-3 col-sm-3 grey-border">
+                                                                <input type="text" placeholder="MM" required class="expiry_month">
+
+                                                            </div>
+                                                            <div class="col-md-1 col-sm-1">
+                                                                /
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-3 grey-border">
+                                                                <input type="text" placeholder="YY" required class="expiry_year">
+                                                            </div>
+                                                            <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
+                                                                <input type="text" placeholder="Code" required class="card_cvv_code">
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <input type="text" placeholder="Address">
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border" >
+                                                            <input type="text">
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <input type="text" placeholder="Zip code">
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <input type="text" placeholder="Ville">
+                                                        </div>
+                                                        <div class="col-md-12 margin-top-20 grey-border">
+                                                            <input type="text" placeholder="CEDEX">
+                                                        </div>
+                                                    </div>
+                                                    <div class="center-contant vertical-row none" id="paypal">
+                                                        <div class="col-md-4 payment-img">
+                                                            <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/paypal-iphone.png">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            You will be redirected to PayPal 
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-12 padding-0 bg-white padding-top-4per">
+                                                        <div class="col-md-12 theme-modal-header">
+                                                            <div class="col-md-offset-2 col-md-1">
+                                                                <div class="onoffswitch margin-top-10">
+                                                                    <input type="checkbox" name="accept" class="onoffswitch-checkbox post_type_switch" data_post_type="accept" id="accept" value="accept">
+                                                                    <label class="onoffswitch-label" for="accept"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8"><h4 class=" bold"> I have read and accepted the Terms & Conditions</h4> </div>
+                                                        </div>
+                                                        <div class="col-md-offset-2 col-md-10 theme-modal-header">
+
+                                                            <div class="col-md-9">
+                                                                I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use
+                                                            </div>
+                                                            <div class="col-md-9 margin-top-20">You have an option to terminate your subscription online at any time </div>
+                                                            <div class="col-md-9 margin-top-20">
+                                                                <button type="submit" class="btn btn-lg button-orng btn-radius-0 payment_btn">Activate my 30 days trials</button>
+                                                                <div class="payment_result"></div>
+                                                                <div class="margin-top-20">* Free offer valid only once</div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!----------payment modal end-->
+                                    </div>
                                 <?php endif; ?>
                             </span>
                         </div>
@@ -131,12 +289,12 @@ if ($items):
                         <p class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>"><?php echo osc_item_title(); ?></p>
 
                         <?php
-                         if ($item['item_type']):
-                             item_resources(osc_item_id());
-                         endif;
+                        if ($item['item_type']):
+                            item_resources(osc_item_id());
+                        endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                 ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                       ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -240,6 +398,14 @@ else:
 endif;
 ?>
 <script>
+    $('.payment-option').on('change', function () {
+        $('.payment-option').each(function () {
+            var remove = $(this).val();
+            $('#' + remove).addClass('none');
+        });
+        var data = $(this).val();
+        $('#' + data).removeClass('none');
+    });
     $(document).on('click', '.delete_post', function () {
         var user_id = $(this).attr('data-user-id');
         var post_id = $(this).attr('data-post-id');

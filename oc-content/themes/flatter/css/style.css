@@ -2172,6 +2172,17 @@ select {
     box-shadow: none;
     margin-left: -5px;
     border-radius: 5px;
+    font-size: 36px;
+}
+.premium_close{
+    position: absolute;
+    top: 0px;
+    right: -35px;
+    color: white;
+    font-size: 40px;
+}
+.payment-img img{
+    width: 150px !important;
 }
 .location_filter_container .location_filter_tab {
     display: inline-block;

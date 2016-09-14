@@ -19,7 +19,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                 <div class="col-md-12 border-top-gray background-white border-box-right border-bottom-gray tchat_tab">
                     <ul class="nav nav-tabs margin-top-20 nav-font">
                         <li class="col-md-7 pointer active_tab">
-                            <div class="msg msg_tab" data-toggle="tab" data-target="#message">
+                            <div class="msg msg_tab new_message" data-toggle="tab" data-target="#message">
                                 New messages
                             </div>
                         </li>
@@ -83,7 +83,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                             <i class="fa fa-search search_icon pointer padding-10"></i>                 
                         </div>
                         <div class="col-md-12 background-white border-box-right t_chat_overflow">                        
-                            <ul class="padding-0" id="user_list">
+                            <ul class="padding-0" id="user_list1">
                                 <?php
                                 $user = $msg['from'];
 
@@ -106,7 +106,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                         <div class="col-md-5 dropdown"> 
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                                             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
+    <!--                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>-->
                                                 <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
                                             </ul>
                                         </div>
@@ -119,7 +119,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 border-top-gray border-bottom-gray background-white">
+            <div class="col-md-8 border-top-gray border-bottom-gray background-white chat_msg">
                 <div class="col-md-12 padding-top-3per">
                     <!--                    <div class="vertical-row">
                                             <span class="border-bottom-gray padding-top-4per separator1"></span>
@@ -176,14 +176,14 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                         endif;
                         ?>                       
                     </div>
-
-                    <div class="col-md-12 padding-0 padding-top-13per">
-                        <textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>
+                    <div class="reply">
+                        <div class="col-md-12 padding-0 padding-top-13per">
+                            <textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>
+                        </div>
+                        <div class="col-md-12 padding-0 padding-bottom-13per padding-top-4per">
+                            <button class="btn btn-default send_msg">Send</button>
+                        </div>
                     </div>
-                    <div class="col-md-12 padding-0 padding-bottom-13per padding-top-4per">
-                        <button class="btn btn-default send_msg">Send</button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -208,6 +208,26 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     location.reload();
                 }
             });
+        });
+        $('.reply').hide();
+        $('#user_list li').click(function () {
+            $('.reply').show();
+            $('.chat_msg').show();
+        });
+        $('.archives').click(function () {
+            $('.reply').hide();
+            $('.chat_msg').hide();
+
+        });
+        $('.new_message').click(function () {
+            $('.reply').show();
+            $('.chat_msg').hide();
+
+        });
+        $('#user_list1 li').click(function () {
+            $('.reply').hide();
+            $('.chat_msg').show();
+            $('#chat-box').css('max-height', '385px');
         });
 
         //delete chat

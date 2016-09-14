@@ -7,7 +7,7 @@ require 'functions.php';
 if ($_REQUEST['mark_all'] == 'mark_all'):
     $db_prefix = DB_TABLE_PREFIX;
     $read_status['read_status'] = '1';
-    $user['from_user_id'] = osc_logged_user_id();
+    $user['to_user_id'] = $_REQUEST['user_id'];
     $mark_all = new DAO();
     $mark_all->dao->update("{$db_prefix}t_user_notifications", $read_status, $user);
 endif;
