@@ -2317,6 +2317,30 @@ if ($page == 'user' && $action == 'profile') {
     header("Location: " . osc_base_url());
 }
 
+//for paypal payment
+//NOTIFY URL WILL LOOK LIKE http://www.newsfid.http5000.com/index.php?page=custom&route=paypal-notify&extra=NzlbEF8NMCr1Pjs3SKw+Pol3txeWLTifhfq0gAd18nU=
+$page = Params::getParam('page');
+$p_route = Params::getParam('route');
+//if ($page == 'custom' && $p_route == 'payment-pro-done') {
+if ($page == 'custom' && $p_route == 'paypal-notify') {    
+    $transaction_array['dt_date'] = date("Y-m-d H:i:s");
+    $transaction_array['s_code'] = ' ';
+    $transaction_array['i_amount'] = 4.99;
+    $transaction_array['s_currency_code'] = 'USD';
+    $transaction_array['s_email'] = @$_GET['user_email'];
+    $transaction_array['fk_i_user_id'] = @$_GET['user_id'];
+    $transaction_array['s_source'] = 'PAYPAL';
+    $transaction_array['i_status'] = '1';
+    $transaction_array['debug_code'] = "<pre>".print_r($_POST)."<pre>";
+
+    $db_prefix = DB_TABLE_PREFIX;
+    $transaction_data = new DAO();
+    $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
+
+    $user_data = new DAO();
+    $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => @$_GET['user_id']));
+}
+
 function custom_echo($x, $length) {
     if (strlen($x) <= $length) {
         echo $x;

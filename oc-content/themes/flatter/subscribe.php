@@ -184,6 +184,9 @@ require 'functions.php';
                                         <div class="col-md-9 margin-top-20">You have an option to terminate your subscription online at any time </div>
                                         <div class="col-md-9 margin-top-20">
                                             <button type="submit" class="btn btn-lg button-orng btn-radius-0 payment_btn">Activate my 30 days trials</button>
+                                            <div class="col-md-10">
+                                                <span class="error-term red">Please Accept Term & Condition</span>
+                                            </div>
                                             <div class="payment_result"></div>
                                             <div class="margin-top-20">* Free offer valid only once</div>
                                         </div>
@@ -316,6 +319,7 @@ function payment_script() {
     ?>
     <script>
         jQuery(document).ready(function ($) {
+            $('.error-term').hide();
             $('.payment-option').on('change', function () {
                 $('.payment-option').each(function () {
                     var remove = $(this).val();
@@ -326,8 +330,15 @@ function payment_script() {
             });
 
             $('.payment_btn').click(function () {
+                
+                if (!$("#accept").is(":checked")) {
+                    $('.error-term').show();
+                    return false;
+                }
                 var selected_payment_method = $('.payment-option:checked').val();
                 if (selected_payment_method == 'paypal') {
+                    var pay_action = $('input[name=notify_url]').val()+'&user_id=<?php echo osc_logged_user_id()?>&user_email=<?php echo osc_logged_user_email()?>';
+                    $('input[name=notify_url]').val(pay_action);                    
                     $('.paypal-btn').trigger('click');
                 }
                 if (selected_payment_method == 'payment-card') {
