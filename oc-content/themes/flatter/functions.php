@@ -1761,7 +1761,6 @@ function get_user_last_post_resource($user_id) {
     endif;
 }
 
-
 function get_search_popup($search_newsfid, $item_search_array, $user_search_array) {
     ?>
     <!-- Modal content-->
@@ -1774,35 +1773,35 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
         <?php if (!$user_search_array): ?>
             <h5> Your Search did not return any results. Please try again. </h5>
 
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
             <label  class="col-md-4  search-list">User</label>
             <label class="col-md-4 search-list">Publication</label>
         </div>
-                <?php if ($user_search_array): ?>
+        <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
                 <div class="col-md-4">
-                            <?php foreach ($user_search_array as $user) : ?>
+                    <?php foreach ($user_search_array as $user) : ?>
                         <div class="col-md-12">
                             <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
-                        <?php echo $user['user_name']; ?>
+                                <?php echo $user['user_name']; ?>
                             </a>
                         </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="col-md-4">
-                            <?php foreach ($item_search_array as $item) : ?>
+                    <?php foreach ($item_search_array as $item) : ?>
                         <div class="col-md-12">
                             <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
-                        <?php echo $item['s_title']; ?>
+                                <?php echo $item['s_title']; ?>
                             </a>
                         </div>
-            <?php endforeach; ?> 
+                    <?php endforeach; ?> 
                 </div>
             </div>   
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
 
     <?php
@@ -1873,11 +1872,11 @@ function get_user_profile_picture($user_id) {
             $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
         endif;
         ?>
-    <?php if ($user['user_type'] != 0) : ?>
+        <?php if ($user['user_type'] != 0) : ?>
             <div class="user_type_icon_image">
                 <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
             </div>
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
     <?php
 }
@@ -2158,6 +2157,7 @@ function get_chat_message_data($user_id = null) {
     $user_messge_array = $user_message_result->result();
     return $user_messge_array;
 }
+
 function get_archives_message_data($user_id = null) {
     $user_message_data = new DAO();
     $user_message_data->dao->select('frei_chat_archives.*');
@@ -2180,6 +2180,7 @@ function get_chat_conversion($user_id = null, $partner_user_id = null) {
     $user_conversion_array = $user_conversion_result->result();
     return $user_conversion_array;
 }
+
 function get_archive_conversion($user_id = null, $partner_user_id = null) {
     $user_conversion_data = new DAO();
     $user_conversion_data->dao->select('frei_chat_archives.*');
@@ -2251,6 +2252,17 @@ function set_user_notification($from_user_id = null, $to_user_id = null, $messag
     endif;
 }
 
+function get_item_details($item_id = null) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $post_data = new DAO();
+    $post_data->dao->select("item.*");
+    $post_data->dao->from("{$db_prefix}t_item_description AS item");
+    $post_data->dao->where("item.fk_i_item_id", $item_id);
+    $post_data_result = $post_data->dao->get();
+    $post_desc = $post_data_result->result();
+    return $post_desc;
+}
+
 function get_user_notification() {
     $user_id = osc_logged_user_id();
     if ($user_id):
@@ -2277,6 +2289,23 @@ function get_user_notification() {
         endif;
         return $notifications;
     endif;
+}
+
+function get_item_premium() {
+    $item = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
+    $item->dao->select("item.item_id");
+    $item->dao->from("{$db_prefix}t_premium_items AS item");
+    $item->dao->where('start_date <= NOW() AND end_date >= NOW()');
+    $result = $item->dao->get();
+    $item_data = $result->result();
+    $item_array = array();
+    if (!empty($item_data)):
+        foreach ($item_data as $v):
+            $item_array[] = $v['item_id'];
+        endforeach;
+    endif;
+    return array_unique($item_array);
 }
 
 $page = Params::getParam('page');

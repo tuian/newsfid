@@ -37,33 +37,36 @@ if ($item_id):
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <?php
-                $item = get_item($item_id);
-
-                osc_query_item(array('id' => $item_id, 'results_per_page' => 1));
-                while (osc_has_custom_items()):
+                $items_pre = get_item_premium();
+                if (!empty($items_pre)):
+                    $item_rand = array_rand($items_pre);
+                    $item_id_pre = $items_pre[$item_rand];
+                    $user_pre = get_item($item_id_pre);
+                    $user_pre_id = $user_pre['fk_i_user_id'];
+                    $item_pre_details = get_item_details($item_id_pre);
                     ?>
                     <div class="col-md-12 padding-0">
                         <div class="col-md-12 background-white">
                             <div class="col-md-12 padding-top-4per">
                                 <div class="popup">
-                                    <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
+                                    <?php user_follow_box(osc_logged_user_id(), $user_pre_id); ?>
                                     <div class="user-block">
                                         <?php
-                                        $user = get_user_data(osc_item_user_id());
-                                        if (!empty($user['s_path'])):
-                                            $user_image_url = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . "_nav." . $user['s_extension'];
+                                        $user_pr = get_user_data($user_pre_id);
+                                        if (!empty($user_pr['s_path'])):
+                                            $user_image_url = osc_base_url() . $user_pr['s_path'] . $user_pr['pk_i_id'] . "_nav." . $user_pr['s_extension'];
                                         else:
                                             $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                                         endif;
                                         ?>
-                                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user['user_name'] ?>">
+                                        <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user_pr['user_name'] ?>">
                                         <span class="username">
-                                            <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
+                                            <a href="<?php echo osc_user_public_profile_url($user_pre_id) ?>"><?php echo $user_pr['user_name'] ?></a>
                                             <div class="">
                                                 <i class="fa fa-users" aria-hidden="true"></i>
                                                 <span class="padding-left-10"> 
                                                     <?php
-                                                    $user_followers = get_user_follower_data($user['user_id']);
+                                                    $user_followers = get_user_follower_data($user_pre_id);
                                                     if ($user_followers):
                                                         echo count($user_followers);
                                                     else:
@@ -77,172 +80,317 @@ if ($item_id):
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="col-md-5 padding-0 padding-top-10 padding-bottom-10">
-                                    <?php item_resources(osc_item_id()) ?>
+                                <div class="col-md-12 post_resource" style="display: none">
+                                    <h2> <?php echo $item_pre_details[0]['s_title']; ?> </h2>                    
+                                </div>
+                                <div class="col-md-5 post_resource_hide padding-0 padding-top-10 padding-bottom-10">
+                                    <?php item_resources($item_id_pre); ?>
                                     <span class="padding-top-10"> Promoted posts </span>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="bold"> <?php echo osc_item_title(); ?> </div>                                   
-                                    <?php $desc = osc_item_description(); ?>   
+                                <div class="col-md-12 post_resource padding-0 padding-top-10 padding-bottom-10" style="display: none">
+                                    <?php item_resources($item_id_pre); ?>
+                                    <span class="padding-top-10"> Promoted posts </span>
+                                </div>
+                                <div class="col-md-7 post_resource_hide">
+                                    <div class="bold"> <?php echo $item_pre_details[0]['s_title']; ?> </div>                                   
+                                    <?php $desc = $item_pre_details[0]['s_description']; ?>   
                                     <?php custom_echo($desc, 100); ?> <br/>
                                     <button class="get_more">Get more details</button>
                                 </div>
+                                <div class="col-md-12 post_resource" style="display: none">                                                                   
+                                    <?php echo $item_pre_details[0]['s_description']; ?> 
+                                </div>
                             </div>
-                            <div class='col-md-12 border-bottom-gray'></div>
+                            <div class='col-md-12 border-bottom-gray post_resource_hide'></div>
+                        </div>
+                    </div>
+                    <div class="row post_resource" style="display: none;">
+                        <div class="col-md-12">
+                            <ul class="social-share padding-bottom-20">
+                                <li>
+                                    <?php echo item_like_box(osc_logged_user_id(), $item_id_pre) ?></li>
+
+                                &nbsp;&nbsp;
+                                <li>
+                                    <?php echo user_share_box(osc_logged_user_id(), $item_id_pre) ?></li>
+                                <li>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo $item_id_pre; ?>"><?php echo get_comment_count($item_id_pre) ?></span>&nbsp;
+                                        <?php echo 'Comments' ?>
+                                    </span></li>
+                                &nbsp;&nbsp;
+                                <?php if (osc_is_web_user_logged_in()): ?>
+                                    <li> <span><?php echo 'Tchat' ?></span>&nbsp;</li>
+                                <?php endif; ?>
+
+                                <li class="facebook margin-left-15">
+                                    <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
+                                                    return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li class="twitter">
+                                    <a class="whover" title="" href="https://twitter.com/intent/tweet?text=<?php echo osc_item_title(); ?>&url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Twitter", 'flatter'); ?>"><i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="googleplus">
+                                    <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
+                                                    return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </li> 
+                                <li> 
+                                    <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == $user_pre_id) { ?>
+                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
+                                            <i class="fa fa-pencil"></i>
+                                        </div>
+                                    <?php } ?>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row post_resource" style="display: none">
+                        <div class="col-md-12">
+                            <div class="cmnt comments_container_<?php echo $item_id_pre; ?>">
+                                <?php
+                                $c_data = get_item_comments($item_id_pre);
+                                if (!empty($c_data)):
+                                    if (count($c_data) > 3):
+                                        ?>
+                                        <div class="box-body">
+                                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                            <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                                        </div>
+                                        <?php
+                                    endif;
+                                    $total_comment = count($c_data);
+                                    foreach ($c_data as $k => $comment_data):
+                                        $comment_user = get_user_data($comment_data['fk_i_user_id']);
+                                        if ($k < $total_comment - 3 && !$load_more):
+                                            $load_more = 'load more';
+                                            echo '<div class="load_more">';
+                                        endif;
+                                        ?>
+                                        <?php
+                                        if ($comment_user['s_path']):
+                                            $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
+                                        else:
+                                            $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
+                                        endif;
+                                        ?>
+                                        <div class="box-footer box-comments border-blue-left">
+                                            <div class="box-comment">
+                                                <!-- User image -->
+                                                <div class="comment_user_image col-md-1 padding-0">
+                                                    <?php get_user_profile_picture($comment_user['user_id']) ?>
+                                                </div>
+
+                                                <div class="comment-area col-md-10">
+                                                    <span class="username">
+                                                        <?php echo $comment_user['user_name'] ?>
+                                                        <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
+                                                        <!--                                                                                                                                                <div class="dropdown  pull-right">
+                                                                                                                                                                                                <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                                                                                                                                                                <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                                                                                                                                                <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
+                                                                                                                                                                                                <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Modifier</a></li>
+                                                                                                                                                                                                <li><a></a></li>
+                                                                                                                                                                                                <li><a>Sponsoriser</a></li>
+                                                                                                                                                                                                <li><a>Remonter en tête de liste</a></li>
+                                                                                                                                                                                                <li><a></a></li>
+                                                                                                                                                                                                <li><a>Signaler la publication</a></li>
+                                                                                                                                
+                                                                                                                                                                                                </ul>
+                                                                                                                                                                                                </div>-->
+                                                    </span><!-- /.username -->
+                                                    <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
+                                                        <?php echo $comment_data['s_body']; ?>
+                                                    </span>
+                                                </div>
+                                                <!-- /.comment-text -->
+                                            </div>                       
+                                        </div>                  
+                                        <?php
+                                        if ($k == (count($c_data) - 4)):
+                                            unset($load_more);
+                                            echo "</div>";
+                                        endif;
+                                    endforeach;
+                                endif;
+                                ?>
+                            </div>
+
+                            <!-- /.box-footer -->
+                            <?php if (osc_is_web_user_logged_in()): ?>
+                                <div class="box-footer">
+                                    <form class="comment_form" data_item_id="<?php echo $item_id_pre ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
+                                        <div class="comment_user_image col-md-1 padding-0">
+                                            <?php get_user_profile_picture($item_id_pre) ?>
+                                        </div>
+                                        <!-- .img-push is used to add margin to elements next to floating images -->
+                                        <div class="img-push">
+                                            <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <?php
+                            endif;
+                            ?>
                         </div>
                     </div>
                     <?php
-                endwhile;
+                endif;
                 $item = get_item($item_id);
-
                 osc_query_item(array('id' => $item_id, 'results_per_page' => 1));
                 while (osc_has_custom_items()):
                     ?>
-                    <div class="box-body">
-                        <?php //osc_item($item_id);    ?>
-                        <div id="columns">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12 padding-top-10">
-                                        <div class="popup">
-                                            <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
-                                            <div class="user-block">
-                                                <?php
-                                                $user = get_user_data(osc_item_user_id());
-                                                if (!empty($user['s_path'])):
-                                                    $user_image_url = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . "_nav." . $user['s_extension'];
-                                                else:
-                                                    $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
-                                                endif;
-                                                ?>
-                                                <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user['user_name'] ?>">
-                                                <span class="username">
-                                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 item-title">
-                                        <h2><?php echo osc_item_title(); ?></h2>                                    
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                        <?php if (osc_get_preference('position7_enable', 'flatter_theme') != '0') { ?>
-                                            <div id="position_widget"<?php
-                                            if (osc_get_preference('position7_hide', 'flatter_theme') != '0') {
-                                                echo " class='hidden-xs'";
-                                            }
-                                            ?>>
-                                                <div class="dd-widget position_7">
-                                                    <?php echo osc_get_preference('position7_content', 'flatter_theme'); ?>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-
-                                        <div id="content">
-                                            <?php item_resources(osc_item_id()) ?>
-
-                                            <div id="itemdetails" class="clearfix">
-                                                <div class="description comment more">
-                                                    <?php echo osc_item_description(); ?>                                              
-                                                </div>                                            
-
-                                                <div id="extra-fields">
-                                                    <?php //osc_run_hook('item_detail', osc_item());    ?>
-                                                </div>
-
-                                            </div> <!-- Description End -->
-
-                                        </div><!-- Item Content End -->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <ul class="social-share padding-bottom-20">
-                                                    <li>
-                                                        <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?></li>
-
-                                                    &nbsp;&nbsp;
-                                                    <li>
-                                                        <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?></li>
-                                                    <li>
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                                                            <?php echo 'Comments' ?>
-                                                        </span></li>
-                                                    &nbsp;&nbsp;
-                                                    <?php if (osc_is_web_user_logged_in()): ?>
-                                                        <li> <span><?php echo 'Tchat' ?></span>&nbsp;</li>
-                                                    <?php endif; ?>
-
-                                                    <li class="facebook margin-left-15">
-                                                        <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                                        return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
-                                                            <i class="fa fa-facebook"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="twitter">
-                                                        <a class="whover" title="" href="https://twitter.com/intent/tweet?text=<?php echo osc_item_title(); ?>&url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Twitter", 'flatter'); ?>"><i class="fa fa-twitter"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="googleplus">
-                                                        <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                                        return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
-                                                            <i class="fa fa-google-plus"></i>
-                                                        </a>
-                                                    </li> 
-                                                    <li> 
-                                                        <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
-                                                            <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="cmnt comments_container_<?php echo osc_item_id(); ?>">
+                    <div class="post_body">
+                        <div class="box-body">
+                            <?php //osc_item($item_id);     ?>
+                            <div id="columns">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 padding-top-10">
+                                            <div class="popup">
+                                                <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
+                                                <div class="user-block">
                                                     <?php
-                                                    $c_data = get_item_comments(osc_item_id());
-                                                    if ($c_data):
-                                                        if (count($c_data) > 3):
-                                                            ?>
-                                                            <div class="box-body">
-                                                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
-                                                                <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
-                                                            </div>
-                                                            <?php
-                                                        endif;
-                                                        $total_comment = count($c_data);
-                                                        foreach ($c_data as $k => $comment_data):
-                                                            $comment_user = get_user_data($comment_data['fk_i_user_id']);
-                                                            if ($k < $total_comment - 3 && !$load_more):
-                                                                $load_more = 'load more';
-                                                                echo '<div class="load_more">';
-                                                            endif;
-                                                            ?>
-                                                            <?php
-                                                            if ($comment_user['s_path']):
-                                                                $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
-                                                            else:
-                                                                $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
-                                                            endif;
-                                                            ?>
-                                                            <div class="box-footer box-comments border-blue-left">
-                                                                <div class="box-comment">
-                                                                    <!-- User image -->
-                                                                    <div class="comment_user_image col-md-1 padding-0">
-                                                                        <?php get_user_profile_picture($comment_user['user_id']) ?>
-                                                                    </div>
+                                                    $user = get_user_data(osc_item_user_id());
+                                                    if (!empty($user['s_path'])):
+                                                        $user_image_url = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . "_nav." . $user['s_extension'];
+                                                    else:
+                                                        $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
+                                                    endif;
+                                                    ?>
+                                                    <img class="img-circle" src="<?php echo $user_image_url ?>" alt="<?php echo $user['user_name'] ?>">
+                                                    <span class="username">
+                                                        <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 item-title">
+                                            <h2><?php echo osc_item_title(); ?></h2>                                    
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
 
-                                                                    <div class="comment-area col-md-10">
-                                                                        <span class="username">
-                                                                            <?php echo $comment_user['user_name'] ?>
-                                                                            <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
-                                                                            <!--                                                                                                                                                <div class="dropdown  pull-right">
+                                            <?php if (osc_get_preference('position7_enable', 'flatter_theme') != '0') { ?>
+                                                <div id="position_widget"<?php
+                                                if (osc_get_preference('position7_hide', 'flatter_theme') != '0') {
+                                                    echo " class='hidden-xs'";
+                                                }
+                                                ?>>
+                                                    <div class="dd-widget position_7">
+                                                        <?php echo osc_get_preference('position7_content', 'flatter_theme'); ?>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+
+                                            <div id="content">
+                                                <?php item_resources(osc_item_id()) ?>
+
+                                                <div id="itemdetails" class="clearfix">
+                                                    <div class="description comment more">
+                                                        <?php echo osc_item_description(); ?>                                              
+                                                    </div>                                            
+
+                                                    <div id="extra-fields">
+                                                        <?php //osc_run_hook('item_detail', osc_item());      ?>
+                                                    </div>
+
+                                                </div> <!-- Description End -->
+
+                                            </div><!-- Item Content End -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ul class="social-share padding-bottom-20">
+                                                        <li>
+                                                            <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?></li>
+
+                                                        &nbsp;&nbsp;
+                                                        <li>
+                                                            <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?></li>
+                                                        <li>
+                                                            &nbsp;&nbsp;&nbsp;
+                                                            <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
+                                                                <?php echo 'Comments' ?>
+                                                            </span></li>
+                                                        &nbsp;&nbsp;
+                                                        <?php if (osc_is_web_user_logged_in()): ?>
+                                                            <li> <span><?php echo 'Tchat' ?></span>&nbsp;</li>
+                                                        <?php endif; ?>
+
+                                                        <li class="facebook margin-left-15">
+                                                            <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
+                                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                                <i class="fa fa-facebook"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="twitter">
+                                                            <a class="whover" title="" href="https://twitter.com/intent/tweet?text=<?php echo osc_item_title(); ?>&url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Twitter", 'flatter'); ?>"><i class="fa fa-twitter"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="googleplus">
+                                                            <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
+                                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                                <i class="fa fa-google-plus"></i>
+                                                            </a>
+                                                        </li> 
+                                                        <li> 
+                                                            <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
+                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="cmnt comments_container_<?php echo osc_item_id(); ?>">
+                                                        <?php
+                                                        $c_data = get_item_comments(osc_item_id());
+
+                                                        if (!empty($c_data)):
+                                                            if (count($c_data) > 3):
+                                                                ?>
+                                                                <div class="box-body">
+                                                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                                                    <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
+                                                                </div>
+                                                                <?php
+                                                            endif;
+                                                            $total_comment = count($c_data);
+                                                            foreach ($c_data as $k => $comment_data):
+                                                                $comment_user = get_user_data($comment_data['fk_i_user_id']);
+                                                                if ($k < $total_comment - 3 && !$load_more):
+                                                                    $load_more = 'load more';
+                                                                    echo '<div class="load_more">';
+                                                                endif;
+                                                                ?>
+                                                                <?php
+                                                                if ($comment_user['s_path']):
+                                                                    $user_image_url = osc_base_url() . $comment_user['s_path'] . $comment_user['pk_i_id'] . "_nav." . $comment_user['s_extension'];
+                                                                else:
+                                                                    $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
+                                                                endif;
+                                                                ?>
+                                                                <div class="box-footer box-comments border-blue-left">
+                                                                    <div class="box-comment">
+                                                                        <!-- User image -->
+                                                                        <div class="comment_user_image col-md-1 padding-0">
+                                                                            <?php get_user_profile_picture($comment_user['user_id']) ?>
+                                                                        </div>
+
+                                                                        <div class="comment-area col-md-10">
+                                                                            <span class="username">
+                                                                                <?php echo $comment_user['user_name'] ?>
+                                                                                <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
+                                                                                <!--                                                                                                                                                <div class="dropdown  pull-right">
                                                                                                                                                                                                                         <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                                                                                                                                                                                         <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                                                                                                                                                                                                                         <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
@@ -252,69 +400,72 @@ if ($item_id):
                                                                                                                                                                                                                         <li><a>Remonter en tête de liste</a></li>
                                                                                                                                                                                                                         <li><a></a></li>
                                                                                                                                                                                                                         <li><a>Signaler la publication</a></li>
-                                                                                                                                                    
+                                                                                                                                                        
                                                                                                                                                                                                                         </ul>
                                                                                                                                                                                                                         </div>-->
-                                                                        </span><!-- /.username -->
-                                                                        <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
-                                                                            <?php echo $comment_data['s_body']; ?>
-                                                                        </span>
-                                                                    </div>
-                                                                    <!-- /.comment-text -->
-                                                                </div>                       
-                                                            </div>                  
-                                                            <?php
-                                                            if ($k == (count($c_data) - 4)):
-                                                                unset($load_more);
-                                                                echo "</div>";
-                                                            endif;
-                                                        endforeach;
+                                                                            </span><!-- /.username -->
+                                                                            <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
+                                                                                <?php echo $comment_data['s_body']; ?>
+                                                                            </span>
+                                                                        </div>
+                                                                        <!-- /.comment-text -->
+                                                                    </div>                       
+                                                                </div>                  
+                                                                <?php
+                                                                if ($k == (count($c_data) - 4)):
+                                                                    unset($load_more);
+                                                                    echo "</div>";
+                                                                endif;
+                                                            endforeach;
+                                                        endif;
+                                                        ?>
+                                                    </div>
+
+                                                    <!-- /.box-footer -->
+                                                    <?php if (osc_is_web_user_logged_in()): ?>
+                                                        <div class="box-footer">
+                                                            <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
+                                                                <div class="comment_user_image col-md-1 padding-0">
+                                                                    <?php get_user_profile_picture(osc_logged_user_id()) ?>
+                                                                </div>
+                                                                <!-- .img-push is used to add margin to elements next to floating images -->
+                                                                <div class="img-push">
+                                                                    <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <?php
                                                     endif;
                                                     ?>
                                                 </div>
-                                                <!-- /.box-footer -->
-                                                <?php if (osc_is_web_user_logged_in()): ?>
-                                                    <div class="box-footer">
-                                                        <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                                                            <div class="comment_user_image col-md-1 padding-0">
-                                                                <?php get_user_profile_picture($comment_user['user_id']) ?>
-                                                            </div>
-                                                            <!-- .img-push is used to add margin to elements next to floating images -->
-                                                            <div class="img-push">
-                                                                <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
-                                                            </div>
-                                                        </form>
+                                            </div>
+
+                                            <?php if (osc_get_preference('google_adsense', 'flatter_theme') !== '0' && osc_get_preference('adsense_listing', 'flatter_theme') != null) { ?>
+                                                <div class="pagewidget">
+                                                    <div class="gadsense">
+                                                        <?php echo osc_get_preference('adsense_listing', 'flatter_theme'); ?>
                                                     </div>
-                                                    <?php
-                                                endif;
-                                                ?>
-                                            </div>
-                                        </div>
-
-                                        <?php if (osc_get_preference('google_adsense', 'flatter_theme') !== '0' && osc_get_preference('adsense_listing', 'flatter_theme') != null) { ?>
-                                            <div class="pagewidget">
-                                                <div class="gadsense">
-                                                    <?php echo osc_get_preference('adsense_listing', 'flatter_theme'); ?>
                                                 </div>
-                                            </div>
-                                        <?php } ?>
-                                        <!-- Comments Template -->
+                                            <?php } ?>
+                                            <!-- Comments Template -->
 
-                                    </div><!-- Item Content -->
+                                        </div><!-- Item Content -->
 
-                                    <!-- Sidebar Template -->
+                                        <!-- Sidebar Template -->
+
+                                    </div>
 
                                 </div>
-
                             </div>
-                        </div>
-                    </div>              
+                        </div>              
+                    </div>
                 </div>
 
             </div>
         </div>
     <?php endwhile; ?>
     <script>
+
         $(document).ready(function () {
             var showChar = 200;
             var ellipsestext = "";
@@ -513,6 +664,13 @@ if ($item_id):
                     $('.user_role_name').show();
                 }
             });
+        });
+
+        $(document).on('click', '.get_more', function () {
+            $('.post_body').hide('slow');
+            $('.get_more').hide('slow');
+            $('.post_resource_hide').hide('slow');
+            $('.post_resource').show('slow');
         });
     </script>
     <?php

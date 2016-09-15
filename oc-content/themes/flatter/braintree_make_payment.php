@@ -24,25 +24,53 @@ $result = Braintree_Transaction::sale(array(
                 'submitForSettlement' => true
             )
         ));
+if (Params::getParam('subscribe')):
+    if ($result->success) {
+        $transaction_array['dt_date'] = date("Y-m-d H:i:s");
+        $transaction_array['s_code'] = $result->transaction->id;
+        $transaction_array['i_amount'] = $result->transaction->amount;
+        $transaction_array['s_currency_code'] = $result->transaction->currencyIsoCode;
+        $transaction_array['s_email'] = $user['s_email'];
+        $transaction_array['fk_i_user_id'] = $user['user_id'];
+        $transaction_array['s_source'] = 'BRAINTREE';
+        $transaction_array['i_status'] = '1';
 
-if ($result->success) {
-    $transaction_array['dt_date'] = date("Y-m-d H:i:s");
-    $transaction_array['s_code'] = $result->transaction->id;
-    $transaction_array['i_amount'] = $result->transaction->amount;
-    $transaction_array['s_currency_code'] = $result->transaction->currencyIsoCode;
-    $transaction_array['s_email'] = $user['s_email'];
-    $transaction_array['fk_i_user_id'] = $user['user_id'];
-    $transaction_array['s_source'] = 'BRAINTREE';
-    $transaction_array['i_status'] = '1';
+        $transaction_data = new DAO();
+        $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
 
-    $transaction_data = new DAO();
-    $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
-    
-    $user_data = new DAO();
-    $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => $user['user_id']));
-    
-    echo 1;
-} else {
-    echo $result->_attributes[message];
-}
+        $user_data = new DAO();
+        $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => $user['user_id']));
+
+        echo 1;
+    } else {
+        echo $result->_attributes[message];
+    }
+endif;
+if (Params::getParam('premium') == 'premium'):
+    if ($result->success) {
+        $transaction_array['dt_date'] = date("Y-m-d H:i:s");
+        $transaction_array['s_code'] = $result->transaction->id;
+        $transaction_array['i_amount'] = $result->transaction->amount;
+        $transaction_array['s_currency_code'] = $result->transaction->currencyIsoCode;
+        $transaction_array['s_email'] = $user['s_email'];
+        $transaction_array['fk_i_user_id'] = $user['user_id'];
+        $transaction_array['s_source'] = 'BRAINTREE';
+        $transaction_array['i_status'] = '1';
+
+        $transaction_data = new DAO();
+        $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
+        
+        $premium['user_id'] = Params::getParam('user_id');
+        $premium['item_id'] = Params::getParam('item_id');
+        $premium['start_date'] = date("Y-m-d H:i:s");
+        $premium['created'] = date("Y-m-d H:i:s");
+        $premium['end_date'] = date("Y-m-d H:i:s",strtotime("+2 days", strtotime("NOW")));
+        $premium_data = new DAO();
+        $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
+
+        echo 1;
+    } else {
+        echo $result->_attributes[message];
+    }
+endif;
 ?>

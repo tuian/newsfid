@@ -794,10 +794,10 @@ function footer_script() {
                         var fix = 700;
                     }
                     else if (screen > 600) {
-                        var fix = 650;
+                        var fix = 530;
                     }
                     else if (screen > 500) {
-                        var fix = 620;
+                        var fix = 450;
                     }
                     else if (screen > 400) {
                         var fix = 500;

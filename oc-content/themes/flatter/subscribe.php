@@ -339,6 +339,7 @@ function payment_script() {
                     $.ajax({
                         url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
                         data: {
+                            subscribe: 'subscribe',
                             braintree_number: braintree_number,
                             braintree_cvv: braintree_cvv,
                             amount: amount,

@@ -2184,6 +2184,10 @@ select {
 .payment-img img{
     width: 150px !important;
 }
+#online-chat{
+    position: fixed;
+    bottom: -50px;
+}
 .location_filter_container .location_filter_tab {
     display: inline-block;
     border-top: 4px solid #fff;
