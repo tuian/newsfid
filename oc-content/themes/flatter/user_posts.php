@@ -11,6 +11,7 @@ $data = new DAO();
 $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
+$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 $data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
@@ -110,7 +111,7 @@ if ($items):
                                             $items = get_item_premium();
                                             if (!in_array($item_id, $items)):
                                                 ?>
-                                                <li class="premium" data-toggle="modal" data-target="#premium"><a> Premium</a></li>
+                                                <li class="premium" item_id="<?php echo $item_id; ?>" data-toggle="modal" data-target="#premium"><a> Premium</a></li>
                                             <?php endif; ?>
                                             <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
                                                                   <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
@@ -281,7 +282,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                  ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                          ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -378,13 +379,36 @@ if ($items):
             <?php
         endwhile;
     endforeach;
+
+    $id = '11';
+    $description = 'Premium post amount';
+    $amount = '1';
+    $tax = '0';
+    $quantity = 1;
+//$extra = '';
+    $k = 0;
+    $items_pre[$k]["id"] = $id;
+    $items_pre[$k]['description'] = $description;
+    $items_pre[$k]['amount'] = $amount;
+    $items_pre[$k]['tax'] = $tax;
+    $items_pre[$k]['quantity'] = $quantity;
+//$items['extra'] = $extra;
+    $paypal_btn = new PaypalPayment();
+    $paypal_btn->standardButton($items_pre);
     ?>
     <?php
 else:
     echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
 endif;
 ?>
+
 <script>
+    $(document).ready(function () {
+        $('.premium').click(function () {
+            var item_id = $(this).attr('item_id');
+            $('#primium_item_id_post').val(item_id);
+        });
+    });
     $('.payment-option').on('change', function () {
         $('.payment-option').each(function () {
             var remove = $(this).val();
@@ -395,9 +419,11 @@ endif;
     });
     $('.pay_now').click(function () {
         var user_id = $(this).attr('user-id');
-        var item_id = $(this).attr('item-id');
+        var item_id = $('#primium_item_id_post').val();
         var selected_payment_method = $('.payment-option:checked').val();
         if (selected_payment_method == 'paypal') {
+            var pay_action = $('input[name=notify_url]').val() + '&paymement_type=primium&user_id=<?php echo osc_logged_user_id(); ?>&user_email=<?php echo osc_logged_user_email(); ?>&item_id=' + item_id;
+            $('input[name=notify_url]').val(pay_action);
             $('.paypal-btn').trigger('click');
         }
         if (selected_payment_method == 'payment-card') {
@@ -423,7 +449,7 @@ endif;
 //                                $('.payment_result').empty().addClass('success').removeClass('error');
 //                                $('.payment_result').text('Payment added successfully');
 //                                data = '';
-<?php // osc_add_flash_ok_message('Payment added successfully');     ?>
+<?php // osc_add_flash_ok_message('Payment added successfully');             ?>
                         alert('Payment added successfully');
                         window.location.href = "<?php echo osc_base_url(); ?>";
                     } else {

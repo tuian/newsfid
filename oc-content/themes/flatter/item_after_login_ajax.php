@@ -111,10 +111,10 @@ if ($items):
                                         <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
                                         <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
                                         <?php
-                                        $items = get_item_premium();                                       
+                                        $items = get_item_premium();
                                         if (!in_array($item_id, $items)):
                                             ?>
-                                            <li class="premium" data-toggle="modal" data-target="#premium"><a> Premium</a></li>
+                                            <li class="premium" data-toggle="modal" item_id="<?php echo $item_id; ?>" data-target="#premium"><a> Premium</a></li>
                                             <?php
                                         endif;
                                         ?>
@@ -125,7 +125,7 @@ if ($items):
                                                                                         <li><a>Signaler la publication</a></li>-->
                                     </ul>
                                 </button>
-                                <div id="premium" class="modal fade" role="dialog">
+                                <div id="premium" class="modal fade font-12" role="dialog">
                                     <div class="modal-dialog modal-lg">
 
                                         <!-- Modal content-->
@@ -285,7 +285,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                   ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                       ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -401,151 +401,177 @@ if ($items):
             <?php
         endwhile;
     endforeach;
+
 elseif ($page_number > 0):
     echo '<h2 class="result_text">Ends of results</h2> ';
 else:
     echo '<h2 class="result_text">Nothing to show off for now. Thanks to try later</h2> ';
 endif;
-?>
-<script>
-    $('.payment-option').on('change', function () {
-        $('.payment-option').each(function () {
-            var remove = $(this).val();
-            $('#' + remove).addClass('none');
+if (osc_logged_user_id()):
+    $id = '11';
+    $description = 'Premium post amount';
+    $amount = '1';
+    $tax = '0';
+    $quantity = 1;
+//$extra = '';
+    $k = 0;
+    $items_pre[$k]["id"] = $id;
+    $items_pre[$k]['description'] = $description;
+    $items_pre[$k]['amount'] = $amount;
+    $items_pre[$k]['tax'] = $tax;
+    $items_pre[$k]['quantity'] = $quantity;
+//$items['extra'] = $extra;
+    $paypal_btn = new PaypalPayment();
+    $paypal_btn->standardButton($items_pre);
+    ?>
+    <script>
+        $(document).ready(function (){
+           $('.premium').click(function (){             
+                var item_id = $(this).attr('item_id');
+                $('#primium_item_id').val(item_id);                                                     
+           }) 
         });
-        var data = $(this).val();
-        $('#' + data).removeClass('none');
-    });
-    $('.pay_now').click(function () {
-        var user_id = $(this).attr('user-id');
-        var item_id = $(this).attr('item-id');
-        var selected_payment_method = $('.payment-option:checked').val();
-        if (selected_payment_method == 'paypal') {
-            $('.paypal-btn').trigger('click');
-        }
-        if (selected_payment_method == 'payment-card') {
-            var braintree_number = $('.card_number').val();
-            var braintree_cvv = $('.card_cvv_code').val();
-            var amount = 4.99;
-            var braintree_month = $('.expiry_month').val();
-            var braintree_year = $('.expiry_year').val();
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
-                data: {
-                    premium: 'premium',
-                    braintree_number: braintree_number,
-                    user_id: user_id,
-                    item_id: item_id,
-                    braintree_cvv: braintree_cvv,
-                    amount: amount,
-                    braintree_month: braintree_month,
-                    braintree_year: braintree_year,
-                },
-                success: function (data, textStatus, jqXHR) {
-                    if (data == 1) {
-//                                $('.payment_result').empty().addClass('success').removeClass('error');
-//                                $('.payment_result').text('Payment added successfully');
-//                                data = '';
-<?php // osc_add_flash_ok_message('Payment added successfully');         ?>
-                        alert('Payment added successfully');
-                        window.location.href = "<?php echo osc_base_url(); ?>";
-                    } else {
-                        $('.payment_result').empty().addClass('error').removeClass('success');
-                        $('.payment_result').text('Payment not added successfully');
-                        $('.payment_result').text(data);
-                    }
-                }
+        $('.payment-option').on('change', function () {
+            $('.payment-option').each(function () {
+                var remove = $(this).val();
+                $('#' + remove).addClass('none');
             });
-        }
-    });
-    $(document).on('click', '.delete_post', function () {
-        var user_id = $(this).attr('data-user-id');
-        var post_id = $(this).attr('data-post-id');
-        if (confirm('Are Sure Want To Delete This Post')) {
+            var data = $(this).val();
+            $('#' + data).removeClass('none');
+        });
+        $('.pay_now').click(function () {
+            var user_id = $(this).attr('user-id');
+            var item_id = $('#primium_item_id').val();
+            var selected_payment_method = $('.payment-option:checked').val();
+            if (selected_payment_method == 'paypal') {
+                var pay_action = $('input[name=notify_url]').val() + '&paymement_type=primium&user_id=<?php echo osc_logged_user_id(); ?>&user_email=<?php echo osc_logged_user_email(); ?>&item_id=' + item_id;
+                $('input[name=notify_url]').val(pay_action);
+                $('.paypal-btn').trigger('click');
+            }
+            if (selected_payment_method == 'payment-card') {
+                var braintree_number = $('.card_number').val();
+                var braintree_cvv = $('.card_cvv_code').val();
+                var amount = 4.99;
+                var braintree_month = $('.expiry_month').val();
+                var braintree_year = $('.expiry_year').val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('braintree_make_payment.php') ?>",
+                    data: {
+                        premium: 'premium',
+                        braintree_number: braintree_number,
+                        user_id: user_id,
+                        item_id: item_id,
+                        braintree_cvv: braintree_cvv,
+                        amount: amount,
+                        braintree_month: braintree_month,
+                        braintree_year: braintree_year,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data == 1) {
+    //                                $('.payment_result').empty().addClass('success').removeClass('error');
+    //                                $('.payment_result').text('Payment added successfully');
+    //                                data = '';
+    <?php // osc_add_flash_ok_message('Payment added successfully');             ?>
+                            alert('Payment added successfully');
+                            window.location.href = "<?php echo osc_base_url(); ?>";
+                        } else {
+                            $('.payment_result').empty().addClass('error').removeClass('success');
+                            $('.payment_result').text('Payment not added successfully');
+                            $('.payment_result').text(data);
+                        }
+                    }
+                });
+            }
+        });
+        $(document).on('click', '.delete_post', function () {
+            var user_id = $(this).attr('data-user-id');
+            var post_id = $(this).attr('data-post-id');
+            if (confirm('Are Sure Want To Delete This Post')) {
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'delete_post_ajax.php'; ?>",
+                    type: 'post',
+                    data: {
+                        action: 'delete_post',
+                        user_id: user_id,
+                        post_id: post_id
+                    },
+                    success: function () {
+                        $(location).attr('href', '<?php echo osc_base_url(); ?>');
+                    }
+                });
+            }
+        });
+        $(document).on('click', '.edit_user_post', function () {
+            var item_id = $(this).attr('item_id');
             $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'delete_post_ajax.php'; ?>",
+                url: '<?php echo osc_current_web_theme_url() . 'update_user_post.php'; ?>',
                 type: 'post',
                 data: {
-                    action: 'delete_post',
-                    user_id: user_id,
-                    post_id: post_id
+                    action: 'update_post',
+                    redirect: 'homepage',
+                    item_id: item_id
                 },
-                success: function () {
-                    $(location).attr('href', '<?php echo osc_base_url(); ?>');
+                success: function (data) {
+                    $('.free-user-post').html(data);
+                    $('#popup-free-user-post').modal('show');
+                }
+            });
+        });
+    //   $(window).ready(function(){
+    //        $('.edit_cmnt').click(function() { 
+    //           
+    //        });
+    //    });
+        function editComment(comment_id, data_item_id) {
+            var text = $('.comment_edt_' + comment_id).attr('data-text');
+            var input_box = '<input type="text" class="user_comment_textbox" data-item-id="' + data_item_id + '" data_id="' + comment_id + '" value="' + text + '">';
+            $('.comment_edt_' + comment_id).html(input_box);
+        }
+        $(document).on('keypress', '.user_comment_textbox', function (e) {
+            if (e.which == 13) {//Enter key pressed
+                $('.user_comment_textbox').blur()
+            }
+        });
+        $(document).on('blur', '.user_comment_textbox', function () {
+            var new_text = $(this).val();
+            var data_id = $(this).attr('data_id');
+            var item_id = $(this).attr('data-item-id');
+            if (!new_text) {
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
+                method: 'post',
+                data: {
+                    action: 'user_comment',
+                    comment_text: new_text,
+                    comment_id: data_id,
+                    item_id: item_id
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.comment_edt_' + data_id).html(new_text);
+                    $('.comment_edt_' + data_id).attr('data-text', new_text);
+                }
+            });
+            //$('.user_website_text').html(new_text).attr('data_text', new_text);
+        });
+
+        function deleteComment(comment_id, data_item_id) {
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
+                method: 'post',
+                data: {
+                    action: 'user_comment',
+                    comment_id: comment_id,
+                    item_id: data_item_id,
+                    delete: '1'
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.comments_container_' + data_item_id).replaceWith(data);
+                    var current_comment_number = $('.comment_count_' + data_item_id).first().html();
+                    $('.comment_count_' + data_item_id).html(parseInt(current_comment_number) - 1);
                 }
             });
         }
-    });
-    $(document).on('click', '.edit_user_post', function () {
-        var item_id = $(this).attr('item_id');
-        $.ajax({
-            url: '<?php echo osc_current_web_theme_url() . 'update_user_post.php'; ?>',
-            type: 'post',
-            data: {
-                action: 'update_post',
-                redirect: 'homepage',
-                item_id: item_id
-            },
-            success: function (data) {
-                $('.free-user-post').html(data);
-                $('#popup-free-user-post').modal('show');
-            }
-        });
-    });
-//   $(window).ready(function(){
-//        $('.edit_cmnt').click(function() { 
-//           
-//        });
-//    });
-    function editComment(comment_id, data_item_id) {
-        var text = $('.comment_edt_' + comment_id).attr('data-text');
-        var input_box = '<input type="text" class="user_comment_textbox" data-item-id="' + data_item_id + '" data_id="' + comment_id + '" value="' + text + '">';
-        $('.comment_edt_' + comment_id).html(input_box);
-    }
-    $(document).on('keypress', '.user_comment_textbox', function (e) {
-        if (e.which == 13) {//Enter key pressed
-            $('.user_comment_textbox').blur()
-        }
-    });
-    $(document).on('blur', '.user_comment_textbox', function () {
-        var new_text = $(this).val();
-        var data_id = $(this).attr('data_id');
-        var item_id = $(this).attr('data-item-id');
-        if (!new_text) {
-            return false;
-        }
-        $.ajax({
-            url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
-            method: 'post',
-            data: {
-                action: 'user_comment',
-                comment_text: new_text,
-                comment_id: data_id,
-                item_id: item_id
-            },
-            success: function (data, textStatus, jqXHR) {
-                $('.comment_edt_' + data_id).html(new_text);
-                $('.comment_edt_' + data_id).attr('data-text', new_text);
-            }
-        });
-        //$('.user_website_text').html(new_text).attr('data_text', new_text);
-    });
-
-    function deleteComment(comment_id, data_item_id) {
-        $.ajax({
-            url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
-            method: 'post',
-            data: {
-                action: 'user_comment',
-                comment_id: comment_id,
-                item_id: data_item_id,
-                delete: '1'
-            },
-            success: function (data, textStatus, jqXHR) {
-                $('.comments_container_' + data_item_id).replaceWith(data);
-                var current_comment_number = $('.comment_count_' + data_item_id).first().html();
-                $('.comment_count_' + data_item_id).html(parseInt(current_comment_number) - 1);
-            }
-        });
-    }
-</script>
+    </script>
+<?php endif; ?>

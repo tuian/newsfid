@@ -369,6 +369,8 @@ if (isset($user_id)) {
                         <div class="clearfix"></div>
                         <div class="posts_container">
                             <input type="hidden" name="item_page_number" id="item_page_number" value="1">
+                            <input type="hidden" name="primium_item_id" id="primium_item_id">
+
                             <div class="user_related_posts"></div>
                             <div class="loading text-center">
                                 <div class="cs-loader">
@@ -428,7 +430,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                    ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                     ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -450,7 +452,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                    ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                     ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -476,10 +478,10 @@ if (isset($user_id)) {
                         $data->dao->select('item.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
                         $data->dao->from("{$db_prefix}t_item as item");
                         $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
-                        $data->dao->orderBy('dt_pub_date', 'DESC');                        
+                        $data->dao->orderBy('dt_pub_date', 'DESC');
                         $categories = get_category_array('1');
                         $data->dao->whereIn('fk_i_category_id', $categories);
-                        
+
                         $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0");
 
                         $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
@@ -677,7 +679,7 @@ osc_add_hook('footer', 'footer_script');
 
 function footer_script() {
     ?>
-    
+
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
     <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
     <script>
@@ -777,6 +779,7 @@ function footer_script() {
 
             });
     <?php if (osc_is_web_user_logged_in()): ?>
+                
 
                 $(window).scroll(function (event) {
                     var screen = $(window).height();
@@ -881,14 +884,14 @@ function footer_script() {
                 });
     <?php endif; ?>
     <?php if (!osc_is_web_user_logged_in()): ?>
-               // init Masonry
-               var $grid = $('.masonry_row').masonry({
+                // init Masonry
+                var $grid = $('.masonry_row').masonry({
                     columnWidth: '.item',
                     itemSelector: '.item',
                 });
                 // layout Masonry after each image loads
-                $grid.imagesLoaded().progress( function() {
-                  $grid.masonry('layout');
+                $grid.imagesLoaded().progress(function () {
+                    $grid.masonry('layout');
                 });
                 $('#filter_value').val('1');
                 $('#search_form a').click(function (e) {
@@ -909,9 +912,9 @@ function footer_script() {
                             is_enable_ajax = true;
                             //                            $(".result_text").hide();
                             $('.masonry_row').masonry('reloadItems');
-                            $grid.imagesLoaded().progress( function() {
+                            $grid.imagesLoaded().progress(function () {
                                 $grid.masonry('layout');
-                              });
+                            });
                             $('#page_number').val(1);
 
                         }
@@ -921,13 +924,13 @@ function footer_script() {
                 $('#search_form li').click(function (e) {
                     $(this).addClass('active');
                 });
-                 $(window).on("scroll", function() {
-                        var scrollHeight = $(document).height();
-                        var scrollPosition = $(window).height() + $(window).scrollTop();
-                        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-                              setTimeout(make_item_ajax_call, 1000);
-                        }
-                });              
+                $(window).on("scroll", function () {
+                    var scrollHeight = $(document).height();
+                    var scrollPosition = $(window).height() + $(window).scrollTop();
+                    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+                        setTimeout(make_item_ajax_call, 1000);
+                    }
+                });
     <?php else: ?>
                 var item_page_number = $('#item_page_number').val();
                 $.ajax({
@@ -1038,20 +1041,20 @@ function footer_script() {
     <?php endif; ?>
         });
 
-//            $(window).load(function () {            
-//                $.ajax({
-//                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",                
-//                    success: function (data, textStatus, jqXHR) {
-//                        $('.masonry_row').append(data);
-//                        $('.masonry_row').masonry({
-//                            columnWidth: '.item',
-//                            itemSelector: '.item',
-//                        });
-//                        $('.masonry_row').masonry('layout');
-//                        $('.masonry_row').masonry('reloadItems');
-//                    }
-//                });
-//            });
+    //            $(window).load(function () {            
+    //                $.ajax({
+    //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",                
+    //                    success: function (data, textStatus, jqXHR) {
+    //                        $('.masonry_row').append(data);
+    //                        $('.masonry_row').masonry({
+    //                            columnWidth: '.item',
+    //                            itemSelector: '.item',
+    //                        });
+    //                        $('.masonry_row').masonry('layout');
+    //                        $('.masonry_row').masonry('reloadItems');
+    //                    }
+    //                });
+    //            });
 
         function make_after_login_item_ajax_call() {
             var page_number = $('#item_page_number').val();
@@ -1104,9 +1107,9 @@ function footer_script() {
                         var next_page = parseInt($('#page_number').val()) + 1;
                         $('#page_number').val(next_page);
                         loading = false;
-                         $grid.imagesLoaded().progress( function() {
+                        $grid.imagesLoaded().progress(function () {
                             $grid.masonry('layout');
-                          });
+                        });
                         $('.masonry_row').masonry('reloadItems');
                     }
                 }

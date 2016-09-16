@@ -2322,23 +2322,41 @@ if ($page == 'user' && $action == 'profile') {
 $page = Params::getParam('page');
 $p_route = Params::getParam('route');
 //if ($page == 'custom' && $p_route == 'payment-pro-done') {
-if ($page == 'custom' && $p_route == 'paypal-notify') {    
+if ($page == 'custom' && $p_route == 'paypal-notify') {
     $transaction_array['dt_date'] = date("Y-m-d H:i:s");
     $transaction_array['s_code'] = ' ';
-    $transaction_array['i_amount'] = 4.99;
     $transaction_array['s_currency_code'] = 'USD';
-    $transaction_array['s_email'] = @$_GET['user_email'];
-    $transaction_array['fk_i_user_id'] = @$_GET['user_id'];
+    $transaction_array['s_email'] = @$_REQUEST['user_email'];
+    $transaction_array['fk_i_user_id'] = @$_REQUEST['user_id'];
     $transaction_array['s_source'] = 'PAYPAL';
     $transaction_array['i_status'] = '1';
-    $transaction_array['debug_code'] = "<pre>".print_r($_POST)."<pre>";
 
-    $db_prefix = DB_TABLE_PREFIX;
-    $transaction_data = new DAO();
-    $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
+//    $transaction_array['debug_code'] = "<pre>" . print_r($_POST) . "<pre>";
+    if (isset($_REQUEST['paymement_type']) && $_REQUEST['paymement_type'] == 'primium'):
+       
+        $transaction_array['i_amount'] = 1;
+        $db_prefix = DB_TABLE_PREFIX;
+        $transaction_data = new DAO();
+        $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
 
-    $user_data = new DAO();
-    $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => @$_GET['user_id']));
+        $premium['user_id'] = @$_REQUEST['user_id'];
+        $premium['item_id'] = @$_REQUEST['item_id'];
+        $premium['start_date'] = date("Y-m-d H:i:s");
+        $premium['created'] = date("Y-m-d H:i:s");
+        $premium['end_date'] = date("Y-m-d H:i:s", strtotime("+2 days", strtotime("NOW")));
+        $premium_data = new DAO();
+        $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
+      
+       
+    elseif (isset($_GET['paymement_type']) && $_GET['paymement_type'] == 'subscription'):
+        $transaction_array['i_amount'] = 4.99;
+        $db_prefix = DB_TABLE_PREFIX;
+        $transaction_data = new DAO();
+        $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
+
+        $user_data = new DAO();
+        $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => @$_GET['user_id']));
+    endif;
 }
 
 function custom_echo($x, $length) {

@@ -337,7 +337,7 @@ function payment_script() {
                 }
                 var selected_payment_method = $('.payment-option:checked').val();
                 if (selected_payment_method == 'paypal') {
-                    var pay_action = $('input[name=notify_url]').val()+'&user_id=<?php echo osc_logged_user_id()?>&user_email=<?php echo osc_logged_user_email()?>';
+                    var pay_action = $('input[name=notify_url]').val()+'&paymement_type=subscription&user_id=<?php echo osc_logged_user_id()?>&user_email=<?php echo osc_logged_user_email()?>';
                     $('input[name=notify_url]').val(pay_action);                    
                     $('.paypal-btn').trigger('click');
                 }

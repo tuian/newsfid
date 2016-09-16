@@ -365,21 +365,14 @@ endif;
                             <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
                         <?php endif; ?>
                     </ul>  
-
-                    <?php
-                    $user_id = osc_logged_user_id();
-                    $post = get_user_posts_count($user_id);
-//pr($post);
-//if($post == 1):
-                    ?>
-
                     <?php // endif;  ?>
                     <div class="col-md-12 padding-0 search-box success-border">
                     </div>
                     <div class="border-bottom-gray col-md-12"></div>
                     <div class="user_content col-md-12 padding-0 tab-content scroll-content background-white">
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
-                            <input type="hidden" value="0" name="abc" class="user_post_page_number">  
+                            <input type="hidden" value="0" name="abc" class="user_post_page_number"> 
+                            <input type="hidden" name="primium_item_id_post" id="primium_item_id_post">
                             <div class="no-user-post">
                                 <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
                                     <div class="col-md-4 padding-0">
