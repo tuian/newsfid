@@ -49,7 +49,11 @@ if ($item_id):
                         <div class="col-md-12 background-white">
                             <div class="col-md-12 padding-top-4per">
                                 <div class="popup">
-                                    <?php user_follow_box(osc_logged_user_id(), $user_pre_id); ?>
+                                    <?php
+                                    if (osc_logged_user_id() != $user_pre_id):
+                                        user_follow_box(osc_logged_user_id(), $user_pre_id);
+                                    endif;
+                                    ?>
                                     <div class="user-block">
                                         <?php
                                         $user_pr = get_user_data($user_pre_id);
@@ -225,7 +229,7 @@ if ($item_id):
                                 <div class="box-footer">
                                     <form class="comment_form" data_item_id="<?php echo $item_id_pre ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
                                         <div class="comment_user_image col-md-1 padding-0">
-                                            <?php get_user_profile_picture($item_id_pre) ?>
+                                            <?php get_user_profile_picture(osc_logged_user_id()) ?>
                                         </div>
                                         <!-- .img-push is used to add margin to elements next to floating images -->
                                         <div class="img-push">
@@ -252,7 +256,11 @@ if ($item_id):
                                     <div class="row">
                                         <div class="col-md-12 padding-top-10">
                                             <div class="popup">
-                                                <?php user_follow_box(osc_logged_user_id(), osc_item_user_id()); ?>
+                                                <?php
+                                                if (osc_logged_user_id() != osc_item_user_id()):
+                                                    user_follow_box(osc_logged_user_id(), osc_item_user_id());
+                                                endif;
+                                                ?>
                                                 <div class="user-block">
                                                     <?php
                                                     $user = get_user_data(osc_item_user_id());

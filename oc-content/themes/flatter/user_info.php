@@ -39,7 +39,7 @@ $roles = get_user_roles_array();
         <span class="user_type_text info_text" data_role_id="<?php echo $user_data['role_id'] ?>">
             <span class="user_role_selector_container">
                 <span class="user_role_name">
-                    <?php echo $user_data['role_name']; ?>
+                    <?php echo $user_data['role_name_eng']; ?>
                 </span>
                 <select name="user_role_selector" id="user_role_selector" class="user_role_selector">
                     <?php foreach ($roles as $k => $role): ?>

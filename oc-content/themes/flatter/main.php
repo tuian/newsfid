@@ -71,37 +71,37 @@ if (isset($user_id)) {
 <!-- Homepage widget 1 -->
 
 <!-- bottom background -->
+<div id="cover" class="cover">
+    <?php if (osc_is_web_user_logged_in()) : ?>
+        <?php if (function_exists("osc_slider")) { ?>
+            <?php osc_slider(); ?>  
+        <?php } ?>
+    </div>
+    <!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;max-height: 500px;">
+            <div class="last-post col-md-12">
+                <div class="col-md-8">
+                    HEADLINES
+                </div>
+                <div class="col-md-8">
+                    <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
+                </div>
+                <div class="col-md-8 padding-bottom-10"><i>
+    <?php
+    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
 
-<?php if (osc_is_web_user_logged_in()) : ?>
-    <?php if (function_exists("osc_slider")) { ?>
-        <?php // osc_slider();  ?>  
-    <?php } ?>
-
-    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;max-height: 500px;">
-        <div class="last-post col-md-12">
-            <div class="col-md-8">
-                HEADLINES
-            </div>
-            <div class="col-md-8">
-                <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
-            </div>
-            <div class="col-md-8 padding-bottom-10"><i>
-                    <?php
-                    $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
-
-                    if (strlen($string) > 100) {
+    if (strlen($string) > 100) {
 
 // truncate string
-                        $stringCut = substr($string, 0, 100);
+        $stringCut = substr($string, 0, 100);
 
 // make sure it ends in a word so assassinate doesn't become ass...
-                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
-                    }
-                    ?>  <?php echo $string;
-                    ?></i>
-            </div>
-        </div>      
-    </div>
+        $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' <div class="col-md-12 green padding-0 item_title_head read_more" data_item_id="' . $post_details['fk_i_item_id'] . '"> Read More </div>';
+    }
+    ?>  <?php echo $string;
+    ?></i>
+                </div>
+            </div>      
+        </div>-->
 
 <?php else : ?>
     <div class="section" >
@@ -430,7 +430,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                     ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                        ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -452,7 +452,7 @@ if (isset($user_id)) {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                     ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                        ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -779,7 +779,7 @@ function footer_script() {
 
             });
     <?php if (osc_is_web_user_logged_in()): ?>
-                
+
 
                 $(window).scroll(function (event) {
                     var screen = $(window).height();
@@ -1041,20 +1041,20 @@ function footer_script() {
     <?php endif; ?>
         });
 
-    //            $(window).load(function () {            
-    //                $.ajax({
-    //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",                
-    //                    success: function (data, textStatus, jqXHR) {
-    //                        $('.masonry_row').append(data);
-    //                        $('.masonry_row').masonry({
-    //                            columnWidth: '.item',
-    //                            itemSelector: '.item',
-    //                        });
-    //                        $('.masonry_row').masonry('layout');
-    //                        $('.masonry_row').masonry('reloadItems');
-    //                    }
-    //                });
-    //            });
+        //            $(window).load(function () {            
+        //                $.ajax({
+        //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",                
+        //                    success: function (data, textStatus, jqXHR) {
+        //                        $('.masonry_row').append(data);
+        //                        $('.masonry_row').masonry({
+        //                            columnWidth: '.item',
+        //                            itemSelector: '.item',
+        //                        });
+        //                        $('.masonry_row').masonry('layout');
+        //                        $('.masonry_row').masonry('reloadItems');
+        //                    }
+        //                });
+        //            });
 
         function make_after_login_item_ajax_call() {
             var page_number = $('#item_page_number').val();

@@ -77,7 +77,7 @@ if ($_REQUEST['action'] == 'user_role'):
     $result = $user_data->dao->update("{$db_prefix}t_user", array('user_role' => $text), array('pk_i_id' => $user_id));
     if ($result):
         $user_data = get_user_data($user_id);
-        echo $user_data['role_name'];
+        echo $user_data['role_name_eng'];
     else:
         echo 0;
     endif;

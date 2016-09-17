@@ -11,9 +11,9 @@ $data = new DAO();
 $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
-$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'INNER');
+//$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
+//$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 
 if (isset($_REQUEST['location_type'])):
@@ -22,10 +22,10 @@ if (isset($_REQUEST['location_type'])):
     if ($_REQUEST['location_type'] == 'world'):
 
     elseif ($_REQUEST['location_type'] == 'country'):
-        $data->dao->where('item_location.fk_c_country_code', $location_id);
+//        $data->dao->where('item_location.fk_c_country_code', $location_id);
     elseif ($_REQUEST['location_type'] == 'city'):
         if (!empty($location_id)):
-            $data->dao->where('item_location.fk_i_city_id', $location_id);
+//            $data->dao->where('item_location.fk_i_city_id', $location_id);
         endif;
     endif;
 endif;
@@ -35,13 +35,13 @@ if (!empty($_REQUEST['category_id'])):
         $categories = array_column(Category::newInstance()->findSubcategories($_REQUEST['category_id']), 'pk_i_id');
         $categories = implode(',', $categories);
     endif;
-    $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
+//    $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
 //else:
 //    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
 endif;
 
 if (!empty($_REQUEST['post_type'])):
-    $data->dao->where('item.item_type', $_REQUEST['post_type']);
+//    $data->dao->where('item.item_type', $_REQUEST['post_type']);
 endif;
 
 //get_share_post
@@ -282,7 +282,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                          ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                           ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -449,7 +449,7 @@ endif;
 //                                $('.payment_result').empty().addClass('success').removeClass('error');
 //                                $('.payment_result').text('Payment added successfully');
 //                                data = '';
-<?php // osc_add_flash_ok_message('Payment added successfully');             ?>
+<?php // osc_add_flash_ok_message('Payment added successfully');              ?>
                         alert('Payment added successfully');
                         window.location.href = "<?php echo osc_base_url(); ?>";
                     } else {

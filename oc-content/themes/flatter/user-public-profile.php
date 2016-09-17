@@ -52,12 +52,32 @@ endif;
 ?>
 
 <div id="cover" class="cover">
+    <?php if(osc_logged_user_id() == $user['user_id']): ?>
     <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
         <span class ="icon">
             <i class="fa fa-camera"></i>
         </span>
     </div>
+    <?php endif; ?>
     <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
+    <div class="user-followe">
+        <div class="vertical-row">
+            <h1 class="col-md-4">
+                <?php
+                $user_followers = get_user_follower_data($user['user_id']);
+                if ($user_followers):
+                    echo count($user_followers);
+                else:
+                    echo 0;
+                endif;
+                ?>
+            </h1> 
+            <div class="col-md-5 padding-top-13per">FOLLOWERS </div>
+        </div>
+        <span class="col-md-12" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+            <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
+        </span> 
+    </div>
 </div>
 
 <!-- end profil cover -->
@@ -671,18 +691,18 @@ function custom_script() {
 
 
                                                 $('#cover .img').hover(function () {
-                                                        $('.file_upload_cover .icon').show();
-                                                    },
-                                                    function () {
-                                                        $('.file_upload_cover .icon').hide();
-                                                });
-                                                
+                                                    $('.file_upload_cover .icon').show();
+                                                },
+                                                        function () {
+                                                            $('.file_upload_cover .icon').hide();
+                                                        });
+
                                                 $('.file_upload_cover .icon').hover(function () {
-                                                        $('.file_upload_cover .icon').show();
-                                                    },
-                                                    function () {
-                                                        $('.file_upload_cover .icon').hide();
-                                                });
+                                                    $('.file_upload_cover .icon').show();
+                                                },
+                                                        function () {
+                                                            $('.file_upload_cover .icon').hide();
+                                                        });
                                                 $(document).on('click', '.user_profile_navigation .user_follower', function () {
                                                     $.ajax({
                                                         url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
