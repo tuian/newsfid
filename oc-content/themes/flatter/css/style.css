@@ -3075,7 +3075,35 @@ select {
 .img-user{
     position: relative;
 }
-
+.premium .box-widget{
+    margin: 0;
+}
+.copyright_box_post{
+    padding: 15px;
+}
+.buy_pack{
+    padding: 3% 5%;
+}
+.premium-fix {
+    position: fixed;
+    top: 0px;
+    width: 23%;
+}
+.premium_post_fix{
+    top:30px;
+}
+.premium_post{
+    position: relative;
+    left: 33.5%;
+    top: 0px;
+    width: 100%;
+}
+.premium_nav_fix {
+    position: fixed !important;
+    width: 44.55% !important;
+    z-index: 9;
+    top: 0px;
+}
 .disable input[type=text]:disabled {
     background: #dddddd;
 }
@@ -4074,4 +4102,10 @@ textarea.comment_text{
 .bg-tchat #user_list .edit-arrow {
     padding-top: 5px;
     padding-bottom: 15px;
+}
+.padding-top-5{
+    padding-top: 5px;
+}
+canvas input[type="text"]{
+    top:0px !important;
 }

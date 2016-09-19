@@ -143,7 +143,8 @@ function osc_slider() {
 
                 <?php foreach ($slides as $slide) { ?>
                     <li>
-                        <img  src="<?php echo osc_base_url() . 'oc-content/uploads/6/' . $slide['pk_i_id'] . '.' . $slide['s_extension']; ?>" alt="<?php echo $slide['s_name']; ?>" style="background-size: cover;">
+                      <!--server  <img  src="<?php echo osc_base_url() . 'oc-content/uploads/6/' . $slide['pk_i_id'] . '.' . $slide['s_extension']; ?>" alt="<?php echo $slide['s_name']; ?>" style="background-size: cover;">-->
+                        <img  src="<?php echo osc_base_url() . 'oc-content/uploads/8/' . $slide['pk_i_id'] . '.' . $slide['s_extension']; ?>" alt="<?php echo $slide['s_name']; ?>" style="background-size: cover;">
                         <?php if (getSliderCaption() == 1) { ?>
                             <div class="carousel-caption">
 

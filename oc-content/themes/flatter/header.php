@@ -66,6 +66,8 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.knob.js'); ?>"></script>        
+        
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
         <!-- /Header Hook -->

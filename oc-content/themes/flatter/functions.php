@@ -2308,6 +2308,17 @@ function get_item_premium() {
     return array_unique($item_array);
 }
 
+function get_item_premium_pack() {
+    $item = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
+    $item->dao->select("item.*");
+    $item->dao->from("{$db_prefix}t_payment_pro_packs AS item");
+    $item->dao->orderBy('i_amount_cost DESC');
+    $result = $item->dao->get();
+    $item_data = $result->result();  
+    return $item_data;
+}
+
 $page = Params::getParam('page');
 $action = Params::getParam('action');
 if ($page == 'user' && $action == 'profile') {
@@ -2333,7 +2344,7 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
 
 //    $transaction_array['debug_code'] = "<pre>" . print_r($_POST) . "<pre>";
     if (isset($_REQUEST['paymement_type']) && $_REQUEST['paymement_type'] == 'primium'):
-       
+
         $transaction_array['i_amount'] = 1;
         $db_prefix = DB_TABLE_PREFIX;
         $transaction_data = new DAO();
@@ -2346,8 +2357,8 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
         $premium['end_date'] = date("Y-m-d H:i:s", strtotime("+2 days", strtotime("NOW")));
         $premium_data = new DAO();
         $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
-      
-       
+
+
     elseif (isset($_GET['paymement_type']) && $_GET['paymement_type'] == 'subscription'):
         $transaction_array['i_amount'] = 4.99;
         $db_prefix = DB_TABLE_PREFIX;

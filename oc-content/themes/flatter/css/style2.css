@@ -72,8 +72,8 @@
     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover; /* version standardisée */
     background-color: black;
-    max-height: 500px;
-    min-height: 500px;
+    max-height: 460px;
+    min-height: 460px;
     overflow: hidden; 
 }
 #cover img,
