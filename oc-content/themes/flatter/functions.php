@@ -2307,7 +2307,41 @@ function get_item_premium() {
     endif;
     return array_unique($item_array);
 }
+function get_item_inprogress($user_id) {
+    $item = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
+    $item->dao->select("item.item_id");
+    $item->dao->from("{$db_prefix}t_premium_items AS item");
+    $item->dao->where('start_date <= NOW() AND end_date >= NOW() AND item.user_id='.$user_id);
+    $result = $item->dao->get();
+    $item_data = $result->result();
+    $item_array = array();
+    if (!empty($item_data)):
+        foreach ($item_data as $v):
+            $item_array[] = $v['item_id'];
+        endforeach;
+    endif;
+    return $item_array;
+}
 
+function get_item_completed($user_id) {
+
+    $db_prefix = DB_TABLE_PREFIX;
+    $item = new DAO();
+    $item->dao->select("item.item_id");
+    $item->dao->from("{$db_prefix}t_premium_items AS item");
+    $item->dao->where('end_date <= NOW() AND item.user_id='.$user_id);
+    $result = $item->dao->get();
+    $item_data = $result->result();
+    $item_array = array();
+    if (!empty($item_data)):
+        foreach ($item_data as $v):
+            $item_array[] = $v['item_id'];
+        endforeach;
+    endif;
+    
+    return $item_array;
+}
 function get_item_premium_pack() {
     $item = new DAO();
     $db_prefix = DB_TABLE_PREFIX;
@@ -2315,7 +2349,7 @@ function get_item_premium_pack() {
     $item->dao->from("{$db_prefix}t_payment_pro_packs AS item");
     $item->dao->orderBy('i_amount_cost DESC');
     $result = $item->dao->get();
-    $item_data = $result->result();  
+    $item_data = $result->result();
     return $item_data;
 }
 
@@ -2343,21 +2377,19 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
     $transaction_array['i_status'] = '1';
 
 //    $transaction_array['debug_code'] = "<pre>" . print_r($_POST) . "<pre>";
-    if (isset($_REQUEST['paymement_type']) && $_REQUEST['paymement_type'] == 'primium'):
+    if (isset($_REQUEST['paymement_type']) && $_REQUEST['paymement_type'] == 'pack'):
 
         $transaction_array['i_amount'] = 1;
         $db_prefix = DB_TABLE_PREFIX;
         $transaction_data = new DAO();
         $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
 
-        $premium['user_id'] = @$_REQUEST['user_id'];
-        $premium['item_id'] = @$_REQUEST['item_id'];
-        $premium['start_date'] = date("Y-m-d H:i:s");
-        $premium['created'] = date("Y-m-d H:i:s");
-        $premium['end_date'] = date("Y-m-d H:i:s", strtotime("+2 days", strtotime("NOW")));
-        $premium_data = new DAO();
-        $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
-
+        $user_premium_array['pack_id'] = @$_REQUEST['pack_id'];
+        $user_premium_array['user_id'] = @$_REQUEST['user_id'];
+        $user_premium_array['premium_post'] = @$_REQUEST['posts'];
+        $user_premium_array['pack_name'] = @$_REQUEST['pack_name'];
+        $premium_user = new DAO();
+        $premium_user->dao->insert("{$db_prefix}t_user_pack", $user_premium_array);
 
     elseif (isset($_GET['paymement_type']) && $_GET['paymement_type'] == 'subscription'):
         $transaction_array['i_amount'] = 4.99;
@@ -2368,6 +2400,29 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
         $user_data = new DAO();
         $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => @$_GET['user_id']));
     endif;
+}
+$user_id = osc_logged_user_id();
+
+function get_user_pack_details($user_id) {
+    $item = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
+    $item->dao->select("pack.*");
+    $item->dao->from("{$db_prefix}t_user_pack AS pack");
+    $item->dao->where('user_id', $user_id);
+    $result = $item->dao->get();
+    $item_data = $result->row();
+    return $item_data;
+}
+
+function get_user_pack_name($pack_id) {
+    $item = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
+    $item->dao->select("pack.s_name");
+    $item->dao->from("{$db_prefix}t_payment_pro_packs AS pack");
+    $item->dao->where('pk_i_id', $pack_id);
+    $result = $item->dao->get();
+    $item_data = $result->row();
+    return $item_data;
 }
 
 function custom_echo($x, $length) {

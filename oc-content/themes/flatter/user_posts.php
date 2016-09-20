@@ -110,8 +110,13 @@ if ($items):
                                             <?php
                                             $items = get_item_premium();
                                             if (!in_array($item_id, $items)):
-                                                ?>
-                                                <li class="premium" item_id="<?php echo $item_id; ?>"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php?item_id='.$item_id; ?>"> Premium</a></li>
+                                                $pack = get_user_pack_details(osc_logged_user_id());
+                                                if ($pack['remaining_post'] == 0):
+                                                    ?>
+                                                    <li class="premium" item_id="<?php echo $item_id; ?>"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php?item_id=' . $item_id; ?>"> Premium</a></li>
+                                                <?php else: ?>
+                                                    <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Premium</a></li>
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                             <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
                                                                   <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
@@ -142,7 +147,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                              ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -247,6 +252,22 @@ endif;
 ?>
 
 <script>
+    $(document).on('click', '.add_premium_post', function () {
+        var item_id = $(this).attr('item_id');
+        var user_id = <?php echo osc_logged_user_id() ?>;
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url('promoted_post_ajax.php') ?>",
+            type: 'post',
+            data: {
+                add_premium: 'add_premium',
+                item_id: item_id,
+                user_id: user_id
+            },
+            success: function () {
+                $(location).attr('href', '<?php echo osc_base_url(); ?>');
+            }
+        });
+    });
     $(document).on('click', '.delete_post', function () {
         var user_id = $(this).attr('data-user-id');
         var post_id = $(this).attr('data-post-id');

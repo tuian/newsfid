@@ -113,9 +113,14 @@ if ($items):
                                         <?php
                                         $items = get_item_premium();
                                         if (!in_array($item_id, $items)):
-                                            ?>
-                                            <li class="premium" item_id="<?php echo $item_id; ?>"><a href="<?php echo osc_current_web_theme_url('promoted_post_pack.php') ?>"> Premium</a></li>
+                                            $pack = get_user_pack_details(osc_logged_user_id());
+                                            if ($pack['remaining_post'] == 0):
+                                                ?>
+                                                <li class="premium" item_id="<?php echo $item_id; ?>"><a href="<?php echo osc_current_web_theme_url('promoted_post_pack.php') ?>"> Premium</a></li>
+                                            <?php else: ?>
+                                                <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Premium</a></li>
                                             <?php
+                                            endif;
                                         endif;
                                         ?>
                                         <!--                                    <li><a></a></li>
@@ -145,7 +150,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                        ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                  ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -285,6 +290,22 @@ if (osc_logged_user_id()):
     $paypal_btn->standardButton($items_pre);
     ?>
     <script>
+        $(document).on('click', '.add_premium_post', function () {
+            var item_id = $(this).attr('item_id');
+            var user_id = <?php echo osc_logged_user_id() ?>;
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('promoted_post_ajax.php') ?>",
+                type: 'post',
+                data: {
+                    add_premium: 'add_premium',
+                    item_id: item_id,
+                    user_id: user_id
+                },
+                success: function () {
+                    $(location).attr('href', '<?php echo osc_base_url(); ?>');
+                }
+            });
+        });
         $(document).ready(function () {
             $('.premium').click(function () {
                 var item_id = $(this).attr('item_id');
@@ -331,7 +352,7 @@ if (osc_logged_user_id()):
                             //                                $('.payment_result').empty().addClass('success').removeClass('error');
                             //                                $('.payment_result').text('Payment added successfully');
                             //                                data = '';
-    <?php // osc_add_flash_ok_message('Payment added successfully');              ?>
+    <?php // osc_add_flash_ok_message('Payment added successfully');                        ?>
                             alert('Payment added successfully');
                             window.location.href = "<?php echo osc_base_url(); ?>";
                         } else {

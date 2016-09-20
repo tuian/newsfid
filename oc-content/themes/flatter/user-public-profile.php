@@ -52,27 +52,27 @@ endif;
 ?>
 
 <div id="cover" class="cover">
-    <?php if(osc_logged_user_id() == $user['user_id']): ?>
-    <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
-        <span class ="icon">
-            <i class="fa fa-camera"></i>
-        </span>
-    </div>
+    <?php if (osc_logged_user_id() == $user['user_id']): ?>
+        <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
+            <span class ="icon">
+                <i class="fa fa-camera"></i>
+            </span>
+        </div>
     <?php endif; ?>
     <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
     <div class="user-followe">
-        <div class="vertical-row">
-            <h1 class="col-md-4">
-                <?php
-                $user_followers = get_user_follower_data($user['user_id']);
-                if ($user_followers):
+        <?php
+        $user_followers = get_user_follower_data($user['user_id']);
+        if ($user_followers):
+            ?>
+            <div class="vertical-row">
+                <h1 class="col-md-4">
+                    <?php
                     echo count($user_followers);
-                else:
-                    echo 0;
-                endif;
-                ?>
-            </h1> 
-            <div class="col-md-5 padding-top-13per">FOLLOWERS </div>
+                    ?>
+                </h1> 
+                <div class="col-md-5 padding-top-13per">FOLLOWERS </div>
+            <?php endif; ?>
         </div>
         <span class="col-md-12" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
             <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
@@ -385,7 +385,7 @@ endif;
                             <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
                         <?php endif; ?>
                     </ul>  
-                    <?php // endif;  ?>
+                    <?php // endif;   ?>
                     <div class="col-md-12 padding-0 search-box success-border">
                     </div>
                     <div class="border-bottom-gray col-md-12"></div>

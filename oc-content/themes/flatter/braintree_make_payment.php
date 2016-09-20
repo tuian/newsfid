@@ -59,14 +59,15 @@ if (Params::getParam('premium') == 'premium'):
 
         $transaction_data = new DAO();
         $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
-        
-        $premium['user_id'] = Params::getParam('user_id');
-        $premium['item_id'] = Params::getParam('item_id');
-        $premium['start_date'] = date("Y-m-d H:i:s");
-        $premium['created'] = date("Y-m-d H:i:s");
-        $premium['end_date'] = date("Y-m-d H:i:s",strtotime("+2 days", strtotime("NOW")));
-        $premium_data = new DAO();
-        $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
+
+        $user_premium_array['pack_id'] = Params::getParam('pack_id');
+        $user_premium_array['user_id'] = Params::getParam('user_id');
+        $user_premium_array['premium_post'] = Params::getParam('posts');
+        $user_premium_array['created'] = date("Y-m-d H:i:s");
+        $user_premium_array['remaining_post'] = Params::getParam('posts');
+
+        $premium_user = new DAO();
+        $premium_user->dao->insert("{$db_prefix}t_user_pack", $user_premium_array);
 
         echo 1;
     } else {

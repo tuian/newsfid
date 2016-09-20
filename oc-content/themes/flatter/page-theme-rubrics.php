@@ -41,7 +41,7 @@ if (isset($_GET['type']) && $_GET['type'] == 'interest'):
     $intrest_data->dao->orderBy('a.pk_i_id', 'ASC');
     $result = $intrest_data->dao->get();
     $interest = $result->result();
-   
+
     $rdata = new DAO();
     $rdata->dao->select("rubric.rubric_id");
     $rdata->dao->from(DB_TABLE_PREFIX . 't_user_rubrics as rubric');
@@ -53,45 +53,10 @@ if (isset($_GET['type']) && $_GET['type'] == 'interest'):
         $selected_rubric_arr[] = $sl['rubric_id'];
     endforeach;
 endif;
-
-
-
-if ($_POST):
-    $conn = getConnection();
-    if (isset($_GET['type']) && $_GET['type'] == 'interest'):
-        if (count($_REQUEST['cat_id']) >= 4):
-            $conn->osc_dbExec("DELETE FROM `%st_user_rubrics` WHERE `user_id` = %s", DB_TABLE_PREFIX, $user_id);
-            foreach ($_REQUEST['cat_id'] as $k => $v):
-                $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
-            endforeach;           
-            osc_add_flash_info_message(_m('Rubriques updated successfully'));
-            header("Location: " . $_SERVER['REQUEST_URI']);
-        else:
-            osc_add_flash_error_message(_m('You must select at least four rubrics'));
-            header("Location: " . $_SERVER['REQUEST_URI']);
-        endif;
-    else:
-        if (count($_REQUEST['cat_id']) >= 1):
-            $conn->osc_dbExec("DELETE FROM `%st_user_themes` WHERE `user_id` = %s", DB_TABLE_PREFIX, $user_id);
-            foreach ($_REQUEST['cat_id'] as $k => $v):
-                $conn->osc_dbExec("INSERT INTO %st_user_themes ( user_id, theme_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
-            endforeach;
-            osc_add_flash_info_message(_m('Theme updated successfully'));
-            header('Location: ' . osc_static_page_url());
-        else:
-            osc_add_flash_error_message(_m('You must select at least one theme'));
-            header("Location: " . $_SERVER['REQUEST_URI']);
-        endif;
-    endif;
-endif;
-
 ?>
 
 <div id="columns" class="user-interest">
-    <h3 class="col-md-9">Center of interest</h3>
-    <div class="col-md-3 pull-right">
-        <input class="btn btn-blue btn-flat update_theme" type="submit" name="submit" value="Save" />
-    </div>
+    <h3 class="col-md-9">Center of interest</h3>    
     <div class="clearfix"></div>
     <div class="theme-interest-container">
         <ul class="nav">
@@ -107,7 +72,7 @@ endif;
                         <div class="row">                         
                             <?php foreach ($interest as $k => $i): ?>
                                 <div class="col-md-2 col-sm-2 margin-bottom-20">
-                                    <div title="<?php echo $i['s_name']; ?>" class="category_box <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'selected' : '' ?>">
+                                    <div title="<?php echo $i['s_name']; ?>" class="category_box <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'selected' : '' ?>" cat-id='<?php echo $i['fk_i_category_id'] ?>' check-type='interest'>
                                         <div class="category_image">
                                             <?php
                                             if ($i['bs_image_name']) :
@@ -144,7 +109,7 @@ endif;
                         <div class="row">                         
                             <?php foreach ($themes as $k => $theme): ?>
                                 <div class="col-md-2 col-sm-2 margin-bottom-20">
-                                    <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'selected' : '' ?>" data-id="<?php echo $theme['pk_i_id'] ?>">
+                                    <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'selected' : '' ?>" cat-id="<?php echo $theme['pk_i_id'] ?>" check-type='theme'>
                                         <div class="category_image">
                                             <?php
                                             if ($theme['bs_image_name']) :
@@ -182,12 +147,22 @@ function new_footer() {
     <script>
         $(document).ready(function () {
             $('.category_box').click(function () {
+                
+                var cat_id = $(this).attr('cat-id');
+                var check_type = $(this).attr('check-type');
                 $(this).toggleClass('selected');
                 var checkbox = $(this).find('.cat_checkbox');
                 checkbox.attr("checked", !checkbox.attr("checked"));
-            });
-            $('.update_theme').click(function (e) {
-                $('.user_theme_form').submit();
+                //                $('.user_theme_form').submit();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('theme-rubrics-ajax.php') ?>",
+                    type: 'post',
+                    data: {
+                        action: 'theme-rubrics',
+                        cat_id: cat_id,
+                        check_type: check_type,
+                    }
+                });
             });
         });
     </script>
