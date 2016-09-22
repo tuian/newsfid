@@ -5,6 +5,7 @@ $user_id = osc_logged_user_id();
 $user = get_user_data($user_id);
 if ($_REQUEST['action'] == "chat-converstion"):
     $to_user_id = $_REQUEST['user_id'];
+    osc_set_preference('chat_user_id', $to_user_id);   
     $user_to = get_user_data($to_user_id);
     $msg = get_chat_message_data($user_id);
     if (isset($to_user_id)):
