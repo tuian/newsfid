@@ -40,7 +40,7 @@ if (osc_is_web_user_logged_in()):
                 </a>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
-                <i class="fa fa-user" aria-hidden="true"></i>
+                <i class="fa fa-user chat-window-button" aria-hidden="true"></i>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
                 <a class="font-color-white" href="<?php echo osc_current_web_theme_url() . 't-chat.php' ?>">
@@ -165,6 +165,24 @@ if (osc_is_web_user_logged_in()):
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
 
+        $(document).ready(function () {
+            var chat_user_id = '<?php echo osc_get_preference('chat_user_id'); ?>';
+            if (chat_user_id !== '') {
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                    type: 'post',
+                    data: {
+                        action: 'chat-converstion',
+                        user_id: chat_user_id
+                    },
+                    success: function (data) {
+                        $('#online-chat').html(data);
+                        $('#online-chat').css('display', 'block');
+                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                    }
+                });
+            }
+        });
         $(document).on('click', '.chat-user', function () {
             var id = $(this).attr('to-user-id');
             $.ajax({
@@ -197,11 +215,8 @@ if (osc_is_web_user_logged_in()):
             $('#t_chat_menu').css("display", "block");
         });
         $(document).on('click', '.notification', function () {
-            $('.notification').addClass('notification1');
-            $('.notification').addClass('orange');
-            $('.notification').removeClass('notification');
+            $('.notification').addClass('notification1 orange').removeClass('notification');
             $('.notification-area').show();
-
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'notification.php'; ?>",
                 method: 'post',
@@ -218,10 +233,16 @@ if (osc_is_web_user_logged_in()):
 
             });
         });
+        
+        $(document).on('click', '.chat-window-button', function () {
+            $('.notification1').addClass('notification').removeClass('orange').removeClass('notification1');
+            $('.notification-area').hide();
+            $('.chat-menu').show();
+            $('#chat-user-list').show();
+            $('#online-chat').show();
+        });
         $(document).on('click', '.notification1', function () {
-            $('.notification1').addClass('notification');
-            $('.notification1').removeClass('orange');
-            $('.notification1').removeClass('notification1');
+            $('.notification1').addClass('notification').removeClass('orange').removeClass('notification1');
             $('.notification-area').hide();
             $('.chat-menu').show();
             $('#chat-user-list').show();
