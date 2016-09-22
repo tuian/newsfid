@@ -415,12 +415,12 @@ endif;
                             <div class="loading text-center">
                                 <div class="cs-loader">
                                     <div class="cs-loader-inner">
-                                        <label>	â—�</label>
-                                        <label>	â—�</label>
-                                        <label>	â—�</label>
-                                        <label>	â—�</label>
-                                        <label>	â—�</label>
-                                        <label>	â—�</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
+                                        <label>	●</label>
                                     </div>
                                 </div>
                             </div>

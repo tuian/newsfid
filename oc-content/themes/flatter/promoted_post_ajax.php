@@ -157,6 +157,10 @@ if ($_REQUEST['add_premium'] == 'add_premium'):
     $premium_data = new DAO();
     $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
 
+    
+     $message = 'Created promoted post';
+        set_user_notification($_REQUEST['user_id'], $_REQUEST['user_id'], $message, $_REQUEST['item_id']);
+    
     $pack = get_user_pack_details($_REQUEST['user_id']);
     $remaining_post = $pack['remaining_post'] - 1;
     $pack_id = $pack['pack_id'];
@@ -205,8 +209,8 @@ if ($_REQUEST['action'] == 'promoted_post'):
                 var item_id = $('#primium_item_id').val();
                 var selected_payment_method = $('.payment-option:checked').val();
                 if (selected_payment_method == 'paypal') {
-                    var pay_action = $('input[name=notify_url]').val() + '&paymement_type=pack&user_id=<?php echo osc_logged_user_id(); ?>&user_email=<?php echo osc_logged_user_email(); ?>&pack_id=' + pack_id;
-                    $('input[name=notify_url]').val(pay_action);
+                    var pay_action = $('input[name=notify_url]').val() + '&paymement_type=pack&pack_id=' + pack_id;
+                    $('input[name=notify_url]').val(pay_action);       
                     $('.paypal-btn').trigger('click');
                 }
                 if (selected_payment_method == 'payment-card') {

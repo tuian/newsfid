@@ -353,7 +353,7 @@ h1 > small, h2 > small { font-size:14px; font-weight:300;}
 /** SLIDER **/
 #sliders .rslides img { max-width:none!important; }
 #sliders .rslides img { height:auto!important; }
-#sliders .carousel-caption {top:45%; left: 10%; color:#fff; padding:0; text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.73); }
+#sliders .carousel-caption {top:260px; left: 10%; color:#fff; padding:0; text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.73); }
 
 
 
@@ -2830,7 +2830,7 @@ select {
     padding-top: 35%; 
 }
 .font-color-white{
-    color: #fff;
+    color: #fff !important;
 }
 .bold-600{
     font-weight: 600;
@@ -3589,8 +3589,14 @@ textarea.msg_textarea{
 .sidebar-menu>li.active-menu>a{
     background-color: #b1b9cb !important;
 }
-.skin-blue .sidebar a {
+.sidebar.sidenav.padding-top-4per ul a{
+    color: #fff !important;
+}
+.skin-blue .main_wrapper .sidebar a {
     color: #000 !important;
+}
+.sliderstyle_nav {
+    top: 240px !important;
 }
 .skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn {
     background-color: #b1b9cb !important;
@@ -4105,4 +4111,13 @@ textarea.comment_text{
 }
 .text-shadow-black{
 text-shadow: 0px 3px 3px rgb(0, 0, 0);
+}
+.button-box{
+    border-radius: 0 !important;
+}
+.button-box.blue-box a{
+    color: #fff !important;
+}
+.adverting-btn{
+    background-color: #fff !important;
 }

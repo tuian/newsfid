@@ -88,7 +88,7 @@ endif;
                                                 ?>
                                             </h5>
                                             <span class="description-text">
-                                                En cours
+                                                Running 
                                             </span>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@ endif;
                                                 endif;
                                                 ?>
                                             </h5>
-                                            <span class="description-text">Termine</span>
+                                            <span class="description-text">Finish</span>
                                         </div>
                                     </div>
                                 </div>
@@ -148,13 +148,21 @@ endif;
                             <div class="box-body" style="display: block;">
                                 <div class="progressDiv">
                                     <div class="statChartHolder">
-                                        <div class="progress-pie-chart" data-percent="<?php if (!empty($user_pack)): echo $remain_pack; else: echo'0';endif; ?>"><!--Pie Chart -->
+                                        <div class="progress-pie-chart" data-percent="<?php
+                                        if (!empty($user_pack)): echo $remain_pack;
+                                        else: echo'0';
+                                        endif;
+                                        ?>"><!--Pie Chart -->
                                             <div class="ppc-progress">
                                                 <div class="ppc-progress-fill"></div>
                                             </div>
                                             <div class="balance bold">
                                                 <div>Balance</div>
-                                                <h1 class="margin-0 text-center"><?php if (!empty($user_pack)): echo $user_pack['remaining_post']; else: echo'0';endif; ?></h1>
+                                                <h1 class="margin-0 text-center"><?php
+                                                    if (!empty($user_pack)): echo $user_pack['remaining_post'];
+                                                    else: echo'0';
+                                                    endif;
+                                                    ?></h1>
                                             </div>
                                             <div class="ppc-percents">
                                                 <div class="pcc-percents-wrapper">
@@ -181,23 +189,46 @@ endif;
             <div class="premium_post">
                 <div class="col-md-8 padding-left-0">
                     <ul class="nav nav-tabs user_profile_navigation bg-white premium_nav_fix">
-                        <li class="active user_posts"><a data-toggle="tab" data-target="#en_cours" href="javascript:void(0)">Campagne en cours</a></li>
+                        <li class="active user_posts"><a data-toggle="tab" data-target="#en_cours" href="javascript:void(0)">Running campaign</a></li>
                         <li class="user_info"><a data-toggle="tab" data-target="#top_up_now" href="javascript:void(0)">Top up now</a></li>
                     </ul>  
-                    <?php // endif;    ?>
+                    <?php // endif;       ?>
                     <div class="col-md-12 padding-0 search-box success-border">
                     </div>
                     <div class="user_content col-md-12 padding-0 tab-content scroll-content premium_post_fix background-white">
-                        <div class="padding-top-13per padding-bottom-13per user_posts_area user_details tab-pane fade in active" id="en_cours">
-                            <div class="padding-7per vertical-row">
-                                <div class="">
-                                    <img src="<?php echo osc_current_web_theme_url() ?>images/poster.png" width="150px">
+                        <div class="tab-pane fade in active" id="en_cours">
+                            <?php
+                            $inprog = get_item_inprogress(osc_logged_user_id());
+                            if (empty($inprog)):
+                                ?>
+                                <div class="padding-top-13per padding-bottom-13per user_posts_area user_details">
+                                    <div class="padding-7per vertical-row">
+                                        <div class="">
+                                            <img src="<?php echo osc_current_web_theme_url() ?>images/poster.png" width="150px">
+                                        </div>
+                                        <div class="padding-left-7per">
+                                            <div class="light_gray bold"> No running campaign</div>
+                                            <div class="col-md-7 padding-0"> No campaign is running for now. Top up your credit or start one at anytime.</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="padding-left-7per">
-                                    <div class="light_gray bold"> No running campaign</div>
-                                    <div class="col-md-7 padding-0"> No campaign is running for now. Top up your credit or start one at anytime.</div>
+                            <?php else : ?>
+                                <input type="hidden" value="0" name="abc" class="user_post_page_number"> 
+                                <div class="user_posts_container"></div>
+                                <div class="result_text_message"></div> 
+                                <div class="loading text-center">
+                                    <div class="cs-loader">
+                                        <div class="cs-loader-inner">
+                                            <label>	●</label>
+                                            <label>	●</label>
+                                            <label>	●</label>
+                                            <label>	●</label>
+                                            <label>	●</label>
+                                            <label>	●</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                         <div class="user_info_container user_details tab-pane fade bg-white" id="top_up_now">
                             <div class="col-md-12 padding-3per">
@@ -215,8 +246,10 @@ endif;
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/information.png" width="20px">
                                 </div>
                                 <div class="col-md-11 padding-0">
-                                    <div class="bold light_gray">Votre publication sponsorisee apparaita en tete de publication.</div>
-                                    <div class="light_gray">C'est a dire que lorsqu'un utilisateur consulte un post il voit votre post dans l'entete de la publication qu'il consulte.</div>
+                                    <!--<div class="bold light_gray">Votre publication sponsorisee apparaita en tete de publication.</div>-->
+                                    <div class="bold light_gray">Your publication will appear at the top of publication's window.</div>
+                                    <!--<div class="light_gray">C'est a dire que lorsqu'un utilisateur consulte un post il voit votre post dans l'entete de la publication qu'il consulte.</div>-->
+                                    <div class="light_gray">it means that when a user is consulting a post he sees your publication in the header of the publication.</div>
                                 </div>
                             </div>
                             <div class="border-bottom-gray-2px col-md-12"></div>
@@ -295,9 +328,13 @@ endif;
 
     </div>
 </div>
+<div class="popup"></div>
 <div id="premium-post"></div>
 <?php osc_current_web_theme_path('footer.php'); ?>
 <script>
+    $(document).ready(function () {
+        fetch_user_posts();
+    });
     $(document).on('click', '.buy_pack', function () {
         var posts = $(this).attr('post');
         var name = $(this).attr('name');
@@ -331,5 +368,35 @@ endif;
         $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
         $('.ppc-percents span').html(percent);
     });
-
+    function fetch_user_posts() {
+        var post = $('.user_post_page_number').val();
+        var page_number = $('.user_posts_area .user_post_page_number').val();
+        var user_id = '<?php echo osc_user_id() ?>';
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'user_premium_post.php' ?>",
+            data: {
+                user_id: user_id,
+                page_number: page_number,
+            },
+            success: function (data) {
+                $('.user_posts_area .loading').fadeOut(1000);
+                $('.user_posts_container').css({'opacity': '1'});
+                if (data.indexOf("Nothing to show") >= 0) {
+                    if (page_number === 1) {
+                        $('.result_text_message').html('<h2 class="result_text">Ends of results</h2>');
+                    } else if ($('.usepost_no_record').size() < 1) {
+                        $('.result_text_message').html(data);
+                    }
+                    is_enable_ajax = false;
+                }
+                else {
+                    loading = false;
+                    $(".no-user-post").hide();
+                    $(".user_posts_container").append(data);
+                    var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
+                    $('.user_posts_area .user_post_page_number').val(next_page);
+                }
+            }
+        });
+    }
 </script>

@@ -2307,12 +2307,13 @@ function get_item_premium() {
     endif;
     return array_unique($item_array);
 }
+
 function get_item_inprogress($user_id) {
     $item = new DAO();
     $db_prefix = DB_TABLE_PREFIX;
     $item->dao->select("item.item_id");
     $item->dao->from("{$db_prefix}t_premium_items AS item");
-    $item->dao->where('start_date <= NOW() AND end_date >= NOW() AND item.user_id='.$user_id);
+    $item->dao->where('start_date <= NOW() AND end_date >= NOW() AND item.user_id=' . $user_id);
     $result = $item->dao->get();
     $item_data = $result->result();
     $item_array = array();
@@ -2330,7 +2331,7 @@ function get_item_completed($user_id) {
     $item = new DAO();
     $item->dao->select("item.item_id");
     $item->dao->from("{$db_prefix}t_premium_items AS item");
-    $item->dao->where('end_date <= NOW() AND item.user_id='.$user_id);
+    $item->dao->where('end_date <= NOW() AND item.user_id=' . $user_id);
     $result = $item->dao->get();
     $item_data = $result->result();
     $item_array = array();
@@ -2339,9 +2340,21 @@ function get_item_completed($user_id) {
             $item_array[] = $v['item_id'];
         endforeach;
     endif;
-    
+
     return $item_array;
 }
+
+function get_item_premium_pack_by_id($pack_id) {
+    $item = new DAO();
+    $db_prefix = DB_TABLE_PREFIX;
+    $item->dao->select("item.*");
+    $item->dao->from("{$db_prefix}t_payment_pro_packs AS item");
+    $item->dao->where('pk_i_id', $pack_id);
+    $result = $item->dao->get();
+    $item_data = $result->row();
+    return $item_data;
+}
+
 function get_item_premium_pack() {
     $item = new DAO();
     $db_prefix = DB_TABLE_PREFIX;
@@ -2353,7 +2366,6 @@ function get_item_premium_pack() {
     return $item_data;
 }
 
-$page = Params::getParam('page');
 $action = Params::getParam('action');
 if ($page == 'user' && $action == 'profile') {
     if (ob_get_length() > 0) {
@@ -2368,29 +2380,31 @@ $page = Params::getParam('page');
 $p_route = Params::getParam('route');
 //if ($page == 'custom' && $p_route == 'payment-pro-done') {
 if ($page == 'custom' && $p_route == 'paypal-notify') {
+    $email = osc_logged_user_email();
+    $user = osc_logged_user_id();
     $transaction_array['dt_date'] = date("Y-m-d H:i:s");
     $transaction_array['s_code'] = ' ';
     $transaction_array['s_currency_code'] = 'USD';
-    $transaction_array['s_email'] = @$_REQUEST['user_email'];
-    $transaction_array['fk_i_user_id'] = @$_REQUEST['user_id'];
+    $transaction_array['s_email'] = $email;
+    $transaction_array['fk_i_user_id'] = $user;
     $transaction_array['s_source'] = 'PAYPAL';
     $transaction_array['i_status'] = '1';
 
 //    $transaction_array['debug_code'] = "<pre>" . print_r($_POST) . "<pre>";
     if (isset($_REQUEST['paymement_type']) && $_REQUEST['paymement_type'] == 'pack'):
-
-        $transaction_array['i_amount'] = 1;
+        $p = get_item_premium_pack_by_id(@$_REQUEST['pack_id']);        
+        $transaction_array['i_amount'] = $p['i_amount_cost'];
         $db_prefix = DB_TABLE_PREFIX;
         $transaction_data = new DAO();
         $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
 
-        $user_premium_array['pack_id'] = @$_REQUEST['pack_id'];
-        $user_premium_array['user_id'] = @$_REQUEST['user_id'];
-        $user_premium_array['premium_post'] = @$_REQUEST['posts'];
-		$user_premium_array['created'] = date("Y-m-d H:i:s");
-		$user_premium_array['remaining_post'] = @$_REQUEST['posts'];
-		
-        /*$user_premium_array['pack_name'] = @$_REQUEST['pack_name'];*/
+        $user_premium_array['pack_id'] = $p['pk_i_id'];
+        $user_premium_array['user_id'] = $user;
+        $user_premium_array['premium_post'] = $p['i_amount'];
+        $user_premium_array['created'] = date("Y-m-d H:i:s");
+        $user_premium_array['remaining_post'] = $p['i_amount'];
+
+        /* $user_premium_array['pack_name'] = @$_REQUEST['pack_name']; */
         $premium_user = new DAO();
         $premium_user->dao->insert("{$db_prefix}t_user_pack", $user_premium_array);
 
@@ -2404,8 +2418,15 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
         $user_data->dao->update("{$db_prefix}t_user", array('user_type' => '1', 'valid_date' => date('d/m/Y', strtotime("+1 months", strtotime("NOW")))), array('pk_i_id' => @$_GET['user_id']));
     endif;
 }
-$user_id = osc_logged_user_id();
+// redirect to specific page
+if ($page == 'custom' && ($p_route == 'payment-pro-checkout' || $p_route == 'payment-pro-user-menu' || $p_route == 'payment-pro-user-packs')):
+     osc_redirect_to(osc_base_url());
+endif;
 
+$scategory = Params::getParam('sCategory');
+if ($page == 'search' && isset($_GET['sCategory'])):
+     osc_redirect_to(osc_base_url());
+endif;
 function get_user_pack_details($user_id) {
     $item = new DAO();
     $db_prefix = DB_TABLE_PREFIX;

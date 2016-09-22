@@ -48,9 +48,10 @@ if (Params::getParam('subscribe')):
 endif;
 if (Params::getParam('premium') == 'premium'):
     if ($result->success) {
+        $p = get_item_premium_pack_by_id(Params::getParam('pack_id'));
         $transaction_array['dt_date'] = date("Y-m-d H:i:s");
         $transaction_array['s_code'] = $result->transaction->id;
-        $transaction_array['i_amount'] = $result->transaction->amount;
+        $transaction_array['i_amount'] = $p['i_amount_cost'];
         $transaction_array['s_currency_code'] = $result->transaction->currencyIsoCode;
         $transaction_array['s_email'] = $user['s_email'];
         $transaction_array['fk_i_user_id'] = $user['user_id'];
@@ -59,7 +60,7 @@ if (Params::getParam('premium') == 'premium'):
 
         $transaction_data = new DAO();
         $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
-
+        
         $user_premium_array['pack_id'] = Params::getParam('pack_id');
         $user_premium_array['user_id'] = Params::getParam('user_id');
         $user_premium_array['premium_post'] = Params::getParam('posts');

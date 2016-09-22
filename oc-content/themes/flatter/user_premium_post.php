@@ -1,76 +1,21 @@
 <?php
 require '../../../oc-load.php';
 require 'functions.php';
-$search_name = $_REQUEST['search_name'];
-if ($_REQUEST['user_id']):
-    $user_id = $_REQUEST['user_id'];
-else:
-    $user_id = osc_logged_user_id();
-endif;
+$user_id = osc_logged_user_id();
 $data = new DAO();
 $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 //$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-//$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
+
+$item = get_item_inprogress($user_id);
+$i = array_unique($item);
+$pre = implode(',', $i);
+
+$data->dao->where(sprintf("item.pk_i_id IN(%s)", $pre));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 
-if (isset($_REQUEST['location_type'])):
-    $location_type = $_REQUEST['location_type'];
-    $location_id = isset($_REQUEST['location_id']) ? $_REQUEST['location_id'] : '';
-    if ($_REQUEST['location_type'] == 'world'):
-
-    elseif ($_REQUEST['location_type'] == 'country'):
-//        $data->dao->where('item_location.fk_c_country_code', $location_id);
-    elseif ($_REQUEST['location_type'] == 'city'):
-        if (!empty($location_id)):
-//            $data->dao->where('item_location.fk_i_city_id', $location_id);
-        endif;
-    endif;
-endif;
-if (!empty($_REQUEST['category_id'])):
-    $categories = $_REQUEST['category_id'];
-    if (Category::newInstance()->isRoot($_REQUEST['category_id'])):
-        $categories = array_column(Category::newInstance()->findSubcategories($_REQUEST['category_id']), 'pk_i_id');
-        $categories = implode(',', $categories);
-    endif;
-//    $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
-//else:
-//    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
-endif;
-
-if (!empty($_REQUEST['post_type'])):
-//    $data->dao->where('item.item_type', $_REQUEST['post_type']);
-endif;
-
-//get_share_post
-$share_array = get_user_shared_item($user_id);
-if ($share_array):
-    $share_pk_id = implode(',', $share_array);
-    $data->dao->where(sprintf('item.pk_i_id IN (%s) OR item.fk_i_user_id =%s', $share_pk_id, $user_id));
-else:
-    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
-endif;
-
-//$following_user = get_user_following_data($user_id);
-//$following_user[] = $user_id;
-//$current_user_following_users = get_user_following_data(osc_logged_user_id());
-//if ($following_user):
-//    $following_user[] = $user_id;
-//    $data->dao->where(sprintf('item.fk_i_user_id IN (%s)', implode(',', $following_user)));
-//else:
-//    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
-//endif;
-//if ($current_user_following_users):
-//    $current_user_following_users = implode(',', $current_user_following_users);
-//    $data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($current_user_following_users))");
-//else:
-//    $data->dao->where("item_user.has_private_post = '0'");
-//endif;
-//$following_user = implode(',', $following_user);
-//$data->dao->where("item_user.has_private_post = 0 OR (item_user.has_private_post = 1 AND item.fk_i_user_id IN ($following_user))");
-//$data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
 $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
 $offset = 10;
 $start_from = $page_number * $offset;
@@ -81,6 +26,7 @@ if ($result) {
 } else {
     $items = array();
 }
+
 $pack = get_user_pack_details(osc_logged_user_id());
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
@@ -88,6 +34,7 @@ if ($items):
     $data = $conn->getOsclassDb();
     $comm = new DBCommandClass($data);
     $db_prefix = DB_TABLE_PREFIX;
+
     foreach ($item_result as $k => $item):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
         while (osc_has_custom_items()):
@@ -113,10 +60,10 @@ if ($items):
                                                 $pack = get_user_pack_details(osc_logged_user_id());
                                                 if ($pack['remaining_post'] == 0):
                                                     ?>
-                                                    <li class="premium" data-toggle="modal" data-target="#marketing"><a> Promote Now</a></li>
+                                                    <li class="premium" data-toggle="modal" data-target="#marketing" item_id="<?php echo $item_id; ?>"><a> Premium</a></li>
 
                                                 <?php else: ?>
-                                                    <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Promote Now</a></li>
+                                                    <li class="premium add_premium_post"><a href="javascript:void(0)"> Premium</a></li>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                             <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
@@ -141,24 +88,24 @@ if ($items):
                                                 $pack = get_user_pack_details(osc_logged_user_id());
                                                 if (!$pack['remaining_post'] == 0):
                                                     ?>
-                                                <div class="premium-success">
-                                                    <h4><span  class="bold"> You've done it great</span></h4>
-                                                    <div class="col-md-10 padding-0 padding-bottom-6per">
-                                                        We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
+                                                    <div class="premium-success">
+                                                        <h4><span  class="bold"> You've done it great</span></h4>
+                                                        <div class="col-md-10 padding-0 padding-bottom-6per">
+                                                            We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 <?php else : ?>
-                                                <div class="premium-fail">
-                                                    <div class="col-md-10 padding-0 padding-bottom-10">
-                                                        We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
+                                                    <div class="premium-fail">
+                                                        <div class="col-md-10 padding-0 padding-bottom-10">
+                                                            We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
+                                                        </div>
+                                                        <div class="col-md-10 padding-0 padding-bottom-10">
+                                                            if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.
+                                                        </div>
+                                                        <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
+                                                            You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-10 padding-0 padding-bottom-10">
-                                                        if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.
-                                                    </div>
-                                                    <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
-                                                        You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
-                                                    </div>
-                                                </div>
                                                 <?php endif; ?>
                                             </div>
                                         </div><div class="clearfix"></div>
@@ -168,9 +115,9 @@ if ($items):
                                                 $pack = get_user_pack_details(osc_logged_user_id());
                                                 if (!$pack['remaining_post'] == 0):
                                                     ?>
-                                                <button class="btn  btn-info pull-left button-box blue-box bold"><a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id());?>">Thanks</a></button>
+                                                    <button class="btn  btn-info pull-left button-box bold"><a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>">Thanks</a></button>
                                                 <?php else : ?>
-                                                <button class="btn  btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
+                                                    <button class="btn  btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
                                                 <?php endif; ?>
                                                 <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">Go to adverting account</a></button>
                                             </div>
@@ -199,7 +146,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                 ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                  ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 

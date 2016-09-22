@@ -114,15 +114,14 @@ if ($items):
                                         $items = get_item_premium();
                                         if (!in_array($item_id, $items)):
                                             $pack = get_user_pack_details(osc_logged_user_id());
-                                            if ($pack['remaining_post'] == 0):
+                                            if ($pack['remaining_post'] < 0):
                                                 ?>
-                                                <li class="premium" item_id="<?php echo $item_id; ?>"><a href="<?php echo osc_current_web_theme_url('promoted_post_pack.php') ?>"> Premium</a></li>
+                                                <li class="premium" data-toggle="modal" data-target="#marketing"><a> Promote Now</a></li>
+
                                             <?php else: ?>
-                                                <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Premium</a></li>
-                                            <?php
-                                            endif;
-                                        endif;
-                                        ?>
+                                                <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Promote Now</a></li>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                         <!--                                    <li><a></a></li>
                                                                                         <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
                                                                                         <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
@@ -132,6 +131,57 @@ if ($items):
                                 </button>
                             <?php endif; ?>
                         </span>
+                        <div id="premium-popup"></div>
+                        <div id="marketing" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">                                            
+                                        <div class="bold blue_text center-contant">Newsfid Marketing</div>
+                                    </div>
+                                    <div class="modal-body padding-bottom-10">
+                                        <div class="center-contant">
+                                            <?php
+                                            $pack = get_user_pack_details(osc_logged_user_id());
+                                            if ($pack['remaining_post'] > 0):
+                                                ?>
+                                                <div class="premium-success">
+                                                    <h4><span  class="bold"> You've done it great</span></h4>
+                                                    <div class="col-md-10 padding-0 padding-bottom-6per">
+                                                        We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
+                                                    </div>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="premium-fail">
+                                                    <div class="col-md-10 padding-0 padding-bottom-10">
+                                                        We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
+                                                    </div>
+                                                    <div class="col-md-10 padding-0 padding-bottom-10">
+                                                        if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.
+                                                    </div>
+                                                    <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
+                                                        You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div><div class="clearfix"></div>
+                                    <div class="modal-footer padding-bottom-20">
+                                        <div class="center-contant">
+                                            <?php
+                                            $pack = get_user_pack_details(osc_logged_user_id());
+                                            if ($pack['remaining_post'] > 0):
+                                                ?>
+                                            <a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>"><button class="btn margin-right-10 btn-info pull-left button-box bold">Thanks</button></a>
+                                            <?php else : ?>
+                                                <button class="btn btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
+                                            <?php endif; ?>
+                                            <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">Go to adverting account</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <span class="description"><?php echo time_elapsed_string(strtotime($item['dt_pub_date'])); ?></span>                        
                     </div>
                     <!--                     /.user-block 
@@ -150,7 +200,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                  ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                     ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -268,9 +318,9 @@ if ($items):
     endforeach;
 
 elseif ($page_number > 0):
-    echo '<h2 class="result_text">Ends of results</h2> ';
+   echo '<div class="usepost_no_record"><h2 class="result_text">Ends of results</h2> </div> ';
 else:
-    echo '<h2 class="result_text">Nothing to show off for now. Thanks to try later</h2> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
 endif;
 if (osc_logged_user_id()):
     $id = '11';
@@ -302,7 +352,7 @@ if (osc_logged_user_id()):
                     user_id: user_id
                 },
                 success: function () {
-                    $(location).attr('href', '<?php echo osc_base_url(); ?>');
+                    $('#marketing').modal('show');
                 }
             });
         });
@@ -352,7 +402,7 @@ if (osc_logged_user_id()):
                             //                                $('.payment_result').empty().addClass('success').removeClass('error');
                             //                                $('.payment_result').text('Payment added successfully');
                             //                                data = '';
-    <?php // osc_add_flash_ok_message('Payment added successfully');                        ?>
+    <?php // osc_add_flash_ok_message('Payment added successfully');                           ?>
                             alert('Payment added successfully');
                             window.location.href = "<?php echo osc_base_url(); ?>";
                         } else {

@@ -434,7 +434,7 @@ img .user_profile_img{
     content: "";
     position: absolute;
     border-radius: 50%;
-    left: calc(50% - 100px);
+    left: calc(48% - 100px);
     top: calc(50% - 100px);
     width: 200px;
     height: 200px;
