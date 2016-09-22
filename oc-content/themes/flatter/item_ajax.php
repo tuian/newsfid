@@ -162,6 +162,6 @@ if ($items):
 //elseif($page_number > 0):
 //    echo '<h2 class="result_text">No More Data Found</h2> ';
 else:
-    echo '<h2 class="result_text">Nothing to show off for now. Thanks to try later</h2> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
 endif;
 ?>

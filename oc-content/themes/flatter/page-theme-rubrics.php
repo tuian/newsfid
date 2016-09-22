@@ -19,7 +19,7 @@ foreach ($selected_themes as $sl):
 endforeach;
 
 $data1 = new DAO();
-$data1->dao->select("a.*, b.*, d.*");
+$data1->dao->select(" a.*, a.pk_i_id as cat_pk_id, b.*, d.*");
 $data1->dao->from(DB_TABLE_PREFIX . 't_category as a');
 $data1->dao->join(DB_TABLE_PREFIX . 't_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
 //$data1->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
@@ -40,8 +40,8 @@ if (isset($_GET['type']) && $_GET['type'] == 'interest'):
     $intrest_data->dao->where(sprintf("a.fk_i_parent_id in (%s) AND b.fk_c_locale_code = 'en_US'", implode(",", $selected_themes_arr)));
     $intrest_data->dao->orderBy('a.pk_i_id', 'ASC');
     $result = $intrest_data->dao->get();
-    $interest = $result->result();
-
+    $interest = $result->result();    
+    
     $rdata = new DAO();
     $rdata->dao->select("rubric.rubric_id");
     $rdata->dao->from(DB_TABLE_PREFIX . 't_user_rubrics as rubric');
@@ -109,7 +109,7 @@ endif;
                         <div class="row">                         
                             <?php foreach ($themes as $k => $theme): ?>
                                 <div class="col-md-2 col-sm-2 margin-bottom-20">
-                                    <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'selected' : '' ?>" cat-id="<?php echo $theme['pk_i_id'] ?>" check-type='theme'>
+                                    <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['cat_pk_id'], $selected_themes_arr) ? 'selected' : '' ?>" cat-id="<?php echo $theme['cat_pk_id'] ?>" check-type='theme'>
                                         <div class="category_image">
                                             <?php
                                             if ($theme['bs_image_name']) :
@@ -123,7 +123,7 @@ endif;
                                                 <span class="add_icon"></span>
                                             </div>
                                             <div class="overlay"></div>
-                                            <input type="checkbox" name="cat_id[]" value="<?php echo $theme['pk_i_id'] ?>" class="cat_checkbox" <?php echo in_array($theme['pk_i_id'], $selected_themes_arr) ? 'checked="checked"' : '' ?> style="display: none">
+                                            <input type="checkbox" name="cat_id[]" value="<?php echo $theme['cat_pk_id'] ?>" class="cat_checkbox" <?php echo in_array($theme['cat_pk_id'], $selected_themes_arr) ? 'checked="checked"' : '' ?> style="display: none">
                                         </div>
                                         <div class="category_title">
                                             <?php echo osc_highlight($theme['s_name'], 13); ?>
