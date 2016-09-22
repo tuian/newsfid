@@ -1370,7 +1370,7 @@ function update_item_like($user_id, $item_id, $like_value) {
     $item = $result->row();
     if ($like_value == 1 && $user_id != $item['fk_i_user_id']):
         $message = 'liked your post';
-        set_user_notification($user_id, $item['fk_i_user_id'], $message);
+        set_user_notification($user_id, $item['fk_i_user_id'], $message, $item['pk_i_id']);
     endif;
     return $like_reult;
 }
@@ -1621,7 +1621,7 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     $item = $result->row();
     if ($share_value == 1 && $user_id != $item['fk_i_user_id']):
         $message = 'shared your post';
-        set_user_notification($user_id, $item['fk_i_user_id'], $message);
+        set_user_notification($user_id, $item['fk_i_user_id'], $message, $item_id, $item['pk_i_id']);
     endif;
 }
 
@@ -1692,7 +1692,7 @@ function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
     $item = $result->row();
     if ($watchlist_value == 1 && $user_id != $item['fk_i_user_id']):
         $message = 'added your post to his/her watchlist';
-        set_user_notification($user_id, $item['fk_i_user_id'], $message);
+        set_user_notification($user_id, $item['fk_i_user_id'], $message, $item['pk_i_id']);
     endif;
 }
 
@@ -2005,13 +2005,13 @@ function admin_footer_script() {
 /*
  * jaysukh
   client comments
- * Centre d’interet 
-  - If user hasn’t selected center of interests choose these ones by default :
+ * Centre dâ€™interet 
+  - If user hasnâ€™t selected center of interests choose these ones by default :
 
   Theme=  news + entertainment  /
   Rubrics = celebrity + news + international + entertainment
 
-  Important because 80 users already have profiles created before re-built of the site si they will not have selected centers of interest, and we don’t want them to get a blank newsfeed on publication of the new site.
+  Important because 80 users already have profiles created before re-built of the site si they will not have selected centers of interest, and we donâ€™t want them to get a blank newsfeed on publication of the new site.
  * 
  *  */
 // this code is not necessary once website live and old user update his interest
@@ -2243,11 +2243,11 @@ function get_block_user_data() {
     return $block;
 }
 
-function set_user_notification($from_user_id = null, $to_user_id = null, $message = null) {
+function set_user_notification($from_user_id = null, $to_user_id = null, $message = null, $item_id = null) {
     if ($from_user_id):
         $created = date('Y-m-d H:i:s');
         $conn = getConnection();
-        $conn->osc_dbExec("INSERT INTO %st_user_notifications (from_user_id, to_user_id, message, created) VALUES (%s, %s, '%s','%s')", DB_TABLE_PREFIX, $from_user_id, $to_user_id, $message, $created);
+        $conn->osc_dbExec("INSERT INTO %st_user_notifications (from_user_id, to_user_id, message, created, item_id) VALUES (%s, %s, '%s','%s', '%s')", DB_TABLE_PREFIX, $from_user_id, $to_user_id, $message, $created, $item_id);
         return 1;
     endif;
 }
@@ -2387,7 +2387,10 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
         $user_premium_array['pack_id'] = @$_REQUEST['pack_id'];
         $user_premium_array['user_id'] = @$_REQUEST['user_id'];
         $user_premium_array['premium_post'] = @$_REQUEST['posts'];
-        $user_premium_array['pack_name'] = @$_REQUEST['pack_name'];
+		$user_premium_array['created'] = date("Y-m-d H:i:s");
+		$user_premium_array['remaining_post'] = @$_REQUEST['posts'];
+		
+        /*$user_premium_array['pack_name'] = @$_REQUEST['pack_name'];*/
         $premium_user = new DAO();
         $premium_user->dao->insert("{$db_prefix}t_user_pack", $user_premium_array);
 

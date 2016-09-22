@@ -15,9 +15,9 @@ if ($_REQUEST['notification'] == 'notification'):
         </span>
     </div>
     <div class="background-white notification_list border-bottom-gray">
-
+<div class="popup"></div>
         <?php foreach ($notifications as $n): ?>
-            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 unread<?php
+            <div class="col-md-12 padding-top-10 border-bottom-gray padding-bottom-10 unread <?php
             if ($n['read_status'] == '0'): echo 'unread-notification';
             endif;
             ?>">
@@ -37,7 +37,7 @@ if ($_REQUEST['notification'] == 'notification'):
                 else: echo "light-gray";
                 endif;
                 ?> ">
-                    <?php echo $n['message']; ?>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
+                   <span class="notification_post pointer" item-id="<?php echo $n['item_id']; ?>"> <?php echo $n['message']; ?></span>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -48,6 +48,20 @@ endif;
 ?>
 
 <script>
+$(document).on('click', '.notification_post', function () {
+	var item_id = $(this).attr('item-id');
+	$.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'popup_ajax.php'; ?>",
+            type: 'post',
+            data: {
+                item_id: item_id
+            },
+            success: function (data) {
+                $('.popup').html(data);
+				$('#item_popup_modal').modal('show');
+            }
+        });
+});
     $(document).on('click', '.mark_all', function () {
         var user = $(this).attr('user-id');
         $.ajax({
@@ -58,7 +72,7 @@ endif;
                 user_id: user
             },
             success: function (data) {
-                $('.unreadunread-notification').css('background-color', '#fff');
+                $('.unread-notification').css('background-color', '#fff');
                 var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
                 var no = 0;
                 console.log(no);
@@ -74,8 +88,8 @@ endif;
     });
     $(document).on('click', '.mark_read', function () {
         var mark_time = $(this).attr('mark_time');
-        var to_id = $(this).attr('to_user_id');
-
+        var to_id = $(this).attr('to_user_id');      
+        $(this).closest('.unread-notification').removeClass('unread-notification');                
         $.ajax({
             url: "<?php echo osc_current_web_theme_url() . 'tchat_user_data.php'; ?>",
             type: 'post',
@@ -87,8 +101,7 @@ endif;
             success: function (data) {
                 $('.user_notification').show();
                 var exist_cnt = parseInt($('.user_notification').attr('data-pending-message'));
-                var no = exist_cnt - 1;
-                console.log(no);
+                var no = exist_cnt - 1;                                
                 $('.user_notification').attr('data-pending-message', no);
                 $('.user_notification').html(no);
             }
@@ -97,6 +110,7 @@ endif;
     $(document).on('click', '.unmark_read', function () {
         var mark_time = $(this).attr('mark_time');
         var to_id = $(this).attr('to_user_id');
+        $(this).closest('.unread').addClass('unread-notification'); 
         $.ajax({
             url: "<?php echo osc_current_web_theme_url() . 'tchat_user_data.php'; ?>",
             type: 'post',

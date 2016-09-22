@@ -60,21 +60,21 @@ endif;
         </div>
     <?php endif; ?>
     <img src="<?php echo $cover_image_path; ?>" class="img img-responsive">
-    <div class="user-followe">
+    <div class="user-followe text-shadow-black">
         <?php
         $user_followers = get_user_follower_data($user['user_id']);
         if ($user_followers):
             ?>
             <div class="vertical-row">
-                <h1 class="col-md-4">
+                <h1 class="col-md-4 text-shadow-black">
                     <?php
                     echo count($user_followers);
                     ?>
                 </h1> 
-                <div class="col-md-5 padding-top-13per">FOLLOWERS </div>
+                <div class="col-md-5 padding-top-13per text-shadow-black">FOLLOWERS </div>
             <?php endif; ?>
         </div>
-        <span class="col-md-12" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+        <span class="col-md-12 text-shadow-black" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
             <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
         </span> 
     </div>
@@ -415,12 +415,12 @@ endif;
                             <div class="loading text-center">
                                 <div class="cs-loader">
                                     <div class="cs-loader-inner">
-                                        <label>	●</label>
-                                        <label>	●</label>
-                                        <label>	●</label>
-                                        <label>	●</label>
-                                        <label>	●</label>
-                                        <label>	●</label>
+                                        <label>	â—�</label>
+                                        <label>	â—�</label>
+                                        <label>	â—�</label>
+                                        <label>	â—�</label>
+                                        <label>	â—�</label>
+                                        <label>	â—�</label>
                                     </div>
                                 </div>
                             </div>

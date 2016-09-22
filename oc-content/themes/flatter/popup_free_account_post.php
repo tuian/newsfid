@@ -60,7 +60,7 @@ require_once 'functions.php';
 
                                 </div>
                                 <div class="col-md-12 vertical-row">
-                                    <h5 class=" margin-0">Vous avez déjà <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publication </h5>
+                                    <h5 class=" margin-0">Vous avez dÃ©jÃ  <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publication </h5>
                                 </div>
 
 
@@ -308,6 +308,9 @@ require_once 'functions.php';
 
 <!----free user post end------->
 <script>
+$(document).on('click', '.post_file_upload_container', function() {
+	$('.post_file_upload_container').css('background','none');
+});
     $('#thumbnil').hide();
     function showimage(fileInput) {
         var files = fileInput.files;

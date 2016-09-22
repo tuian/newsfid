@@ -45,7 +45,7 @@ else :
     //insert notification for author
     $message = 'commented your post';
     if($comment_user_id != $item['fk_i_user_id']):
-        set_user_notification($comment_user_id, $item['fk_i_user_id'], $message);    
+        set_user_notification($comment_user_id, $item['fk_i_user_id'], $message,$comment_item_id);    
     endif;
     
 endif;
@@ -99,7 +99,7 @@ $c_data = $comments_result->result();
                                         <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $comment_item_id; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $comment_item_id; ?>)" ><a>Modifier</a></li>
                                         <li><a></a></li>
                                         <li><a>Sponsoriser</a></li>
-                                        <li><a>Remonter en tête de liste</a></li>
+                                        <li><a>Remonter en tÃªte de liste</a></li>
                                         <li><a></a></li>
                                         <li><a>Signaler la publication</a></li>
 

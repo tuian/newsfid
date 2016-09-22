@@ -171,7 +171,7 @@ endif;
                             </div>
                             <div class="col-md-12 border-bottom-gray"></div>
                             <div class="box-default copyright_box_post">
-                                Copyright Newsfid - <span class="bold"> GaÃ«l Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
+                                Copyright Newsfid - <span class="bold"> GaÃƒÂ«l Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
                             </div>
                         </div>
                         <!-- /.box -->                 

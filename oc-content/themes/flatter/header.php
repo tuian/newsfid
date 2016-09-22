@@ -66,7 +66,7 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.knob.js'); ?>"></script>        
+               
 
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
@@ -231,7 +231,7 @@ found!');</script>";
                         <!-- /.search form -->
                         <!-- sidebar menu: : style can be found in sidebar.less -->
                         <ul class="sidebar-menu">
-                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
                             <!--<li class="header">MAIN NAVIGATION</li>-->
                             <?php
                             $url = $_SERVER['QUERY_STRING']; //you will get last part of url from there
@@ -519,7 +519,7 @@ found!');</script>";
                     </div>
                 </div>                
             </div>
-            <span class="menu-button" onclick="openNav()">&#9776;</span>
+            <span class="menu-button" onClick="openNav()">&#9776;</span>
             <div class="user_passwor_popup_container">
                 <div id="user_confirm_password" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -533,7 +533,7 @@ found!');</script>";
                             <div class="modal-body">
                                 <div class="">
                                     Cette page contient des informations personelles,<br/>
-                                    <span class="bold">confirmer votre mot de passe pour y accéder.</span>
+                                    <span class="bold">confirmer votre mot de passe pour y accÃ©der.</span>
                                 </div>
                                 <div class="input-text-area margin-top-20 left-border box-shadow-none">
                                     <input class="border-bottom-0 user_password_field width-60" type="password" placeholder="Mot de passe">
@@ -673,6 +673,21 @@ found!');</script>";
                             });</script>
                         <script>
                             $(document).ready(function () {
+							$(document).on('click', '#search-btn', function () {
+                                    var search_newsfid_text = $('.search-newsfid-text').val();
+                                    
+                                        $.ajax({
+                                            url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
+                                            data: {
+                                                search_newsfid_text: search_newsfid_text
+                                            },
+                                            success: function (data, textStatus, jqXHR) {
+                                                $('.search-newsfid-popup .modal-content').empty().append(data);
+                                                $('#newsfid-search').modal('show');
+                                            }
+                                        })
+                                   
+                                });
                                 var a = $(document).on('keyup', '.search-newsfid-text', function () {
                                     var search_newsfid_text = $('.search-newsfid-text').val();
                                     if (search_newsfid_text != '') {

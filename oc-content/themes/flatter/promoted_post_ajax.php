@@ -202,19 +202,16 @@ if ($_REQUEST['action'] == 'promoted_post'):
             $('.pay_now').click(function () {
                 var user_id = $(this).attr('user-id');
                 var pack_id = $(this).attr('pack-id');
-                var pack_name = $(this).attr('pack-name');
-                var posts = $(this).attr('post');
                 var item_id = $('#primium_item_id').val();
                 var selected_payment_method = $('.payment-option:checked').val();
                 if (selected_payment_method == 'paypal') {
-                    var pay_action = $('input[name=notify_url]').val() + '&paymement_type=pack&user_id=<?php echo osc_logged_user_id(); ?>&user_email=<?php echo osc_logged_user_email(); ?>&pack_id=' + pack_id + '&pack_name=' + pack_name + '&posts=' + posts;
+                    var pay_action = $('input[name=notify_url]').val() + '&paymement_type=pack&user_id=<?php echo osc_logged_user_id(); ?>&user_email=<?php echo osc_logged_user_email(); ?>&pack_id=' + pack_id;
                     $('input[name=notify_url]').val(pay_action);
                     $('.paypal-btn').trigger('click');
                 }
                 if (selected_payment_method == 'payment-card') {
                     var braintree_number = $('.card_number').val();
                     var braintree_cvv = $('.card_cvv_code').val();
-                    var amount = 4.99;
                     var braintree_month = $('.expiry_month').val();
                     var braintree_year = $('.expiry_year').val();
                     $.ajax({
@@ -225,11 +222,8 @@ if ($_REQUEST['action'] == 'promoted_post'):
                             braintree_number: braintree_number,
                             user_id: user_id,
                             item_id: item_id,
-                            pack_name: pack_name,
                             pack_id: pack_id,
-                            posts: posts,
                             braintree_cvv: braintree_cvv,
-                            amount: amount,
                             braintree_month: braintree_month,
                             braintree_year: braintree_year,
                         },
@@ -238,7 +232,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                                 //                                $('.payment_result').empty().addClass('success').removeClass('error');
                                 //                                $('.payment_result').text('Payment added successfully');
                                 //                                data = '';
-        <?php // osc_add_flash_ok_message('Payment added successfully');                     ?>
+        <?php // osc_add_flash_ok_message('Payment added successfully');                         ?>
                                 alert('Payment added successfully');
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {
