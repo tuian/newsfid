@@ -70,16 +70,18 @@ if (isset($user_id)) {
 
 <!-- Homepage widget 1 -->
 <?php if (osc_is_web_user_logged_in()) : ?>
-    <!-- bottom background -->
+<!--     bottom background 
     <div id="cover" class="cover">
 
-        <?php if (function_exists("osc_slider")) { ?>
-            <?php osc_slider(); ?>  
-        <?php } ?>
-    </div>
-<?php else: {
+        <?php // if (function_exists("osc_slider")) { ?>
+            <?php // osc_slider(); ?>  
+        <?php // } ?>
+    </div>-->
+    <?php
+else: {
         
-    } ?>
+    }
+    ?>
     <!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;max-height: 500px;">
             <div class="last-post col-md-12">
                 <div class="col-md-8">
@@ -126,7 +128,7 @@ if (isset($user_id)) {
                     <a href="https://newsfid.com/index.php?page=item&action=item_add"> Share a story with us now.</a>  <br><br>
                 <?php } else { ?>
                     <a href="<?php echo osc_register_account_url(); ?>"> Or get an account for free now.</a>  <br><br>
-    <?php } ?>                
+                <?php } ?>                
             </div>
         </div>
 
@@ -147,7 +149,7 @@ if (isset($user_id)) {
                             
                                                     <div class="widget-user-header bg-black" style="background: url('<?php echo osc_current_web_theme_url() . "/images/cover-image.png" ?>') center center;">
                                                         <h3 class="widget-user-username">
-    <?php echo $logged_user['user_name'] ?>
+                            <?php echo $logged_user['user_name'] ?>
                                                         </h3>
                                                         <h5 class="widget-user-desc">
                                                             Web Designer
@@ -245,8 +247,8 @@ if (isset($user_id)) {
 
                                 <div class="box-body" style="display: block;">
                                     <div class="category-dropdown left-border" style="display: block;">
-    <?php osc_goto_first_category(); ?>
-                                            <?php if (osc_count_categories()) { ?>
+                                        <?php osc_goto_first_category(); ?>
+                                        <?php if (osc_count_categories()) { ?>
                                             <select id="sCategory" class="form-control input-box" name="sCategory">
                                                 <option value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
                                                 <?php while (osc_has_categories()) { ?>
@@ -255,16 +257,16 @@ if (isset($user_id)) {
                                                         <?php while (osc_has_subcategories()) { ?>
                                                             <option class="subcat margin-left-30" value="<?php echo osc_category_id(); ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo osc_category_name(); ?></option>
                                                         <?php } ?>
-            <?php } ?>
-                                            <?php } ?>
+                                                    <?php } ?>
+                                                <?php } ?>
 
                                             </select>
-    <?php } ?>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="box-body" style="display: block;">
                                     <div class="country-dropdown left-border" style="display: block;">
-    <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>                                
+                                        <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>                                
                                     </div>
                                 </div>
 
@@ -295,7 +297,7 @@ if (isset($user_id)) {
                                                     ?>
                                                     <div class="col-md-12 col-xs-12 margin-bottom-10">
                                                         <div class="col-md-3 col-xs-2 padding-0">
-                    <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                            <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
                                                         </div>
                                                         <div class="col-md-9 col-xs-10 padding-right-0">
                                                             <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
@@ -341,7 +343,7 @@ if (isset($user_id)) {
                                     <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li> 
                                 <?php else: ?>
                                     <li><a data-toggle="modal" data-target="#myModal">LOCAL</a></li>                                     
-    <?php endif; ?>
+                                <?php endif; ?>
                                 <div id="myModal" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
 
@@ -354,7 +356,7 @@ if (isset($user_id)) {
                                             <div class="modal-body">
                                                 <div class="col-md-12 col-sm-12 user_website">
                                                     <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
-    <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
+                                                        <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
                                                     </span>   
                                                     <input type="text" class="" id="autocomplete_main">       
                                                     <div class="user_info_row margin-0 user_map_box">
@@ -432,8 +434,8 @@ if (isset($user_id)) {
                                         ?>
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
-                <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                          ?>)</span>-->
+                                                <?php echo osc_category_name(); ?>
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                                 ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -448,17 +450,17 @@ if (isset($user_id)) {
                                     $i++;
                                 }
                                 ?> 
-                                    <?php } ?>
+                            <?php } ?>
                             <li class="show-more-li show_more"><?php echo __('Show more') . "&nbsp;&nbsp;&nbsp;"; ?><i class="fa fa-angle-down vertical-bottom"></i>
                                 <ul class="">
-                                            <?php foreach ($other_cat as $$k => $n): ?>
+                                    <?php foreach ($other_cat as $$k => $n): ?>
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
-        <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                          ?>)</span>-->
+                                                <?php echo $n['name']; ?>
+                                                <!--<span>(<?php //echo $n['count'];                                                                 ?>)</span>-->
                                             </a>
                                         </li>
-    <?php endforeach; ?>                            
+                                    <?php endforeach; ?>                            
                                 </ul>  
                             </li>
                         </ul>                                    
@@ -525,28 +527,28 @@ if (isset($user_id)) {
                                         <!--<div class="item1 wow animated col-md-4 col-sm-4 col-lg-4">-->
                                         <div class="item animated col-md-4 col-sm-4 col-lg-4 padding-lr-5">
                                             <div class="list">
-                                                        <?php if (osc_images_enabled_at_items()) { ?>
+                                                <?php if (osc_images_enabled_at_items()) { ?>
                                                     <div class="image">
                                                         <div>
-                                                                <?php if (osc_count_item_resources()) { ?>
+                                                            <?php if (osc_count_item_resources()) { ?>
                                                                 <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">
-                                                                <?php item_resources(osc_item_id()) ?>
+                                                                    <?php item_resources(osc_item_id()) ?>
                                                                 </a>
-                        <?php } else { ?>
+                                                            <?php } else { ?>
                                                                 <a href="<?php echo osc_item_url(); ?>">
                                                                     <img src="<?php echo osc_current_web_theme_url('images/no-image.jpg'); ?>" alt="<?php echo osc_item_title(); ?>" class="img-responsive item_image">
                                                                 </a>
-                                                    <?php } ?>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
-                    <?php } ?>
+                                                <?php } ?>
                                                 <div class="description" >
                                                     <div class="col-md-9 padding-top-10">
                                                         <img src="<?php echo $user_image_url; ?>" alt="<?php echo isset($user['user_name']) ? $user['user_name'] : 'user icon'; ?>" class="col-md-3 padding-0 img-responsive item_image user_thumbnail">
                                                         <h3 class="item_title col-md-9">
                                                             <a class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
-                    <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
-                    <?php //echo osc_item_title();    ?>
+                                                                <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
+                                                                <?php //echo osc_item_title();      ?>
                                                             </a>
                                                         </h3>
                                                         <span class="item_time col-md-9 padding-left-10"><?php echo $date_in_french; ?></span>                            
@@ -554,10 +556,10 @@ if (isset($user_id)) {
 
                                                     <div class="col-md-12">
                                                         <p class="item_description">
-                    <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>
+                                                            <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>
                                                         </p>                            
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12 padding-bottom-10">
                                                         <div class="item_counts">
                                                             <div class="col-md-6 padding-0">
 
@@ -566,7 +568,7 @@ if (isset($user_id)) {
                                                                 if ($like_count > 0):
                                                                     ?>
                                                                     <span class="item_view_count padding-right-10">
-                                                                    <?php echo $like_count; ?>
+                                                                        <?php echo $like_count; ?>
                                                                         <i class="fa fa-thumbs-o-up"></i> 
                                                                     </span>
                                                                     <?php
@@ -575,7 +577,7 @@ if (isset($user_id)) {
                                                                 if ($share_count > 0):
                                                                     ?>
                                                                     <span class="item_view_count padding-right-10">
-                                                                    <?php echo $share_count; ?>
+                                                                        <?php echo $share_count; ?>
                                                                         <i class="fa fa-retweet"></i> 
                                                                     </span>
                                                                     <?php
@@ -585,7 +587,7 @@ if (isset($user_id)) {
                                                                     ?>                                                                                                                           
                                                                     <span class="comment_text padding-right-10">
                                                                         <i class="fa fa-comments"></i>
-                                                                    <?php echo $comment_count; ?>
+                                                                        <?php echo $comment_count; ?>
                                                                     </span>
                                                                     <?php
                                                                 endif;
@@ -599,20 +601,18 @@ if (isset($user_id)) {
                                                                 endif;
                                                                 ?>
                                                             </div>  
-                                                            <div class="col-md-6 blue_text text-right pull-right">
-
-                    <?php echo osc_item_category(); ?>
-
+                                                            <div class="col-md-6 blue_text text-right pull-right pointer item_cat" cat-id="<?php echo osc_item_category_id(); ?>">
+                                                                <?php echo osc_item_category(); ?>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-9 col-sm-9 col-xs-9">
-                                                                <?php if (osc_price_enabled_at_items()) { ?>
+                                                            <?php if (osc_price_enabled_at_items()) { ?>
                                                                 <span class="price sclr">
-                                                                <?php echo osc_format_price(osc_item_price()); ?>
+                                                                    <?php echo osc_format_price(osc_item_price()); ?>
                                                                 </span>
-                    <?php } ?>
+                                                            <?php } ?>
                                                         </div>
 
                                                     </div>
@@ -686,6 +686,7 @@ function footer_script() {
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
     <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
     <script>
+
         google.maps.event.addDomListener(window, 'load', initMap);
         function initMap() {
             var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
@@ -750,6 +751,22 @@ function footer_script() {
 
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
+        $(document).on('click', '.item_cat', function () {
+            var cat_id = $(this).attr('cat-id');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('item_filter.php') ?>",
+                type: "POST",
+                data: {
+                    cat_id: cat_id
+                },
+                success: function (data) {
+                    $('.masonry_row').html(data);
+                    $('html,body').animate({
+                        scrollTop: 600
+                    }, 1000);
+                }
+            });
+        });
         $(document).on('click', '.frnd-sug-button', function () {
             var user = $(this).attr('user-data');
             $(user).hide('slow');
@@ -781,6 +798,7 @@ function footer_script() {
                 }
 
             });
+
     <?php if (osc_is_web_user_logged_in()): ?>
 
 
@@ -811,7 +829,7 @@ function footer_script() {
                     else if (screen > 300) {
                         var fix = 450;
                     }
-                    if (scroll > fix) {
+                    if (scroll > 0) {
                         $('#wrap').addClass("box_fix_main");
                         $('.box_post').addClass("box_post_main");
                         $('.user_profile_navigation').addClass("fix_nav");
@@ -936,6 +954,8 @@ function footer_script() {
                 });
     <?php else: ?>
                 var item_page_number = $('#item_page_number').val();
+                var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                var location_id = $('.location_filter_tab.active').attr('data_location_id');
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
                     data: {
@@ -972,6 +992,10 @@ function footer_script() {
                 });
                 $('#sCategory').change(function () {
                     $('.posts_container .loading').fadeIn(500);
+                    var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                    var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                    var category_id = $('#sCategory').val();
+                    var post_type = $('.post_type_filter').val();
                     $('.user_related_posts').css({'opacity': '0.2'});
                     reset_variable_after_login();
                     //make_after_login_item_ajax_call();
@@ -1009,6 +1033,11 @@ function footer_script() {
                     });
                 });
                 $('.filter-button').click(function () {
+                    var country_id = $('#countryId').val();
+                    var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                    var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                    var category_id = $('#sCategory').val();
+                    var post_type = $('.post_type_filter').val();
                     $('.posts_container .loading').fadeIn(500);
                     $('.user_related_posts').css({'opacity': '0.2'});
                     reset_variable_after_login();
@@ -1019,7 +1048,8 @@ function footer_script() {
                             location_type: location_type,
                             location_id: location_id,
                             category_id: category_id,
-                            post_type: post_type,
+                            country_id: country_id,
+                            post_type: post_type
                         },
                         success: function (data) {
                             $('.user_related_posts').empty().append(data);

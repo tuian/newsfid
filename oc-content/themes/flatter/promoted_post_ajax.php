@@ -157,10 +157,10 @@ if ($_REQUEST['add_premium'] == 'add_premium'):
     $premium_data = new DAO();
     $premium_data->dao->insert("{$db_prefix}t_premium_items", $premium);
 
-    
-     $message = 'Created promoted post';
-        set_user_notification($_REQUEST['user_id'], $_REQUEST['user_id'], $message, $_REQUEST['item_id']);
-    
+
+    $message = 'Created promoted post';
+    set_user_notification($_REQUEST['user_id'], $_REQUEST['user_id'], $message, $_REQUEST['item_id']);
+
     $pack = get_user_pack_details($_REQUEST['user_id']);
     $remaining_post = $pack['remaining_post'] - 1;
     $pack_id = $pack['pack_id'];
@@ -204,13 +204,11 @@ if ($_REQUEST['action'] == 'promoted_post'):
                 $('#' + data).removeClass('none');
             });
             $('.pay_now').click(function () {
-                var user_id = $(this).attr('user-id');
                 var pack_id = $(this).attr('pack-id');
-                var item_id = $('#primium_item_id').val();
                 var selected_payment_method = $('.payment-option:checked').val();
                 if (selected_payment_method == 'paypal') {
                     var pay_action = $('input[name=notify_url]').val() + '&paymement_type=pack&pack_id=' + pack_id;
-                    $('input[name=notify_url]').val(pay_action);       
+                    $('input[name=notify_url]').val(pay_action);
                     $('.paypal-btn').trigger('click');
                 }
                 if (selected_payment_method == 'payment-card') {
@@ -224,8 +222,6 @@ if ($_REQUEST['action'] == 'promoted_post'):
                         data: {
                             premium: 'premium',
                             braintree_number: braintree_number,
-                            user_id: user_id,
-                            item_id: item_id,
                             pack_id: pack_id,
                             braintree_cvv: braintree_cvv,
                             braintree_month: braintree_month,
@@ -236,7 +232,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                                 //                                $('.payment_result').empty().addClass('success').removeClass('error');
                                 //                                $('.payment_result').text('Payment added successfully');
                                 //                                data = '';
-        <?php // osc_add_flash_ok_message('Payment added successfully');                         ?>
+        <?php // osc_add_flash_ok_message('Payment added successfully');                            ?>
                                 alert('Payment added successfully');
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {

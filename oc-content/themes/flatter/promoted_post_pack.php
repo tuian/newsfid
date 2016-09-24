@@ -269,57 +269,7 @@ endif;
                                 <div class="border-bottom-gray col-md-12"></div>
 
                             <?php endforeach; ?>
-                            <!--                            <div class="col-md-12 padding-7per">
-                                                            <div class="col-md-12 orange bold-600 font-12 padding-bottom-10">Professional</div>
-                                                            <div class="col-md-12 padding-0 padding-bottom-6per">
-                                                                <div class="col-md-6">                                        
-                                                                    <div class="blue_text bold font-12"> Pack 100 promoted posts</div>
-                                                                    <div>   Price:<span class="font-12 orange"> 110.30 USD</span> </div>                                      
-                                                                </div>
-                                                                <div class="col-md-6 padding-0">
-                                                                    <button class="btn button-orng-box buy_pack pull-right" data-toggle="modal" data-target="#premium">Buy this pack</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-bottom-gray col-md-12"></div>
-                                                        <div class="col-md-12 padding-7per">
-                                                            <div class="col-md-12 orange bold-600 font-12 padding-bottom-10">Partners</div>
-                                                            <div class="col-md-12 padding-0 padding-bottom-6per">
-                                                                <div class="col-md-6">                                        
-                                                                    <div class="blue_text bold font-12"> Pack 50 promoted posts</div>
-                                                                    <div>   Price:<span class="font-12 orange"> 60.99 USD</span> </div>                                      
-                                                                </div>
-                                                                <div class="col-md-6 padding-0">
-                                                                    <button class="btn button-orng-box buy_pack pull-right" data-toggle="modal" data-target="#premium">Buy this pack</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-bottom-gray col-md-12"></div>
-                                                        <div class="col-md-12 padding-7per">
-                                                            <div class="col-md-12 orange bold-600 font-12 padding-bottom-10">Starter</div>
-                                                            <div class="col-md-12 padding-0 padding-bottom-6per">
-                                                                <div class="col-md-6">                                        
-                                                                    <div class="blue_text bold font-12"> Pack 20 promoted posts</div>
-                                                                    <div>   Price:<span class="font-12 orange"> 32.40 USD</span> </div>                                      
-                                                                </div>
-                                                                <div class="col-md-6 padding-0">
-                                                                    <button class="btn button-orng-box buy_pack pull-right" data-toggle="modal" data-target="#premium">Buy this pack</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-bottom-gray col-md-12"></div>
-                                                        <div class="col-md-12 padding-7per">
-                                                            <div class="col-md-12 orange bold-600 font-12 padding-bottom-10">On the go</div>
-                                                            <div class="col-md-12 padding-0 padding-bottom-6per">
-                                                                <div class="col-md-6">                                        
-                                                                    <div class="blue_text bold font-12"> Pack 5 promoted posts</div>
-                                                                    <div>   Price:<span class="font-12 orange"> 10.70 USD</span> </div>                                      
-                                                                </div>
-                                                                <div class="col-md-6 padding-0">
-                                                                    <button class="btn button-orng-box buy_pack pull-right" data-toggle="modal" data-target="#premium">Buy this pack</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>-->
+                           
                         </div>
                     </div>
                 </div>

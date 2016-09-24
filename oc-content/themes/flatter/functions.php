@@ -1908,6 +1908,30 @@ function cust_admin_user_type_data($row, $aRow) {
 osc_add_hook('admin_users_table', 'cust_admin_user_type_header');
 osc_add_filter("users_processing_row", "cust_admin_user_type_data");
 
+
+
+function cust_admin_user_type_data_pre($row, $aRow) {
+    if ($aRow['user_type'] == 2 || $aRow['user_type'] == 3):
+        $checked = 'checked';
+    else:
+        $checked = '';
+    endif;
+
+    $user_subscribe_switch = '
+                        <div class="user_type_switch">                            
+                            <label class="switch">
+                                <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                        ';
+
+    $row['user_type'] = $user_subscribe_switch;
+    return $row;
+}
+
+osc_add_filter("users_processing_row", "cust_admin_user_type_data_pre");
+
 osc_add_hook('admin_footer', 'admin_footer_script');
 
 function admin_footer_script() {

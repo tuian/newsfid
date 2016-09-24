@@ -1,13 +1,16 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
+<?php
+
+if (!defined('OC_ADMIN'))
+    exit('Direct access is not allowed.');
 /*
-Plugin Name: Category icon
-Plugin URI: https://github.com/panaionutwteh/osclass/tree/master/category_icon
-Description: This plugin add the category icon
-Version: 1.0.0
-Author: WTEH
-Author URI: http://www.wteh.ro/
-Plugin update URI: category-icon
-*/
+  Plugin Name: Category icon
+  Plugin URI: https://github.com/panaionutwteh/osclass/tree/master/category_icon
+  Description: This plugin add the category icon
+  Version: 1.0.0
+  Author: WTEH
+  Author URI: http://www.wteh.ro/
+  Plugin update URI: category-icon
+ */
 require_once 'DAOCategoryIcon.php';
 
 /**
@@ -23,8 +26,7 @@ $uploadImageName = null;
 /**
  *
  */
-function categoryIconCallAfterInstall()
-{
+function categoryIconCallAfterInstall() {
     $path = osc_plugin_resource('category_icon/struct.sql');
     $sql = file_get_contents($path);
     DAOCategoryIcon::newInstance()->importSql($sql);
@@ -33,16 +35,14 @@ function categoryIconCallAfterInstall()
 /**
  *
  */
-function categoryIconCallAfterUninstall()
-{
+function categoryIconCallAfterUninstall() {
     DAOCategoryIcon::newInstance()->dropCategoriIconTable();
 }
 
 /**
  * @return int
  */
-function categoryIconActions()
-{
+function categoryIconActions() {
     global $uploadImageName;
 
     $dao_preference = new Preference();
@@ -56,21 +56,43 @@ function categoryIconActions()
     if ($addnew == 'true' && uploadCategoryIcon()) {
         $img = $uploadImageName;
         $cat = Params::getParam('sCategory');
+        if ($cat):
+            $item_image_data = new DAO();
+            $item_image_data->dao->select(sprintf('%sbs_theme_category_icon.*', DB_TABLE_PREFIX));
+            $item_image_data->dao->from(sprintf('%sbs_theme_category_icon', DB_TABLE_PREFIX));
+            $item_image_data->dao->where(array('pk_i_id' => $cat));
+            $item_image_result = $item_image_data->dao->get();
+            $data = $item_image_result->result();
+            if (!empty($data)):
+                foreach ($data as $d):
+                    $img_path = UPLOAD_PATH . $d['bs_image_name'];
+                    @unlink($img_path);
+                    $cat_id = $d['bs_key_id'];
+                    $db_prefix = DB_TABLE_PREFIX;
+                    $delete_cat_img = new DAO();
+                    $delete_cat_img->dao->delete("{$db_prefix}bs_theme_category_icon", "bs_key_id= $cat_id");
+                endforeach;
+                $addIcon = DAOCategoryIcon::newInstance()->addCategoryIcons(array(
+                    'bs_image_name' => $img,
+                    'pk_i_id' => $cat
+                ));
+            else:
+                $addIcon = DAOCategoryIcon::newInstance()->addCategoryIcons(array(
+                    'bs_image_name' => $img,
+                    'pk_i_id' => $cat
+                ));
+            endif;
 
-        $addIcon = DAOCategoryIcon::newInstance()->addCategoryIcons(array(
-            'bs_image_name' => $img,
-            'pk_i_id' => $cat
-        ));
-
-        if($addIcon){
-            osc_add_flash_ok_message(__('The icon has been added', 'category_icon'), 'admin');
-        } else {
-            osc_add_flash_error_message(_e('An error occurred delete the icon', 'category_icon'), 'admin');
-        }
+            if ($addIcon) {
+                osc_add_flash_ok_message(__('The icon has been added', 'category_icon'), 'admin');
+            } else {
+                osc_add_flash_error_message(_e('An error occurred delete the icon', 'category_icon'), 'admin');
+            }
+        endif;
         osc_redirect_to(osc_admin_render_plugin_url('category_icon/admin.php'));
     } elseif ($bs_key_id != '') {
         $deleteIcon = DAOCategoryIcon::newInstance()->deleteByIconId($bs_key_id);
-        if($deleteIcon) {
+        if ($deleteIcon) {
             osc_add_flash_ok_message(__('The icon has been deleted', 'category_icon'), 'admin');
         } else {
             osc_add_flash_error_message(__('An error occurred delete the icon', 'category_icon'), 'admin');
@@ -79,12 +101,10 @@ function categoryIconActions()
     }
 }
 
-
 /**
  * @return int
  */
-function uploadCategoryIcon()
-{
+function uploadCategoryIcon() {
     global $uploadImageName;
 
     if (!empty($_FILES['imageName'])) {
@@ -117,8 +137,7 @@ function uploadCategoryIcon()
         }
 
         // preserve file from temporary directory
-        $success = move_uploaded_file($myFile["tmp_name"],
-            UPLOAD_DIR . $name);
+        $success = move_uploaded_file($myFile["tmp_name"], UPLOAD_DIR . $name);
         if (!$success) {
             osc_add_flash_error_message(__('An error occurred saving the icon', 'category_icon'), 'admin');
             osc_redirect_to(osc_admin_render_plugin_url('category_icon/admin.php'));
@@ -137,11 +156,10 @@ function uploadCategoryIcon()
  * @param $categoryId
  * @return int
  */
-function get_category_icon($categoryId)
-{
+function get_category_icon($categoryId) {
     $icon = DAOCategoryIcon::newInstance()->findByIconCategoryId($categoryId);
 
-    if(count($icon) > 0) {
+    if (count($icon) > 0) {
         foreach ($icon as $imgname) {
             return UPLOAD_PATH . $imgname['bs_image_name'];
         }
@@ -153,8 +171,7 @@ function get_category_icon($categoryId)
 /**
  * @return array
  */
-function get_all_categories_icon()
-{
+function get_all_categories_icon() {
     $icons = DAOCategoryIcon::newInstance()->getAllCategoryIcons();
     if (count($icons) > 0) {
         return $icons;
@@ -165,24 +182,21 @@ function get_all_categories_icon()
 /**
  *
  */
-function categoryIconAdmin()
-{
+function categoryIconAdmin() {
     osc_admin_render_plugin('category_icon/admin.php');
 }
 
 /**
  *
  */
-function categoryIconAdminMenu()
-{
+function categoryIconAdminMenu() {
     osc_admin_menu_plugins('Category icon', osc_admin_render_plugin_url('category_icon/admin.php'), 'category_icon_submenu');
 }
 
 /**
  *
  */
-function categoryIconLoadScripts()
-{
+function categoryIconLoadScripts() {
     osc_enqueue_style('categoryIcon', osc_base_url() . 'oc-content/plugins/category_icon/assets/css/custom_category_icon.css');
 }
 

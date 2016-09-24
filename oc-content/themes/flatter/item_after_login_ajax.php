@@ -7,6 +7,7 @@ $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, 
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+$data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0'));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 $following_user = get_user_following_data($comment_user_id);
 if ($following_user):

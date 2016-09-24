@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Credit', 'payment_pro'); ?></div>
-                        <div class="form-controls"><input type="text" class="xlarge" name="amount" value="1" /> <?php echo osc_get_preference('currency', 'payment_pro'); ?></div>
+                        <div class="form-controls"><input type="text" class="xlarge" name="amount" value="1" /> <?php echo osc_get_preference('post', 'payment_pro'); ?></div>
                     </div>
 
                     <div class="clear"></div>
@@ -63,7 +63,7 @@
             </div>
             <div class="form-row">
                 <div class="form-label"><?php _e('Current balance', 'payment_pro'); ?></div>
-                <div class="form-controls"><input type="text" class="xlarge" id="user_balance" name="user_balance" value="" readonly="readonly"/> <?php echo osc_get_preference('currency', 'payment_pro'); ?></div>
+                <div class="form-controls"><input type="text" class="xlarge" id="user_balance" name="user_balance" value="" readonly="readonly"/> <?php echo osc_get_preference('post', 'payment_pro'); ?></div>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
                             if(data.error==0) {
                                 $("#user_name").attr("value", data.user.s_name);
                                 $("#user_email").attr("value", data.user.s_email);
-                                $("#user_balance").attr("value", data.wallet.formatted_amount);
+                                $("#user_balance").attr("value", data.wallet.remaining_post);
                             } else {
                                 $("#user_name").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
                                 $("#user_email").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");

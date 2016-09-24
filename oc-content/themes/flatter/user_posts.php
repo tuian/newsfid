@@ -13,6 +13,7 @@ $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX),
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 //$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
+$data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 0'));
 //$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 

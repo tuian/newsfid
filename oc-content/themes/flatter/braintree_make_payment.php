@@ -5,6 +5,7 @@ require 'functions.php';
 
 $db_prefix = DB_TABLE_PREFIX;
 $user = get_user_data(osc_logged_user_id());
+$p = get_item_premium_pack_by_id(Params::getParam('pack_id'));
 Braintree_Configuration::environment(osc_get_preference('braintree_sandbox', 'payment_pro'));
 Braintree_Configuration::merchantId(payment_pro_decrypt(osc_get_preference('braintree_merchant_id', 'payment_pro')));
 Braintree_Configuration::publicKey(payment_pro_decrypt(osc_get_preference('braintree_public_key', 'payment_pro')));
@@ -13,7 +14,7 @@ Braintree_Configuration::privateKey(payment_pro_decrypt(osc_get_preference('brai
 //$status = payment_pro_check_items($data['items'], $data['amount']);
 
 $result = Braintree_Transaction::sale(array(
-            'amount' => Params::getParam('amount'),
+            'amount' => 4.99,
             'creditCard' => array(
                 'number' => Params::getParam('braintree_number'),
                 'cvv' => Params::getParam('braintree_cvv'),
@@ -48,7 +49,7 @@ if (Params::getParam('subscribe')):
 endif;
 if (Params::getParam('premium') == 'premium'):
     if ($result->success) {
-        $p = get_item_premium_pack_by_id(Params::getParam('pack_id'));
+
         $transaction_array['dt_date'] = date("Y-m-d H:i:s");
         $transaction_array['s_code'] = $result->transaction->id;
         $transaction_array['i_amount'] = $p['i_amount_cost'];
@@ -60,12 +61,12 @@ if (Params::getParam('premium') == 'premium'):
 
         $transaction_data = new DAO();
         $transaction_data->dao->insert("{$db_prefix}t_payment_pro_invoice", $transaction_array);
-        
+
         $user_premium_array['pack_id'] = Params::getParam('pack_id');
-        $user_premium_array['user_id'] = Params::getParam('user_id');
-        $user_premium_array['premium_post'] = Params::getParam('posts');
+        $user_premium_array['user_id'] = $user['user_id'];
+        $user_premium_array['premium_post'] = $p['i_amount']/1000000;
         $user_premium_array['created'] = date("Y-m-d H:i:s");
-        $user_premium_array['remaining_post'] = Params::getParam('posts');
+        $user_premium_array['remaining_post'] = $p['i_amount']/1000000;
 
         $premium_user = new DAO();
         $premium_user->dao->insert("{$db_prefix}t_user_pack", $user_premium_array);

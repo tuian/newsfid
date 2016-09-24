@@ -130,15 +130,15 @@ $packs = ModelPaymentPro::newInstance()->getPacks();
     <div class="form-horizontal">
         <div class="form-row">
             <div class="form-label"><?php _e('Pack cost (what the user pays)', 'payment_pro'); ?></div>
-            <div class="form-controls"><input type="text" id="amount_cost" name="amount_cost" value="" placeholder="10.0" /> <?php echo osc_get_preference('currency', 'payment_pro'); ?></div>
+            <div class="form-controls"><input type="text" id="amount_cost" name="amount_cost" value="" placeholder="Enetr Pack Price" /> <?php echo osc_get_preference('currency', 'payment_pro'); ?></div>
         </div>
         <div class="form-row">
-            <div class="form-label"><?php _e('Credit rewarded (what the user received as credits)', 'payment_pro'); ?></div>
-            <div class="form-controls"><input type="text" id="amount" name="amount" value="" placeholder="12.0" /> <?php echo osc_get_preference('currency', 'payment_pro'); ?></div>
+            <div class="form-label"><?php _e('Pack post(what the user received as post)', 'payment_pro'); ?></div>
+            <div class="form-controls"><input type="text" id="amount" name="amount" value="" placeholder="Enetr number of Post" /> <?php echo osc_get_preference('Post', 'payment_pro'); ?></div>
         </div>
         <div class="form-row">
-            <div class="form-label"><?php _e('Name or short description', 'payment_pro'); ?></div>
-            <div class="form-controls"><input type="text" id="name" name="name" value="" placeholder="Pack premium credit" /> <?php echo osc_get_preference('currency', 'payment_pro'); ?></div>
+            <div class="form-label"><?php _e('Name of Pack', 'payment_pro'); ?></div>
+            <div class="form-controls"><input type="text" id="name" name="name" value="" placeholder="Name of Pack" /> <?php echo osc_get_preference('Name', 'payment_pro'); ?></div>
         </div>
         <div class="form-actions">
             <div class="wrapper">
