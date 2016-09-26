@@ -29,8 +29,7 @@ if (osc_is_web_user_logged_in()):
 
 
     <span class="t_chat_open" onclick="openNav()">T-Chat</span>
-    <div class="tchat_profile col-md-6 padding-0 hide">
-    </div>
+    <div class="tchat_profile col-md-6 padding-0"></div>
     <div class="t-chat t_chat_menu" id="t_chat_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="chat-notification">
@@ -233,7 +232,7 @@ if (osc_is_web_user_logged_in()):
 
             });
         });
-        
+
         $(document).on('click', '.chat-window-button', function () {
             $('.notification1').addClass('notification').removeClass('orange').removeClass('notification1');
             $('.notification-area').hide();
@@ -248,7 +247,7 @@ if (osc_is_web_user_logged_in()):
             $('#chat-user-list').show();
             $('#online-chat').show();
         });
-
+       
         $(document).on('click', '.user_tchat', function () {
             var user_id = $(this).attr('data_user_id');
             $.ajax({
@@ -258,24 +257,8 @@ if (osc_is_web_user_logged_in()):
                     user_id: user_id
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $('.tchat_profile').html(data);
-                    $('.tchat_profile').addClass('show');
-                    $(".tchat_profile").animate({
-                        width: '700px',
-                    });
-                    $('.tchat_profile').removeClass('hide');
+                    $(".tchat_profile").show('slow').html(data);
                 }
-
-            });
-            $(document).on('click', '.tchat_profile', function () {
-                $('.tchat_profile').addClass('show');
-                $('.tchat_profile').removeClass('hide');
-            });
-            $('body').click(function () {
-
-                $(".tchat_profile").animate({
-                    width: '0px',
-                });
             });
         });
         $(document).on('click', '.chat-filter', function () {

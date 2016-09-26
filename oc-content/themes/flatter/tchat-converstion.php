@@ -235,18 +235,18 @@ if ($_REQUEST['search_action'] == 'search-action'):
     $msg = $result;
     ?>
     <ul class="padding-0" id="user_list">
-    <?php
-    $result = $msg['from'];
-    foreach ($msg as $k => $data):
+        <?php
+        $result = $msg['from'];
+        foreach ($msg as $k => $data):
 
-        $id = $data['to'];
-        $user = get_user_data($id);
-        if (!empty($user['s_path'])):
-            $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
-        else:
-            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-        endif;
-        ?>
+            $id = $data['to'];
+            $user = get_user_data($id);
+            if (!empty($user['s_path'])):
+                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+            else:
+                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
+            ?>
             <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
                 <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
                 <div>
@@ -254,36 +254,36 @@ if ($_REQUEST['search_action'] == 'search-action'):
                     <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
                 </div>
             </li>
-        <?php
-    endforeach;
-    ?>
-    </ul>
-        <?php
-    endif;
-    if ($_REQUEST['search_archive'] == 'search-archive'):
-        $search = $_REQUEST['search_text'];
-        $user_conversion_data = new DAO();
-        $user_conversion_data->dao->select('frei_chat_archives.*');
-        $user_conversion_data->dao->from('frei_chat_archives');
-        $user_conversion_data->dao->where("`from` = " . $user_id . " AND `to_name` LIKE '%" . $search . "%'");
-        $user_conversion_data->dao->groupBy('`to`');
-        $user_result = $user_conversion_data->dao->get();
-        $result = $user_result->result();
-        $msg = $result;
+            <?php
+        endforeach;
         ?>
+    </ul>
+    <?php
+endif;
+if ($_REQUEST['search_archive'] == 'search-archive'):
+    $search = $_REQUEST['search_text'];
+    $user_conversion_data = new DAO();
+    $user_conversion_data->dao->select('frei_chat_archives.*');
+    $user_conversion_data->dao->from('frei_chat_archives');
+    $user_conversion_data->dao->where("`from` = " . $user_id . " AND `to_name` LIKE '%" . $search . "%'");
+    $user_conversion_data->dao->groupBy('`to`');
+    $user_result = $user_conversion_data->dao->get();
+    $result = $user_result->result();
+    $msg = $result;
+    ?>
     <ul class="padding-0" id="user_list">
-    <?php
-    $result = $msg['from'];
-    foreach ($msg as $k => $data):
+        <?php
+        $result = $msg['from'];
+        foreach ($msg as $k => $data):
 
-        $id = $data['to'];
-        $user = get_user_data($id);
-        if (!empty($user['s_path'])):
-            $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
-        else:
-            $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
-        endif;
-        ?>
+            $id = $data['to'];
+            $user = get_user_data($id);
+            if (!empty($user['s_path'])):
+                $img_path = osc_base_url() . $user['s_path'] . $user['pk_i_id'] . '.' . $user['s_extension'];
+            else:
+                $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
+            endif;
+            ?>
             <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
                 <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
                 <div>
@@ -291,16 +291,16 @@ if ($_REQUEST['search_action'] == 'search-action'):
                     <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
                 </div>
             </li>
-        <?php
-    endforeach;
-    ?>
-    </ul>
-        <?php
-    endif;
-
-
-    if ($_REQUEST['action'] == "online-chat-converstion"):
+            <?php
+        endforeach;
         ?>
+    </ul>
+    <?php
+endif;
+
+
+if ($_REQUEST['action'] == "online-chat-converstion"):
+    ?>
     <script>
         document.getElementById("messageBox1").onkeypress = function enterKey(e)
         {
@@ -336,6 +336,39 @@ if ($_REQUEST['search_action'] == 'search-action'):
                 });
             }
         };
+        $(document).on('click', '.send_msg', function () {
+            var msg = $('.t_chat_textarea').val();
+            var from_id = $('#hidden-user-data').attr('from-user-id');
+            var from_name = $('#hidden-user-data').attr('from-user-name');
+            var to_id = $('#hidden-user-data').attr('to-user-id');
+            var to_name = $('#hidden-user-data').attr('to-user-name');
+            if (!msg) {
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    submit: 'send-msg',
+                    action: 'chat-converstion',
+                    from_id: from_id,
+                    from_name: from_name,
+                    user_id: to_id,
+                    to_name: to_name,
+                    msg: msg
+                },
+                success: function (data) {
+                    $('#chat-box').html(data);
+                    $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+                    $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>');
+                }
+            });
+        });
+        $('.t_chat_textarea').bind('keypress', function (e) {
+            if (e.which === 13) {
+                $('.send_msg').click();
+            }
+        });
 
     </script>
 <?php endif; ?>

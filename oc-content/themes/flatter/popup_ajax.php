@@ -89,11 +89,9 @@ if ($item_id):
                                 </div>
                                 <div class="col-md-5 post_resource_hide padding-0 padding-top-10 padding-bottom-10">
                                     <?php item_resources($item_id_pre); ?>
-                                    <span class="padding-top-10"> Promoted posts </span>
                                 </div>
                                 <div class="col-md-12 post_resource padding-0 padding-top-10 padding-bottom-10" style="display: none">
-                                    <?php item_resources($item_id_pre); ?>
-                                    <span class="padding-top-10"> Promoted posts </span>
+                                    <?php item_resources($item_id_pre); ?>                                    
                                 </div>
                                 <div class="col-md-7 post_resource_hide">
                                     <div class="bold"> <?php echo $item_pre_details[0]['s_title']; ?> </div>                                   
@@ -101,6 +99,7 @@ if ($item_id):
                                     <?php custom_echo($desc, 100); ?> <br/>
                                     <button class="get_more">Get more details</button>
                                 </div>
+                                <div class="col-md-12 padding-0 padding-bottom-10"> Promoted posts </div>
                                 <div class="col-md-12 post_resource" style="display: none">                                                                   
                                     <?php echo $item_pre_details[0]['s_description']; ?> 
                                 </div>

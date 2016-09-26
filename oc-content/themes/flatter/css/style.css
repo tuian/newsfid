@@ -2137,6 +2137,10 @@ select {
 }
 .item_title_head {
     cursor: pointer;
+    font-size: 16px;
+}
+.user_related_posts .item_title_head {
+    cursor: pointer;
     font-size: 36px;
     line-height: 100%;
 }
@@ -3310,7 +3314,10 @@ select {
 .t_chat_overflow{
     position: relative;
     overflow-y: scroll;
-    max-height: 400px;
+    height: 410px;
+}
+.add_circle{
+    padding-top: 2px !important;
 }
 .active-t_chat{
     background-color: #c9c9ca;
@@ -3522,11 +3529,20 @@ select {
 }
 .communication-tab .btn{
     padding: 5px 0px;
-    margin-right: 2px;
+    margin-right: 10px;
     width: 36.4%;
 }
 .last_btn{
-    margin: 0;
+    margin: 0px !important;
+    padding: 5px 0px !important;
+}
+.close-tchat-profile{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 50%;
 }
 .masonry_row .user_thumbnail{
     width: 60px;
@@ -3816,7 +3832,7 @@ textarea.comment_text{
     padding-bottom: 15px;
 }
 .text-shadow-black{
-text-shadow: 0px 3px 3px rgb(0, 0, 0);
+    text-shadow: 0px 3px 3px rgb(0, 0, 0);
 }
 .button-box{
     border-radius: 0 !important;
@@ -3829,4 +3845,8 @@ text-shadow: 0px 3px 3px rgb(0, 0, 0);
 }
 .post_resource_hide iframe {
     height: 100%;
+}
+.dropdown-menu.edit-arrow{
+    top:20px;
+    left:-90px;
 }

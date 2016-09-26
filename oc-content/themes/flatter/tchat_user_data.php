@@ -56,7 +56,9 @@ $logged_in_user_id = osc_logged_user_id();
         ?>
         <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" class="col-md-2 padding-0"><img src="<?php echo $img_path ?>" class="background-white padding-10 img-circle"></a>
         <div class="col-md-6 padding-0 padding-top-8per">
-            <label class="font-color-black bold">Live:&nbsp;&nbsp;</label> <?php if($user['s_city']): echo $user['s_city'] ?>-<?php endif; if($user['s_region']): echo $user['s_region'] ?>-<?php endif; echo $user['s_country'] ?>
+            <label class="font-color-black bold">Live:&nbsp;&nbsp;</label> <?php if ($user['s_city']): echo $user['s_city'] ?>-<?php endif;
+        if ($user['s_region']): echo $user['s_region'] ?>-<?php endif;
+        echo $user['s_country'] ?>
             <div> <label class="font-color-black bold">Register since:&nbsp;&nbsp;</label><?php
                 $date = $user['reg_date'];
                 echo date('l jS F Y', strtotime($date));
@@ -104,6 +106,7 @@ $logged_in_user_id = osc_logged_user_id();
             </div>
         </div>
     </div>
+    <button class="btn btn-round close-tchat-profile">X</button>
 
 </div>
 <script>
@@ -140,4 +143,8 @@ $logged_in_user_id = osc_logged_user_id();
             }
         })
     });
+    $(document).on('click', '.close-tchat-profile', function () {
+        $('.tchat_profile').hide('slow');
+    });
+    $('.tchat_profile').show('slow');
 </script>
