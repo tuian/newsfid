@@ -85,34 +85,34 @@ endif;
 
 if ($_REQUEST['action'] == 'user_type_change'):
     $user_id = $_REQUEST['user_id'];
-    $user_type_value = $_REQUEST['user_type_value'];
+    $new_user_type_value = $_REQUEST['user_type_value'];
 
-    $db_prefix = DB_TABLE_PREFIX;
-    $user_data = new DAO();
-    $user_data->dao->select("user.*");
-    $user_data->dao->from("{$db_prefix}t_user as user");
-    $user_data->dao->where('user.pk_i_id', $user_id);
-    $user_result = $user_data->dao->get();
-    $user_array = $user_result->row();
-
-    $new_user_type_value = 2;
-
-    if ($user_type_value == '1'):
-        if ($user_array['user_type'] == '0'):
-            $new_user_type_value = 2;
-        endif;
-        if ($user_array['user_type'] == '1'):
-            $new_user_type_value = 3;
-        endif;
-        
-    elseif ($user_type_value == '0'):
-        if ($user_array['user_type'] == '2'):
-            $new_user_type_value = 0;
-        endif;
-        if ($user_array['user_type'] == '3'):
-            $new_user_type_value = 1;
-        endif;        
-    endif;
+//    $db_prefix = DB_TABLE_PREFIX;
+//    $user_data = new DAO();
+//    $user_data->dao->select("user.*");
+//    $user_data->dao->from("{$db_prefix}t_user as user");
+//    $user_data->dao->where('user.pk_i_id', $user_id);
+//    $user_result = $user_data->dao->get();
+//    $user_array = $user_result->row();
+//
+//    $new_user_type_value = 2;
+//
+//    if ($user_type_value == '1'):
+//        if ($user_array['user_type'] == '0'):
+//            $new_user_type_value = 2;
+//        endif;
+//        if ($user_array['user_type'] == '1'):
+//            $new_user_type_value = 3;
+//        endif;
+//        
+//    elseif ($user_type_value == '0'):
+//        if ($user_array['user_type'] == '2'):
+//            $new_user_type_value = 0;
+//        endif;
+//        if ($user_array['user_type'] == '3'):
+//            $new_user_type_value = 1;
+//        endif;        
+//    endif;
 
     $result = $user_data->dao->update("{$db_prefix}t_user", array('user_type' => $new_user_type_value), array('pk_i_id' => $user_id));
 

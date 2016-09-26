@@ -1882,61 +1882,45 @@ function get_user_profile_picture($user_id) {
 }
 
 function cust_admin_user_type_header($table) {
-    $table->addColumn('user_type', '<span>Certify User</span>');
+    $table->addColumn('user_type', '<span>User Type</span>');
 }
 
 function cust_admin_user_type_data($row, $aRow) {
-    if ($aRow['user_type'] == 2 || $aRow['user_type'] == 3):
-        $checked = 'checked';
-    else:
-        $checked = '';
-    endif;
-
-    $user_subscribe_switch = '
-                        <div class="user_type_switch">                            
-                            <label class="switch">
-                                <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
-                                <div class="slider round"></div>
-                            </label>
-                        </div>
-                        ';
-
-    $row['user_type'] = $user_subscribe_switch;
+//    $user_subscribe_switch = '
+//                        <div class="user_type_switch">                            
+//                            <label class="switch">
+//                                <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
+//                                <div class="slider round"></div>
+//                            </label>
+//                        </div>
+//                        ';
+//    $row['user_type'] = $user_subscribe_switch;
+    $option1 = $aRow['user_type']=='0'?"selected":"";
+    $option2 = $aRow['user_type']=='1'?"selected":"";
+    $option3 = $aRow['user_type']=='2'?"selected":"";
+    $option4 = $aRow['user_type']=='3'?"selected":"";
+    $user_types = '<div class="user_type">'
+            . '<select id="admin_user_type" data_user_id="' . $aRow['pk_i_id'] . '">'
+            . '<option value="0" '.$option1.'>Normal User</option>'
+            . '<option value="1" '.$option2.'>Premium User</option>'
+            . '<option value="2" '.$option3.'>Certify User</option>'
+            . '<option value="3" '.$option4.'>Certify+Premium User</option>'
+            . '</select><div class="success_msg_' . $aRow['pk_i_id'] . ' success-msg"></div>';
+    $row['user_type'] = $user_types;
     return $row;
 }
 
 osc_add_hook('admin_users_table', 'cust_admin_user_type_header');
 osc_add_filter("users_processing_row", "cust_admin_user_type_data");
 
-
-
-function cust_admin_user_type_data_pre($row, $aRow) {
-    if ($aRow['user_type'] == 2 || $aRow['user_type'] == 3):
-        $checked = 'checked';
-    else:
-        $checked = '';
-    endif;
-
-    $user_subscribe_switch = '
-                        <div class="user_type_switch">                            
-                            <label class="switch">
-                                <input type="checkbox" id="certified_box" name="certified_box" data_user_id="' . $aRow['pk_i_id'] . '" class="onoffswitch-checkbox certified_box"' . $checked . '>
-                                <div class="slider round"></div>
-                            </label>
-                        </div>
-                        ';
-
-    $row['user_type'] = $user_subscribe_switch;
-    return $row;
-}
-
-osc_add_filter("users_processing_row", "cust_admin_user_type_data_pre");
-
 osc_add_hook('admin_footer', 'admin_footer_script');
 
 function admin_footer_script() {
     ?>
     <style>
+        .success-msg{
+            color: green;
+        }
         .switch {
             position: relative;
             display: inline-block;
@@ -1987,13 +1971,9 @@ function admin_footer_script() {
 
     <script>
         jQuery(document).ready(function ($) {
-            $(document).on('change', '.certified_box', function () {
-                var user_id = $(this).attr('data_user_id');
-                console.log(user_id);
-                var user_type_value = 0;
-                if (this.checked) {
-                    user_type_value = 1;
-                }
+            $(document).on('change', '#admin_user_type', function () {
+                var user_id = $(this).attr('data_user_id');             
+                var user_type_value = $(this).val();              
                 $.ajax({
                     url: '<?php echo osc_current_web_theme_url('user_info_ajax.php') ?>',
                     data: {
@@ -2001,13 +1981,12 @@ function admin_footer_script() {
                         user_id: user_id,
                         user_type_value: user_type_value
                     },
-                    success: function (data, textStatus, jqXHR) {
-                        console.log(data);
+                    success: function (data, textStatus, jqXHR) {                        
                         if (data == 1) {
-                            console.log('user type updated successfully');
+                            $('.success_msg_'+user_id).html('user type update successfully');
                         }
                         if (data == 0) {
-                            console.log('user type not updated successfully');
+                           $('.success_msg_'+user_id).html('user type not updated');
                         }
                     }
                 });
