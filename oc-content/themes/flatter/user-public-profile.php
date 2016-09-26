@@ -293,7 +293,7 @@ endif;
                                         $follow_user_id = $user['user_id'];
                                         ?>
                                         <?php user_follow_btn_box($user_id, $follow_user_id) ?>
-                                        <button class="btn btn-default bold font-12 col-md-4 padding-0" onClick="FreiChat.create_chat_window(<?php echo "'" . $user['user_name'] . "'"; ?>, <?php echo $user['user_id']; ?>)"><?php echo $u['user_name']; ?>Tchat</button>
+                                        <button class="btn btn-default bold font-12 col-md-4 padding-0 chat-user1" to-user-id = "<?php echo $user['user_id']?>">Tchat</button>
                                         <?php
                                         $circle_data = get_user_circle_data($user_id);
                                         if (!empty($circle_data) && in_array($follow_user_id, $circle_data)):
@@ -936,6 +936,22 @@ function custom_script() {
                                                 post_type = $('.post_type_filter').val();
                                                 $('.user_posts_area .user_post_page_number').val(0);
                                             }
+                                            $(document).on('click', '.chat-user1', function () {
+                                                var id = $(this).attr('to-user-id');
+                                                $.ajax({
+                                                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                                                    type: 'post',
+                                                    data: {
+                                                        action: 'chat-converstion',
+                                                        user_id: id
+                                                    },
+                                                    success: function (data) {
+                                                        $('#online-chat').html(data);
+                                                        $('#online-chat').css('display', 'block');
+                                                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                                                    }
+                                                });
+                                            });
     </script>
 
 

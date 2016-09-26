@@ -79,10 +79,14 @@ $roles = get_user_roles_array();
         <span class="user_info_header padding-left-10">Localisation</span>
     </div>
     <div class="col-md-8 col-sm-8 user_website">
+        <input type="hidden" class="city_id">
+        <input type="hidden" class="region_id">
+        <input type="hidden" name="country_id" class="country_id">
         <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
-            <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
-        </span>   
-        <input type="text" class="hide" id="autocomplete">       
+            <span class="location-box"><?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?></span>
+            <input type="text" class="user_localisation_textbox filter_city" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+
+        </span>  
         <?php if (osc_user_id() == osc_logged_user_id()): ?>
             <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
                 <i class="fa fa-pencil-square-o"></i> Edit
@@ -102,84 +106,89 @@ osc_add_hook('footer', 'custom_map_script');
 function custom_map_script() {
     ?>
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
-    
+
     <script>
-        google.maps.event.addDomListener(window, 'load', initMap);
-        function initMap() {
-            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
-            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
-            
-            var myLatLng = {lat: latitude, lng: longitude};
-            var map = new google.maps.Map(document.getElementById('user_map'), {
-                zoom: 10,
-                center: myLatLng
-            });
-            //add the code here, after the map variable has been instantiated
-            var tab = jQuery('ul.user_profile_navigation li')[1]
-            jQuery(tab).one('click', function () {
-                setTimeout(function () {
-                    google.maps.event.trigger(map, 'resize');
-                    map.setCenter(myLatLng)
-                    google.maps.Marker({
-                        position: myLatLng,
-                        map: map,
-                        title: 'My City'
-                    });
-                }, 1000);
-
-            });
-        }
-        function updateMap(latitude, longitude) {             
-            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};            
-            var map = new google.maps.Map(document.getElementById('user_map'), {
-                zoom: 10,
-                center: myLatLng
-            });           
-            google.maps.event.trigger(map, 'resize');
-            map.setCenter(myLatLng)
-            google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'My City'
-            });               
-        }
-
-        //       
-        var goptions = {
-            map: '#user_map',
-            details: ".details",
-            types: ['(cities)'],
-            basemap: 'gray',
-            mapOptions: {
-                zoom: 10
-            },
-            marketOptions: {
-                draggable: true
+        //        google.maps.event.addDomListener(window, 'load', initMap);
+        //        function initMap() {
+        //            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
+        //            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
+        //
+        //            var myLatLng = {lat: latitude, lng: longitude};
+        //            var map = new google.maps.Map(document.getElementById('user_map'), {
+        //                zoom: 10,
+        //                center: myLatLng
+        //            });
+        //            //add the code here, after the map variable has been instantiated
+        //            var tab = jQuery('ul.user_profile_navigation li')[1]
+        //            jQuery(tab).one('click', function () {
+        //                setTimeout(function () {
+        //                    google.maps.event.trigger(map, 'resize');
+        //                    map.setCenter(myLatLng)
+        //                    google.maps.Marker({
+        //                        position: myLatLng,
+        //                        map: map,
+        //                        title: 'My City'
+        //                    });
+        //                }, 1000);
+        //
+        //            });
+        //        }
+        //        function updateMap(latitude, longitude) {
+        //            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+        //            var map = new google.maps.Map(document.getElementById('user_map'), {
+        //                zoom: 10,
+        //                center: myLatLng
+        //            });
+        //            google.maps.event.trigger(map, 'resize');
+        //            map.setCenter(myLatLng)
+        //            google.maps.Marker({
+        //                position: myLatLng,
+        //                map: map,
+        //                title: 'My City'
+        //            });
+        //        }
+        //
+        //        //       
+        //        var goptions = {
+        //            map: '#user_map',
+        //            details: ".details",
+        //            types: ['(cities)'],
+        //            basemap: 'gray',
+        //            mapOptions: {
+        //                zoom: 10
+        //            },
+        //            marketOptions: {
+        //                draggable: true
+        //            }
+        //        }
+        $('.filter_city').typeahead({
+            source: function (query, process) {
+                var $items = new Array;
+                $items = [""];
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                    dataType: "json",
+                    type: "POST",
+                    data: {city_name: query, region_name: query, country_name: query},
+                    success: function (data) {
+                        console.log(data);
+                        $('.country_id').val(data.country_code);
+                        $('.region_id').val(data.region_id);
+                        $('.city_id').val(data.city_name);
+                        $.map(data, function (data) {
+                            var group;
+                            group = {
+                                city_id: data.city_id,
+                                region_id: data.region_id,
+                                country_code: data.country_code,
+                                name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                            };
+                            $items.push(group);
+                        });
+                        process($items);
+                    }
+                });
             }
-        }
-        $('#autocomplete').geocomplete(goptions).bind("geocode:result", function (event, result) {
-            var lat = result.geometry.location.lat;
-            var lng = result.geometry.location.lng;
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
-                type: 'POST',
-                data: {
-                    action: 'user_localisation',
-                    lat: lat,
-                    lng: lng,
-                    city: result.address_components['0'].long_name,
-                    country: result.address_components['3'].long_name,
-                    scountry: result.address_components['3'].short_name,
-                },
-                dataType: "json",    
-                success: function (data, textStatus, jqXHR) {                   
-                    $('#autocomplete').addClass('hide');
-                    $('.user_localisation_text').show();
-                    $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
-                    $('.user_localisation_text').attr('data_text', result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
-                    updateMap(data.lat, data.lng);                    
-                }
-            });
         });
     </script>           
 
@@ -238,7 +247,6 @@ function custom_map_script() {
                 //                var input_box = '<input type="text" class="user_website_textbox" value="' + text + '">';
                 //                $('.user_website_text').html(input_box);
             });
-
             $(document).on('change', '.user_role_selector', function () {
                 var role_id = $(this).val();
                 $.ajax({
@@ -256,14 +264,26 @@ function custom_map_script() {
                     }
                 });
             });
-
+            $('.user_localisation_textbox').hide();
             $(document).on('click', '.user_localisation_edit', function () {
-                var text = $('.user_localisation_text').attr('data_text');
-                $('#autocomplete').val(text);
-                $('.user_localisation_text').hide();
-                $('#autocomplete').removeClass('hide');
+                $('.user_localisation_textbox').show();
+                $('.location-box').hide();
+            });
+            $(document).on('blur', '.user_localisation_textbox', function () {
+                var new_text = $(this).val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                    data: {
+                        action: 'user_localisation',
+                        user_localisation_text: new_text,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    }
+                });
+                $('.user_localisation_text').html(new_text).attr('data_text', new_text);
             });
         });
+
     </script>
     <?php
 }
