@@ -46,8 +46,8 @@ endif;
 
 //get_share_post
 $share_array = get_user_shared_item($user_id);
-$share_pk_id = implode(',', $share_array);
 if ($share_array):
+    $share_pk_id = implode(',', $share_array);
     $data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.item_id = item.pk_i_id', 'LEFT');
     $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled AND item.b_active', $share_pk_id, $user_id, 1, 0));    
 else:

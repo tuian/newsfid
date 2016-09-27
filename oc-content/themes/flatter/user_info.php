@@ -78,14 +78,15 @@ $roles = get_user_roles_array();
         <i class="fa fa-map-marker" aria-hidden="true"></i>
         <span class="user_info_header padding-left-10">Localisation</span>
     </div>
-    <div class="col-md-8 col-sm-8 user_website">
+    <div class="col-md-8 col-sm-8">
         <input type="hidden" class="city_id">
         <input type="hidden" class="region_id">
         <input type="hidden" name="country_id" class="country_id">
         <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
             <span class="location-box"><?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?></span>
-            <input type="text" class="user_localisation_textbox filter_city" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
-
+            <?php if (osc_user_id() == osc_logged_user_id()): ?>
+                <input type="text" class="user_localisation_textbox filter_city" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+            <?php endif; ?>
         </span>  
         <?php if (osc_user_id() == osc_logged_user_id()): ?>
             <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
@@ -280,7 +281,8 @@ function custom_map_script() {
                     success: function (data, textStatus, jqXHR) {
                     }
                 });
-                $('.user_localisation_text').html(new_text).attr('data_text', new_text);
+                var html_text = '<span class="location-box">'+new_text+'</span><input type="text" class="user_localisation_textbox filter_city" style="display:none" city="" region="" country=""value="'+new_text+'">';            
+                $('.user_localisation_text').html(html_text).attr('data_text', new_text);
             });
         });
 

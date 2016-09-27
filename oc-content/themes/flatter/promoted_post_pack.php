@@ -178,8 +178,8 @@ endif;
                                 <span class="bold"> Pack : </span> <?php echo $pack_name['s_name']; ?>
                             </div>
                             <div class="col-md-12 border-bottom-gray"></div>
-                            <div class="box-default copyright_box_post">
-                                Copyright Newsfid - <span class="bold"> GaÃƒÂ«l Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
+                            <div class="box-default copyright_box_post">                                
+                                Copyright Newsfid - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
                             </div>
                         </div>
                         <!-- /.box -->                 

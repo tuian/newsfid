@@ -274,12 +274,7 @@ endif;
                                         <div class="description-block">
                                             <h5 class="description-header">
                                                 <?php
-                                                $user_likes = get_user_item_likes($user['user_id']);
-                                                if ($user_likes):
-                                                    echo count($user_likes);
-                                                else:
-                                                    echo 0;
-                                                endif;
+                                                    echo get_user_item_likes($user['user_id']);                                                
                                                 ?>
                                             </h5>
                                             <span class="description-text">Likes</span>
@@ -396,7 +391,7 @@ endif;
                             <div class="no-user-post">
                                 <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
                                     <div class="col-md-4 padding-0">
-                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe (1).png" ?>" class="post_icon">
+                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe.png" ?>" class="post_icon">
                                     </div>
                                     <div class="col-md-7 padding-0">
                                         <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>

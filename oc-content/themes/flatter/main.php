@@ -751,22 +751,7 @@ function footer_script() {
 
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-        $(document).on('click', '.item_cat', function () {
-            var cat_id = $(this).attr('cat-id');
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('item_filter.php') ?>",
-                type: "POST",
-                data: {
-                    cat_id: cat_id
-                },
-                success: function (data) {
-                    $('.masonry_row').html(data);
-                    $('html,body').animate({
-                        scrollTop: 600
-                    }, 1000);
-                }
-            });
-        });
+        
         $(document).on('click', '.frnd-sug-button', function () {
             var user = $(this).attr('user-data');
             $(user).hide('slow');
@@ -951,6 +936,27 @@ function footer_script() {
                     if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
                         setTimeout(make_item_ajax_call, 1000);
                     }
+                });
+                
+                $(document).on('click', '.item_cat', function () {
+                    var cat_id = $(this).attr('cat-id');
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url('item_filter.php') ?>",
+                        type: "POST",
+                        data: {
+                            cat_id: cat_id
+                        },
+                        success: function (data) {
+                            $('.masonry_row').html(data);
+                            $('html,body').animate({
+                                scrollTop: 600
+                            }, 1000);
+                            $('.masonry_row').masonry('reloadItems');
+                            $grid.imagesLoaded().progress(function () {
+                                $grid.masonry('layout');
+                            });
+                        }
+                    });
                 });
     <?php else: ?>
                 var item_page_number = $('#item_page_number').val();

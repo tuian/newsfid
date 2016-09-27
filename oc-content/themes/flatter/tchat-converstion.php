@@ -25,11 +25,12 @@ if ($_REQUEST['submit'] == 'send-msg'):
     $msg_array['GMT_time'] = time();
     $msg_array['message_type'] = 0;
     $msg_array['room_id'] = -1;
-//    pr($_REQUEST);
+//    pr($msg_array);
     $msg_data = new DAO();
     if ($_REQUEST['action'] == 'archives-converstion'):
         $msg_data->dao->insert("`frei_chat_archives`", $msg_array);
-    elseif ($_REQUEST['action'] == 'chat-converstion'):
+    else:
+//    elseif ($_REQUEST['action'] == 'chat-converstion'):
         $msg_data->dao->insert("`frei_chat`", $msg_array);
     endif;
 endif;

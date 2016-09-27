@@ -114,12 +114,7 @@ if ($user_search_array):
                                 <div class="description-block">
                                     <h5 class="description-header">
                                         <?php
-                                        $user_likes = get_user_item_likes($user['user_id']);
-                                        if ($user_likes):
-                                            echo count($user_likes);
-                                        else:
-                                            echo 0;
-                                        endif;
+                                            echo get_user_item_likes($user['user_id']);                                        
                                         ?>
                                     </h5>
                                     <span class="description-text">LIKES</span>

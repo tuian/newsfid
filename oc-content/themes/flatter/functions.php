@@ -2440,7 +2440,7 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
     endif;
 }
 // redirect to specific page
-if ($page == 'custom' && ($p_route == 'payment-pro-checkout' || $p_route == 'payment-pro-user-menu' || $p_route == 'payment-pro-user-packs')):
+if ($page == 'custom' && ($p_route == 'payment-pro-checkout' || $p_route ==  'payment-pro-done'|| $p_route == 'payment-pro-user-menu' || $p_route == 'payment-pro-user-packs')):
     osc_redirect_to(osc_base_url());
 endif;
 
