@@ -173,7 +173,7 @@ if ($items):
                                             $pack = get_user_pack_details(osc_logged_user_id());
                                             if ($pack['remaining_post'] > 0):
                                                 ?>
-                                            <a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>"><button class="btn margin-right-10 btn-info pull-left button-box bold">Thanks</button></a>
+                                                <a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>"><button class="btn margin-right-10 btn-info pull-left button-box bold">Thanks</button></a>
                                             <?php else : ?>
                                                 <button class="btn btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
                                             <?php endif; ?>
@@ -201,7 +201,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                     ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                       ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -213,9 +213,10 @@ if ($items):
                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
                         <?php echo 'Comments' ?>
                     </span>
+                    <?php if ($user['user_id'] != osc_logged_user_id()): ?>
                     &nbsp;&nbsp;
-                    <a href="#"><?php echo 'Tchat' ?></a>&nbsp;
-
+                        <span class="chat-user1 pointer" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo 'Tchat' ?></span>&nbsp;
+                    <?php endif; ?>
                     &nbsp;&nbsp;
                     <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -319,7 +320,7 @@ if ($items):
     endforeach;
 
 elseif ($page_number > 0):
-   echo '<div class="usepost_no_record"><h2 class="result_text">Ends of results</h2> </div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">Ends of results</h2> </div> ';
 else:
     echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
 endif;
@@ -403,7 +404,7 @@ if (osc_logged_user_id()):
                             //                                $('.payment_result').empty().addClass('success').removeClass('error');
                             //                                $('.payment_result').text('Payment added successfully');
                             //                                data = '';
-    <?php // osc_add_flash_ok_message('Payment added successfully');                           ?>
+    <?php // osc_add_flash_ok_message('Payment added successfully');                             ?>
                             alert('Payment added successfully');
                             window.location.href = "<?php echo osc_base_url(); ?>";
                         } else {
@@ -505,5 +506,21 @@ if (osc_logged_user_id()):
                 }
             });
         }
+        $(document).on('click', '.chat-user1', function () {
+            var id = $(this).attr('to-user-id');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    action: 'chat-converstion',
+                    user_id: id
+                },
+                success: function (data) {
+                    $('#online-chat').html(data);
+                    $('#online-chat').css('display', 'block');
+                    $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                }
+            });
+        });
     </script>
 <?php endif; ?>

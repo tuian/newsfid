@@ -3846,7 +3846,7 @@ textarea.comment_text{
 .post_resource_hide iframe {
     height: 100%;
 }
-.dropdown-menu.edit-arrow{
+.dropdown-menu.edit-arrow.edit_msg{
     top:20px;
     left:-90px;
 }

@@ -54,7 +54,7 @@
     background-position: center center !important;
 }
 .blue_text{
-    color: #20a8e0;
+    color: #20a8e0 !important;
 }
 .user_found_text {
     padding: 20px 5px;

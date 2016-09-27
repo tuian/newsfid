@@ -27,7 +27,11 @@ if ($_REQUEST['submit'] == 'send-msg'):
     $msg_array['room_id'] = -1;
 //    pr($_REQUEST);
     $msg_data = new DAO();
-    $msg_data->dao->insert("`frei_chat`", $msg_array);
+    if ($_REQUEST['action'] == 'archives-converstion'):
+        $msg_data->dao->insert("`frei_chat_archives`", $msg_array);
+    elseif ($_REQUEST['action'] == 'chat-converstion'):
+        $msg_data->dao->insert("`frei_chat`", $msg_array);
+    endif;
 endif;
 if ($_REQUEST['action'] == 'chat-converstion'):
     $partner_id = $_REQUEST['user_id'];
@@ -36,11 +40,15 @@ if ($_REQUEST['action'] == 'chat-converstion'):
     $partner = get_user_data($partner_id);
     $conv = get_chat_conversion($user_id, $partner_id);
     $new_msg_cnt = count(get_chat_conversion($user_id, $partner_id));
+    if ($_REQUEST['read_status'] == '0'):
+        $msg_data = new DAO();        
+        $msg_data->dao->update("`frei_chat`", array('read_status' => 1), array('`to`' => $partner_id));
+    endif;
     if ($old_msg_cnt == $new_msg_cnt):
         die('same as old');
     endif;
     ?>
-    <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $user_id ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id ?>" to-user-name="<?php echo $partner['user_name'] ?>" old_msg_cnt="<?php echo $new_msg_cnt; ?>"/>    
+    <input type="hidden" id="hidden-user-data" msg_type="chat-converstion" from-user-id="<?php echo $user_id ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id ?>" to-user-name="<?php echo $partner['user_name'] ?>" old_msg_cnt="<?php echo $new_msg_cnt; ?>"/>    
     <?php
     foreach ($conv as $k => $msg):
         ?>
@@ -89,7 +97,9 @@ if ($_REQUEST['action'] == 'archives-converstion'):
     $user = get_user_data($user_id);
     $partner = get_user_data($partner_id);
     $conv = get_archive_conversion($user_id, $partner_id);
-    foreach ($conv as $k => $msg):
+    ?>
+    <input type="hidden" id="hidden-user-data" msg_type="archives-converstion" from-user-id="<?php echo $user_id; ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id; ?>" to-user-name="<?php echo $partner['user_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $partner_id)); ?>"/>
+    <?php foreach ($conv as $k => $msg):
         ?>
         <div class="conversion">
             <div class="col-md-12 padding-0 vertical-row">

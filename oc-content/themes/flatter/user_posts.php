@@ -8,14 +8,13 @@ else:
     $user_id = osc_logged_user_id();
 endif;
 $data = new DAO();
-$data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+$data->dao->select('item.*, CASE WHEN item_share.created IS NOT NULL THEN item_share.created ELSE item.dt_pub_date END as f_date, item_location.*, item_share.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
-//$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'INNER');
+//$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'LEFT');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-$data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 0'));
 //$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
-$data->dao->orderBy('item.dt_pub_date', 'DESC');
+$data->dao->orderBy('f_date', 'DESC');
 
 if (isset($_REQUEST['location_type'])):
     $location_type = $_REQUEST['location_type'];
@@ -47,11 +46,12 @@ endif;
 
 //get_share_post
 $share_array = get_user_shared_item($user_id);
+$share_pk_id = implode(',', $share_array);
 if ($share_array):
-    $share_pk_id = implode(',', $share_array);
-    $data->dao->where(sprintf('item.pk_i_id IN (%s) OR item.fk_i_user_id =%s', $share_pk_id, $user_id));
+    $data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.item_id = item.pk_i_id', 'LEFT');
+    $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled AND item.b_active', $share_pk_id, $user_id, 1, 0));    
 else:
-    $data->dao->where(sprintf('item.fk_i_user_id =%s', $user_id));
+    $data->dao->where(sprintf('item.fk_i_user_id =%s AND item.b_enabled AND item.b_active', $user_id, 1, 0));
 endif;
 
 //$following_user = get_user_following_data($user_id);
@@ -82,6 +82,7 @@ if ($result) {
 } else {
     $items = array();
 }
+
 $pack = get_user_pack_details(osc_logged_user_id());
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
@@ -93,7 +94,8 @@ if ($items):
         osc_query_item(array('id' => $item['pk_i_id'], 'results_per_page' => 1000));
         while (osc_has_custom_items()):
             $item_id = osc_item_id();
-            $user = get_user_data(osc_item_user_id());
+            $post_user = get_user_data(osc_item_user_id());
+            $user = get_user_data($user_id);
             ?>
             <div id="box" class="box_<?php echo $item['pk_i_id'] ?>">
                 <div class="box box-widget">
@@ -101,9 +103,18 @@ if ($items):
                         <div class="user-block">
                             <div class="user_image">
                                 <?php get_user_profile_picture($user['user_id']); ?>
-                            </div>                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
-                            <span class="description"><?php echo time_elapsed_string(strtotime($item['dt_pub_date'])); ?>
-                                <?php if (osc_logged_user_id() == $user['user_id']): ?>
+                            </div>                        <span class="username">
+                                <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
+                                    <?php echo $user['user_name'] ?>
+                                </a> <?php if (in_array($item['pk_i_id'], $share_array)): ?> <sapn>shared <?php
+                                        if ($post_user['user_id'] == $user['user_id']): if ($user['s_gender'] == 'male'):echo 'his';
+                                            else: echo 'her';
+                                            endif;
+                                        else:
+                                            ?>
+                                            <a class="blue_text" href="<?php echo osc_user_public_profile_url($post_user['user_id']) ?>"><?php echo $post_user['user_name']; ?></a><?php endif; ?> post</sapn><?php endif; ?></span>
+                            <span class="description"> <?php if (in_array($item['pk_i_id'], $share_array)): $i = get_user_shared_item_details($item['pk_i_id']); echo time_elapsed_string(strtotime($i['created'])); else: echo time_elapsed_string(strtotime($item['dt_pub_date'])); endif;?>
+                                <?php if (osc_logged_user_id() == $user['user_id'] = osc_item_user_id()): ?>
                                     <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
                                         <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
                                             <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
@@ -142,24 +153,24 @@ if ($items):
                                                 $pack = get_user_pack_details(osc_logged_user_id());
                                                 if (!$pack['remaining_post'] == 0):
                                                     ?>
-                                                <div class="premium-success">
-                                                    <h4><span  class="bold"> You've done it great</span></h4>
-                                                    <div class="col-md-10 padding-0 padding-bottom-6per">
-                                                        We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
+                                                    <div class="premium-success">
+                                                        <h4><span  class="bold"> You've done it great</span></h4>
+                                                        <div class="col-md-10 padding-0 padding-bottom-6per">
+                                                            We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 <?php else : ?>
-                                                <div class="premium-fail">
-                                                    <div class="col-md-10 padding-0 padding-bottom-10">
-                                                        We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
+                                                    <div class="premium-fail">
+                                                        <div class="col-md-10 padding-0 padding-bottom-10">
+                                                            We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
+                                                        </div>
+                                                        <div class="col-md-10 padding-0 padding-bottom-10">
+                                                            if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.
+                                                        </div>
+                                                        <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
+                                                            You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-10 padding-0 padding-bottom-10">
-                                                        if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.
-                                                    </div>
-                                                    <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
-                                                        You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
-                                                    </div>
-                                                </div>
                                                 <?php endif; ?>
                                             </div>
                                         </div><div class="clearfix"></div>
@@ -169,9 +180,9 @@ if ($items):
                                                 $pack = get_user_pack_details(osc_logged_user_id());
                                                 if (!$pack['remaining_post'] == 0):
                                                     ?>
-                                                <button class="btn  btn-info pull-left button-box blue-box bold"><a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id());?>">Thanks</a></button>
+                                                    <button class="btn  btn-info pull-left button-box blue-box bold"><a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>">Thanks</a></button>
                                                 <?php else : ?>
-                                                <button class="btn  btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
+                                                    <button class="btn  btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
                                                 <?php endif; ?>
                                                 <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">Go to adverting account</a></button>
                                             </div>
@@ -200,7 +211,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                 ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                       ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 

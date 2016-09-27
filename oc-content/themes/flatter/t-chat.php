@@ -45,7 +45,6 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                 $user = $msg['from'];
 
                                 foreach ($msg as $k => $data):
-
                                     $id = $data['to'];
                                     $user = get_user_data($id);
                                     if (!empty($user['s_path'])):
@@ -54,7 +53,10 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                         $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
                                     endif;
                                     ?>
-                                    <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer" data-id='<?php echo $data['to']; ?>'>
+                                    <li class="col-md-12 vertical-row padding-0 border-bottom-gray user_list pointer <?php
+                                    if ($data['read_status'] == '0'): echo 'unread-notification';
+                                    endif;
+                                    ?>" data-id='<?php echo $data['to']; ?>' read-status="<?php echo $data['read_status']; ?>">
                                         <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
                                         <div class="col-md-7">
                                             <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
@@ -62,7 +64,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                         </div>
                                         <div class="col-md-5 dropdown"> 
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
-                                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                                            <ul class="dropdown-menu edit-arrow edit_msg" aria-labelledby="dropdownMenu2">
                                                 <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
                                                 <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
                                             </ul>
@@ -86,6 +88,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                             <ul class="padding-0" id="user_list1">
                                 <?php
                                 $user = $msg['from'];
+
 
                                 foreach ($msg as $k => $data):
 
@@ -132,7 +135,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                             $conv = get_chat_conversion($user_id, $msg[0]['to']);
                             ?>
 
-                            <input type="hidden" id="hidden-user-data" from-user-id="<?php echo $msg[0]['from'] ?>" from-user-name="<?php echo $msg[0]['from_name'] ?>" to-user-id="<?php echo $msg[0]['to'] ?>" to-user-name="<?php echo $msg[0]['to_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $msg[0]['to'])); ?>"/>
+                            <input type="hidden" id="hidden-user-data" msg_type="chat-converstion" from-user-id="<?php echo $msg[0]['from'] ?>" from-user-name="<?php echo $msg[0]['from_name'] ?>" to-user-id="<?php echo $msg[0]['to'] ?>" to-user-name="<?php echo $msg[0]['to_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $msg[0]['to'])); ?>"/>
                             <?php foreach ($conv as $k => $msg):
                                 ?>
                                 <div class="conversion">
@@ -209,23 +212,18 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                 }
             });
         });
-        $('.reply').hide();
         $('#user_list li').click(function () {
-            $('.reply').show();
             $('.chat_msg').show();
         });
         $('.archives').click(function () {
-            $('.reply').hide();
             $('.chat_msg').hide();
 
         });
         $('.new_message').click(function () {
-            $('.reply').show();
             $('.chat_msg').hide();
 
         });
         $('#user_list1 li').click(function () {
-            $('.reply').hide();
             $('.chat_msg').show();
             $('#chat-box').css('max-height', '385px');
         });
@@ -279,6 +277,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
         var from_name = $('#hidden-user-data').attr('from-user-name');
         var to_id = $('#hidden-user-data').attr('to-user-id');
         var to_name = $('#hidden-user-data').attr('to-user-name');
+        var msg_type = $('#hidden-user-data').attr('msg_type');
         if (!msg) {
             return false;
         }
@@ -287,7 +286,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             type: 'post',
             data: {
                 submit: 'send-msg',
-                action: 'chat-converstion',
+                action: msg_type,
                 from_id: from_id,
                 from_name: from_name,
                 user_id: to_id,
@@ -301,25 +300,29 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             }
         });
     });
-    $('.t_chat_textarea').bind('keypress', function (e) {
+    $(document).on('keypress', '.t_chat_textarea', function (e) {
+
         if (e.which === 13) {
             $('.send_msg').click();
         }
     });
     $(document).on('click', '.user_list', function () {
         var id = $(this).attr('data-id');
-        $.ajax({
-            url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
-            type: 'post',
-            data: {
-                action: 'chat-converstion',
-                user_id: id
-            },
-            success: function (data) {
-                $('#chat-box').html(data);
-                $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-            }
-        });
+        var read_status = $(this).attr('read-status');
+        $(this).closest('.unread-notification').removeClass('unread-notification');  
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                    type: 'post',
+                    data: {
+                        action: 'chat-converstion',
+                        user_id: id,
+                        read_status: read_status
+                    },
+                    success: function (data) {
+                        $('#chat-box').html(data);
+                        $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
+                    }
+                });
     });
     $(document).on('click', '.arc_user_list', function () {
         var id = $(this).attr('data-id');

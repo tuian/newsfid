@@ -1055,7 +1055,7 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 function get_user_data($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website, user.dt_reg_date as reg_date');
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.s_gender, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website, user.dt_reg_date as reg_date');
     $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
     $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext, user_cover_picture.cover_pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name as role_name, user_role.role_name_eng as role_name_eng');
@@ -1178,7 +1178,11 @@ function item_resources($item_id) {
             break;
 
         case 'video':
-            if (strpos($post_resource_array['s_path'], 'iframe') !== false):
+            if (strpos($post_resource_array['s_path'], 'dai.ly') !== false):
+                ?>
+                <iframe src="<?php echo $post_resource_array['s_path']; ?>" width="854" height="350" frameborder="0" allowfullscreen ></iframe>
+                <?php
+            elseif (strpos($post_resource_array['s_path'], 'iframe') !== false):
                 echo $post_resource_array['s_path'];
             else:
                 preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $post_resource_array['s_path'], $matches);
@@ -1396,7 +1400,7 @@ function item_like_box($user_id, $item_id) {
         <span class="item_like">
             <i class="fa fa-thumbs-o-up"></i>
         </span>&nbsp;
-        <?php echo $like_text ?>
+    <?php echo $like_text ?>
     </span>
     <?php
 }
@@ -1550,6 +1554,18 @@ function get_user_shared_item($user_id) {
     return $item_result;
 }
 
+function get_user_shared_item_details($item_id) {
+    $user_share_data = new DAO();
+    $user_share_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
+    $user_share_data->dao->from(sprintf('%st_user_share_item', DB_TABLE_PREFIX));
+    $user_share_data->dao->where('item_id', $item_id);
+    $user_share_data->dao->where('share_value', '1');
+    $user_share_data->dao->orderBy('created DESC');
+    $user_share_result = $user_share_data->dao->get();
+    $user_share_array = $user_share_result->row();
+    return $user_share_array;
+}
+
 function get_item_shares_count($item_id) {
     $item_share_data = new DAO();
     $item_share_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
@@ -1586,7 +1602,7 @@ function user_share_box($user_id, $item_id) {
         <span class="item_share">
             <i class="fa fa-retweet"></i>
         </span>&nbsp;
-        <?php echo $share_text ?>
+    <?php echo $share_text ?>
     </span>
     <?php
 }
@@ -1596,6 +1612,8 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     $follow_array['user_id'] = $user_id;
     $follow_array['item_id'] = $item_id;
     $follow_array['share_value'] = $share_value;
+    $follow_array['created'] = date('Y-m-d H:i:s');
+    ;
 
     $user_follow_data = new DAO();
     $user_follow_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
@@ -1658,7 +1676,7 @@ function user_watchlist_box($user_id, $item_id) {
     endif;
     ?>
     <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
-        <?php echo $watchlist_text ?>
+    <?php echo $watchlist_text ?>
     </span>
     <?php
 }
@@ -1770,38 +1788,38 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
         <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
         <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="Start typing...">
     <!--        <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>-->
-        <?php if (!$user_search_array): ?>
+    <?php if (!$user_search_array): ?>
             <h5> Your Search did not return any results. Please try again. </h5>
 
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
             <label  class="col-md-4  search-list">User</label>
             <label class="col-md-4 search-list">Publication</label>
         </div>
-        <?php if ($user_search_array): ?>
+    <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
                 <div class="col-md-4">
-                    <?php foreach ($user_search_array as $user) : ?>
+        <?php foreach ($user_search_array as $user) : ?>
                         <div class="col-md-12">
                             <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
-                                <?php echo $user['user_name']; ?>
+            <?php echo $user['user_name']; ?>
                             </a>
                         </div>
-                    <?php endforeach; ?>
+        <?php endforeach; ?>
                 </div>
                 <div class="col-md-4">
-                    <?php foreach ($item_search_array as $item) : ?>
+        <?php foreach ($item_search_array as $item) : ?>
                         <div class="col-md-12">
                             <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
-                                <?php echo $item['s_title']; ?>
+            <?php echo $item['s_title']; ?>
                             </a>
                         </div>
-                    <?php endforeach; ?> 
+        <?php endforeach; ?> 
                 </div>
             </div>   
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
 
     <?php
@@ -1872,11 +1890,11 @@ function get_user_profile_picture($user_id) {
             $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
         endif;
         ?>
-        <?php if ($user['user_type'] != 0) : ?>
+    <?php if ($user['user_type'] != 0) : ?>
             <div class="user_type_icon_image">
                 <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
             </div>
-        <?php endif; ?>
+    <?php endif; ?>
     </div>
     <?php
 }
@@ -1895,16 +1913,16 @@ function cust_admin_user_type_data($row, $aRow) {
 //                        </div>
 //                        ';
 //    $row['user_type'] = $user_subscribe_switch;
-    $option1 = $aRow['user_type']=='0'?"selected":"";
-    $option2 = $aRow['user_type']=='1'?"selected":"";
-    $option3 = $aRow['user_type']=='2'?"selected":"";
-    $option4 = $aRow['user_type']=='3'?"selected":"";
+    $option1 = $aRow['user_type'] == '0' ? "selected" : "";
+    $option2 = $aRow['user_type'] == '1' ? "selected" : "";
+    $option3 = $aRow['user_type'] == '2' ? "selected" : "";
+    $option4 = $aRow['user_type'] == '3' ? "selected" : "";
     $user_types = '<div class="user_type">'
             . '<select id="admin_user_type" data_user_id="' . $aRow['pk_i_id'] . '">'
-            . '<option value="0" '.$option1.'>Normal User</option>'
-            . '<option value="1" '.$option2.'>Premium User</option>'
-            . '<option value="2" '.$option3.'>Certify User</option>'
-            . '<option value="3" '.$option4.'>Certify+Premium User</option>'
+            . '<option value="0" ' . $option1 . '>Normal User</option>'
+            . '<option value="1" ' . $option2 . '>Premium User</option>'
+            . '<option value="2" ' . $option3 . '>Certify User</option>'
+            . '<option value="3" ' . $option4 . '>Certify+Premium User</option>'
             . '</select><div class="success_msg_' . $aRow['pk_i_id'] . ' success-msg"></div>';
     $row['user_type'] = $user_types;
     return $row;
@@ -1972,8 +1990,8 @@ function admin_footer_script() {
     <script>
         jQuery(document).ready(function ($) {
             $(document).on('change', '#admin_user_type', function () {
-                var user_id = $(this).attr('data_user_id');             
-                var user_type_value = $(this).val();              
+                var user_id = $(this).attr('data_user_id');
+                var user_type_value = $(this).val();
                 $.ajax({
                     url: '<?php echo osc_current_web_theme_url('user_info_ajax.php') ?>',
                     data: {
@@ -1981,12 +1999,12 @@ function admin_footer_script() {
                         user_id: user_id,
                         user_type_value: user_type_value
                     },
-                    success: function (data, textStatus, jqXHR) {                        
+                    success: function (data, textStatus, jqXHR) {
                         if (data == 1) {
-                            $('.success_msg_'+user_id).html('user type update successfully');
+                            $('.success_msg_' + user_id).html('user type update successfully');
                         }
                         if (data == 0) {
-                           $('.success_msg_'+user_id).html('user type not updated');
+                            $('.success_msg_' + user_id).html('user type not updated');
                         }
                     }
                 });
@@ -2154,8 +2172,8 @@ function get_chat_message_data($user_id = null) {
     $user_message_data->dao->select('frei_chat.*');
     $user_message_data->dao->from('frei_chat');
     $user_message_data->dao->where('`from`', $user_id);
-    $user_message_data->dao->orderBy("sent DESC");
     $user_message_data->dao->groupBy('`to`');
+    $user_message_data->dao->orderBy("`sent` DESC");
     $user_message_result = $user_message_data->dao->get();
     $user_messge_array = $user_message_result->result();
     return $user_messge_array;
@@ -2395,7 +2413,7 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
 
 //    $transaction_array['debug_code'] = "<pre>" . print_r($_POST) . "<pre>";
     if (isset($_REQUEST['paymement_type']) && $_REQUEST['paymement_type'] == 'pack'):
-        $p = get_item_premium_pack_by_id(@$_REQUEST['pack_id']);        
+        $p = get_item_premium_pack_by_id(@$_REQUEST['pack_id']);
         $transaction_array['i_amount'] = $p['i_amount_cost'];
         $db_prefix = DB_TABLE_PREFIX;
         $transaction_data = new DAO();
@@ -2423,13 +2441,14 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
 }
 // redirect to specific page
 if ($page == 'custom' && ($p_route == 'payment-pro-checkout' || $p_route == 'payment-pro-user-menu' || $p_route == 'payment-pro-user-packs')):
-     osc_redirect_to(osc_base_url());
+    osc_redirect_to(osc_base_url());
 endif;
 
 $scategory = Params::getParam('sCategory');
 if ($page == 'search' && isset($_GET['sCategory'])):
-     osc_redirect_to(osc_base_url());
+    osc_redirect_to(osc_base_url());
 endif;
+
 function get_user_pack_details($user_id) {
     $item = new DAO();
     $db_prefix = DB_TABLE_PREFIX;
