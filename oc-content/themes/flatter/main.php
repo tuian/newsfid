@@ -70,27 +70,27 @@ if (isset($user_id)) {
 
 <!-- Homepage widget 1 -->
 <?php if (osc_is_web_user_logged_in()) : ?>
-<!--     bottom background 
-    <div id="cover" class="cover">
+    <!--     bottom background 
+        <div id="cover" class="cover">
 
-        <?php // if (function_exists("osc_slider")) { ?>
-            <?php // osc_slider(); ?>  
-        <?php // } ?>
-    </div>-->
+    <?php // if (function_exists("osc_slider")) { ?>
+    <?php // osc_slider(); ?>  
+    <?php // } ?>
+        </div>-->
     <?php
 else: {
         
     }
     ?>
-    <!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;max-height: 500px;">
-            <div class="last-post col-md-12">
-                <div class="col-md-8">
-                    HEADLINES
-                </div>
-                <div class="col-md-8">
-                    <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
-                </div>
-                <div class="col-md-8 padding-bottom-10"><i>
+        <!--    <div id="cover" class="cover" style="background-image: url(<?php echo osc_base_url() . $post_resource_array['s_path'] . $post_resource_array['pk_i_id'] . '.' . $post_resource_array['s_extension']; ?>);background-size: cover;max-height: 500px;">
+                <div class="last-post col-md-12">
+                    <div class="col-md-8">
+                        HEADLINES
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="bold"><?php echo isset($post_details['s_title']) ? $post_details['s_title'] : ''; ?></h3>
+                    </div>
+                    <div class="col-md-8 padding-bottom-10"><i>
     <?php
     $string = strip_tags(isset($post_details['s_description']) ? $post_details['s_description'] : '');
 
@@ -104,9 +104,9 @@ else: {
     }
     ?>  <?php echo $string;
     ?></i>
-                </div>
-            </div>      
-        </div>-->
+                    </div>
+                </div>      
+            </div>-->
 
 
     <div class="section" >
@@ -303,9 +303,16 @@ else: {
                                                             <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
                                                             <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                                            <?php
-                                                            user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
-                                                            ?>
+                                                            <div class="col-md-12 padding-0">                                                           
+                                                                <div class="col-md-offset-2 col-md-4 padding-0 sug_button">                                                           
+                                                                    <?php
+                                                                    user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
+                                                                    ?>
+                                                                </div>
+                                                                <div class="col-md-4">         
+                                                                    <button class="button-gray-box">Remove</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>    
                                                     <?php
@@ -435,7 +442,7 @@ else: {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                                 ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                                   ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -457,7 +464,7 @@ else: {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                                 ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                                   ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -751,10 +758,10 @@ function footer_script() {
 
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-        
+
         $(document).on('click', '.frnd-sug-button', function () {
             var user = $(this).attr('user-data');
-            $(user).hide('slow');
+            $(user).hide();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
                 type: "POST",
@@ -937,7 +944,7 @@ function footer_script() {
                         setTimeout(make_item_ajax_call, 1000);
                     }
                 });
-                
+
                 $(document).on('click', '.item_cat', function () {
                     var cat_id = $(this).attr('cat-id');
                     $.ajax({

@@ -6,7 +6,7 @@ if ($_REQUEST['notification'] == 'notification'):
     $notifications = get_user_notification();
     ?>
     <div class="notification_dropdown border-bottom-gray">
-        <span class="bold font-color-black">  Marquer to comme lu</span> <span class="dropdown pull-right pointer padding-left-10"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i>
+        <span class="bold font-color-black">  Mark all as read</span> <span class="dropdown pull-right pointer padding-left-10"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i>
             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                 <li><a class="mark_all" user-id="<?php echo osc_logged_user_id(); ?>"> Mark all as read</a></li>
                 <!--                <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>

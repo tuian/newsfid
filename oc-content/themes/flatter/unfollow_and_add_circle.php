@@ -6,18 +6,20 @@ require 'functions.php';
 $logged_in_user_id = $_REQUEST['logged_in_user_id'];
 $follow_user_id = $_REQUEST['follow_user_id'];
 if ($_REQUEST['action'] == 'unfollow'):
+    $follow_value = 0;
+    $follow_update = update_user_following($logged_in_user_id, $follow_user_id, $follow_value);
+elseif ($_REQUEST['action'] == 'follow'):
+    $follow_value = 1;
     $follow_update = update_user_following($logged_in_user_id, $follow_user_id, $follow_value);
 endif;
-if ($_REQUEST['action'] == 'add_circle'):
-    $add_circle = add_user_circle($logged_in_user_id, $follow_user_id);
-    osc_add_flash_ok_message('This User Succsessfully Added To Your Circle');
-endif;
 
-if ($_REQUEST['remove_circle'] == 'remove_circle'):
-    $db_prefix = DB_TABLE_PREFIX;
-    $remove_user_data = new DAO();
-    $remove_user_data->dao->delete("`{$db_prefix}t_user_circle`", "user_id = $logged_in_user_id AND circle_user_id = $follow_user_id");
-    osc_add_flash_ok_message('This User Succsessfully Removed To Your Circle');
+
+if ($_REQUEST['action'] == 'add_circle'):
+    $circle_value = 1;
+    $add_circle = update_user_circle($logged_in_user_id, $follow_user_id, $circle_value);
+elseif ($_REQUEST['action'] == 'remove_circle'):
+    $circle_value = 0;
+    $add_circle = update_user_circle($logged_in_user_id, $follow_user_id, $circle_value);
 endif;
 
 if ($_REQUEST['follow'] == 'follow-user'):
@@ -47,9 +49,16 @@ if ($_REQUEST['follow'] == 'follow-user'):
                                     <h5 class="direct-chat-name margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
                                     <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                    <?php
-                                    user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
-                                    ?>
+                                    <div class="col-md-12 padding-0">                                                           
+                                        <div class="col-md-offset-2 col-md-4 padding-0 sug_button">                                                           
+                                            <?php
+                                            user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
+                                            ?>
+                                        </div>
+                                        <div class="col-md-4">         
+                                            <button class="button-gray-box">Remove</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>    
                             <?php
@@ -74,7 +83,7 @@ endif;
 <script>
     $(document).on('click', '.frnd-sug-button', function () {
         var user = $(this).attr('user-data');
-        $(user).hide('slow');
+        $(user).hide();
         $.ajax({
             url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
             type: "POST",

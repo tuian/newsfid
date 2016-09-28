@@ -1131,14 +1131,14 @@ s_extra VARCHAR( 250 ) NULL ,PRIMARY KEY(fk_s_pending_code),INDEX idx_fk_s_pendi
         return $this->dao->delete($this->getTable_highlight(), array('fk_i_item_id' => $itemId));
     }
 
-    public function addWallet($user, $amount) {
-        $amount = (int) ($amount);
-        $wallet = $this->getWallet($user);
-
-        if (isset($wallet['premium_post'])) {
+    public function addWallet($user, $amountt) {
+        $amount = (int) ($amountt);
+        $wallet = $this->getWallet($user);       
+        
+        if (isset($wallet['premium_post']) && $wallet['premium_post'] != 0) {
             return $this->dao->update($this->getTable_wallet(), array('premium_post' => $amount + $wallet['premium_post'], 'remaining_post' => $amount + $wallet['remaining_post']), array('user_id' => $user));
         } else {
-            return $this->dao->insert($this->getTable_wallet(), array('user_id' => $user, 'premium_post' => $amount));
+             return $this->dao->insert($this->getTable_wallet(), array('premium_post' => $amount, 'created' => date('Y-m-d H:i:s'), 'remaining_post' => $amount, 'user_id' => $user));          
         }
     }
 

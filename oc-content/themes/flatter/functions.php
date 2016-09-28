@@ -1329,20 +1329,21 @@ function get_item_likes_count($item_id) {
     return count($item_like_array);
 }
 
+
 function get_user_item_likes($user_id) {
-    $user_like_data = new DAO();
-    $user_like_data->dao->select(sprintf('%st_item_likes.*', DB_TABLE_PREFIX));
-    $user_like_data->dao->from(sprintf('%st_item_likes', DB_TABLE_PREFIX));
-    $user_like_data->dao->where('user_id', $user_id);
-    $user_like_data->dao->where('like_value', '1');
+    $user_like_data = new DAO();    
+    $user_like_data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('fk_i_user_id', $user_id);   
     $user_like_result = $user_like_data->dao->get();
-    $user_like_array = $user_like_result->result();
-    if ($user_like_array):
-        $item_result = custom_array_column($user_like_array, 'item_id');
-    else:
-        $item_result = false;
+    $user_like_array = $user_like_result->result();    
+    $likes_cnt = 0;
+    if (!empty($user_like_array)):
+        foreach ($user_like_array as $i):
+            $likes_cnt += get_item_likes_count($i['pk_i_id']);
+        endforeach;            
     endif;
-    return $item_result;
+    return $likes_cnt;
 }
 
 function update_item_like($user_id, $item_id, $like_value) {
@@ -1380,11 +1381,21 @@ function update_item_like($user_id, $item_id, $like_value) {
 }
 
 function item_like_box($user_id, $item_id) {
-
     $like = 'like';
     $like_text = 'Like';
-    $like_class = '';
-    $like_item_array = get_user_item_likes($user_id);
+    $like_class = '';    
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('%st_item_likes.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_item_likes', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('user_id', $user_id);
+    $user_like_data->dao->where('like_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $like_item_array = custom_array_column($user_like_array, 'item_id');
+    else:
+        $like_item_array = false;
+    endif;
     if ($like_item_array && in_array($item_id, $like_item_array)):
         $like = 'unlike';
         $like_class = 'liked';
@@ -2139,19 +2150,30 @@ function get_users_data($users = array()) {
     return $user;
 }
 
-function add_user_circle($logged_in_user_id, $follow_user_id = NULL) {
-    $follow_array['user_id'] = $logged_in_user_id;
-    $follow_array['circle_user_id'] = $follow_user_id;
-    $add_user_data = new DAO();
-    if ($follow_user_id):
-        $add_user_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
-//insert notification for author    
-        $message = 'added you to his/her circle';
-        set_user_notification($logged_in_user_id, $follow_user_id, $message);
+function update_user_circle($logged_in_user_id = NULL, $circle_user_id = NULL, $circle_value = NULL) {
 
+    $follow_array['user_id'] = $logged_in_user_id;
+    $follow_array['circle_user_id'] = $circle_user_id;
+    $follow_array['circle_value'] = $circle_value;
+    $user_follow_data = new DAO();
+    $user_follow_data->dao->select(sprintf('%st_user_circle.*', DB_TABLE_PREFIX));
+    $user_follow_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
+    $user_follow_data->dao->where('user_id', $logged_in_user_id);
+    $user_follow_data->dao->where('circle_user_id', $circle_user_id);
+    $user_follow_data->dao->limit(1);
+    $user_follow_result = $user_follow_data->dao->get();
+    $user_follow_array = $user_follow_result->result();
+
+    if ($user_follow_array):
+        $user_follow_data->dao->update(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
+    else:
+        $user_follow_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
+    endif;
+    if ($circle_value == 1):
+        $message = 'is now following you';
+        set_user_notification($logged_in_user_id, $circle_user_id, $message);
     endif;
 }
-
 function get_user_circle_data($user_id) {
     $user_circle_data = new DAO();
     $user_circle_data->dao->select(sprintf('%st_user_circle.*', DB_TABLE_PREFIX));
@@ -2161,6 +2183,22 @@ function get_user_circle_data($user_id) {
     $user_circle_array = $user_circle_result->result();
     if ($user_circle_array):
         $item_result = custom_array_column($user_circle_array, 'circle_user_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function get_user_circle($user_id) {
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('user_circle.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_user_circle AS user_circle', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('user_circle.user_id', $user_id);
+    $user_like_data->dao->where('circle_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $item_result = custom_array_column($user_like_array, 'circle_user_id');
     else:
         $item_result = false;
     endif;

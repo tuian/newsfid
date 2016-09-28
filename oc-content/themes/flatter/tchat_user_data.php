@@ -37,7 +37,7 @@ $logged_in_user_id = osc_logged_user_id();
 <div class="background-white col-md-12 padding-bottom-14per padding-0 box-shadow-black" id="tchat_data">
     <?php
     if ($user['cover_picture_user_id']):
-        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['pic_ext'];
+        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
     else:
         $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
     endif;
@@ -56,9 +56,13 @@ $logged_in_user_id = osc_logged_user_id();
         ?>
         <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" class="col-md-2 padding-0"><img src="<?php echo $img_path ?>" class="background-white padding-10 img-circle"></a>
         <div class="col-md-6 padding-0 padding-top-8per">
-            <label class="font-color-black bold">Live:&nbsp;&nbsp;</label> <?php if ($user['s_city']): echo $user['s_city'] ?>-<?php endif;
-        if ($user['s_region']): echo $user['s_region'] ?>-<?php endif;
-        echo $user['s_country'] ?>
+            <label class="font-color-black bold">Live:&nbsp;&nbsp;</label> <?php if ($user['s_city']): echo $user['s_city'] ?>-<?php
+            endif;
+            if ($user['s_region']): echo $user['s_region']
+                ?>-<?php
+            endif;
+            echo $user['s_country']
+            ?>
             <div> <label class="font-color-black bold">Register since:&nbsp;&nbsp;</label><?php
                 $date = $user['reg_date'];
                 echo date('l jS F Y', strtotime($date));
@@ -91,10 +95,32 @@ $logged_in_user_id = osc_logged_user_id();
         </div>
         <div class="col-md-6">
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                <a class="pointer unfollow_user font-color-black bold">  Unfollow </a>
+                <?php
+                $follow = get_user_following_data(osc_logged_user_id());
+                if ($follow):
+                    if (in_array($user_id, $follow)):
+                        ?>
+                        <a class="pointer unfollow_user font-color-black bold"> Unfollow </a>
+                    <?php else: ?>
+                        <a class="pointer follow_user font-color-black bold"> Follow </a>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <a class="pointer follow_user font-color-black bold"> Follow </a>
+                <?php endif; ?>
             </div>
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                <a class="pointer add_circle font-color-black bold"> Add to circle </a>
+                <?php
+                $circle = get_user_circle(osc_logged_user_id());
+                if ($circle):
+                    if (in_array($user_id, $circle)):
+                        ?>
+                        <a class="pointer removed_circle font-color-black bold"> Remove from circle </a>
+                    <?php else: ?>
+                        <a class="pointer added_circle font-color-black bold"> Add to circle </a>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <a class="pointer added_circle font-color-black bold"> Add to circle </a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="col-md-6">            
@@ -122,12 +148,28 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-
+                $('.unfollow_user').text('Follow').addClass('follow_user').removeClass('unfollow_user');
+            }
+        })
+    });
+    $(document).on('click', '.follow_user', function () {
+        var follow_user_id = <?php echo $follow_user_id ?>;
+        var logged_in_user_id = <?php echo $logged_in_user_id ?>;
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
+            type: 'post',
+            data: {
+                action: 'follow',
+                follow_user_id: follow_user_id,
+                logged_in_user_id: logged_in_user_id
+            },
+            success: function () {
+                $('.follow_user').text('Unfollow').addClass('unfollow_user').removeClass('follow_user');
             }
         })
     });
 
-    $(document).on('click', '.add_circle', function () {
+    $(document).on('click', '.added_circle', function () {
         var follow_user_id = <?php echo $follow_user_id ?>;
         var logged_in_user_id = <?php echo $logged_in_user_id ?>;
         $.ajax({
@@ -139,7 +181,23 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-
+                $('.added_circle').text('Remove from circle').addClass('removed_circle').removeClass('added_circle');
+            }
+        })
+    });
+    $(document).on('click', '.removed_circle', function () {
+        var follow_user_id = <?php echo $follow_user_id ?>;
+        var logged_in_user_id = <?php echo $logged_in_user_id ?>;
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
+            type: 'post',
+            data: {
+                action: 'remove_circle',
+                follow_user_id: follow_user_id,
+                logged_in_user_id: logged_in_user_id
+            },
+            success: function () {
+                $('.removed_circle').text('Add to circle').addClass('added_circle').removeClass('removed_circle');
             }
         })
     });
