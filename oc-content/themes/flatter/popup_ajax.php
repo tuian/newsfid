@@ -109,7 +109,7 @@ if ($item_id):
                     </div>
                     <div class="row post_resource" style="display: none;">
                         <div class="col-md-12">
-                            <ul class="social-share padding-bottom-20">
+                            <ul class="social-share padding-bottom-20 padding-left-7per">
                                 <li>
                                     <?php echo item_like_box(osc_logged_user_id(), $item_id_pre) ?></li>
 

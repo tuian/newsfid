@@ -1329,19 +1329,18 @@ function get_item_likes_count($item_id) {
     return count($item_like_array);
 }
 
-
 function get_user_item_likes($user_id) {
-    $user_like_data = new DAO();    
+    $user_like_data = new DAO();
     $user_like_data->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX));
     $user_like_data->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
-    $user_like_data->dao->where('fk_i_user_id', $user_id);   
+    $user_like_data->dao->where('fk_i_user_id', $user_id);
     $user_like_result = $user_like_data->dao->get();
-    $user_like_array = $user_like_result->result();    
+    $user_like_array = $user_like_result->result();
     $likes_cnt = 0;
     if (!empty($user_like_array)):
         foreach ($user_like_array as $i):
             $likes_cnt += get_item_likes_count($i['pk_i_id']);
-        endforeach;            
+        endforeach;
     endif;
     return $likes_cnt;
 }
@@ -1383,7 +1382,7 @@ function update_item_like($user_id, $item_id, $like_value) {
 function item_like_box($user_id, $item_id) {
     $like = 'like';
     $like_text = 'Like';
-    $like_class = '';    
+    $like_class = '';
     $user_like_data = new DAO();
     $user_like_data->dao->select(sprintf('%st_item_likes.*', DB_TABLE_PREFIX));
     $user_like_data->dao->from(sprintf('%st_item_likes', DB_TABLE_PREFIX));
@@ -1411,7 +1410,7 @@ function item_like_box($user_id, $item_id) {
         <span class="item_like">
             <i class="fa fa-thumbs-o-up"></i>
         </span>&nbsp;
-    <?php echo $like_text ?>
+        <?php echo $like_text ?>
     </span>
     <?php
 }
@@ -1448,6 +1447,22 @@ function get_user_following_data($user_id) {
     $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
     $user_like_data->dao->where('user_id', $user_id);
     $user_like_data->dao->where('follow_value', '1');
+    $user_like_result = $user_like_data->dao->get();
+    $user_like_array = $user_like_result->result();
+    if ($user_like_array):
+        $item_result = custom_array_column($user_like_array, 'follow_user_id');
+    else:
+        $item_result = false;
+    endif;
+    return $item_result;
+}
+
+function get_user_following_remove_data($user_id) {
+    $user_like_data = new DAO();
+    $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
+    $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
+    $user_like_data->dao->where('user_id', $user_id);
+    $user_like_data->dao->where('follow_value', '2');
     $user_like_result = $user_like_data->dao->get();
     $user_like_array = $user_like_result->result();
     if ($user_like_array):
@@ -1522,6 +1537,14 @@ function user_follow_btn_box($logged_in_user_id, $follow_user_id) {
     ?>   
     <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" user-data=".user-<?php echo $follow_user_id ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
     <?php
+}
+
+function follow_user($logged_in_user_id, $follow_user_id, $follow_value) {
+    $follow_array['user_id'] = $logged_in_user_id;
+    $follow_array['follow_user_id'] = $follow_user_id;
+    $follow_array['follow_value'] = $follow_value;
+    $user_follow_data = new DAO();
+    $user_follow_data->dao->insert(sprintf('%st_user_follow', DB_TABLE_PREFIX), $follow_array);
 }
 
 function update_user_following($logged_in_user_id, $follow_user_id, $follow_value) {
@@ -1613,7 +1636,7 @@ function user_share_box($user_id, $item_id) {
         <span class="item_share">
             <i class="fa fa-retweet"></i>
         </span>&nbsp;
-    <?php echo $share_text ?>
+        <?php echo $share_text ?>
     </span>
     <?php
 }
@@ -1687,7 +1710,7 @@ function user_watchlist_box($user_id, $item_id) {
     endif;
     ?>
     <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
-    <?php echo $watchlist_text ?>
+        <?php echo $watchlist_text ?>
     </span>
     <?php
 }
@@ -1799,38 +1822,38 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
         <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
         <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="Start typing...">
     <!--        <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>-->
-    <?php if (!$user_search_array): ?>
+        <?php if (!$user_search_array): ?>
             <h5> Your Search did not return any results. Please try again. </h5>
 
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
             <label  class="col-md-4  search-list">User</label>
             <label class="col-md-4 search-list">Publication</label>
         </div>
-    <?php if ($user_search_array): ?>
+        <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
                 <div class="col-md-4">
-        <?php foreach ($user_search_array as $user) : ?>
+                    <?php foreach ($user_search_array as $user) : ?>
                         <div class="col-md-12">
                             <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
-            <?php echo $user['user_name']; ?>
+                                <?php echo $user['user_name']; ?>
                             </a>
                         </div>
-        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
                 <div class="col-md-4">
-        <?php foreach ($item_search_array as $item) : ?>
+                    <?php foreach ($item_search_array as $item) : ?>
                         <div class="col-md-12">
                             <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
-            <?php echo $item['s_title']; ?>
+                                <?php echo $item['s_title']; ?>
                             </a>
                         </div>
-        <?php endforeach; ?> 
+                    <?php endforeach; ?> 
                 </div>
             </div>   
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
 
     <?php
@@ -1849,7 +1872,7 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_data->dao->from("{$db_prefix}t_user_themes as user_themes");
     $suggest_user_data->dao->where("user_themes.theme_id IN ({$themes})");
     $suggest_user_data->dao->where("user_themes.user_id != {$user_id}");
-    $suggest_user_data->dao->limit(4);
+    $suggest_user_data->dao->limit($limit);
     $suggest_user_result = $suggest_user_data->dao->get();
     $suggest_user_array = $suggest_user_result->result();
     $theme_user_id = custom_array_column($suggest_user_array, 'user_id');
@@ -1860,8 +1883,8 @@ function get_suggested_users($user_id, $limit) {
     $suggest_user_data->dao->limit($limit);
     $suggest_user_result = $suggest_user_data->dao->get();
     $suggest_user_array = $suggest_user_result->result();
-
     $rubric_user_id = custom_array_column($suggest_user_array, 'user_id');
+
     $users = array_merge($theme_user_id, $rubric_user_id);
     return array_slice(array_unique($users), 0, $limit);
 }
@@ -1901,11 +1924,11 @@ function get_user_profile_picture($user_id) {
             $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
         endif;
         ?>
-    <?php if ($user['user_type'] != 0) : ?>
+        <?php if ($user['user_type'] != 0) : ?>
             <div class="user_type_icon_image">
                 <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
             </div>
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
     <?php
 }
@@ -2145,6 +2168,7 @@ function get_users_data($users = array()) {
     $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
     $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
     $user_data->dao->where("user.pk_i_id IN ({$users})");
+    $user_data->dao->orderBy("user_cover_picture.pic_ext DESC");
     $result = $user_data->dao->get();
     $user = $result->result();
     return $user;
@@ -2174,6 +2198,7 @@ function update_user_circle($logged_in_user_id = NULL, $circle_user_id = NULL, $
         set_user_notification($logged_in_user_id, $circle_user_id, $message);
     endif;
 }
+
 function get_user_circle_data($user_id) {
     $user_circle_data = new DAO();
     $user_circle_data->dao->select(sprintf('%st_user_circle.*', DB_TABLE_PREFIX));
@@ -2478,7 +2503,7 @@ if ($page == 'custom' && $p_route == 'paypal-notify') {
     endif;
 }
 // redirect to specific page
-if ($page == 'custom' && ($p_route == 'payment-pro-checkout' || $p_route ==  'payment-pro-done'|| $p_route == 'payment-pro-user-menu' || $p_route == 'payment-pro-user-packs')):
+if ($page == 'custom' && ($p_route == 'payment-pro-checkout' || $p_route == 'payment-pro-done' || $p_route == 'payment-pro-user-menu' || $p_route == 'payment-pro-user-packs')):
     osc_redirect_to(osc_base_url());
 endif;
 

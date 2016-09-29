@@ -285,39 +285,38 @@ else: {
                                     <?php
                                     $suggested_users = get_suggested_users($logged_user['user_id'], 1000);
                                     $follow_user = (array) get_user_following_data($logged_user['user_id']);
-                                    $suggested_users_result = array_diff($suggested_users, $follow_user);
+                                    $suggested_follow_users = array_diff($suggested_users, $follow_user);
+                                    $follow_remove = (array) get_user_following_remove_data($logged_user['user_id']);
+                                    $suggested_users_result = array_diff($suggested_follow_users, $follow_remove);
+                                    $suggested_users_result = get_users_data($suggested_users_result);  
                                     if ($suggested_users_result):
                                         $i = 0;
-                                        foreach ($suggested_users_result as $s_user):
-                                            if (+$i > 4)
+                                        foreach ($suggested_users_result as $suggested_user_array):
+                                            if (+$i > 3)
                                                 break;
-                                            $suggested_user_array = get_user_data($s_user);
-                                            if (!empty($suggested_user_array)):
-                                                if ((get_user_follower_data($suggested_user_array['user_id']))):
-                                                    ?>
-                                                    <div class="col-md-12 col-xs-12 margin-bottom-10">
-                                                        <div class="col-md-3 col-xs-2 padding-0">
-                                                            <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                                        </div>
-                                                        <div class="col-md-9 col-xs-10 padding-right-0">
-                                                            <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
+                                           
+//                                                if ((get_user_follower_data($suggested_user_array['user_id']))): 
+                                                ?>
+                                                <div class="sugg_box col-md-12 col-xs-12 margin-bottom-10">
+                                                    <div class="col-md-3 col-xs-2 padding-0">
+                                                        <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                    </div>
+                                                    <div class="col-md-9 col-xs-10 padding-right-0">
+                                                        <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
-                                                            <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                                            <div class="col-md-12 padding-0">                                                           
-                                                                <div class="col-md-offset-2 col-md-4 padding-0 sug_button">                                                           
-                                                                    <?php
-                                                                    user_follow_btn_box($logged_user['user_id'], $suggested_user_array['user_id']);
-                                                                    ?>
-                                                                </div>
-                                                                <div class="col-md-4">         
-                                                                    <button class="button-gray-box">Remove</button>
-                                                                </div>
+                                                        <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
+                                                        <div class="col-md-12 padding-0">                                                           
+                                                            <div class="col-md-offset-2 col-md-4 padding-0 sug_button">
+                                                                <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>">Follow</button>
+                                                            </div>
+                                                            <div class="col-md-4 padding-left-10">         
+                                                                <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>">Remove</button>
                                                             </div>
                                                         </div>
-                                                    </div>    
-                                                    <?php
-                                                endif;
-                                            endif;
+                                                    </div>
+                                                </div>    
+                                                <?php
+//                                              
                                             $i++;
                                         endforeach;
                                     else:
@@ -442,7 +441,7 @@ else: {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                                   ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                                       ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -464,7 +463,7 @@ else: {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                                   ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                                       ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -759,14 +758,30 @@ function footer_script() {
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
 
-        $(document).on('click', '.frnd-sug-button', function () {
-            var user = $(this).attr('user-data');
-            $(user).hide();
+        $(document).on('click', '.follow_remove', function () {
+            var user_id = $(this).attr('user-id');
+            $(this).closest('.sugg_box').hide('slow');
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
                 type: "POST",
                 data: {
-                    follow: 'follow-user'
+                    follow_remove: 'follow-remove',
+                    follow_user_id: user_id,
+                },
+                success: function (data) {
+                    $('#suggested_user_div').html(data);
+                }
+            });
+        });
+        $(document).on('click', '.follow_users', function () {
+            var user_id = $(this).attr('user-id');
+            $(this).closest('.sugg_box').hide('slow');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
+                type: "POST",
+                data: {
+                    follow: 'follow-user',
+                    follow_user_id: user_id,
                 },
                 success: function (data) {
                     $('#suggested_user_div').html(data);

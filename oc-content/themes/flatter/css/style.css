@@ -3060,12 +3060,16 @@ select {
     border: none !important;
     border-radius: 0 !important;
 }
-.sug_button .follow-user-btn{
-    padding: 10% 18% !important;
+.sug_button .follow_users{
+    padding: 6% 18% !important;
     background-color: #20a8e0 !important;
     color: white !important;
     border: none !important;
     border-radius: 0 !important;
+}
+.sugg_box img{
+    width: 50px;
+    height: auto;
 }
 .button-gray-box {
     padding: 10% 18% !important;

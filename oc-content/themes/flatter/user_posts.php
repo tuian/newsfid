@@ -8,24 +8,36 @@ else:
     $user_id = osc_logged_user_id();
 endif;
 $data = new DAO();
-$data->dao->select('item.*, CASE WHEN item_share.created IS NOT NULL THEN item_share.created ELSE item.dt_pub_date END as f_date, item_location.*, item_share.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+//get_share_post
+$share_array = get_user_shared_item($user_id);
+if (!empty($share_array)):
+    $share_pk_id = implode(',', $share_array);
+    $data->dao->select('item.*, CASE WHEN item_share.created IS NOT NULL THEN item_share.created ELSE item.dt_pub_date END as f_date, item_location.*, item_share.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+    $data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.item_id = item.pk_i_id', 'LEFT');
+    $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s', $share_pk_id, $user_id, 1, 1, 0));
+    $data->dao->orderBy('f_date', 'DESC');
+else:
+    $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+    $data->dao->where(sprintf('item.fk_i_user_id =%s AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s', $user_id, 1, 1, 0));
+    $data->dao->orderBy('item.dt_pub_date', 'DESC');
+endif;
+
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
 //$data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.user_id = item.fk_i_user_id', 'LEFT');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
 //$data->dao->where(sprintf("item_user.s_name LIKE '%s'", '%' . $search_name . '%'));
-$data->dao->orderBy('f_date', 'DESC');
+
 
 if (isset($_REQUEST['location_type'])):
     $location_type = $_REQUEST['location_type'];
     $location_id = isset($_REQUEST['location_id']) ? $_REQUEST['location_id'] : '';
     if ($_REQUEST['location_type'] == 'world'):
-
     elseif ($_REQUEST['location_type'] == 'country'):
-//        $data->dao->where('item_location.fk_c_country_code', $location_id);
+        $data->dao->where('item_location.fk_c_country_code', $location_id);
     elseif ($_REQUEST['location_type'] == 'city'):
         if (!empty($location_id)):
-//            $data->dao->where('item_location.fk_i_city_id', $location_id);
+            $data->dao->where('item_location.fk_i_city_id', $location_id);
         endif;
     endif;
 endif;
@@ -35,24 +47,16 @@ if (!empty($_REQUEST['category_id'])):
         $categories = array_column(Category::newInstance()->findSubcategories($_REQUEST['category_id']), 'pk_i_id');
         $categories = implode(',', $categories);
     endif;
-//    $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
+    $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
 //else:
-//    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
+    $data->dao->whereIn('item.fk_i_category_id', get_user_categories(osc_logged_user_id()));
 endif;
 
-if (!empty($_REQUEST['post_type'])):
-//    $data->dao->where('item.item_type', $_REQUEST['post_type']);
+if ($_REQUEST['post_type'] != 'all' && !empty($_REQUEST['post_type'])):
+    $data->dao->where('item.item_type', $_REQUEST['post_type']);
 endif;
 
-//get_share_post
-$share_array = get_user_shared_item($user_id);
-if ($share_array):
-    $share_pk_id = implode(',', $share_array);
-    $data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.item_id = item.pk_i_id', 'LEFT');
-    $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled AND item.b_active', $share_pk_id, $user_id, 1, 0));    
-else:
-    $data->dao->where(sprintf('item.fk_i_user_id =%s AND item.b_enabled AND item.b_active', $user_id, 1, 0));
-endif;
+
 
 //$following_user = get_user_following_data($user_id);
 //$following_user[] = $user_id;
@@ -82,7 +86,6 @@ if ($result) {
 } else {
     $items = array();
 }
-
 $pack = get_user_pack_details(osc_logged_user_id());
 if ($items):
     $item_result = Item::newInstance()->extendData($items);
@@ -103,40 +106,58 @@ if ($items):
                         <div class="user-block">
                             <div class="user_image">
                                 <?php get_user_profile_picture($user['user_id']); ?>
-                            </div>                        <span class="username">
+                            </div>  
+                            <span class="username">
                                 <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                     <?php echo $user['user_name'] ?>
-                                </a> <?php if (in_array($item['pk_i_id'], $share_array)): ?> <sapn>shared <?php
-                                        if ($post_user['user_id'] == $user['user_id']): if ($user['s_gender'] == 'male'):echo 'his';
-                                            else: echo 'her';
+                                </a> 
+                                <?php if (!empty($share_array) && in_array($item['pk_i_id'], $share_array)): ?> 
+                                <sapn>shared <?php
+                                        if ($post_user['user_id'] == $user['user_id']):
+                                            if ($user['s_gender'] == 'male'):
+                                                echo 'his';
+                                            else:
+                                                echo 'her';
                                             endif;
                                         else:
                                             ?>
-                                            <a class="blue_text" href="<?php echo osc_user_public_profile_url($post_user['user_id']) ?>"><?php echo $post_user['user_name']; ?></a><?php endif; ?> post</sapn><?php endif; ?></span>
-                            <span class="description"> <?php if (in_array($item['pk_i_id'], $share_array)): $i = get_user_shared_item_details($item['pk_i_id']); echo time_elapsed_string(strtotime($i['created'])); else: echo time_elapsed_string(strtotime($item['dt_pub_date'])); endif;?>
-                                <?php if (osc_logged_user_id() == $user['user_id'] = osc_item_user_id()): ?>
-                                    <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
-                                        <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
-                                            <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
-                                            <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
-                                            <?php
-                                            $items = get_item_premium();
-                                            if (!in_array($item_id, $items)):
-                                                $pack = get_user_pack_details(osc_logged_user_id());
-                                                if ($pack['remaining_post'] == 0):
-                                                    ?>
-                                                    <li class="premium" data-toggle="modal" data-target="#marketing"><a> Promote Now</a></li>
+                                    <a class="blue_text" href="<?php echo osc_user_public_profile_url($post_user['user_id']) ?>"><?php echo $post_user['user_name']; ?></a>
+                                        <?php endif; ?> 
+                                    post
+                                </sapn>
+                                <?php endif; ?>
+                            </span>
+                                    <span class="description"> <?php
+                                        if (!empty($share_array) && in_array($item['pk_i_id'], $share_array)): 
+                                            $i = get_user_shared_item_details($item['pk_i_id']);
+                                            echo time_elapsed_string(strtotime($i['created']));
+                                        else:
+                                            echo time_elapsed_string(strtotime($item['dt_pub_date']));
+                                        endif;
+                                        ?>
+                                        <?php if (osc_logged_user_id() == $user['user_id'] = osc_item_user_id()): ?>
+                                                        <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                                            <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                                                                <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
+                                                                <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
+                                                                <?php
+                                                                $items = get_item_premium();
+                                                                if (!in_array($item_id, $items)):
+                                                                    $pack = get_user_pack_details(osc_logged_user_id());
+                                                                    if ($pack['remaining_post'] == 0):
+                                                                        ?>
+                                                                        <li class="premium" data-toggle="modal" data-target="#marketing"><a> Promote Now</a></li>
 
-                                                <?php else: ?>
-                                                    <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Promote Now</a></li>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
-                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
-                                                                  <li><a></a></li>
-                                                                  <li><a>Signaler la publication</a></li>-->
-                                        </ul>
-                                    </button>
+                                                                    <?php else: ?>
+                                                                        <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Promote Now</a></li>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                                                <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
+                                                                                      <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                                                                      <li><a></a></li>
+                                                                                      <li><a>Signaler la publication</a></li>-->
+                                                            </ul>
+                                                        </button>
                                 <?php endif; ?>
                             </span>
                             <div id="premium-popup"></div>
@@ -159,7 +180,7 @@ if ($items):
                                                             We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
                                                         </div>
                                                     </div>
-                                                <?php else : ?>
+            <?php else : ?>
                                                     <div class="premium-fail">
                                                         <div class="col-md-10 padding-0 padding-bottom-10">
                                                             We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
@@ -171,7 +192,7 @@ if ($items):
                                                             You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
                                                         </div>
                                                     </div>
-                                                <?php endif; ?>
+            <?php endif; ?>
                                             </div>
                                         </div><div class="clearfix"></div>
                                         <div class="modal-footer padding-bottom-20">
@@ -183,7 +204,7 @@ if ($items):
                                                     <button class="btn  btn-info pull-left button-box blue-box bold"><a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>">Thanks</a></button>
                                                 <?php else : ?>
                                                     <button class="btn  btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
-                                                <?php endif; ?>
+            <?php endif; ?>
                                                 <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">Go to adverting account</a></button>
                                             </div>
                                         </div>
@@ -211,20 +232,20 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                       ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                        ?></p>
 
-                        <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
+            <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
                         &nbsp;&nbsp;
 
-                        <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
+            <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
 
                         &nbsp;&nbsp;&nbsp;
                         <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                            <?php echo 'Comments' ?>
+                        <?php echo 'Comments' ?>
                         </span>
                         &nbsp;&nbsp;
-                        <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
+            <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
                     </div>
                     <!-- /.box-body -->
 
@@ -246,7 +267,7 @@ if ($items):
                         <?php
                         if ($c_data):
                             ?>
-                            <?php if (count($c_data) > 3): ?>
+                <?php if (count($c_data) > 3): ?>
                                 <div class="box-body">
                                     <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
                                     <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
@@ -265,14 +286,14 @@ if ($items):
                                     <div class="box-comment">
                                         <!-- User image -->
                                         <div class="comment_user_image">
-                                            <?php get_user_profile_picture($comment_user['user_id']) ?>
+                    <?php get_user_profile_picture($comment_user['user_id']) ?>
                                         </div>
                                         <div class="comment-text">
                                             <span class="username">
-                                                <?php echo $comment_user['user_name'] ?>
+                                            <?php echo $comment_user['user_name'] ?>
                                                 <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span><!-- /.username -->
-                                            <?php echo $comment_data['s_body']; ?>
+                    <?php echo $comment_data['s_body']; ?>
                                         </div>
                                         <!-- /.comment-text -->
                                     </div>                       
@@ -287,21 +308,21 @@ if ($items):
                         ?>
                     </div>
                     <!-- /.box-footer -->
-                    <?php if (osc_is_web_user_logged_in()): ?>
+                            <?php if (osc_is_web_user_logged_in()): ?>
                         <div class="box-footer">
                             <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
                                 <?php
                                 $current_user = get_user_data(osc_logged_user_id());
                                 ?>
                                 <div class="comment_user_image">
-                                    <?php get_user_profile_picture($current_user['user_id']) ?>
+                <?php get_user_profile_picture($current_user['user_id']) ?>
                                 </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
                                     <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
                                 </div>
                             </form>
                         </div>
-                    <?php endif; ?>
+            <?php endif; ?>
                     <!-- /.box-footer -->
                 </div>
             </div>

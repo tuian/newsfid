@@ -274,7 +274,7 @@ endif;
                                         <div class="description-block">
                                             <h5 class="description-header">
                                                 <?php
-                                                    echo get_user_item_likes($user['user_id']);                                                
+                                                echo get_user_item_likes($user['user_id']);
                                                 ?>
                                             </h5>
                                             <span class="description-text">Likes</span>
@@ -384,7 +384,7 @@ endif;
                     <div class="col-md-12 padding-0 search-box success-border">
                     </div>
                     <div class="border-bottom-gray col-md-12"></div>
-                    <div class="user_content col-md-12 padding-0 tab-content scroll-content background-white">
+                    <div class="user_content col-md-12 padding-0 tab-content scroll-content">
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number"> 
                             <input type="hidden" name="primium_item_id_post" id="primium_item_id_post">
@@ -630,13 +630,7 @@ function custom_script() {
     </script>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
-                                                                    var user_id = '<?php echo osc_user_id() ?>'
-                                                                    var is_enable_ajax = true;
-                                                                    var loading = false;
-                                                                    var location_type = $('.filter_city').attr('data_location_type');
-                                                                    var location_id = $('.filter_city').attr('data_location_id');
-                                                                    var category_id = $('#sCategory').val();
-                                                                    var post_type = $('.post_type_filter').val();
+
                                                                     $(document).on('click', '.file_upload', function () {
 
                                                                         //$('#crop-img').modal('show');
@@ -683,8 +677,6 @@ function custom_script() {
                                                                     });
                                                                     $(document).ready(function ($) {
                                                                         fetch_user_posts();
-
-
                                                                         $('#cover .img').hover(function () {
                                                                             $('.file_upload_cover .icon').show();
                                                                         },
@@ -789,6 +781,13 @@ function custom_script() {
                                                                             }
                                                                         });
                                                                         $('#sCategory').change(function () {
+                                                                            var user_id = '<?php echo osc_user_id() ?>';
+                                                                            var is_enable_ajax = true;
+                                                                            var loading = false;
+                                                                            var location_type = $('.filter_city').attr('data_location_type');
+                                                                            var location_id = $('.filter_city').attr('data_location_id');
+                                                                            var category_id = $('#sCategory').val();
+                                                                            var post_type = $('.post_type_filter').val();
                                                                             $('.user_posts_area .loading').fadeIn(500);
                                                                             $('.user_posts_container').css({'opacity': '0.2'});
                                                                             reset_variables();
@@ -827,6 +826,13 @@ function custom_script() {
                                                                             });
                                                                         });
                                                                         $('.filter_city').change(function () {
+                                                                            var user_id = '<?php echo osc_user_id() ?>';
+                                                                            var is_enable_ajax = true;
+                                                                            var loading = false;
+                                                                            var location_type = $('.filter_city').attr('data_location_type');
+                                                                            var location_id = $('.filter_city').attr('data_location_id');
+                                                                            var category_id = $('#sCategory').val();
+                                                                            var post_type = $('.post_type_filter').val();
                                                                             $('.user_posts_area .loading').fadeIn(500);
                                                                             $('.user_posts_container').css({'opacity': '0.2'});
                                                                             reset_variables();
@@ -847,11 +853,18 @@ function custom_script() {
                                                                             });
                                                                         });
                                                                         $('.filter-button').click(function () {
+                                                                            var user_id = '<?php echo osc_user_id() ?>';
+                                                                            var is_enable_ajax = true;
+                                                                            var loading = false;
+                                                                            var location_type = $('.filter_city').attr('data_location_type');
+                                                                            var location_id = $('.filter_city').attr('data_location_id');
+                                                                            var category_id = $('#sCategory').val();
+                                                                            var post_type = $('.post_type_filter').val();
                                                                             $('.user_posts_area .loading').fadeIn(500);
                                                                             $('.user_posts_container').css({'opacity': '0.2'});
                                                                             reset_variables();
                                                                             $.ajax({
-                                                                                url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                                                                url: "<?php echo osc_current_web_theme_url() . '/user_posts.php' ?>",
                                                                                 data: {
                                                                                     user_id: user_id,
                                                                                     location_type: location_type,
@@ -872,6 +885,13 @@ function custom_script() {
                                                                         });
                                                                     });
                                                                     function fetch_user_posts() {
+                                                                        var user_id = '<?php echo osc_user_id() ?>';
+                                                                        var is_enable_ajax = true;
+                                                                        var loading = false;
+                                                                        var location_type = $('.filter_city').attr('data_location_type');
+                                                                        var location_id = $('.filter_city').attr('data_location_id');
+                                                                        var category_id = $('#sCategory').val();
+                                                                        var post_type = $('.post_type_filter').val();
                                                                         var post = $('.user_post_page_number').val();
 
                                                                         var page_number = $('.user_posts_area .user_post_page_number').val();

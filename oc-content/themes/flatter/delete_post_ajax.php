@@ -51,6 +51,10 @@ if ($_REQUEST['action'] == 'delete_post'):
     $delete_item_watchlist = new DAO();
     $delete_item_watchlist->dao->delete("{$db_prefix}t_item_watchlist", "item_id= $post_id");
     $watchlist_result = $delete_item_watchlist->dao->get();
+    
+    $delete_item_premium = new DAO();
+    $delete_item_premium->dao->delete("{$db_prefix}t_premium_items", "item_id= $post_id AND user_id = $user_id");
+    $watchlist_result = $delete_item_premium->dao->get();
 
     $delete_user_post = new DAO();
     $delete_user_post->dao->delete("{$db_prefix}t_item", "pk_i_id= $post_id AND fk_i_user_id = $user_id");
