@@ -162,6 +162,12 @@ function custom_map_script() {
         //                draggable: true
         //            }
         //        }
+        
+        $('.user_localisation_textbox').hide();
+        $(document).on('click', '.user_localisation_edit', function () {
+            $('.user_localisation_textbox').show();
+            $('.location-box').hide();
+        });
         $('.filter_city').typeahead({
             source: function (query, process) {
                 var $items = new Array;
@@ -171,24 +177,43 @@ function custom_map_script() {
                     dataType: "json",
                     type: "POST",
                     data: {city_name: query, region_name: query, country_name: query},
-                    success: function (data) {
-                        console.log(data);
-                        $('.country_id').val(data.country_code);
-                        $('.region_id').val(data.region_id);
-                        $('.city_id').val(data.city_name);
+                    success: function (data) {                        
                         $.map(data, function (data) {
                             var group;
                             group = {
                                 city_id: data.city_id,
-                                region_id: data.region_id,
+                                city_name:data.city_name,
+                                region_id: data.r_id,
+                                region_name:data.region_name,
                                 country_code: data.country_code,
+                                country_name:data.country_name,
                                 name: data.city_name + '-' + data.region_name + '-' + data.country_name,
                             };
                             $items.push(group);
-                        });
+                        });                        
                         process($items);
                     }
                 });
+            },
+            updater:function (data) {
+                var new_text = data.name;                
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                    type: 'POST',
+                    data: {
+                        action: 'user_localisation',                     
+                        city: data.city_name,
+                        country: data.country_name,
+                        scountry: data.country_code,
+                        region_code: data.region_id,
+                        region_name: data.region_name,
+                    },
+                    dataType: "json", 
+                    success: function (data, textStatus, jqXHR) {
+                        var html_text = '<span class="location-box">'+new_text+'</span><input type="text" class="user_localisation_textbox filter_city" style="display:none" city="" region="" country=""value="'+new_text+'">';            
+                        $('.user_localisation_text').html(html_text).attr('data_text', new_text);                        
+                    }
+                });           
             }
         });
     </script>           
@@ -264,25 +289,6 @@ function custom_map_script() {
                         $('.user_role_name').show();
                     }
                 });
-            });
-            $('.user_localisation_textbox').hide();
-            $(document).on('click', '.user_localisation_edit', function () {
-                $('.user_localisation_textbox').show();
-                $('.location-box').hide();
-            });
-            $(document).on('blur', '.user_localisation_textbox', function () {
-                var new_text = $(this).val();
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
-                    data: {
-                        action: 'user_localisation',
-                        user_localisation_text: new_text,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                    }
-                });
-                var html_text = '<span class="location-box">'+new_text+'</span><input type="text" class="user_localisation_textbox filter_city" style="display:none" city="" region="" country=""value="'+new_text+'">';            
-                $('.user_localisation_text').html(html_text).attr('data_text', new_text);
             });
         });
 

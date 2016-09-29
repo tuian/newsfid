@@ -923,6 +923,7 @@ function custom_script() {
                                                                                     $(".user_posts_container").append(data);
                                                                                     var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
                                                                                     $('.user_posts_area .user_post_page_number').val(next_page);
+                                                                                    is_enable_ajax = false;
 
                                                                                 }
                                                                                 //                                                        else {

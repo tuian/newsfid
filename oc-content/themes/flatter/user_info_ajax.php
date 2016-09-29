@@ -29,33 +29,36 @@ endif;
 
 
 if ($_REQUEST['action'] == 'user_localisation'):    
-    $lat = $_REQUEST['lat'];
-    $lng = $_REQUEST['lng'];
+    
     $city = $_REQUEST['city'];
+    $region_code = $_REQUEST['region_code'];
+    $region_name = $_REQUEST['region_name'];
     $country = $_REQUEST['country'];
     $country_code = $_REQUEST['scountry'];
  
     /*add city and country if not exist and also insert country id and city id*/
-    $user_data->dao->select("country.*");
-    $user_data->dao->from("{$db_prefix}t_country as country");
-    $user_data->dao->where('country.s_name', $country);
-    $country_result = $user_data->dao->get();
-    $country_arr = $country_result->row();
-    if(!empty($country_arr)):
-        $country_code = $country_arr['pk_c_code'];  
-    else:
-        $c_array['pk_c_code'] = $country_code;
-        $c_array['s_name'] = $country;
-        $c_array['s_slug'] = str_replace(" ", "-", strtolower($country));
-        $user_data->dao->insert("{$db_prefix}t_country", $c_array);
-    endif;
-    // add city and region 
+//    $user_data->dao->select("country.*");
+//    $user_data->dao->from("{$db_prefix}t_country as country");
+//    $user_data->dao->where('country.s_name', $country);
+//    $country_result = $user_data->dao->get();
+//    $country_arr = $country_result->row();
+//    if(!empty($country_arr)):
+//        $country_code = $country_arr['pk_c_code'];  
+//    else:
+//        $c_array['pk_c_code'] = $country_code;
+//        $c_array['s_name'] = $country;
+//        $c_array['s_slug'] = str_replace(" ", "-", strtolower($country));
+//        $user_data->dao->insert("{$db_prefix}t_country", $c_array);
+//    endif;
     
-    $result = $user_data->dao->update("{$db_prefix}t_user", array('d_coord_lat' => $lat, 'd_coord_long' => $lng, 's_city' => $city, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
+    
+//    $result = $user_data->dao->update("{$db_prefix}t_user", array('d_coord_lat' => $lat, 'd_coord_long' => $lng, 's_city' => $city, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('s_region' => $region_name, 'fk_i_region_id' => $region_code, 's_city' => $city, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
     if ($result):
-        $data['lat'] = $lat;
-        $data['lng'] = $lng;
-        echo json_encode($data);
+//        $data['lat'] = $lat;
+//        $data['lng'] = $lng;
+//        echo json_encode($data);
+        echo 1;
     else:
         echo 0;
     endif;
