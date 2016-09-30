@@ -348,33 +348,27 @@ else: {
                                 <?php if (!empty($logged_user['fk_i_city_id'])): ?>
                                     <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li> 
                                 <?php else: ?>
-                                    <li><a data-toggle="modal" data-target="#myModal">LOCAL</a></li>                                     
-                                <?php endif; ?>
-                                <div id="myModal" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
-
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Please enter your City and Country name to use this tab</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="col-md-12 col-sm-12 user_website">
-                                                    <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
-                                                        <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
-                                                    </span>   
-                                                    <input type="text" class="" id="autocomplete_main">       
-                                                    <div class="user_info_row margin-0 user_map_box">
-                                                        <div class="user_map" id="user_map"></div>
-                                                    </div>
+                                    <li><a data-toggle="modal" data-target="#myModal">LOCAL</a></li>                                
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Please enter your City and Country name to use this tab</h4>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">                                                
+                                                <div class="modal-body">
+                                                    <div class="col-md-10 col-sm-10">                                                         
+                                                        <input type="text" id="autocomplete_main" name="autocomplete_main" value="<?php echo osc_user_field('s_city') . " " . osc_user_field('s_country'); ?>">    
+                                                    </div>
+                                                    <span id="ajax_city_saved" class="hidden">Saved..</span>
+                                                </div>
+                                                <div class="modal-footer">                                                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endif; ?>
                             </ul>                                                    
                         </div>                                                   
                         <div class="clearfix"></div>
@@ -688,73 +682,58 @@ osc_add_hook('footer', 'footer_script');
 
 function footer_script() {
     ?>
-
-    <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
-    <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
-    <script>
-
-        google.maps.event.addDomListener(window, 'load', initMap);
-        function initMap() {
-            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
-            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
-
-            var myLatLng = {lat: latitude, lng: longitude};
-            var map = new google.maps.Map(document.getElementById('user_map'), {
-                zoom: 10,
-                center: myLatLng
-            });
-            //add the code here, after the map variable has been instantiated
-            var tab = jQuery('ul.user_profile_navigation li')[1]
-            jQuery(tab).one('click', function () {
-                setTimeout(function () {
-                    google.maps.event.trigger(map, 'resize');
-                    map.setCenter(myLatLng)
-                    google.maps.Marker({
-                        position: myLatLng,
-                        map: map,
-                        title: 'My City'
-                    });
-                }, 1000);
-
-            });
-        }
-
-        //       
-        var goptions = {
-            map: '#user_map',
-            details: ".details",
-            types: ['(cities)'],
-            basemap: 'gray',
-            mapOptions: {
-                zoom: 10
+    <?php if (osc_is_web_user_logged_in()): ?>
+        <script>
+            $('#autocomplete_main').typeahead({
+            source: function (query, process) {
+                var $items = new Array;
+                $items = [""];
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                    dataType: "json",
+                    type: "POST",
+                    data: {city_name: query, region_name: query, country_name: query},
+                    success: function (data) {                        
+                        $.map(data, function (data) {
+                            var group;
+                            group = {
+                                city_id: data.city_id,
+                                city_name:data.city_name,
+                                region_id: data.r_id,
+                                region_name:data.region_name,
+                                country_code: data.country_code,
+                                country_name:data.country_name,
+                                name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                            };
+                            $items.push(group);
+                        });                        
+                        process($items);
+                    }
+                });
             },
-            marketOptions: {
-                draggable: true
+            updater:function (data) {
+                var new_text = data.name; 
+                $('#ajax_city_saved').removeClass('hidden');
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                    type: 'POST',
+                    data: {
+                        action: 'user_localisation',                     
+                        city: data.city_name,
+                        country: data.country_name,
+                        scountry: data.country_code,
+                        region_code: data.region_id,
+                        region_name: data.region_name,
+                    },
+                    dataType: "json", 
+                    success: function (data, textStatus, jqXHR) {
+                        location.reload();                      
+                    }
+                });           
             }
-        }
-        $('#autocomplete_main').geocomplete(goptions).bind("geocode:result", function (event, result) {
-            var lat = result.geometry.location.lat;
-            var lng = result.geometry.location.lng;
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
-                type: 'POST',
-                data: {
-                    action: 'user_localisation',
-                    lat: lat,
-                    lng: lng,
-                    city: result.address_components['0'].long_name,
-                    country: result.address_components['3'].long_name,
-                    scountry: result.address_components['3'].short_name,
-                },
-                success: function (data, textStatus, jqXHR) {
-                    $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
-
-                    location.reload();
-                }
-            });
         });
-    </script> 
-
+        </script>
+    <?php endif; ?>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
 

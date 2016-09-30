@@ -2433,7 +2433,7 @@ select {
     width: 60% !important;
 }
 .width-90{
-    width:90%;
+    width:90% !important;
 }
 .description-box{
     //margin-top: 35px;
@@ -3872,4 +3872,7 @@ textarea.comment_text{
 .dropdown-menu.edit-arrow.edit_msg{
     top:20px;
     left:-90px;
+}
+#ajax_city_saved{
+    color:#13496b;
 }

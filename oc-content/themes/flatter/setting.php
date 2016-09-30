@@ -108,19 +108,19 @@ $user_desc = $user_result->row();
                                 <span class="user_info_header">Localisation</span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_website">
-                                <span class="user_localisation_text info_text" data_text=" <?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>">
-                                    <?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>
-                                </span>   
-                                <input type="text" class="hide" id="autocomplete">    
-
+                                <span class="user_localisation_text info_text" data_text="<?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>">
+                                    <span class="location-box">  <?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?></span>
+                                    <input type="text" class="user_localisation_textbox filter_city hide" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">                                   
+                                </span>  
+                                
                                 <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
                                     <i class="fa fa-pencil-square-o"></i> Edit
                                 </span>
                             </div>
                         </div>
-                        <div class="row user_info_row margin-0 user_map_box">
+<!--                        <div class="row user_info_row margin-0 user_map_box">
                             <div class="user_map" id="user_map_profile"></div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div id="social" class="tab-pane fade in ">
@@ -220,7 +220,7 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-lock"></i>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+<!--                            <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
                                     Default network
                                 </div>
@@ -249,7 +249,7 @@ $user_desc = $user_result->row();
                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                     <i class="fa fa-globe"></i>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="border-bottom-gray padding-top-4per"></div>
                         <div class="row margin-0">
@@ -593,89 +593,61 @@ $user_desc = $user_result->row();
 </div>
 <?php
 osc_add_hook('footer', 'custom_map_script');
-
 function custom_map_script() {
     ?>
-    <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
-    <script src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
-    <script>
-        google.maps.event.addDomListener(window, 'load', initMap);
-        function initMap() {
-            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
-            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
-
-            var myLatLng = {lat: latitude, lng: longitude};
-            var map = new google.maps.Map(document.getElementById('user_map_profile'), {
-                zoom: 10,
-                center: myLatLng
-            });
-            //add the code here, after the map variable has been instantiated
-            var tab = jQuery('ul.user_profile_navigation li')[1]
-            jQuery(tab).one('click', function () {
-                setTimeout(function () {
-                    google.maps.event.trigger(map, 'resize');
-                    map.setCenter(myLatLng)
-                    google.maps.Marker({
-                        position: myLatLng,
-                        map: map,
-                        title: 'My City'
-                    });
-                }, 1000);
-
-            });
-        }
-
-        function updateMap(latitude, longitude) {             
-            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
-            console.log(myLatLng);
-            var map = new google.maps.Map(document.getElementById('user_map'), {
-                zoom: 10,
-                center: myLatLng
-            });           
-            google.maps.event.trigger(map, 'resize');
-            map.setCenter(myLatLng)
-            google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'My City'
-            });               
-        }      
-        var goptions = {
-            map: '#user_map_profile',
-            details: ".details",
-            types: ['(cities)'],
-            basemap: 'gray',
-            mapOptions: {
-                zoom: 10
-            },
-            marketOptions: {
-                draggable: true
-            }
-        }
-        $('#autocomplete').geocomplete(goptions).bind("geocode:result", function (event, result) {
-            var lat = result.geometry.location.lat;
-            var lng = result.geometry.location.lng;
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
-                type: 'POST',
-                data: {
-                    action: 'user_localisation',
-                    lat: lat,
-                    lng: lng,
-                    city: result.address_components['0'].long_name,
-                    country: result.address_components['3'].long_name,
-                    scountry: result.address_components['3'].short_name,
-                },
-                dataType: "json", 
-                success: function (data, textStatus, jqXHR) {
-                    $('#autocomplete').addClass('hide');
-                    $('.user_localisation_text').show();
-                    $('.user_localisation_text').html(result.address_components['0'].long_name + " - " + result.address_components['3'].long_name);
-                    updateMap(data.lat, data.lng);    
-                }
-            });
+    <Script>
+    $(document).on('click', '.user_localisation_edit', function () {
+            $('.user_localisation_textbox').show();
+            $('.location-box').hide();
         });
-    </script>          
+        $('.filter_city').typeahead({
+            source: function (query, process) {
+                var $items = new Array;
+                $items = [""];
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                    dataType: "json",
+                    type: "POST",
+                    data: {city_name: query, region_name: query, country_name: query},
+                    success: function (data) {                        
+                        $.map(data, function (data) {
+                            var group;
+                            group = {
+                                city_id: data.city_id,
+                                city_name:data.city_name,
+                                region_id: data.r_id,
+                                region_name:data.region_name,
+                                country_code: data.country_code,
+                                country_name:data.country_name,
+                                name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                            };
+                            $items.push(group);
+                        });                        
+                        process($items);
+                    }
+                });
+            },
+            updater:function (data) {
+                var new_text = data.name;                
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                    type: 'POST',
+                    data: {
+                        action: 'user_localisation',                     
+                        city: data.city_name,
+                        country: data.country_name,
+                        scountry: data.country_code,
+                        region_code: data.region_id,
+                        region_name: data.region_name,
+                    },
+                    dataType: "json", 
+                    success: function (data, textStatus, jqXHR) {
+                        var html_text = '<span class="location-box">'+new_text+'</span><input type="text" class="user_localisation_textbox filter_city" style="display:none" city="" region="" country=""value="'+new_text+'">';            
+                        $('.user_localisation_text').html(html_text).attr('data_text', new_text);                        
+                    }
+                });           
+            }
+        });     
     <?php
 }
 ?>
@@ -739,48 +711,48 @@ function custom_map_script() {
                 });
             } // End if
         });
-        $('#s_city').typeahead({
-            source: function (query, process) {
-                var $items = new Array;
-                var c_id = $('#country_Id').val();
-                console.log(c_id);
-                if (c_id) {
-                    $items = [""];
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url('city_ajax.php') ?>",
-                        dataType: "json",
-                        type: "POST",
-                        data: {city_name: query, country_id: c_id},
-                        success: function (data) {
-                            $.map(data, function (data) {
-                                var group;
-                                group = {
-                                    id: data.pk_i_id,
-                                    name: data.s_name,
-                                };
-                                $items.push(group);
-                            });
-                            process($items);
-                        }
-                    });
-                } else {
-                    alert('Please select country first');
-                }
-            },
-            afterSelect: function (obj) {
-                $('#cityId').val(obj.id);
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
-                    data: {
-                        action: 'change-city',
-                        id: obj.id,
-                        name: obj.name,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                    }
-                });
-            },
-        });
+//        $('#s_city').typeahead({
+//            source: function (query, process) {
+//                var $items = new Array;
+//                var c_id = $('#country_Id').val();
+//                console.log(c_id);
+//                if (c_id) {
+//                    $items = [""];
+//                    $.ajax({
+//                        url: "<?php echo osc_current_web_theme_url('city_ajax.php') ?>",
+//                        dataType: "json",
+//                        type: "POST",
+//                        data: {city_name: query, country_id: c_id},
+//                        success: function (data) {
+//                            $.map(data, function (data) {
+//                                var group;
+//                                group = {
+//                                    id: data.pk_i_id,
+//                                    name: data.s_name,
+//                                };
+//                                $items.push(group);
+//                            });
+//                            process($items);
+//                        }
+//                    });
+//                } else {
+//                    alert('Please select country first');
+//                }
+//            },
+//            afterSelect: function (obj) {
+//                $('#cityId').val(obj.id);
+//                $.ajax({
+//                    url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+//                    data: {
+//                        action: 'change-city',
+//                        id: obj.id,
+//                        name: obj.name,
+//                    },
+//                    success: function (data, textStatus, jqXHR) {
+//                    }
+//                });
+//            },
+//        });
     });</script>
 <script>
 
@@ -828,37 +800,37 @@ function custom_map_script() {
             });
             // $('.name').html(new_text).val('name', new_text);
         });
-        $(document).on('change', '.user_country_textbox', function () {
-            var country_name = $('.user_country_textbox option:selected').text();
-            var country_code = $(this).val();
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
-                data: {
-                    action: 'fk_c_country_code',
-                    up_country: country_code,
-                    up_country_name: country_name,
-                },
-                success: function (data, textStatus, jqXHR) {
-                }
-            });
-            // $('.name').html(new_text).val('name', new_text);
-        });
-        $(document).on('blur', '.user_city_textbox', function () {
-            var city_name = $(this).text();
-            var city_code = $(this).val();
-            console.log(city_code);
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
-                data: {
-                    action: 'fk_i_city_id',
-                    up_city_name: city_name,
-                    up_city_code: city_code,
-                },
-                success: function (data, textStatus, jqXHR) {
-                }
-            });
-            // $('.name').html(new_text).val('name', new_text);
-        });
+//        $(document).on('change', '.user_country_textbox', function () {
+//            var country_name = $('.user_country_textbox option:selected').text();
+//            var country_code = $(this).val();
+//            $.ajax({
+//                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+//                data: {
+//                    action: 'fk_c_country_code',
+//                    up_country: country_code,
+//                    up_country_name: country_name,
+//                },
+//                success: function (data, textStatus, jqXHR) {
+//                }
+//            });
+//            // $('.name').html(new_text).val('name', new_text);
+//        });
+//        $(document).on('blur', '.user_city_textbox', function () {
+//            var city_name = $(this).text();
+//            var city_code = $(this).val();
+//            console.log(city_code);
+//            $.ajax({
+//                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+//                data: {
+//                    action: 'fk_i_city_id',
+//                    up_city_name: city_name,
+//                    up_city_code: city_code,
+//                },
+//                success: function (data, textStatus, jqXHR) {
+//                }
+//            });
+//            // $('.name').html(new_text).val('name', new_text);
+//        });
 
         $(document).on('change', '.user_type_textbox', function () {
             var role_id = $(this).val();
