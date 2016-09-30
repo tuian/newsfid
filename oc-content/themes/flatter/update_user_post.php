@@ -34,6 +34,7 @@ if ($_REQUEST['action'] == 'update_post'):
                     <form method="post" id="post_update" action="<?php echo osc_current_web_theme_url('post_update.php'); ?>" enctype="multipart/form-data">
                         <!--<input type="hidden" name="save" value="true">-->
                         <input type="hidden" name="item_id" id="item_id" value="<?php echo $item_id; ?>">
+                        <input type="hidden" name="item_type" id="item_type" value="<?php echo $item_id; ?>">
                         <input type="hidden" name="redirect" id="redirect" value="<?php echo $_REQUEST['redirect'] ?>">
                         <!-------------------------User Information Start---------------------------->
 
@@ -108,7 +109,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                                 <select id="sCategory" class="form-control input-box" name="sCategory">
                                                     <option <?php ?> value=""><?php _e('&nbsp; Category', 'flatter'); ?></option>
                                                     <?php while (osc_has_categories()) { ?>
-                                                    <option  class="maincat bold" <?php if (osc_category_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>                                                        
+                                                        <option  class="maincat bold" <?php if (osc_category_id() == $item['fk_i_category_id']) echo 'selected'; ?> value="<?php echo osc_category_id(); ?>"><?php echo osc_category_name(); ?></option>                                                        
                                                     <?php } ?>
 
                                                 </select>
@@ -161,6 +162,9 @@ if ($_REQUEST['action'] == 'update_post'):
                                             <span class="padding-left-10 col-md-10"> Update media(Image/GIF/Video) </span>
                                             <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#media"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                                         </div>
+                                        <?php
+                                        $item_resorce = get_user_post_resource($post_desc['fk_i_item_id']);
+                                        ?>
                                         <div id="media" class="collapse">                                            
                                             <div class=" col-md-12 border-bottom"></div>
                                             <div class="padding-top-3per col-md-12">
@@ -168,14 +172,14 @@ if ($_REQUEST['action'] == 'update_post'):
                                                     <div class="col-md-12 vertical-row center-contant">
                                                         <div class="col-md-2"> <span class="bold">Image</span>
                                                             <div class="onoffswitch">
-                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" checked value="image">
+                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" <?php if (($item['item_type'] == "image") || ($item['item_type'] == "image/jpeg")): ?> checked<?php endif; ?> value="image">
                                                                 <label class="onoffswitch-label" for="image"></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 ou">ou</div>
                                                         <div class="col-md-2"><span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
                                                             <div class="onoffswitch">
-                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="video" id="video" value="video">
+                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="video" id="video" <?php if ($item['item_type'] == "video"): ?> checked<?php endif; ?> value="video">
                                                                 <label class="onoffswitch-label" for="video"></label>
                                                             </div>
                                                         </div>
@@ -183,134 +187,143 @@ if ($_REQUEST['action'] == 'update_post'):
                                                     <div class="col-md-12 padding-top-8per">
                                                         <div class="col-md-offset-1 col-md-4">
                                                             <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
-                                                            <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
-                                                                <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                            <?php if ($item['item_type'] == "image" || $item['item_type'] == "gif" || $item['item_type'] == "image/jpeg"): ?> 
+                                                                <div class="post_file_upload_container" style="background-image: url('<?php echo osc_base_url() . 'oc-content/uploads/8/' . $item_resorce['pk_i_id'] . '.' . $item_resorce['s_extension'] ?>')">
+                                                                <?php else: ?>
+                                                                    <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
+                                                                    <?php endif; ?>
+
+                                                                    <?php if ($item['item_type'] == "video"): ?>
+                                                                        <input type="text" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here" value="<?php echo $item_resorce['s_path']; ?>">
+                                                                    <?php else: ?>
+                                                                        <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                                    <?php endif; ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6  text-bg-color">
-                                                    <div class="bold padding-10">
-                                                        You can not choose both at the same time
-                                                        you can publish  image or a video link.
+                                                    <div class="col-md-6  text-bg-color">
+                                                        <div class="bold padding-10">
+                                                            You can not choose both at the same time
+                                                            you can publish  image or a video link.
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class=" col-md-12 border-bottom">
+                                                    <div class="col-md-6">
+                                                        <span class="bold">GIF</span>
+                                                        <div class="onoffswitch margin-top-20">
+                                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif"  <?php if ($item['item_type'] == "gif"): ?> checked <?php endif; ?> value="gif">                                                            
+                                                            <label class="onoffswitch-label" for="gif"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6  text-bg-color">
+                                                        <div class="bold padding-10">
+                                                            The image begins to automatically animate when the user will scroll.
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> 
-                                            <div class=" col-md-12 border-bottom">
-                                                <div class="col-md-6">
-                                                    <span class="bold">GIF</span>
-                                                    <div class="onoffswitch margin-top-20">
-                                                        <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif" value="gif">
-                                                        <label class="onoffswitch-label" for="gif"></label>
+                                                <div class=" col-md-12 border-bottom">
+                                                    <div class="col-md-6">
+                                                        <span class="bold">Music</span>
+                                                        <div class="onoffswitch margin-top-20">
+                                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?> value="music">
+                                                            <label class="onoffswitch-label" for="music"></label>
+                                                        </div>
+                                                        <div class="mp3-max">
+                                                            <span class="">(MP3 10.MO maximum) </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-bg-color">
+                                                        <div class="bold padding-10">
+                                                            You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6  text-bg-color">
-                                                    <div class="bold padding-10">
-                                                        The image begins to automatically animate when the user will scroll.
+                                                <div class=" col-md-12 border-bottom">
+                                                    <div class="col-md-6 podcast">
+                                                        <span class="bold">Podcast</span>
+                                                        <div class="onoffswitch margin-top-20">
+                                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?>  value="podcast">
+                                                            <label class="onoffswitch-label" for="podcast"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-bg-color">
+                                                        <div class="bold padding-10">
+                                                            Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>                                           
+                                            </div>
+                                        </div>
+                                        <div class="border-bottom col-md-12">                 
+                                        </div>
+                                        <div class="center-contant padding-bottom-20">    
+                                            <div class="col-md-12 padding-10 vertical-row">
+                                                <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
+                                                <span class="padding-left-10 col-md-10"> Update location(Country/state/region/City/place) </span>
+                                                <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#location"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
+                                            </div>
+                                            <div id="location" class="collapse padding-bottom-20">                                              
+                                                <div class="col-md-offset-2 col-md-10 margin-top-20">
+                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">                                  
+                                                        <select id="countryId" class="user_country_textbox" name="countryId">
+                                                            <?php
+                                                            $counrtry_db = osc_get_countries();
+                                                            foreach ($counrtry_db as $key => $country) :
+                                                                ?>
+                                                                <option <?php if ($country['pk_c_code'] == $item_location['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code']; ?>"><?php echo $country['s_name']; ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
+                                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="Region" value="<?php echo $item_location['s_region']; ?>">
+                                                        <input type="hidden" id="s_region_id" name="s_region_id">
+                                                    </div>
+                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
+                                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City" value="<?php echo $item_location['s_city']; ?>">
+                                                        <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
+                                                    </div>
+                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
+                                                        <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
+                                                    </div>
+                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30" >
+                                                        <input type="text" name="s_address" id="s_address" placeholder="Address" value="<?php echo $item_location['s_address']; ?>">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class=" col-md-12 border-bottom">
-                                                <div class="col-md-6">
-                                                    <span class="bold">Music</span>
-                                                    <div class="onoffswitch margin-top-20">
-                                                        <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" value="music">
-                                                        <label class="onoffswitch-label" for="music"></label>
-                                                    </div>
-                                                    <div class="mp3-max">
-                                                        <span class="">(MP3 10.MO maximum) </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 text-bg-color">
-                                                    <div class="bold padding-10">
-                                                        You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" col-md-12 border-bottom">
-                                                <div class="col-md-6">
-                                                    <span class="bold">Podcast</span>
-                                                    <div class="onoffswitch margin-top-20">
-                                                        <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" value="podcast">
-                                                        <label class="onoffswitch-label" for="podcast"></label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 text-bg-color">
-                                                    <div class="bold padding-10">
-                                                        Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
-
-                                                    </div>
-                                                </div>
-
-
-                                            </div>                                           
                                         </div>
                                     </div>
-                                    <div class="border-bottom col-md-12">                 
+                                </div>
+                                <!-------------------------Location end------------------------------>
+                                <div class="breack-line"></div></div>
+                            <!-------------------------Reminder start------------------------------>
+
+                            <!-------------------------Finalisation Start------------------------------>
+                            <div class="finalisation-info bg-white padding-3per col-md-12">
+                                <div class="vertical-row col-md-offset-1">
+                                    <div class="en-savoir-plus1 publier1 col-md-3">
+                                        <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
+                                            <span class="bold">Publier</span></button>
                                     </div>
-                                    <div class="center-contant padding-bottom-20">    
-                                        <div class="col-md-12 padding-10 vertical-row">
-                                            <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
-                                            <span class="padding-left-10 col-md-10"> Update location(Country/state/region/City/place) </span>
-                                            <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#location"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
-                                        </div>
-                                        <div id="location" class="collapse padding-bottom-20">                                              
-                                            <div class="col-md-offset-2 col-md-10 margin-top-20">
-                                                <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">                                  
-                                                    <select id="countryId" class="user_country_textbox" name="countryId">
-                                                        <?php
-                                                        $counrtry_db = osc_get_countries();
-                                                        foreach ($counrtry_db as $key => $country) :
-                                                            ?>
-                                                            <option <?php if ($country['pk_c_code'] == $item_location['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code']; ?>"><?php echo $country['s_name']; ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
-
-
-                                                <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                    <input type="text" id="s_region_name" name="s_region_name" placeholder="Region" value="<?php echo $item_location['s_region']; ?>">
-                                                    <input type="hidden" id="s_region_id" name="s_region_id">
-                                                </div>
-                                                <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                    <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City" value="<?php echo $item_location['s_city']; ?>">
-                                                    <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
-                                                </div>
-                                                <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                    <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
-                                                </div>
-                                                <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30" >
-                                                    <input type="text" name="s_address" id="s_address" placeholder="Address" value="<?php echo $item_location['s_address']; ?>">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="onoffswitch col-md-3">
+                                        <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">
+                                        <label class="onoffswitch-label" for="publier"></label>
+                                    </div>   <span class="">I accept addition requirement</span>                 
+                                    <div class="col-md-2">
+                                        <span class="error-term red">Please Accept Term & Condition</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="error-btn red">Please Fill All Required Field</span>
                                     </div>
                                 </div>
                             </div>
-                            <!-------------------------Location end------------------------------>
-                            <div class="breack-line"></div></div>
-                        <!-------------------------Reminder start------------------------------>
-
-                        <!-------------------------Finalisation Start------------------------------>
-                        <div class="finalisation-info bg-white padding-3per col-md-12">
-                            <div class="vertical-row col-md-offset-1">
-                                <div class="en-savoir-plus1 publier1 col-md-3">
-                                    <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
-                                        <span class="bold">Publier</span></button>
-                                </div>
-                                <div class="onoffswitch col-md-3">
-                                    <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">
-                                    <label class="onoffswitch-label" for="publier"></label>
-                                </div>   <span class="">I accept addition requirement</span>                 
-                                <div class="col-md-2">
-                                    <span class="error-term red">Please Accept Term & Condition</span>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="error-btn red">Please Fill All Required Field</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-------------------------Finalisation End------------------------------>
+                            <!-------------------------Finalisation End------------------------------>
 
                     </form>
                 </div>
@@ -391,7 +404,19 @@ if ($_REQUEST['action'] == 'update_post'):
             },
         });
     });
-</script>
+    $(document).on('click', '.publier-btn', function () {
+        var post = $('.post_type_switch').filter(':checked').val();
+        if (post === 'video') {
+            var post_media = $('#post_media').val();
+        }
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . '/post_update.php' ?>",
+            data: {
+                post_type: post,
+                post_media: post_media
+            }
+        });
+    });</script>
 <script>
     $(".post_type_switch").on('click', function () {
         var $box = $(this);
@@ -403,7 +428,6 @@ if ($_REQUEST['action'] == 'update_post'):
             $box.prop("checked", false);
         }
         var selected_post_type = $('.post_type_switch').filter(':checked');
-
         if (selected_post_type.attr('data_post_type') == 'music' || selected_post_type.attr('data_post_type') == 'podcast') {
             var duplicate_post_media = $('#post_media').clone();
             $('#post_media').remove();
@@ -426,8 +450,6 @@ if ($_REQUEST['action'] == 'update_post'):
             $('#post_media').attr('type', 'file');
         }
     });
-
-
     $(document).ready(function () {
         $('.error-desc').hide();
         $('.error-title').hide();
@@ -455,11 +477,9 @@ if ($_REQUEST['action'] == 'update_post'):
 
             if (!$("#publier").is(":checked")) {
                 $('.error-term').show();
-
                 return false;
             }
             return true;
-
         });
     });
 </script>

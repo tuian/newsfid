@@ -110,17 +110,17 @@ $user_desc = $user_result->row();
                             <div class="col-md-8 col-sm-8 user_website">
                                 <span class="user_localisation_text info_text" data_text="<?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>">
                                     <span class="location-box">  <?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?></span>
-                                    <input type="text" class="user_localisation_textbox filter_city hide" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">                                   
+                                    <input type="text" class="user_localisation_textbox filter_city hide" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>">                                   
                                 </span>  
-                                
+
                                 <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
                                     <i class="fa fa-pencil-square-o"></i> Edit
                                 </span>
                             </div>
                         </div>
-<!--                        <div class="row user_info_row margin-0 user_map_box">
-                            <div class="user_map" id="user_map_profile"></div>
-                        </div>-->
+                        <!--                        <div class="row user_info_row margin-0 user_map_box">
+                                                    <div class="user_map" id="user_map_profile"></div>
+                                                </div>-->
                     </div>
                 </div>
                 <div id="social" class="tab-pane fade in ">
@@ -220,36 +220,36 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-lock"></i>
                                 </div>
                             </div>
-<!--                            <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
-                                <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Default network
-                                </div>
-                                <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                                    <select id="country_Id" class="user_country_textbox disabled" name="up_country" disabled>
-                                        <?php
-                                        $counrtry_db = osc_get_countries();
-                                        foreach ($counrtry_db as $key => $country) :
-                                            ?>
-                                            <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
-                                <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Ville
-                                </div>
-                                <?php
-                                $city_data = City::newInstance()->findByPrimaryKey($user_info['fk_i_city_id']);
+                            <!--                            <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+                                                            <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                                                                Default network
+                                                            </div>
+                                                            <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                                                                <select id="country_Id" class="user_country_textbox disabled" name="up_country" disabled>
+                            <?php
+                            $counrtry_db = osc_get_countries();
+                            foreach ($counrtry_db as $key => $country) :
                                 ?>
-                                <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
-                                    <input type="text" name="s_city" class="user_city_textbox form-control disabled" name="up_city" id="s_city" placeholder="" value="<?php echo $city_data['s_name'] ?>" disabled>
-                                    <input type="hidden" name="cityId" class="form-control" id="cityId">
-                                </div>
-                                <div class="col-md-1 col-sm-1 col-xs-1">
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                            </div>-->
+                                                                                <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                            <?php endforeach; ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
+                                                            <div class="col-md-3 col-sm-3 col-xs-5 text-right">
+                                                                Ville
+                                                            </div>
+                            <?php
+                            $city_data = City::newInstance()->findByPrimaryKey($user_info['fk_i_city_id']);
+                            ?>
+                                                            <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
+                                                                <input type="text" name="s_city" class="user_city_textbox form-control disabled" name="up_city" id="s_city" placeholder="" value="<?php echo $city_data['s_name'] ?>" disabled>
+                                                                <input type="hidden" name="cityId" class="form-control" id="cityId">
+                                                            </div>
+                                                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                                                <i class="fa fa-globe"></i>
+                                                            </div>
+                                                        </div>-->
                         </div>
                         <div class="border-bottom-gray padding-top-4per"></div>
                         <div class="row margin-0">
@@ -593,12 +593,14 @@ $user_desc = $user_result->row();
 </div>
 <?php
 osc_add_hook('footer', 'custom_map_script');
+
 function custom_map_script() {
     ?>
-    <Script>
-    $(document).on('click', '.user_localisation_edit', function () {
-            $('.user_localisation_textbox').show();
-            $('.location-box').hide();
+    <script>
+
+        $(document).on('click', '.user_localisation_edit', function () {
+            $('.user_localisation_textbox').removeClass('hide');
+            $('.location-box').addClass('hide');
         });
         $('.filter_city').typeahead({
             source: function (query, process) {
@@ -609,45 +611,48 @@ function custom_map_script() {
                     dataType: "json",
                     type: "POST",
                     data: {city_name: query, region_name: query, country_name: query},
-                    success: function (data) {                        
+                    success: function (data) {
                         $.map(data, function (data) {
                             var group;
                             group = {
                                 city_id: data.city_id,
-                                city_name:data.city_name,
+                                city_name: data.city_name,
                                 region_id: data.r_id,
-                                region_name:data.region_name,
+                                region_name: data.region_name,
                                 country_code: data.country_code,
-                                country_name:data.country_name,
+                                country_name: data.country_name,
                                 name: data.city_name + '-' + data.region_name + '-' + data.country_name,
                             };
                             $items.push(group);
-                        });                        
+                        });
                         process($items);
                     }
                 });
             },
-            updater:function (data) {
-                var new_text = data.name;                
+            updater: function (data) {
+                var new_text = data.name;
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
                     type: 'POST',
                     data: {
-                        action: 'user_localisation',                     
+                        action: 'user_localisation',
                         city: data.city_name,
                         country: data.country_name,
                         scountry: data.country_code,
                         region_code: data.region_id,
                         region_name: data.region_name,
                     },
-                    dataType: "json", 
+                    dataType: "json",
                     success: function (data, textStatus, jqXHR) {
-                        var html_text = '<span class="location-box">'+new_text+'</span><input type="text" class="user_localisation_textbox filter_city" style="display:none" city="" region="" country=""value="'+new_text+'">';            
-                        $('.user_localisation_text').html(html_text).attr('data_text', new_text);                        
+                         $('.user_localisation_textbox').val(new_text);
+                         $('.user_localisation_textbox').addClass('hide');
+                        $('.location-box').html(new_text);
+                        $('.location-box').removeClass('hide');
                     }
-                });           
+                });
             }
-        });     
+        });
+    </script>
     <?php
 }
 ?>
@@ -960,12 +965,7 @@ function custom_map_script() {
             });
             $('.user_website_text').html(new_text).attr('data_text', new_text);
         });
-        $(document).on('click', '.user_localisation_edit', function () {
-            var text = $('.user_localisation_text').attr('data_text');
-            $('#autocomplete').val(text);
-            $('.user_localisation_text').hide();
-            $('#autocomplete').removeClass('hide');
-        });
+
         $(document).on('click', '.user_type_edit', function () {
             $('.user_role_selector').show();
             $('.user_role_name').hide();

@@ -345,7 +345,7 @@ else: {
                                 <?php else: ?>
                                     <li><a data-toggle="modal" data-target="#myModal">NATIONAL</a></li>                                     
                                 <?php endif; ?>
-                                <?php if (!empty($logged_user['fk_i_city_id'])): ?>
+                                <?php if (empty($logged_user['fk_i_city_id'])): ?>
                                     <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li> 
                                 <?php else: ?>
                                     <li><a data-toggle="modal" data-target="#myModal">LOCAL</a></li>                                
@@ -727,6 +727,7 @@ function footer_script() {
                     },
                     dataType: "json", 
                     success: function (data, textStatus, jqXHR) {
+                        $('#autocomplete_main').val(new_text);
                         location.reload();                      
                     }
                 });           

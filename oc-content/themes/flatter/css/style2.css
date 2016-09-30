@@ -163,8 +163,8 @@ textarea.border-bottom-0{
 .edit_user_detail {
     float: right;
 }
-.info_text{
-    color: 
+.podcast #post_media{
+    width: 100% !important;
 }
 .profile_img_overlay {
     position: absolute;

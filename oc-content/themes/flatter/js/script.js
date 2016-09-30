@@ -19,8 +19,8 @@ function checkForm() {
 
 // update info by cropping (onChange and onSelect events handler)
 function updateInfo(e) {
-    $('#x1').val(e.x);
-    $('#y1').val(e.y);
+    $('#x').val(e.x);
+    $('#y').val(e.y);
     $('#x2').val(e.x2);
     $('#y2').val(e.y2);
     $('#w').val(e.w);
@@ -30,8 +30,8 @@ function updateInfo(e) {
 
 // clear info by cropping (onRelease event handler)
 function clearInfo() {
-    $('.info #w').val('');
-    $('.info #h').val('');
+    $('.info_img #w').val('');
+    $('.info_img #h').val('');
 }
 
 // Create variables (in this scope) to hold the Jcrop API and image size
@@ -90,7 +90,7 @@ function fileSelectHandler() {
             setTimeout(function () {
                 // initialize Jcrop
                 $('#preview').Jcrop({
-                    minSize: [100, 100], // min crop size
+                    minSize: [16, 16], // min crop size
                     aspectRatio: 1, // keep aspect ratio 1:1
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity

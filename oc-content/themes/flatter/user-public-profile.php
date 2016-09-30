@@ -195,8 +195,8 @@ endif;
                                                             <!-- upload form -->
                                                             <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkForm()">
                                                                 <!-- hidden crop params -->
-                                                                <input type="hidden" id="x1" name="x" />
-                                                                <input type="hidden" id="y1" name="y" />
+                                                                <input type="hidden" id="x" name="x" />
+                                                                <input type="hidden" id="y" name="y" />
                                                                 <input type="hidden" id="x2" name="x2" />
                                                                 <input type="hidden" id="y2" name="y2" />
 
@@ -209,7 +209,7 @@ endif;
                                                                     <h4>Step2: Please select a crop region</h4>
                                                                     <img id="preview" />
 
-                                                                    <div class="info">
+                                                                    <div class="info_img">
                                                                         <input type="hidden" id="filesize" name="filesize" />
                                                                         <input type="hidden" id="filetype" name="filetype" />
                                                                         <input type="hidden" id="filedim" name="filedim" />

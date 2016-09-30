@@ -2542,4 +2542,34 @@ function custom_echo($x, $length) {
         echo $y;
     }
 }
+
+function get_user_post_resource($item_id) {
+    $user_last_post_data = new DAO();
+    $user_last_post_data->dao->select(sprintf('%st_item_resource.*', DB_TABLE_PREFIX));
+    $user_last_post_data->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
+    $user_last_post_data->dao->Where('fk_i_item_id', $item_id);
+    $user_last_post_array = $user_last_post_data->dao->get();
+    $user_last_post_result = $user_last_post_array->row();
+    return $user_last_post_result;
+}
+
+function check_language() {
+    $browser = str_replace("-", "_", substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5)); //language in the browser
+    $list = osc_get_locales(); //list of languages in osclass
+    $current = osc_current_user_locale(); //current language in osclass
+    $browser = 'fr_FR';
+
+    if (!isset($_COOKIE['osc_auto_language']) && !isset($_GET['auto'])) {
+        setcookie("osc_auto_language", true, time() + 60 * 60 * 24 * 90, "/");
+        if ($current != $browser) {
+            foreach ($list as $lan_code) {
+                if ($browser == $lan_code['pk_c_code']) {
+                    header("Location: index.php?page=language&auto=true&locale=" . $browser);
+                }
+            }
+        }
+    }
+}
+
+osc_add_hook('init', check_language());
 ?>

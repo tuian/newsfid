@@ -85,7 +85,7 @@ $roles = get_user_roles_array();
         <span class="user_localisation_text info_text" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
             <span class="location-box"><?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?></span>
             <?php if (osc_user_id() == osc_logged_user_id()): ?>
-                <input type="text" class="user_localisation_textbox filter_city" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+                <input type="text" class="user_localisation_textbox filter_city hide" city="<?php echo osc_user_field('s_city') ?>" region="<?php echo osc_user_field('s_region') ?>" country="<?php echo osc_user_field('s_country') ?>"value="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
             <?php endif; ?>
         </span>  
         <?php if (osc_user_id() == osc_logged_user_id()): ?>
@@ -162,11 +162,11 @@ function custom_map_script() {
         //                draggable: true
         //            }
         //        }
+
         
-        $('.user_localisation_textbox').hide();
         $(document).on('click', '.user_localisation_edit', function () {
-            $('.user_localisation_textbox').show();
-            $('.location-box').hide();
+            $('.user_localisation_textbox').removeClass('hide');
+            $('.location-box').addClass('hide');
         });
         $('.filter_city').typeahead({
             source: function (query, process) {
@@ -177,43 +177,45 @@ function custom_map_script() {
                     dataType: "json",
                     type: "POST",
                     data: {city_name: query, region_name: query, country_name: query},
-                    success: function (data) {                        
+                    success: function (data) {
                         $.map(data, function (data) {
                             var group;
                             group = {
                                 city_id: data.city_id,
-                                city_name:data.city_name,
+                                city_name: data.city_name,
                                 region_id: data.r_id,
-                                region_name:data.region_name,
+                                region_name: data.region_name,
                                 country_code: data.country_code,
-                                country_name:data.country_name,
+                                country_name: data.country_name,
                                 name: data.city_name + '-' + data.region_name + '-' + data.country_name,
                             };
                             $items.push(group);
-                        });                        
+                        });
                         process($items);
                     }
                 });
             },
-            updater:function (data) {
-                var new_text = data.name;                
+            updater: function (data) {
+                var new_text = data.name;
                 $.ajax({
                     url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
                     type: 'POST',
                     data: {
-                        action: 'user_localisation',                     
+                        action: 'user_localisation',
                         city: data.city_name,
                         country: data.country_name,
                         scountry: data.country_code,
                         region_code: data.region_id,
                         region_name: data.region_name,
                     },
-                    dataType: "json", 
+                    dataType: "json",
                     success: function (data, textStatus, jqXHR) {
-                        var html_text = '<span class="location-box">'+new_text+'</span><input type="text" class="user_localisation_textbox filter_city" style="display:none" city="" region="" country=""value="'+new_text+'">';            
-                        $('.user_localisation_text').html(html_text).attr('data_text', new_text);                        
+                        $('.user_localisation_textbox').val(new_text);
+                        $('.user_localisation_textbox').addClass('hide');
+                        $('.location-box').html(new_text);
+                        $('.location-box').removeClass('hide');
                     }
-                });           
+                });
             }
         });
     </script>           

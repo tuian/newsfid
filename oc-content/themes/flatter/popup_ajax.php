@@ -35,7 +35,7 @@ if ($item_id):
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" id="popup_news_close">&times;</button>
                 <?php
                 $items_pre = get_item_premium();
                 if (!empty($items_pre)):
@@ -128,7 +128,7 @@ if ($item_id):
 
                                 <li class="facebook margin-left-15">
                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                    return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                         <i class="fa fa-facebook"></i>
                                     </a>
                                 </li>
@@ -138,7 +138,7 @@ if ($item_id):
                                 </li>
                                 <li class="googleplus">
                                     <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                    return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                         <i class="fa fa-google-plus"></i>
                                     </a>
                                 </li> 
@@ -192,19 +192,13 @@ if ($item_id):
                                                     <span class="username">
                                                         <?php echo $comment_user['user_name'] ?>
                                                         <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
-                                                        <!--                                                                                                                                                <div class="dropdown  pull-right">
-                                                                                                                                                                                                <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                                                                                                                                                                <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                                                                                                                                                                <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
-                                                                                                                                                                                                <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Modifier</a></li>
-                                                                                                                                                                                                <li><a></a></li>
-                                                                                                                                                                                                <li><a>Sponsoriser</a></li>
-                                                                                                                                                                                                <li><a>Remonter en tête de liste</a></li>
-                                                                                                                                                                                                <li><a></a></li>
-                                                                                                                                                                                                <li><a>Signaler la publication</a></li>
-                                                                                                                                
-                                                                                                                                                                                                </ul>
-                                                                                                                                                                                                </div>-->
+                                                        <div class="dropdown  pull-right">
+                                                            <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Edit'); ?></a></li>
+                                                                <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete') ?></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </span><!-- /.username -->
                                                     <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                         <?php echo $comment_data['s_body']; ?>
@@ -331,7 +325,7 @@ if ($item_id):
 
                                                         <li class="facebook margin-left-15">
                                                             <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                                    return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                                                 <i class="fa fa-facebook"></i>
                                                             </a>
                                                         </li>
@@ -341,7 +335,7 @@ if ($item_id):
                                                         </li>
                                                         <li class="googleplus">
                                                             <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                                    return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                                                 <i class="fa fa-google-plus"></i>
                                                             </a>
                                                         </li> 
@@ -397,19 +391,13 @@ if ($item_id):
                                                                             <span class="username">
                                                                                 <?php echo $comment_user['user_name'] ?>
                                                                                 <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
-                                                                                <!--                                                                                                                                                <div class="dropdown  pull-right">
-                                                                                                                                                                                                                        <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                                                                                                                                                                                        <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                                                                                                                                                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Supprimer la publication</a></li>
-                                                                                                                                                                                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a>Modifier</a></li>
-                                                                                                                                                                                                                        <li><a></a></li>
-                                                                                                                                                                                                                        <li><a>Sponsoriser</a></li>
-                                                                                                                                                                                                                        <li><a>Remonter en tête de liste</a></li>
-                                                                                                                                                                                                                        <li><a></a></li>
-                                                                                                                                                                                                                        <li><a>Signaler la publication</a></li>
-                                                                                                                                                        
-                                                                                                                                                                                                                        </ul>
-                                                                                                                                                                                                                        </div>-->
+                                                                                <div class="dropdown  pull-right">
+                                                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Edit'); ?></a></li>                                                                                       
+                                                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete'); ?></a></li>
+                                                                                    </ul>
+                                                                                </div>
                                                                             </span><!-- /.username -->
                                                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                                                 <?php echo $comment_data['s_body']; ?>
@@ -537,6 +525,7 @@ if ($item_id):
         });
         $(document).on('click', '.edit_post', function () {
             var item_id = $(this).attr('item_id');
+            $('#popup_news_close').click();
             $.ajax({
                 url: '<?php echo osc_current_web_theme_url() . 'update_user_post.php'; ?>',
                 type: 'post',

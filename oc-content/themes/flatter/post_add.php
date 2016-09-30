@@ -104,16 +104,16 @@ if ($item_id) {
     $item_action = new ItemActions();
 
     if ($item_type == 'image' || $item_type == 'gif' || $item_type == 'music'):
-        item_files_upload($_FILES['post_media'], $item_id);
+        item_files_upload($_FILES['post_media'], $item_id, $item_type);
     else:
-        item_embedcode_upload($_REQUEST['post_media'], $item_id);
+        item_embedcode_upload($_REQUEST['post_media'], $item_id, $item_type);
     endif;
 
     osc_redirect_to(osc_base_url());
     die;
 }
 
-function item_files_upload($aResources, $itemId) {
+function item_files_upload($aResources, $itemId, $item_type) {
     $db_prefix = DB_TABLE_PREFIX;
     $item_resource_data = new DAO();
     $folder = osc_uploads_path() . (floor($itemId / 100)) . "/";
@@ -121,6 +121,7 @@ function item_files_upload($aResources, $itemId) {
     //foreach ($aResources as $key => $error) {
     $tmpName = $aResources['tmp_name'];
     $file_name = $aResources['name'];
+    
     $extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
     $item_resource_data->dao->insert("{$db_prefix}t_item_resource", array('fk_i_item_id' => $itemId));
@@ -138,7 +139,8 @@ function item_files_upload($aResources, $itemId) {
     $item_resource_data->dao->update("{$db_prefix}t_item_resource", array(
         's_path' => $s_path
         , 's_name' => osc_genRandomPassword()
-        , 's_extension' => $extension
+        , 's_extension' => $extension,
+        's_content_type' => $item_type,
             //, 's_content_type' => $mime
             )
             , array(
@@ -148,7 +150,7 @@ function item_files_upload($aResources, $itemId) {
     );
 }
 
-function item_embedcode_upload($aResources, $itemId) {
+function item_embedcode_upload($aResources, $itemId, $item_type) {
     $db_prefix = DB_TABLE_PREFIX;
     $item_resource_data = new DAO();
     $item_resource_data->dao->insert("{$db_prefix}t_item_resource", array('fk_i_item_id' => $itemId));
@@ -156,7 +158,8 @@ function item_embedcode_upload($aResources, $itemId) {
     $s_path = $aResources;
     $item_resource_data->dao->update("{$db_prefix}t_item_resource", array(
         's_path' => $s_path
-        , 's_name' => osc_genRandomPassword()
+        , 's_name' => osc_genRandomPassword(),
+        's_content_type' => $item_type,
             //, 's_extension' => $extension
             //, 's_content_type' => $mime
             )
