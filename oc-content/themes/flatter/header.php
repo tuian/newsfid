@@ -472,7 +472,7 @@ found!');</script>";
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_user_login_url() ?>">
-                                        <i class="fa fa-sign-in"></i>Login
+                                        <i class="fa fa-sign-in"></i> <?php echo __('Login', 'flatter');?>
                                     </a>
                                 </li>
 
@@ -489,7 +489,7 @@ found!');</script>";
 
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_register_account_url() ?>">
-                                        <i class="fa fa-user-plus"></i>Register
+                                        <i class="fa fa-user-plus"></i><?php echo __('Register', 'flatter'); ?>
                                     </a>
                                 </li>
                             <?php endif; ?>
