@@ -91,7 +91,9 @@ $c_data = $comments_result->result();
                         </div>
                         <div class="comment-area col-md-10">
                             <span class="username">
-                                <?php echo $comment_user['user_name'] ?>
+                                <?php echo $comment_user['user_name'];
+                                if($comment_data['fk_i_user_id'] == osc_logged_user_id()): 
+                                ?>
                                 <div class="dropdown  pull-right">
                                     <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
@@ -99,6 +101,7 @@ $c_data = $comments_result->result();
                                         <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $comment_item_id; ?>)"><a><?php echo __('Delete')?></a></li>
                                     </ul>
                                 </div>
+                                 <?php endif; ?>
                            <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                             </span>
                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">

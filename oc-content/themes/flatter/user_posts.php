@@ -232,7 +232,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                         ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                          ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -290,10 +290,23 @@ if ($items):
                                         </div>
                                         <div class="comment-text">
                                             <span class="username">
-                                                <?php echo $comment_user['user_name'] ?>
+                                                <?php echo $comment_user['user_name'];
+                                                
+                                                if($comment_data['fk_i_user_id'] == osc_logged_user_id()):        
+                                                ?>
+                                                <div class="dropdown  pull-right">
+                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Edit'); ?></a></li>
+                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Delete'); ?></a></li>
+                                                    </ul>
+                                                </div>
+                                                <?php endif; ?>
                                                 <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
-                                            </span><!-- /.username -->
-                                            <?php echo $comment_data['s_body']; ?>
+                                            </span>
+                                            <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
+                                                <?php echo $comment_data['s_body']; ?>
+                                            </span>
                                         </div>
                                         <!-- /.comment-text -->
                                     </div>                       
@@ -386,4 +399,50 @@ endif;
             }
         });
     });
+    
+    $(document).on('blur', '.user_comment_textbox', function () {
+            var new_text = $(this).val();
+            var data_id = $(this).attr('data_id');
+            var item_id = $(this).attr('data-item-id');
+            if (!new_text) {
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
+                method: 'post',
+                data: {
+                    action: 'user_comment',
+                    comment_text: new_text,
+                    comment_id: data_id,
+                    item_id: item_id
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.comment_edt_' + data_id).html(new_text);
+                    $('.comment_edt_' + data_id).attr('data-text', new_text);
+                }
+            });
+            //$('.user_website_text').html(new_text).attr('data_text', new_text);
+        });
+    function editComment(comment_id, data_item_id) {
+        var text = $('.comment_edt_' + comment_id).attr('data-text');
+        var input_box = '<input type="text" class="user_comment_textbox" data-item-id="' + data_item_id + '" data_id="' + comment_id + '" value="' + text + '">';
+        $('.comment_edt_' + comment_id).html(input_box);
+    }
+    function deleteComment(comment_id, data_item_id) {
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
+            method: 'post',
+            data: {
+                action: 'user_comment',
+                comment_id: comment_id,
+                item_id: data_item_id,
+                delete: '1'
+            },
+            success: function (data, textStatus, jqXHR) {
+                $('.comments_container_' + data_item_id).replaceWith(data);
+                var current_comment_number = $('.comment_count_' + data_item_id).first().html();
+                $('.comment_count_' + data_item_id).html(parseInt(current_comment_number) - 1);
+            }
+        });
+    }
 </script>

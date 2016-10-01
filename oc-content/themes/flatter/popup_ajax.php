@@ -190,8 +190,9 @@ if ($item_id):
 
                                                 <div class="comment-area col-md-10">
                                                     <span class="username">
-                                                        <?php echo $comment_user['user_name'] ?>
+                                                        <?php echo $comment_user['user_name']; ?>
                                                         <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
+                                                        <?php if($comment_data['fk_i_user_id'] == osc_logged_user_id()):  ?>
                                                         <div class="dropdown  pull-right">
                                                             <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
@@ -199,6 +200,7 @@ if ($item_id):
                                                                 <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete') ?></a></li>
                                                             </ul>
                                                         </div>
+                                                        <?php endif; ?>
                                                     </span><!-- /.username -->
                                                     <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                         <?php echo $comment_data['s_body']; ?>
@@ -391,13 +393,15 @@ if ($item_id):
                                                                             <span class="username">
                                                                                 <?php echo $comment_user['user_name'] ?>
                                                                                 <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
-                                                                                <div class="dropdown  pull-right">
-                                                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Edit'); ?></a></li>                                                                                       
-                                                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete'); ?></a></li>
-                                                                                    </ul>
-                                                                                </div>
+                                                                                <?php if($comment_data['fk_i_user_id'] == osc_logged_user_id()):  ?>
+                                                                                    <div class="dropdown  pull-right">
+                                                                                        <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                                                        <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                                            <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Edit'); ?></a></li>                                                                                       
+                                                                                            <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete'); ?></a></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                <?php endif; ?>
                                                                             </span><!-- /.username -->
                                                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
                                                                                 <?php echo $comment_data['s_body']; ?>
