@@ -120,7 +120,7 @@ endif;
                                                 endif;
                                                 ?>
                                             </h5>
-                                            <span class="description-text">Finish</span>
+                                            <span class="description-text"><?php _e("Finish", 'flatter') ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -175,11 +175,11 @@ endif;
                             </div>
                             <div class="col-md-12 border-bottom-gray"></div>
                             <div class="copyright_box_post">
-                                <span class="bold"> Pack : </span> <?php echo $pack_name['s_name']; ?>
+                                <span class="bold"><?php _e("Pack", 'flatter') ?>  : </span> <?php echo $pack_name['s_name']; ?>
                             </div>
                             <div class="col-md-12 border-bottom-gray"></div>
                             <div class="box-default copyright_box_post">                                
-                                Copyright Newsfid - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
+                                <?php _e("Copyright Newsfid", 'flatter') ?> - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
                             </div>
                         </div>
                         <!-- /.box -->                 
@@ -189,8 +189,8 @@ endif;
             <div class="premium_post">
                 <div class="col-md-8 padding-left-0">
                     <ul class="nav nav-tabs user_profile_navigation bg-white premium_nav_fix">
-                        <li class="active user_posts"><a data-toggle="tab" data-target="#en_cours" href="javascript:void(0)">Running campaign</a></li>
-                        <li class="user_info"><a data-toggle="tab" data-target="#top_up_now" href="javascript:void(0)">Top up now</a></li>
+                        <li class="active user_posts"><a data-toggle="tab" data-target="#en_cours" href="javascript:void(0)"><?php _e("Running campaign", 'flatter') ?></a></li>
+                        <li class="user_info"><a data-toggle="tab" data-target="#top_up_now" href="javascript:void(0)"><?php _e("Top up now", 'flatter') ?></a></li>
                     </ul>  
                     <?php // endif;       ?>
                     <div class="col-md-12 padding-0 search-box success-border">
@@ -207,8 +207,8 @@ endif;
                                             <img src="<?php echo osc_current_web_theme_url() ?>images/poster.png" width="150px">
                                         </div>
                                         <div class="padding-left-7per">
-                                            <div class="light_gray bold"> No running campaign</div>
-                                            <div class="col-md-7 padding-0"> No campaign is running for now. Top up your credit or start one at anytime.</div>
+                                            <div class="light_gray bold"><?php _e("No running campaign", 'flatter') ?> </div>
+                                            <div class="col-md-7 padding-0"><?php _e("No campaign is running for now. Top up your credit or start one at anytime.", 'flatter') ?> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -236,8 +236,8 @@ endif;
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/Shopping.ico" width="45px">
                                 </div>
                                 <div class="col-md-11">
-                                    <div class="bold">Select the pack you wish to up with</div>
-                                    <div class="font-12 light_gray padding-top-5">Once you balance will be aible to top up with a new pack but not before</div>
+                                    <div class="bold"><?php _e("Select the pack you wish to up with", 'flatter') ?></div>
+                                    <div class="font-12 light_gray padding-top-5"><?php _e("Once you balance will be aible to top up with a new pack but not before", 'flatter') ?></div>
                                 </div>
                             </div>
                             <div class="border-bottom-gray col-md-12"></div>
@@ -247,9 +247,9 @@ endif;
                                 </div>
                                 <div class="col-md-11 padding-0">
                                     <!--<div class="bold light_gray">Votre publication sponsorisee apparaita en tete de publication.</div>-->
-                                    <div class="bold light_gray">Your publication will appear at the top of publication's window.</div>
+                                    <div class="bold light_gray"><?php _e("Your publication will appear at the top of publication's window.", 'flatter') ?></div>
                                     <!--<div class="light_gray">C'est a dire que lorsqu'un utilisateur consulte un post il voit votre post dans l'entete de la publication qu'il consulte.</div>-->
-                                    <div class="light_gray">it means that when a user is consulting a post he sees your publication in the header of the publication.</div>
+                                    <div class="light_gray"><?php _e("it means that when a user is consulting a post he sees your publication in the header of the publication.", 'flatter') ?></div>
                                 </div>
                             </div>
                             <div class="border-bottom-gray-2px col-md-12"></div>
@@ -258,11 +258,11 @@ endif;
                                     <div class="col-md-12 orange bold-600 font-12 padding-bottom-10"><?php echo $p['s_name']; ?></div>
                                     <div class="col-md-12 padding-0 padding-bottom-6per">
                                         <div class="col-md-6">                                        
-                                            <div class="blue_text bold font-12"> Pack <?php echo $p['i_amount'] / 1000000; ?> promoted posts</div>
-                                            <div>   Price:<span class="font-12 orange"> <?php echo $p['i_amount_cost'] / 1000000; ?> USD</span> </div>                                      
+                                            <div class="blue_text bold font-12"> <?php _e("Pack", 'flatter') ?>  <?php echo $p['i_amount'] / 1000000; ?> <?php _e("promoted posts", 'flatter') ?></div>
+                                            <div>  <?php _e("Price", 'flatter') ?> :<span class="font-12 orange"> <?php echo $p['i_amount_cost'] / 1000000; ?> <?php _e("USD", 'flatter') ?></span> </div>                                      
                                         </div>
                                         <div class="col-md-6 padding-0">
-                                            <button data-toggle="modal" data-target="#myModal" class="btn button-orng-box buy_pack pull-right" item-id='<?php echo $_REQUEST['item_id']; ?>' name='<?php echo $p['s_name']; ?>' pack-id='<?php echo $p['pk_i_id']; ?>' post='<?php echo $p['i_amount'] / 1000000; ?>' amount='<?php echo $p['i_amount_cost'] / 1000000; ?>'>Buy this pack</button>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn button-orng-box buy_pack pull-right" item-id='<?php echo $_REQUEST['item_id']; ?>' name='<?php echo $p['s_name']; ?>' pack-id='<?php echo $p['pk_i_id']; ?>' post='<?php echo $p['i_amount'] / 1000000; ?>' amount='<?php echo $p['i_amount_cost'] / 1000000; ?>'><?php _e("Buy this pack", 'flatter') ?></button>
                                         </div>
                                     </div>
                                 </div>
@@ -333,7 +333,7 @@ endif;
                 $('.user_posts_container').css({'opacity': '1'});
                 if (data.indexOf("Nothing to show") >= 0) {
                     if (page_number === 1) {
-                        $('.result_text_message').html('<h2 class="result_text">Ends of results</h2>');
+                        $('.result_text_message').html('<h2 class="result_text">'.<?php _e("Ends of results.", 'flatter') ?>'</h2>');
                     } else if ($('.usepost_no_record').size() < 1) {
                         $('.result_text_message').html(data);
                     }

@@ -26,7 +26,7 @@ if ($_REQUEST['submit']):
         header('Location: ' . osc_base_url());
         die;
     else:
-        osc_add_flash_error_message(_m('You must select at least four rubrics'));
+        osc_add_flash_error_message(_e("You must select at least four rubrics", 'flatter') );
         header("Location: " . $_SERVER['REQUEST_URI']);
     endif;
 endif;
@@ -38,14 +38,14 @@ endif;
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <div class="titlebox background-white padding-10">
-                        <h2>Center of interest</h2>
+                        <h2><?php _e("Center of interest", 'flatter') ?></h2>
                         <!--<h2>Centre d'intérêt</h2>-->
                         <h1>
-                            Choose one or more topics that interest you
+                            <?php _e("Choose one or more topics that interest you", 'flatter') ?>
                             <!--Choisissez un ou plusieurs sujets qui vous intéressent-->
                         </h1>
                         <span>
-                            What kind of topics interest you? You must select at least four of them. This will allow us to connect to people and organization that have the same interests as you center.
+                            <?php _e("What kind of topics interest you? You must select at least four of them. This will allow us to connect to people and organization that have the same interests as you center.", 'flatter') ?>
                             <!--Quel genre de sujets vous intéresse? Vous devez en sélectionner au moins un d'entre eux. Cela nous permettra de vous connecter à personnes et l'organisation qu ont les même centre d'intérêts que vous.-->
                         </span>
                     </div>
@@ -55,7 +55,7 @@ endif;
                     <div class="col-md-12 padding-10 background-white">
                         <div class="pull-right">
                             <!--<input class="btn btn-blue btn-flat add_rubric" type="submit" name="submit" value="Poursuivre" />-->
-                            <input class="btn btn-blue btn-flat add_rubric" type="submit" name="submit" value="Continue" />
+                            <input class="btn btn-blue btn-flat add_rubric" type="submit" name="submit" value="<?php _e("Continue", 'flatter') ?>" />
                         </div>
                     </div>
 
@@ -124,7 +124,7 @@ function new_footer() {
                 if (checked_cat.length >= 4) {
                     $('.user_rubric_form').submit();
                 } else {
-                    alert('Please select at least four rubrics');
+                    alert(<?php _e("Please select at least four rubrics", 'flatter') ?>);
                     e.preventDefault();
                 }
             });

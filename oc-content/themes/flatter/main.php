@@ -339,29 +339,29 @@ else: {
                     <div class="col-md-8 col-sm-8 padding-left-0">
                         <div class="col-md-12 padding-0">                        
                             <ul class="nav user_profile_navigation bg-white">
-                                <li class="active location_filter_tab"><a href="#tab_1">WORLD</a></li>
+                                <li class="active location_filter_tab"><a href="#tab_1"><?php _e("WORLD", 'flatter'); ?></a></li>
                                 <?php if (!empty($logged_user['fk_c_country_code'])): ?>
-                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2">NATIONAL</a></li>
+                                    <li class="location_filter_tab" data_location_type="country" data_location_id="<?php echo $logged_user['fk_c_country_code'] ?>"><a href="#tab_2"><?php _e("NATIONAL", 'flatter'); ?></a></li>
                                 <?php else: ?>
-                                    <li><a data-toggle="modal" data-target="#myModal">NATIONAL</a></li>                                     
+                                    <li><a data-toggle="modal" data-target="#myModal"><?php _e("NATIONAL", 'flatter'); ?></a></li>                                     
                                 <?php endif; ?>
-                                <?php if (empty($logged_user['fk_i_city_id'])): ?>
-                                    <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3">LOCAL</a></li> 
+                                <?php if (!empty($logged_user['fk_i_city_id'])): ?>
+                                    <li class="location_filter_tab" data_location_type="city" data_location_id="<?php echo $logged_user['fk_i_city_id'] ?>"><a href="#tab_3"><?php _e("LOCAL", 'flatter'); ?></a></li> 
                                 <?php else: ?>
-                                    <li><a data-toggle="modal" data-target="#myModal">LOCAL</a></li>                                
+                                    <li><a data-toggle="modal" data-target="#myModal"><?php _e("LOCAL", 'flatter'); ?></a></li>                                
                                     <div id="myModal" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Please enter your City and Country name to use this tab</h4>
+                                                    <h4 class="modal-title"><?php _e("Please enter your City and Country name to use this tab", 'flatter'); ?></h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="col-md-10 col-sm-10">                                                         
                                                         <input type="text" id="autocomplete_main" name="autocomplete_main" value="<?php echo osc_user_field('s_city') . " " . osc_user_field('s_country'); ?>">    
                                                     </div>
-                                                    <span id="ajax_city_saved" class="hidden">Saved..</span>
+                                                    <span id="ajax_city_saved" class="hidden"><?php _e("Saved..", 'flatter'); ?></span>
                                                 </div>
                                                 <div class="modal-footer">                                                
                                                 </div>
@@ -636,7 +636,7 @@ else: {
                         //elseif($page_number > 0):
                         //    echo '<h2 class="result_text">No More Data Found</h2> ';
                         else:
-                            echo '<h2 class="result_text">Nothing to show off for now. Thanks to try later</h2> ';
+                            echo '<h2 class="result_text">'._e("Nothing to show off for now. Thanks to try later", 'flatter').'</h2> ';
                         endif;
                         ?>
                     </div>
@@ -1138,7 +1138,7 @@ function footer_script() {
                     $('.loading').fadeOut(1000);
                     if (data.indexOf("Nothing to show") >= 0) {
                         if (page_number === 1) {
-                            $('.result_message').html('<h2 class="result_text">Ends of results</h2>');
+                            $('.result_message').html('<h2 class="result_text"><?php _e("Ends of results", 'flatter'); ?></h2>');
                         } else if ($('.result_text').size() < 1) {
                             $('.result_message').html(data);
                         }

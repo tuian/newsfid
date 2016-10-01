@@ -8,7 +8,7 @@ if ($_REQUEST['notification'] == 'notification'):
     <div class="notification_dropdown border-bottom-gray">
         <span class="bold font-color-black">  Mark all as read</span> <span class="dropdown pull-right pointer padding-left-10"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i>
             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                <li><a class="mark_all" user-id="<?php echo osc_logged_user_id(); ?>"> Mark all as read</a></li>
+                <li><a class="mark_all" user-id="<?php echo osc_logged_user_id(); ?>"><?php _e("Mark all as read", 'flatter'); ?> </a></li>
                 <!--                <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>
                                 <li><a class="chat-filter" data-value="off">Turn chat off</a></li>-->
             </ul>
@@ -28,8 +28,8 @@ if ($_REQUEST['notification'] == 'notification'):
                 <div class="col-md-9 padding-0 bold dropdown"> <i class="fa fa-angle-down pull-right dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i>
                     <a href="<?php echo osc_user_public_profile_url($n['from_user_id']) ?>" ><?php echo $n['user_name'] ?></a>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu3">
-                        <li><a class="pointer mark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"> Mark read</a></li>
-                        <li><a class="pointer unmark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"> Unmark as not read</a></li>                       
+                        <li><a class="pointer mark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"><?php _e("Mark read", 'flatter'); ?> </a></li>
+                        <li><a class="pointer unmark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"><?php _e(" Unmark as not read", 'flatter'); ?></a></li>                       
                     </ul>
                 </div>
                 <div class="col-md-9 padding-0 <?php

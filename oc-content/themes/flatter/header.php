@@ -223,7 +223,7 @@ found!');</script>";
 
                         <!-- search form -->
                         <div class="input-group sidebar-form search-newsfid" >
-                            <input type="text"  name="q" class="form-control search-newsfid-text" placeholder="Search...">
+                            <input type="text"  name="q" class="form-control search-newsfid-text" placeholder="<?php _e("Search...", 'flatter'); ?>">
                             <span class="input-group-btn">
                                 <button type="submit" id="search-btn" class="btn btn-flat search-newsfid-btn"><i class="fa fa-search"></i> </button>
                             </span>
@@ -249,7 +249,7 @@ found!');</script>";
                             <li class="treeview <?php echo $active ?>">
                                 <a href="<?php echo osc_base_url() ?>">
                                     <i class="fa fa-th"></i>
-                                    News Feed
+                                    <?php _e("News Feed", 'flatter'); ?>
                                 </a>
                             </li>
                             <?php
@@ -266,7 +266,7 @@ found!');</script>";
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
                                         <i class="fa fa-circle-o"></i>
-                                        Center of interest
+                                        <?php _e("Center of interest", 'flatter'); ?>
                                     </a>
                                 </li>
                                 <?php
@@ -283,7 +283,7 @@ found!');</script>";
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
                                         <i class="fa fa-list-ul"></i>
-                                        Publish
+                                        <?php _e("Publish", 'flatter'); ?>
                                     </a>
 
                                 </li> 
@@ -304,7 +304,7 @@ found!');</script>";
                                     <!--<a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>">-->
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                         <i class="fa fa-copy"></i>
-                                        My profile
+                                        <?php _e("My profile", 'flatter'); ?>
                                     </a>
                                 </li>   
                                 <?php
@@ -320,7 +320,7 @@ found!');</script>";
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
                                         <i class="fa fa-users"></i>
-                                        People
+                                        <?php _e("People", 'flatter'); ?>
                                     </a>
                                 </li>                                 
                                 <?php
@@ -367,7 +367,8 @@ found!');</script>";
                                         <li class="user_settings treeview <?php echo $active ?>" data-toggle="modal" data-target="#user_confirm_password">
     <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="javascript:void(0)">
-                                                <i class="fa fa-gear"></i>Center of settings
+                                                <i class="fa fa-gear"></i>
+                                                <?php _e("Center of settings", 'flatter'); ?>
                                             </a>
                                         </li>
                                         <?php
@@ -380,7 +381,8 @@ found!');</script>";
                                         ?> 
                                         <li class="user_settings treeview <?php echo $active ?>">
                                             <a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">
-                                                <i class="fa fa-gear"></i>Advertising Account
+                                                <i class="fa fa-gear"></i>
+                                                <?php _e("Advertising Account", 'flatter'); ?>
                                             </a>
                                         </li>
                                     </ul>
@@ -402,7 +404,8 @@ found!');</script>";
                                 <?php if ($user['user_type'] == 0 || $user['user_type'] == 2): ?>
                                     <li class="treeview <?php echo $active ?>">
                                         <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
-                                            <i class="fa fa-money"></i>Subscribe now
+                                            <i class="fa fa-money"></i>
+                                            <?php _e("Subscribe now", 'flatter'); ?>
                                         </a>
                                     </li>   
                                 <?php endif; ?>
@@ -418,7 +421,9 @@ found!');</script>";
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
-                                        <i class="fa fa-info"></i>Informations<i class="fa fa-angle-left pull-right"></i>
+                                        <i class="fa fa-info"></i>
+                                        <?php _e("Informations", 'flatter'); ?>
+                                        <i class="fa fa-angle-left pull-right"></i>
                                     </a>
 
                                     <ul class="treeview-menu">
@@ -434,7 +439,8 @@ found!');</script>";
                                         ?>
                                         <li class="treeview <?php echo $active ?>">
                                             <a href="<?php echo osc_base_url() . '?page=page&id=34' ?>">
-                                                <i class="fa fa-book"></i>Terms
+                                                <i class="fa fa-book"></i>
+                                                <?php _e("Terms", 'flatter'); ?>
                                             </a>
                                         </li>
 
@@ -450,7 +456,8 @@ found!');</script>";
                                         ?>
                                         <li class="treeview <?php echo $active ?>">                          
                                             <a href="<?php echo osc_contact_url(); ?>">
-                                                <i class="fa fa-phone"></i>Contact
+                                                <i class="fa fa-phone"></i>
+                                                <?php _e("Contact", 'flatter'); ?>
                                             </a>
                                         </li>
                                     </ul>
@@ -497,7 +504,8 @@ found!');</script>";
 
                                 <li class="treeview">
                                     <a href="<?php echo osc_user_logout_url() ?>">
-                                        <i class="fa fa-sign-out"></i>Logout
+                                        <i class="fa fa-sign-out"></i>
+                                        <?php _e("Logout", 'flatter'); ?>
                                     </a>
                                 </li>
 
@@ -527,22 +535,22 @@ found!');</script>";
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="blue_text modal-title bold">
-                                    Identification
+                                    <?php _e("Identification", 'flatter'); ?>
                                 </h4>
                             </div>
                             <div class="modal-body">
                                 <div class="">
-                                    Cette page contient des informations personelles,<br/>
-                                    <span class="bold">confirmer votre mot de passe pour y accÃ©der.</span>
+                                    <?php _e("This page contains Personal Information,", 'flatter'); ?><br/>
+                                    <span class="bold"><?php _e("confirm your password to get access.", 'flatter'); ?></span>
                                 </div>
                                 <div class="input-text-area margin-top-20 left-border box-shadow-none">
-                                    <input class="border-bottom-0 user_password_field width-60" type="password" placeholder="Mot de passe">
+                                    <input class="border-bottom-0 user_password_field width-60" type="password" placeholder="<?php _e("Password", 'flatter'); ?>">
                                     <image src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" id="setting_loader" class="hidden">
                                 </div>
                                 <div class="red_text alert_text"></div>
                             </div>
                             <div class="modal-footer text-left">
-                                <button type="button" class="btn btn-blue border-radius-0 user_password_check_btn">Confirmer</button>
+                                <button type="button" class="btn btn-blue border-radius-0 user_password_check_btn"><?php _e("Confirm", 'flatter'); ?></button>
                             </div>
                         </div>
 
@@ -555,9 +563,9 @@ found!');</script>";
                     <div class="content">
                         <?php if (!isset($_COOKIE["cookie_banner"])) { ?>
                             <div id="cookie_banner">
-                                <span>
-                                    By continuing the navigation you accept the use of cookies to deliver adapted content with your center of interest.
-                                    <span class="cookie_btn" title="close_cookie">Accept</span>
+                                <span><?php _e("By continuing the navigation you accept the use of cookies to deliver adapted content with your center of interest.", 'flatter'); ?>
+                                    
+                                    <span class="cookie_btn" title="close_cookie"><?php _e("Accept", 'flatter'); ?></span>
                                 </span>
                             </div>
                         <?php } ?>

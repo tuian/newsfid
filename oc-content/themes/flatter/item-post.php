@@ -63,9 +63,10 @@ osc_enqueue_script('jquery-validate');
 
                                 <p style="font-size: 12px; font-color: grey">
                                     <br><br>
-                                    You do not have to pay to publish on our service. Newsfid is a platform who allows people to seek for the right information at the right time. 
+                                    <?php _e("You do not have to pay to publish on our service. Newsfid is a platform who allows people to seek for the right information at the right time. 
                                     Then thank you to make sure that you post your story into the proper topic so anyone can find it easily. 
-                                    All story who does not respect our rules will be taking off without notice and delay.
+                                    All story who does not respect our rules will be taking off without notice and delay.", 'flatter'); ?>
+                                    
 
                                 </p>
 

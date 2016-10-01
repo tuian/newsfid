@@ -8,12 +8,12 @@ require 'functions.php';
     <div class="cover-img">
         <div class="container">
             <div class="col-md-8">
-                <h3 class="font-color-white bold-600 margin-0">Start now with</h3>
-                <h1 class="font-color-white bold-600 font-65px margin-0">NEWSFID PRO</h1>
+                <h3 class="font-color-white bold-600 margin-0"><?php _e("Start now with", 'flatter') ?></h3>
+                <h1 class="font-color-white bold-600 font-65px margin-0"><?php _e("NEWSFID PRO", 'flatter') ?></h1>
                 <div class="col-md-8 border-bottom"></div>
-                <h2 class="font-color-white bold-600">Freedom, Notoriety , Difference , Simplicity</h2>
+                <h2 class="font-color-white bold-600"><?php _e("Freedom, Notoriety , Difference , Simplicity", 'flatter') ?></h2>
                 <div class="col-md-offset-1 margin-top-20">
-                    <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment">Get Newsfid pro with 30 days trials right now</button>
+                    <button type="submit" class="btn btn-lg button-orng" data-toggle="modal" data-target="#payment"><?php _e("Get Newsfid pro with 30 days trials right now", 'flatter') ?></button>
                     <!-- Payment modal start -->
                     <div id="payment" class="modal fade" role="dialog">
                         <div class="modal-dialog modal-lg">
@@ -31,12 +31,12 @@ require 'functions.php';
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="col-md-12">
-                                                    <h1 class="bold font-color-light-blue">Newsfid Premium</h1>
-                                                    <h3 class="bold font-color-royal-blue margin-0">Improve your experience</h3>
+                                                    <h1 class="bold font-color-light-blue"><?php _e("Newsfid Premium", 'flatter') ?></h1>
+                                                    <h3 class="bold font-color-royal-blue margin-0"><?php _e("Improve your experience", 'flatter') ?></h3>
                                                 </div>
                                                 <div class="col-md-12 padding-top-13per">
-                                                    Subscribers benefit from advantageous services. 
-                                                    You can better manage your reputation and reach more users easily.                                               </div>
+                                                    <?php _e("Subscribers benefit from advantageous services. 
+                                                    You can better manage your reputation and reach more users easily.", 'flatter') ?>                                    </div>
                                             </div>
                                         </div>
 
@@ -47,7 +47,7 @@ require 'functions.php';
                                 <div class="payment-section-2 bg-white col-md-12 border-radius-10 padding-0">
                                     <div class="col-md-12 theme-modal-header">
                                         <div class="col-md-offset-1">
-                                            <h2 class="bold margin-0"> Select payment mode </h2>
+                                            <h2 class="bold margin-0"><?php _e("Select payment mode ", 'flatter') ?> </h2>
                                         </div>
                                     </div>
                                     <div class="container">
@@ -55,23 +55,23 @@ require 'functions.php';
                                             <table class="table margin-0">
                                                 <thead>
                                                     <tr class="bg-blue-light">
-                                                        <th class="border-right-white font-color-black">Date</th>
-                                                        <th class="border-right-white font-color-black">Description</th>
-                                                        <th class="border-right-white font-color-black">Quantity</th>
-                                                        <th class="border-right-white font-color-black">Unit Price</th>
-                                                        <th>Amount</th>
+                                                        <th class="border-right-white font-color-black"><?php _e("Date", 'flatter') ?></th>
+                                                        <th class="border-right-white font-color-black"><?php _e("Description", 'flatter') ?></th>
+                                                        <th class="border-right-white font-color-black"><?php _e("Quantity", 'flatter') ?></th>
+                                                        <th class="border-right-white font-color-black"><?php _e("Unit Price", 'flatter') ?></th>
+                                                        <th><?php _e("Amount", 'flatter') ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr class="border-bottom">
                                                         <td class="font-color-black"><?php echo date('d/m/Y'); ?></td>
-                                                        <td class="font-color-black">Newsfid Premium (12 month Payment) 1 Month for free</td>
+                                                        <td class="font-color-black"><?php _e("Newsfid Premium (12 month Payment) 1 Month for free", 'flatter') ?></td>
                                                         <td class="font-color-black">1</td>
                                                         <td class="font-color-black">$4.99</td>
                                                         <td class="font-color-black">4.99$</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-color-black"><h1 class="bold">TOTAL</h1></td>
+                                                        <td class="font-color-black"><h1 class="bold"><?php _e("TOTAL", 'flatter') ?></h1></td>
                                                         <td class="font-color-black"></td>
                                                         <td class="font-color-black"></td>
                                                         <td class="font-color-black"></td>
@@ -96,7 +96,7 @@ require 'functions.php';
                                             <input type="radio" class="payment-option" name="payment" value="paypal">
                                         </div>
                                         <div class="col-md-6 padding-3per bg-green-light">
-                                            You will not be charged until the end of your trial period dated <?php echo date('d/m/Y', strtotime("+1 months", strtotime("NOW"))); ?>, You could cancel your membership online at any time.
+                                            <?php _e("You will not be charged until the end of your trial period dated", 'flatter') ?> <?php echo date('d/m/Y', strtotime("+1 months", strtotime("NOW"))); ?>, <?php _e("You could cancel your membership online at any time.", 'flatter') ?>
                                         </div>
 
                                     </div>
@@ -114,26 +114,26 @@ require 'functions.php';
                                         <div class="col-md-12">                                           
                                             <div class="margin-top-20">
                                                 <div class="col-md-5 col-sm-5">
-                                                    Expiration date
+                                                    <?php _e("Expiration date", 'flatter') ?>
                                                 </div>
                                                 <div class="col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2">
-                                                    CVV<span class="circle-border"> ?</span>
+                                                    <?php _e("CVV", 'flatter') ?><span class="circle-border"> ?</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
                                             <div class="col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="MM" required class="expiry_month">
+                                                <input type="text" placeholder="<?php _e("MM", 'flatter') ?>" required class="expiry_month">
 
                                             </div>
                                             <div class="col-md-1 col-sm-1">
                                                 /
                                             </div>
                                             <div class="col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="YY" required class="expiry_year">
+                                                <input type="text" placeholder="<?php _e("YY", 'flatter') ?>" required class="expiry_year">
                                             </div>
                                             <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="Code" required class="card_cvv_code">
+                                                <input type="text" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
@@ -141,19 +141,19 @@ require 'functions.php';
                                             <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Address">
+                                            <input type="text" placeholder="<?php _e("Address", 'flatter') ?>">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border" >
                                             <input type="text">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Zip code">
+                                            <input type="text" placeholder="<?php _e("Zip code", 'flatter') ?>">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="Ville">
+                                            <input type="text" placeholder="<?php _e("City", 'flatter') ?>">
                                         </div>
                                         <div class="col-md-12 margin-top-20 grey-border">
-                                            <input type="text" placeholder="CEDEX">
+                                            <input type="text" placeholder="<?php _e("CEDEX", 'flatter') ?>">
                                         </div>
                                     </div>
                                     <div class="center-contant vertical-row none" id="paypal">
@@ -161,7 +161,7 @@ require 'functions.php';
                                             <img class="img img-responsive" src="images/paypal-iphone.png">
                                         </div>
                                         <div class="col-md-8">
-                                            You will be redirected to PayPal 
+                                            <?php _e("You will be redirected to PayPal ", 'flatter') ?>
                                         </div>
                                     </div>
                                 </div>
@@ -174,21 +174,22 @@ require 'functions.php';
                                                 <label class="onoffswitch-label" for="accept"></label>
                                             </div>
                                         </div>
-                                        <div class="col-md-8"><h4 class=" bold"> I have read and accepted the Terms & Conditions</h4> </div>
+                                        <div class="col-md-8"><h4 class=" bold"><?php _e("I have read and accepted the Terms & Conditions", 'flatter') ?> </h4> </div>
                                     </div>
                                     <div class="col-md-offset-2 col-md-10 theme-modal-header">
 
                                         <div class="col-md-9">
-                                            I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use
+                                            <?php _e(" I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use", 'flatter') ?>
+                                           
                                         </div>
-                                        <div class="col-md-9 margin-top-20">You have an option to terminate your subscription online at any time </div>
+                                        <div class="col-md-9 margin-top-20"><?php _e("You have an option to terminate your subscription online at any time ", 'flatter') ?></div>
                                         <div class="col-md-9 margin-top-20">
-                                            <button type="submit" class="btn btn-lg button-orng btn-radius-0 payment_btn">Activate my 30 days trials</button>
+                                            <button type="submit" class="btn btn-lg button-orng btn-radius-0 payment_btn"><?php _e("Activate my 30 days trials", 'flatter') ?></button>
                                             <div class="col-md-10">
-                                                <span class="error-term red">Please Accept Term & Condition</span>
+                                                <span class="error-term red"><?php _e("Please Accept Term & Condition", 'flatter') ?></span>
                                             </div>
                                             <div class="payment_result"></div>
-                                            <div class="margin-top-20">* Free offer valid only once</div>
+                                            <div class="margin-top-20">* <?php _e("Free offer valid only once", 'flatter') ?></div>
                                         </div>
 
                                     </div>
@@ -205,7 +206,7 @@ require 'functions.php';
     <div class="contant bg-white col-md-12">
 
         <div class="col-md-12 text-center padding-top-4per ">
-            <h4 class="bold-600 margin-0 font-color-black">Start newsfid pro and get 30 days trial. You can stop it when you want.</h4>
+            <h4 class="bold-600 margin-0 font-color-black"><?php _e("Start newsfid pro and get 30 days trial. You can stop it when you want.", 'flatter') ?></h4>
         </div>
         <div class="sub-info col-md-12   margin-top-20">
             <div class="col-md-5">
@@ -215,20 +216,20 @@ require 'functions.php';
             <div class="col-md-7">
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="font-color-black">Options</div>
+                        <div class="font-color-black"><?php _e("Options", 'flatter') ?></div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3">
-                        <div class="font-color-black bold">Free</div>
+                        <div class="font-color-black bold"><?php _e("Free", 'flatter') ?></div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3">
-                        <div class="font-color-black bold">Premium</div>
+                        <div class="font-color-black bold"><?php _e("Premium", 'flatter') ?></div>
                     </div>
                 </div>
                 <!--------------Table title End----------------->
                 <!------------------Table row Start-------1--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Post an audio track</div>
+                        <div class="orange bold padding-top-4per"><?php _e("Post an audio track", 'flatter') ?></div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="white-round margin-left-15"></div>
@@ -241,7 +242,7 @@ require 'functions.php';
                 <!------------------Table row Start-------2--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Post GIF image</div>
+                        <div class="orange bold padding-top-4per"><?php _e("Post GIF image", 'flatter') ?></div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="green-round margin-left-15"></div>
@@ -267,7 +268,7 @@ require 'functions.php';
                 <!------------------Table row Start-------4--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Post video link ( youtube / Vimeo / Dailymotion)</div>
+                        <div class="orange bold padding-top-4per"><?php _e("Post video link ( youtube / Vimeo / Dailymotion)", 'flatter') ?></div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="green-round margin-left-15"></div>
@@ -280,7 +281,7 @@ require 'functions.php';
                 <!------------------Table row Start-------5--------->
                 <div class="col-md-12 border-bottom  vertical-row">
                     <div class="col-md-8 col-sm-8 col-xs-6">
-                        <div class="orange bold padding-top-4per">Get a professional logo to make difference with users.</div>
+                        <div class="orange bold padding-top-4per"><?php _e("Get a professional logo to make difference with users.", 'flatter') ?></div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
                         <div class="white-round margin-left-15"></div>
@@ -367,7 +368,7 @@ function payment_script() {
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {
                                 $('.payment_result').empty().addClass('error').removeClass('success');
-                                $('.payment_result').text('Payment not added successfully');
+                                $('.payment_result').text(<?php _e("Payment not added successfully", 'flatter') ?>);
                                 $('.payment_result').text(data);
                             }
                         }

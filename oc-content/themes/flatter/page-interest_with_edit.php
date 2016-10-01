@@ -27,7 +27,7 @@ osc_current_web_theme_path('header.php');
             header('Location: ' . osc_static_page_url());
             die;
         else:
-            osc_add_flash_error_message(_m('You must select at least one theme'));
+            osc_add_flash_error_message(_e("You must select at least one theme", 'flatter'));
             header("Location: " . $_SERVER['REQUEST_URI']);
         endif;
     endif;
@@ -39,15 +39,16 @@ osc_current_web_theme_path('header.php');
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="titlebox background-white padding-10">
-                            <h2>Centre d'intérêt</h2>
+                            <h2><?php _e("Center of interest", 'flatter') ?></h2>
                             <h1>
-                                Choisissez un ou plusieurs themes
+                                <?php _e("Choose one or more themes", 'flatter') ?>
                             </h1>
                             <span>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus.
+                                <?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo posuere auctor and, diam ultrices libero enim ut erat blandit ipsum in orci. Nulla justo ac leo elementum luctus not faucibus vehicula sapien.", 'flatter') ?>
                                 <br/>
+                                <?php _e("In viverra arcu laoreet vitae iaculis. Proin erat justo, molestie sed dictum id, commodo non erat.", 'flatter') ?>
                                 <br/>
-                                In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat.
+
                             </span>
                         </div>
 
@@ -55,7 +56,7 @@ osc_current_web_theme_path('header.php');
 
                         <div class="col-md-12 padding-10 background-white">
                             <div class="pull-right">
-                                <input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="Poursuivre" />
+                                <input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="<?php _e("Continue", 'flatter') ?>" />
                             </div>
                         </div>
 
@@ -137,7 +138,7 @@ osc_current_web_theme_path('header.php');
                     if (checked_cat.length >= 1) {
                         $('.user_theme_form').submit();
                     } else {
-                        alert('Please select at least one theme');
+                        alert(<?php _e("Please select at least one theme", 'flatter') ?>);
                         e.preventDefault();
                     }
                 });

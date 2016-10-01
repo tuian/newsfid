@@ -31,24 +31,24 @@ $user_desc = $user_result->row();
         <div class="col-md-offset-1 col-md-9 main-contant margin-top-20 border-box bg-white padding-0">
             <div class="col-md-12 padding-0">      
                 <ul class="nav nav-tabs settings-li">
-                    <span class="set bold font-30px font-color-black">Settings</span>
-                    <li ><a data-toggle="tab" href="#securite">Security</a></li>
-                    <li ><a data-toggle="tab" href="#social">Social</a></li>
-                    <li class="active" ><a data-toggle="tab" href="#general">General </a></li>
+                    <span class="set bold font-30px font-color-black"><?php _e("Settings", 'flatter') ?></span>
+                    <li ><a data-toggle="tab" href="#securite"><?php _e("Security", 'flatter') ?></a></li>
+                    <li ><a data-toggle="tab" href="#social"><?php _e("Social", 'flatter') ?></a></li>
+                    <li class="active" ><a data-toggle="tab" href="#general"><?php _e("General", 'flatter') ?> </a></li>
                 </ul>
             </div>
             <div class="tab-content">
                 <div id="general" class="tab-pane fade in active">
                     <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange border-bottom-gray padding-bottom-10">
                         <div class='col-md-3'>
-                            <h3 class="bold blue_text">General </h3>
+                            <h3 class="bold blue_text"><?php _e("General", 'flatter') ?> </h3>
                         </div>
 
                     </div>
                     <div class="col-md-12 padding-0">
                         <div class="row user_info_row success-border margin-0">
                             <div class="col-md-4 col-sm-4">
-                                <span class="user_info_header">About me </span>
+                                <span class="user_info_header"><?php _e("About me", 'flatter') ?> </span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_info">
                                 <span class="user_info_text info_text" data_text="<?php echo $user_desc['s_info']; ?>">
@@ -56,7 +56,7 @@ $user_desc = $user_result->row();
                                 </span>
 
                                 <span class="edit_user_detail edit-color-blue pointer user_info_edit">
-                                    <i class="fa fa-pencil-square-o"></i> Edit
+                                    <i class="fa fa-pencil-square-o"></i><?php _e("Edit", 'flatter') ?> 
                                 </span>
 
                             </div>
@@ -64,7 +64,7 @@ $user_desc = $user_result->row();
 
                         <div class="row user_info_row  margin-0">
                             <div class="col-md-4 col-sm-4">
-                                <span class="user_info_header">Type of account</span>
+                                <span class="user_info_header"><?php _e("Type of account", 'flatter') ?></span>
                             </div>
                             <div class="col-md-8 col-sm-8">
                                 <span class="user_type_text info_text" data_role_id="<?php echo $user_info['role_id'] ?>">
@@ -81,7 +81,7 @@ $user_desc = $user_result->row();
                                 </span>
 
                                 <span class="edit_user_detail edit-color-blue pointer user_type_edit">
-                                    <i class="fa fa-pencil-square-o"></i> Edit
+                                    <i class="fa fa-pencil-square-o"></i><?php _e("Edit", 'flatter') ?> 
                                 </span>
 
                             </div>
@@ -89,7 +89,7 @@ $user_desc = $user_result->row();
 
                         <div class="row user_info_row  margin-0">
                             <div class="col-md-4 col-sm-4">
-                                <span class="user_info_header">Website</span>
+                                <span class="user_info_header"><?php _e("Website", 'flatter') ?></span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_website">
                                 <span class="user_website_text info_text" data_text="<?php echo $user_info['s_website']; ?>">
@@ -97,7 +97,7 @@ $user_desc = $user_result->row();
                                 </span>        
 
                                 <span class="edit_user_detail edit-color-blue pointer user_website_edit">
-                                    <i class="fa fa-pencil-square-o"></i> Edit
+                                    <i class="fa fa-pencil-square-o"></i> <?php _e("Edit", 'flatter') ?>
                                 </span>
 
                             </div>
@@ -105,7 +105,7 @@ $user_desc = $user_result->row();
 
                         <div class="row user_info_row  margin-0">
                             <div class="col-md-4 col-sm-4">
-                                <span class="user_info_header">Localisation</span>
+                                <span class="user_info_header"><?php _e("Localisation", 'flatter') ?></span>
                             </div>
                             <div class="col-md-8 col-sm-8 user_website">
                                 <span class="user_localisation_text info_text" data_text="<?php echo $user_info['s_city'] . " - " . $user_info['s_country']; ?>">
@@ -114,7 +114,7 @@ $user_desc = $user_result->row();
                                 </span>  
 
                                 <span class="edit_user_detail edit-color-blue pointer user_localisation_edit">
-                                    <i class="fa fa-pencil-square-o"></i> Edit
+                                    <i class="fa fa-pencil-square-o"></i><?php _e("Edit", 'flatter') ?> 
                                 </span>
                             </div>
                         </div>
@@ -127,15 +127,15 @@ $user_desc = $user_result->row();
                     <div class="row margin-0">
                         <div class="col-md-12 vertical-row padding-bottom-20 border-left-orange border-bottom-gray">
                             <div class='col-md-3'>
-                                <h3 class="bold blue_text">Social</h3>
+                                <h3 class="bold blue_text"><?php _e("Social", 'flatter') ?></h3>
                             </div>
                             <div id="edit-social" class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i><?php _e("Edit", 'flatter') ?>  
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                             <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                Facebook
+                                <?php _e("Facebook", 'flatter') ?>
                             </div>
                             <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                 <input type="text" id="facebook" name="facebook" class="facebook disabled" value="<?php echo $user_info['facebook']; ?>" disabled>
@@ -143,7 +143,7 @@ $user_desc = $user_result->row();
                         </div>
                         <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                             <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                Twitter
+                                <?php _e("Twitter", 'flatter') ?>
                             </div>
                             <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                 <input type="text" id="twitter" name="twitter" class="twitter disabled" value="<?php echo $user_info['twitter']; ?>" disabled>
@@ -155,7 +155,7 @@ $user_desc = $user_result->row();
                         </div>
                         <div class="col-md-offset-5 col-md-7 padding-top-4per">
                             <div class="col-md-4 none" id="save-social">
-                                <button type="submit" id="change-social" class="btn btn-lg button-blue-box">Save</button>
+                                <button type="submit" id="change-social" class="btn btn-lg button-blue-box"><?php _e("Save", 'flatter') ?></button>
                             </div>
                         </div>
                     </div>
@@ -163,28 +163,28 @@ $user_desc = $user_result->row();
                 <div id="securite" class="tab-pane fade in">
                     <div class="col-md-12 menu-tabs padding-0 ">      
                         <ul class="nav nav-tabs padding-top-4per padding-bottom-20">
-                            <li class="col-md-offset-1"><a href="#compte">Account</a></li>
-                            <li><a href="#contenu">Content</a></li>
-                            <li><a href="#moyen_de_paiement">Mean of payment</a></li>
-                            <li><a href="#compte_bloques">Bloqued account</a></li>
-                            <li><a href="#verouillage">Locking</a></li>
-                            <li><a href="#audio">Audio</a></li>
+                            <li class="col-md-offset-1"><a href="#compte"><?php _e("Account", 'flatter') ?></a></li>
+                            <li><a href="#contenu"><?php _e("Content", 'flatter') ?></a></li>
+                            <li><a href="#moyen_de_paiement"><?php _e("Mean of payment", 'flatter') ?></a></li>
+                            <li><a href="#compte_bloques"><?php _e("Bloqued account", 'flatter') ?></a></li>
+                            <li><a href="#verouillage"><?php _e("Locking", 'flatter') ?></a></li>
+                            <li><a href="#audio"><?php _e("Audio", 'flatter') ?></a></li>
                         </ul>
                     </div>
                     <div id="compte">
                         <div class="col-md-12 vertical-row padding-bottom-10 border-left-orange">
                             <div class='col-md-3'>
-                                <h3 class="bold blue_text">Acount</h3>
+                                <h3 class="bold blue_text"><?php _e("Acount", 'flatter') ?></h3>
                             </div>
                             <div id="edit" class="col-md-offset-7 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i><?php _e("Edit", 'flatter') ?>  
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12"></div>
                         <div class="row margin-0">
                             <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Username
+                                    <?php _e("Username", 'flatter') ?>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row user">
 
@@ -197,7 +197,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Email address
+                                    <?php _e("Email address", 'flatter') ?>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <input type="text" name="up_email" class="user_email_textbox disabled" value="<?php echo $user_info['s_email']; ?>" disabled>
@@ -208,7 +208,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-xs-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Phone number
+                                    <?php _e("Phone number", 'flatter') ?>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
                                     <div class="input-group code-box">
@@ -255,7 +255,7 @@ $user_desc = $user_result->row();
                         <div class="row margin-0">
                             <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    User type
+                                    <?php _e("User type", 'flatter') ?>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <select name="user_role_selector" id="user_role_selector" class="user_type_textbox disabled" disabled>
@@ -273,7 +273,7 @@ $user_desc = $user_result->row();
                         <div class="row margin-0">
                             <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Current Password<span class="red star-alert">*</span>
+                                    <?php _e("Current Password", 'flatter') ?><span class="red star-alert">*</span>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <input type="password" id="pass" name="pass" class="pass disabled" disabled>
@@ -281,7 +281,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    New Password<span class="red star-alert">*</span>
+                                    <?php _e("New Password", 'flatter') ?><span class="red star-alert">*</span>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <input type="password" id="npass" name="npass" class="npass disabled" disabled>
@@ -289,7 +289,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-12 col-sm-12 padding-top-4per vertical-row">
                                 <div class="col-md-3 col-sm-3 col-xs-5 text-right">
-                                    Confirm Password<span class="red star-alert">*</span>
+                                    <?php _e("Confirm Password", 'flatter') ?><span class="red star-alert">*</span>
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border vertical-row">
                                     <input type="password" id="cpass" name="cpass" class="cpass disabled" disabled>
@@ -300,7 +300,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-offset-5 col-md-7 padding-top-4per">
                                 <div class="col-md-4 none" id="save">
-                                    <button type="submit" id="change-pass" class="btn btn-lg button-blue-box">Save</button>
+                                    <button type="submit" id="change-pass" class="btn btn-lg button-blue-box"><?php _e("Save", 'flatter') ?></button>
                                 </div>
                             </div>
                         </div>
@@ -310,16 +310,16 @@ $user_desc = $user_result->row();
                     <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row padding-bottom-10">
                             <div class='col-md-3'>
-                                <h3 class="bold blue_text">Content</h3>
+                                <h3 class="bold blue_text"><?php _e("Content", 'flatter') ?></h3>
                             </div>
                         </div>
                         <div class="border-bottom-gray  col-md-12"></div>
                         <div class="col-md-offset-1 col-md-12 padding-top-4per vertical-row">
                             <div class="col-md-2 font-color-black">
-                                Medias
+                                <?php _e("Medias", 'flatter') ?>
                             </div>
                             <div class="col-md-7 font-color-black">
-                                Everyone can see what I post
+                                <?php _e("Everyone can see what I post", 'flatter') ?>
                             </div>
                         </div>
                         <div class="col-md-offset-1 col-md-12 padding-top-4per vertical-row">
@@ -332,7 +332,7 @@ $user_desc = $user_result->row();
                             <div class="col-md-7">
                                 <div class="padding-left-10 font-light-gray">
 
-                                    Otherwise only followers can see my content
+                                    <?php _e("Otherwise only followers can see my content", 'flatter') ?>
 
                                 </div>
                             </div>
@@ -342,10 +342,10 @@ $user_desc = $user_result->row();
                     <div id="moyen_de_paiement" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h3 class="bold blue_text">Mean of payment</h3>
+                                <h3 class="bold blue_text"><?php _e("Mean of payment", 'flatter') ?></h3>
                             </div>
                             <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i><?php _e("Edit", 'flatter') ?>  
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12 padding-top-10"></div>
@@ -355,7 +355,7 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-credit-card fa-2x"></i>
                                 </div>
                                 <div class="col-md-offset-1 col-md-9">
-                                    Add a debit / Credit card
+                                    <?php _e("Add a debit / Credit card", 'flatter') ?>
                                 </div>
 
                             </div>
@@ -364,7 +364,7 @@ $user_desc = $user_result->row();
                                     <i class="fa fa-credit-card fa-2x"></i>
                                 </div>
                                 <div class="col-md-offset-1 col-md-9 font-light-gray">
-                                    Change my payment card
+                                    <?php _e("Change my payment card", 'flatter') ?>
                                 </div>
                             </div>
                         </div>
@@ -372,35 +372,35 @@ $user_desc = $user_result->row();
                         <div class="col-md-12 padding-top-4per">
                             <div class="col-md-offset-1 col-md-10" id="payment-card">
                                 <div class="col-md-12">
-                                    <div class="blue_text bold">Mean of payment </div>
+                                    <div class="blue_text bold"><?php _e("Mean of payment", 'flatter') ?> </div>
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="Card number" required class="card_number">
+                                    <input type="text" placeholder="<?php _e("Card number", 'flatter') ?>" required class="card_number">
                                     <span class="card-icon"></span>
                                 </div>
                                 <div class="col-md-12">                                           
                                     <div class="margin-top-20">
                                         <div class="col-md-5 col-sm-5">
-                                            Expiration date
+                                            <?php _e("Expiration date", 'flatter') ?>
                                         </div>
                                         <div class="col-md-offset-4 col-md-3 col-sm-offset-5 col-sm-2">
-                                            CVV<span class="circle-border">?</span>
+                                            <?php _e("CVV", 'flatter') ?><span class="circle-border">?</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
                                     <div class="col-md-3 col-sm-3 grey-border">
-                                        <input type="text" placeholder="MM" required class="expiry_month">
+                                        <input type="text" placeholder="<?php _e("MM", 'flatter') ?>" required class="expiry_month">
 
                                     </div>
                                     <div class="col-md-1 col-sm-1">
                                         /
                                     </div>
                                     <div class="col-md-3 col-sm-3 grey-border">
-                                        <input type="text" placeholder="AA" required class="expiry_year">
+                                        <input type="text" placeholder="<?php _e("YY", 'flatter') ?>" required class="expiry_year">
                                     </div>
                                     <div class="col-md-offset-1 col-md-4 col-sm-3 grey-border">
-                                        <input type="text" placeholder="Code" required class="card_cvv_code">
+                                        <input type="text" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -408,19 +408,19 @@ $user_desc = $user_result->row();
                                     <?php UserForm::country_select(osc_get_countries()); ?>
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder=" Address ">
+                                    <input type="text" placeholder="<?php _e("Address", 'flatter') ?>  ">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border" >
                                     <input type="text">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder=" Zip code/ Post code">
+                                    <input type="text" placeholder="<?php _e("Zip code/ Post code", 'flatter') ?> ">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="City">
+                                    <input type="text" placeholder="<?php _e("City", 'flatter') ?>">
                                 </div>
                                 <div class="col-md-12 margin-top-20 grey-border">
-                                    <input type="text" placeholder="CEDEX">
+                                    <input type="text" placeholder="<?php _e("CEDEX", 'flatter') ?>">
                                 </div>
                             </div>
 
@@ -428,7 +428,8 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
                         <div class="col-md-12 margin-top-20">
                             <div class="col-md-offset-2 col-md-8">
-                                By continuing you add this payment method to your account and accept the  <span class="blue_text"> generals temrs of use </span> and <span class="blue_text"> privacy </span> of  Newsfid services.  
+                                <?php _e("By continuing you add this payment method to your account and accept the", 'flatter') ?>
+                                  <span class="blue_text"><?php _e("generals temrs of use", 'flatter') ?>  </span> <?php _e("and", 'flatter') ?> <span class="blue_text"><?php _e("privacy", 'flatter') ?>  </span> <?php _e("of  Newsfid services. ", 'flatter') ?> 
                             </div>
                             <div class="col-md-offset-2 col-md-8 padding-top-4per">
                                 <div class="onoffswitch">
@@ -452,7 +453,7 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
                         <div class="col-md-12 padding-top-4per">
                             <div class="col-md-offset-3">
-                                <button type="submit" class="btn btn-lg button-blue"> Save </button>
+                                <button type="submit" class="btn btn-lg button-blue"><?php _e("Save", 'flatter') ?>  </button>
                             </div>
                         </div>
                     </div>
@@ -460,10 +461,10 @@ $user_desc = $user_result->row();
                     <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h3 class="bold blue_text"> Bloqued account</h3>
+                                <h3 class="bold blue_text"> <?php _e("Blocked account", 'flatter') ?></h3>
                             </div>
                             <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i><?php _e("Edit", 'flatter') ?>  
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12"></div>
@@ -481,7 +482,7 @@ $user_desc = $user_result->row();
                                 <h3 class="font-color-black bold"> Alex Crawford Sky</h3>
                             </div>
                             <div class="col-md-offset-2 col-md-3">
-                                <button class="btn btn-disabled">Bloqued</button>
+                                <button class="btn btn-disabled"><?php _e("Blocked", 'flatter') ?></button>
                             </div>
                         </div>
                     </div>
@@ -489,7 +490,7 @@ $user_desc = $user_result->row();
                     <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h3 class="bold blue_text"> Locking </h3>
+                                <h3 class="bold blue_text"><?php _e("Locking", 'flatter') ?>  </h3>
                             </div>
                         </div>
                         <div class="col-md-offset-1 col-md-10 font-light-gray padding-3per">
@@ -498,7 +499,7 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12 padding-top-8per"></div>
                         <div class="col-md-12 padding-3per">
                             <div class="col-md-offset-1 col-md-8 padding-3per bold">
-                                Lock my settings now
+                                <?php _e("Lock my settings now", 'flatter') ?>
 
                             </div>
                             <div class="col-md-2 padding-3per">
@@ -512,7 +513,7 @@ $user_desc = $user_result->row();
                         <div class="col-md-12">
                             <div class="col-md-12">
                                 <div class="padding-3per">
-                                    Confirm your password
+                                    <?php _e("Confirm your password", 'flatter') ?>
                                 </div>
                             </div>
                             <div class="col-md-8 padding-left-8per">
@@ -521,7 +522,7 @@ $user_desc = $user_result->row();
                                 </div>
                             </div>
                             <div class="col-md-4 padding-3per">
-                                <button type="submit" class="btn btn-lg button-blue-box">Save</button>
+                                <button type="submit" class="btn btn-lg button-blue-box"><?php _e("Save", 'flatter') ?></button>
                             </div>
                         </div>
                     </div>
@@ -529,7 +530,7 @@ $user_desc = $user_result->row();
                     <div id="audio" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h3 class="bold blue_text">Audio</h3>
+                                <h3 class="bold blue_text"><?php _e("Audio", 'flatter') ?></h3>
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12"></div>
@@ -541,10 +542,10 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12"></div>
                         <div class="col-md-12">
                             <div class="col-md-3 padding-3per font-color-black">
-                                Privacy
+                                <?php _e("Privacy", 'flatter') ?>
                             </div>
                             <div class="col-md-9 padding-3per padding-left-7per font-color-black">
-                                Everyone can see
+                                <?php _e("Everyone can see", 'flatter') ?>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -563,7 +564,7 @@ $user_desc = $user_result->row();
                     <div id="delete-account" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
-                                <h3 class="bold blue_text">Delete Account</h3>
+                                <h3 class="bold blue_text"><?php _e("Delete Account", 'flatter') ?></h3>
                             </div>
                         </div>
                         <div class="col-md-12 border-bottom-gray"></div>
@@ -572,7 +573,7 @@ $user_desc = $user_result->row();
                                 <i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i>
                             </div>
                             <div class="col-md-7">
-                                <h3 class="bold"> Do you wanna leave us already?  </h3>
+                                <h3 class="bold"> <?php _e("Do you wanna leave us already?", 'flatter') ?>  </h3>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -582,7 +583,7 @@ $user_desc = $user_result->row();
                         </div>
                         <div class="col-md-12">
                             <div class="col-md-offset-3 col-md-8 font-light-gray padding-top-8per padding-bottom-6per">
-                                <button class="en-savoir-plus-button-gry">Delete my account</button>
+                                <button class="en-savoir-plus-button-gry"><?php _e("Delete my account", 'flatter') ?></button>
                             </div>
                         </div>
                     </div>
@@ -896,12 +897,12 @@ function custom_map_script() {
                                 window.location.href = '<?php echo osc_current_web_theme_url() . 'setting.php' ?>'
                             } else {
                                 $('#setting_loader').addClass('hidden');
-                                $('.alert_text').html('password is not correct');
+                                $('.alert_text').html('<?php _e("password is not correct", 'flatter') ?>');
                             }
                         }
                     });
                 } else {
-                    $('.alert_text').html('password does not match');
+                    $('.alert_text').html(<?php _e("password does not match", 'flatter') ?>);
                 }
             }
             else {

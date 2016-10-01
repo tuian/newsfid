@@ -70,7 +70,7 @@ $c_data = $comments_result->result();
         ?>
         <?php if (count($c_data) > 3): ?>
             <div class="box-body">
-                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter'); ?> <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter'); ?> </span>
                 <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
             </div>
         <?php endif; ?>
@@ -79,7 +79,7 @@ $c_data = $comments_result->result();
         foreach ($c_data as $k => $comment_data):           
             $comment_user = get_user_data($comment_data['fk_i_user_id']);
             if ($k < $total_comment-3 && !$load_more):
-                $load_more = 'load more';
+                $load_more =  _e("load more", 'flatter'); 
                 echo '<div class="load_more">';                            
             endif; ?>
                 <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id']?'border-blue-left':''?>">

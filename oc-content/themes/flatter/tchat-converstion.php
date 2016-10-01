@@ -161,9 +161,9 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                 <span class="dropdown vertical-row pull-right">
                     <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                        <li class="pointer"><a>Block this user</a></li>
-                        <li class="close_chat pointer"><a> Close this chat</a></li>
-                        <li class="pointer"><a>Turn chat off</a></li>
+                        <li class="pointer"><a><?php _e("Block this user", 'flatter') ?></a></li>
+                        <li class="close_chat pointer"><a><?php _e(" Close this chat", 'flatter') ?></a></li>
+                        <li class="pointer"><a><?php _e("Turn chat off", 'flatter') ?></a></li>
                     </ul>
                 </span>
             </div>
@@ -199,7 +199,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
             <!--<div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
             <div class="textarea">
-                <textarea class="msg_textarea" placeholder="Press enter to reply" id="messageBox1"></textarea>
+                <textarea class="msg_textarea" placeholder="<?php _e("Press enter to reply", 'flatter') ?>" id="messageBox1"></textarea>
                 <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
             </div>
         </div>
@@ -371,7 +371,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                 success: function (data) {
                     $('#chat-box').html(data);
                     $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-                    $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>');
+                    $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="<?php _e("Write a reply....", 'flatter') ?>"></textarea>');
                 }
             });
         });

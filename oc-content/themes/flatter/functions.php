@@ -1020,7 +1020,7 @@ osc_add_hook('user_register_completed', 'go_to_theme_select');
 function go_to_theme_select($user) {
     if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
         $conn = getConnection();
-        $conn->osc_dbExec("UPDATE `%st_user` SET `s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
+        $conn->osc_dbExec("UPDATE `%st_user` SET `s_firstname`= '%s',`s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_firstname'], $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
 //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
     Session::newInstance()->_set('user_id', $user);
@@ -1672,7 +1672,7 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     $result = $data->dao->get();
     $item = $result->row();
     if ($share_value == 1 && $user_id != $item['fk_i_user_id']):
-        $message = 'shared your post';
+        $message = _e("shared your post", 'flatter');
         set_user_notification($user_id, $item['fk_i_user_id'], $message, $item_id, $item['pk_i_id']);
     endif;
 }
@@ -1699,14 +1699,14 @@ function user_watchlist_box($user_id, $item_id) {
     $watchlist_class = 'remove_from_watchlist';
     $action = 'remove_watchlist';
 //$fa_class = 'fa fa-user-times';
-    $watchlist_text = 'Remove from watchlist';
+    $watchlist_text = _e("Remove from watchlist", 'flatter'); 
     $user_share = get_user_watchlist_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
         $watchlist_class = 'add_watchlist';
         $action = 'add_watchlist';
 //$fa_class = 'fa fa-user-plus';
-        $watchlist_text = 'Add to watchlist';
+        $watchlist_text = _e("Add to watchlist", 'flatter'); 
     endif;
     ?>
     <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
@@ -1743,7 +1743,7 @@ function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
     $result = $data->dao->get();
     $item = $result->row();
     if ($watchlist_value == 1 && $user_id != $item['fk_i_user_id']):
-        $message = 'added your post to his/her watchlist';
+        $message = _e("added your post to his/her watchlist", 'flatter');
         set_user_notification($user_id, $item['fk_i_user_id'], $message, $item['pk_i_id']);
     endif;
 }
@@ -1819,18 +1819,18 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" style="right: 200px;top: 65px;position: absolute;background-color: grey;color: white;border-radius: 50%;width: 25px;padding-bottom: 3px; padding-left: 1px">&times;</button>
-        <h5><b style="font-weight: 600;margin-left: 8px;">Search Newsfid</b></h5>
-        <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="Start typing...">
+        <h5><b style="font-weight: 600;margin-left: 8px;"><?php _e("Search Newsfid", 'flatter'); ?></b></h5>
+        <input type="text" class="search-modal-textbox search_newsfid_text" value="<?php echo $search_newsfid; ?>" placeholder="<?php _e("Start typing...", 'flatter'); ?>">
     <!--        <h1><b style="font-size: 70px; font-weight: 700;"><?php echo $search_newsfid; ?></b></h1>-->
         <?php if (!$user_search_array): ?>
-            <h5> Your Search did not return any results. Please try again. </h5>
+            <h5><?php _e("Your Search did not return any results. Please try again.", 'flatter'); ?>  </h5>
 
         <?php endif; ?>
     </div>
     <div class="modal-body col-md-offset-2 ">
         <div class="col-md-12">
-            <label  class="col-md-4  search-list">User</label>
-            <label class="col-md-4 search-list">Publication</label>
+            <label  class="col-md-4  search-list"><?php _e("User", 'flatter'); ?></label>
+            <label class="col-md-4 search-list"><?php _e("Publication", 'flatter'); ?></label>
         </div>
         <?php if ($user_search_array): ?>
             <div class="search-height col-md-12 padding-0">
@@ -2194,7 +2194,7 @@ function update_user_circle($logged_in_user_id = NULL, $circle_user_id = NULL, $
         $user_follow_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
     endif;
     if ($circle_value == 1):
-        $message = 'is now following you';
+        $message = _e("is now following you", 'flatter');
         set_user_notification($logged_in_user_id, $circle_user_id, $message);
     endif;
 }

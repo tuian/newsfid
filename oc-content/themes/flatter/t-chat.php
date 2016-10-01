@@ -20,12 +20,12 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     <ul class="nav nav-tabs margin-top-20 nav-font">
                         <li class="col-md-7 pointer active_tab">
                             <div class="msg msg_tab new_message" data-toggle="tab" data-target="#message">
-                                New messages
+                                <?php _e("New messages", 'flatter') ?>
                             </div>
                         </li>
                         <li class="col-md-5 pointer">
                             <div class="msg msg_tab archives text-center" data-toggle="tab" data-target="#archive">
-                                Archives
+                                <?php _e("Archives", 'flatter') ?>
                             </div>
                         </li>
                     </ul>
@@ -36,7 +36,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     ?>
                     <div id="message" class="tab-pane fade in active ">
                         <div class="col-md-12 background-white padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
-                            <input type="text" name="search_name" class="form-control search-tchat-text search_name" placeholder="Search...">
+                            <input type="text" name="search_name" class="form-control search-tchat-text search_name" placeholder="<?php _e("Search...", 'flatter') ?>">
                             <i class="fa fa-search search_icon pointer padding-10"></i>                 
                         </div>
                         <div class="col-md-12 background-white border-box-right t_chat_overflow">                        
@@ -65,8 +65,8 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                         <div class="col-md-5 dropdown"> 
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                                             <ul class="dropdown-menu edit-arrow edit_msg" aria-labelledby="dropdownMenu2">
-                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>
-                                                <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
+                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a><?php _e("Archive", 'flatter') ?></a></li>
+                                                <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a><?php _e("Delete", 'flatter') ?></a></li>                                        
                                             </ul>
                                         </div>
                                     </li>
@@ -81,7 +81,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     ?>
                     <div id="archive" class="tab-pane fade">                        
                         <div class="col-md-12 background-white padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
-                            <input type="text" name="search_name" class="form-control search-tchat-text search_archive" placeholder="Search...">
+                            <input type="text" name="search_name" class="form-control search-tchat-text search_archive" placeholder="<?php _e("Search...", 'flatter') ?>">
                             <i class="fa fa-search search_icon pointer padding-10"></i>                 
                         </div>
                         <div class="col-md-12 background-white border-box-right t_chat_overflow">                        
@@ -110,7 +110,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                                             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
     <!--                                                <li class="archive_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Archive</a></li>-->
-                                                <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a>Delete</a></li>                                        
+                                                <li class="delete_chat pointer" data-id="<?php echo $data['to']; ?>"><a><?php _e("Delete", 'flatter') ?></a></li>                                        
                                             </ul>
                                         </div>
                                     </li>
@@ -181,10 +181,10 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                     </div>
                     <div class="reply">
                         <div class="col-md-12 padding-0 padding-top-13per">
-                            <textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>
+                            <textarea class="t_chat_textarea" placeholder="<?php _e("Write a reply....", 'flatter') ?>"></textarea>
                         </div>
                         <div class="col-md-12 padding-0 padding-bottom-13per padding-top-4per">
-                            <button class="btn btn-default send_msg">Send</button>
+                            <button class="btn btn-default send_msg"><?php _e("Send", 'flatter') ?></button>
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             success: function (data) {
                 $('#chat-box').html(data);
                 $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-                $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="Write a reply...."></textarea>');
+                $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="'<?php _e("Write a reply....", 'flatter') ?>'"></textarea>');
             }
         });
     });

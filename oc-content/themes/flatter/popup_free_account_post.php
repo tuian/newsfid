@@ -60,14 +60,14 @@ require_once 'functions.php';
 
                                 </div>
                                 <div class="col-md-12 vertical-row">
-                                    <h5 class=" margin-0">Vous avez dÃ©jÃ  <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publication </h5>
+                                    <h5 class=" margin-0"><?php _e("You have already", 'flatter') ?>   <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span><?php _e("publication", 'flatter') ?>  </h5>
                                 </div>
 
 
                             </div>
                             <div class="col-md-4 padding-top-4per">
                                 <div class="col-md-offset-4">
-                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> Get more details </a>
+                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> <?php _e("Get more details", 'flatter') ?> </a>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ require_once 'functions.php';
                                         <?php } ?>
                                     </select>
                                 <?php } ?>
-                            </div><span class="error-mcat red">Please select category</span>
+                            </div><span class="error-mcat red"><?php _e("Please select category", 'flatter') ?></span>
                             <div class="category-dropdown left-border width-50 margin-top-10" style="display: block;">
                                 <?php osc_goto_first_category(); ?>
                                 <?php if (osc_count_categories()) { ?>
@@ -109,9 +109,9 @@ require_once 'functions.php';
                                     </select>
                                 <?php } ?>
 
-                            </div><span class="error-scat red">Please select rubrics</span>
+                            </div><span class="error-scat red"><?php _e("Please select rubrics", 'flatter') ?></span>
                             <div class="input-text-area margin-top-10 padding-bottom-20 left-border box-shadow-none width-50">
-                                <input type="text" placeholder="Title" name="p_title" class="p_title"><span class="error-title red">Post Title Required</span>
+                                <input type="text" placeholder="Title" name="p_title" class="p_title"><span class="error-title red"><?php _e("Post Title Required", 'flatter') ?></span>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ require_once 'functions.php';
                                 <img src="<?php echo $img_path; ?>" alt="user" width='40px' >
                             </div>
                             <div class="box-shadow-none width-90 description-box col-md-8 padding-0">
-                                <textarea placeholder="What's on your mind?" name="p_disc" class="p_disc"></textarea><span class="error-desc red">Post Description Required</span>
+                                <textarea placeholder="<?php _e("What's on your mind?", 'flatter') ?>" name="p_disc" class="p_disc"></textarea><span class="error-desc red"><?php _e("Post Description Required", 'flatter') ?></span>
                             </div>
                         </div>
                         <div class="border-bottom col-md-12">                 
@@ -134,7 +134,7 @@ require_once 'functions.php';
                         <div class="center-contant">
                             <div class="col-md-12 padding-10 vertical-row">
                                 <i class="fa fa-picture-o col-md-1" aria-hidden="true" ></i> 
-                                <span class="padding-left-10 col-md-10"> Add media(Image/GIF/Video) </span>
+                                <span class="padding-left-10 col-md-10"><?php _e("Add media(Image/GIF/Video) ", 'flatter') ?> </span>
                                 <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#media"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                             </div>
                             <div id="media" class="collapse">
@@ -142,14 +142,14 @@ require_once 'functions.php';
                                 <div class="padding-top-3per col-md-12">
                                     <div class="col-md-6">
                                         <div class="col-md-12 vertical-row center-contant">
-                                            <div class="col-md-2"> <span class="bold">Image</span>
+                                            <div class="col-md-2"> <span class="bold"><?php _e("Image", 'flatter') ?></span>
                                                 <div class="onoffswitch">
                                                     <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" value="image">
                                                     <label class="onoffswitch-label" for="image"></label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1 ou">ou</div>
-                                            <div class="col-md-2"><span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
+                                            <div class="col-md-1 ou"><?php _e("or", 'flatter') ?></div>
+                                            <div class="col-md-2"><span class="bold"><?php _e("Video", 'flatter') ?></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<?php _e("Liens", 'flatter') ?>)</span>
                                                 <div class="onoffswitch">
                                                     <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="video" id="video" value="video">
                                                     <label class="onoffswitch-label" for="video"></label>
@@ -160,7 +160,7 @@ require_once 'functions.php';
                                             <div class="col-md-offset-1 col-md-4">
                                                 <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                 <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
-                                                    <input type="file" name="post_media" accept="image/*"  onchange="showimage(this)" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                    <input type="file" name="post_media" accept="image/*"  onchange="showimage(this)" id="post_media" class="post_media" placeholder="<?php _e("Add your embedding code here", 'flatter') ?>">
                                                     <img id="thumbnil" src="" alt="image"/>
                                                 </div>
                                             </div>
@@ -168,14 +168,15 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6  text-bg-color">
                                         <div class="bold padding-10">
-                                            You can not choose both at the same time
-                                            you can publish  image or a video link.
+                                            <?php _e("You can not choose both at the same time
+                                            you can publish  image or a video link.", 'flatter') ?>
+                                            
                                         </div>
                                     </div>
                                 </div> 
                                 <div class=" col-md-12 border-bottom">
                                     <div class="col-md-6">
-                                        <span class="bold">GIF</span>
+                                        <span class="bold"><?php _e("GIF", 'flatter') ?></span>
                                         <div class="onoffswitch margin-top-20">
                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif" value="gif">
                                             <label class="onoffswitch-label" for="gif"></label>
@@ -183,30 +184,30 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6  text-bg-color">
                                         <div class="bold padding-10">
-                                            The image begins to automatically animate when the user will scroll.
+                                            <?php _e("The image begins to automatically animate when the user will scroll.", 'flatter') ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class=" col-md-12 border-bottom">
                                     <div class="col-md-6">
-                                        <span class="bold">Music</span>
+                                        <span class="bold"><?php _e("Music", 'flatter') ?></span>
                                         <div class="onoffswitch margin-top-20">
                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" value="music">
                                             <label class="onoffswitch-label" for="music"></label>
                                         </div>
                                         <div class="mp3-max">
-                                            <span class="">(MP3 10.MO maximum) </span>
+                                            <span class=""><?php _e("(MP3 10.MO maximum)", 'flatter') ?> </span>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-bg-color">
                                         <div class="bold padding-10">
-                                            You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.
+                                            <?php _e("You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.", 'flatter') ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class=" col-md-12">
                                     <div class="col-md-6">
-                                        <span class="bold">Podcast</span>
+                                        <span class="bold"><?php _e("Podcast", 'flatter') ?></span>
                                         <div class="onoffswitch margin-top-20">
                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" value="podcast">
                                             <label class="onoffswitch-label" for="podcast"></label>
@@ -214,7 +215,7 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6 text-bg-color">
                                         <div class="bold padding-10">
-                                            Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
+                                           <?php _e(" Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.", 'flatter') ?>
 
                                         </div>
                                     </div>
@@ -228,7 +229,7 @@ require_once 'functions.php';
                         <div class="center-contant padding-bottom-20">    
                             <div class="col-md-12 padding-10 vertical-row">
                                 <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
-                                <span class="padding-left-10 col-md-10"> Add location(Country/state/region/City/place) </span>
+                                <span class="padding-left-10 col-md-10"> <?php _e("Add location(Country/state/region/City/place)", 'flatter') ?>  </span>
                                 <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#location"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                             </div>
                             <div id="location" class="collapse padding-bottom-20">  
@@ -241,7 +242,7 @@ require_once 'functions.php';
                                             <img class="vertical-top  img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/info.png' ?>" width="50px" height="45px" style="margin-left: 10px; margin-top:10px;">
                                         </div>
                                         <div class="col-md-10 padding-10">
-                                            This step is not mandatory but nevertheless important to improve your publication in our search engine.
+                                            <?php _e("This step is not mandatory but nevertheless important to improve your publication in our search engine.", 'flatter') ?>
                                         </div>
                                     </div>
                                     <div class="border-bottom col-md-12">                 
@@ -253,18 +254,18 @@ require_once 'functions.php';
                                         <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                                     </div>
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="Region">
+                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="<?php _e("Region", 'flatter') ?>">
                                         <input type="hidden" id="s_region_id" name="s_region_id">
                                     </div>
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City">
+                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="<?php _e("City", 'flatter') ?>">
                                         <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
                                     </div>
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name">
+                                        <input type="text" placeholder="<?php _e("City Area", 'flatter') ?>" id="s_city_area_name" name="s_city_area_name">
                                     </div>
                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                        <input type="text" name="s_address" id="s_address" placeholder="Address">
+                                        <input type="text" name="s_address" id="s_address" placeholder="<?php _e("Address", 'flatter') ?>">
                                     </div>
                                 </div>                        
                             </div>
@@ -284,17 +285,17 @@ require_once 'functions.php';
                         <div class="vertical-row col-md-offset-1">
                             <div class="en-savoir-plus1 publier1 col-md-3">
                                 <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
-                                    <span class="bold">Publier</span></button>
+                                    <span class="bold"><?php _e("Publier", 'flatter') ?></span></button>
                             </div>
                             <div class="onoffswitch col-md-3">
                                 <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">
                                 <label class="onoffswitch-label" for="publier"></label>
-                            </div>   <span class="">I accept addition requirement</span>                 
+                            </div>   <span class=""><?php _e("I accept addition requirement", 'flatter') ?></span>                 
                             <div class="col-md-2">
-                                <span class="error-term red">Please Accept Term & Condition</span>
+                                <span class="error-term red"><?php _e("Please Accept Term & Condition", 'flatter') ?></span>
                             </div>
                             <div class="col-md-3">
-                                <span class="error-btn red">Please Fill All Required Field</span>
+                                <span class="error-btn red"><?php _e("Please Fill All Required Field", 'flatter') ?></span>
                             </div>
                         </div>
                     </div>

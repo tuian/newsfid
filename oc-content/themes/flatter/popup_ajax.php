@@ -97,9 +97,9 @@ if ($item_id):
                                     <div class="bold"> <?php echo $item_pre_details[0]['s_title']; ?> </div>                                   
                                     <?php $desc = $item_pre_details[0]['s_description']; ?>   
                                     <?php custom_echo($desc, 100); ?> <br/>
-                                    <button class="get_more">Get more details</button>
+                                    <button class="get_more"><?php _e("Get more details", 'flatter') ?></button>
                                 </div>
-                                <div class="col-md-12 padding-0 padding-bottom-10"> Promoted posts </div>
+                                <div class="col-md-12 padding-0 padding-bottom-10"><?php _e("Promoted posts", 'flatter') ?>  </div>
                                 <div class="col-md-12 post_resource" style="display: none">                                                                   
                                     <?php echo $item_pre_details[0]['s_description']; ?> 
                                 </div>
@@ -119,11 +119,11 @@ if ($item_id):
                                 <li>
                                     &nbsp;&nbsp;&nbsp;
                                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo $item_id_pre; ?>"><?php echo get_comment_count($item_id_pre) ?></span>&nbsp;
-                                        <?php echo 'Comments' ?>
+                                        <?php echo _e("Comments", 'flatter')?>
                                     </span></li>
                                 &nbsp;&nbsp;
                                 <?php if (osc_is_web_user_logged_in()): ?>
-                                    <li> <span><?php echo 'Tchat' ?></span>&nbsp;</li>
+                                    <li> <span><?php echo  _e("Tchat", 'flatter') ?></span>&nbsp;</li>
                                 <?php endif; ?>
 
                                 <li class="facebook margin-left-15">
@@ -161,7 +161,7 @@ if ($item_id):
                                     if (count($c_data) > 3):
                                         ?>
                                         <div class="box-body">
-                                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?>  <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter') ?> </span>
                                             <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                                         </div>
                                         <?php
@@ -170,7 +170,7 @@ if ($item_id):
                                     foreach ($c_data as $k => $comment_data):
                                         $comment_user = get_user_data($comment_data['fk_i_user_id']);
                                         if ($k < $total_comment - 3 && !$load_more):
-                                            $load_more = 'load more';
+                                            $load_more = _e("load more", 'flatter');
                                             echo '<div class="load_more">';
                                         endif;
                                         ?>
@@ -228,7 +228,7 @@ if ($item_id):
                                         </div>
                                         <!-- .img-push is used to add margin to elements next to floating images -->
                                         <div class="img-push">
-                                            <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
+                                            <textarea class="form-control input-sm comment_text" placeholder="<?php _e("Press enter to post comment", 'flatter') ?>"></textarea>
                                         </div>
                                     </form>
                                 </div>
@@ -318,11 +318,11 @@ if ($item_id):
                                                         <li>
                                                             &nbsp;&nbsp;&nbsp;
                                                             <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                                                                <?php echo 'Comments' ?>
+                                                                <?php echo  _e("Comments", 'flatter') ?>
                                                             </span></li>
                                                         &nbsp;&nbsp;
                                                         <?php if (osc_is_web_user_logged_in()): ?>
-                                                            <li> <span><?php echo 'Tchat' ?></span>&nbsp;</li>
+                                                            <li> <span><?php  _e("Tchat", 'flatter')?></span>&nbsp;</li>
                                                         <?php endif; ?>
 
                                                         <li class="facebook margin-left-15">
@@ -362,7 +362,7 @@ if ($item_id):
                                                             if (count($c_data) > 3):
                                                                 ?>
                                                                 <div class="box-body">
-                                                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i><?php _e("Display", 'flatter') ?>  <?php echo count($c_data) - 3 ?><?php _e("comments more", 'flatter') ?>  </span>
                                                                     <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                                                                 </div>
                                                                 <?php
@@ -371,7 +371,7 @@ if ($item_id):
                                                             foreach ($c_data as $k => $comment_data):
                                                                 $comment_user = get_user_data($comment_data['fk_i_user_id']);
                                                                 if ($k < $total_comment - 3 && !$load_more):
-                                                                    $load_more = 'load more';
+                                                                    $load_more =  _e("load more", 'flatter');
                                                                     echo '<div class="load_more">';
                                                                 endif;
                                                                 ?>
@@ -429,7 +429,7 @@ if ($item_id):
                                                                 </div>
                                                                 <!-- .img-push is used to add margin to elements next to floating images -->
                                                                 <div class="img-push">
-                                                                    <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
+                                                                    <textarea class="form-control input-sm comment_text" placeholder=" <?php _e("Press enter to post comment", 'flatter') ?>"></textarea>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -468,8 +468,8 @@ if ($item_id):
         $(document).ready(function () {
             var showChar = 200;
             var ellipsestext = "";
-            var moretext = "Read More";
-            var lesstext = "Read Less";
+            var moretext = "<?php _e("Read More", 'flatter') ?>";
+            var lesstext = "<?php _e("Read Less", 'flatter') ?>";
             $('.more').each(function () {
                 var content = $(this).html();
                 if (content.length > showChar) {
@@ -573,7 +573,7 @@ if ($item_id):
                             }
                         });
                     } else {
-                        alert('Please select country first');
+                        alert(<?php _e("Please select country first", 'flatter') ?>);
                     }
                 },
                 afterSelect: function (obj) {
@@ -607,7 +607,7 @@ if ($item_id):
                             }
                         });
                     } else {
-                        alert('Please select region first');
+                        alert(<?php _e("Please select region first", 'flatter') ?>);
                     }
                 },
                 afterSelect: function (obj) {

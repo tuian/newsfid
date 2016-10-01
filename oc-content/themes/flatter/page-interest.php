@@ -26,7 +26,7 @@ osc_current_web_theme_path('header.php');
             header('Location: ' . osc_static_page_url());
             die;
         else:
-            osc_add_flash_error_message(_m('You must select at least one theme'));
+            osc_add_flash_error_message( _e("You must select at least one theme", 'flatter'));
             header("Location: " . $_SERVER['REQUEST_URI']);
         endif;
     endif;
@@ -38,19 +38,19 @@ osc_current_web_theme_path('header.php');
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="titlebox background-white padding-10">
-                            <h2>Center of interest</h2>
+                            <h2><?php _e("Center of interest", 'flatter'); ?></h2>
                             <!--                            <h2>Centre d'intérêt</h2>-->
                             <h1>
-                                Choose topics that you are interested
+                                <?php _e("Choose topics that you are interested", 'flatter'); ?>
                                 <!--Choisissez les sujets qui vous intéresse-->
                             </h1>
                             <span>
                                 <!--Cette étape nous permet simplement de vous faire des suggestions de sujet auquel vous êtes intéressé(e).-->
-                                This step simply allows us to make you suggestions about which you are interested.
+                                <?php _e("This step simply allows us to make you suggestions about which you are interested.", 'flatter'); ?>
                                 <br/>
                                 <br/>
                                 <!--                                Prenez le temps de faire votre choix. Vous pourrai le modifier plus tard. -->
-                                Take time to make your choice. You could change it later.
+                                <?php _e("Take time to make your choice. You could change it later.", 'flatter'); ?>
                             </span>
                         </div>
 
@@ -59,7 +59,7 @@ osc_current_web_theme_path('header.php');
                         <div class="col-md-12 padding-10 background-white">
                             <div class="pull-right">
                                 <!--<input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="Poursuivre" />-->
-                                <input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="Continue" />
+                                <input class="btn btn-blue btn-flat add_theme" type="submit" name="submit" value="<?php _e("Continue", 'flatter'); ?>" />
                             </div>
                         </div>
 
@@ -128,7 +128,7 @@ osc_current_web_theme_path('header.php');
                     if (checked_cat.length >= 1) {
                         $('.user_theme_form').submit();
                     } else {
-                        alert('Please select at least one theme');
+                        alert(<?php _e("Please select at least one theme", 'flatter'); ?>);
                         e.preventDefault();
                     }
                 });

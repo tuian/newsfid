@@ -109,18 +109,18 @@ if ($items):
                             <?php if (osc_logged_user_id() == $user['user_id']): ?>
                                 <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
-                                        <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication-->Delete</a></li>
-                                        <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--> Edit</a></li>
+                                        <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication--><?php _e("Delete", 'flatter'); ?></a></li>
+                                        <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--><?php _e("Edit", 'flatter'); ?> </a></li>
                                         <?php
                                         $items = get_item_premium();
                                         if (!in_array($item_id, $items)):
                                             $pack = get_user_pack_details(osc_logged_user_id());
                                             if ($pack['remaining_post'] < 0):
                                                 ?>
-                                                <li class="premium" data-toggle="modal" data-target="#marketing"><a> Promote Now</a></li>
+                                                <li class="premium" data-toggle="modal" data-target="#marketing"><a><?php _e("Promote Now", 'flatter'); ?> </a></li>
 
                                             <?php else: ?>
-                                                <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> Promote Now</a></li>
+                                                <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"><?php _e("Promote Now", 'flatter'); ?> </a></li>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <!--                                    <li><a></a></li>
@@ -138,7 +138,7 @@ if ($items):
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <div class="modal-header">                                            
-                                        <div class="bold blue_text center-contant">Newsfid Marketing</div>
+                                        <div class="bold blue_text center-contant"><?php _e("Newsfid Marketing", 'flatter'); ?></div>
                                     </div>
                                     <div class="modal-body padding-bottom-10">
                                         <div class="center-contant">
@@ -147,21 +147,23 @@ if ($items):
                                             if ($pack['remaining_post'] > 0):
                                                 ?>
                                                 <div class="premium-success">
-                                                    <h4><span  class="bold"> You've done it great</span></h4>
+                                                    <h4><span  class="bold"><?php _e("You've done it great", 'flatter'); ?> </span></h4>
                                                     <div class="col-md-10 padding-0 padding-bottom-6per">
-                                                        We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours 
+                                                        <?php _e("We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours ", 'flatter'); ?>                                                        
                                                     </div>
                                                 </div>
                                             <?php else : ?>
                                                 <div class="premium-fail">
                                                     <div class="col-md-10 padding-0 padding-bottom-10">
-                                                        We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.
+                                                        <?php _e("We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.", 'flatter'); ?>                                                        
                                                     </div>
                                                     <div class="col-md-10 padding-0 padding-bottom-10">
-                                                        if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.
+                                                        <?php _e("if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.", 'flatter'); ?>
+                                                        
                                                     </div>
                                                     <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
-                                                        You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.
+                                                        <?php _e("You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.", 'flatter'); ?>
+                                                        
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
@@ -173,11 +175,11 @@ if ($items):
                                             $pack = get_user_pack_details(osc_logged_user_id());
                                             if ($pack['remaining_post'] > 0):
                                                 ?>
-                                                <a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>"><button class="btn margin-right-10 btn-info pull-left button-box bold">Thanks</button></a>
+                                                <a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>"><button class="btn margin-right-10 btn-info pull-left button-box bold"><?php _e("Thanks", 'flatter'); ?></button></a>
                                             <?php else : ?>
-                                                <button class="btn btn-info pull-left button-box bold" data-dismiss="modal">Thanks</button>
+                                                <button class="btn btn-info pull-left button-box bold" data-dismiss="modal"><?php _e("Thanks", 'flatter'); ?></button>
                                             <?php endif; ?>
-                                            <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">Go to adverting account</a></button>
+                                            <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>"><?php _e("Go to adverting account", 'flatter'); ?></a></button>
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +217,7 @@ if ($items):
                     </span>
                     <?php if ($user['user_id'] != osc_logged_user_id()): ?>
                     &nbsp;&nbsp;
-                        <span class="chat-user1 pointer" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo 'Tchat' ?></span>&nbsp;
+                        <span class="chat-user1 pointer" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo  _e("Tchat", 'flatter'); ?></span>&nbsp;
                     <?php endif; ?>
                     &nbsp;&nbsp;
                     <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
@@ -243,7 +245,7 @@ if ($items):
                         ?>
                         <?php if (count($c_data) > 3): ?>
                             <div class="box-body">
-                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter'); ?> <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter'); ?> </span>
                                 <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                             </div>
                         <?php endif; ?>
@@ -305,7 +307,7 @@ if ($items):
                         </div>
                         <!-- .img-push is used to add margin to elements next to floating images -->
                         <div class="img-push">
-                            <textarea type="text" class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
+                            <textarea type="text" class="form-control input-sm comment_text" placeholder="<?php _e("Press enter to post comment", 'flatter'); ?>"></textarea>
                         </div>
                     </form>
                 </div>
@@ -322,7 +324,7 @@ else:
 endif;
 if (osc_logged_user_id()):
     $id = '11';
-    $description = 'Premium post amount';
+    $description =  _e("Premium post amount", 'flatter');
     $amount = '1';
     $tax = '0';
     $quantity = 1;

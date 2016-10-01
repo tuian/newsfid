@@ -12,7 +12,7 @@ if (osc_is_web_user_logged_in()):
                     <div class="col-md-6 col-sm-6 col-xs-6 copyright">
                         &copy; <?php echo date('Y'); ?> <a href="#"><?php echo osc_page_title(); ?></a>. <?php _e('All Rights Reserved', 'flatter'); ?>. 
                         <?php if (osc_get_preference('footer_link', 'flatter_theme') !== '0') { ?>
-                            <?php _e('Powered by', ' '); ?> <a title="Osclass" target="_blank" rel="nofollow" href="http://osclass.org/"> Eustache & Madisse SAS </a> 
+                            <?php _e('Powered by', ' '); ?> <a title="Osclass" target="_blank" rel="nofollow" href="http://osclass.org/"><?php _e("Eustache & Madisse SAS", 'flatter'); ?>  </a> 
                         <?php } ?>
                     </div>
                     <?php if (osc_get_preference('footer_link', 'flatter_theme') !== '0') { ?>

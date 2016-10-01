@@ -15,7 +15,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                     <button type="button" class="close premium_close" data-dismiss="modal">&times;</button>
                     <div class="col-md-12 theme-modal-header">
                         <div class="col-md-offset-1">
-                            <h2 class="bold margin-0"> Select payment mode </h2>
+                            <h2 class="bold margin-0"><?php _e("Select payment mode", 'flatter') ?>  </h2>
                         </div>
                     </div>
                     <div class="container">
@@ -23,23 +23,23 @@ if ($_REQUEST['action'] == 'promoted_post'):
                             <table class="table margin-0">
                                 <thead>
                                     <tr class="bg-blue-light">
-                                        <th class="border-right-white font-color-black">Date</th>
-                                        <th class="border-right-white font-color-black">Description</th>
-                                        <th class="border-right-white font-color-black">Quantity</th>
-                                        <th class="border-right-white font-color-black">Unit Price</th>
+                                        <th class="border-right-white font-color-black"><?php _e("Date", 'flatter') ?></th>
+                                        <th class="border-right-white font-color-black"><?php _e("Description", 'flatter') ?></th>
+                                        <th class="border-right-white font-color-black"><?php _e("Quantity", 'flatter') ?></th>
+                                        <th class="border-right-white font-color-black"><?php _e("Unit Price", 'flatter') ?></th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-bottom">
                                         <td class="font-color-black"><?php echo date('d/m/Y'); ?></td>
-                                        <td class="font-color-black"><span class="bold"><?php echo $_REQUEST['name']; ?></span> Premium Post for <?php echo $_REQUEST['posts']; ?> day</td>
+                                        <td class="font-color-black"><span class="bold"><?php echo $_REQUEST['name']; ?></span> <?php _e("Premium Post for", 'flatter') ?> <?php echo $_REQUEST['posts']; ?> <?php _e("day", 'flatter') ?></td>
                                         <td class="font-color-black">1</td>
                                         <td class="font-color-black">$<?php echo $_REQUEST['amount']; ?></td>
                                         <td class="font-color-black"><?php echo $_REQUEST['amount']; ?>$</td>
                                     </tr>
                                     <tr>
-                                        <td class="font-color-black"><h1 class="bold">TOTAL</h1></td>
+                                        <td class="font-color-black"><h1 class="bold"><?php _e("TOTAL", 'flatter') ?></h1></td>
                                         <td class="font-color-black"></td>
                                         <td class="font-color-black"></td>
                                         <td class="font-color-black"></td>
@@ -64,7 +64,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                             <input type="radio" class="payment-option" name="payment" value="paypal">
                         </div>
                         <div class="col-md-6 padding-3per bg-green-light">
-                            You will get a benefits of Premium Post up to dated <?php echo date('d/m/Y', strtotime("+2 days", strtotime("NOW"))); ?>. 
+                            <?php _e("You will get a benefits of Premium Post up to dated", 'flatter') ?> <?php echo date('d/m/Y', strtotime("+2 days", strtotime("NOW"))); ?>. 
                         </div>
 
                     </div>
@@ -82,26 +82,26 @@ if ($_REQUEST['action'] == 'promoted_post'):
                         <div class="col-md-12">                                           
                             <div class="margin-top-20">
                                 <div class="col-md-5 col-sm-5">
-                                    Expiration date
+                                    <?php _e("Expiration date", 'flatter') ?>
                                 </div>
                                 <div class="col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2">
-                                    CVV<span class="circle-border"> ?</span>
+                                    <?php _e("CVV", 'flatter') ?><span class="circle-border"> ?</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 margin-top-20 padding-0 vertical-row">
                             <div class="col-md-3 col-sm-3 grey-border">
-                                <input type="text" placeholder="MM" required class="expiry_month">
+                                <input type="text" placeholder="<?php _e("MM", 'flatter') ?>" required class="expiry_month">
 
                             </div>
                             <div class="col-md-1 col-sm-1">
                                 /
                             </div>
                             <div class="col-md-3 col-sm-3 grey-border">
-                                <input type="text" placeholder="YY" required class="expiry_year">
+                                <input type="text" placeholder="<?php _e("YY", 'flatter') ?>" required class="expiry_year">
                             </div>
                             <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
-                                <input type="text" placeholder="Code" required class="card_cvv_code">
+                                <input type="text" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -109,16 +109,16 @@ if ($_REQUEST['action'] == 'promoted_post'):
                             <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>
                         </div>
                         <div class="col-md-12 margin-top-20 grey-border">
-                            <input type="text" placeholder="Address">
+                            <input type="text" placeholder="<?php _e("Address", 'flatter') ?>">
                         </div>
                         <div class="col-md-12 margin-top-20 grey-border" >
                             <input type="text">
                         </div>
                         <div class="col-md-12 margin-top-20 grey-border">
-                            <input type="text" placeholder="Zip code">
+                            <input type="text" placeholder="<?php _e("Zip code", 'flatter') ?>">
                         </div>
                         <div class="col-md-12 margin-top-20 grey-border">
-                            <input type="text" placeholder="Ville">
+                            <input type="text" placeholder="<?php _e("City", 'flatter') ?>">
                         </div>
                         <div class="col-md-12 margin-top-20 grey-border">
                             <input type="text" placeholder="CEDEX">
@@ -129,13 +129,13 @@ if ($_REQUEST['action'] == 'promoted_post'):
                             <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/paypal-iphone.png">
                         </div>
                         <div class="col-md-8">
-                            You will be redirected to PayPal 
+                            <?php _e("You will be redirected to PayPal", 'flatter') ?> 
                         </div>
                     </div>
                     <div class="col-md-12 padding-0 bg-white padding-top-4per">
                         <div class="col-md-offset-3 col-md-9 theme-modal-header">
                             <div class="col-md-9 margin-top-20">
-                                <button type="submit" class="btn btn-lg button-orng btn-radius-0 pay_now" pack-name="<?php echo $_REQUEST['name']; ?>" pack-id='<?php echo $_REQUEST['pack_id']; ?>' post="<?php echo $_REQUEST['posts']; ?>" user-id="<?php echo osc_logged_user_id(); ?>">Pay now</button>
+                                <button type="submit" class="btn btn-lg button-orng btn-radius-0 pay_now" pack-name="<?php echo $_REQUEST['name']; ?>" pack-id='<?php echo $_REQUEST['pack_id']; ?>' post="<?php echo $_REQUEST['posts']; ?>" user-id="<?php echo osc_logged_user_id(); ?>"><?php _e("Pay now", 'flatter') ?></button>
                                 <div class="payment_result"></div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {
                                 $('.payment_result').empty().addClass('error').removeClass('success');
-                                $('.payment_result').text('Payment not added successfully');
+                                $('.payment_result').text(<?php _e("Payment not added successfully", 'flatter') ?>);
                                 $('.payment_result').text(data);
                             }
                         }
