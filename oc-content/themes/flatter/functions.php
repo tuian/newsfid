@@ -1283,7 +1283,7 @@ function time_elapsed_string($ptime) {
         if ($d >= 1) {
             if ($secs < 86400) {
                 $r = round($d);
-                return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
+                return $r . ' ' . ($r > 1 ? __($a_plural[$str],'flatter') : $str) . __(' ago','flatter');
             } else {
 //                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
                 return date("d M", $ptime);
@@ -2557,7 +2557,7 @@ function check_language() {
     $browser = str_replace("-", "_", substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5)); //language in the browser
     $list = osc_get_locales(); //list of languages in osclass
     $current = osc_current_user_locale(); //current language in osclass
-    $browser = 'fr_FR';
+//    $browser = 'fr_FR';
 
     if (!isset($_COOKIE['osc_auto_language']) && !isset($_GET['auto'])) {
         setcookie("osc_auto_language", true, time() + 60 * 60 * 24 * 90, "/");

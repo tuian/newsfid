@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
+<!--<html dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">-->
+<html dir="ltr" lang="fr_FR">
     <head>
         <meta charset="utf-8">
         <title><?php echo meta_title(); ?></title>

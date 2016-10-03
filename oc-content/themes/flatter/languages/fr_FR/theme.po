@@ -164,7 +164,7 @@ msgstr "Adresse"
 
 #: ddfunctions.php:10 locationfind.php:16
 msgid "Select a country..."
-msgstr ""
+msgstr "Choisir votre pays..."
 
 #: ddfunctions.php:23 ddfunctions.php:73 ddfunctions.php:122
 #: ddfunctions.php:124 locationfind.php:28 locationfind.php:83
@@ -489,7 +489,7 @@ msgstr ""
 
 #: functions.php:1675
 msgid "shared your post"
-msgstr ""
+msgstr "A partagé(e) votre publication"
 
 #: functions.php:1702
 msgid "Remove from watchlist"
@@ -527,7 +527,7 @@ msgstr ""
 
 #: functions.php:2197
 msgid "is now following you"
-msgstr ""
+msgstr "Vous suit désormais "
 
 #: header.php:226 t-chat.php:39 t-chat.php:84
 msgid "Search..."
@@ -535,12 +535,13 @@ msgstr ""
 
 #: header.php:252
 msgid "News Feed"
-msgstr ""
+msgstr "Fil d’actualité"
+msgstr "Fil d’actualité"
 
 #: header.php:269 page-interest.php:41 page-interest_with_edit.php:42
 #: page-rubric.php:41 page-theme-rubrics.php:59 user-category.php:18
 msgid "Center of interest"
-msgstr ""
+msgstr "Centre d’ intérêt"
 
 #: header.php:286
 msgid "Publish"
@@ -548,27 +549,27 @@ msgstr "Publier"
 
 #: header.php:307
 msgid "My profile"
-msgstr ""
+msgstr "Mon profil"
 
 #: header.php:323
 msgid "People"
-msgstr ""
+msgstr "Agenda "
 
 #: header.php:371
 msgid "Center of settings"
-msgstr ""
+msgstr "Centre des réglages"
 
 #: header.php:385
 msgid "Advertising Account"
-msgstr ""
+msgstr "Compte publicitaire"
 
 #: header.php:425
 msgid "Informations"
-msgstr ""
+msgstr "Informations"
 
 #: header.php:443
 msgid "Terms"
-msgstr ""
+msgstr "Conditions générales"
 
 #: header.php:538
 msgid "Identification"
@@ -784,12 +785,12 @@ msgstr "Annonce offensante"
 #: user_info.php:27 user_info.php:53 user_info.php:70 user_info.php:93
 #: user_posts.php:142 user_posts.php:304 user_premium_post.php:56
 msgid "Edit"
-msgstr ""
+msgstr "Modifier le post"
 
 #: item_after_login_ajax.php:120 item_after_login_ajax.php:123
 #: user_posts.php:149 user_posts.php:152
 msgid "Promote Now"
-msgstr ""
+msgstr "Promouvoir le post"
 
 #: item_after_login_ajax.php:141 user_posts.php:169 user_premium_post.php:83
 msgid "Newsfid Marketing"
@@ -836,7 +837,7 @@ msgstr ""
 #: item_after_login_ajax.php:220 popup_ajax.php:126 popup_ajax.php:325
 #: user-public-profile.php:291
 msgid "Tchat"
-msgstr ""
+msgstr "Tchater"
 
 #: item_after_login_ajax.php:248 item_comment_ajax.php:73 popup_ajax.php:164
 #: popup_ajax.php:365 user_posts.php:276 user_premium_post.php:190
@@ -852,7 +853,7 @@ msgstr ""
 #: item_after_login_ajax.php:310 popup_ajax.php:231 popup_ajax.php:432
 #: user_posts.php:338 user_premium_post.php:239 user_watchlist.php:175
 msgid "Press enter to post comment"
-msgstr ""
+msgstr "Presser entrer pour commenter"
 
 #: item_after_login_ajax.php:327
 msgid "Premium post amount"
@@ -952,15 +953,15 @@ msgstr ""
 
 #: main.php:342 page-people.php:25
 msgid "WORLD"
-msgstr ""
+msgstr "Mondial "
 
 #: main.php:344 main.php:346 page-people.php:26
 msgid "NATIONAL"
-msgstr ""
+msgstr "National"
 
 #: main.php:349 main.php:351 page-people.php:27
 msgid "LOCAL"
-msgstr ""
+msgstr "Local"
 
 #: main.php:358
 msgid "Please enter your City and Country name to use this tab"
@@ -988,11 +989,11 @@ msgstr ""
 
 #: notification.php:31
 msgid "Mark read"
-msgstr ""
+msgstr "Marquer comme lue"
 
 #: notification.php:32
 msgid " Unmark as not read"
-msgstr ""
+msgstr "Marqué comme non lu"
 
 #: page-interest.php:29 page-interest_with_edit.php:30
 msgid "You must select at least one theme"
@@ -1000,21 +1001,22 @@ msgstr ""
 
 #: page-interest.php:44
 msgid "Choose topics that you are interested"
-msgstr ""
+msgstr "Choisissez les sujets qui vous intéresse "
 
 #: page-interest.php:49
 msgid ""
 "This step simply allows us to make you suggestions about which you are "
 "interested."
-msgstr ""
+msgstr "Cette étape nous permet simplement de vous faire des meilleures suggestions à propos de ce qui pourrai vous intéresser. "
 
 #: page-interest.php:53
 msgid "Take time to make your choice. You could change it later."
-msgstr ""
+msgstr "Prenez le temps de choisir. 
+Vous pourrez toujours changer votre choix plus tard."
 
 #: page-interest.php:62 page-interest_with_edit.php:59 page-rubric.php:58
 msgid "Continue"
-msgstr ""
+msgstr "Poursuivre"
 
 #: page-interest.php:131 page-interest_with_edit.php:141
 msgid "Please select at least one theme"
@@ -1027,7 +1029,7 @@ msgstr ""
 
 #: page-interest_with_edit.php:44 user-category.php:20
 msgid "Choose one or more themes"
-msgstr ""
+msgstr "Choisissez les sujets qui vous intéressent vraiment."
 
 #: page-interest_with_edit.php:47
 msgid ""
@@ -1059,7 +1061,9 @@ msgid ""
 "What kind of topics interest you? You must select at least four of them. "
 "This will allow us to connect to people and organization that have the same "
 "interests as you center."
-msgstr ""
+msgstr "Qu’est-ce qui qui vous passionne réellement?  
+Vous devez choisir au minimum quatre sujets. Cela va nous permettre de vous connecter avec les personnes et organisations qui ont les mêmes passions que vous. 
+"
 
 #: page-rubric.php:127
 msgid "Please select at least four rubrics"
@@ -1083,11 +1087,11 @@ msgstr ""
 
 #: popup_ajax.php:471
 msgid "Read More"
-msgstr ""
+msgstr "Tout lire"
 
 #: popup_ajax.php:472
 msgid "Read Less"
-msgstr ""
+msgstr "Moins lire"
 
 #: popup_ajax.php:576
 msgid "Please select country first"
@@ -1140,7 +1144,7 @@ msgstr ""
 #: popup_free_account_post.php:152 update_user_post.php:180
 #: user-public-profile.php:326
 msgid "Video"
-msgstr ""
+msgstr "Vidéo"
 
 #: popup_free_account_post.php:152
 msgid "Liens"
@@ -1207,7 +1211,7 @@ msgstr ""
 
 #: popup_free_account_post.php:293 update_user_post.php:313
 msgid "I accept addition requirement"
-msgstr ""
+msgstr " j’accepte les conditions de publications"
 
 #: popup_free_account_post.php:295 subscribe.php:189 update_user_post.php:315
 msgid "Please Accept Term & Condition"
@@ -1251,15 +1255,15 @@ msgstr ""
 
 #: promoted_post_ajax.php:36
 msgid "day"
-msgstr ""
+msgstr "Jours"
 
 #: promoted_post_ajax.php:42 subscribe.php:74
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTAL"
 
 #: promoted_post_ajax.php:67
 msgid "You will get a benefits of Premium Post up to dated"
-msgstr ""
+msgstr "Méthode de paiement"
 
 #: promoted_post_ajax.php:73 subscribe.php:105
 msgid "Method of payment"
@@ -1656,19 +1660,19 @@ msgstr ""
 
 #: subscribe.php:11
 msgid "Start now with"
-msgstr ""
+msgstr "Démarrer maintenant avec"
 
 #: subscribe.php:12
 msgid "NEWSFID PRO"
-msgstr ""
+msgstr "NEWSFID PRO"
 
 #: subscribe.php:14
 msgid "Freedom, Notoriety , Difference , Simplicity"
-msgstr ""
+msgstr "Liberté, Notoriété, Différence, Simplicité"
 
 #: subscribe.php:16
 msgid "Get Newsfid pro with 30 days trials right now"
-msgstr ""
+msgstr "Passez maintenant à Newsfid Pro gratuit pendant 30 jours"
 
 #: subscribe.php:34
 msgid "Newsfid Premium"
@@ -1676,14 +1680,15 @@ msgstr ""
 
 #: subscribe.php:35
 msgid "Improve your experience"
-msgstr ""
+msgstr "Améliorer votre expérience"
 
 #: subscribe.php:38
 msgid ""
 "Subscribers benefit from advantageous services. \n"
 "                                                    You can better manage "
 "your reputation and reach more users easily."
-msgstr ""
+msgstr "Les abonnés bénéficient de services avantageux. 
+Vous pouvez mieux gérer votre réputation et atteindre plus facilement les autres utilisateurs. "
 
 #: subscribe.php:50
 msgid "Select payment mode "
@@ -1738,7 +1743,7 @@ msgstr ""
 
 #: subscribe.php:219
 msgid "Options"
-msgstr ""
+msgstr "Option "
 
 #: subscribe.php:225 user_premium_post.php:63 user_premium_post.php:66
 msgid "Premium"
@@ -1746,19 +1751,19 @@ msgstr "Premium"
 
 #: subscribe.php:232
 msgid "Post an audio track"
-msgstr ""
+msgstr "Publier une piste audio"
 
 #: subscribe.php:245
 msgid "Post GIF image"
-msgstr ""
+msgstr "Publier une image animée GIF"
 
 #: subscribe.php:271
 msgid "Post video link ( youtube / Vimeo / Dailymotion)"
-msgstr ""
+msgstr "Publier lien vidéo (Youtube & Dailymotion )"
 
 #: subscribe.php:284
 msgid "Get a professional logo to make difference with users."
-msgstr ""
+msgstr "Obtenir un logo de marquage professionnel sur votre compte"
 
 #: t-chat.php:23
 msgid "New messages"
@@ -1799,7 +1804,7 @@ msgstr ""
 #: tchat_user_data.php:105 tchat_user_data.php:108 tchat_user_data.php:151
 #: user-public-profile.php:252
 msgid "Follow"
-msgstr ""
+msgstr "Abonnés"
 
 #: tchat_user_data.php:117 tchat_user_data.php:184
 msgid "Remove from circle"
@@ -1807,7 +1812,7 @@ msgstr ""
 
 #: tchat_user_data.php:119 tchat_user_data.php:122 tchat_user_data.php:200
 msgid "Add to circle"
-msgstr ""
+msgstr "Vous a ajouté a son Cercle"
 
 #: tchat_user_data.php:131
 msgid "Send a file"
@@ -1819,7 +1824,7 @@ msgstr ""
 
 #: update_user_post.php:162
 msgid "Update media(Image/GIF/Video)"
-msgstr ""
+msgstr "Ajouter media(Image/GIF/Video)"
 
 #: update_user_post.php:180
 msgid "links"
@@ -1987,7 +1992,7 @@ msgstr "Mot de passe oublié?"
 
 #: user-login.php:53
 msgid "Reset Password"
-msgstr ""
+msgstr "Mot de passe perdu"
 
 #: user-login.php:57
 msgid "Connexion"
@@ -1995,7 +2000,7 @@ msgstr ""
 
 #: user-login.php:64
 msgid "Or sign in as a different user"
-msgstr ""
+msgstr "Me connecter avec un autre compte "
 
 #: user-profile.php:26
 msgid "My account"
@@ -2016,7 +2021,7 @@ msgstr "Téléphone"
 #: user-public-profile.php:74 user_circle.php:99 user_follower.php:97
 #: user_search_ajax.php:107
 msgid "FOLLOWERS"
-msgstr ""
+msgstr "abonnements"
 
 #: user-public-profile.php:115 user-public-profile.php:190
 msgid "Upload Image"
@@ -2040,7 +2045,7 @@ msgstr ""
 
 #: user-public-profile.php:280
 msgid "Likes"
-msgstr ""
+msgstr "Likes"
 
 #: user-public-profile.php:296
 msgid "Remove to circle"
@@ -2048,11 +2053,11 @@ msgstr ""
 
 #: user-public-profile.php:300 user-public-profile.php:380
 msgid "Circle"
-msgstr ""
+msgstr "Cercle"
 
 #: user-public-profile.php:317
 msgid "Filters"
-msgstr ""
+msgstr "Filtres"
 
 #: user-public-profile.php:324
 msgid "All"
@@ -2060,7 +2065,7 @@ msgstr ""
 
 #: user-public-profile.php:327
 msgid "Gif"
-msgstr ""
+msgstr "Gif"
 
 #: user-public-profile.php:363
 msgid "Reset"
@@ -2072,19 +2077,19 @@ msgstr ""
 
 #: user-public-profile.php:374
 msgid "Infos"
-msgstr ""
+msgstr "Infos"
 
 #: user-public-profile.php:376
 msgid "Watchlist"
-msgstr ""
+msgstr "Sauvegarde"
 
 #: user-public-profile.php:378
 msgid "Follows"
-msgstr ""
+msgstr "Abonnés"
 
 #: user-public-profile.php:397
 msgid "Nothing to show for now "
-msgstr ""
+msgstr "Rien à montrer pour l’instant"
 
 #: user-public-profile.php:398
 msgid "Nothing has been post yet on that profile page"
@@ -2152,7 +2157,7 @@ msgstr "Vous avez déjà un compte?"
 
 #: user-register.php:37
 msgid "First name"
-msgstr ""
+msgstr "Prénom "
 
 #: user-register.php:52
 msgid "Create an account for free"
@@ -2176,7 +2181,7 @@ msgstr ""
 
 #: user-register.php:112
 msgid "Birthday"
-msgstr ""
+msgstr "Date de naissance"
 
 #: user-register.php:180
 msgid "Age"
@@ -2184,11 +2189,11 @@ msgstr ""
 
 #: user-register.php:240
 msgid "Yes"
-msgstr ""
+msgstr "Yes"
 
 #: user-register.php:241
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: user-sidebar.php:6
 msgid "View public profile"
@@ -2230,7 +2235,7 @@ msgstr ""
 
 #: user_search_ajax.php:120
 msgid "LIKES"
-msgstr ""
+msgstr "LIKES"
 
 #: user_search_ajax.php:137
 msgid "No people found"
@@ -2688,4 +2693,4 @@ msgstr ""
 #~ msgstr "exemple"
 
 #~ msgid "Publish and share stories with the world"
-#~ msgstr "Publier et partager des histoires avec le monde"
+#~ msgstr "Publier et partager des histoires avec le monde "
