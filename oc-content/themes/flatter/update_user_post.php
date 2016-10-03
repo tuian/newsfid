@@ -80,12 +80,12 @@ if ($_REQUEST['action'] == 'update_post'):
                                                 </div>
                                             </div>
                                             <div class="col-md-12 vertical-row">
-                                                <h5 class=" margin-0">Vous avez déjà <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publication </h5>
+                                                <h5 class=" margin-0"><?php _e("You have already ", 'flatter') ?> <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span> publication </h5>
                                             </div>
                                         </div>
                                         <div class="col-md-4 padding-top-4per">
                                             <div class="col-md-offset-4">
-                                                <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> Get more details </a>
+                                                <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> <?php _e("Get more details", 'flatter') ?> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@ if ($_REQUEST['action'] == 'update_post'):
 
                                         </div>
                                         <div class="input-text-area margin-top-20 left-border box-shadow-none width-60">
-                                            <input type="text" placeholder="Title" class="p_title" name="p_title" value="<?php echo $post_desc['s_title'] ?>"> <span class="error-title red">Post Title Required</span>
+                                            <input type="text" placeholder="Title" class="p_title" name="p_title" value="<?php echo $post_desc['s_title'] ?>"> <span class="error-title red"> <?php _e("Post Title Required", 'flatter') ?></span>
                                         </div>                              
                                     </div>                        
                                 </div>
@@ -150,7 +150,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                         </div>
 
                                         <div class="box-shadow-none width-90 description-box col-md-8 padding-0">
-                                            <textarea placeholder="What's on your mind?" name="p_disc" class="p_disc" name="p_disc"><?php echo $post_desc['s_description'] ?></textarea><span class="error-desc red">Post Description Required</span>
+                                            <textarea placeholder="<?php _e("What's on your mind?", 'flatter') ?>" name="p_disc" class="p_disc" name="p_disc"><?php echo $post_desc['s_description'] ?></textarea><span class="error-desc red"><?php _e("Post Description Required", 'flatter') ?></span>
                                         </div>
                                     </div>
                                     <div class="border-bottom col-md-12">                 
@@ -159,7 +159,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                     <div class="center-contant">
                                         <div class="col-md-12 padding-10 vertical-row">
                                             <i class="fa fa-picture-o col-md-1" aria-hidden="true" ></i> 
-                                            <span class="padding-left-10 col-md-10"> Update media(Image/GIF/Video) </span>
+                                            <span class="padding-left-10 col-md-10"> <?php _e("Update media(Image/GIF/Video)", 'flatter') ?>  </span>
                                             <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#media"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                                         </div>
                                         <?php
@@ -170,14 +170,14 @@ if ($_REQUEST['action'] == 'update_post'):
                                             <div class="padding-top-3per col-md-12">
                                                 <div class="col-md-6">
                                                     <div class="col-md-12 vertical-row center-contant">
-                                                        <div class="col-md-2"> <span class="bold">Image</span>
+                                                        <div class="col-md-2"> <span class="bold"><?php _e("Image", 'flatter') ?></span>
                                                             <div class="onoffswitch">
                                                                 <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="image" id="image" <?php if (($item['item_type'] == "image") || ($item['item_type'] == "image/jpeg")): ?> checked<?php endif; ?> value="image">
                                                                 <label class="onoffswitch-label" for="image"></label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1 ou">ou</div>
-                                                        <div class="col-md-2"><span class="bold">Video</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Liens)</span>
+                                                        <div class="col-md-1 ou"><?php _e("or", 'flatter') ?></div>
+                                                        <div class="col-md-2"><span class="bold"><?php _e("Video", 'flatter') ?></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<?php _e("links", 'flatter') ?>)</span>
                                                             <div class="onoffswitch">
                                                                 <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="video" id="video" <?php if ($item['item_type'] == "video"): ?> checked<?php endif; ?> value="video">
                                                                 <label class="onoffswitch-label" for="video"></label>
@@ -204,14 +204,15 @@ if ($_REQUEST['action'] == 'update_post'):
                                                     </div>
                                                     <div class="col-md-6  text-bg-color">
                                                         <div class="bold padding-10">
-                                                            You can not choose both at the same time
-                                                            you can publish  image or a video link.
+                                                            <?php _e("You can not choose both at the same time
+                                                            you can publish  image or a video link.", 'flatter') ?>
+
                                                         </div>
                                                     </div>
                                                 </div> 
                                                 <div class=" col-md-12 border-bottom">
                                                     <div class="col-md-6">
-                                                        <span class="bold">GIF</span>
+                                                        <span class="bold"><?php _e("GIF", 'flatter') ?></span>
                                                         <div class="onoffswitch margin-top-20">
                                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif"  <?php if ($item['item_type'] == "gif"): ?> checked <?php endif; ?> value="gif">                                                            
                                                             <label class="onoffswitch-label" for="gif"></label>
@@ -219,30 +220,30 @@ if ($_REQUEST['action'] == 'update_post'):
                                                     </div>
                                                     <div class="col-md-6  text-bg-color">
                                                         <div class="bold padding-10">
-                                                            The image begins to automatically animate when the user will scroll.
+                                                            <?php _e("The image begins to automatically animate when the user will scroll.", 'flatter') ?>                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class=" col-md-12 border-bottom">
                                                     <div class="col-md-6">
-                                                        <span class="bold">Music</span>
+                                                        <span class="bold"><?php _e("Music", 'flatter') ?></span>
                                                         <div class="onoffswitch margin-top-20">
                                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?> value="music">
                                                             <label class="onoffswitch-label" for="music"></label>
                                                         </div>
                                                         <div class="mp3-max">
-                                                            <span class="">(MP3 10.MO maximum) </span>
+                                                            <span class=""><?php _e("(MP3 10.MO maximum)", 'flatter') ?> </span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 text-bg-color">
                                                         <div class="bold padding-10">
-                                                            You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.
+                                                            <?php _e("You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.", 'flatter') ?>                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class=" col-md-12 border-bottom">
                                                     <div class="col-md-6 podcast">
-                                                        <span class="bold">Podcast</span>
+                                                        <span class="bold"><?php _e("Podcast", 'flatter') ?></span>
                                                         <div class="onoffswitch margin-top-20">
                                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?>  value="podcast">
                                                             <label class="onoffswitch-label" for="podcast"></label>
@@ -250,12 +251,9 @@ if ($_REQUEST['action'] == 'update_post'):
                                                     </div>
                                                     <div class="col-md-6 text-bg-color">
                                                         <div class="bold padding-10">
-                                                            Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.
-
+                                                            <?php _e("Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.", 'flatter') ?>                                                          
                                                         </div>
                                                     </div>
-
-
                                                 </div>                                           
                                             </div>
                                         </div>
@@ -264,7 +262,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                         <div class="center-contant padding-bottom-20">    
                                             <div class="col-md-12 padding-10 vertical-row">
                                                 <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
-                                                <span class="padding-left-10 col-md-10"> Update location(Country/state/region/City/place) </span>
+                                                <span class="padding-left-10 col-md-10"> <?php _e("Update location(Country/state/region/City/place)", 'flatter') ?> </span>
                                                 <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#location"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                                             </div>
                                             <div id="location" class="collapse padding-bottom-20">                                              
@@ -279,21 +277,19 @@ if ($_REQUEST['action'] == 'update_post'):
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
-
-
                                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="Region" value="<?php echo $item_location['s_region']; ?>">
+                                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="<?php _e("Region", 'flatter') ?>" value="<?php echo $item_location['s_region']; ?>">
                                                         <input type="hidden" id="s_region_id" name="s_region_id">
                                                     </div>
                                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="City" value="<?php echo $item_location['s_city']; ?>">
+                                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="<?php _e("City", 'flatter') ?>" value="<?php echo $item_location['s_city']; ?>">
                                                         <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
                                                     </div>
                                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                        <input type="text" placeholder="City Area" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
+                                                        <input type="text" placeholder="<?php _e("City Area", 'flatter') ?>" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
                                                     </div>
                                                     <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30" >
-                                                        <input type="text" name="s_address" id="s_address" placeholder="Address" value="<?php echo $item_location['s_address']; ?>">
+                                                        <input type="text" name="s_address" id="s_address" placeholder="<?php _e("Address", 'flatter') ?>" value="<?php echo $item_location['s_address']; ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,17 +305,17 @@ if ($_REQUEST['action'] == 'update_post'):
                                 <div class="vertical-row col-md-offset-1">
                                     <div class="en-savoir-plus1 publier1 col-md-3">
                                         <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
-                                            <span class="bold">Publier</span></button>
+                                            <span class="bold"><?php _e("Publier", 'flatter') ?></span></button>
                                     </div>
                                     <div class="onoffswitch col-md-3">
                                         <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">
                                         <label class="onoffswitch-label" for="publier"></label>
-                                    </div>   <span class="">I accept addition requirement</span>                 
+                                    </div>   <span class=""><?php _e("I accept addition requirement", 'flatter') ?></span>                 
                                     <div class="col-md-2">
-                                        <span class="error-term red">Please Accept Term & Condition</span>
+                                        <span class="error-term red"><?php _e("Please Accept Term & Condition", 'flatter') ?></span>
                                     </div>
                                     <div class="col-md-3">
-                                        <span class="error-btn red">Please Fill All Required Field</span>
+                                        <span class="error-btn red"><?php _e("Please Fill All Required Field", 'flatter') ?></span>
                                     </div>
                                 </div>
                             </div>

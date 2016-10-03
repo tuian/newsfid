@@ -85,7 +85,7 @@ if ($user_search_array):
                                         ?>
                                     </h5>
                                     <span class="description-text">
-                                        ABONNEMENTS
+                                        <?php _e("ABONNEMENTS", 'flatter') ?>
                                     </span>
                                 </div>
                                 <!-- /.description-block -->
@@ -104,7 +104,7 @@ if ($user_search_array):
                                         ?>
                                     </h5>
                                     <span class="description-text">
-                                        FOLLOWERS
+                                        <?php _e("FOLLOWERS", 'flatter') ?>
                                     </span>
                                 </div>
                                 <!-- /.description-block -->
@@ -117,7 +117,7 @@ if ($user_search_array):
                                             echo get_user_item_likes($user['user_id']);                                        
                                         ?>
                                     </h5>
-                                    <span class="description-text">LIKES</span>
+                                    <span class="description-text"><?php _e("LIKES", 'flatter') ?></span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
@@ -134,6 +134,6 @@ if ($user_search_array):
 
 <?php else: ?>
     <div class = "col-md-12">
-        <p class = "people-result-text">No people found</p>
+        <p class = "people-result-text"><?php _e("No people found", 'flatter') ?></p>
     </div>
 <?php endif; ?>

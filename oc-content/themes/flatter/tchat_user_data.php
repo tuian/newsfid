@@ -70,7 +70,7 @@ $logged_in_user_id = osc_logged_user_id();
         </div>
         <div class="col-md-3 padding-top-8per">
             <div class="">
-                <i class="fa fa-users" aria-hidden="true"></i> Abonnés 
+                <i class="fa fa-users" aria-hidden="true"></i> <?php _e("Abonnés", 'flatter') ?> 
                 <span class="bold padding-left-10"> 
                     <?php
                     $user_followers = get_user_follower_data($user['user_id']);
@@ -82,7 +82,7 @@ $logged_in_user_id = osc_logged_user_id();
                     ?>
                 </span></div>
             <div class="">
-                <i class="fa fa-play" aria-hidden="true"></i> Lectures <span class="bold padding-left-10"> 45</span>
+                <i class="fa fa-play" aria-hidden="true"></i> <?php _e("Lectures", 'flatter') ?> <span class="bold padding-left-10">45</span>
             </div>
         </div>
     </div>
@@ -100,12 +100,12 @@ $logged_in_user_id = osc_logged_user_id();
                 if ($follow):
                     if (in_array($user_id, $follow)):
                         ?>
-                        <a class="pointer unfollow_user font-color-black bold"> Unfollow </a>
+                        <a class="pointer unfollow_user font-color-black bold"> <?php _e("Unfollow", 'flatter') ?> </a>
                     <?php else: ?>
-                        <a class="pointer follow_user font-color-black bold"> Follow </a>
+                        <a class="pointer follow_user font-color-black bold"> <?php _e("Follow", 'flatter') ?> </a>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a class="pointer follow_user font-color-black bold"> Follow </a>
+                    <a class="pointer follow_user font-color-black bold"> <?php _e("Follow", 'flatter') ?> </a>
                 <?php endif; ?>
             </div>
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
@@ -114,21 +114,21 @@ $logged_in_user_id = osc_logged_user_id();
                 if ($circle):
                     if (in_array($user_id, $circle)):
                         ?>
-                        <a class="pointer removed_circle font-color-black bold"> Remove from circle </a>
-                    <?php else: ?>
-                        <a class="pointer added_circle font-color-black bold"> Add to circle </a>
+                        <a class="pointer removed_circle font-color-black bold"> <?php _e("Remove from circle", 'flatter') ?> </a>
+                    <?php else: ?>Remove from circle
+                        <a class="pointer added_circle font-color-black bold"> <?php _e("Add to circle", 'flatter') ?> </a>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a class="pointer added_circle font-color-black bold"> Add to circle </a>
+                    <a class="pointer added_circle font-color-black bold"> <?php _e("Add to circle", 'flatter') ?> </a>
                 <?php endif; ?>
             </div>
         </div>
         <div class="col-md-6">            
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                <a class="pointer font-color-black bold"> Block this user </a>
+                <a class="pointer font-color-black bold"> <?php _e("Block this user", 'flatter') ?> </a>
             </div>
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                <a class="pointer font-color-black bold"> Send a file </a>
+                <a class="pointer font-color-black bold"> <?php _e("Send a file", 'flatter') ?>  </a>
             </div>
         </div>
     </div>
@@ -148,7 +148,7 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-                $('.unfollow_user').text('Follow').addClass('follow_user').removeClass('unfollow_user');
+                $('.unfollow_user').text('<?php _e("Follow", 'flatter')?>').addClass('follow_user').removeClass('unfollow_user');
             }
         })
     });
@@ -164,7 +164,7 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-                $('.follow_user').text('Unfollow').addClass('unfollow_user').removeClass('follow_user');
+                $('.follow_user').text(<?php _e("Unfollow", 'flatter') ?>).addClass('unfollow_user').removeClass('follow_user');
             }
         })
     });
@@ -181,7 +181,7 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-                $('.added_circle').text('Remove from circle').addClass('removed_circle').removeClass('added_circle');
+                $('.added_circle').text('<?php _e("Remove from circle", 'flatter') ?>').addClass('removed_circle').removeClass('added_circle');
             }
         })
     });
@@ -197,7 +197,7 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-                $('.removed_circle').text('Add to circle').addClass('added_circle').removeClass('removed_circle');
+                $('.removed_circle').text('<?php _e("Add to circle", 'flatter') ?>').addClass('added_circle').removeClass('removed_circle');
             }
         })
     });

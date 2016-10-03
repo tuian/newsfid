@@ -23,7 +23,7 @@ $follower_users = get_user_circle_data($user_id);
 if ($user_search_array):
     ?>
     <div class="col-md-12 padding-0">
-        <div class="user_found_text bg-white"><?php echo 'We found <span class="result_count_text blue_text">' . count($user_search_array) . '</span> results'; ?></div>
+        <div class="user_found_text bg-white"><?php echo _e("We found", 'flatter') ?><span class="result_count_text blue_text">' . count($user_search_array) . '</span> <?php _e("results", 'flatter') ?>'; ?></div>
     </div>
     <div class="col-md-12 padding-0">
         <?php foreach ($user_search_array as $user): ?>
@@ -77,7 +77,7 @@ if ($user_search_array):
                                         ?>
                                     </h5>
                                     <span class="description-text">
-                                        ABONNEMENTS
+                                        <?php _e("ABONNEMENTS", 'flatter') ?>
                                     </span>
                                 </div>
                                 <!-- /.description-block -->
@@ -96,7 +96,7 @@ if ($user_search_array):
                                         ?>
                                     </h5>
                                     <span class="description-text">
-                                        FOLLOWERS
+                                        <?php _e("FOLLOWERS", 'flatter') ?>
                                     </span>
                                 </div>
                                 <!-- /.description-block -->
@@ -109,7 +109,7 @@ if ($user_search_array):
                                         echo get_user_posts_count($user['user_id']);
                                         ?>
                                     </h5>
-                                    <span class="description-text">POSTS</span>
+                                    <span class="description-text"><?php _e("POSTS", 'flatter') ?></span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
@@ -126,6 +126,6 @@ if ($user_search_array):
 
 <?php else: ?>
     <div class = "col-md-12 no-of-result">
-        <p class = "people-result-text">No user found</p>
+        <p class = "people-result-text"><?php _e("No user found", 'flatter') ?></p>
     </div>
 <?php endif; ?>

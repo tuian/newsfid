@@ -15,15 +15,16 @@ osc_current_web_theme_path('header.php');
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <div class="titlebox background-white padding-10">
-                        <h2>Centre d'intérêt</h2>
+                        <h2><?php _e("Center of interest", 'flatter') ?></h2>
                         <h1>
-                            Choisissez un ou plusieurs themes
+                           <?php _e("Choose one or more themes", 'flatter') ?>
                         </h1>
                         <span>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus.
+                            <?php _e("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus.", 'flatter') ?>                            
                             <br/>
                             <br/>
-                            In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat.
+                            <?php _e("In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat.", 'flatter') ?>
+                            
                         </span>
                     </div>
 

@@ -71,7 +71,7 @@ endif;
                     echo count($user_followers);
                     ?>
                 </h1> 
-                <div class="col-md-5 padding-top-13per text-shadow-black">FOLLOWERS </div>
+                <div class="col-md-5 padding-top-13per text-shadow-black"><?php _e("FOLLOWERS", 'flatter') ?> </div>
             <?php endif; ?>
         </div>
         <span class="col-md-12 text-shadow-black" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
@@ -112,7 +112,7 @@ endif;
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h3 class="modal-title">Upload Image</h3>
+                                                    <h3 class="modal-title"><?php _e("Upload Image", 'flatter') ?></h3>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="bbody">
@@ -125,13 +125,13 @@ endif;
                                                             <input type="hidden" id="x2_cover" name="x2_cover" />
                                                             <input type="hidden" id="y2_cover" name="y2_cover" />
 
-                                                            <h4>Step1: Please select image file</h4>
+                                                            <h4><?php _e("Step1: Please select image file", 'flatter') ?></h4>
                                                             <div class="choose-file"><input type="file" name="file_cover_img" id="image_file_cover" onchange="fileSelectHandlerCover()" /></div>
 
                                                             <div class="error"></div>
                                                             <div id="loader-icon_cover" style="display:none;"><img src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" /></div>
                                                             <div class="step2">
-                                                                <h4>Step2: Please select a crop region</h4>
+                                                                <h4><?php _e("Step2: Please select a crop region", 'flatter') ?></h4>
                                                                 <img id="preview_cover" />
 
                                                                 <div class="info">
@@ -149,7 +149,7 @@ endif;
                                                 </div>
                                                 <div class="clear"></div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php _e("Close", 'flatter') ?></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,7 +187,7 @@ endif;
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h3 class="modal-title">Upload Image</h3>
+                                                        <h3 class="modal-title"><?php _e("Upload Image", 'flatter') ?></h3>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="bbody">
@@ -200,13 +200,13 @@ endif;
                                                                 <input type="hidden" id="x2" name="x2" />
                                                                 <input type="hidden" id="y2" name="y2" />
 
-                                                                <h4>Step1: Please select image file</h4>
+                                                                <h4><?php _e("Step1: Please select image file", 'flatter') ?></h4>
                                                                 <div><input type="file" name="image_file" id="image_file" onchange="fileSelectHandler()" /></div>
 
                                                                 <div class="error"></div>
                                                                 <div id="loader-icon" style="display:none;"><img src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" /></div>
                                                                 <div class="step2">
-                                                                    <h4>Step2: Please select a crop region</h4>
+                                                                    <h4><?php _e("Step2: Please select a crop region", 'flatter') ?></h4>
                                                                     <img id="preview" />
 
                                                                     <div class="info_img">
@@ -216,7 +216,7 @@ endif;
                                                                         <input type="hidden" id="w" name="w" />
                                                                         <input type="hidden" id="h" name="h" />
                                                                     </div>
-                                                                    <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
+                                                                    <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="<?php _e("Upload", 'flatter') ?>" /></div>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -249,7 +249,7 @@ endif;
                                                 ?>
                                             </h5>
                                             <span class="description-text">
-                                                Follow
+                                               <?php _e("Follow", 'flatter') ?> 
                                             </span>
                                         </div>
                                     </div>
@@ -266,7 +266,7 @@ endif;
                                                 ?>
                                             </h5>
                                             <span class="description-text">
-                                                Followers
+                                                <?php _e("Followers", 'flatter') ?>
                                             </span>
                                         </div>
                                     </div>
@@ -277,7 +277,7 @@ endif;
                                                 echo get_user_item_likes($user['user_id']);
                                                 ?>
                                             </h5>
-                                            <span class="description-text">Likes</span>
+                                            <span class="description-text"><?php _e("Likes", 'flatter') ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -288,16 +288,16 @@ endif;
                                         $follow_user_id = $user['user_id'];
                                         ?>
                                         <?php user_follow_btn_box($user_id, $follow_user_id) ?>
-                                        <button class="btn btn-default font-12 bold chat-user1" to-user-id = "<?php echo $user['user_id'] ?>">Tchat</button>
+                                        <button class="btn btn-default font-12 bold chat-user1" to-user-id = "<?php echo $user['user_id'] ?>"><?php _e("Tchat", 'flatter') ?></button>
                                         <?php
                                         $circle_data = get_user_circle_data($user_id);
                                         if (!empty($circle_data) && in_array($follow_user_id, $circle_data)):
                                             ?>
-                                            <button class="btn btn-default font-12 bold last_btn remove_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>">Remove to circle</button>
+                                            <button class="btn btn-default font-12 bold last_btn remove_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>"><?php _e("Remove to circle", 'flatter') ?></button>
                                             <?php
                                         else:
                                             ?>
-                                            <button class="btn btn-default font-12 bold last_btn add_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>">Circle</button>
+                                            <button class="btn btn-default font-12 bold last_btn add_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>"><?php _e("Circle", 'flatter') ?></button>
                                         <?php
                                         endif;
                                         ?>
@@ -314,19 +314,19 @@ endif;
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <span class="bold"> Filters </span>
+                                <span class="bold"> <?php _e("Filters", 'flatter') ?> </span>
                                 <!-- /.box-tools -->
                             </div>
                             <!-- /.box-header -->
 
                             <div class="box-body" style="display: block;">                             
                                 <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                    <option value="all">All</option> 
-                                    <option value="image">Image</option>                                
-                                    <option value="video">Video</option>                                
-                                    <option value="gif">Gif</option>                                
-                                    <option value="music">Music</option>                                
-                                    <option value="podcast">Podcast</option>                                
+                                    <option value="all"><?php _e("All", 'flatter') ?></option> 
+                                    <option value="image"><?php _e("Image", 'flatter') ?></option>                                
+                                    <option value="video"><?php _e("Video", 'flatter') ?></option>                                
+                                    <option value="gif"><?php _e("Gif", 'flatter') ?></option>                                
+                                    <option value="music"><?php _e("Music", 'flatter') ?></option>                                
+                                    <option value="podcast"><?php _e("Podcast", 'flatter') ?></option>                                
                                 </select>
                             </div> 
 
@@ -359,8 +359,8 @@ endif;
                             </div>
                             <div class="box-body" style="display: block;">                            
                                 <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
-                                    <img src="<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>" width="20px">  Search</button> or 
-                                <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset">Reset</button>
+                                    <img src="<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>" width="20px">  <?php _e("Search", 'flatter') ?></button><?php _e("or", 'flatter') ?>  
+                                <button type="reset" class="btn btn-box-tool reset-button" data-toggle="tooltip" title="Reset"><?php _e("Reset", 'flatter') ?></button>
                             </div>
                         </div>
                         <!-- /.box -->                 
@@ -370,14 +370,14 @@ endif;
             <div class="box_post2" id="box_post2">
                 <div class="col-md-8 padding-left-0">
                     <ul class="nav nav-tabs user_profile_navigation bg-white">
-                        <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)">Post</a></li>
-                        <li class="user_info"><a data-toggle="tab" data-target="#user_info" href="javascript:void(0)">Infos</a></li>
+                        <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)"><?php _e("Post", 'flatter') ?></a></li>
+                        <li class="user_info"><a data-toggle="tab" data-target="#user_info" href="javascript:void(0)"><?php _e("Infos", 'flatter') ?></a></li>
                         <?php if (osc_user_id() == osc_logged_user_id()): ?>
-                            <li class="user_watchlist"><a data-toggle="tab" data-target="#user_watchlist" href="javascript:void(0)">Watchlist</a></li>
+                            <li class="user_watchlist"><a data-toggle="tab" data-target="#user_watchlist" href="javascript:void(0)"><?php _e("Watchlist", 'flatter') ?></a></li>
                         <?php endif; ?>
-                        <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)">Follows</a></li>
+                        <li class="user_follower"><a data-toggle="tab" data-target="#user_follower" href="javascript:void(0)"><?php _e("Follows", 'flatter') ?></a></li>
                         <?php if (osc_user_id() == osc_logged_user_id()): ?>
-                            <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)">Circle</a></li>
+                            <li class="user_circle"><a data-toggle="tab" data-target="#user_circle" href="javascript:void(0)"><?php _e("Circle", 'flatter') ?></a></li>
                         <?php endif; ?>
                     </ul>  
                     <?php // endif;   ?>
@@ -394,11 +394,11 @@ endif;
                                         <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe.png" ?>" class="post_icon">
                                     </div>
                                     <div class="col-md-7 padding-0">
-                                        <div class="col-md-12 light_gray bold padding-bottom-10"> Nothing to show for now </div>
-                                        <div class="col-md-12 font-color-black padding-bottom-13per">Nothing has been post yet on that profile page</div>
+                                        <div class="col-md-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
+                                        <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
                                         <div class="col-md-12">
                                             <a href="javascript:void(0)" class="free_account" >
-                                                <button class="btn btn-info border-radius-0">Publish Something</button>
+                                                <button class="btn btn-info border-radius-0"><?php _e("Publish Something", 'flatter') ?></button>
                                             </a>
                                         </div>
                                     </div>                                
@@ -456,7 +456,7 @@ endif;
                                     <div class="col-md-offset-1 col-md-10">
                                         <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
                                             <div class="col-md-10  margin-bottom-20">
-                                                <input type="text" class="bold follower_search_text search_text" placeholder=" who are you looking for among your followers?">
+                                                <input type="text" class="bold follower_search_text search_text" placeholder="<?php _e("who are you looking for among your followers?", 'flatter') ?>">
                                             </div>
                                             <div class="follower-search-button search-button col-md-1">
                                                 <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -477,9 +477,9 @@ endif;
                                             <img src="<?php echo osc_current_web_theme_url() . "images/follow_user.png" ?>" class="post_icon">
                                         </div>
                                         <div class="col-md-7 padding-0">
-                                            <div class="col-md-12 light_gray bold padding-bottom-10"> No user found</div>
-                                            <div class="col-md-12 font-color-black padding-bottom-13per">When people are following you ther are display just right here then you can better manage them and see who likes you.  </div>
-                                        </div>                                
+                                            <div class="col-md-12 light_gray bold padding-bottom-10"> <?php _e("No user found", 'flatter') ?></div>
+                                            <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e(" When people are following you ther are display just right here then you can better manage them and see who likes you", 'flatter') ?> </div>
+                                        </div>             .                   
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -511,7 +511,7 @@ endif;
                                         <div class="col-md-offset-1 col-md-10">
                                             <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
                                                 <div class="col-md-10  margin-bottom-20">
-                                                    <input type="text" class="bold circle_search search_text" placeholder="Who are you looking for among your circle?">
+                                                    <input type="text" class="bold circle_search search_text" placeholder="<?php _e("Who are you looking for among your circle?", 'flatter') ?>">
                                                 </div>
                                                 <div class="circle-search-button search-button col-md-1">
                                                     <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -532,8 +532,9 @@ endif;
                                                 <img src="<?php echo osc_current_web_theme_url() . "images/user.png" ?>" class="post_icon">
                                             </div>
                                             <div class="col-md-7 padding-0">
-                                                <div class="col-md-12 light_gray bold padding-bottom-10"> No user found</div>
-                                                <div class="col-md-12 font-color-black padding-bottom-13per">You can add people to your circle at anytime. That's the quicker and easier way to find back people you like to discuss with.</div>
+                                                <div class="col-md-12 light_gray bold padding-bottom-10"> <?php _e("No user found", 'flatter') ?></div>
+                                                <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e("You can add people to your circle at anytime. That's the quicker and easier way to find back people you like to discuss with.", 'flatter') ?>
+                                                    </div>
                                             </div>                                
                                         </div>
                                     <?php endif; ?>
@@ -911,7 +912,7 @@ function custom_script() {
                     $('.user_posts_container').css({'opacity': '1'});
                     if (data.indexOf("Nothing to show") >= 0) {
                         if (page_number === 1) {
-                            $('.result_text_message').html('<h2 class="result_text">Ends of results</h2>');
+                            $('.result_text_message').html('<h2 class="result_text">'.<?php _e("Ends of results", 'flatter') ?>.'</h2>');
                         } else if ($('.usepost_no_record').size() < 1) {
                             $('.result_text_message').html(data);
                         }

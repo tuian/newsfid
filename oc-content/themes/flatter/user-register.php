@@ -18,10 +18,10 @@ osc_current_web_theme_path('header.php');
                     <div class="row">
                         <div class="col-md-10 col-md-offset-2">
                             <span class="login-text">
-                                <a href="<?php echo osc_user_login_url() ?>">Login</a> 
+                                <a href="<?php echo osc_user_login_url() ?>"><?php _e("Login", 'flatter') ?></a> 
                             </span>
                             <span class="login-text">
-                                <span class="bold">Register</span>
+                                <span class="bold"><?php _e("Register", 'flatter') ?></span>
                             </span>
                         </div>
                     </div>
@@ -49,10 +49,11 @@ osc_current_web_theme_path('header.php');
                             <div class="col-md-5 margin-l-m-10">
                                 <div class="row background-white padding-top-13per padding-bottom-13per">
                                     <div class="col-md-12">
-                                        <h2> Create an account for free </h2>
+                                        <h2> <?php _e("Create an account for free", 'flatter') ?> </h2>
                                         <span>
-                                            Newsfid is an instant cloud service that hosts news and stories about what you are interesting for.  <br/><br/>
-                                            You can now follow organizations and  people and do even much more.
+                                            <?php _e("Newsfid is an instant cloud service that hosts news and stories about what you are interesting for.  <br/><br/>
+                                            You can now follow organizations and  people and do even much more.", 'flatter') ?>
+
                                         </span>
                                     </div>
                                 </div>
@@ -66,7 +67,7 @@ osc_current_web_theme_path('header.php');
                                     </div>
 
                                     <div class="col-md-9 col-sm-9">
-                                        I agree to the <a class="clr" href="<?php echo osc_base_url() . '?page=page&id=34' ?>" target="_blank"><?php _e("terms", 'flatter'); ?></a>.
+                                        <?php _e("I agree to the", 'flatter') ?> <a class="clr" href="<?php echo osc_base_url() . '?page=page&id=34' ?>" target="_blank"><?php _e("terms", 'flatter'); ?></a>.
                                     </div>
                                 </div>
 
@@ -111,6 +112,41 @@ osc_current_web_theme_path('header.php');
     <!--<input type="text" name="s_birthday" class="form-control" id="s_birthday" placeholder="<?php _e('Birthday', 'flatter'); ?>">-->
                                                 <input type="date" name="s_birthday" value="" class="dropdate s_birthday" id="s_birthday">
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                                $data = new DAO();
+                                $data->dao->select("l.*");
+                                $data->dao->from(DB_TABLE_PREFIX . 't_locale as l');
+                                $data->dao->where("l.b_enabled = 1");
+                                $languages = $data->dao->get();
+                                $languages = $languages->result();
+                                ?>
+                                <div class="row margin-bottom-5">
+                                    <div class="col-md-12">
+                                        <div class="form-group">   
+                                            <select name="mother_tongue" class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                                <option value=""><?php echo __('Mother Language...', 'flatter'); ?></option>                                
+                                                <?php
+                                                foreach ($languages as $l):
+                                                    echo '<option value="' . $l['pk_c_code'] . '">' . $l['s_name'] . '</option>';
+                                                endforeach;
+                                                ?>           
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row margin-bottom-5">
+                                    <div class="col-md-12">
+                                        <div class="form-group">   
+                                            <select name="read_language[]" class="form-control select2 post_type_filter" multiple="" id="reading_laguage" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                                <?php
+                                                foreach ($languages as $l):
+                                                    echo '<option value="' . $l['pk_c_code'] . '">' . $l['s_name'] . '</option>';
+                                                endforeach;
+                                                ?>                               
+                                            </select>                                            
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +240,9 @@ function new_footer() {
                 'onText': '<?php echo __('Yes', 'flatter') ?>',
                 'offText': '<?php echo __('No', 'flatter') ?>'
             });
-
+            $("#reading_laguage").select2({
+                placeholder: "<?php echo __('Reading Language...', 'flatter'); ?>",
+            });
             //$('#s_birthday').datepicker();
             //            $('#countryId').on('change', function () {
             //                var c_id = $(this).val();
@@ -293,7 +331,7 @@ function new_footer() {
             $('.dropdate').dropdate({
                 dateFormat: 'yyyy/mm/dd'
             });
-        });               
+        });
     </script>
     <?php
 }

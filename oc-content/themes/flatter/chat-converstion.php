@@ -16,7 +16,7 @@ if ($_REQUEST['action'] == "chat-converstion"):
 
             <div class="background-white padding-10">
                 <div class="bold">
-                    <span class="orange padding-right-10"> With</span> <?php echo $user_to['user_name']; ?>
+                    <span class="orange padding-right-10"><?php _e("With", 'flatter'); ?> </span> <?php echo $user_to['user_name']; ?>
                 </div>            
             </div>
             <div  class="col-md-12 border-bottom-gray"></div>
@@ -24,9 +24,9 @@ if ($_REQUEST['action'] == "chat-converstion"):
                 <span class="dropdown vertical-row pull-right">
                     <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                        <li class="pointer"><a>Block this user</a></li>
-                        <li class="close_chat pointer"><a> Close this chat</a></li>
-                        <li class="pointer"><a>Turn chat off</a></li>
+                        <li class="pointer"><a><?php _e("Block this user", 'flatter'); ?></a></li>
+                        <li class="close_chat pointer"><a><?php _e("Close this chat", 'flatter'); ?> </a></li>
+                        <li class="pointer"><a><?php _e("Turn chat off", 'flatter'); ?></a></li>
                     </ul>
                 </span>
             </div>

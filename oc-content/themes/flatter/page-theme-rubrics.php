@@ -56,12 +56,12 @@ endif;
 ?>
 
 <div id="columns" class="user-interest">
-    <h3 class="col-md-9">Center of interest</h3>    
+    <h3 class="col-md-9"><?php _e("Center of interest", 'flatter') ?></h3>    
     <div class="clearfix"></div>
     <div class="theme-interest-container">
         <ul class="nav">
-            <li class="theme-interest-tab <?php echo $active == '1' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url(); ?>"> Themes</a></li>
-            <li class="theme-interest-tab <?php echo $active == '2' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url() . '&type=interest'; ?>">Rubrics</a></li>            
+            <li class="theme-interest-tab <?php echo $active == '1' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url(); ?>"><?php _e("Themes", 'flatter') ?> </a></li>
+            <li class="theme-interest-tab <?php echo $active == '2' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url() . '&type=interest'; ?>"><?php _e("Rubrics", 'flatter') ?></a></li>            
         </ul> 
     </div>
     <?php if (isset($_GET['type']) && $_GET['type'] == 'interest'): ?>

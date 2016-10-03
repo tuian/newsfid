@@ -13,9 +13,9 @@ if (!$users_watchlist):
             <img src="<?php echo osc_current_web_theme_url() . "images/documentation.png" ?>" class="post_icon">
         </div>
         <div class="col-md-7 padding-0">
-            <div class="col-md-12 light_gray bold padding-bottom-10"> No watchlist posts found</div>
-            <div class="col-md-12 font-color-black padding-bottom-13per">Add to watchlist any posts you wish to read later. That is a good way to keep things if you need to hurry up because of something else to do in ruch</div>
-        </div>                                
+            <div class="col-md-12 light_gray bold padding-bottom-10"> <?php _e("No watchlist posts found", 'flatter') ?></div>
+            <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e("Add to watchlist any posts you wish to read later. That is a good way to keep things if you need to hurry up because of something else to do in ruch                             ", 'flatter') ?></div>
+        </div>   
     </div> 
     <?php
     return;
@@ -61,7 +61,7 @@ if ($items):
                     </div>
                     <!-- /.user-block -->
                     <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="<?php _e("Mark as read", 'flatter') ?>">
                             <i class="fa fa-circle-o"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -87,7 +87,7 @@ if ($items):
 
                     &nbsp;&nbsp;&nbsp;
                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                        <?php echo 'Comments' ?>
+                        <?php echo _e("Comments", 'flatter') ?>
                     </span>
                     &nbsp;&nbsp;
                     <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
@@ -114,7 +114,7 @@ if ($items):
                         ?>
                         <?php if (count($c_data) > 3): ?>
                             <div class="box-body">
-                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> Display <?php echo count($c_data) - 3 ?> comments more </span>
+                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?> <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter') ?> </span>
                                 <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                             </div>
                         <?php endif; ?>
@@ -126,7 +126,7 @@ if ($items):
                             ?>
                             <?php
                             if ($k > 2 && !$load_more && count($c_data) > 3):
-                                $load_more = 'load more';
+                                $load_more = _e("load more", 'flatter');
                                 ?>                                
                                 <div class="load_more">
                                     <?php
@@ -172,7 +172,7 @@ if ($items):
                                 <?php get_user_profile_picture($current_user['user_id']) ?>
                             </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                             <div class="img-push">
-                                <textarea class="form-control input-sm comment_text" placeholder="Press enter to post comment"></textarea>
+                                <textarea class="form-control input-sm comment_text" placeholder="<?php _e("Press enter to post comment", 'flatter') ?>"></textarea>
                             </div>
                         </form>
                     </div>
@@ -185,5 +185,5 @@ if ($items):
     ?>
     <?php
 else:
-    echo 'No watchlist item found';
+    echo _e("No watchlist item found", 'flatter');
 endif;

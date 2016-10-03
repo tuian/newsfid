@@ -51,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 endif;
                 osc_redirect_to(osc_user_public_profile_url(osc_logged_user_id()));
             } else {
-                osc_add_flash_error_message(_m('unknown problem!'));
+                osc_add_flash_error_message(_e("Unknown problem!", 'flatter'));
             }
         } else {
-            osc_add_flash_error_message(_m('file is too small or large'));
+            osc_add_flash_error_message( _e("File is too small or large", 'flatter'));
         }
     } elseif (isset($_FILES['file_cover_img']['name'])) {
         if (!$_FILES['file_cover_img']['error'] && $_FILES['file_cover_img']['size'] < $max_file_size) {
@@ -103,16 +103,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 endif;
                 osc_redirect_to(osc_user_public_profile_url(osc_logged_user_id()));
             } else {
-                osc_add_flash_error_message(_m('unknown problem!'));
+                osc_add_flash_error_message(_e("Unknown problem!", 'flatter'));
             }
         } else {
-            osc_add_flash_error_message(_m('file is too small or large'));
+            osc_add_flash_error_message( _e("File is too small or large", 'flatter'));
         }
     } else {
-        osc_add_flash_error_message(_m('file not set!'));
+        osc_add_flash_error_message(_e("File not set!", 'flatter'));
     }
     die;
 } else {
-    osc_add_flash_error_message(_m('bad request!'));
+    osc_add_flash_error_message(_e("Bad request!", 'flatter'));
 }
 ?>
