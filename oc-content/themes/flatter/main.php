@@ -122,12 +122,12 @@ else: {
                 <br> 
                 <h2 class="clr"><?php echo osc_get_preference("fpromo_text", "flatter_theme"); ?></h2>
 
-                <span style=" ">  Publish and share stories with the world </span> 
+                <span style=" ">  <?php echo __('Publish and share stories with the world', 'flatter'); ?> </span> 
 
                 <?php if (osc_is_web_user_logged_in()) { ?>
-                    <a href="https://newsfid.com/index.php?page=item&action=item_add"> Share a story with us now.</a>  <br><br>
+                    <a href="https://newsfid.com/index.php?page=item&action=item_add"> <?php echo __('Share a story with us now.', 'flatter'); ?></a>  <br><br>
                 <?php } else { ?>
-                    <a href="<?php echo osc_register_account_url(); ?>"> Or get an account for free now.</a>  <br><br>
+                    <a href="<?php echo osc_register_account_url(); ?>"> <?php echo __('Or get an account for free now.', 'flatter'); ?></a>  <br><br>
                 <?php } ?>                
             </div>
         </div>

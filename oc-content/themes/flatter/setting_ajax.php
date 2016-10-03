@@ -88,5 +88,23 @@ if ($_REQUEST['action'] == 'twitter'):
         echo 0;
     endif;
 endif;
+if ($_REQUEST['action'] == 'mother_tongue'):
+    $text = $_REQUEST['mother_tongue'];
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('mother_tongue' => $text), array('pk_i_id' => $user_id));
+    if ($result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+endif;
+if ($_REQUEST['action'] == 'reading_language'):
+    $text = implode(",", $_REQUEST['reading_language']);
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('reading_language' => $text), array('pk_i_id' => $user_id));
+    if ($result):
+        echo 1;
+    else:
+        echo 0;
+    endif;
+endif;
 $new_user = osc_user_id();
 ?>

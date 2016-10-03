@@ -164,6 +164,7 @@ $user_desc = $user_result->row();
                     <div class="col-md-12 menu-tabs padding-0 ">      
                         <ul class="nav nav-tabs padding-top-4per padding-bottom-20">
                             <li class="col-md-offset-1"><a href="#compte"><?php _e("Account", 'flatter') ?></a></li>
+                            <li><a href="#language"><?php _e("Mother Language", 'flatter') ?></a></li>
                             <li><a href="#contenu"><?php _e("Content", 'flatter') ?></a></li>
                             <li><a href="#moyen_de_paiement"><?php _e("Mean of payment", 'flatter') ?></a></li>
                             <li><a href="#compte_bloques"><?php _e("Bloqued account", 'flatter') ?></a></li>
@@ -230,7 +231,7 @@ $user_desc = $user_result->row();
                             $counrtry_db = osc_get_countries();
                             foreach ($counrtry_db as $key => $country) :
                                 ?>
-                                                                                <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                                                                                            <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
                             <?php endforeach; ?>
                                                                 </select>
                                                             </div>
@@ -305,7 +306,78 @@ $user_desc = $user_result->row();
                             </div>
                         </div>
                     </div>
-
+                    <?php
+                    $data = new DAO();
+                    $data->dao->select("l.*");
+                    $data->dao->from(DB_TABLE_PREFIX . 't_locale as l');
+                    $data->dao->where("l.b_enabled = 1");
+                    $languages = $data->dao->get();
+                    $languages = $languages->result();                    
+                    ?>
+                    <div class="breack-line"></div>
+                    <div id="language" class="col-md-offset-1 col-md-10 main-contant border-radius-10 border-box bg-white  padding-0">
+                        <div class="col-md-12 vertical-row padding-bottom-10">                            
+                            <h3 class="bold blue_text"><?php _e("Mother Language", 'flatter') ?></h3>                            
+                        </div>
+                        <div class="border-bottom-gray  col-md-12"></div>
+                        <div class="col-md-12 padding-top-4per vertical-row">
+                            <div class="col-md-3 col-sm-3 col-xs-5 text-right padding-0">
+                                <?php _e("Posting Language", 'flatter') ?>
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
+                                <select name="mother_tongue" id="mother_tongue" class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                    <option value=""><?php echo __('Mother Language...', 'flatter'); ?></option>                                
+                                    <?php
+                                    foreach ($languages as $l):
+                                        $selected_var = '';
+                                        if($l['pk_c_code'] == $user_info['mother_tongue']):
+                                            $selected_var =  'selected="selected"';
+                                        endif;
+                                        echo '<option value="' . $l['pk_c_code'] . '" '.$selected_var.'>' . $l['s_name'] . '</option>';
+                                    endforeach;
+                                    ?>           
+                                </select>                                                                            
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                        </div>                      
+                        <div class="row">                      
+                            <div class="col-md-3"></div>
+                            <div class="col-md-7 text-gray margin-top-10 line-height-15">
+                                It helps other users to know automatically the language
+                                your are using when doing a post. Then users can
+                                read post which fits only with their native language.
+                            </div>
+                        </div>
+                        <div class="col-md-12 padding-top-4per vertical-row">
+                            <div class="col-md-3 col-sm-3 col-xs-5 text-right padding-0">
+                                <?php _e("Reading Language", 'flatter') ?>
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
+                                <select name="read_language[]" class="form-control select2 post_type_filter" multiple="" id="reading_language" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
+                                    <?php
+                                    foreach ($languages as $l):
+                                        $selected_var = '';                                        
+                                        if (strpos($user_info['reading_language'], $l['pk_c_code']) !== false):
+                                            $selected_var =  'selected="selected"';
+                                        endif;
+                                        echo '<option value="' . $l['pk_c_code'] . '" '.$selected_var.'>' . $l['s_name'] . '</option>';
+                                    endforeach;
+                                    ?>                               
+                                </select>                                                                            
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                        </div> 
+                        <div class="row">                      
+                            <div class="col-md-3"></div>
+                            <div class="col-md-7 text-gray margin-top-10 margin-top-10 line-height-15">
+                                This language will be the Only one displays on your news feed. Depending on if you areas English or French user you can now choose to see only post writing in your native language. Other language will not be display to you.
+                            </div>
+                        </div>
+                    </div>
                     <div class="breack-line"></div>
                     <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row padding-bottom-10">
@@ -429,7 +501,7 @@ $user_desc = $user_result->row();
                         <div class="col-md-12 margin-top-20">
                             <div class="col-md-offset-2 col-md-8">
                                 <?php _e("By continuing you add this payment method to your account and accept the", 'flatter') ?>
-                                  <span class="blue_text"><?php _e("generals temrs of use", 'flatter') ?>  </span> <?php _e("and", 'flatter') ?> <span class="blue_text"><?php _e("privacy", 'flatter') ?>  </span> <?php _e("of  Newsfid services. ", 'flatter') ?> 
+                                <span class="blue_text"><?php _e("generals temrs of use", 'flatter') ?>  </span> <?php _e("and", 'flatter') ?> <span class="blue_text"><?php _e("privacy", 'flatter') ?>  </span> <?php _e("of  Newsfid services. ", 'flatter') ?> 
                             </div>
                             <div class="col-md-offset-2 col-md-8 padding-top-4per">
                                 <div class="onoffswitch">
@@ -598,7 +670,36 @@ osc_add_hook('footer', 'custom_map_script');
 function custom_map_script() {
     ?>
     <script>
-
+        $("#mother_tongue").select2({
+            placeholder: "<?php echo __('Mother Language...', 'flatter'); ?>",
+        });
+        $("#reading_language").select2({
+            placeholder: "<?php echo __('Reading Language...', 'flatter'); ?>",
+        });
+        $('#mother_tongue').change(function (){           
+           var mt = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 'mother_tongue',
+                    mother_tongue: mt,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
+            });
+        });
+        $('#reading_language').change(function (){           
+           var mt = $(this).val();
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
+                data: {
+                    action: 'reading_language',
+                    reading_language: mt,
+                },
+                success: function (data, textStatus, jqXHR) {
+                }
+            });
+        });
         $(document).on('click', '.user_localisation_edit', function () {
             $('.user_localisation_textbox').removeClass('hide');
             $('.location-box').addClass('hide');
@@ -645,8 +746,8 @@ function custom_map_script() {
                     },
                     dataType: "json",
                     success: function (data, textStatus, jqXHR) {
-                         $('.user_localisation_textbox').val(new_text);
-                         $('.user_localisation_textbox').addClass('hide');
+                        $('.user_localisation_textbox').val(new_text);
+                        $('.user_localisation_textbox').addClass('hide');
                         $('.location-box').html(new_text);
                         $('.location-box').removeClass('hide');
                     }
@@ -902,7 +1003,7 @@ function custom_map_script() {
                         }
                     });
                 } else {
-                    $('.alert_text').html(<?php _e("password does not match", 'flatter') ?>);
+                    $('.alert_text').html('<?php _e("password does not match", 'flatter') ?>');
                 }
             }
             else {

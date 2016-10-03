@@ -1020,7 +1020,7 @@ osc_add_hook('user_register_completed', 'go_to_theme_select');
 function go_to_theme_select($user) {
     if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
         $conn = getConnection();
-        $conn->osc_dbExec("UPDATE `%st_user` SET `s_firstname`= '%s',`s_birthday`= '%s',`s_gender`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_firstname'], $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $user);
+        $conn->osc_dbExec("UPDATE `%st_user` SET `s_firstname`= '%s',`s_birthday`= '%s',`s_gender`='%s', `mother_tongue`='%s', `reading_language`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_firstname'], $_REQUEST['s_birthday'], $_REQUEST['s_gender'] , $_REQUEST['mother_tongue'], implode(",", $_REQUEST['read_language']), $user);
 //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
     Session::newInstance()->_set('user_id', $user);
@@ -1055,7 +1055,7 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 function get_user_data($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.s_gender, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website, user.dt_reg_date as reg_date');
+    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.s_gender, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website, user.dt_reg_date as reg_date, user.mother_tongue, user.reading_language');
     $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
     $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext, user_cover_picture.cover_pic_ext');
     $user_data->dao->select('user_role.id as role_id, user_role.role_name as role_name, user_role.role_name_eng as role_name_eng');
