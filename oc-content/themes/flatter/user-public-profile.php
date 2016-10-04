@@ -472,7 +472,7 @@ endif;
                                 $follower_users = get_user_follower_data($user_id);
                                 if (!$follower_users):
                                     ?>
-                                    <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per">
+                                    <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
                                         <div class="col-md-4 padding-0">
                                             <img src="<?php echo osc_current_web_theme_url() . "images/follow_user.png" ?>" class="post_icon">
                                         </div>
@@ -527,7 +527,7 @@ endif;
                                     $circle_users = get_user_circle_data($user_id);
                                     if (!$circle_users):
                                         ?>
-                                        <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per">
+                                        <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
                                             <div class="col-md-4 padding-0">
                                                 <img src="<?php echo osc_current_web_theme_url() . "images/user.png" ?>" class="post_icon">
                                             </div>

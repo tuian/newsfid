@@ -8,7 +8,7 @@ endif;
 $users_watchlist = get_user_watchlist_item($user_id);
 if (!$users_watchlist):
     ?>
-    <div class="result_text col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per">
+    <div class="result_text col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
         <div class="col-md-4 padding-0">
             <img src="<?php echo osc_current_web_theme_url() . "images/documentation.png" ?>" class="post_icon">
         </div>

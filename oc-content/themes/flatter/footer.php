@@ -66,6 +66,9 @@ if (osc_is_web_user_logged_in()):
                     <span class="label message-count user_notification" data-pending-message="<?php echo $pending_msg_cnt ?>"><?php echo $pending_msg_cnt ?></span>
                 <?php endif; ?>
             </div>    
+            <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer soundpass">
+                <i class="fa fa-headphones" aria-hidden="true"></i>
+            </div>    
         </div>
 
         <div class="notification-area"></div>
@@ -154,6 +157,7 @@ if (osc_is_web_user_logged_in()):
             </div>
         </div>
         <div id="chat-box-footer"></div>
+        <div id="soundpass"><iframe width="242px" height="242px" src="<?php echo osc_current_web_theme_url().'soundcloud.php' ?>"></iframe></div>
 
     </div>	
 
@@ -182,6 +186,7 @@ if (osc_is_web_user_logged_in()):
                 });
             }
         });
+        
         $(document).on('click', '.chat-user', function () {
             var id = $(this).attr('to-user-id');
             $.ajax({
@@ -201,7 +206,6 @@ if (osc_is_web_user_logged_in()):
         $(document).on('click', '.close_chat', function () {
             $('#online-chat').css('display', 'none');
         });
-
         $(document).on('click', '.closebtn', function () {
             $('#t_chat_menu').css("display", "none");
             $('.t_chat_menu').css("transition", "0.9s");
@@ -227,12 +231,10 @@ if (osc_is_web_user_logged_in()):
                     $('.chat-menu').hide();
                     $('#chat-user-list').hide();
                     $('#online-chat').hide();
-
                 }
 
             });
         });
-
         $(document).on('click', '.chat-window-button', function () {
             $('.notification1').addClass('notification').removeClass('orange').removeClass('notification1');
             $('.notification-area').hide();
@@ -247,7 +249,6 @@ if (osc_is_web_user_logged_in()):
             $('#chat-user-list').show();
             $('#online-chat').show();
         });
-       
         $(document).on('click', '.user_tchat', function () {
             var user_id = $(this).attr('data_user_id');
             $.ajax({
@@ -292,7 +293,7 @@ if (osc_is_web_user_logged_in()):
 <?php if (osc_get_preference('anim', 'flatter_theme') != '0') { ?>
     <script src="<?php echo osc_current_web_theme_url('js/wow.min.js'); ?>"></script>
     <script type="text/javascript">
-            new WOW().init();</script>
+        new WOW().init();</script>
 <?php } ?>
 <?php osc_run_hook('footer'); ?>
 <?php if (osc_is_home_page() && !osc_is_web_user_logged_in()): ?>

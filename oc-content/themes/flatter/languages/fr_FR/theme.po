@@ -17,15 +17,15 @@ msgstr ""
 
 #: 404.php:11
 msgid "Sorry but I can't find the page you're looking for"
-msgstr ""
+msgstr "Désolé mais je ne peux pas trouver la page que vous cherchez"
 
 #: 404.php:12
 msgid "404"
-msgstr ""
+msgstr "404"
 
 #: 404.php:13
 msgid "Page not found!"
-msgstr ""
+msgstr "Page non trouvée!"
 
 #: 404.php:18
 msgid "Look for it in the most popular categories."
@@ -41,15 +41,15 @@ msgstr "Abonnez-vous maintenant"
 
 #: alert-form.php:18
 msgid "Enter your e-mail"
-msgstr ""
+msgstr "Entrer votre Email"
 
 #: chat-converstion.php:19
 msgid "With"
-msgstr ""
+msgstr "Avec"
 
 #: chat-converstion.php:27 tchat-converstion.php:164 tchat_user_data.php:128
 msgid "Block this user"
-msgstr ""
+msgstr "Bloquer cet utilisateur"
 
 #: chat-converstion.php:28
 msgid "Close this chat"
@@ -127,7 +127,7 @@ msgstr "Contactez-nous"
 
 #: contact.php:24
 msgid "Enquiry/Feedback"
-msgstr ""
+msgstr "Feedback"
 
 #: contact.php:30 item-post.php:179 user-profile.php:70
 #: user-register(old).php:38 user-register.php:42
@@ -181,7 +181,7 @@ msgid "Select a city..."
 msgstr ""
 
 #: ddfunctions.php:115
-msgid "Select 1a region..."
+msgid "Select a region..."
 msgstr ""
 
 #: ddfunctions.php:192 locationfind.php:202 user-register.php:264
@@ -782,10 +782,13 @@ msgstr "Annonce offensante"
 #: item_comment_ajax.php:100 popup_ajax.php:199 popup_ajax.php:400
 #: setting.php:59 setting.php:84 setting.php:100 setting.php:117
 #: setting.php:133 setting.php:181 setting.php:420 setting.php:539
-#: user_info.php:27 user_info.php:53 user_info.php:70 user_info.php:93
 #: user_posts.php:142 user_posts.php:304 user_premium_post.php:56
 msgid "Edit"
 msgstr "Modifier le post"
+
+#: user_info.php:27 user_info.php:53 user_info.php:70 user_info.php:93
+msgid "Edit"
+msgstr "Modifier"
 
 #: item_after_login_ajax.php:120 item_after_login_ajax.php:123
 #: user_posts.php:149 user_posts.php:152
@@ -1239,15 +1242,15 @@ msgstr ""
 
 #: promoted_post_ajax.php:26 subscribe.php:58
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: promoted_post_ajax.php:28 subscribe.php:60
 msgid "Quantity"
-msgstr ""
+msgstr "Quantité "
 
 #: promoted_post_ajax.php:29 subscribe.php:61
 msgid "Unit Price"
-msgstr ""
+msgstr "Prix unitaire"
 
 #: promoted_post_ajax.php:36
 msgid "Premium Post for"
@@ -1263,43 +1266,43 @@ msgstr "TOTAL"
 
 #: promoted_post_ajax.php:67
 msgid "You will get a benefits of Premium Post up to dated"
-msgstr "Méthode de paiement"
+msgstr ""
 
 #: promoted_post_ajax.php:73 subscribe.php:105
 msgid "Method of payment"
-msgstr ""
+msgstr "Méthode de paiement"
 
 #: promoted_post_ajax.php:76 subscribe.php:108
 msgid "Cardholder's name"
-msgstr ""
+msgstr "Prénom et nom du propriétaire de la carte"
 
 #: promoted_post_ajax.php:80 setting.php:450 subscribe.php:112
 msgid "Card number"
-msgstr ""
+msgstr "Numéros de la carte"
 
 #: promoted_post_ajax.php:85 setting.php:456 subscribe.php:117
 msgid "Expiration date"
-msgstr ""
+msgstr "Numéros de la carte"
 
 #: promoted_post_ajax.php:88 setting.php:459 subscribe.php:120
 msgid "CVV"
-msgstr ""
+msgstr "CVV"
 
 #: promoted_post_ajax.php:94 setting.php:465 subscribe.php:126
 msgid "MM"
-msgstr ""
+msgstr "Mois"
 
 #: promoted_post_ajax.php:101 setting.php:472 subscribe.php:133
 msgid "YY"
-msgstr ""
+msgstr "Année"
 
 #: promoted_post_ajax.php:104 setting.php:475 subscribe.php:136
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #: promoted_post_ajax.php:118 subscribe.php:150
 msgid "Zip code"
-msgstr ""
+msgstr "Code postal"
 
 #: promoted_post_ajax.php:132
 msgid "You will be redirected to PayPal"
@@ -1315,7 +1318,7 @@ msgstr ""
 
 #: promoted_post_pack.php:123
 msgid "Finish"
-msgstr ""
+msgstr "Terminé"
 
 #: promoted_post_pack.php:178 promoted_post_pack.php:261
 msgid "Pack"
@@ -1327,20 +1330,20 @@ msgstr ""
 
 #: promoted_post_pack.php:192
 msgid "Running campaign"
-msgstr ""
+msgstr "Campagne en cours"
 
 #: promoted_post_pack.php:193
 msgid "Top up now"
-msgstr ""
+msgstr "Recharger maintenant"
 
 #: promoted_post_pack.php:210
 msgid "No running campaign"
-msgstr ""
+msgstr "Aucune campagne en cours"
 
 #: promoted_post_pack.php:211
 msgid ""
 "No campaign is running for now. Top up your credit or start one at anytime."
-msgstr ""
+msgstr "Aucune campagne est en cours d'exécution pour le moment. Rechargez votre crédit ou commencer une campagne publicitaire à tout moment."
 
 #: promoted_post_pack.php:239
 msgid "Select the pack you wish to up with"
@@ -1443,11 +1446,11 @@ msgstr "Général"
 
 #: setting.php:51 user_info.php:19
 msgid "About me"
-msgstr ""
+msgstr "A propos de moi"
 
 #: setting.php:67 user_info.php:36
 msgid "Type of account"
-msgstr ""
+msgstr "Type de compte"
 
 #: setting.php:92 user-profile.php:100 user_info.php:62
 msgid "Website"
@@ -1455,7 +1458,7 @@ msgstr "Site web"
 
 #: setting.php:108 user_info.php:79
 msgid "Localisation"
-msgstr ""
+msgstr "Localisation"
 
 #: setting.php:138
 msgid "Facebook"
@@ -1696,46 +1699,46 @@ msgstr ""
 
 #: subscribe.php:62
 msgid "Amount"
-msgstr ""
+msgstr "Montant"
 
 #: subscribe.php:68
 msgid "Newsfid Premium (12 month Payment) 1 Month for free"
-msgstr ""
+msgstr "Newsfid Pro ( 12 mois sous contrat ) 1 mois gratuit offert"
 
 #: subscribe.php:99
 msgid "You will not be charged until the end of your trial period dated"
-msgstr ""
+msgstr "Vous ne serez pas facturé jusqu'à la fin de votre période d'essai en date du"
 
 #: subscribe.php:99
 msgid "You could cancel your membership online at any time."
-msgstr ""
+msgstr "Vous pouvez annuler votre abonnement en ligne à tout moment."
 
 #: subscribe.php:164
 msgid "You will be redirected to PayPal "
-msgstr ""
+msgstr "Vous allez être redirige(é ) sur Paypal"
 
 #: subscribe.php:177
 msgid "I have read and accepted the Terms & Conditions"
-msgstr ""
+msgstr "Je l'ai lu et accepté les Conditions Générales d'Utilisation"
 
 #: subscribe.php:182
 msgid ""
 " I accept the terms of use and additional requirements related to the use of "
 "newsfid service. One case of conflict with my content I agree to b I accept "
 "the terms of use"
-msgstr ""
+msgstr "J'accepte les conditions d'utilisation générales et les exigences supplémentaires liées à l'utilisation du service Newsfid."
 
 #: subscribe.php:185
 msgid "You have an option to terminate your subscription online at any time "
-msgstr ""
+msgstr "Vous avez la possibilité de résilier votre abonnement en ligne à tout moment"
 
 #: subscribe.php:187
 msgid "Activate my 30 days trials"
-msgstr ""
+msgstr "Activer mes 30 jours gratuit "
 
 #: subscribe.php:192
 msgid "Free offer valid only once"
-msgstr ""
+msgstr "offre valable une seule fois"
 
 #: subscribe.php:209
 msgid "Start newsfid pro and get 30 days trial. You can stop it when you want."
@@ -2101,27 +2104,27 @@ msgstr ""
 
 #: user-public-profile.php:459
 msgid "who are you looking for among your followers?"
-msgstr ""
+msgstr "Qui recherchez vous parmi les abonnés?"
 
 #: user-public-profile.php:480 user-public-profile.php:535 user_circle.php:129
 msgid "No user found"
-msgstr ""
+msgstr "Aucun utilisateur trouvé"
 
 #: user-public-profile.php:481
 msgid ""
 " When people are following you ther are display just right here then you can "
 "better manage them and see who likes you"
-msgstr ""
+msgstr " Lorsque les utilisateurs s’ abonnent à vous ils s’affichent ici pour vous aidez à mieux gérer vos abonnés."
 
 #: user-public-profile.php:514
 msgid "Who are you looking for among your circle?"
-msgstr ""
+msgstr "Qui recherchez vous dans votre Cercle de contact?"
 
 #: user-public-profile.php:536
 msgid ""
 "You can add people to your circle at anytime. That's the quicker and easier "
 "way to find back people you like to discuss with."
-msgstr ""
+msgstr "Vous pouvez ajouter des personnes à votre cercle à tout moment. C'est le moyen plus rapide et facile de retrouver des gens  avec qui vous aimez discuter."
 
 #: user-recover.php:27
 msgid "Send me a new password"
@@ -2243,14 +2246,14 @@ msgstr ""
 
 #: user_watchlist.php:16
 msgid "No watchlist posts found"
-msgstr ""
+msgstr "Aucune sauvegarde trouvée"
 
 #: user_watchlist.php:17
 msgid ""
 "Add to watchlist any posts you wish to read later. That is a good way to "
 "keep things if you need to hurry up because of something else to do in "
 "ruch                             "
-msgstr ""
+msgstr "Sauvegarder toute les publications que vous souhaitez lire plus tard. Voilà une bonne façon de garder les choses à portée de main si vous voulez vous y consacrer plus tard. "
 
 #: user_watchlist.php:64
 msgid "Mark as read"

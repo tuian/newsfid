@@ -19,7 +19,7 @@ $follower_users = get_user_circle_data($user_id);
 
     $user_search_data->dao->orderBy('user.s_name', 'ASC');
     $user_search_result = $user_search_data->dao->get();
-    $user_search_array = $user_search_result->result();
+    $user_search_array = $user_search_result->result(); pr($user_search_array);
 if ($user_search_array):
     ?>
     <div class="col-md-12 padding-0">

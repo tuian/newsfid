@@ -112,7 +112,7 @@ function location() {
                 } else {
 
                     // add empty select
-                    $("#region").before('<select class="form-control" name="regionId" id="regionId" ><option value=""><?php echo osc_esc_js(__("Select 1a region...")); ?></option></select>');
+                    $("#region").before('<select class="form-control" name="regionId" id="regionId" ><option value=""><?php echo osc_esc_js(__("Select a region...")); ?></option></select>');
                     $("#region").remove();
 
                     $("#city").before('<select class="form-control" name="cityId" id="cityId" ><option value=""><?php echo osc_esc_js(__("Select a city...")); ?></option></select>');

@@ -500,6 +500,10 @@ found!');</script>";
                                         <i class="fa fa-user-plus"></i><?php echo __('Register', 'flatter'); ?>
                                     </a>
                                 </li>
+                                <button class="btn button-orng-box margin-left-5">We have our owenr radio</button>
+                                <div class="soundpass_loggin_page">
+                                    <iframe width="192px" height="192px" src="<?php echo osc_current_web_theme_url().'soundcloud.php' ?>"></iframe>
+                                </div>
                             <?php endif; ?>
                             <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
 
@@ -514,7 +518,7 @@ found!');</script>";
 
                         </ul>
 
-                    </section>
+                        </section>
                     <!-- /.sidebar -->
                 </aside>
             </div>

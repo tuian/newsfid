@@ -1,0 +1,554 @@
+@import url(https://fonts.googleapis.com/css?family=Arimo);
+body {
+    background-color: transparent;
+}
+
+html,
+body {
+    overflow: hidden;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-family: 'TitilliumText22LRegular', Arial, sans-serif;
+}
+
+a {
+    font-weight: bold;
+
+    text-decoration: none;
+
+    color: #f15a23;
+}
+h1 {
+    font-family: 'TitilliumText22LBold', Arial, sans-serif;
+    font-size: 80px;
+
+    position: relative;
+
+    margin-top: 0;
+
+    color: #292929;
+    text-shadow: 2px 2px 2px white;
+}
+
+.ui-tooltip {
+    font-size: 12px !important;
+
+    padding: 5px !important;
+
+    background-color: #fff;
+}
+
+#global {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: #eb2369;
+}
+
+#main {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-image: url(../images/bg.png);
+}
+
+#header {
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    z-index: 999;
+    font-size: 20px;
+}
+#header a{
+    text-shadow: 2px 2px #000;
+    color: #fff;
+}
+
+#pochette {
+    position: absolute;
+    top: 0px;
+    left: 1px;
+
+    width: 100%;
+    height: 100%;
+}
+
+#pochetteHolder {
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    left: 1px;
+
+    width: 100%;
+    height: 100%;
+
+    background-image: url(../images/coverholder.png);
+}
+
+#mainTitrage {
+    position: fixed;
+    bottom: 2%;
+    left: -15%;
+    overflow: hidden;
+    width: 100%;
+    height: 53px;
+}
+
+
+#effectTitrage {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#titrage {
+    font-family: 'TitilliumText22LBold', Arial, sans-serif;
+
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    left: 41px;
+
+    overflow: hidden;
+
+    width: 168px;
+    height: 47px;
+    margin-top: 6px;
+
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+#titrage .artiste {
+    font-size: 16px;
+    line-height: 22px;
+
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    width: 168px;
+    height: 25px;
+
+    text-align: center;
+
+    color: #fff;
+}
+
+#titrage .titre {
+    font-size: 12px;
+    line-height: 18px;
+
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    width: 168px;
+    height: 20px;
+
+    text-align: center;
+
+    color: #e5e5e5;
+}
+
+#titrageBg {
+    position: absolute;
+    z-index: 15;
+    top: 0;
+    left: 0;
+
+    zoom: 1;/* HACK POUR IE */
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0.64;
+    background: #000;
+
+    -moz-opacity: 0.64;
+    -khtml-opacity: 0.64;
+    -ms-filter: 'alpha(opacity=64)';
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=64);
+    filter: alpha(opacity=64);
+}
+
+#titrageBgColor {
+    position: absolute;
+    z-index: 12;
+    top: 0;
+    left: 0;
+
+    zoom: 1;/* HACK POUR IE */
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0.52;
+    background: #eb2369;
+
+    -moz-opacity: 0.52;
+    -khtml-opacity: 0.52;
+    -ms-filter: 'alpha(opacity=52)';
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=52);
+    filter: alpha(opacity=52);
+}
+
+#sharePanel {
+    position: absolute;
+    z-index: 20;
+    top: 62px;
+    left: 0;
+
+    width: 100%;
+    height: 180px;
+}
+
+#sharePanel p {
+    font-family: 'TitilliumText22LBold', Arial, sans-serif;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+#sharePanel ul {
+    position: relative;
+
+    margin: 0;
+    margin-left: 45px;
+    padding: 0;
+
+    list-style: none;
+}
+
+#sharePanel ul li {
+    float: left;
+
+    margin-left: 15px;
+}
+
+#sharePanel input {
+    position: absolute;
+    top: 130px;
+    left: 21px;
+
+    width: 200px;
+}
+
+#closeShare {
+    position: absolute;
+    top: 130px;
+    top: 13px;
+    left: 21px;
+    left: 217px;
+
+    width: 16px;
+    height: 16px;
+
+    cursor: pointer;
+
+    background: url('../images/close.png') no-repeat;
+}
+
+#sharePanel span.code {
+    font-family: 'TitilliumText22LBold', Arial, sans-serif;
+    font-size: 12px;
+
+    position: absolute;
+    top: 109px;
+
+    width: 100%;
+    margin-left: 1px;
+
+    text-align: center;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+#separatorShare {
+    position: absolute;
+    z-index: 20;
+    top: 60px;
+
+    width: 100%;
+    height: 1px;
+
+    opacity: 0.5;
+    background: #000;
+}
+
+#separator2Share {
+    position: absolute;
+    z-index: 20;
+    top: 61px;
+
+    width: 100%;
+    height: 1px;
+
+    opacity: 0.3;
+    background: #fff;
+}
+
+.libelle {
+    display: none;
+    visibility: hidden;
+
+    cursor: default;
+}
+
+#btnDownload {
+    position: absolute;
+    z-index: 20;
+    top: 16px;
+    left: 10px;
+
+    width: 20px;
+    height: 18px;
+
+    cursor: default;
+
+    background-image: url(../images/download.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+#btnDownload .hover {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+
+    width: 20px;
+    height: 18px;
+
+    background-image: url(../images/download.png);
+    background-repeat: no-repeat;
+    background-position: 0 -18px;
+}
+
+#btnShare {
+    position: absolute;
+    z-index: 20;
+    top: 16px;
+    left: 218px;
+
+    width: 19px;
+    height: 18px;
+
+    cursor: pointer;
+
+    background-image: url(../images/share.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+#btnShare .hover {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+
+    width: 19px;
+    height: 18px;
+
+    cursor: pointer;
+
+    background-image: url(../images/share.png);
+    background-repeat: no-repeat;
+    background-position: 0 -18px;
+}
+
+#btnPopup {
+    position: absolute;
+    top: 6px;
+    left: 228px;
+
+    width: 17px;
+    height: 17px;
+
+    cursor: pointer;
+
+    background-image: url(../images/popup.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+#btnPopup .hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 17px;
+    height: 17px;
+
+    cursor: pointer;
+}
+
+#btnPlay {
+    position: absolute;
+    top: 40%;
+    left: 42%;
+    cursor: pointer;
+    z-index: 998;
+    color: #fff;
+}
+
+#loading {
+    position: absolute;
+    top: 40%;
+    left: 37%;
+    cursor: pointer;
+    display: none;
+    color: #fff;
+}
+
+#btnStop {
+    position: absolute;
+    top: 40%;
+    left: 42%;
+    cursor: pointer;
+    display: none;
+    z-index: 998;
+    color: #fff;
+}
+#slider {
+    position: absolute;
+    bottom: 20%;
+    right: 10%;
+
+    width: 2%;
+
+    border: none;
+    background: none;
+}
+#pochette img{
+    filter: blur(5px);
+}
+#pochette_circle{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+}
+#pochette_circle img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid;
+}
+.ui-slider-vertical .ui-slider-range {
+    width: 100%;
+}
+.ui-slider-range.ui-widget-header.ui-corner-all.ui-slider-range-min{
+    background-color: red !important;
+}
+.ui-slider .ui-slider-range {
+    height:100% !important;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #red;
+    background-image: url(../images/slideron.png);
+    background-repeat: no-repeat;
+    margin-bottom: -5px;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+    width: 250% !important;
+    height: 13% !important;
+    border-radius: 50%;
+    margin-left: 0.1em !important;
+    border: 1px !important;
+    background: #fff;
+    z-index: 99;
+}
+#volume-icon{
+    color: #fff;
+    position: absolute;
+    bottom: 3%;
+    right: 8%;
+}
+
+.ui-state-default:focus {
+    outline: none !important;
+}
+
+.hd {
+    position: absolute;
+    top: 293px;
+    right: 18px;
+
+    display: none;
+
+    cursor: pointer;
+}
+
+.hd > img {
+    width: 24px;
+}
+
+.hd.off > img.on,
+.hd.on > img.off {
+    display: none;
+}
+
+.hd.off > img.off,
+.hd.on > img.on {
+    display: block;
+}
+
+.eq {
+    position: absolute;
+    top: 288px;
+    left: 206px;
+}
+
+.bar {
+    display: inline-block;
+
+    width: 4px;
+    height: 15px;
+    margin-left: -2px;
+
+    vertical-align: bottom;
+
+    background-color: #fff;
+}
+
+#memoire {
+    visibility: hidden;
+}
+
+#sm2movie {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 1px;
+    height: 1px;
+}
