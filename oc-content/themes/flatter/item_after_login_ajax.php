@@ -2,14 +2,23 @@
 require '../../../oc-load.php';
 require 'functions.php';
 $comment_user_id = osc_logged_user_id();
+$user_language = get_user_language($comment_user_id);
+$ulang = '';
+foreach ($user_language as $ul):
+    $ulang .= '"'.$ul.'",';
+endforeach;
+$ulang = rtrim($ulang, ",");
+
 $data = new DAO();
-$data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+$data->dao->select('item.*, item_location.*, item_description.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->join(sprintf('%st_item_location AS item_location', DB_TABLE_PREFIX), 'item_location.fk_i_item_id = item.pk_i_id', 'INNER');
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
+$data->dao->join(sprintf('%st_item_description AS item_description', DB_TABLE_PREFIX), 'item.pk_i_id = item_description.fk_i_item_id', 'INNER');
 $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-$data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0'));
+$data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0 AND item_description.fk_c_locale_code IN (%s)', $ulang));
 $data->dao->orderBy('item.dt_pub_date', 'DESC');
 $following_user = get_user_following_data($comment_user_id);
+//pr($data->dao);
 if ($following_user):
     $data->dao->where(sprintf('(item.fk_i_category_id IN (%s) OR item.fk_i_user_id IN (%s))', implode(',', get_user_categories($comment_user_id)), implode(',', $following_user)));
 endif;
@@ -324,7 +333,7 @@ else:
 endif;
 if (osc_logged_user_id()):
     $id = '11';
-    $description =  _e("Premium post amount", 'flatter');
+    $description =  __("Premium post amount", 'flatter');
     $amount = '1';
     $tax = '0';
     $quantity = 1;

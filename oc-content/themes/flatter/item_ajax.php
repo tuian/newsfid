@@ -1,12 +1,14 @@
 <?php
 require '../../../oc-load.php';
 require 'functions.php';
+$language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
 $db_prefix = DB_TABLE_PREFIX;
 $data = new DAO();
-$data->dao->select('item.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+$data->dao->select('item.*,  item_description.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
 $data->dao->from("{$db_prefix}t_item as item");
 $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
-$data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0'));
+$data->dao->join(sprintf('%st_item_description AS item_description', DB_TABLE_PREFIX), 'item.pk_i_id = item_description.fk_i_item_id', 'INNER');
+$data->dao->where('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0 AND item_description.fk_c_locale_code="' . $language . '"');
 $data->dao->orderBy('dt_pub_date', 'DESC');
 if ($_REQUEST['filter_value'] && !empty($_REQUEST['filter_value'])):
     $categories = get_category_array($_REQUEST['filter_value']);
@@ -163,7 +165,7 @@ if ($items):
 //elseif($page_number > 0):
 //    echo '<h2 class="result_text">No More Data Found</h2> ';
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">'.__('Nothing to show off for now.', 'flatter').'</h2>Thanks to try later</div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . __('Nothing to show off for now.', 'flatter') . '</h2>Thanks to try later</div> ';
 endif;
 ?>
 <script>

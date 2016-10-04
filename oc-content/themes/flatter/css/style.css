@@ -3882,3 +3882,6 @@ textarea.comment_text{
 .line-height-15{
     line-height: 15px;
 }
+.masonry_row{
+    min-height: 150px !important;
+}

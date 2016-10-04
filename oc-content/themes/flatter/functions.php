@@ -1672,7 +1672,7 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     $result = $data->dao->get();
     $item = $result->row();
     if ($share_value == 1 && $user_id != $item['fk_i_user_id']):
-        $message = _e("shared your post", 'flatter');
+        $message = __("shared your post", 'flatter');
         set_user_notification($user_id, $item['fk_i_user_id'], $message, $item_id, $item['pk_i_id']);
     endif;
 }
@@ -1699,14 +1699,14 @@ function user_watchlist_box($user_id, $item_id) {
     $watchlist_class = 'remove_from_watchlist';
     $action = 'remove_watchlist';
 //$fa_class = 'fa fa-user-times';
-    $watchlist_text = _e("Remove from watchlist", 'flatter'); 
+    $watchlist_text = __("Remove from watchlist", 'flatter'); 
     $user_share = get_user_watchlist_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
         $watchlist_class = 'add_watchlist';
         $action = 'add_watchlist';
 //$fa_class = 'fa fa-user-plus';
-        $watchlist_text = _e("Add to watchlist", 'flatter'); 
+        $watchlist_text = __("Add to watchlist", 'flatter'); 
     endif;
     ?>
     <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
@@ -1743,7 +1743,7 @@ function update_user_watchlist_item($user_id, $item_id, $watchlist_value) {
     $result = $data->dao->get();
     $item = $result->row();
     if ($watchlist_value == 1 && $user_id != $item['fk_i_user_id']):
-        $message = _e("added your post to his/her watchlist", 'flatter');
+        $message = __("added your post to his/her watchlist", 'flatter');
         set_user_notification($user_id, $item['fk_i_user_id'], $message, $item['pk_i_id']);
     endif;
 }
@@ -2194,7 +2194,7 @@ function update_user_circle($logged_in_user_id = NULL, $circle_user_id = NULL, $
         $user_follow_data->dao->insert(sprintf('%st_user_circle', DB_TABLE_PREFIX), $follow_array);
     endif;
     if ($circle_value == 1):
-        $message = _e("is now following you", 'flatter');
+        $message = __("is now following you", 'flatter');
         set_user_notification($logged_in_user_id, $circle_user_id, $message);
     endif;
 }
@@ -2558,7 +2558,7 @@ function check_language() {
     $list = osc_get_locales(); //list of languages in osclass
     $current = osc_current_user_locale(); //current language in osclass
 //    $browser = 'fr_FR';
-
+//index.php?page=language&auto=true&locale=fr_FR
     if (!isset($_COOKIE['osc_auto_language']) && !isset($_GET['auto'])) {
         setcookie("osc_auto_language", true, time() + 60 * 60 * 24 * 90, "/");
         if ($current != $browser) {
@@ -2572,4 +2572,22 @@ function check_language() {
 }
 
 osc_add_hook('init', check_language());
+function get_user_language($user_id){
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_data = new DAO();
+    $user_data->dao->select('user.*');
+    $user_data->dao->from("{$db_prefix}t_user user");
+    $user_data->dao->where("user.pk_i_id={$user_id}");
+    $user_data->dao->limit(1);
+    $result = $user_data->dao->get();
+    $user = $result->row();  
+    if(!empty($user)):
+        $lang= $user['reading_language'];
+        $lang = explode(",", $lang);
+    else:
+        $lang = array('en_US');
+    endif;
+    return $lang;
+}
+
 ?>

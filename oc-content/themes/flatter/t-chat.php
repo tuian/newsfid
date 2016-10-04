@@ -296,7 +296,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
             success: function (data) {
                 $('#chat-box').html(data);
                 $('#chat-box').animate({scrollTop: $('#chat-box').prop("scrollHeight")}, 500);
-                $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="'<?php _e("Write a reply....", 'flatter') ?>'"></textarea>');
+                $('.t_chat_textarea').closest('div').html('<textarea class="t_chat_textarea" placeholder="<?php _e("Write a reply....", 'flatter') ?>"></textarea>');
             }
         });
     });

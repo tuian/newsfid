@@ -74,7 +74,7 @@ $item_id = $item_data->dao->insertedId();
 
 if ($item_id) {
     $item_desc['fk_i_item_id'] = $item_id;
-    $item_desc['fk_c_locale_code'] = 'en_US';
+    $item_desc['fk_c_locale_code'] = !empty($user['mother_tongue'])?$user['mother_tongue']:'en_US';
     $item_desc['s_title'] = $_REQUEST['p_title'];
     $item_desc['s_description'] = $_REQUEST['p_disc'];
     $item_data->dao->insert("{$db_prefix}t_item_description", $item_desc);
