@@ -29,8 +29,8 @@ $(document).ready(function() {
 	var pochetteHeight = 100;
 
 	if ($typeplayer == "big") {
-		pochetteWidth = 194;
-		pochetteHeight = 194;
+		pochetteWidth = 100;
+		pochetteHeight = 100;
 	}
 
 	var pochetteUrl = "images/cover.png";
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		pochetteUrl = apiURL + '/track/cover/' + coverimg;
 	}
 
-	$('#pochette').append('<img src="' + pochetteUrl + '" width="' + pochetteWidth + '"></img>');
+	$('#pochette').append('<img src="' + pochetteUrl + '" width="' + pochetteWidth + '%"></img>');
 	$('#pochette_circle').append('<img src="' + pochetteUrl + '"></img>');
 
 	$('#artiste').text(radioName);

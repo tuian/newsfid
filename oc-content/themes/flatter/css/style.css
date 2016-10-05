@@ -2556,7 +2556,7 @@ select {
     top: 0px;
     left: 0px;
     bottom: 0px;
-    width: 14%;
+    width: 15%;
     overflow-y: auto;
 }
 .chat-notification{
@@ -2986,10 +2986,23 @@ select {
         font-size:17px;
     }
 }
-.soundpass-page .cover-img{
-    background-image: url(../images/sound_cloud.jpg);
+.soundpass-page{
+    background-image: url(../images/sound_cloud1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    color: #f68935;
+}
+.soundpass_loggin_page{
+    position: absolute;
+    bottom: 0;
+}
+.sound_text{
+    font-size: 64px;
+    font-weight: bolder;
+    border-bottom-color: #f68935;
+}
+.evolution{
+    padding-bottom: 22%;
 }
 .min-height-300{
     min-height: 300px;
@@ -3881,4 +3894,21 @@ textarea.comment_text{
 }
 .line-height-15{
     line-height: 15px;
+}
+.soundpass-show iframe{
+    width: 100%;
+    height: 100%;
+}
+.circle_sound{
+    position: absolute;
+    bottom: 25%;
+    left: 25%;
+    border: 5px solid rgba(255, 255, 255, 0.18);
+    width: 50%;
+}
+.play_btn{
+    position: absolute;
+    top: 42%;
+    left: 45%;
+    color: #fff;
 }

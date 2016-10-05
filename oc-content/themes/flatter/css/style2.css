@@ -483,6 +483,27 @@ img .user_profile_img{
     display: table-cell;
     vertical-align: middle;
 }
+@media only screen and (max-width: 1440px){
+    .soundpass-show iframe {
+        width: 89%;
+        height: 235px;
+    }
+}
+@media only screen and (min-width: 959px) and (max-width: 1024px){
+    .soundpass-show iframe{
+        width: 192px;
+        height: 192px
+    }
+    .fix_nav {
+        width: 43.7% !important;
+    }
+    .sug_button .follow_users, .follow_remove {
+        font-size: 12px;
+    }
+    #dropdownMenu2{
+        margin-right: 10px;
+    }
+}
 @media only screen and (min-width: 768px) and (max-width: 960px){
     .sidenav {
         height: 100%; /* 100% Full-height */
@@ -571,6 +592,12 @@ img .user_profile_img{
     }
     .sidebar {
         left: 0%;
+        position: inherit;
+        width: 34%;
+        padding-bottom:0px;
+    }
+    .main_content{
+        left: 0;
     }
     .box_fix{
         position:fixed;
@@ -578,7 +605,7 @@ img .user_profile_img{
         width: 97%;
     }
     .box_post{
-        left: 24.3%;
+        left: 0%;
         position:relative;
     }
     .box_fix2{

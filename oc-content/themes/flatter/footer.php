@@ -67,7 +67,7 @@ if (osc_is_web_user_logged_in()):
                 <?php endif; ?>
             </div>    
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer soundpass">
-                <i class="fa fa-headphones" aria-hidden="true"></i>
+                <a class="font-color-white"><i class="fa fa-headphones" aria-hidden="true"></i></a>
             </div>    
         </div>
 
@@ -81,6 +81,8 @@ if (osc_is_web_user_logged_in()):
                 </ul>
             </span>
         </div>
+        <div class="soundpass-show"></div>
+        <div class="soundpass-text padding-7per text-center" style="display: none">Promote your brand or company at anytime</div>
         <div class="chat-user-overflow" id="chat-user-list">                
             <?php
             if (!empty($users)):
@@ -157,7 +159,6 @@ if (osc_is_web_user_logged_in()):
             </div>
         </div>
         <div id="chat-box-footer"></div>
-        <div id="soundpass"><iframe width="242px" height="242px" src="<?php echo osc_current_web_theme_url().'soundcloud.php' ?>"></iframe></div>
 
     </div>	
 
@@ -166,6 +167,24 @@ if (osc_is_web_user_logged_in()):
 <?php endif; ?>
 <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
+    <script>
+            
+        $(function () {
+            $('.soundpass').click(function () {
+                $('.chat-menu').hide();
+                $('.chat-user-overflow').hide();
+                $('.notification_dropdown').hide();
+                $('.notification_list').hide();
+                $('.soundpass-text').show();
+                $('.soundpass-show').show();
+                if (!$('#iframe').length) {
+                    $('.soundpass-show').html('<iframe id="iframe" src="<?php echo osc_current_web_theme_url() . 'soundcloud.php' ?>" style="border: none;"></iframe>');
+                }
+            });
+        });
+    </script>
+
+
     <script>
 
         $(document).ready(function () {
@@ -186,7 +205,7 @@ if (osc_is_web_user_logged_in()):
                 });
             }
         });
-        
+
         $(document).on('click', '.chat-user', function () {
             var id = $(this).attr('to-user-id');
             $.ajax({
@@ -231,6 +250,8 @@ if (osc_is_web_user_logged_in()):
                     $('.chat-menu').hide();
                     $('#chat-user-list').hide();
                     $('#online-chat').hide();
+                    $('.soundpass-show').hide();
+                    $('.soundpass-text').hide();
                 }
 
             });
@@ -238,6 +259,8 @@ if (osc_is_web_user_logged_in()):
         $(document).on('click', '.chat-window-button', function () {
             $('.notification1').addClass('notification').removeClass('orange').removeClass('notification1');
             $('.notification-area').hide();
+            $('.soundpass-show').hide();
+            $('.soundpass-text').hide();
             $('.chat-menu').show();
             $('#chat-user-list').show();
             $('#online-chat').show();
@@ -248,6 +271,8 @@ if (osc_is_web_user_logged_in()):
             $('.chat-menu').show();
             $('#chat-user-list').show();
             $('#online-chat').show();
+            $('.soundpass-show').hide();
+            $('.soundpass-text').hide();
         });
         $(document).on('click', '.user_tchat', function () {
             var user_id = $(this).attr('data_user_id');

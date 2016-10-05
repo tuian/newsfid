@@ -67,7 +67,7 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
-               
+
 
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
@@ -480,7 +480,7 @@ found!');</script>";
                                 ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_user_login_url() ?>">
-                                        <i class="fa fa-sign-in"></i> <?php echo __('Login', 'flatter');?>
+                                        <i class="fa fa-sign-in"></i> <?php echo __('Login', 'flatter'); ?>
                                     </a>
                                 </li>
 
@@ -499,10 +499,12 @@ found!');</script>";
                                     <a href="<?php echo osc_register_account_url() ?>">
                                         <i class="fa fa-user-plus"></i><?php echo __('Register', 'flatter'); ?>
                                     </a>
+                                    <button class="btn button-orng-box margin-left-5"><a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>"><?php _e("We have our owne radio", 'flatter'); ?></a></button>
                                 </li>
-                                <button class="btn button-orng-box margin-left-5">We have our owenr radio</button>
                                 <div class="soundpass_loggin_page">
-                                    <iframe width="192px" height="192px" src="<?php echo osc_current_web_theme_url().'soundcloud.php' ?>"></iframe>
+                                    <img src="<?php echo osc_current_web_theme_url() ?>images/2.jpg" style="filter: blur(4px);">
+                                    <img src="<?php echo osc_current_web_theme_url() ?>images/1.jpg" class="img-circle circle_sound">
+                                    <i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i>
                                 </div>
                             <?php endif; ?>
                             <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
@@ -518,7 +520,7 @@ found!');</script>";
 
                         </ul>
 
-                        </section>
+                    </section>
                     <!-- /.sidebar -->
                 </aside>
             </div>
@@ -569,7 +571,7 @@ found!');</script>";
                         <?php if (!isset($_COOKIE["cookie_banner"])) { ?>
                             <div id="cookie_banner">
                                 <span><?php _e("By continuing the navigation you accept the use of cookies to deliver adapted content with your center of interest.", 'flatter'); ?>
-                                    
+
                                     <span class="cookie_btn" title="close_cookie"><?php _e("Accept", 'flatter'); ?></span>
                                 </span>
                             </div>
@@ -592,7 +594,11 @@ found!');</script>";
                                 </div>
                             </div>
                         <?php } ?>
-
+                        <script>
+                            $(document).on('click', '.play_btn', function () {
+                                window.open("<?php echo osc_current_web_theme_url() . 'soundcloud.php' ?>", "_blank", "width=500, height=400", "_self");
+                            });
+                        </script>
 
                         <script>
                             (function (i, s, o, g, r, a, m) {
@@ -686,20 +692,20 @@ found!');</script>";
                             });</script>
                         <script>
                             $(document).ready(function () {
-							$(document).on('click', '#search-btn', function () {
+                                $(document).on('click', '#search-btn', function () {
                                     var search_newsfid_text = $('.search-newsfid-text').val();
-                                    
-                                        $.ajax({
-                                            url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
-                                            data: {
-                                                search_newsfid_text: search_newsfid_text
-                                            },
-                                            success: function (data, textStatus, jqXHR) {
-                                                $('.search-newsfid-popup .modal-content').empty().append(data);
-                                                $('#newsfid-search').modal('show');
-                                            }
-                                        })
-                                   
+
+                                    $.ajax({
+                                        url: '<?php echo osc_current_web_theme_url() . 'search-newsfid.php' ?>',
+                                        data: {
+                                            search_newsfid_text: search_newsfid_text
+                                        },
+                                        success: function (data, textStatus, jqXHR) {
+                                            $('.search-newsfid-popup .modal-content').empty().append(data);
+                                            $('#newsfid-search').modal('show');
+                                        }
+                                    })
+
                                 });
                                 var a = $(document).on('keyup', '.search-newsfid-text', function () {
                                     var search_newsfid_text = $('.search-newsfid-text').val();
