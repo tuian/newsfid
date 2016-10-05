@@ -477,17 +477,18 @@ else: {
             <div class="row  effect-3">
                 <div class="col-md-12">
                     <div class="masonry_row">
-                        <?php
+                    <?php                        
+                        $language = isset($_SESSION['userLocale'])?$_SESSION['userLocale']:osc_locale_code();
                         $db_prefix = DB_TABLE_PREFIX;
                         $data = new DAO();
-                        $data->dao->select('item.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+                        $data->dao->select('item.*, item_description.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
                         $data->dao->from("{$db_prefix}t_item as item");
                         $data->dao->join(sprintf('%st_user AS item_user', DB_TABLE_PREFIX), 'item_user.pk_i_id = item.fk_i_user_id', 'INNER');
+                        $data->dao->join(sprintf('%st_item_description AS item_description', DB_TABLE_PREFIX), 'item.pk_i_id = item_description.fk_i_item_id', 'INNER');
                         $data->dao->orderBy('dt_pub_date', 'DESC');
                         $categories = get_category_array('1');
                         $data->dao->whereIn('fk_i_category_id', $categories);
-
-                        $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0");
+                        $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0 AND item_description.fk_c_locale_code='".$language."'");
 
                         $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
                         $offset = 20;
@@ -499,8 +500,7 @@ else: {
                             $items = $result->result();
                         } else {
                             $items = array();
-                        }
-
+                        }                        
                         if ($items):
                             $item_result = Item::newInstance()->extendData($items);
                             $db_prefix = DB_TABLE_PREFIX;
@@ -556,7 +556,7 @@ else: {
 
                                                     <div class="col-md-12">
                                                         <p class="item_description">
-                                                            <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>
+                                                            <?php echo osc_highlight(strip_tags($item['s_description']), 120); ?>
                                                         </p>                            
                                                     </div>
                                                     <div class="col-md-12 padding-bottom-10">
@@ -636,7 +636,7 @@ else: {
                         //elseif($page_number > 0):
                         //    echo '<h2 class="result_text">No More Data Found</h2> ';
                         else:
-                            echo '<h2 class="result_text">'._e("Nothing to show off for now. Thanks to try later", 'flatter').'</h2> ';
+                            echo '<div class="usepost_no_record"><h2 class="result_text">'.__("Nothing to show off for now.", 'flatter').'</h2>'.__('Thanks to try later').'</div>';                           
                         endif;
                         ?>
                     </div>

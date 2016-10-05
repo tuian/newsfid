@@ -1007,7 +1007,7 @@ function custom_map_script() {
                 }
             }
             else {
-<?php osc_add_flash_ok_message('Data Updated Succsessfully'); ?>
+                <?php //osc_add_flash_ok_message('Data Updated Succsessfully'); ?>
                 window.location.href = '<?php echo osc_current_web_theme_url() . 'setting.php' ?>'
             }
         });
