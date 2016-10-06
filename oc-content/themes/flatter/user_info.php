@@ -32,8 +32,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        <span class="user_info_header  padding-left-10"><?php _e("Type of account", 'flatter') ?></span>
+        <i class="col-md-2 col-sm-2 padding-0 fa fa-list" aria-hidden="true"></i>
+        <span class="col-md-9 col-sm-9 user_info_header  padding-left-10"><?php _e("Type of account", 'flatter') ?></span>
     </div>
     <div class="col-md-8 col-sm-8">
         <span class="user_type_text info_text" data_role_id="<?php echo $user_data['role_id'] ?>">
@@ -58,8 +58,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
-        <i class="fa fa-globe" aria-hidden="true"></i>
-        <span class="user_info_header padding-left-10"><?php _e("Website", 'flatter') ?></span>
+        <i class="col-md-2 col-sm-2 padding-0 fa fa-globe" aria-hidden="true"></i>
+        <span class="col-md-9 col-sm-9 user_info_header padding-left-10"><?php _e("Website", 'flatter') ?></span>
     </div>
     <div class="col-md-8 col-sm-8 user_website">
         <span class="user_website_text info_text" data_text="<?php echo osc_user_website(); ?>">
@@ -75,8 +75,8 @@ $roles = get_user_roles_array();
 
 <div class="row user_info_row  margin-0">
     <div class="col-md-4 col-sm-4">
-        <i class="fa fa-map-marker" aria-hidden="true"></i>
-        <span class="user_info_header padding-left-10"><?php _e("Localisation", 'flatter') ?></span>
+        <i class="col-md-2 col-sm-2 padding-0 fa fa-map-marker" aria-hidden="true"></i>
+        <span class="col-md-9 col-sm-9 user_info_header padding-left-10"><?php _e("Localisation", 'flatter') ?></span>
     </div>
     <div class="col-md-8 col-sm-8">
         <input type="hidden" class="city_id">

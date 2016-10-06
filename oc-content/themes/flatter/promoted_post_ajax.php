@@ -237,7 +237,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {
                                 $('.payment_result').empty().addClass('error').removeClass('success');
-                                $('.payment_result').text(<?php _e("Payment not added successfully", 'flatter') ?>);
+                                $('.payment_result').text('<?php _e("Payment not added successfully", 'flatter') ?>');
                                 $('.payment_result').text(data);
                             }
                         }

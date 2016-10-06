@@ -116,6 +116,9 @@
                 .skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn {
                     background-color:#374850 !important;
                 }
+                .sidebar{
+                    width: 15%;
+                }
             </style>
         <?php endif; ?>
         <!--[if lt IE 9]>
@@ -188,9 +191,10 @@ found!');</script>";
 
                             <div class="user-panel">
                                 <div class="pull-left image">
-                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
+                                    <a href="<?php  echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
-                                        <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">
+                                        <?php get_user_profile_picture($user['user_id'])?>
+<!--                                        <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">-->
                                         <div class="green-dot"></div>
                                     </a>
                                 </div>
@@ -499,12 +503,14 @@ found!');</script>";
                                     <a href="<?php echo osc_register_account_url() ?>">
                                         <i class="fa fa-user-plus"></i><?php echo __('Register', 'flatter'); ?>
                                     </a>
-                                    <button class="btn button-orng-box margin-left-5"><a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>"><?php _e("We have our owne radio", 'flatter'); ?></a></button>
+                                    
                                 </li>
                                 <div class="soundpass_loggin_page">
+                                    <button class="btn soundpass_btn"><a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>"><?php _e("We have our owne radio", 'flatter'); ?></a></button>
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/2.jpg" style="filter: blur(4px);">
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/1.jpg" class="img-circle circle_sound">
                                     <i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i>
+                                    <span class="sound_pass">SoundPass</span>
                                 </div>
                             <?php endif; ?>
                             <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
@@ -564,7 +570,7 @@ found!');</script>";
                     </div>
                 </div>
             </div>
-            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-10 after_logging  " ?>
+            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-10 col-sm-10 after_logging  " ?>
             <div class="<?php echo $class ?> padding-0 " id="main">
                 <div class="content-wrapper">
                     <div class="content">

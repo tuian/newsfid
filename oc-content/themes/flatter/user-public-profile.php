@@ -66,15 +66,15 @@ endif;
         if ($user_followers):
             ?>
             <div class="vertical-row">
-                <h1 class="col-md-4 text-shadow-black">
+                <h1 class="col-md-4 col-sm-4 text-shadow-black">
                     <?php
                     echo count($user_followers);
                     ?>
                 </h1> 
-                <div class="col-md-5 padding-top-13per text-shadow-black"><?php _e("FOLLOWERS", 'flatter') ?> </div>
+                <div class="col-md-5 col-sm-5 padding-top-13per text-shadow-black"><?php _e("FOLLOWERS", 'flatter') ?> </div>
             <?php endif; ?>
         </div>
-        <span class="col-md-12 text-shadow-black" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
+        <span class="col-md-12 col-sm-12 text-shadow-black" data_text="<?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>">
             <?php echo osc_user_field('s_city') . " - " . osc_user_field('s_country'); ?>
         </span> 
     </div>
@@ -87,8 +87,8 @@ endif;
 
         <div class="row wrap">
             <div class="">
-                <div class="col-md-4"  id="wrap">
-                    <div class=" bg-white col-md-12 padding-0">
+                <div class="col-md-4 col-sm-4"  id="wrap">
+                    <div class=" bg-white col-md-12 col-sm-12 padding-0">
                         <?php
                         if ($user['cover_picture_user_id']):
                             $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
@@ -142,7 +142,7 @@ endif;
                                                                     <input type="hidden" id="h_cover" name="h" />
 
                                                                 </div>
-                                                                <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
+                                                                <div class="col-md-offset-4 col-sm-offset-4 col-md-4 col-sm-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -216,7 +216,7 @@ endif;
                                                                         <input type="hidden" id="w" name="w" />
                                                                         <input type="hidden" id="h" name="h" />
                                                                     </div>
-                                                                    <div class="col-md-offset-4 col-md-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="<?php _e("Upload", 'flatter') ?>" /></div>
+                                                                    <div class="col-md-offset-4 col-sm-offset-4 col-md-4 col-sm-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="<?php _e("Upload", 'flatter') ?>" /></div>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -235,7 +235,7 @@ endif;
                             </div>
 
                             <div class="box-footer">
-                                <div class="col-md-12 padding-0 user_info_area font-12">
+                                <div class="col-md-12 col-sm-12 padding-0 user_info_area font-12">
                                     <div class="col-sm-4 border-right padding-left-0">
                                         <div class="description-block">
                                             <h5 class="description-header">
@@ -282,7 +282,7 @@ endif;
                                     </div>
                                 </div>
                                 <?php if (osc_logged_user_id() != $user['user_id']): ?>
-                                    <div class="col-md-12 padding-0 communication-tab vertical-row">
+                                    <div class="col-md-12 col-sm-12 padding-0 communication-tab vertical-row">
                                         <?php
                                         $user_id = osc_logged_user_id();
                                         $follow_user_id = $user['user_id'];
@@ -368,7 +368,7 @@ endif;
                 </div>
             </div>
             <div class="box_post2" id="box_post2">
-                <div class="col-md-8 padding-left-0">
+                <div class="col-md-8 col-sm-8 padding-left-0">
                     <ul class="nav nav-tabs user_profile_navigation bg-white">
                         <li class="active user_posts"><a data-toggle="tab" data-target="#user_posts" href="javascript:void(0)"><?php _e("Post", 'flatter') ?></a></li>
                         <li class="user_info"><a data-toggle="tab" data-target="#user_info" href="javascript:void(0)"><?php _e("Infos", 'flatter') ?></a></li>
@@ -381,29 +381,29 @@ endif;
                         <?php endif; ?>
                     </ul>  
                     <?php // endif;   ?>
-                    <div class="col-md-12 padding-0 search-box success-border">
+                    <div class="col-md-12 col-sm-12 padding-0 search-box success-border">
                     </div>
-                    <div class="border-bottom-gray col-md-12"></div>
-                    <div class="user_content col-md-12 padding-0 tab-content scroll-content">
+                    <div class="border-bottom-gray col-md-12 col-sm-12"></div>
+                    <div class="user_content col-md-12 col-sm-12 padding-0 tab-content scroll-content">
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number"> 
                             <input type="hidden" name="primium_item_id_post" id="primium_item_id_post">
                             <div class="no-user-post">
-                                <div class="col-md-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
-                                    <div class="col-md-4 padding-0">
+                                <div class="col-md-12 col-sm-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
+                                    <div class="col-md-4 col-sm-4 padding-0">
                                         <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe.png" ?>" class="post_icon">
                                     </div>
                                     <div class="col-md-7 padding-0">
-                                        <div class="col-md-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
-                                        <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
+                                        <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
+                                        <div class="col-md-12 col-sm-12">
                                             <a href="javascript:void(0)" class="free_account" >
                                                 <button class="btn btn-info border-radius-0"><?php _e("Publish Something", 'flatter') ?></button>
                                             </a>
                                         </div>
                                     </div>                                
                                 </div>
-                                <div class="border-bottom-gray col-md-12"></div>
+                                <div class="border-bottom-gray col-md-12 col-sm-12"></div>
                             </div>
                             <div class="user_posts_container"></div>
                             <div class="result_text_message"></div> 
@@ -452,19 +452,19 @@ endif;
                                                                 <div class="clear"></div>
                                 
                                                             </div>-->
-                                <div class="col-md-12 padding-0 search-box success-border">
-                                    <div class="col-md-offset-1 col-md-10">
+                                <div class="col-md-12 col-sm-12 padding-0 search-box success-border">
+                                    <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10">
                                         <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
-                                            <div class="col-md-10  margin-bottom-20">
+                                            <div class="col-md-10 col-sm-10 margin-bottom-20">
                                                 <input type="text" class="bold follower_search_text search_text" placeholder="<?php _e("who are you looking for among your followers?", 'flatter') ?>">
                                             </div>
-                                            <div class="follower-search-button search-button col-md-1">
+                                            <div class="follower-search-button search-button col-md-1 col-sm-1">
                                                 <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 border-bottom-gray"></div>
+                                <div class="col-md-12 col-sm-12 border-bottom-gray"></div>
 
                                 <div class="user_follower_box"></div>
                                 <?php
@@ -472,13 +472,13 @@ endif;
                                 $follower_users = get_user_follower_data($user_id);
                                 if (!$follower_users):
                                     ?>
-                                    <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
-                                        <div class="col-md-4 padding-0">
+                                    <div class="col-md-12 col-sm-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
+                                        <div class="col-md-4 col-sm-4 padding-0">
                                             <img src="<?php echo osc_current_web_theme_url() . "images/follow_user.png" ?>" class="post_icon">
                                         </div>
-                                        <div class="col-md-7 padding-0">
-                                            <div class="col-md-12 light_gray bold padding-bottom-10"> <?php _e("No user found", 'flatter') ?></div>
-                                            <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e(" When people are following you ther are display just right here then you can better manage them and see who likes you", 'flatter') ?> </div>
+                                        <div class="col-md-7 col-sm-7 padding-0">
+                                            <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"> <?php _e("No user found", 'flatter') ?></div>
+                                            <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e(" When people are following you ther are display just right here then you can better manage them and see who likes you", 'flatter') ?> </div>
                                         </div>             .                   
                                     </div>
                                 <?php endif; ?>
@@ -507,19 +507,19 @@ endif;
                                                                     <div class="clear"></div>
                                     
                                                                 </div>-->
-                                    <div class="col-md-12 padding-0 search-box success-border">
-                                        <div class="col-md-offset-1 col-md-10">
+                                    <div class="col-md-12 col-sm-12 padding-0 search-box success-border">
+                                        <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10">
                                             <div class="input-text-area margin-top-20 left-border-30 box-shadow-none">
-                                                <div class="col-md-10  margin-bottom-20">
+                                                <div class="col-md-10 col-sm-10 margin-bottom-20">
                                                     <input type="text" class="bold circle_search search_text" placeholder="<?php _e("Who are you looking for among your circle?", 'flatter') ?>">
                                                 </div>
-                                                <div class="circle-search-button search-button col-md-1">
+                                                <div class="circle-search-button search-button col-md-1 col-sm-1">
                                                     <button class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 border-bottom-gray"></div>
+                                    <div class="col-md-12 col-sm-12 border-bottom-gray"></div>
 
                                     <div class="user_follower_box"></div>
                                     <?php
@@ -527,13 +527,13 @@ endif;
                                     $circle_users = get_user_circle_data($user_id);
                                     if (!$circle_users):
                                         ?>
-                                        <div class="col-md-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
-                                            <div class="col-md-4 padding-0">
+                                        <div class="col-md-12 col-sm-12 padding-top-8per padding-left-7per vertical-row padding-bottom-13per background-white">
+                                            <div class="col-md-4 col-sm-4 padding-0">
                                                 <img src="<?php echo osc_current_web_theme_url() . "images/user.png" ?>" class="post_icon">
                                             </div>
-                                            <div class="col-md-7 padding-0">
-                                                <div class="col-md-12 light_gray bold padding-bottom-10"> <?php _e("No user found", 'flatter') ?></div>
-                                                <div class="col-md-12 font-color-black padding-bottom-13per"><?php _e("You can add people to your circle at anytime. That's the quicker and easier way to find back people you like to discuss with.", 'flatter') ?>
+                                            <div class="col-md-7 col-sm-7 padding-0">
+                                                <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"> <?php _e("No user found", 'flatter') ?></div>
+                                                <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e("You can add people to your circle at anytime. That's the quicker and easier way to find back people you like to discuss with.", 'flatter') ?>
                                                     </div>
                                             </div>                                
                                         </div>

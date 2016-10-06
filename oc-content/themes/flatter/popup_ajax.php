@@ -184,11 +184,11 @@ if ($item_id):
                                         <div class="box-footer box-comments border-blue-left">
                                             <div class="box-comment">
                                                 <!-- User image -->
-                                                <div class="comment_user_image col-md-1 padding-0">
+                                                <div class="comment_user_image col-md-1 col-sm-1 padding-0">
                                                     <?php get_user_profile_picture($comment_user['user_id']) ?>
                                                 </div>
 
-                                                <div class="comment-area col-md-10">
+                                                <div class="comment-area col-md-10 col-sm-10">
                                                     <span class="username">
                                                         <?php echo $comment_user['user_name']; ?>
                                                         <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
@@ -223,7 +223,7 @@ if ($item_id):
                             <?php if (osc_is_web_user_logged_in()): ?>
                                 <div class="box-footer">
                                     <form class="comment_form" data_item_id="<?php echo $item_id_pre ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                                        <div class="comment_user_image col-md-1 padding-0">
+                                        <div class="comment_user_image col-md-1 col-sm-1 padding-0">
                                             <?php get_user_profile_picture(osc_logged_user_id()) ?>
                                         </div>
                                         <!-- .img-push is used to add margin to elements next to floating images -->
@@ -385,11 +385,11 @@ if ($item_id):
                                                                 <div class="box-footer box-comments border-blue-left">
                                                                     <div class="box-comment">
                                                                         <!-- User image -->
-                                                                        <div class="comment_user_image col-md-1 padding-0">
+                                                                        <div class="comment_user_image col-md-1 col-sm-1 padding-0">
                                                                             <?php get_user_profile_picture($comment_user['user_id']) ?>
                                                                         </div>
 
-                                                                        <div class="comment-area col-md-10">
+                                                                        <div class="comment-area col-md-10 col-sm-10">
                                                                             <span class="username">
                                                                                 <?php echo $comment_user['user_name'] ?>
                                                                                 <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
@@ -424,7 +424,7 @@ if ($item_id):
                                                     <?php if (osc_is_web_user_logged_in()): ?>
                                                         <div class="box-footer">
                                                             <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                                                                <div class="comment_user_image col-md-1 padding-0">
+                                                                <div class="comment_user_image col-sm-1 col-md-1 padding-0">
                                                                     <?php get_user_profile_picture(osc_logged_user_id()) ?>
                                                                 </div>
                                                                 <!-- .img-push is used to add margin to elements next to floating images -->
@@ -573,7 +573,7 @@ if ($item_id):
                             }
                         });
                     } else {
-                        alert(<?php _e("Please select country first", 'flatter') ?>);
+                        alert('<?php _e("Please select country first", 'flatter') ?>');
                     }
                 },
                 afterSelect: function (obj) {
@@ -607,7 +607,7 @@ if ($item_id):
                             }
                         });
                     } else {
-                        alert(<?php _e("Please select region first", 'flatter') ?>);
+                        alert('<?php _e("Please select region first", 'flatter') ?>');
                     }
                 },
                 afterSelect: function (obj) {

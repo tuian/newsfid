@@ -356,7 +356,7 @@ if ($_REQUEST['action'] == 'update_post'):
                         }
                     });
                 } else {
-                    alert('Please select country first');
+                    alert('<?php _e("Please select country first", 'flatter') ?>');
                 }
             },
             afterSelect: function (obj) {
@@ -392,7 +392,7 @@ if ($_REQUEST['action'] == 'update_post'):
                         }
                     });
                 } else {
-                    alert('Please select region first');
+                    alert('<?php _e("Please select region first", 'flatter') ?>');
                 }
             },
             afterSelect: function (obj) {

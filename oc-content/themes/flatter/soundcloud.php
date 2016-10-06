@@ -50,8 +50,8 @@ require 'functions.php';
                     left: 43%;
                 }
                 #btnStop {
-                    top: 40%;
-                    left: 41%
+                    top: 41%;
+                    left: 42%
                 }
                 #loading {
                     top: 41%;

@@ -306,10 +306,10 @@ else: {
 
                                                         <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                                         <div class="col-md-12 padding-0">                                                           
-                                                            <div class="col-md-offset-2 col-md-4 col-sm-4 padding-0 sug_button">
+                                                            <div class="col-md-offset-2 col-md-4 col-sm-4 col-xs-4 padding-0 sug_button">
                                                                 <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>">Follow</button>
                                                             </div>
-                                                            <div class="col-md-4 col-sm-4 padding-left-10">         
+                                                            <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10">         
                                                                 <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>">Remove</button>
                                                             </div>
                                                         </div>

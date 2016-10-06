@@ -10,7 +10,7 @@ $logged_user = get_user_data(osc_logged_user_id());
     <div class="user-search">
 
         <ul>
-            <li class="people-search col-md-11">
+            <li class="people-search col-md-11 col-sm-11">
                 <input class="search_name" type="text" placeholder="<?php _e("Search for someone or an organization", 'flatter') ?>">
             </li>
             <li class="search-button">

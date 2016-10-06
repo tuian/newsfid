@@ -26,7 +26,7 @@ if ($_REQUEST['notification'] == 'notification'):
                     <img src="<?php echo $n['user_image'] ?>" data_user_id="<?php echo $n['from_user_id']; ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                 </div>
                 <div class="col-md-9 padding-0 bold dropdown"> <i class="fa fa-angle-down pull-right dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-hidden="true"></i>
-                    <a href="<?php echo osc_user_public_profile_url($n['from_user_id']) ?>" ><?php echo $n['user_name'] ?></a>
+                    <div class="user_chat_name"><a href="<?php echo osc_user_public_profile_url($n['from_user_id']) ?>" ><?php echo $n['user_name'] ?></a></div>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu3">
                         <li><a class="pointer mark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"><?php _e("Mark read", 'flatter'); ?> </a></li>
                         <li><a class="pointer unmark_read" mark_time="<?php echo $n['id']; ?>" to_user_id="<?php echo $n['to_user_id']; ?>"><?php _e(" Unmark as not read", 'flatter'); ?></a></li>                       

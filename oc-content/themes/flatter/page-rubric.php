@@ -124,7 +124,7 @@ function new_footer() {
                 if (checked_cat.length >= 4) {
                     $('.user_rubric_form').submit();
                 } else {
-                    alert(<?php _e("Please select at least four rubrics", 'flatter') ?>);
+                    alert('<?php _e("Please select at least four rubrics", 'flatter') ?>');
                     e.preventDefault();
                 }
             });

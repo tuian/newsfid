@@ -270,10 +270,10 @@ if ($items):
                             <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id'] ? 'border-blue-left' : '' ?>">
                                 <div class="box-comment">
                                     <!-- User image -->
-                                    <div class="comment_user_image col-md-1 padding-0">
+                                    <div class="comment_user_image col-md-1 col-sm-1 padding-0">
                                         <?php get_user_profile_picture($comment_user['user_id']) ?>
                                     </div>
-                                    <div class="comment-area col-md-10">
+                                    <div class="comment-area col-md-10 col-sm-10">
                                         <span class="username">
                                             <?php echo $comment_user['user_name'];
                                             if($comment_data['fk_i_user_id'] == $comment_user_id):

@@ -317,7 +317,7 @@ function new_footer() {
                             }
                         });
                     } else {
-                        alert('Please select country first');
+                        alert('<?php _e("Please select country first", 'flatter') ?>');
                     }
                 },
                 afterSelect: function (obj) {

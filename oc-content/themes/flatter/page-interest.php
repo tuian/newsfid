@@ -128,7 +128,7 @@ osc_current_web_theme_path('header.php');
                     if (checked_cat.length >= 1) {
                         $('.user_theme_form').submit();
                     } else {
-                        alert(<?php _e("Please select at least one theme", 'flatter'); ?>);
+                        alert('<?php _e("Please select at least one theme", 'flatter'); ?>');
                         e.preventDefault();
                     }
                 });
