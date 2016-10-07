@@ -161,7 +161,7 @@ if ($item_id):
                                     if (count($c_data) > 3):
                                         ?>
                                         <div class="box-body">
-                                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?>  <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter') ?> </span>
+                                            <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?>  <?php echo count($c_data) - 3 ?>  <?php _e(" comments more", 'flatter') ?> </span>
                                             <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                                         </div>
                                         <?php
@@ -170,7 +170,7 @@ if ($item_id):
                                     foreach ($c_data as $k => $comment_data):
                                         $comment_user = get_user_data($comment_data['fk_i_user_id']);
                                         if ($k < $total_comment - 3 && !$load_more):
-                                            $load_more = _e("load more", 'flatter');
+                                            $load_more = __("load more", 'flatter');
                                             echo '<div class="load_more">';
                                         endif;
                                         ?>
@@ -188,9 +188,9 @@ if ($item_id):
                                                     <?php get_user_profile_picture($comment_user['user_id']) ?>
                                                 </div>
 
-                                                <div class="comment-area col-md-10 col-sm-10">
+                                                <div class="comment-area">
                                                     <span class="username">
-                                                        <?php echo $comment_user['user_name']; ?>
+                                                        <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']); ?>"><?php echo $comment_user['user_name']; ?></a>
                                                         <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
                                                         <?php if($comment_data['fk_i_user_id'] == osc_logged_user_id()):  ?>
                                                         <div class="dropdown  pull-right">
@@ -362,7 +362,7 @@ if ($item_id):
                                                             if (count($c_data) > 3):
                                                                 ?>
                                                                 <div class="box-body">
-                                                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i><?php _e("Display", 'flatter') ?>  <?php echo count($c_data) - 3 ?><?php _e("comments more", 'flatter') ?>  </span>
+                                                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i><?php _e("Display", 'flatter') ?>  <?php echo count($c_data) - 3 ?> <?php _e(" comments more", 'flatter') ?>  </span>
                                                                     <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                                                                 </div>
                                                                 <?php
@@ -371,7 +371,7 @@ if ($item_id):
                                                             foreach ($c_data as $k => $comment_data):
                                                                 $comment_user = get_user_data($comment_data['fk_i_user_id']);
                                                                 if ($k < $total_comment - 3 && !$load_more):
-                                                                    $load_more =  _e("load more", 'flatter');
+                                                                    $load_more =  __("load more", 'flatter');
                                                                     echo '<div class="load_more">';
                                                                 endif;
                                                                 ?>
@@ -389,9 +389,9 @@ if ($item_id):
                                                                             <?php get_user_profile_picture($comment_user['user_id']) ?>
                                                                         </div>
 
-                                                                        <div class="comment-area col-md-10 col-sm-10">
+                                                                        <div class="comment-area">
                                                                             <span class="username">
-                                                                                <?php echo $comment_user['user_name'] ?>
+                                                                                <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']); ?>"> <?php echo $comment_user['user_name'] ?></a>
                                                                                 <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
                                                                                 <?php if($comment_data['fk_i_user_id'] == osc_logged_user_id()):  ?>
                                                                                     <div class="dropdown  pull-right">

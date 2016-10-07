@@ -16,7 +16,7 @@ if ($_REQUEST['action'] == "chat-converstion"):
 
             <div class="background-white padding-10">
                 <div class="bold">
-                    <span class="orange padding-right-10"><?php _e("With", 'flatter'); ?> </span> <?php echo $user_to['user_name']; ?>
+                    <span class="orange padding-right-10"><?php _e("With", 'flatter'); ?> </span> <a href="<?php echo osc_user_public_profile_url($to_user_id) ?>"> <?php echo $user_to['user_name']; ?></a>
                 </div>            
             </div>
             <div  class="col-md-12 border-bottom-gray"></div>

@@ -294,6 +294,9 @@ img .user_profile_img{
 .box-comments .comment-text{
     margin-left: 60px;
 }
+.box-comments .comment-area{
+    margin-left: 60px;
+}
 .comment_user_image {
     position: relative;
     width: 35px;

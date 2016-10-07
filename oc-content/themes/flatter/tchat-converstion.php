@@ -153,7 +153,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
         <div class="chat_box">
             <div class="background-white padding-10">
                 <div class="bold">
-                    <span class="orange padding-right-10"> With</span> <?php echo $user_to['user_name']; ?>
+                    <span class="orange padding-right-10"> With</span> <a><?php echo $user_to['user_name']; ?> </a>
                 </div>            
             </div>
             <div  class="col-md-12 border-bottom-gray"></div>

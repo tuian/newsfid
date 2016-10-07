@@ -22,9 +22,10 @@ $item_search_data->dao->join("{$db_prefix}t_item_description AS item_description
 $item_search_data->dao->where(array("item.b_enabled" => 1, "item.b_active" => 1));
 $item_search_data->dao->where(sprintf("item_description.s_title LIKE '%s'", '%' . $search_newsfid . '%'));
 $item_search_data->dao->orderBy('item_description.s_title', 'ASC');
+
 $item_search_result = $item_search_data->dao->get();
 $item_search_array = $item_search_result->result();
-
+//pr($item_search_array);
 ?>
 
         <!-- Modal content-->

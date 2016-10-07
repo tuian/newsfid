@@ -3817,7 +3817,7 @@ textarea.msg_textarea{
     background-image: url(../images/audio.jpg);
     background-size: cover;
 }
-input#post_media{
+input#post_media.media_video{
     width: 380%;
 }
 .pac-container.pac-logo {

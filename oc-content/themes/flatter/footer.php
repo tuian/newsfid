@@ -2,6 +2,7 @@
 <span style="padding-bottom: 10px;"></span>
 
 <?php
+
 if (osc_is_web_user_logged_in()):
     $users = get_chat_users();
     ?>
@@ -35,7 +36,7 @@ if (osc_is_web_user_logged_in()):
         <div class="chat-notification">
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">
                 <a href="<?php echo osc_base_url() ?>">
-                    <img src="<?php echo osc_current_web_theme_url() . '/images/newsfidlogo-white.png' ?>" width="20px" height="20px" style="cursor: pointer;">
+                    <img src="<?php echo osc_current_web_theme_url() . '/images/blacklogo.png' ?>" width="20px" height="20px" style="cursor: pointer;">
                 </a>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 padding-left-0 pointer text-center">

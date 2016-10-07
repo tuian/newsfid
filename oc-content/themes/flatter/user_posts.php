@@ -14,7 +14,8 @@ if (!empty($share_array)):
     $share_pk_id = implode(',', $share_array);
     $data->dao->select('item.*, CASE WHEN item_share.created IS NOT NULL THEN item_share.created ELSE item.dt_pub_date END as f_date, item_location.*, item_share.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
     $data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.item_id = item.pk_i_id', 'LEFT');
-    $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s', $share_pk_id, $user_id, 1, 1, 0));
+//    $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s AND item_share.share_value = %s', $share_pk_id, $user_id, 1, 1, 0, 1));
+    $data->dao->where(sprintf('((item.pk_i_id IN (%s) AND item_share.share_value = 1) OR item.fk_i_user_id =%s) AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s', $share_pk_id, $user_id, 1, 1, 0));
     $data->dao->orderBy('f_date', 'DESC');
 else:
     $data->dao->select('item.*, item_location.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
@@ -178,22 +179,22 @@ if ($items):
                                                         <h4><span  class="bold"> You've done it great</span></h4>
                                                         <div class="col-md-10 padding-0 padding-bottom-6per">
                                                             <?php _e("We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours ", 'flatter') ?>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 <?php else : ?>
                                                     <div class="premium-fail">
                                                         <div class="col-md-10 padding-0 padding-bottom-10">
                                                             <?php _e("We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.", 'flatter') ?>
-                                                            
+
                                                         </div>
                                                         <div class="col-md-10 padding-0 padding-bottom-10">
                                                             <?php _e("if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.", 'flatter') ?>
-                                                            
+
                                                         </div>
                                                         <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
                                                             <?php _e("You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.", 'flatter') ?>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 <?php endif; ?>
@@ -236,7 +237,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                          ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                           ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -273,7 +274,7 @@ if ($items):
                             ?>
                             <?php if (count($c_data) > 3): ?>
                                 <div class="box-body">
-                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?> <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter') ?> </span>
+                                    <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?> <?php echo count($c_data) - 3 ?>  <?php _e(" comments more", 'flatter') ?> </span>
                                     <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                                 </div>
                             <?php endif; ?>
@@ -294,22 +295,22 @@ if ($items):
                                         </div>
                                         <div class="comment-text">
                                             <span class="username">
-                                                <?php echo $comment_user['user_name'];
-                                                
-                                                if($comment_data['fk_i_user_id'] == osc_logged_user_id()):        
-                                                ?>
-                                                <div class="dropdown  pull-right">
-                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Edit'); ?></a></li>
-                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Delete'); ?></a></li>
-                                                    </ul>
-                                                </div>
-                                                <?php endif; ?>
+                                                <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']) ?>"> <?php echo $comment_user['user_name']; ?> </a>
+
+                                              <?php  if ($comment_data['fk_i_user_id'] == osc_logged_user_id()):
+                                                    ?>
+                                                    <div class="dropdown  pull-right">
+                                                        <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                        <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                            <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Edit'); ?></a></li>
+                                                            <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Delete'); ?></a></li>
+                                                        </ul>
+                                                    </div>
+                    <?php endif; ?>
                                                 <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span>
                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
-                                                <?php echo $comment_data['s_body']; ?>
+                    <?php echo $comment_data['s_body']; ?>
                                             </span>
                                         </div>
                                         <!-- /.comment-text -->
@@ -325,21 +326,21 @@ if ($items):
                         ?>
                     </div>
                     <!-- /.box-footer -->
-                    <?php if (osc_is_web_user_logged_in()): ?>
+            <?php if (osc_is_web_user_logged_in()): ?>
                         <div class="box-footer">
                             <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
                                 <?php
                                 $current_user = get_user_data(osc_logged_user_id());
                                 ?>
                                 <div class="comment_user_image">
-                                    <?php get_user_profile_picture($current_user['user_id']) ?>
+                <?php get_user_profile_picture($current_user['user_id']) ?>
                                 </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
                                     <textarea class="form-control input-sm comment_text" placeholder="<?php _e("Press enter to post comment", 'flatter') ?>"></textarea>
                                 </div>
                             </form>
                         </div>
-                    <?php endif; ?>
+            <?php endif; ?>
                     <!-- /.box-footer -->
                 </div>
             </div>
@@ -349,7 +350,7 @@ if ($items):
     ?>
     <?php
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">'. _e("Nothing to show off for now.", 'flatter').'</h2>Thanks to try later</div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . _e("Nothing to show off for now.", 'flatter') . '</h2>Thanks to try later</div> ';
 endif;
 ?>
 
@@ -403,30 +404,35 @@ endif;
             }
         });
     });
-    
+
     $(document).on('blur', '.user_comment_textbox', function () {
-            var new_text = $(this).val();
-            var data_id = $(this).attr('data_id');
-            var item_id = $(this).attr('data-item-id');
-            if (!new_text) {
-                return false;
+        var new_text = $(this).val();
+        var data_id = $(this).attr('data_id');
+        var item_id = $(this).attr('data-item-id');
+        if (!new_text) {
+            return false;
+        }
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
+            method: 'post',
+            data: {
+                action: 'user_comment',
+                comment_text: new_text,
+                comment_id: data_id,
+                item_id: item_id
+            },
+            success: function (data, textStatus, jqXHR) {
+                $('.comment_edt_' + data_id).html(new_text);
+                $('.comment_edt_' + data_id).attr('data-text', new_text);
             }
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'item_comment_ajax.php'; ?>",
-                method: 'post',
-                data: {
-                    action: 'user_comment',
-                    comment_text: new_text,
-                    comment_id: data_id,
-                    item_id: item_id
-                },
-                success: function (data, textStatus, jqXHR) {
-                    $('.comment_edt_' + data_id).html(new_text);
-                    $('.comment_edt_' + data_id).attr('data-text', new_text);
-                }
-            });
-            //$('.user_website_text').html(new_text).attr('data_text', new_text);
         });
+        //$('.user_website_text').html(new_text).attr('data_text', new_text);
+    });
+    $(document).keyup(function (event) {
+        if (event.keyCode == 13) {
+            $(".user_comment_textbox").blur();
+        }
+    });
     function editComment(comment_id, data_item_id) {
         var text = $('.comment_edt_' + comment_id).attr('data-text');
         var input_box = '<input type="text" class="user_comment_textbox" data-item-id="' + data_item_id + '" data_id="' + comment_id + '" value="' + text + '">';

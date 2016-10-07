@@ -5,7 +5,7 @@ $comment_user_id = osc_logged_user_id();
 $user_language = get_user_language($comment_user_id);
 $ulang = '';
 foreach ($user_language as $ul):
-    $ulang .= '"'.$ul.'",';
+    $ulang .= '"' . $ul . '",';
 endforeach;
 $ulang = rtrim($ulang, ",");
 
@@ -168,11 +168,11 @@ if ($items):
                                                     </div>
                                                     <div class="col-md-10 padding-0 padding-bottom-10">
                                                         <?php _e("if you are a partner organization just contact us at services@newsfid.com and we'll do it for you.", 'flatter'); ?>
-                                                        
+
                                                     </div>
                                                     <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
                                                         <?php _e("You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.", 'flatter'); ?>
-                                                        
+
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
@@ -212,7 +212,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                       ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                         ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -225,8 +225,8 @@ if ($items):
                         <?php echo 'Comments' ?>
                     </span>
                     <?php if ($user['user_id'] != osc_logged_user_id()): ?>
-                    &nbsp;&nbsp;
-                        <span class="chat-user1 pointer" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo  _e("Tchat", 'flatter'); ?></span>&nbsp;
+                        &nbsp;&nbsp;
+                        <span class="chat-user1 pointer" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo _e("Tchat", 'flatter'); ?></span>&nbsp;
                     <?php endif; ?>
                     &nbsp;&nbsp;
                     <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
@@ -254,7 +254,7 @@ if ($items):
                         ?>
                         <?php if (count($c_data) > 3): ?>
                             <div class="box-body">
-                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter'); ?> <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter'); ?> </span>
+                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter'); ?> <?php echo count($c_data) - 3 ?>  <?php _e(" comments more", 'flatter'); ?> </span>
                                 <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                             </div>
                         <?php endif; ?>
@@ -273,18 +273,19 @@ if ($items):
                                     <div class="comment_user_image col-md-1 col-sm-1 padding-0">
                                         <?php get_user_profile_picture($comment_user['user_id']) ?>
                                     </div>
-                                    <div class="comment-area col-md-10 col-sm-10">
+                                    <div class="comment-area">
                                         <span class="username">
-                                            <?php echo $comment_user['user_name'];
-                                            if($comment_data['fk_i_user_id'] == $comment_user_id):
-                                            ?>
-                                            <div class="dropdown  pull-right">
-                                                <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                    <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Edit'); ?></a></li>
-                                                    <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Delete'); ?></a></li>
-                                                </ul>
-                                            </div>
+                                            <a href="<?php echo osc_user_public_profile_url($comment_data['fk_i_user_id']) ?>"><?php echo $comment_user['user_name']; ?></a>
+                                            <?php
+                                            if ($comment_data['fk_i_user_id'] == $comment_user_id):
+                                                ?>
+                                                <div class="dropdown  pull-right">
+                                                    <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                    <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                        <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Edit'); ?></a></li>
+                                                        <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Delete'); ?></a></li>
+                                                    </ul>
+                                                </div>
                                             <?php endif; ?>
                                             <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                         </span>
@@ -333,7 +334,7 @@ else:
 endif;
 if (osc_logged_user_id()):
     $id = '11';
-    $description =  __("Premium post amount", 'flatter');
+    $description = __("Premium post amount", 'flatter');
     $amount = '1';
     $tax = '0';
     $quantity = 1;
@@ -411,7 +412,7 @@ if (osc_logged_user_id()):
                             //                                $('.payment_result').empty().addClass('success').removeClass('error');
                             //                                $('.payment_result').text('Payment added successfully');
                             //                                data = '';
-    <?php // osc_add_flash_ok_message('Payment added successfully');                             ?>
+    <?php // osc_add_flash_ok_message('Payment added successfully');                               ?>
                             alert('Payment added successfully');
                             window.location.href = "<?php echo osc_base_url(); ?>";
                         } else {

@@ -22,7 +22,7 @@ $follower_users = get_user_follower_data($user_id);
 if ($user_search_array):
     ?>
     <div class="col-md-12 padding-0">
-        <div class="user_found_text bg-white"><?php echo  _e("We found", 'flatter')?> <span class="result_count_text blue_text">' . count($user_search_array) . '</span> <?php _e("results", 'flatter') ?>'; ?></div>
+        <div class="user_found_text bg-white"><?php echo  _e("We found", 'flatter')?> <span class="result_count_text blue_text"> <?php echo  count($user_search_array)?> </span> <?php _e("results", 'flatter') ?></div>
     </div>
     <div class="col-md-12 padding-0">
         <?php foreach ($user_search_array as $user): ?>

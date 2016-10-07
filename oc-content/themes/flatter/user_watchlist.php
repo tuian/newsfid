@@ -114,7 +114,7 @@ if ($items):
                         ?>
                         <?php if (count($c_data) > 3): ?>
                             <div class="box-body">
-                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?> <?php echo count($c_data) - 3 ?> <?php _e("comments more", 'flatter') ?> </span>
+                                <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?> <?php echo count($c_data) - 3 ?>  <?php _e(" comments more", 'flatter') ?> </span>
                                 <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
                             </div>
                         <?php endif; ?>
@@ -126,7 +126,7 @@ if ($items):
                             ?>
                             <?php
                             if ($k > 2 && !$load_more && count($c_data) > 3):
-                                $load_more = _e("load more", 'flatter');
+                                $load_more = __("load more", 'flatter');
                                 ?>                                
                                 <div class="load_more">
                                     <?php
@@ -140,7 +140,7 @@ if ($items):
                                         </div>
                                         <div class="comment-text">
                                             <span class="username">
-                                                <?php echo $comment_user['user_name'] ?>
+                                                <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']) ?>"> <?php echo $comment_user['user_name'] ?> </a>
                                                 <span class="text-muted pull-right"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span><!-- /.username -->
                                             <?php echo $comment_data['s_body']; ?>

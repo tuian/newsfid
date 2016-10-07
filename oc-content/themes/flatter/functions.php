@@ -1020,7 +1020,7 @@ osc_add_hook('user_register_completed', 'go_to_theme_select');
 function go_to_theme_select($user) {
     if (isset($_REQUEST['s_birthday']) && !empty($_REQUEST['s_birthday'])):
         $conn = getConnection();
-        $conn->osc_dbExec("UPDATE `%st_user` SET `s_firstname`= '%s',`s_birthday`= '%s',`s_gender`='%s', `mother_tongue`='%s', `reading_language`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_firstname'], $_REQUEST['s_birthday'], $_REQUEST['s_gender'] , $_REQUEST['mother_tongue'], implode(",", $_REQUEST['read_language']), $user);
+        $conn->osc_dbExec("UPDATE `%st_user` SET `s_firstname`= '%s',`s_birthday`= '%s',`s_gender`='%s', `mother_tongue`='%s', `reading_language`='%s' where `pk_i_id` = %s", DB_TABLE_PREFIX, $_REQUEST['s_firstname'], $_REQUEST['s_birthday'], $_REQUEST['s_gender'], $_REQUEST['mother_tongue'], implode(",", $_REQUEST['read_language']), $user);
 //UPDATE `oc_t_user` SET `s_birthday`= now(),`s_gender`= 'male' WHERE `pk_i_id` = 75        
     endif;
     Session::newInstance()->_set('user_id', $user);
@@ -1283,7 +1283,7 @@ function time_elapsed_string($ptime) {
         if ($d >= 1) {
             if ($secs < 86400) {
                 $r = round($d);
-                return $r . ' ' . ($r > 1 ? __($a_plural[$str],'flatter') : $str) . __(' ago','flatter');
+                return $r . ' ' . ($r > 1 ? __($a_plural[$str], 'flatter') : $str) . __(' ago', 'flatter');
             } else {
 //                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
                 return date("d M", $ptime);
@@ -1613,10 +1613,10 @@ function get_item_shares_count($item_id) {
 
 function user_share_box($user_id, $item_id) {
 
-    $share_class = 'unshare';
-    $action = 'unshare';
-    $fa_class = 'fa fa-user-times';
-    $share_text = 'Unshare';
+//    $share_class = 'unshare';
+//    $action = 'unshare';
+//    $fa_class = 'fa fa-user-times';
+
     $user_share = get_user_shared_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
@@ -1624,9 +1624,12 @@ function user_share_box($user_id, $item_id) {
         $action = 'share';
         $fa_class = 'fa fa-user-plus';
         $share_text = 'Share';
+    else:
+        $share_text = 'Shared';
+        $disable = 'style="pointer-events: none;"';
     endif;
     ?>
-    <span class="share_box <?php echo $share_class ?> item_share_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
+    <span class="share_box <?php echo $share_class ?> item_share_box<?php echo $user_id . $item_id ?>" <?php echo $disable ?> data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
         <?php
         $share_count = get_item_shares_count($item_id);
         if ($share_count > 0)
@@ -1699,14 +1702,14 @@ function user_watchlist_box($user_id, $item_id) {
     $watchlist_class = 'remove_from_watchlist';
     $action = 'remove_watchlist';
 //$fa_class = 'fa fa-user-times';
-    $watchlist_text = __("Remove from watchlist", 'flatter'); 
+    $watchlist_text = __("Remove from watchlist", 'flatter');
     $user_share = get_user_watchlist_item($user_id);
 
     if (!($user_share && ( in_array($item_id, $user_share)) )):
         $watchlist_class = 'add_watchlist';
         $action = 'add_watchlist';
 //$fa_class = 'fa fa-user-plus';
-        $watchlist_text = __("Add to watchlist", 'flatter'); 
+        $watchlist_text = __("Add to watchlist", 'flatter');
     endif;
     ?>
     <span class="watch_box <?php echo $watchlist_class ?> item_watch_box<?php echo $user_id . $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
@@ -1832,28 +1835,26 @@ function get_search_popup($search_newsfid, $item_search_array, $user_search_arra
             <label  class="col-md-4  search-list"><?php _e("User", 'flatter'); ?></label>
             <label class="col-md-4 search-list"><?php _e("Publication", 'flatter'); ?></label>
         </div>
-        <?php if ($user_search_array): ?>
-            <div class="search-height col-md-12 padding-0">
-                <div class="col-md-4">
-                    <?php foreach ($user_search_array as $user) : ?>
-                        <div class="col-md-12">
-                            <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
-                                <?php echo $user['user_name']; ?>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="col-md-4">
-                    <?php foreach ($item_search_array as $item) : ?>
-                        <div class="col-md-12">
-                            <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
-                                <?php echo $item['s_title']; ?>
-                            </a>
-                        </div>
-                    <?php endforeach; ?> 
-                </div>
-            </div>   
-        <?php endif; ?>
+        <div class="search-height col-md-12 padding-0">
+            <div class="col-md-4">
+                <?php foreach ($user_search_array as $user) : ?>
+                    <div class="col-md-12">
+                        <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" >
+                            <?php echo $user['user_name']; ?>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="col-md-4">
+                <?php foreach ($item_search_array as $item) : ?>
+                    <div class="col-md-12">
+                        <a href="javascript:void(0)" class="item_title_head" data_item_id="<?php echo $item['pk_i_id'] ?>">
+                            <?php echo $item['s_title']; ?>
+                        </a>
+                    </div>
+                <?php endforeach; ?> 
+            </div>
+        </div>   
     </div>
 
     <?php
@@ -2572,7 +2573,8 @@ function check_language() {
 }
 
 osc_add_hook('init', check_language());
-function get_user_language($user_id){
+
+function get_user_language($user_id) {
     $db_prefix = DB_TABLE_PREFIX;
     $user_data = new DAO();
     $user_data->dao->select('user.*');
@@ -2580,14 +2582,13 @@ function get_user_language($user_id){
     $user_data->dao->where("user.pk_i_id={$user_id}");
     $user_data->dao->limit(1);
     $result = $user_data->dao->get();
-    $user = $result->row();  
-    if(!empty($user)):
-        $lang= $user['reading_language'];
+    $user = $result->row();
+    if (!empty($user)):
+        $lang = $user['reading_language'];
         $lang = explode(",", $lang);
     else:
         $lang = array('en_US');
     endif;
     return $lang;
 }
-
 ?>

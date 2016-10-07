@@ -132,10 +132,10 @@ require_once 'functions.php';
                         <div class="border-bottom col-md-12 col-sm-12">                 
                         </div>  
                         <div class="center-contant">
-                            <div class="col-md-12 col-sm-12 padding-10 vertical-row">
+                            <div class="col-md-12 col-sm-12 padding-10 vertical-row pointer" data-toggle="collapse" data-target="#media">
                                 <i class="fa fa-picture-o col-md-1 col-sm-1" aria-hidden="true" ></i> 
                                 <span class="padding-left-10 col-md-10 col-sm-10"><?php _e("Add media(Image/GIF/Video) ", 'flatter') ?> </span>
-                                <span class="col-md-1 col-sm-1 pointer padding-0" data-toggle="collapse" data-target="#media"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
+                                <span class="col-md-1 col-sm-1 pointer padding-0"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                             </div>
                             <div id="media" class="collapse">
                                 <div class="col-md-12 col-sm-12 border-bottom"></div>
@@ -170,7 +170,7 @@ require_once 'functions.php';
                                         <div class="bold padding-10">
                                             <?php _e("You can not choose both at the same time
                                             you can publish  image or a video link.", 'flatter') ?>
-                                            
+
                                         </div>
                                     </div>
                                 </div> 
@@ -215,7 +215,7 @@ require_once 'functions.php';
                                     </div>
                                     <div class="col-md-6 col-sm-6 text-bg-color">
                                         <div class="bold padding-10">
-                                           <?php _e(" Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.", 'flatter') ?>
+                                            <?php _e(" Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.", 'flatter') ?>
 
                                         </div>
                                     </div>
@@ -227,10 +227,10 @@ require_once 'functions.php';
                         <div class="border-bottom col-md-12 col-sm-12">                 
                         </div>
                         <div class="center-contant padding-bottom-20">    
-                            <div class="col-md-12 col-sm-12 padding-10 vertical-row">
+                            <div class="col-md-12 col-sm-12 padding-10 vertical-row pointer" data-toggle="collapse" data-target="#location">
                                 <i class="fa fa-map-marker col-md-1 col-sm-1" aria-hidden="true"></i>                        
                                 <span class="padding-left-10 col-md-10 col-sm-10"> <?php _e("Add location(Country/state/region/City/place)", 'flatter') ?>  </span>
-                                <span class="col-md-1 col-sm-1 pointer padding-0" data-toggle="collapse" data-target="#location"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
+                                <span class="col-md-1 col-sm-1 pointer padding-0"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                             </div>
                             <div id="location" class="collapse padding-bottom-20">  
                                 <div class="border-bottom col-md-12">                 
@@ -309,9 +309,9 @@ require_once 'functions.php';
 
 <!----free user post end------->
 <script>
-$(document).on('click', '.post_file_upload_container', function() {
-	$('.post_file_upload_container').css('background','none');
-});
+    $(document).on('click', '.post_file_upload_container', function () {
+        $('.post_file_upload_container').css('background', 'none');
+    });
     $('#thumbnil').hide();
     function showimage(fileInput) {
         var files = fileInput.files;
@@ -503,6 +503,23 @@ $(document).on('click', '.post_file_upload_container', function() {
             $('#post_media').attr('type', 'text');
         } else {
             $('#post_media').attr('type', 'file');
+        }
+
+        if (selected_post_type.attr('data_post_type') == 'image') {
+            $('#post_media').attr('accept', 'image/*');
+            $('#post_media').removeClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'gif') {
+            $('#post_media').attr('accept', 'image/gif');
+            $('#post_media').removeClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'music') {
+            $('#post_media').attr('accept', 'audio/*');
+            $('#post_media').removeClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'video') {
+            $('#post_media').attr('accept', 'video/*');
+            $('#post_media').addClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'podcast') {
+            $('#post_media').attr('accept', 'podcast');
+            $('#post_media').removeClass('media_video');
         }
     });
 </script>
