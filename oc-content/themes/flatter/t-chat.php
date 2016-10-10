@@ -32,7 +32,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                 </div>                
                 <div class="tab-content">
                     <?php
-                    $msg = get_chat_message_data($user_id);
+                    $msg = get_chat_message_data($user_id);                    
                     ?>
                     <div id="message" class="tab-pane fade in active ">
                         <div class="col-md-12 background-white padding-top-4per padding-bottom-13per vertical-row search-box_tchat">
@@ -60,7 +60,7 @@ $res = $update_message->dao->update("frei_chat", array('read_status' => 1), arra
                                         <img src="<?php echo $img_path; ?>" class="img img-responsive" style="width:25%; padding: 5px">
                                         <div class="col-md-7">
                                             <label class="margin-0 bold font-color-black"><?php echo $data['to_name']; ?></label>
-                                            <div class="icon-size"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
+                                            <div class="icon-size recent_message_excerpt"><i class="fa fa-reply" aria-hidden="true"></i> <?php echo $data['message']; ?></div>
                                         </div>
                                         <div class="col-md-5 dropdown"> 
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>

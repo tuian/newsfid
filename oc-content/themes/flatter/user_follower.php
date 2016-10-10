@@ -8,7 +8,7 @@ $follower_users = get_user_follower_data($user_id);
     $user_search_data = new DAO();
     $user_search_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.fk_c_country_code');
     $user_search_data->dao->select('user_resource.pk_i_id, user_resource.fk_i_user_id, user_resource.s_extension, user_resource.s_path');
-    $user_search_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
+    $user_search_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext, user_cover_picture.cover_pic_ext');
     $user_search_data->dao->join(sprintf('%st_user_resource AS user_resource', DB_TABLE_PREFIX), 'user.pk_i_id = user_resource.fk_i_user_id', 'LEFT');
     $user_search_data->dao->join(sprintf('%st_profile_picture AS user_cover_picture', DB_TABLE_PREFIX), 'user.pk_i_id = user_cover_picture.user_id', 'LEFT');
     $user_search_data->dao->from(sprintf('%st_user AS user', DB_TABLE_PREFIX));
@@ -31,8 +31,8 @@ if ($user_search_array):
                     <!-- Add the bg color to the header using any of the bg-* classes -->
 
                     <?php
-                    if ($user['cover_picture_user_id']):
-                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] .'.'. $user['pic_ext'];
+                    if (!empty($user['cover_picture_user_id']) && !empty($user['cover_pic_ext'])):
+                        $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] .'.'. $user['cover_pic_ext'];
                     else:
                         $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
                     endif;

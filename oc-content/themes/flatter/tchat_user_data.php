@@ -36,7 +36,7 @@ $logged_in_user_id = osc_logged_user_id();
 ?>
 <div class="background-white col-md-12 padding-bottom-14per padding-0 box-shadow-black" id="tchat_data">
     <?php
-    if ($user['cover_picture_user_id']):
+    if (!empty($user['cover_picture_user_id']) && !empty($user['cover_pic_ext'])):
         $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
     else:
         $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";

@@ -2232,14 +2232,8 @@ function get_user_circle($user_id) {
 }
 
 function get_chat_message_data($user_id = null) {
-    $user_message_data = new DAO();
-    $user_message_data->dao->select('frei_chat.*');
-    $user_message_data->dao->from('frei_chat');
-    $user_message_data->dao->where('`from`', $user_id);
-    $user_message_data->dao->groupBy('`to`');
-    $user_message_data->dao->orderBy("`sent` DESC");
-    $user_message_result = $user_message_data->dao->get();
-    $user_messge_array = $user_message_result->result();
+    $conn = getConnection();
+    $user_messge_array = $conn->osc_dbFetchResults("SELECT * FROM (SELECT * FROM frei_chat ORDER BY sent DESC) AS sub where `from` = {$user_id} GROUP BY `to`");
     return $user_messge_array;
 }
 

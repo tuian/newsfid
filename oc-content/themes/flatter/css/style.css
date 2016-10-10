@@ -3910,7 +3910,13 @@ textarea.comment_text{
 .line-height-15{
     line-height: 15px;
 }
-<<<<<<< HEAD
+.recent_message_excerpt{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .soundpass-show iframe{
     width: 100%;
     height: 100%;
@@ -3934,8 +3940,7 @@ textarea.comment_text{
     top: 42%;
     left: 45%;
     color: #fff;
-    =======
-    .masonry_row{
-        min-height: 150px !important;
-        >>>>>>> 6e68ca48538574ef9d4e1265b1ffada6de692236
-    }
+}
+.masonry_row{
+    min-height: 150px !important;  
+}

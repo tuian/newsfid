@@ -44,7 +44,7 @@ $user = get_user_data(osc_user_id());
 ?>
 <!-- profil cover -->
 <?php
-if ($user['cover_picture_user_id']):
+if (!empty($user['cover_picture_user_id']) && !empty($user['cover_pic_ext'])):
     $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
 else:
     $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";

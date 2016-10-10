@@ -101,7 +101,7 @@ if ($item_id):
                                 </div>
                                 <div class="col-md-12 padding-0 padding-bottom-10"><?php _e("Promoted posts", 'flatter') ?>  </div>
                                 <div class="col-md-12 post_resource" style="display: none">                                                                   
-                                    <?php echo $item_pre_details[0]['s_description']; ?> 
+                                    <?php echo nl2br($item_pre_details[0]['s_description']); ?> 
                                 </div>
                             </div>
                             <div class='col-md-12 border-bottom-gray post_resource_hide'></div>
@@ -181,7 +181,7 @@ if ($item_id):
                                             $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                                         endif;
                                         ?>
-                                        <div class="box-footer box-comments border-blue-left">
+                                        <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id'] ? 'border-blue-left' : '' ?>">
                                             <div class="box-comment">
                                                 <!-- User image -->
                                                 <div class="comment_user_image col-md-1 col-sm-1 padding-0">
@@ -296,7 +296,7 @@ if ($item_id):
 
                                                 <div id="itemdetails" class="clearfix">
                                                     <div class="description comment more">
-                                                        <?php echo osc_item_description(); ?>                                              
+                                                        <?php echo nl2br(osc_item_description()); ?>                                              
                                                     </div>                                            
 
                                                     <div id="extra-fields">
@@ -382,7 +382,7 @@ if ($item_id):
                                                                     $user_image_url = osc_current_web_theme_url('images/user-default.jpg');
                                                                 endif;
                                                                 ?>
-                                                                <div class="box-footer box-comments border-blue-left">
+                                                                <div class="box-footer box-comments <?php echo $comment_data['fk_i_user_id'] == $item['fk_i_user_id'] ? 'border-blue-left' : '' ?>">
                                                                     <div class="box-comment">
                                                                         <!-- User image -->
                                                                         <div class="comment_user_image col-md-1 col-sm-1 padding-0">
