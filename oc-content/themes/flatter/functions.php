@@ -2105,12 +2105,14 @@ function pr($arr = array()) {
 
 function get_chat_users($filter = 'all') {
     $user_id = osc_logged_user_id();
+    $db_prefix = DB_TABLE_PREFIX;
     $chat_user = array();
     if ($filter != 'circle') {
         $user_like_data = new DAO();
-        $user_like_data->dao->select(sprintf('%st_user_follow.*', DB_TABLE_PREFIX));
-        $user_like_data->dao->from(sprintf('%st_user_follow', DB_TABLE_PREFIX));
-        $user_like_data->dao->where('(user_id =' . $user_id . ' OR follow_user_id =' . $user_id . ') AND follow_value=1');
+        $user_like_data->dao->select('follow.*', 'online.*');
+        $user_like_data->dao->from("{$db_prefix}t_user_follow as follow");
+        $user_like_data->dao->join("{$db_prefix}t_useronline as online", "follow.user_id = online.userid", "LEFT");
+        $user_like_data->dao->where('(follow.user_id =' . $user_id . ' OR follow.follow_user_id =' . $user_id . ') AND follow.follow_value=1');
 //    $user_like_data->dao->where('follow_value', '1');
         $user_like_result = $user_like_data->dao->get();
         $user_like_array = $user_like_result->result();
@@ -2125,8 +2127,9 @@ function get_chat_users($filter = 'all') {
     }
 //get user from circle
     $user_circle_data = new DAO();
-    $user_circle_data->dao->select(sprintf('%st_user_circle.circle_user_id', DB_TABLE_PREFIX));
-    $user_circle_data->dao->from(sprintf('%st_user_circle', DB_TABLE_PREFIX));
+    $user_circle_data->dao->select('circle.circle_user_id');
+    $user_circle_data->dao->from("{$db_prefix}t_user_circle as circle");
+    $user_circle_data->dao->join("{$db_prefix}t_useronline as online", 'online.userid = circle.user_id', "LEFT");
     $user_circle_data->dao->where('user_id =' . $user_id);
     $user_circle_result = $user_circle_data->dao->get();
     $user_circle_array = $user_circle_result->result();
@@ -2584,5 +2587,16 @@ function get_user_language($user_id) {
         $lang = array('en_US');
     endif;
     return $lang;
+}
+
+function get_blocked_user($user_id) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_data = new DAO();
+    $user_data->dao->select('user.*');
+    $user_data->dao->from("{$db_prefix}t_user_block as user");
+    $user_data->dao->where("user.user_id={$user_id}");
+    $result = $user_data->dao->get();
+    $user = $result->result();
+    return $user;
 }
 ?>

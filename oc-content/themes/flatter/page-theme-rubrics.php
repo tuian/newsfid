@@ -71,7 +71,7 @@ endif;
                     <div class="col-md-12 col-sm-12">
                         <div class="row">                         
                             <?php foreach ($interest as $k => $i): ?>
-                                <div class="col-md-2 col-sm-2 margin-bottom-20">
+                                <div class="col-md-3 col-sm-3 margin-bottom-20">
                                     <div title="<?php echo $i['s_name']; ?>" class="category_box <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'selected' : '' ?>" cat-id='<?php echo $i['fk_i_category_id'] ?>' check-type='interest'>
                                         <div class="category_image">
                                             <?php
@@ -108,7 +108,7 @@ endif;
                     <div class="col-md-12 col-sm-12">
                         <div class="row">                         
                             <?php foreach ($themes as $k => $theme): ?>
-                                <div class="col-md-2 col-sm-2 margin-bottom-20">
+                                <div class="col-md-3 col-sm-3 margin-bottom-20">
                                     <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['cat_pk_id'], $selected_themes_arr) ? 'selected' : '' ?>" cat-id="<?php echo $theme['cat_pk_id'] ?>" check-type='theme'>
                                         <div class="category_image">
                                             <?php

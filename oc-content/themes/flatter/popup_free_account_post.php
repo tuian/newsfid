@@ -212,6 +212,9 @@ require_once 'functions.php';
                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" value="podcast">
                                             <label class="onoffswitch-label" for="podcast"></label>
                                         </div>
+                                        <div class="mp3-max">
+                                            <span class=""><?php _e("( Sound Cloud(Embed code) )", 'flatter') ?> </span>
+                                        </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 text-bg-color">
                                         <div class="bold padding-10">

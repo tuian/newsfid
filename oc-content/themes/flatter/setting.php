@@ -231,7 +231,7 @@ $user_desc = $user_result->row();
                             $counrtry_db = osc_get_countries();
                             foreach ($counrtry_db as $key => $country) :
                                 ?>
-                                                                                            <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                                                                                                                        <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
                             <?php endforeach; ?>
                                                                 </select>
                                                             </div>
@@ -312,7 +312,7 @@ $user_desc = $user_result->row();
                     $data->dao->from(DB_TABLE_PREFIX . 't_locale as l');
                     $data->dao->where("l.b_enabled = 1");
                     $languages = $data->dao->get();
-                    $languages = $languages->result();                    
+                    $languages = $languages->result();
                     ?>
                     <div class="breack-line"></div>
                     <div id="language" class="col-md-offset-1 col-md-10 main-contant border-radius-10 border-box bg-white  padding-0">
@@ -330,10 +330,10 @@ $user_desc = $user_result->row();
                                     <?php
                                     foreach ($languages as $l):
                                         $selected_var = '';
-                                        if($l['pk_c_code'] == $user_info['mother_tongue']):
-                                            $selected_var =  'selected="selected"';
+                                        if ($l['pk_c_code'] == $user_info['mother_tongue']):
+                                            $selected_var = 'selected="selected"';
                                         endif;
-                                        echo '<option value="' . $l['pk_c_code'] . '" '.$selected_var.'>' . $l['s_name'] . '</option>';
+                                        echo '<option value="' . $l['pk_c_code'] . '" ' . $selected_var . '>' . $l['s_name'] . '</option>';
                                     endforeach;
                                     ?>           
                                 </select>                                                                            
@@ -358,11 +358,11 @@ $user_desc = $user_result->row();
                                 <select name="read_language[]" class="form-control select2 post_type_filter" multiple="" id="reading_language" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
                                     <?php
                                     foreach ($languages as $l):
-                                        $selected_var = '';                                        
+                                        $selected_var = '';
                                         if (strpos($user_info['reading_language'], $l['pk_c_code']) !== false):
-                                            $selected_var =  'selected="selected"';
+                                            $selected_var = 'selected="selected"';
                                         endif;
-                                        echo '<option value="' . $l['pk_c_code'] . '" '.$selected_var.'>' . $l['s_name'] . '</option>';
+                                        echo '<option value="' . $l['pk_c_code'] . '" ' . $selected_var . '>' . $l['s_name'] . '</option>';
                                     endforeach;
                                     ?>                               
                                 </select>                                                                            
@@ -531,6 +531,10 @@ $user_desc = $user_result->row();
                     </div>
                     <div class="breack-line"></div>
                     <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
+                        <?php
+                        $user_id = osc_logged_user_id();
+                        $block = get_blocked_user($user_id);
+                        ?>
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
                                 <h3 class="bold blue_text"> <?php _e("Blocked account", 'flatter') ?></h3>
@@ -540,23 +544,33 @@ $user_desc = $user_result->row();
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12"></div>
-                        <div class="col-md-12 padding-top-8per padding-bottom-13per">
-                            <div class="col-md-11 font-light-gray ">
-                                <!--                    En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  -->
+                        <?php if (empty($block)): ?>
+                            <div class="col-md-12 padding-top-8per padding-bottom-13per">
+                                <div class="col-md-11 font-light-gray bold">
+                                    <?php _e("Non blocked user for now", 'flatter') ?>           
+                                </div>
                             </div>
-                        </div>
-                        <div class="border-bottom-gray col-md-12"></div>
-                        <div class="col-md-12 vertical-row padding-bottom-20">
-                            <div class="col-md-2 padding-top-4per">
-                                <img src="images/user1-128x128.jpg" class="img img-responsive">
-                            </div>
-                            <div class="col-md-5">
-                                <h3 class="font-color-black bold"> Alex Crawford Sky</h3>
-                            </div>
-                            <div class="col-md-offset-2 col-md-3">
-                                <button class="btn btn-disabled"><?php _e("Blocked", 'flatter') ?></button>
-                            </div>
-                        </div>
+
+                            <?php
+                        else:
+                            foreach ($block as $b):
+                                $user_data = get_user_data($b['block_user_id']);
+                                ?>
+                                <div class="col-md-12 vertical-row padding-bottom-20">
+                                    <div class="col-md-2 padding-top-4per">
+                                        <?php get_user_profile_picture($b['block_user_id']) ?>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h3 class="font-color-black bold"> <?php echo $user_data['user_name']; ?></h3>
+                                    </div>
+                                    <div class="col-md-offset-2 col-md-3">
+                                        <button class="btn btn-disabled"><?php _e("Blocked", 'flatter') ?></button>
+                                    </div>
+                                </div>
+                                <?php
+                            endforeach;
+                        endif;
+                        ?>
                     </div>
                     <div class="breack-line"></div>
                     <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
@@ -676,8 +690,8 @@ function custom_map_script() {
         $("#reading_language").select2({
             placeholder: "<?php echo __('Reading Language...', 'flatter'); ?>",
         });
-        $('#mother_tongue').change(function (){           
-           var mt = $(this).val();
+        $('#mother_tongue').change(function () {
+            var mt = $(this).val();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
                 data: {
@@ -688,8 +702,8 @@ function custom_map_script() {
                 }
             });
         });
-        $('#reading_language').change(function (){           
-           var mt = $(this).val();
+        $('#reading_language').change(function () {
+            var mt = $(this).val();
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url('setting_ajax.php'); ?>",
                 data: {
@@ -1007,7 +1021,7 @@ function custom_map_script() {
                 }
             }
             else {
-                <?php //osc_add_flash_ok_message('Data Updated Succsessfully'); ?>
+<?php //osc_add_flash_ok_message('Data Updated Succsessfully');        ?>
                 window.location.href = '<?php echo osc_current_web_theme_url() . 'setting.php' ?>'
             }
         });

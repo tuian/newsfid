@@ -67,7 +67,12 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
-
+        <script type="text/javascript">
+            function openwindow()
+            {
+                window.open("<?php echo osc_current_web_theme_url() . 'soundcloud.php' ?>", "mywindow", "menubar=1,resizable=1,width=350,height=250");
+            }
+        </script>
 
         <!-- Header Hook -->
         <?php osc_run_hook('header'); ?>
@@ -191,10 +196,10 @@ found!');</script>";
 
                             <div class="user-panel">
                                 <div class="pull-left image">
-                                    <a href="<?php  echo osc_user_public_profile_url($user['user_id']) ?>">
+                                    <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
-                                        <?php get_user_profile_picture($user['user_id'])?>
-<!--                                        <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">-->
+                                        <?php get_user_profile_picture($user['user_id']) ?>
+    <!--                                        <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">-->
                                         <div class="green-dot"></div>
                                     </a>
                                 </div>
@@ -274,6 +279,55 @@ found!');</script>";
                                         <?php _e("Center of interest", 'flatter'); ?>
                                     </a>
                                 </li>
+                                <?php
+                                $active = '';
+
+//                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
+//                                if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
+                                if ((strpos($_SERVER['REQUEST_URI'], 'Languages') !== false)):
+                                    $active = 'active';
+                                else:
+                                    $active = '';
+                                endif;
+                                ?>   
+                                <li class="treeview <?php echo $active ?>">
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-language" aria-hidden="true"></i>
+                                        <?php echo __('Languages'); ?>
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </a>                                
+                                    <ul class="treeview-menu">
+                                        <?php
+                                        $active = '';
+                                        if (strpos($parts[0], 'page=language') !== false && strpos($parts[0], 'auto=true') !== false && strpos($parts[0], 'locale=fr_FR')):
+                                            $active = 'active';
+                                        else:
+                                            $active = '';
+                                        endif;
+                                        ?> 
+                                        <li class="user_settings treeview <?php echo $active ?>">
+    <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
+                                            <a href="<?php echo osc_base_url(); ?>/index.php?page=language&auto=true&locale=fr_FR">
+                                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                <?php _e("French", 'flatter'); ?>
+                                            </a>
+                                        </li>
+                                        <?php
+                                        $active = '';
+                                        if (strpos($parts[0], 'page=language') !== false && strpos($parts[0], 'auto=true') !== false && strpos($parts[0], 'locale=en_EN')):
+                                            $active = 'active';
+                                        else:
+                                            $active = '';
+                                        endif;
+                                        ?> 
+                                        <li class="user_settings treeview <?php echo $active ?>">
+                                            <a href="<?php echo osc_base_url(); ?>/index.php?page=language&auto=true&locale=en_US">
+                                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                <?php _e("English", 'flatter'); ?>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>  
                                 <?php
                                 $active = '';
                                 if (!empty($parts[0])):
@@ -503,13 +557,13 @@ found!');</script>";
                                     <a href="<?php echo osc_register_account_url() ?>">
                                         <i class="fa fa-user-plus"></i><?php echo __('Register', 'flatter'); ?>
                                     </a>
-                                    
+
                                 </li>
                                 <div class="soundpass_loggin_page">
                                     <button class="btn soundpass_btn"><a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>"><?php _e("We have our owne radio", 'flatter'); ?></a></button>
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/2.jpg" style="filter: blur(4px);">
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/1.jpg" class="img-circle circle_sound">
-                                    <i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i>
+                                    <a  href="javascript: openwindow()"><i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i></a>
                                     <span class="sound_pass">SoundPass</span>
                                 </div>
                             <?php endif; ?>
@@ -600,11 +654,6 @@ found!');</script>";
                                 </div>
                             </div>
                         <?php } ?>
-                        <script>
-                            $(document).on('click', '.play_btn', function () {
-                                window.open("<?php echo osc_current_web_theme_url() . 'soundcloud.php' ?>", "_blank", "width=500, height=400", "_self");
-                            });
-                        </script>
 
                         <script>
                             (function (i, s, o, g, r, a, m) {

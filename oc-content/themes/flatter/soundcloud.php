@@ -24,7 +24,7 @@
         <link rel="stylesheet" type="text/css" href="css/player.css" />
         <link rel="stylesheet" type="text/css" href="css/fonts.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-
+        
         <?php
 //        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
         $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : 'fr_FR';
@@ -73,7 +73,7 @@
 
         <script type="text/javascript">
 
-            var AutoPlay = "1";            
+            var AutoPlay = "1";
             var radioSite = "https://newsfid.com/";
             var apiURL = "https://www.radioking.com/api";
             var streams = [{"idstream": 64519, "idradio": 28600, "idprimary": 2, "format": "MP3", "bitrate": 128, "frequency": 44100, "status": "active", "type": 1}];
@@ -95,7 +95,7 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="javascript: poponload()">
 
         <div id="global">
             <div id="main">

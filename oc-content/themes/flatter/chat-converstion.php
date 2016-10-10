@@ -24,7 +24,7 @@ if ($_REQUEST['action'] == "chat-converstion"):
                 <span class="dropdown vertical-row pull-right">
                     <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                        <li class="pointer"><a><?php _e("Block this user", 'flatter'); ?></a></li>
+                        <li class="pointer block_user"><a><?php _e("Block this user", 'flatter'); ?></a></li>
                         <li class="close_chat pointer"><a><?php _e("Close this chat", 'flatter'); ?> </a></li>
                         <li class="pointer"><a><?php _e("Turn chat off", 'flatter'); ?></a></li>
                     </ul>
@@ -71,6 +71,21 @@ if ($_REQUEST['action'] == "chat-converstion"):
 endif;
 ?>
 <script>
+    $(document).on('click', '.block_user', function () {
+            var follow_user_id = <?php echo $to_user_id ?>;
+            $.ajax({
+                url: '<?php echo osc_current_web_theme_url() . 'block_user.php' ?>',
+                type: 'post',
+                data: {
+                    action: 'user_block',
+                    block_user_id: follow_user_id
+                },
+                success: function () {
+                    $('.block_user').text('<?php _e("Blocked", 'flatter') ?>');
+                    location.reload();
+                }
+            })
+        });
     document.getElementById("messageBox").onkeypress = function enterKey(e)
     {
         var key = e.which || e.keyCode;

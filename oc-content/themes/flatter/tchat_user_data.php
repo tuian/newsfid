@@ -125,7 +125,7 @@ $logged_in_user_id = osc_logged_user_id();
         </div>
         <div class="col-md-6">            
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                <a class="pointer font-color-black bold"> <?php _e("Block this user", 'flatter') ?> </a>
+                <a class="pointer font-color-black block_user bold"> <?php _e("Block this user", 'flatter') ?> </a>
             </div>
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
                 <a class="pointer font-color-black bold"> <?php _e("Send a file", 'flatter') ?>  </a>
@@ -148,7 +148,22 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-                $('.unfollow_user').text('<?php _e("Follow", 'flatter')?>').addClass('follow_user').removeClass('unfollow_user');
+                $('.unfollow_user').text('<?php _e("Follow", 'flatter') ?>').addClass('follow_user').removeClass('unfollow_user');
+            }
+        })
+    });
+    $(document).on('click', '.block_user', function () {
+        var follow_user_id = <?php echo $follow_user_id ?>;
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'block_user.php' ?>',
+            type: 'post',
+            data: {
+                action: 'user_block',
+                block_user_id: follow_user_id
+            },
+            success: function () {
+                $('.block_user').text('<?php _e("Blocked", 'flatter') ?>');
+                location.reload();
             }
         })
     });

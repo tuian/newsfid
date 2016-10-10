@@ -1,25 +1,37 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
+if (!defined('ABS_PATH'))
+    exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-    if(Params::getParam('plugin_action')=='done') {
-        ob_get_clean();
+if (Params::getParam('plugin_action') == 'done') {
+    ob_get_clean();
 
-        if(Params::getParam('userId')!='') {
-            $success = ModelPaymentPro::newInstance()->addWallet(Params::getParam('userId'), Params::getParam('amount'));
-            $wallet = ModelPaymentPro::newInstance()->getWallet(Params::getParam('userId'));
-            $user = User::newInstance()->findByPrimaryKey(Params::getParam('userId'));
-            if($success) {
-                osc_add_flash_ok_message(sprintf(__('Amount added to the user\'s credit. Current balance: %s (User #%s - %s - %s)', 'payment_pro'), $wallet['formatted_amount'], @$user['pk_i_id'], @$user['s_name'], @$user['s_email']), 'admin');
-            } else {
-                osc_add_flash_error_message(sprintf(__('Error adding the credit: Current balance: %s (User #%s - %s - %s)', 'payment_pro'), $wallet['formatted_amount'], @$user['pk_i_id'], @$user['s_name'], @$user['s_email']), 'admin');
-            }
+    if (Params::getParam('userId') != '') {
+        $success = ModelPaymentPro::newInstance()->addWallet(Params::getParam('userId'), Params::getParam('amount'));
+        $wallet = ModelPaymentPro::newInstance()->getWallet(Params::getParam('userId'));
+        $user = User::newInstance()->findByPrimaryKey(Params::getParam('userId'));
+        if ($success) {
+            osc_add_flash_ok_message(sprintf(__('Amount added to the user\'s credit. Current balance: %s (User #%s - %s - %s)', 'payment_pro'), $wallet['formatted_amount'], @$user['pk_i_id'], @$user['s_name'], @$user['s_email']), 'admin');
         } else {
-            osc_add_flash_error_message(__('No user selected', 'payment_pro'), 'admin');
+            osc_add_flash_error_message(sprintf(__('Error adding the credit: Current balance: %s (User #%s - %s - %s)', 'payment_pro'), $wallet['formatted_amount'], @$user['pk_i_id'], @$user['s_name'], @$user['s_email']), 'admin');
         }
-
-        osc_redirect_to(osc_route_admin_url('payment-pro-admin-wallet'));
+    } else {
+        osc_add_flash_error_message(__('No user selected', 'payment_pro'), 'admin');
     }
-?>
 
+    osc_redirect_to(osc_route_admin_url('payment-pro-admin-wallet'));
+}
+?>
+<style>
+    input.debit_soundpass{
+        width: 100px;
+    }
+    #debit_btn{
+        margin-left: 15px;
+    }
+    #debit{
+        color: #3fb93f;        
+    }
+</style>
 <div id="general-setting">
     <div id="general-settings" style="float:left; width: 50%;">
         <h2 class="render-title"><?php _e('Add credit to users', 'payment_pro'); ?></h2>
@@ -43,7 +55,7 @@
 
                     <div class="clear"></div>
                     <div class="form-actions">
-                        <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Add credit', 'payment_pro') ); ?>" class="btn btn-submit" />
+                        <input type="submit" id="save_changes" value="<?php echo osc_esc_html(__('Add credit', 'payment_pro')); ?>" class="btn btn-submit" />
                     </div>
                 </div>
             </fieldset>
@@ -65,12 +77,39 @@
                 <div class="form-label"><?php _e('Current balance', 'payment_pro'); ?></div>
                 <div class="form-controls"><input type="text" class="xlarge" id="user_balance" name="user_balance" value="" readonly="readonly"/> <?php echo osc_get_preference('post', 'payment_pro'); ?></div>
             </div>
+            <div class="form-row">
+                <div class="form-label"><?php _e('Fee SoundPass', 'payment_pro'); ?></div>
+                <div class="form-controls"><input type="text" class="debit_soundpass" id="debit_soundpass" name="debit_soundpass" value=""/> <?php echo osc_get_preference('post', 'payment_pro'); ?>
+                    <input type="button" class="btn btn-submit pull-right" id="debit_btn" name="debit_btn" value="<?php _e('Debit Now', 'payment_pro'); ?>"/></div>
+                <div id="debit" style="display: none"><?php _e("Amount debited from user balance", "payment_pro"); ?></div>
+            </div>
+
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $(document).on('click', '#debit_btn', function () {
+            var amount = $('.debit_soundpass').val();
+            var user_id = $('#userId').val();
+            if (amount === '' || user_id ===''){
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_admin_base_url() . '/ajax/debit_ajax.php' ?>",
+                type: 'post',
+                data: {
+                    action: 'debit',
+                    amount: amount,
+                    user_id: user_id
+                },
+                success: function (data) {
+                    location.reload();
+                    $('#debit').show();
+                }
+            });
+        });
         // users autocomplete
         $('input[name="user"]').attr("autocomplete", "off");
         $('#user').autocomplete({
@@ -81,19 +120,19 @@
                     return false;
                 } else {
                     $.getJSON(
-                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=runhook&hook=payment_pro_userinfo&id=" + ui.item.id,
-                        {"s_username": $("#s_username").attr("value")},
-                        function(data){
-                            if(data.error==0) {
-                                $("#user_name").attr("value", data.user.s_name);
-                                $("#user_email").attr("value", data.user.s_email);
-                                $("#user_balance").attr("value", data.wallet.remaining_post);
-                            } else {
-                                $("#user_name").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
-                                $("#user_email").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
-                                $("#user_balance").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
-                            }
+                            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=runhook&hook=payment_pro_userinfo&id=" + ui.item.id,
+                            {"s_username": $("#s_username").attr("value")},
+                    function (data) {
+                        if (data.error == 0) {
+                            $("#user_name").attr("value", data.user.s_name);
+                            $("#user_email").attr("value", data.user.s_email);
+                            $("#user_balance").attr("value", data.wallet.remaining_post);
+                        } else {
+                            $("#user_name").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
+                            $("#user_email").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
+                            $("#user_balance").attr("value", "<?php _e("Error getting data", "payment_pro"); ?>");
                         }
+                    }
                     );
                 }
                 $('#userId').val(ui.item.id);
