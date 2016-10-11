@@ -33,7 +33,7 @@ if (isset($_REQUEST['comment_id']) && !empty($_REQUEST['comment_id'])):
 else :
     $comment_array = array();
     $comment_array['fk_i_item_id'] = $comment_item_id;
-    $comment_array['s_body'] = $comment_text;
+    $comment_array['s_body'] = $comment_text;    
     $comment_array['fk_i_user_id'] = $user['user_id'];
     $comment_array['s_author_name'] = $user['user_name'];
     $comment_array['s_author_email'] = $user['s_email'];
@@ -47,6 +47,17 @@ else :
     if ($comment_user_id != $item['fk_i_user_id']):
         set_user_notification($comment_user_id, $item['fk_i_user_id'], $message, $comment_item_id);
     endif;
+    
+    //commented your shared post
+//    $message1 = 'commented your shared post';
+//    if ($comment_user_id != $item['fk_i_user_id']):
+//        set_user_notification($comment_user_id, $item['fk_i_user_id'], $message, $comment_item_id);
+//    endif;
+//    //insert notification for author
+//    $message2 = 'joined your discussion';
+//    if ($comment_user_id != $item['fk_i_user_id']):
+//        set_user_notification($comment_user_id, $item['fk_i_user_id'], $message, $comment_item_id);
+//    endif;
 
 endif;
 $c_data;

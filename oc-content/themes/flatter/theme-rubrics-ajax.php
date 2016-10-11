@@ -15,8 +15,8 @@ if ($_REQUEST['action'] == 'theme-rubrics'):
         $rubric_data->dao->where('rubrics.user_id=' . $user_id . ' AND rubrics.rubric_id=' . $_REQUEST['cat_id']);
         $rubric = $rubric_data->dao->get();
         $rubrics = $rubric->row();
-        echo "<pre>";
-        print_r($rubrics);
+//        echo "<pre>";
+//        print_r($rubrics);
         if (!empty($rubrics)):
             $rubric_data->dao->delete("{$db_prefix}t_user_rubrics", "id=" . $rubrics['id']);
         else:

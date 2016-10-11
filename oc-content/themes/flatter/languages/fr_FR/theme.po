@@ -2697,3 +2697,6 @@ msgstr ""
 
 #~ msgid "Publish and share stories with the world"
 #~ msgstr "Publier et partager des histoires avec le monde "
+
+msgid "A radio"
+msgstr "A radio"

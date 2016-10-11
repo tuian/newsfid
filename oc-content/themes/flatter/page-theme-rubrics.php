@@ -17,6 +17,7 @@ $selected_themes_arr = array();
 foreach ($selected_themes as $sl):
     $selected_themes_arr[] = $sl['theme_id'];
 endforeach;
+$current_l = osc_current_user_locale();
 
 $data1 = new DAO();
 $data1->dao->select(" a.*, a.pk_i_id as cat_pk_id, b.*, d.*");
@@ -24,7 +25,7 @@ $data1->dao->from(DB_TABLE_PREFIX . 't_category as a');
 $data1->dao->join(DB_TABLE_PREFIX . 't_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
 //$data1->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
 $data1->dao->join(DB_TABLE_PREFIX . 'bs_theme_category_icon  as d ', 'a.pk_i_id = d.pk_i_id', 'LEFT');
-$data1->dao->where("a.fk_i_parent_id IS NULL AND b.fk_c_locale_code = 'en_US'");
+$data1->dao->where("a.fk_i_parent_id IS NULL AND b.fk_c_locale_code = '{$current_l}'");
 $data1->dao->orderBy('a.pk_i_id', 'ASC');
 $result1 = $data1->dao->get();
 $themes = $result1->result();
@@ -37,7 +38,7 @@ if (isset($_GET['type']) && $_GET['type'] == 'interest'):
     $intrest_data->dao->join(DB_TABLE_PREFIX . 't_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
     //$intrest_data->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
     $intrest_data->dao->join(DB_TABLE_PREFIX . 'bs_theme_category_icon  as d ', 'a.pk_i_id = d.pk_i_id', 'LEFT');
-    $intrest_data->dao->where(sprintf("a.fk_i_parent_id in (%s) AND b.fk_c_locale_code = 'en_US'", implode(",", $selected_themes_arr)));
+    $intrest_data->dao->where(sprintf("a.fk_i_parent_id in (%s) AND b.fk_c_locale_code = '%s'", implode(",", $selected_themes_arr), $current_l));
     $intrest_data->dao->orderBy('a.pk_i_id', 'ASC');
     $result = $intrest_data->dao->get();
     $interest = $result->result();    

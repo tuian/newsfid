@@ -67,6 +67,7 @@ osc_current_web_theme_path('header.php');
                     <div class="col-md-8 col-sm-8 scroll-content">
                         <div class="row">
                             <?php
+                            $current_l = osc_current_user_locale();
                             $data = new DAO();
                             $data->dao->select("a.*, b.*, c.i_num_items, d.*");
                             $data->dao->from(DB_TABLE_PREFIX . 't_category as a');
@@ -74,7 +75,7 @@ osc_current_web_theme_path('header.php');
                             $data->dao->join(DB_TABLE_PREFIX . 't_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
                             $data->dao->join(DB_TABLE_PREFIX . 'bs_theme_category_icon  as d ', 'a.pk_i_id = d.pk_i_id', 'LEFT');
                             $data->dao->where("a.fk_i_parent_id IS NULL");
-                            $data->dao->where("b.fk_c_locale_code = 'en_US'");
+                            $data->dao->where("b.fk_c_locale_code = '{$current_l}'");
                             $data->dao->orderBy('a.pk_i_id', 'ASC');
                             $result1 = $data->dao->get();
                             $themes = $result1->result();

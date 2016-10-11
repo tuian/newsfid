@@ -63,6 +63,7 @@ endif;
                 <div class="col-md-8 col-sm-8 scroll-content">
                     <div class="row">
                         <?php
+                        $current_l = osc_current_user_locale();
                         $data = new DAO();
                         $data->dao->select("a.*, b.*, c.i_num_items, d.bs_image_name"); // i take bs_image_name coz pk_i_id ambigues with icon table
                         $data->dao->from(DB_TABLE_PREFIX . 't_category as a');
@@ -71,7 +72,7 @@ endif;
                         $data->dao->join(DB_TABLE_PREFIX . 'bs_theme_category_icon  as d ', 'a.pk_i_id = d.pk_i_id', 'LEFT');
                         //$data->dao->where(sprintf("a.fk_i_parent_id in (%s)", $_SESSION['theme_ids']));
                         $data->dao->whereIn("a.fk_i_parent_id", $_SESSION['theme_ids']);
-                        $data->dao->where("b.fk_c_locale_code = 'en_US'");
+                        $data->dao->where("b.fk_c_locale_code = '{$current_l}'");
                         $data->dao->orderBy('a.pk_i_id', 'ASC');
                         $result1 = $data->dao->get();
                         $themes = $result1->result();                       
