@@ -144,9 +144,9 @@ if ($item_id):
                                 </li> 
                                 <li> 
                                     <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == $user_pre_id) { ?>
-                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
+<!--                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
                                             <i class="fa fa-pencil"></i>
-                                        </div>
+                                        </div>-->
                                     <?php } ?>
                                 </li>
                             </ul>
@@ -343,9 +343,9 @@ if ($item_id):
                                                         </li> 
                                                         <li> 
                                                             <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
-                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
+<!--                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
                                                                     <i class="fa fa-pencil"></i>
-                                                                </div>
+                                                                </div>-->
                                                             <?php } ?>
                                                         </li>
                                                     </ul>

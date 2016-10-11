@@ -101,7 +101,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                                 <input type="text" placeholder="<?php _e("YY", 'flatter') ?>" required class="expiry_year">
                             </div>
                             <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
-                                <input type="text" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
+                                <input type="password" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
                             </div>
                         </div>
                         <div class="clearfix"></div>

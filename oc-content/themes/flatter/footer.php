@@ -77,7 +77,18 @@ if (osc_is_web_user_logged_in()):
                 <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
                     <li><a class="chat-filter" data-value="all"> See all chats</a></li>
                     <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>
-                    <li><a class="chat-filter" data-value="off">Turn chat off</a></li>
+                    <li class="pointer chat-filter chat_option">                               
+                        <?php
+                        $a = get_user_online_status(osc_logged_user_id());
+                        if (!empty($a)):
+                            if ($a['status'] == 0):
+                                ?>
+                                <a class="chat_off"><?php _e("Turn chat off", 'flatter'); ?></a>
+                            <?php else: ?>
+                                <a class="chat_on"><?php _e("Turn chat on", 'flatter'); ?></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </li>
                 </ul>
             </span>
         </div>
@@ -104,16 +115,20 @@ if (osc_is_web_user_logged_in()):
                             <img src="<?php echo $img_path ?>" data_user_id="<?php echo $u['user_id'] ?>" class="img-circle user-icon user_tchat" alt="User Image">                                
                             <div class="onlineuser">
                                 <?php
-                                if (useronline_show_user_status($u['user_id']) == 1) {
-                                    ?>
-                                    <div class="green-dot"></div>                                        
-                                <?php } else { ?>
-                                    <!--<a class="chat_offline_inline" href="javascript:void(0)"></a>-->
-                                <?php } ?>
-                            </div> 
+                                $a = get_user_online_status($u['user_id']);
+                                if (!empty($a)):
+                                    if ($a['status'] == 0):
+                                        ?>
+                                        <div class="green-dot"></div>
+                                        <?php
+                                    endif;
+                                endif;
+                                ?>
+                            </div>
                         </div>
-                        <div class="col-md-9 col-sm-9 col-xs-9 padding-left-0 user_chat_name">
-                            <span class="bold chat-user" to-user-id="<?php echo $u['user_id']; ?>"><a href="javascript:void(0)"><?php echo $u['user_name']; ?></a></span>
+                        <div class = "col-md-9 col-sm-9 col-xs-9 padding-left-0 user_chat_name">
+                            <span class = "bold chat-user" to-user-id = "<?php echo $u['user_id']; ?>"><a href = "javascript:void(0)"><?php echo $u['user_name'];
+                                ?></a></span>
                         </div>
                     </div>                        
                     <?php
@@ -172,6 +187,32 @@ if (osc_is_web_user_logged_in()):
 <!-- / wrapper -->
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
+        $(document).on('click', '.chat_off', function () {
+            $.ajax({
+                url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
+                type: 'post',
+                data: {
+                    action: 'chat_off'
+                },
+                success: function () {
+                    $('.chat_off').text('<?php _e("Turn chat on", 'flatter') ?>');
+                    location.reload();
+                }
+            })
+        });
+        $(document).on('click', '.chat_on', function () {
+            $.ajax({
+                url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
+                type: 'post',
+                data: {
+                    action: 'chat_on'
+                },
+                success: function () {
+                    $('.chat_off').text('<?php _e("Turn chat off", 'flatter') ?>');
+                    location.reload();
+                }
+            })
+        });
         $(function () {
             $('.soundpass').click(function () {
                 $('.chat-menu').hide();

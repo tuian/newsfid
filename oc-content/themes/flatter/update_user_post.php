@@ -27,7 +27,7 @@ if ($_REQUEST['action'] == 'update_post'):
     ?>
     <div id="popup-free-user-post" class="modal modal-transparent fade" role="dialog">        
         <div class="col-md-offset-1 col-md-10 post">
-            <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="large-modal">
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -157,10 +157,10 @@ if ($_REQUEST['action'] == 'update_post'):
                                     </div>
 
                                     <div class="center-contant">
-                                        <div class="col-md-12 padding-10 vertical-row">
+                                        <div class="col-md-12 padding-10 vertical-row pointer" data-toggle="collapse" data-target="#media">
                                             <i class="fa fa-picture-o col-md-1" aria-hidden="true" ></i> 
                                             <span class="padding-left-10 col-md-10"> <?php _e("Update media(Image/GIF/Video)", 'flatter') ?>  </span>
-                                            <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#media"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
+                                            <span class="col-md-1 pointer padding-0"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                                         </div>
                                         <?php
                                         $item_resorce = get_user_post_resource($post_desc['fk_i_item_id']);
@@ -194,9 +194,9 @@ if ($_REQUEST['action'] == 'update_post'):
                                                                     <?php endif; ?>
 
                                                                     <?php if ($item['item_type'] == "video"): ?>
-                                                                        <input type="text" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here" value="<?php echo $item_resorce['s_path']; ?>">
+                                                                        <input type="text" name="post_media" accept="" id="post_media" class="post_media" placeholder="add your embedding code here" value="<?php echo $item_resorce['s_path']; ?>">
                                                                     <?php else: ?>
-                                                                        <input type="file" name="post_media" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                                        <input type="file" name="post_media" accept="image/*" id="post_media" class="post_media" placeholder="add your embedding code here">
                                                                     <?php endif; ?>
                                                                 </div>
                                                             </div>
@@ -248,6 +248,9 @@ if ($_REQUEST['action'] == 'update_post'):
                                                             <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?>  value="podcast">
                                                             <label class="onoffswitch-label" for="podcast"></label>
                                                         </div>
+                                                        <div class="mp3-max">
+                                                            <span class=""><?php _e("( Sound Cloud(Embed code) )", 'flatter') ?> </span>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 text-bg-color">
                                                         <div class="bold padding-10">
@@ -260,10 +263,10 @@ if ($_REQUEST['action'] == 'update_post'):
                                         <div class="border-bottom col-md-12">                 
                                         </div>
                                         <div class="center-contant padding-bottom-20">    
-                                            <div class="col-md-12 padding-10 vertical-row">
+                                            <div class="col-md-12 padding-10 vertical-row pointer" data-toggle="collapse" data-target="#location">
                                                 <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
                                                 <span class="padding-left-10 col-md-10"> <?php _e("Update location(Country/state/region/City/place)", 'flatter') ?> </span>
-                                                <span class="col-md-1 pointer padding-0" data-toggle="collapse" data-target="#location"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
+                                                <span class="col-md-1 pointer padding-0"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                                             </div>
                                             <div id="location" class="collapse padding-bottom-20">                                              
                                                 <div class="col-md-offset-2 col-md-10 margin-top-20">
@@ -444,6 +447,23 @@ if ($_REQUEST['action'] == 'update_post'):
             $('#post_media').attr('type', 'text');
         } else {
             $('#post_media').attr('type', 'file');
+        }
+
+        if (selected_post_type.attr('data_post_type') == 'image') {
+            $('#post_media').attr('accept', 'image/*');
+            $('#post_media').removeClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'gif') {
+            $('#post_media').attr('accept', 'image/gif');
+            $('#post_media').removeClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'music') {
+            $('#post_media').attr('accept', 'audio/*');
+            $('#post_media').removeClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'video') {
+            $('#post_media').attr('accept', 'video/*');
+            $('#post_media').addClass('media_video');
+        } else if (selected_post_type.attr('data_post_type') == 'podcast') {
+            $('#post_media').attr('accept', 'podcast');
+            $('#post_media').removeClass('media_video');
         }
     });
     $(document).ready(function () {

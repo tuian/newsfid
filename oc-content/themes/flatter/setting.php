@@ -16,6 +16,11 @@ $user_data_info->dao->limit(1);
 $user_result = $user_data_info->dao->get();
 $user_desc = $user_result->row();
 ?>
+<style>
+    .main_content .content-wrapper{
+        background-color: #f8fbfd !important;
+    }
+</style>
 <div id="setting" class="row margin-0"> 
     <div class="col-md-12 padding-bottom-6per">
         <!--        <div class="user-search">
@@ -472,7 +477,7 @@ $user_desc = $user_result->row();
                                         <input type="text" placeholder="<?php _e("YY", 'flatter') ?>" required class="expiry_year">
                                     </div>
                                     <div class="col-md-offset-1 col-md-4 col-sm-3 grey-border">
-                                        <input type="text" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
+                                        <input type="password" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -604,7 +609,7 @@ $user_desc = $user_result->row();
                             </div>
                             <div class="col-md-8 padding-left-8per">
                                 <div class="input-text-area left-border box-shadow-none margin-0">
-                                    <input type="text" placeholder="Mot de passe" name="p_title">
+                                    <input type="password" placeholder="Mot de passe" name="p_title">
                                 </div>
                             </div>
                             <div class="col-md-4 padding-3per">
