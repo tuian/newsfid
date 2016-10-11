@@ -53,7 +53,10 @@ function useronline_user_online() {
     if (osc_is_web_user_logged_in()) {
         $conn = getConnection();
         $id = osc_logged_user_id();
-        $conn->osc_dbExec("INSERT INTO %st_useronline (`userid`, `timestamp`) VALUES ('$id', CURRENT_TIMESTAMP) ON DUPLICATE KEY UPDATE timestamp=CURRENT_TIMESTAMP", DB_TABLE_PREFIX);
+        $userOnline = $conn->osc_dbFetchResult("SELECT `userid` FROM %st_useronline", DB_TABLE_PREFIX);
+//        if (!in_array($id, $userOnline)):
+            $conn->osc_dbExec("INSERT INTO %st_useronline (`userid`, `timestamp`, `status`) VALUES ('$id', CURRENT_TIMESTAMP, '0') ON DUPLICATE KEY UPDATE timestamp=CURRENT_TIMESTAMP", DB_TABLE_PREFIX);
+//        endif;
     }
     // delete the USER ID that are no longer online (no update for longer than 5 minutes)
     $conn = getConnection();
@@ -87,7 +90,7 @@ function useronline_show_user_status($itemUserId = null) {
         $itemUserId = osc_item_user_id();
     endif;
     $conn = getConnection();
-    $userOnline = $conn->osc_dbFetchResult("SELECT * FROM %st_useronline WHERE userid = '%s'", DB_TABLE_PREFIX, $itemUserId);
+    $userOnline = $conn->osc_dbFetchResult("SELECT * FROM %st_useronline WHERE userid = '%s' AND status = '%s'", DB_TABLE_PREFIX, $itemUserId, '1');
     if ($userOnline != '') {
         return 1;
     } else {
@@ -104,7 +107,15 @@ function useronline_user_logout() {
     if (osc_is_web_user_logged_in()) {
         $conn = getConnection();
         $id = osc_logged_user_id();
-        $conn->osc_dbExec("DELETE FROM %st_useronline WHERE userid = '%s'", DB_TABLE_PREFIX, $id);
+        $conn->osc_dbExec("UPDATE %st_useronline SET status = '1' WHERE userid = '%s'", DB_TABLE_PREFIX, $id);
+    }
+}
+
+function useronline_user_chat_on() {
+    if (osc_is_web_user_logged_in()) {
+        $conn = getConnection();
+        $id = osc_logged_user_id();
+        $conn->osc_dbExec("UPDATE %st_useronline SET status = '0' WHERE userid = '%s'", DB_TABLE_PREFIX, $id);
     }
 }
 

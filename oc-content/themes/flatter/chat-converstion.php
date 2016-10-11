@@ -5,7 +5,7 @@ $user_id = osc_logged_user_id();
 $user = get_user_data($user_id);
 if ($_REQUEST['action'] == "chat-converstion"):
     $to_user_id = $_REQUEST['user_id'];
-    osc_set_preference('chat_user_id', $to_user_id);   
+    osc_set_preference('chat_user_id', $to_user_id);
     $user_to = get_user_data($to_user_id);
     $msg = get_chat_message_data($user_id);
     if (isset($to_user_id)):
@@ -22,11 +22,22 @@ if ($_REQUEST['action'] == "chat-converstion"):
             <div  class="col-md-12 border-bottom-gray"></div>
             <div class="col-md-12 background-white">
                 <span class="dropdown vertical-row pull-right">
-                    <i class="fa fa-plus pull-right font-12 padding-5" aria-hidden="true"></i><i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                    <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
                         <li class="pointer block_user"><a><?php _e("Block this user", 'flatter'); ?></a></li>
                         <li class="close_chat pointer"><a><?php _e("Close this chat", 'flatter'); ?> </a></li>
-                        <li class="pointer"><a><?php _e("Turn chat off", 'flatter'); ?></a></li>
+                        <li class="pointer chat_option">
+                            <?php
+                            $a = get_user_online_status($user_id);
+                            if (!empty($a)):
+                                if ($a['status'] == 0):
+                                    ?>
+                                    <a class="chat_off"><?php _e("Turn chat off", 'flatter'); ?></a>
+                                <?php else: ?>
+                                    <a class="chat_on"><?php _e("Turn chat on", 'flatter'); ?></a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </li>
                     </ul>
                 </span>
             </div>
@@ -54,7 +65,7 @@ if ($_REQUEST['action'] == "chat-converstion"):
                         </div>
                     <?php else : ?>
                         <div class="col-md-12 padding-0 padding-5 msg_me font-color-black">
-                            <div class="pull-left"> <img src="<?php echo $img_path; ?>" class="img-circle" width="20px"></div><span class="col-md-10 padding-left-10"> <?php echo $msg['message']; ?> </span>
+                            <div class="pull-left"> <img src="<?php echo $img_path; ?>" class="img-circle" width="20px"></div><span class="col-md-10 padding-left-10 dont-break-out"> <?php echo $msg['message']; ?> </span>
                         </div>  
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -71,21 +82,47 @@ if ($_REQUEST['action'] == "chat-converstion"):
 endif;
 ?>
 <script>
+    $(document).on('click', '.chat_off', function () {
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
+            type: 'post',
+            data: {
+                action: 'chat_off'                
+            },
+            success: function () {
+                $('.chat_off').text('<?php _e("Turn chat on", 'flatter') ?>');
+                location.reload();
+            }
+        })
+    });
+    $(document).on('click', '.chat_on', function () {
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
+            type: 'post',
+            data: {
+                action: 'chat_on'                
+            },
+            success: function () {
+                $('.chat_off').text('<?php _e("Turn chat off", 'flatter') ?>');
+                location.reload();
+            }
+        })
+    });
     $(document).on('click', '.block_user', function () {
-            var follow_user_id = <?php echo $to_user_id ?>;
-            $.ajax({
-                url: '<?php echo osc_current_web_theme_url() . 'block_user.php' ?>',
-                type: 'post',
-                data: {
-                    action: 'user_block',
-                    block_user_id: follow_user_id
-                },
-                success: function () {
-                    $('.block_user').text('<?php _e("Blocked", 'flatter') ?>');
-                    location.reload();
-                }
-            })
-        });
+        var follow_user_id = <?php echo $to_user_id ?>;
+        $.ajax({
+            url: '<?php echo osc_current_web_theme_url() . 'block_user.php' ?>',
+            type: 'post',
+            data: {
+                action: 'user_block',
+                block_user_id: follow_user_id
+            },
+            success: function () {
+                $('.block_user').text('<?php _e("Blocked", 'flatter') ?>');
+                location.reload();
+            }
+        })
+    });
     document.getElementById("messageBox").onkeypress = function enterKey(e)
     {
         var key = e.which || e.keyCode;

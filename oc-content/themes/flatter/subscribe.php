@@ -3,7 +3,14 @@ require '../../../oc-load.php';
 require 'functions.php';
 ?>
 <?php osc_current_web_theme_path('header.php'); ?>
-
+<style>
+    #t_chat_menu{
+        display: none;
+    }
+    .main_content{
+        width: 85%;
+    }
+</style>
 <div class="subscribe-page">
     <div class="cover-img">
         <div class="container">
@@ -133,7 +140,7 @@ require 'functions.php';
                                                 <input type="text" placeholder="<?php _e("YY", 'flatter') ?>" required class="expiry_year">
                                             </div>
                                             <div class="col-md-offset-2 col-md-3 col-sm-3 grey-border">
-                                                <input type="text" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
+                                                <input type="password" placeholder="<?php _e("Code", 'flatter') ?>" required class="card_cvv_code">
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>

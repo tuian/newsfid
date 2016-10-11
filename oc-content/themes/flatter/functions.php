@@ -2599,4 +2599,15 @@ function get_blocked_user($user_id) {
     $user = $result->result();
     return $user;
 }
+
+function get_user_online_status($user_id) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_data = new DAO();
+    $user_data->dao->select('*');
+    $user_data->dao->from("oc_t_useronline");
+    $user_data->dao->where("userid", $user_id);
+    $result = $user_data->dao->get();
+    $user = $result->row();
+    return $user;
+}
 ?>

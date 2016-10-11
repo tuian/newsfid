@@ -2575,6 +2575,20 @@ select {
     background-color: #34c300;
     position: absolute;
 }
+.gray-dot{ 
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-bottom: 0px;
+    margin-left: 37px;
+    width: 12px;
+    height: 12px;
+    margin-top: -12px;
+    background-color: #b1b9cb;
+    position: absolute;
+}
+.padding-30per{
+    padding: 30%;
+}
 .user_area{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -3007,6 +3021,7 @@ select {
 .soundpass_loggin_page{
     position: absolute;
     bottom: 0;
+    border: 3px solid rgba(0, 0, 0, 0.39);
 }
 .sound_text{
     font-size: 64px;
@@ -3923,6 +3938,7 @@ textarea.comment_text{
 }
 .soundpass-show{
     position:relative;
+    border: 2px solid rgba(0, 0, 0, 0.39);
 }
 .play_btn:hover{
     color:#f68935;
@@ -3943,4 +3959,15 @@ textarea.comment_text{
 }
 .masonry_row{
     min-height: 150px !important;  
+}
+.dont-break-out {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 }
