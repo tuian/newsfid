@@ -113,10 +113,24 @@ require_once 'functions.php';
                             <div class="input-text-area margin-top-10 padding-bottom-20 left-border box-shadow-none width-50">
                                 <input type="text" placeholder="Title" name="p_title" class="p_title"><span class="error-title red"><?php _e("Post Title Required", 'flatter') ?></span>
                             </div>
+                                 <div id="custom_fields">
+                                    <?php if( osc_count_item_meta() >= 1 ) { ?>
+                                        <br />
+                                        <div class="meta_list">
+                                            <?php while ( osc_has_item_meta() ) { ?>
+                                                <?php if(osc_item_meta_value()!='') { ?>
+                                                    <div class="meta">
+                                                        <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
+                                                    </div>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
                         </div>
                     </div>
                     <div class="breack-line"></div>
-
+                    
                     <!-------------------------General Information end---------------------------->
 
                     <!-------------------------Add Media Start---------------------------->
