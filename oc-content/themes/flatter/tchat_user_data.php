@@ -111,11 +111,11 @@ $logged_in_user_id = osc_logged_user_id();
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
                 <?php
                 $circle = get_user_circle(osc_logged_user_id());
-                if ($circle):
+                if (!empty($circle)):
                     if (in_array($user_id, $circle)):
                         ?>
                         <a class="pointer removed_circle font-color-black bold"> <?php _e("Remove from circle", 'flatter') ?> </a>
-                    <?php else: ?>Remove from circle
+                    <?php else: ?>
                         <a class="pointer added_circle font-color-black bold"> <?php _e("Add to circle", 'flatter') ?> </a>
                     <?php endif; ?>
                 <?php else: ?>
@@ -125,11 +125,11 @@ $logged_in_user_id = osc_logged_user_id();
         </div>
         <div class="col-md-6">            
             <div class="border-bottom-gray padding-top-10 padding-bottom-10">
-                <a class="pointer font-color-black block_user bold"> <?php _e("Block this user", 'flatter') ?> </a>
+                <a class="pointer font-color-black bold" id="block_user"> <?php _e("Block this user", 'flatter') ?> </a>
             </div>
-            <div class="border-bottom-gray padding-top-10 padding-bottom-10">
+<!--            <div class="border-bottom-gray padding-top-10 padding-bottom-10">
                 <a class="pointer font-color-black bold"> <?php _e("Send a file", 'flatter') ?>  </a>
-            </div>
+            </div>-->
         </div>
     </div>
     <button class="btn btn-round close-tchat-profile">X</button>
@@ -152,7 +152,7 @@ $logged_in_user_id = osc_logged_user_id();
             }
         })
     });
-    $(document).on('click', '.block_user', function () {
+    $(document).on('click', '#block_user', function () {
         var follow_user_id = <?php echo $follow_user_id ?>;
         $.ajax({
             url: '<?php echo osc_current_web_theme_url() . 'block_user.php' ?>',
@@ -162,7 +162,7 @@ $logged_in_user_id = osc_logged_user_id();
                 block_user_id: follow_user_id
             },
             success: function () {
-                $('.block_user').text('<?php _e("Blocked", 'flatter') ?>');
+                $('#block_user').text('<?php _e("Blocked", 'flatter') ?>');
                 location.reload();
             }
         })

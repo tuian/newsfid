@@ -56,18 +56,45 @@ if ($items):
                         <div class="user_image">
                             <?php get_user_profile_picture($user['user_id']); ?>
                         </div>  
-                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a></span>
+                        <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
+
+
+                            <!-- /.user-block -->
+                            <!--                    <div class="box-tools">
+                                                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="<?php _e("Mark as read", 'flatter') ?>">
+                                                        <i class="fa fa-circle-o"></i></button>
+                                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                </div>-->
+                            <!-- /.box-tools -->
+                            <?php if (osc_logged_user_id() == $user['user_id'] = osc_item_user_id()): ?>
+                                <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                    <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                                        <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication--><?php _e("Delete", 'flatter') ?></a></li>
+                                        <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--><?php _e("Edit", 'flatter') ?> </a></li>
+                                        <?php
+                                        $items = get_item_premium();
+                                        if (!in_array($item_id, $items)):
+                                            $pack = get_user_pack_details(osc_logged_user_id());
+                                            if ($pack['remaining_post'] == 0):
+                                                ?>
+                                                <li class="premium" data-toggle="modal" data-target="#marketing"><a> <?php _e("Promote Now", 'flatter') ?></a></li>
+
+                                            <?php else: ?>
+                                                <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> <?php _e("Promote Now", 'flatter') ?></a></li>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                        <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
+                                                              <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                                              <li><a></a></li>
+                                                              <li><a>Signaler la publication</a></li>-->
+                                    </ul>
+                                </button>
+                            <?php endif; ?>
+                        </span>
                         <span class="description"><?php echo $date_in_french ?></span>
                     </div>
-                    <!-- /.user-block -->
-                    <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="<?php _e("Mark as read", 'flatter') ?>">
-                            <i class="fa fa-circle-o"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                    <!-- /.box-tools -->
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -77,7 +104,7 @@ if ($items):
                     item_resources(osc_item_id());
                     ?>
 
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                   ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                       ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 

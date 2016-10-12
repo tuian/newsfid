@@ -140,7 +140,7 @@ if (osc_is_web_user_logged_in()):
             <div class="chat_box">
                 <div class="background-white col-md-12 padding-10">
                     <div class="bold">
-                        <div class="col-md-2 padding-0 orange padding-right-10"> With</div>
+                        <div class="col-md-2 padding-0 orange padding-right-10"><?php  _e("With", 'flatter'); ?></div>
                         <div class="col-md-10 dropdown"> 
                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
@@ -184,45 +184,72 @@ if (osc_is_web_user_logged_in()):
 
 
 <?php endif; ?>
-<!-- / wrapper -->
+<script src="<?php echo osc_current_web_theme_url('js/jquery/jquery-1.11.2.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('plugins/select2/select2.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-typeahead.min.js'); ?>"></script>
+<script src="<?php echo osc_current_web_theme_url('js/jPushMenu.js'); ?>"></script>
+<?php
+$user_id = osc_logged_user_id();
+$user = get_user_data($user_id);
+if (!empty($user['s_path'])):
+
+endif;
+?>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo osc_current_web_theme_url('js/main.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap.min.js'); ?>?ver=3.3.5"></script>  
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/placeholders.min.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-switch.min.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery-dropdate.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/date.format.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.Jcrop.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/script.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_base_url() . 'oc-content/plugins/slider/responsiveslides.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
+
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
-        $(document).on('click', '.chat_off', function () {
-            $.ajax({
-                url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
-                type: 'post',
-                data: {
-                    action: 'chat_off'
-                },
-                success: function () {
-                    $('.chat_off').text('<?php _e("Turn chat on", 'flatter') ?>');
-                    location.reload();
-                }
-            })
-        });
-        $(document).on('click', '.chat_on', function () {
-            $.ajax({
-                url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
-                type: 'post',
-                data: {
-                    action: 'chat_on'
-                },
-                success: function () {
-                    $('.chat_off').text('<?php _e("Turn chat off", 'flatter') ?>');
-                    location.reload();
-                }
-            })
-        });
-        $(function () {
-            $('.soundpass').click(function () {
-                $('.chat-menu').hide();
-                $('.chat-user-overflow').hide();
-                $('.notification_dropdown').hide();
-                $('.notification_list').hide();
-                $('.soundpass-text').show();
-                $('.soundpass-show').show();
+            $(document).on('click', '.chat_off', function () {
+                $.ajax({
+                    url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
+                    type: 'post',
+                    data: {
+                        action: 'chat_off'
+                    },
+                    success: function () {
+                        $('.chat_off').text('<?php _e("Turn chat on", 'flatter') ?>');
+                        location.reload();
+                    }
+                })
             });
-        });
+            $(document).on('click', '.chat_on', function () {
+                $.ajax({
+                    url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
+                    type: 'post',
+                    data: {
+                        action: 'chat_on'
+                    },
+                    success: function () {
+                        $('.chat_off').text('<?php _e("Turn chat off", 'flatter') ?>');
+                        location.reload();
+                    }
+                })
+            });
+            $(function () {
+                $('.soundpass').click(function () {
+                    $('.chat-menu').hide();
+                    $('.chat-user-overflow').hide();
+                    $('.notification_dropdown').hide();
+                    $('.notification_list').hide();
+                    $('.soundpass-text').show();
+                    $('.soundpass-show').show();
+                });
+            });
 
     </script>
 
@@ -265,7 +292,18 @@ if (osc_is_web_user_logged_in()):
             });
         });
         $(document).on('click', '.close_chat', function () {
-            $('#online-chat').css('display', 'none');
+            $('.msg_him').css('display', 'none');
+            $('.msg_me').css('display', 'none');
+            $('.user_name_chat').css('display', 'none');
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    action: 'close-chat-converstion',
+                },
+                success: function (data) {
+                }
+            });
         });
         $(document).on('click', '.closebtn', function () {
             $('#t_chat_menu').css("display", "none");
@@ -360,7 +398,7 @@ if (osc_is_web_user_logged_in()):
 <?php if (osc_get_preference('anim', 'flatter_theme') != '0') { ?>
     <script src="<?php echo osc_current_web_theme_url('js/wow.min.js'); ?>"></script>
     <script type="text/javascript">
-        new WOW().init();</script>
+            new WOW().init();</script>
 <?php } ?>
 <?php osc_run_hook('footer'); ?>
 <?php if (osc_is_home_page() && !osc_is_web_user_logged_in()): ?>

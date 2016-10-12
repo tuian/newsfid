@@ -188,314 +188,318 @@ if ($_REQUEST['action'] == 'update_post'):
                                                         <div class="col-md-offset-1 col-md-4">
                                                             <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                             <?php if ($item['item_type'] == "image" || $item['item_type'] == "gif" || $item['item_type'] == "image/jpeg"): ?> 
-                                                                <div class="post_file_upload_container" style="background-image: url('<?php echo osc_base_url() . 'oc-content/uploads/8/' . $item_resorce['pk_i_id'] . '.' . $item_resorce['s_extension'] ?>')">
-                                                                <?php else: ?>
-                                                                    <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
-                                                                    <?php endif; ?>
-
-                                                                    <?php if ($item['item_type'] == "video"): ?>
-                                                                        <input type="text" name="post_media" accept="" id="post_media" class="post_media" placeholder="add your embedding code here" value="<?php echo $item_resorce['s_path']; ?>">
+                                                                <?php if (!empty($item_resorce['s_extension']) || !empty($item_resorce['pk_i_id'])): ?>
+                                                                    <div class="post_file_upload_container" style="background-image: url('<?php echo osc_base_url() . 'oc-content/uploads/8/' . $item_resorce['pk_i_id'] . '.' . $item_resorce['s_extension'] ?>')">
                                                                     <?php else: ?>
-                                                                        <input type="file" name="post_media" accept="image/*" id="post_media" class="post_media" placeholder="add your embedding code here">
-                                                                    <?php endif; ?>
+                                                                        <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
+                                                                        <?php endif; ?>                                                               
+                                                                    <?php else: ?>
+                                                                        <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
+                                                                        <?php endif; ?>
+
+                                                                        <?php if ($item['item_type'] == "video"): ?>
+                                                                            <input type="text" name="post_media" accept="" id="post_media" class="post_media" placeholder="add your embedding code here" value="<?php echo $item_resorce['s_path']; ?>">
+                                                                        <?php else: ?>
+                                                                            <input type="file" name="post_media" accept="image/*" id="post_media" class="post_media" placeholder="add your embedding code here">
+                                                                        <?php endif; ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6  text-bg-color">
-                                                        <div class="bold padding-10">
-                                                            <?php _e("You can not choose both at the same time
+                                                        <div class="col-md-6  text-bg-color">
+                                                            <div class="bold padding-10">
+                                                                <?php _e("You can not choose both at the same time
                                                             you can publish  image or a video link.", 'flatter') ?>
 
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class=" col-md-12 border-bottom">
+                                                        <div class="col-md-6">
+                                                            <span class="bold"><?php _e("GIF", 'flatter') ?></span>
+                                                            <div class="onoffswitch margin-top-20">
+                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif"  <?php if ($item['item_type'] == "gif"): ?> checked <?php endif; ?> value="gif">                                                            
+                                                                <label class="onoffswitch-label" for="gif"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6  text-bg-color">
+                                                            <div class="bold padding-10">
+                                                                <?php _e("The image begins to automatically animate when the user will scroll.", 'flatter') ?>                                                            
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div> 
-                                                <div class=" col-md-12 border-bottom">
-                                                    <div class="col-md-6">
-                                                        <span class="bold"><?php _e("GIF", 'flatter') ?></span>
-                                                        <div class="onoffswitch margin-top-20">
-                                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="gif" id="gif"  <?php if ($item['item_type'] == "gif"): ?> checked <?php endif; ?> value="gif">                                                            
-                                                            <label class="onoffswitch-label" for="gif"></label>
+                                                    <div class=" col-md-12 border-bottom">
+                                                        <div class="col-md-6">
+                                                            <span class="bold"><?php _e("Music", 'flatter') ?></span>
+                                                            <div class="onoffswitch margin-top-20">
+                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?> value="music">
+                                                                <label class="onoffswitch-label" for="music"></label>
+                                                            </div>
+                                                            <div class="mp3-max">
+                                                                <span class=""><?php _e("(MP3 10.MO maximum)", 'flatter') ?> </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 text-bg-color">
+                                                            <div class="bold padding-10">
+                                                                <?php _e("You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.", 'flatter') ?>                                                            
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6  text-bg-color">
-                                                        <div class="bold padding-10">
-                                                            <?php _e("The image begins to automatically animate when the user will scroll.", 'flatter') ?>                                                            
+                                                    <div class=" col-md-12 border-bottom">
+                                                        <div class="col-md-6 podcast">
+                                                            <span class="bold"><?php _e("Podcast", 'flatter') ?></span>
+                                                            <div class="onoffswitch margin-top-20">
+                                                                <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?>  value="podcast">
+                                                                <label class="onoffswitch-label" for="podcast"></label>
+                                                            </div>
+                                                            <div class="mp3-max">
+                                                                <span class=""><?php _e("( Sound Cloud(Embed code) )", 'flatter') ?> </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="col-md-6 text-bg-color">
+                                                            <div class="bold padding-10">
+                                                                <?php _e("Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.", 'flatter') ?>                                                          
+                                                            </div>
+                                                        </div>
+                                                    </div>                                           
                                                 </div>
-                                                <div class=" col-md-12 border-bottom">
-                                                    <div class="col-md-6">
-                                                        <span class="bold"><?php _e("Music", 'flatter') ?></span>
-                                                        <div class="onoffswitch margin-top-20">
-                                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="music" id="music" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?> value="music">
-                                                            <label class="onoffswitch-label" for="music"></label>
-                                                        </div>
-                                                        <div class="mp3-max">
-                                                            <span class=""><?php _e("(MP3 10.MO maximum)", 'flatter') ?> </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 text-bg-color">
-                                                        <div class="bold padding-10">
-                                                            <?php _e("You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe.", 'flatter') ?>                                                            
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="border-bottom col-md-12">                 
+                                            </div>
+                                            <div class="center-contant padding-bottom-20">    
+                                                <div class="col-md-12 padding-10 vertical-row pointer" data-toggle="collapse" data-target="#location">
+                                                    <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
+                                                    <span class="padding-left-10 col-md-10"> <?php _e("Update location(Country/state/region/City/place)", 'flatter') ?> </span>
+                                                    <span class="col-md-1 pointer padding-0"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
                                                 </div>
-                                                <div class=" col-md-12 border-bottom">
-                                                    <div class="col-md-6 podcast">
-                                                        <span class="bold"><?php _e("Podcast", 'flatter') ?></span>
-                                                        <div class="onoffswitch margin-top-20">
-                                                            <input type="checkbox" name="post_type" class="onoffswitch-checkbox post_type_switch" data_post_type="podcast" id="podcast" <?php if ($item['item_type'] == "music"): ?> checked <?php endif; ?>  value="podcast">
-                                                            <label class="onoffswitch-label" for="podcast"></label>
+                                                <div id="location" class="collapse padding-bottom-20">                                              
+                                                    <div class="col-md-offset-2 col-md-10 margin-top-20">
+                                                        <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">                                  
+                                                            <select id="countryId" class="user_country_textbox" name="countryId">
+                                                                <?php
+                                                                $counrtry_db = osc_get_countries();
+                                                                foreach ($counrtry_db as $key => $country) :
+                                                                    ?>
+                                                                    <option <?php if ($country['pk_c_code'] == $item_location['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code']; ?>"><?php echo $country['s_name']; ?></option>
+                                                                <?php endforeach; ?>
+                                                            </select>
                                                         </div>
-                                                        <div class="mp3-max">
-                                                            <span class=""><?php _e("( Sound Cloud(Embed code) )", 'flatter') ?> </span>
+                                                        <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
+                                                            <input type="text" id="s_region_name" name="s_region_name" placeholder="<?php _e("Region", 'flatter') ?>" value="<?php echo $item_location['s_region']; ?>">
+                                                            <input type="hidden" id="s_region_id" name="s_region_id">
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6 text-bg-color">
-                                                        <div class="bold padding-10">
-                                                            <?php _e("Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe.", 'flatter') ?>                                                          
+                                                        <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
+                                                            <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="<?php _e("City", 'flatter') ?>" value="<?php echo $item_location['s_city']; ?>">
+                                                            <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
                                                         </div>
-                                                    </div>
-                                                </div>                                           
-                                            </div>
-                                        </div>
-                                        <div class="border-bottom col-md-12">                 
-                                        </div>
-                                        <div class="center-contant padding-bottom-20">    
-                                            <div class="col-md-12 padding-10 vertical-row pointer" data-toggle="collapse" data-target="#location">
-                                                <i class="fa fa-map-marker col-md-1" aria-hidden="true"></i>                        
-                                                <span class="padding-left-10 col-md-10"> <?php _e("Update location(Country/state/region/City/place)", 'flatter') ?> </span>
-                                                <span class="col-md-1 pointer padding-0"><i class="fa fa-angle-down pull-right " aria-hidden="true"></i></span>
-                                            </div>
-                                            <div id="location" class="collapse padding-bottom-20">                                              
-                                                <div class="col-md-offset-2 col-md-10 margin-top-20">
-                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none country-select width-60 margin-left-30">                                  
-                                                        <select id="countryId" class="user_country_textbox" name="countryId">
-                                                            <?php
-                                                            $counrtry_db = osc_get_countries();
-                                                            foreach ($counrtry_db as $key => $country) :
-                                                                ?>
-                                                                <option <?php if ($country['pk_c_code'] == $item_location['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code']; ?>"><?php echo $country['s_name']; ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                        <input type="text" id="s_region_name" name="s_region_name" placeholder="<?php _e("Region", 'flatter') ?>" value="<?php echo $item_location['s_region']; ?>">
-                                                        <input type="hidden" id="s_region_id" name="s_region_id">
-                                                    </div>
-                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                        <input type="text" name="s_city_name" class="form-control" id="s_city_name" placeholder="<?php _e("City", 'flatter') ?>" value="<?php echo $item_location['s_city']; ?>">
-                                                        <input type="hidden" name="s_city_id" class="form-control" id="s_city_id">
-                                                    </div>
-                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
-                                                        <input type="text" placeholder="<?php _e("City Area", 'flatter') ?>" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
-                                                    </div>
-                                                    <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30" >
-                                                        <input type="text" name="s_address" id="s_address" placeholder="<?php _e("Address", 'flatter') ?>" value="<?php echo $item_location['s_address']; ?>">
+                                                        <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30">
+                                                            <input type="text" placeholder="<?php _e("City Area", 'flatter') ?>" id="s_city_area_name" name="s_city_area_name" value="<?php echo $item_location['s_city_area']; ?>">
+                                                        </div>
+                                                        <div class="input-text-area left-border margin-top-20 box-shadow-none width-60 margin-left-30" >
+                                                            <input type="text" name="s_address" id="s_address" placeholder="<?php _e("Address", 'flatter') ?>" value="<?php echo $item_location['s_address']; ?>">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-------------------------Location end------------------------------>
-                                <div class="breack-line"></div></div>
-                            <!-------------------------Reminder start------------------------------>
+                                    <!-------------------------Location end------------------------------>
+                                    <div class="breack-line"></div></div>
+                                <!-------------------------Reminder start------------------------------>
 
-                            <!-------------------------Finalisation Start------------------------------>
-                            <div class="finalisation-info bg-white padding-3per col-md-12">
-                                <div class="vertical-row col-md-offset-1">
-                                    <div class="en-savoir-plus1 publier1 col-md-3">
-                                        <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
-                                            <span class="bold"><?php _e("Publier", 'flatter') ?></span></button>
-                                    </div>
-                                    <div class="onoffswitch col-md-3">
-                                        <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">
-                                        <label class="onoffswitch-label" for="publier"></label>
-                                    </div>   <span class=""><?php _e("I accept addition requirement", 'flatter') ?></span>                 
-                                    <div class="col-md-2">
-                                        <span class="error-term red"><?php _e("Please Accept Term & Condition", 'flatter') ?></span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <span class="error-btn red"><?php _e("Please Fill All Required Field", 'flatter') ?></span>
+                                <!-------------------------Finalisation Start------------------------------>
+                                <div class="finalisation-info bg-white padding-3per col-md-12">
+                                    <div class="vertical-row col-md-offset-1">
+                                        <div class="en-savoir-plus1 publier1 col-md-3">
+                                            <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
+                                                <span class="bold"><?php _e("Publier", 'flatter') ?></span></button>
+                                        </div>
+                                        <div class="onoffswitch col-md-3">
+                                            <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">
+                                            <label class="onoffswitch-label" for="publier"></label>
+                                        </div>   <span class=""><?php _e("I accept addition requirement", 'flatter') ?></span>                 
+                                        <div class="col-md-2">
+                                            <span class="error-term red"><?php _e("Please Accept Term & Condition", 'flatter') ?></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="error-btn red"><?php _e("Please Fill All Required Field", 'flatter') ?></span>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-------------------------Finalisation End------------------------------>
+
+                                </form>
                             </div>
-                            <!-------------------------Finalisation End------------------------------>
+                        </div>
 
-                    </form>
                 </div>
             </div>
+        <?php endif; ?>
+        <script>
+            $(document).ready(function () {
+                $('#s_region_name').typeahead({
+                    source: function (query, process) {
+                        var $items = new Array;
+                        var c_id = $('#countryId').val();
+                        console.log(c_id);
+                        if (c_id) {
+                            $items = [""];
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url('region_ajax.php') ?>",
+                                dataType: "json",
+                                type: "POST",
+                                data: {region_name: query, country_id: c_id},
+                                success: function (data) {
+                                    $.map(data, function (data) {
+                                        var group;
+                                        group = {
+                                            id: data.pk_i_id,
+                                            name: data.s_name,
+                                        };
+                                        $items.push(group);
+                                    });
 
-        </div>
-    </div>
-<?php endif; ?>
-<script>
-    $(document).ready(function () {
-        $('#s_region_name').typeahead({
-            source: function (query, process) {
-                var $items = new Array;
-                var c_id = $('#countryId').val();
-                console.log(c_id);
-                if (c_id) {
-                    $items = [""];
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url('region_ajax.php') ?>",
-                        dataType: "json",
-                        type: "POST",
-                        data: {region_name: query, country_id: c_id},
-                        success: function (data) {
-                            $.map(data, function (data) {
-                                var group;
-                                group = {
-                                    id: data.pk_i_id,
-                                    name: data.s_name,
-                                };
-                                $items.push(group);
+                                    process($items);
+                                }
                             });
-
-                            process($items);
+                        } else {
+                            alert('<?php _e("Please select country first", 'flatter') ?>');
                         }
-                    });
-                } else {
-                    alert('<?php _e("Please select country first", 'flatter') ?>');
-                }
-            },
-            afterSelect: function (obj) {
-                $('#s_region_id').val(obj.id);
-            },
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#s_city_name').typeahead({
-            source: function (query, process) {
-                var $items = new Array;
-                var region_id = $('#s_region_id').val();
-                if (region_id) {
-                    $items = [""];
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url('search_city_by_region.php') ?>",
-                        dataType: "json",
-                        type: "POST",
-                        data: {city_name: query, region_id: region_id},
-                        success: function (data) {
-                            $.map(data, function (data) {
-                                var group;
-                                group = {
-                                    id: data.pk_i_id,
-                                    name: data.city_name,
-                                };
-                                $items.push(group);
+                    },
+                    afterSelect: function (obj) {
+                        $('#s_region_id').val(obj.id);
+                    },
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#s_city_name').typeahead({
+                    source: function (query, process) {
+                        var $items = new Array;
+                        var region_id = $('#s_region_id').val();
+                        if (region_id) {
+                            $items = [""];
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url('search_city_by_region.php') ?>",
+                                dataType: "json",
+                                type: "POST",
+                                data: {city_name: query, region_id: region_id},
+                                success: function (data) {
+                                    $.map(data, function (data) {
+                                        var group;
+                                        group = {
+                                            id: data.pk_i_id,
+                                            name: data.city_name,
+                                        };
+                                        $items.push(group);
+                                    });
+
+                                    process($items);
+                                }
                             });
-
-                            process($items);
+                        } else {
+                            alert('<?php _e("Please select region first", 'flatter') ?>');
                         }
-                    });
-                } else {
-                    alert('<?php _e("Please select region first", 'flatter') ?>');
+                    },
+                    afterSelect: function (obj) {
+                        //$('#sRegion').val(obj.id);
+                    },
+                });
+            });
+            $(document).on('click', '.publier-btn', function () {
+                var post = $('.post_type_switch').filter(':checked').val();
+                if (post === 'video') {
+                    var post_media = $('#post_media').val();
                 }
-            },
-            afterSelect: function (obj) {
-                //$('#sRegion').val(obj.id);
-            },
-        });
-    });
-    $(document).on('click', '.publier-btn', function () {
-        var post = $('.post_type_switch').filter(':checked').val();
-        if (post === 'video') {
-            var post_media = $('#post_media').val();
-        }
-        $.ajax({
-            url: "<?php echo osc_current_web_theme_url() . '/post_update.php' ?>",
-            data: {
-                post_type: post,
-                post_media: post_media
-            }
-        });
-    });</script>
-<script>
-    $(".post_type_switch").on('click', function () {
-        var $box = $(this);
-        if ($box.is(":checked")) {
-            var group = ".post_type_switch";
-            $(group).prop("checked", false);
-            $box.prop("checked", true);
-        } else {
-            $box.prop("checked", false);
-        }
-        var selected_post_type = $('.post_type_switch').filter(':checked');
-        if (selected_post_type.attr('data_post_type') == 'music' || selected_post_type.attr('data_post_type') == 'podcast') {
-            var duplicate_post_media = $('#post_media').clone();
-            $('#post_media').remove();
-            $(selected_post_type).parent().after(duplicate_post_media);
-        }
-        if (selected_post_type.attr('data_post_type') == 'gif') {
-            var duplicate_post_media2 = $('#post_media').clone();
-            $('#post_media').remove();
-            $(selected_post_type).parent().after(duplicate_post_media2);
-        }
-        if (selected_post_type.attr('data_post_type') == 'image' || selected_post_type.attr('data_post_type') == 'video') {
-            var duplicate_post_media = $('#post_media').clone();
-            $('#post_media').remove();
-            $('.post_file_upload_container').append(duplicate_post_media);
-        }
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . '/post_update.php' ?>",
+                    data: {
+                        post_type: post,
+                        post_media: post_media
+                    }
+                });
+            });</script>
+        <script>
+            $(".post_type_switch").on('click', function () {
+                var $box = $(this);
+                if ($box.is(":checked")) {
+                    var group = ".post_type_switch";
+                    $(group).prop("checked", false);
+                    $box.prop("checked", true);
+                } else {
+                    $box.prop("checked", false);
+                }
+                var selected_post_type = $('.post_type_switch').filter(':checked');
+                if (selected_post_type.attr('data_post_type') == 'music' || selected_post_type.attr('data_post_type') == 'podcast') {
+                    var duplicate_post_media = $('#post_media').clone();
+                    $('#post_media').remove();
+                    $(selected_post_type).parent().after(duplicate_post_media);
+                }
+                if (selected_post_type.attr('data_post_type') == 'gif') {
+                    var duplicate_post_media2 = $('#post_media').clone();
+                    $('#post_media').remove();
+                    $(selected_post_type).parent().after(duplicate_post_media2);
+                }
+                if (selected_post_type.attr('data_post_type') == 'image' || selected_post_type.attr('data_post_type') == 'video') {
+                    var duplicate_post_media = $('#post_media').clone();
+                    $('#post_media').remove();
+                    $('.post_file_upload_container').append(duplicate_post_media);
+                }
 
-        if (selected_post_type.attr('data_post_type') == 'podcast' || selected_post_type.attr('data_post_type') == 'video') {
-            $('#post_media').attr('type', 'text');
-        } else {
-            $('#post_media').attr('type', 'file');
-        }
+                if (selected_post_type.attr('data_post_type') == 'podcast' || selected_post_type.attr('data_post_type') == 'video') {
+                    $('#post_media').attr('type', 'text');
+                } else {
+                    $('#post_media').attr('type', 'file');
+                }
 
-        if (selected_post_type.attr('data_post_type') == 'image') {
-            $('#post_media').attr('accept', 'image/*');
-            $('#post_media').removeClass('media_video');
-        } else if (selected_post_type.attr('data_post_type') == 'gif') {
-            $('#post_media').attr('accept', 'image/gif');
-            $('#post_media').removeClass('media_video');
-        } else if (selected_post_type.attr('data_post_type') == 'music') {
-            $('#post_media').attr('accept', 'audio/*');
-            $('#post_media').removeClass('media_video');
-        } else if (selected_post_type.attr('data_post_type') == 'video') {
-            $('#post_media').attr('accept', 'video/*');
-            $('#post_media').addClass('media_video');
-        } else if (selected_post_type.attr('data_post_type') == 'podcast') {
-            $('#post_media').attr('accept', 'podcast');
-            $('#post_media').removeClass('media_video');
-        }
-    });
-    $(document).ready(function () {
-        $('.error-desc').hide();
-        $('.error-title').hide();
-        $('.error-term').hide();
-        $('.error-btn').hide();
-        $('#post_update').submit(function () {
-            var title = $('.p_title').val();
-            var discription = $('.p_disc').val();
-            if (title != '') {
-                $('.error-title').hide();
-            } else {
-                $('.error-title').show();
-                $('.error-btn').show();
-                return false;
-            }
-            if (discription != '')
-            {
+                if (selected_post_type.attr('data_post_type') == 'image') {
+                    $('#post_media').attr('accept', 'image/*');
+                    $('#post_media').removeClass('media_video');
+                } else if (selected_post_type.attr('data_post_type') == 'gif') {
+                    $('#post_media').attr('accept', 'image/gif');
+                    $('#post_media').removeClass('media_video');
+                } else if (selected_post_type.attr('data_post_type') == 'music') {
+                    $('#post_media').attr('accept', 'audio/*');
+                    $('#post_media').removeClass('media_video');
+                } else if (selected_post_type.attr('data_post_type') == 'video') {
+                    $('#post_media').attr('accept', 'video/*');
+                    $('#post_media').addClass('media_video');
+                } else if (selected_post_type.attr('data_post_type') == 'podcast') {
+                    $('#post_media').attr('accept', 'podcast');
+                    $('#post_media').removeClass('media_video');
+                }
+            });
+            $(document).ready(function () {
                 $('.error-desc').hide();
-            }
-            else {
-                $('.error-desc').show();
-                $('.error-btn').show();
-                return false;
-            }
+                $('.error-title').hide();
+                $('.error-term').hide();
+                $('.error-btn').hide();
+                $('#post_update').submit(function () {
+                    var title = $('.p_title').val();
+                    var discription = $('.p_disc').val();
+                    if (title != '') {
+                        $('.error-title').hide();
+                    } else {
+                        $('.error-title').show();
+                        $('.error-btn').show();
+                        return false;
+                    }
+                    if (discription != '')
+                    {
+                        $('.error-desc').hide();
+                    }
+                    else {
+                        $('.error-desc').show();
+                        $('.error-btn').show();
+                        return false;
+                    }
 
-            if (!$("#publier").is(":checked")) {
-                $('.error-term').show();
-                return false;
-            }
-            return true;
-        });
-    });
-</script>
+                    if (!$("#publier").is(":checked")) {
+                        $('.error-term').show();
+                        return false;
+                    }
+                    return true;
+                });
+            });
+        </script>

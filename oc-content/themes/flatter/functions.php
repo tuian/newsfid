@@ -2151,10 +2151,11 @@ function get_chat_users($filter = 'all') {
             $chat_user = array_unique(array_merge($chat_user, $circle_user));
         endif;
     endif;
-
+    $block_user = get_blocked_user_id($user_id);
+    $chat_use = array_unique(array_diff($chat_user, $block_user));
     $item_result = array();
-    if (!empty($chat_user)):
-        $item_result = get_users_data($chat_user);
+    if (!empty($chat_use)):
+        $item_result = get_users_data($chat_use);
     endif;
     return $item_result;
 }
@@ -2447,9 +2448,9 @@ function get_item_premium_pack() {
     $item_data = $result->result();
     return $item_data;
 }
-
+$page = Params::getParam('page');
 $action = Params::getParam('action');
-if ($page == 'user' && $action == 'profile') {
+if ($page == 'user' && ($action == 'profile' || $action == 'change_username' || $action == 'change_email' || $action == 'change_password')) {
     if (ob_get_length() > 0) {
         ob_end_flush();
     }
@@ -2458,7 +2459,6 @@ if ($page == 'user' && $action == 'profile') {
 
 //for paypal payment
 //NOTIFY URL WILL LOOK LIKE http://www.newsfid.http5000.com/index.php?page=custom&route=paypal-notify&extra=NzlbEF8NMCr1Pjs3SKw+Pol3txeWLTifhfq0gAd18nU=
-$page = Params::getParam('page');
 $p_route = Params::getParam('route');
 //if ($page == 'custom' && $p_route == 'payment-pro-done') {
 if ($page == 'custom' && $p_route == 'paypal-notify') {
@@ -2598,6 +2598,23 @@ function get_blocked_user($user_id) {
     $result = $user_data->dao->get();
     $user = $result->result();
     return $user;
+}
+
+function get_blocked_user_id($user_id) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_data = new DAO();
+    $user_data->dao->select('user.block_user_id');
+    $user_data->dao->from("{$db_prefix}t_user_block as user");
+    $user_data->dao->where("user.user_id={$user_id}");
+    $result = $user_data->dao->get();
+    $user = $result->resultArray();
+    $item_array = array();
+    if (!empty($user)):
+        foreach ($user as $v):
+            $item_array[] = $v['block_user_id'];
+        endforeach;
+    endif;
+    return $item_array;
 }
 
 function get_user_online_status($user_id) {

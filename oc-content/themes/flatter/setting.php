@@ -236,7 +236,7 @@ $user_desc = $user_result->row();
                             $counrtry_db = osc_get_countries();
                             foreach ($counrtry_db as $key => $country) :
                                 ?>
-                                                                                                                        <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
+                                                                                                                                    <option <?php if ($country['pk_c_code'] == $user_info['fk_c_country_code']) echo 'selected'; ?> value="<?php echo $country['pk_c_code'] ?>"><?php echo $country['s_name']; ?></option>
                             <?php endforeach; ?>
                                                                 </select>
                                                             </div>
@@ -544,7 +544,7 @@ $user_desc = $user_result->row();
                             <div class='col-md-7'>
                                 <h3 class="bold blue_text"> <?php _e("Blocked account", 'flatter') ?></h3>
                             </div>
-                            <div class="col-md-offset-3 col-md-2 col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
+                            <div class="col-md-offset-3 col-md-2 block_edit col-sm-2 edit-color-blue pointer text-right padding-20 margin-top-20">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i><?php _e("Edit", 'flatter') ?>  
                             </div>
                         </div>
@@ -569,7 +569,7 @@ $user_desc = $user_result->row();
                                         <h3 class="font-color-black bold"> <?php echo $user_data['user_name']; ?></h3>
                                     </div>
                                     <div class="col-md-offset-2 col-md-3">
-                                        <button class="btn btn-disabled"><?php _e("Blocked", 'flatter') ?></button>
+                                        <button class="btn block_btn btn-disabled" user-id = "<?php echo $b['block_user_id']; ?>"><?php _e("Blocked", 'flatter') ?></button>
                                     </div>
                                 </div>
                                 <?php
@@ -689,6 +689,31 @@ osc_add_hook('footer', 'custom_map_script');
 function custom_map_script() {
     ?>
     <script>
+        $(document).on('click', '.block_edit', function () {
+            $('.block_btn').removeClass('btn-disabled').addClass('unblock');
+            $('.block_btn').css('border','1px solid');
+            $('.block_btn').css('background-color','#fff');
+        });
+        $(document).on('click', '.unblock', function () {
+
+            if (!confirm('Are you sure want to unblock this user...???')) {
+                return false;
+            } else {
+                var user_id = $(this).attr('user-id');
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('block_user.php'); ?>",
+                    data: {
+                        action: 'unblock',
+                        block_user_id: user_id                        
+                    },
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            }
+
+
+        });
         $("#mother_tongue").select2({
             placeholder: "<?php echo __('Mother Language...', 'flatter'); ?>",
         });
@@ -1026,7 +1051,7 @@ function custom_map_script() {
                 }
             }
             else {
-<?php //osc_add_flash_ok_message('Data Updated Succsessfully');        ?>
+<?php //osc_add_flash_ok_message('Data Updated Succsessfully');           ?>
                 window.location.href = '<?php echo osc_current_web_theme_url() . 'setting.php' ?>'
             }
         });

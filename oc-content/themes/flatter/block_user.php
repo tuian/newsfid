@@ -11,4 +11,11 @@ if ($_REQUEST['action'] == 'user_block'):
     $block_data = new DAO();
     $block_data->dao->insert("{$db_prefix}t_user_block", $block_user);
 endif;
+if ($_REQUEST['action'] == 'unblock' && $_REQUEST['block_user_id']):
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_id = osc_logged_user_id();
+    $block_user_id = $_REQUEST['block_user_id'];
+    $block_data = new DAO();
+    $block_data->dao->delete("{$db_prefix}t_user_block", "user_id = $user_id AND block_user_id = $block_user_id");
+endif;
 ?>

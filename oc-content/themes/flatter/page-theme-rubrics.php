@@ -65,6 +65,7 @@ endif;
             <li class="theme-interest-tab <?php echo $active == '2' ? 'active' : '' ?>"><a href="<?php echo osc_static_page_url() . '&type=interest'; ?>"><?php _e("Rubrics", 'flatter') ?></a></li>            
         </ul> 
     </div>
+    <div class="popup"></div>
     <?php if (isset($_GET['type']) && $_GET['type'] == 'interest'): ?>
         <form action="" method="post"  class="user_theme_form">       
             <div class="container">

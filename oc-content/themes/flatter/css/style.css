@@ -2144,7 +2144,7 @@ select {
     font-size: 36px;
     line-height: 100%;
 }
-.user_posts_container .item_title_head {
+.user_posts_container .item_title_head, .user_watchlist_container .item_title_head {
     cursor: pointer;
     font-size: 36px;
     line-height: 100%;
@@ -3015,8 +3015,10 @@ select {
 .soundpass_btn{
     position: absolute;
     top: -30%;
-    background-color: #f68935;
+    background-color: #fff;
     width: 100%;
+    border: 1px solid #f68935 !important;
+    border-radius: 1px !important;
 }
 .soundpass_loggin_page{
     position: absolute;
@@ -3638,8 +3640,8 @@ textarea.msg_textarea{
 }
 .overflow-chat{
     overflow-y: auto;
-    max-height: 140px;
-    min-height: 140px;
+    max-height: 165px;
+    min-height: 165px;
 }
 .after_logging{
     left:16% !important;
@@ -3971,4 +3973,14 @@ textarea.comment_text{
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+.skin-blue .main_wrapper .sidebar .soundpass_btn a {
+    color: #f68935 !important;
+}
+/*.category-dropdown #sCategory, .country-dropdown-main select, .post_type_filter, #countryId, #user_role_selector {*/
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
 }

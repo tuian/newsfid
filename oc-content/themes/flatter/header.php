@@ -41,32 +41,6 @@
         <link href="<?php echo osc_current_web_theme_url('plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/style2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/jquery.Jcrop.min.css'); ?>" rel="stylesheet" type="text/css" />
-        <script src="<?php echo osc_current_web_theme_url('js/jquery/jquery-1.11.2.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('plugins/select2/select2.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-typeahead.min.js'); ?>"></script>
-        <script src="<?php echo osc_current_web_theme_url('js/jPushMenu.js'); ?>"></script>
-        <?php
-        $user_id = osc_logged_user_id();
-        $user = get_user_data($user_id);
-        if (!empty($user['s_path'])):
-
-        endif;
-        ?>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/owl.carousel.min.js'); ?>"></script>
-        <script src="<?php echo osc_current_web_theme_url('js/main.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap.min.js'); ?>?ver=3.3.5"></script>  
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/placeholders.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/bootstrap-switch.min.js'); ?>"></script>
-
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery-dropdate.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/date.format.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.Jcrop.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/script.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_base_url() . 'oc-content/plugins/slider/responsiveslides.min.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
         <script type="text/javascript">
             function openwindow()
             {
@@ -107,47 +81,6 @@
         <![endif]-->
 
 
-        <!--===========================FreiChat=======START=========================-->
-        <!--	For uninstalling ME , first remove/comment all FreiChat related code i.e below code
-                 Then remove FreiChat tables frei_session & frei_chat if necessary
-                 The best/recommended way is using the module for installation                         -->
-
-        <?php
-        $ses = osc_logged_user_id(); //tell freichat the userid of the current user
-        if ($ses != 0) {
-            setcookie("freichat_user", "LOGGED_IN", time() + 3600, "/"); // *do not change -> freichat code
-        } else {
-            $ses = null; //tell freichat that the current user is a guest
-
-            setcookie("freichat_user", null, time() + 3600, "/"); // *do not change -> freichat code
-        }
-
-        if (!function_exists("freichatx_get_hash")) {
-
-            function freichatx_get_hash($ses) {
-
-                if (is_file(osc_base_path() . "/freichat/hardcode.php")) {
-
-                    require osc_base_path() . "/freichat/hardcode.php";
-
-                    $temp_id = $ses . $uid;
-
-                    return md5($temp_id);
-                } else {
-                    echo "<script>alert('module freichatx says: hardcode.php file not
-found!');</script>";
-                }
-
-                return 0;
-            }
-
-        }
-        ?>
-        <script type="text/javascript" language="javascipt" src="<?php echo osc_base_url(); ?>freichat/client/main.php?id=<?php echo $ses; ?>&xhash=<?php echo freichatx_get_hash($ses); ?>"></script>
-        <link rel="stylesheet" href="<?php echo osc_base_url(); ?>freichat/client/jquery/freichat_themes/freichatcss.php" type="text/css">
-        <!--===========================FreiChatX=======END=========================--> 
-
-
     </head>
     <body class="<?php flatter_body_class(); ?> skin-blue sidebar-mini" >
         <div class="wrapper row main_wrapper">
@@ -156,7 +89,7 @@ found!');</script>";
                 <aside class="main-sidebar" >
                     <!-- sidebar: style can be found in sidebar.less -->
                     <section class="sidebar sidenav" id="mySidenav">
-                        <?php if (!osc_is_web_user_logged_in()):?>
+                        <?php if (!osc_is_web_user_logged_in()): ?>
                             <div class="padding-30per">
                                 <a href="<?php echo osc_base_url() ?>"><img class="img img-responsive" src="<?php echo osc_base_url() ?>images/logo-No2-noir.png"></a>
                             </div>
@@ -180,7 +113,7 @@ found!');</script>";
                                 <div class="pull-left image">
                                     <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                         <!--<a href="javascript:void(0)">-->
-    <?php get_user_profile_picture($user['user_id']) ?>
+                                        <?php get_user_profile_picture($user['user_id']) ?>
     <!--                                        <img src="<?php echo $img_path ?>" class="img-circle user-icon" alt="User Image">-->
 
                                         <?php
@@ -192,7 +125,7 @@ found!');</script>";
                                             <?php else: ?>
                                                 <div class="gray-dot"></div>
                                             <?php endif; ?>
-    <?php endif; ?>
+                                        <?php endif; ?>
                                     </a>
                                 </div>
                                 <div class="col-md-12">
@@ -207,7 +140,7 @@ found!');</script>";
                                                                         <a href="javascript:void(0)">
                                                                         <p>
                                                                             <i class="fa fa-circle text-success"></i> 
-    <?php is_user_online($user['user_id']); ?> 
+                                <?php is_user_online($user['user_id']); ?> 
                                                                         </p>
                                                                     </a>
                                                                 </div>
@@ -221,16 +154,16 @@ found!');</script>";
                                                                 </div>-->
                             </div>
 
-<?php endif; ?>
+                        <?php endif; ?>
 
                         <!-- search form -->
-                        <?php if (osc_is_web_user_logged_in()):?>
-                        <div class="input-group sidebar-form search-newsfid" >
-                            <input type="text"  name="q" class="form-control search-newsfid-text" placeholder="<?php _e("Search...", 'flatter'); ?>">
-                            <span class="input-group-btn">
-                                <button type="submit" id="search-btn" class="btn btn-flat search-newsfid-btn"><i class="fa fa-search"></i> </button>
-                            </span>
-                        </div>
+                        <?php if (osc_is_web_user_logged_in()): ?>
+                            <div class="input-group sidebar-form search-newsfid" >
+                                <input type="text"  name="q" class="form-control search-newsfid-text" placeholder="<?php _e("Search...", 'flatter'); ?>">
+                                <span class="input-group-btn">
+                                    <button type="submit" id="search-btn" class="btn btn-flat search-newsfid-btn"><i class="fa fa-search"></i> </button>
+                                </span>
+                            </div>
                         <?php endif; ?>
                         <!-- /.search form -->
                         <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -253,7 +186,7 @@ found!');</script>";
                             <li class="treeview <?php echo $active ?>">
                                 <a href="<?php echo osc_base_url() ?>">
                                     <i class="fa fa-th"></i>
-<?php _e("News Feed", 'flatter'); ?>
+                                    <?php _e("News Feed", 'flatter'); ?>
                                 </a>
                             </li>
                             <?php
@@ -266,11 +199,11 @@ found!');</script>";
                                 endif;
                             endif;
                             ?>
-<?php if (osc_is_web_user_logged_in()): ?>
+                            <?php if (osc_is_web_user_logged_in()): ?>
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . '?page=page&id=33' ?>">
                                         <i class="fa fa-circle-o"></i>
-    <?php _e("Center of interest", 'flatter'); ?>
+                                        <?php _e("Center of interest", 'flatter'); ?>
                                     </a>
                                 </li>
                                 <?php
@@ -287,7 +220,7 @@ found!');</script>";
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-language" aria-hidden="true"></i>
-    <?php echo __('Languages'); ?>
+                                        <?php echo __('Languages'); ?>
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>                                
                                     <ul class="treeview-menu">
@@ -303,7 +236,7 @@ found!');</script>";
     <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="<?php echo osc_base_url(); ?>/index.php?page=language&auto=true&locale=fr_FR">
                                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
-    <?php _e("French", 'flatter'); ?>
+                                                <?php _e("French", 'flatter'); ?>
                                             </a>
                                         </li>
                                         <?php
@@ -317,7 +250,7 @@ found!');</script>";
                                         <li class="user_settings treeview <?php echo $active ?>">
                                             <a href="<?php echo osc_base_url(); ?>/index.php?page=language&auto=true&locale=en_US">
                                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
-    <?php _e("English", 'flatter'); ?>
+                                                <?php _e("English", 'flatter'); ?>
                                             </a>
                                         </li>
                                     </ul>
@@ -336,7 +269,7 @@ found!');</script>";
                                     <!--<a href="<?php echo osc_base_url() . 'index.php?page=item&action=item_add' ?>">-->
                                     <a href="javascript:void(0)" class="free_account" >
                                         <i class="fa fa-list-ul"></i>
-    <?php _e("Publish", 'flatter'); ?>
+                                        <?php _e("Publish", 'flatter'); ?>
                                     </a>
 
                                 </li> 
@@ -357,7 +290,7 @@ found!');</script>";
                                     <!--<a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>">-->
                                     <a href="<?php echo osc_user_public_profile_url(osc_logged_user_id()) ?>">
                                         <i class="fa fa-copy"></i>
-    <?php _e("My profile", 'flatter'); ?>
+                                        <?php _e("My profile", 'flatter'); ?>
                                     </a>
                                 </li>   
                                 <?php
@@ -373,7 +306,7 @@ found!');</script>";
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="<?php echo osc_base_url() . 'index.php?page=page&id=32' ?>">
                                         <i class="fa fa-users"></i>
-    <?php _e("People", 'flatter'); ?>
+                                        <?php _e("People", 'flatter'); ?>
                                     </a>
                                 </li>                                 
                                 <?php
@@ -390,7 +323,7 @@ found!');</script>";
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-user"></i>
-    <?php echo __('Account'); ?>
+                                        <?php echo __('Account'); ?>
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>                                
                                     <ul class="treeview-menu">
@@ -421,7 +354,7 @@ found!');</script>";
     <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
                                             <a href="javascript:void(0)">
                                                 <i class="fa fa-gear"></i>
-    <?php _e("Center of settings", 'flatter'); ?>
+                                                <?php _e("Center of settings", 'flatter'); ?>
                                             </a>
                                         </li>
                                         <?php
@@ -435,7 +368,7 @@ found!');</script>";
                                         <li class="user_settings treeview <?php echo $active ?>">
                                             <a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>">
                                                 <i class="fa fa-gear"></i>
-    <?php _e("Advertising Account", 'flatter'); ?>
+                                                <?php _e("Advertising Account", 'flatter'); ?>
                                             </a>
                                         </li>
                                     </ul>
@@ -454,11 +387,11 @@ found!');</script>";
 //                                endif;
                                 ?>
 
-    <?php if ($user['user_type'] == 0 || $user['user_type'] == 2): ?>
+                                <?php if ($user['user_type'] == 0 || $user['user_type'] == 2): ?>
                                     <li class="treeview <?php echo $active ?>">
                                         <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
                                             <i class="fa fa-money"></i>
-        <?php _e("Subscribe now", 'flatter'); ?>
+                                            <?php _e("Subscribe now", 'flatter'); ?>
                                         </a>
                                     </li>   
                                 <?php endif; ?>
@@ -475,7 +408,7 @@ found!');</script>";
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-info"></i>
-    <?php _e("Informations", 'flatter'); ?>
+                                        <?php _e("Informations", 'flatter'); ?>
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>
 
@@ -493,7 +426,7 @@ found!');</script>";
                                         <li class="treeview <?php echo $active ?>">
                                             <a href="<?php echo osc_base_url() . '?page=page&id=34' ?>">
                                                 <i class="fa fa-book"></i>
-    <?php _e("Terms", 'flatter'); ?>
+                                                <?php _e("Terms", 'flatter'); ?>
                                             </a>
                                         </li>
 
@@ -510,14 +443,14 @@ found!');</script>";
                                         <li class="treeview <?php echo $active ?>">                          
                                             <a href="<?php echo osc_contact_url(); ?>">
                                                 <i class="fa fa-phone"></i>
-    <?php _e("Contact", 'flatter'); ?>
+                                                <?php _e("Contact", 'flatter'); ?>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
 
                             <?php endif; ?>
-<?php if (!osc_is_web_user_logged_in()): ?>
+                            <?php if (!osc_is_web_user_logged_in()): ?>
 
 
                                 <?php
@@ -561,16 +494,16 @@ found!');</script>";
                                     <span class="sound_pass">SoundPass</span>
                                 </div>
                             <?php endif; ?>
-<?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
+                            <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
 
                                 <li class="treeview">
                                     <a href="<?php echo osc_user_logout_url() ?>">
                                         <i class="fa fa-sign-out"></i>
-    <?php _e("Logout", 'flatter'); ?>
+                                        <?php _e("Logout", 'flatter'); ?>
                                     </a>
                                 </li>
 
-<?php endif; ?>
+                            <?php endif; ?>
 
                         </ul>
 
@@ -596,12 +529,12 @@ found!');</script>";
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="blue_text modal-title bold">
-<?php _e("Identification", 'flatter'); ?>
+                                    <?php _e("Identification", 'flatter'); ?>
                                 </h4>
                             </div>
                             <div class="modal-body">
                                 <div class="">
-<?php _e("This page contains Personal Information,", 'flatter'); ?><br/>
+                                    <?php _e("This page contains Personal Information,", 'flatter'); ?><br/>
                                     <span class="bold"><?php _e("confirm your password to get access.", 'flatter'); ?></span>
                                 </div>
                                 <div class="input-text-area margin-top-20 left-border box-shadow-none">
@@ -618,11 +551,11 @@ found!');</script>";
                     </div>
                 </div>
             </div>
-<?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-10 col-sm-10 after_logging  " ?>
+            <?php (osc_is_web_user_logged_in()) ? $class = "col-md-7  main_content" : $class = "col-md-10 col-sm-10 after_logging  " ?>
             <div class="<?php echo $class ?> padding-0 " id="main">
                 <div class="content-wrapper">
                     <div class="content">
-<?php if (!isset($_COOKIE["cookie_banner"])) { ?>
+                        <?php if (!isset($_COOKIE["cookie_banner"])) { ?>
                             <div id="cookie_banner">
                                 <span><?php _e("By continuing the navigation you accept the use of cookies to deliver adapted content with your center of interest.", 'flatter'); ?>
 
@@ -643,11 +576,11 @@ found!');</script>";
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 notification">
-    <?php osc_show_flash_message(); ?>
+                                        <?php osc_show_flash_message(); ?>
                                     </div>
                                 </div>
                             </div>
-<?php } ?>
+                        <?php } ?>
 
                         <script>
                             (function (i, s, o, g, r, a, m) {
