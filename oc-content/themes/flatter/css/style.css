@@ -2443,7 +2443,7 @@ select {
     //background-color: #f9fafb;
     height: 90px;
     outline: 0;
-    border: none;
+    /*border: none;*/
     box-shadow: none;
     resize: none;
 }
@@ -3612,6 +3612,7 @@ select {
 }
 .masonry_row .user_thumbnail{
     width: 60px;
+    border-radius: 50%;
 }
 .communication-tab .follow-user-btn.unfollowing, .communication-tab .follow-user-btn.following {
     color: #444 !important;

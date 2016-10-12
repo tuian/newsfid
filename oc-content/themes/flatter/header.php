@@ -224,12 +224,14 @@ found!');</script>";
 <?php endif; ?>
 
                         <!-- search form -->
+                        <?php if (osc_is_web_user_logged_in()):?>
                         <div class="input-group sidebar-form search-newsfid" >
                             <input type="text"  name="q" class="form-control search-newsfid-text" placeholder="<?php _e("Search...", 'flatter'); ?>">
                             <span class="input-group-btn">
                                 <button type="submit" id="search-btn" class="btn btn-flat search-newsfid-btn"><i class="fa fa-search"></i> </button>
                             </span>
                         </div>
+                        <?php endif; ?>
                         <!-- /.search form -->
                         <!-- sidebar menu: : style can be found in sidebar.less -->
                         <ul class="sidebar-menu">

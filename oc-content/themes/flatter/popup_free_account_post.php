@@ -46,7 +46,7 @@ require_once 'functions.php';
                                 endif;
                                 ?>
 
-                                <img src="<?php echo $img_path; ?>" alt="user" class="img img-responsive">
+                                <img src="<?php echo $img_path; ?>" alt="user" class="img img-responsive img-circle">
                             </div> 
                             <div class="col-md-6 col-sm-6">
                                 <div class="col-md-12 col-sm-12">
@@ -123,10 +123,10 @@ require_once 'functions.php';
                     <div class="col-md-12 col-sm-12 padding-top-4per bg-white">            
                         <div class="center-contant">
                             <div class="col-md-1 col-sm-1 padding-0">
-                                <img src="<?php echo $img_path; ?>" alt="user" width='40px' >
+                                <img src="<?php echo $img_path; ?>" alt="user" width='40px' class="img-circle" >
                             </div>
                             <div class="box-shadow-none width-90 description-box col-md-8 col-sm-8 padding-0">
-                                <textarea placeholder="<?php _e("What's on your mind?", 'flatter') ?>" name="p_disc" class="p_disc"></textarea><span class="error-desc red"><?php _e("Post Description Required", 'flatter') ?></span>
+                                <textarea placeholder="<?php _e("Tell us your story", 'flatter') ?>" name="p_disc" class="p_disc"></textarea><span class="error-desc red"><?php _e("Post Description Required", 'flatter') ?></span>
                             </div>
                         </div>
                         <div class="border-bottom col-md-12 col-sm-12">                 
