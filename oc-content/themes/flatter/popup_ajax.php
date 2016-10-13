@@ -1,3 +1,23 @@
+<style>
+    .skin-blue ::-webkit-scrollbar {
+        width: 10px; 
+    }
+    ::-webkit-scrollbar-button {
+        background-color: transparent; 
+        height: 1px; 
+    }
+    ::-webkit-scrollbar-corner {
+        background-color: #D3D3D3; 
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 7px;
+        border-radius: 30px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+</style>
 <?php
 require_once '../../../oc-load.php';
 require_once 'functions.php';
@@ -119,16 +139,16 @@ if ($item_id):
                                 <li>
                                     &nbsp;&nbsp;&nbsp;
                                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo $item_id_pre; ?>"><?php echo get_comment_count($item_id_pre) ?></span>&nbsp;
-                                        <?php echo _e("Comments", 'flatter')?>
+                                        <?php echo _e("Comments", 'flatter') ?>
                                     </span></li>
                                 &nbsp;&nbsp;
                                 <?php if (osc_is_web_user_logged_in()): ?>
-                                    <li> <span><?php echo  _e("Tchat", 'flatter') ?></span>&nbsp;</li>
+                                    <li> <span><?php echo _e("Tchat", 'flatter') ?></span>&nbsp;</li>
                                 <?php endif; ?>
 
                                 <li class="facebook margin-left-15">
                                     <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                    return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                         <i class="fa fa-facebook"></i>
                                     </a>
                                 </li>
@@ -138,15 +158,15 @@ if ($item_id):
                                 </li>
                                 <li class="googleplus">
                                     <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                    return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                         <i class="fa fa-google-plus"></i>
                                     </a>
                                 </li> 
                                 <li> 
                                     <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == $user_pre_id) { ?>
-<!--                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
-                                            <i class="fa fa-pencil"></i>
-                                        </div>-->
+                <!--                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
+                                                    <i class="fa fa-pencil"></i>
+                                                </div>-->
                                     <?php } ?>
                                 </li>
                             </ul>
@@ -192,14 +212,14 @@ if ($item_id):
                                                     <span class="username">
                                                         <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']); ?>"><?php echo $comment_user['user_name']; ?></a>
                                                         <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
-                                                        <?php if($comment_data['fk_i_user_id'] == osc_logged_user_id()):  ?>
-                                                        <div class="dropdown  pull-right">
-                                                            <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
-                                                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                                                                <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Edit'); ?></a></li>
-                                                                <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete') ?></a></li>
-                                                            </ul>
-                                                        </div>
+                                                        <?php if ($comment_data['fk_i_user_id'] == osc_logged_user_id()): ?>
+                                                            <div class="dropdown  pull-right">
+                                                                <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
+                                                                <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
+                                                                    <li class="edit_cmnt comment_text_<?php echo $comment_data['pk_i_id']; ?>" data-item-id='<?php echo $item['pk_i_id']; ?>' data_text="<?php echo $comment_data['s_body']; ?>" data_id="<?php echo $comment_data['pk_i_id']; ?>" onclick="editComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Edit'); ?></a></li>
+                                                                    <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item_id; ?>)"><a><?php echo __('Delete') ?></a></li>
+                                                                </ul>
+                                                            </div>
                                                         <?php endif; ?>
                                                     </span><!-- /.username -->
                                                     <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
@@ -318,16 +338,16 @@ if ($item_id):
                                                         <li>
                                                             &nbsp;&nbsp;&nbsp;
                                                             <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                                                                <?php echo  _e("Comments", 'flatter') ?>
+                                                                <?php echo _e("Comments", 'flatter') ?>
                                                             </span></li>
                                                         &nbsp;&nbsp;
                                                         <?php if (osc_is_web_user_logged_in()): ?>
-                                                            <li> <span><?php  _e("Tchat", 'flatter')?></span>&nbsp;</li>
+                                                            <li> <span><?php _e("Tchat", 'flatter') ?></span>&nbsp;</li>
                                                         <?php endif; ?>
 
                                                         <li class="facebook margin-left-15">
                                                             <a class="whover" title="" data-toggle="tooltip" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('<?php echo osc_item_url(); ?>'), 'facebook-share-dialog', 'height=279, width=575');
-                                                                    return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
+                                                                            return false;" data-original-title="<?php _e("Share on Facebook", 'flatter'); ?>">
                                                                 <i class="fa fa-facebook"></i>
                                                             </a>
                                                         </li>
@@ -337,15 +357,15 @@ if ($item_id):
                                                         </li>
                                                         <li class="googleplus">
                                                             <a class="whover" title="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,height=600,width=600');
-                                                                    return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
+                                                                            return false;" href="https://plus.google.com/share?url=<?php echo osc_item_url(); ?>" data-toggle="tooltip" data-original-title="<?php _e("Share on Google+", 'flatter'); ?>">
                                                                 <i class="fa fa-google-plus"></i>
                                                             </a>
                                                         </li> 
                                                         <li> 
                                                             <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
-<!--                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </div>-->
+                <!--                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </div>-->
                                                             <?php } ?>
                                                         </li>
                                                     </ul>
@@ -371,7 +391,7 @@ if ($item_id):
                                                             foreach ($c_data as $k => $comment_data):
                                                                 $comment_user = get_user_data($comment_data['fk_i_user_id']);
                                                                 if ($k < $total_comment - 3 && !$load_more):
-                                                                    $load_more =  __("load more", 'flatter');
+                                                                    $load_more = __("load more", 'flatter');
                                                                     echo '<div class="load_more">';
                                                                 endif;
                                                                 ?>
@@ -393,7 +413,7 @@ if ($item_id):
                                                                             <span class="username">
                                                                                 <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']); ?>"> <?php echo $comment_user['user_name'] ?></a>
                                                                                 <span class="text-muted padding-left-10"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>                                                                    
-                                                                                <?php if($comment_data['fk_i_user_id'] == osc_logged_user_id()):  ?>
+                                                                                <?php if ($comment_data['fk_i_user_id'] == osc_logged_user_id()): ?>
                                                                                     <div class="dropdown  pull-right">
                                                                                         <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                                                         <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">

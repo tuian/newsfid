@@ -34,6 +34,38 @@ if ($_REQUEST['submit'] == 'send-msg'):
         $msg_data->dao->insert("`frei_chat`", $msg_array);
     endif;
 endif;
+if ($_REQUEST['submit'] == 'send-msg1'):
+    $msg_array['`from`'] = $_REQUEST['from_id'];
+    $msg_array['from_name'] = $_REQUEST['from_name'];
+    $msg_array['`to`'] = $_REQUEST['user_id'];
+    $msg_array['to_name'] = $_REQUEST['to_name'];
+    $msg_array['message'] = $_REQUEST['msg'];
+    $msg_array['sent'] = date('Y-m-d H:i:s');
+
+
+//    $user = User::newInstance()->findByPrimaryKey($u['user_id']);     // change it                        
+//    if (useronline_show_user_status($_REQUEST['user_id']) == 1) {        
+//        $msg_array['recd'] = 1;
+//    }
+//    else{            
+//        $msg_array['recd'] = 0;
+//    }
+    $msg_array['recd'] = 0;
+    $msg_array['read_status'] = 0;
+
+    $msg_array['time'] = time() . str_replace(" ", "", microtime());
+    $msg_array['GMT_time'] = time();
+    $msg_array['message_type'] = 0;
+    $msg_array['room_id'] = -1;
+//    pr($msg_array);
+    $msg_data = new DAO();
+    if ($_REQUEST['action'] == 'archives-converstion'):
+        $msg_data->dao->insert("`frei_chat_archives`", $msg_array);
+    else:
+//    elseif ($_REQUEST['action'] == 'chat-converstion'):
+        $msg_data->dao->insert("`frei_chat`", $msg_array);
+    endif;
+endif;
 if ($_REQUEST['action'] == 'chat-converstion'):
     $partner_id = $_REQUEST['user_id'];
     $old_msg_cnt = $_REQUEST['old_msg_cnt'];
@@ -99,9 +131,11 @@ if ($_REQUEST['action'] == 'archives-converstion'):
     $partner = get_user_data($partner_id);
     $conv = get_archive_conversion($user_id, $partner_id);
     ?>
-    <input type="hidden" id="hidden-user-data" msg_type="archives-converstion" from-user-id="<?php echo $user_id; ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id; ?>" to-user-name="<?php echo $partner['user_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $partner_id)); ?>"/>
+    <div id="chat-box1"></div>
+    <input type="hidden" id="hidden-user-data1" msg_type="archives-converstion" from-user-id="<?php echo $user_id; ?>" from-user-name="<?php echo $user['user_name'] ?>" to-user-id="<?php echo $partner_id; ?>" to-user-name="<?php echo $partner['user_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $partner_id)); ?>"/>
     <?php foreach ($conv as $k => $msg):
         ?>
+    
         <div class="conversion">
             <div class="col-md-12 padding-0 vertical-row">
                 <div class="col-md-1 padding-0 padding-top-4per">
@@ -375,9 +409,42 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                 }
             });
         });
+        $(document).on('click', '.send_msg1', function () {
+            var msg = $('.t_chat_textarea1').val();
+            var from_id = $('#hidden-user-data1').attr('from-user-id');
+            var from_name = $('#hidden-user-data1').attr('from-user-name');
+            var to_id = $('#hidden-user-data1').attr('to-user-id');
+            var to_name = $('#hidden-user-data1').attr('to-user-name');
+            if (!msg) {
+                return false;
+            }
+            $.ajax({
+                url: "<?php echo osc_current_web_theme_url() . 'tchat-converstion.php' ?>",
+                type: 'post',
+                data: {
+                    submit: 'send-msg1',
+                    action: 'archives-converstion',
+                    from_id: from_id,
+                    from_name: from_name,
+                    user_id: to_id,
+                    to_name: to_name,
+                    msg: msg
+                },
+                success: function (data) {
+                    $('#chat-box1').html(data);
+                    $('#chat-box1').animate({scrollTop: $('#chat-box1').prop("scrollHeight")}, 500);
+                    $('.t_chat_textarea1').closest('div').html('<textarea class="t_chat_textarea1" placeholder="<?php _e("Write a reply....", 'flatter') ?>"></textarea>');
+                }
+            });
+        });
         $('.t_chat_textarea').bind('keypress', function (e) {
             if (e.which === 13) {
                 $('.send_msg').click();
+            }
+        });
+        $('.t_chat_textarea1').bind('keypress', function (e) {
+            if (e.which === 13) {
+                $('.send_msg1').click();
             }
         });
 

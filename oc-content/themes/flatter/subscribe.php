@@ -52,12 +52,12 @@ require 'functions.php';
                                 </div>
                                 <div class="breack-line"></div>
                                 <div class="payment-section-2 bg-white col-md-12 border-radius-10 padding-0">
-                                    <div class="col-md-12 theme-modal-header">
+<!--                                    <div class="col-md-12 theme-modal-header">
                                         <div class="col-md-offset-1">
                                             <h2 class="bold margin-0"><?php _e("Select payment mode ", 'flatter') ?> </h2>
                                         </div>
-                                    </div>
-                                    <div class="container">
+                                    </div>-->
+<!--                                    <div class="container">
                                         <div class="col-md-12 margin-top-20">
                                             <table class="table margin-0">
                                                 <thead>
@@ -87,27 +87,27 @@ require 'functions.php';
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="theme-modal-footer"></div> 
                                     <div class="col-md-12 bg-white">
-                                        <div class="col-md-offset-1 col-md-2 text-center">
+<!--                                        <div class="col-md-offset-1 col-md-2 text-center">
                                             <div class="payment-img">
                                                 <img class="img img-responsive" src="../flatter/images/CreditCards.png">
                                             </div>
                                             <input type="radio" class="payment-option" name="payment" value="payment-card" checked>
-                                        </div>
+                                        </div>-->
                                         <div class="col-md-2 text-center">
                                             <div class="payment-img">
                                                 <img class="img img-responsive" src="../flatter/images/paypal.png">
                                             </div>
-                                            <input type="radio" class="payment-option" name="payment" value="paypal">
+                                            <input type="radio" class="payment-option" name="payment" value="paypal" checked="">
                                         </div>
                                         <div class="col-md-6 padding-3per bg-green-light">
                                             <?php _e("You will not be charged until the end of your trial period dated", 'flatter') ?> <?php echo date('d/m/Y', strtotime("+1 months", strtotime("NOW"))); ?>, <?php _e("You could cancel your membership online at any time.", 'flatter') ?>
                                         </div>
 
                                     </div>
-                                    <div class="col-md-offset-3 col-md-6" id="payment-card">
+<!--                                    <div class="col-md-offset-3 col-md-6" id="payment-card">
                                         <div class="col-md-12">
                                             <div class="blue_text bold"><?php echo __('Method of payment'); ?></div>
                                         </div>
@@ -162,7 +162,7 @@ require 'functions.php';
                                         <div class="col-md-12 margin-top-20 grey-border">
                                             <input type="text" placeholder="<?php _e("CEDEX", 'flatter') ?>">
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="center-contant vertical-row none" id="paypal">
                                         <div class="col-md-4">
                                             <img class="img img-responsive" src="images/paypal-iphone.png">
@@ -375,7 +375,7 @@ function payment_script() {
                                 window.location.href = "<?php echo osc_base_url(); ?>";
                             } else {
                                 $('.payment_result').empty().addClass('error').removeClass('success');
-                                $('.payment_result').text(<?php _e("Payment not added successfully", 'flatter') ?>);
+                                $('.payment_result').text('<?php _e("Payment not added successfully", 'flatter') ?>');
                                 $('.payment_result').text(data);
                             }
                         }

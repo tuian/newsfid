@@ -290,10 +290,10 @@ endif;
                                         <?php user_follow_btn_box($user_id, $follow_user_id) ?>
                                         <button class="btn btn-default font-12 bold chat-user1" to-user-id = "<?php echo $user['user_id'] ?>"><?php _e("Tchat", 'flatter') ?></button>
                                         <?php
-                                        $circle_data = get_user_circle_data($user_id);
+                                        $circle_data = get_user_circle($user_id);
                                         if (!empty($circle_data) && in_array($follow_user_id, $circle_data)):
                                             ?>
-                                            <button class="btn btn-default font-12 bold last_btn remove_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>"><?php _e("Remove to circle", 'flatter') ?></button>
+                                            <button class="btn font-12 bold last_btn remove_circle" user-id="<?php echo osc_logged_user_id(); ?>" follow-user-id="<?php echo $user['user_id']; ?>"><?php _e("Circle", 'flatter') ?></button>
                                             <?php
                                         else:
                                             ?>
@@ -608,9 +608,9 @@ function custom_script() {
                                                                                 logged_in_user_id: logged_in_user_id
                                                                             },
                                                                             success: function () {
-                                                                                $(location).attr('href', '<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>');
+                                                                                $('.add_circle').removeClass('btn-default').addClass('remove_circle').removeClass('add_circle');
                                                                             }
-                                                                        })
+                                                                        });
                                                                     });
                                                                     $(document).on('click', '.remove_circle', function () {
                                                                         var follow_user_id = $(this).attr('follow-user-id');
@@ -619,14 +619,14 @@ function custom_script() {
                                                                             url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
                                                                             type: 'post',
                                                                             data: {
-                                                                                remove_circle: 'remove_circle',
+                                                                                action: 'remove_circle',
                                                                                 follow_user_id: follow_user_id,
                                                                                 logged_in_user_id: logged_in_user_id
                                                                             },
                                                                             success: function () {
-                                                                                $(location).attr('href', '<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>');
+                                                                                $('.remove_circle').addClass('btn-default').addClass('add_circle').removeClass('remove_circle');
                                                                             }
-                                                                        })
+                                                                        });
                                                                     });
     </script>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>

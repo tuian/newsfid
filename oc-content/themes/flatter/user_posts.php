@@ -113,7 +113,7 @@ if ($items):
                                     <?php echo $user['user_name'] ?>
                                 </a> 
                                 <?php if (!empty($share_array) && in_array($item['pk_i_id'], $share_array)): ?> 
-                                    <sapn>shared <?php
+                                    <sapn><?php _e('shared ', 'flatter')?> <?php
                                         if ($post_user['user_id'] == $user['user_id']):
                                             if ($user['s_gender'] == 'male'):
                                                 echo 'his';
@@ -122,9 +122,9 @@ if ($items):
                                             endif;
                                         else:
                                             ?>
-                                            <a class="blue_text" href="<?php echo osc_user_public_profile_url($post_user['user_id']) ?>"><?php echo $post_user['user_name']; ?></a>
+                                            <a class="blue_text" href="<?php echo osc_user_public_profile_url($post_user['user_id']) ?>"><?php echo $post_user['user_name'];?></a><?php _e(" 's",'flatter'); ?>
                                         <?php endif; ?> 
-                                        post
+                                        <?php _e('post', 'flatter'); ?>
                                     </sapn>
                                 <?php endif; ?>
                             </span>

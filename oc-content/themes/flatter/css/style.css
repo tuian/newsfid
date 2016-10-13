@@ -3503,7 +3503,7 @@ select {
     position: fixed;
     bottom: 20px;
 }
-#chat-box{
+#chat-box,#chat-box1{
     position: relative;
     overflow-y: auto;
     max-height: 280px;
@@ -3830,11 +3830,7 @@ textarea.msg_textarea{
 /*.description .item_description{
     min-height: 65px;
 }*/
-.audio{
-    min-height: 193px;
-    background-image: url(../images/audio.jpg);
-    background-size: cover;
-}
+
 input#post_media.media_video{
     width: 380%;
 }
@@ -3983,4 +3979,7 @@ select{
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
+}
+.comment_user_image .user_type_icon_image{
+    width: 10px !important;
 }

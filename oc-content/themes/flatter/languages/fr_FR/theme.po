@@ -1390,6 +1390,15 @@ msgstr "Voir toutes les annonces"
 msgid "Settings"
 msgstr "Réglages"
 
+msgid "Discuss with your circle"
+msgstr "Discuter avec mon Cercle"
+
+msgid "See all chats"
+msgstr "Voir toutes les conversations"
+
+msgid "See only my circle chat"
+msgstr "Voir uniquement mon Cercle"
+
 #: setting.php:35
 msgid "Security"
 msgstr "Sécurité"
@@ -2622,3 +2631,6 @@ msgstr "Aucun item trouvé dans la watchlist"
 
 #~ msgid "Publish and share stories with the world"
 #~ msgstr "Publier et partager des histoires avec le monde "
+
+#~ msgid "Update my account"
+#~ msgstr "Mettre mon compte à niveau"

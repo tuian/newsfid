@@ -67,7 +67,7 @@ require_once 'functions.php';
                             </div>
                             <div class="col-md-4 col-sm-4 padding-top-4per">
                                 <div class="col-md-offset-4">
-                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> <?php _e("Get more details", 'flatter') ?> </a>
+                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> <?php _e("Update my account", 'flatter') ?> </a>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +288,7 @@ require_once 'functions.php';
                         <div class="vertical-row col-md-offset-1 col-sm-offset-1">
                             <div class="en-savoir-plus1 publier1 col-md-3">
                                 <button type="submit" class="en-savoir-plus-button publier-btn pull-left">
-                                    <span class="bold"><?php _e("Publier", 'flatter') ?></span></button>
+                                    <span class="bold"><?php _e("Publish", 'flatter') ?></span></button>
                             </div>
                             <div class="onoffswitch col-md-3 col-sm-3">
                                 <input type="checkbox" name="publier" class="onoffswitch-checkbox" id="publier">

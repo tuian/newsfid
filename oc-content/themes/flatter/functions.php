@@ -2161,22 +2161,24 @@ function get_chat_users($filter = 'all') {
 }
 
 function get_users_data($users = array()) {
-    $users = implode(",", $users);
-    $db_prefix = DB_TABLE_PREFIX;
-    $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website');
-    $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
-    $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
-    $user_data->dao->select('user_role.id as role_id, user_role.role_name');
-    $user_data->dao->from("{$db_prefix}t_user user");
-    $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
-    $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
-    $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
-    $user_data->dao->where("user.pk_i_id IN ({$users})");
-    $user_data->dao->orderBy("user_cover_picture.pic_ext DESC");
-    $result = $user_data->dao->get();
-    $user = $result->result();
-    return $user;
+    if (!empty($users)):
+        $users = implode(",", $users);
+        $db_prefix = DB_TABLE_PREFIX;
+        $user_data = new DAO();
+        $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website');
+        $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
+        $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext');
+        $user_data->dao->select('user_role.id as role_id, user_role.role_name');
+        $user_data->dao->from("{$db_prefix}t_user user");
+        $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
+        $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
+        $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
+        $user_data->dao->where("user.pk_i_id IN ({$users})");
+        $user_data->dao->orderBy("user_cover_picture.pic_ext DESC");
+        $result = $user_data->dao->get();
+        $user = $result->result();
+        return $user;
+    endif;
 }
 
 function update_user_circle($logged_in_user_id = NULL, $circle_user_id = NULL, $circle_value = NULL) {
@@ -2237,7 +2239,13 @@ function get_user_circle($user_id) {
 
 function get_chat_message_data($user_id = null) {
     $conn = getConnection();
-    $user_messge_array = $conn->osc_dbFetchResults("SELECT * FROM (SELECT * FROM frei_chat ORDER BY sent DESC) AS sub where `from` = {$user_id} GROUP BY `to`");
+    $user_messge_array = $conn->osc_dbFetchResults("SELECT * FROM (SELECT * FROM frei_chat ORDER BY sent DESC) AS sub where `from` = {$user_id} GROUP BY `to` order by `sent` DESC");
+    return $user_messge_array;
+}
+
+function get_chat_arc_message_data($user_id = null) {
+    $conn = getConnection();
+    $user_messge_array = $conn->osc_dbFetchResults("SELECT * FROM (SELECT * FROM frei_chat_archives ORDER BY sent DESC) AS sub where `from` = {$user_id} GROUP BY `to` order by `sent` DESC");
     return $user_messge_array;
 }
 
@@ -2448,15 +2456,19 @@ function get_item_premium_pack() {
     $item_data = $result->result();
     return $item_data;
 }
+
 $page = Params::getParam('page');
 $action = Params::getParam('action');
+$id_item = Params::getParam('id');
 if ($page == 'user' && ($action == 'profile' || $action == 'change_username' || $action == 'change_email' || $action == 'change_password')) {
     if (ob_get_length() > 0) {
         ob_end_flush();
     }
     header("Location: " . osc_base_url());
 }
-
+if($page = 'item' && $id_item != ''):
+    osc_redirect_to(osc_base_url());
+endif;
 //for paypal payment
 //NOTIFY URL WILL LOOK LIKE http://www.newsfid.http5000.com/index.php?page=custom&route=paypal-notify&extra=NzlbEF8NMCr1Pjs3SKw+Pol3txeWLTifhfq0gAd18nU=
 $p_route = Params::getParam('route');

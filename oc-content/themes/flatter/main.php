@@ -236,12 +236,12 @@ else: {
 
                                 <div class="box-body" style="display: block;">                             
                                     <select class="form-control select2 post_type_filter" style="width: 100%;" tabindex="-1" title="Podcast" aria-hidden="true">
-                                        <option value="all">All</option> 
-                                        <option value="image">Image</option>                                
-                                        <option value="video">Video</option>                                
-                                        <option value="gif">Gif</option>                                
-                                        <option value="music">Music</option>                                
-                                        <option value="podcast">Podcast</option>                                
+                                        <option value="all"><?php _e('All', 'flatter'); ?></option> 
+                                        <option value="image"><?php _e('Image', 'flatter'); ?></option>                                
+                                        <option value="video"><?php _e('Video', 'flatter'); ?></option>                                
+                                        <option value="gif"><?php _e('Gif', 'flatter'); ?></option>                                
+                                        <option value="music"><?php _e('Music', 'flatter'); ?></option>                                
+                                        <option value="podcast"><?php _e('Podcast', 'flatter'); ?></option>                                
                                     </select>
                                 </div> 
 
@@ -288,43 +288,37 @@ else: {
                                     $suggested_follow_users = array_diff($suggested_users, $follow_user);
                                     $follow_remove = (array) get_user_following_remove_data($logged_user['user_id']);
                                     $suggested_users_result = array_diff($suggested_follow_users, $follow_remove);
-                                    $suggested_users_result = get_users_data($suggested_users_result);  
+                                    $suggested_users_result = get_users_data($suggested_users_result);
                                     if ($suggested_users_result):
                                         $i = 0;
                                         foreach ($suggested_users_result as $suggested_user_array):
                                             if (+$i > 3)
                                                 break;
-                                           
-//                                                if ((get_user_follower_data($suggested_user_array['user_id']))): 
-                                                ?>
-                                                <div class="sugg_box col-md-12 col-xs-12 margin-bottom-10">
-                                                    <div class="col-md-3 col-xs-2 padding-0">
-                                                        <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                                    </div>
-                                                    <div class="col-md-9 col-xs-10 padding-right-0">
-                                                        <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
-                                                        <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                                        <div class="col-md-12 padding-0">                                                           
-                                                            <div class="col-md-offset-2 col-md-4 col-sm-4 col-xs-4 padding-0 sug_button">
-                                                                <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>">Follow</button>
-                                                            </div>
-                                                            <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10">         
-                                                                <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>">Remove</button>
-                                                            </div>
+//                                                if ((get_user_follower_data($suggested_user_array['user_id']))): 
+                                            ?>
+                                            <div class="sugg_box col-md-12 col-xs-12 margin-bottom-10">
+                                                <div class="col-md-3 col-xs-2 padding-0">
+                                                    <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                </div>
+                                                <div class="col-md-9 col-xs-10 padding-right-0">
+                                                    <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
+
+                                                    <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
+                                                    <div class="col-md-12 padding-0">                                                           
+                                                        <div class="col-md-offset-2 col-md-4 col-sm-4 col-xs-4 padding-0 sug_button">
+                                                            <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>">Follow</button>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10">         
+                                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>">Remove</button>
                                                         </div>
                                                     </div>
-                                                </div>    
-                                                <?php
+                                                </div>
+                                            </div>    
+                                            <?php
 //                                              
                                             $i++;
                                         endforeach;
-                                    else:
-                                        ?>
-                                        <div class="col-md-12 col-xs-12 margin-bottom-10">                                
-                                            no
-                                        </div> 
-                                    <?php
                                     endif;
                                     ?>
                                 </div>
@@ -435,7 +429,7 @@ else: {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                                       ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                                        ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -457,7 +451,7 @@ else: {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                                       ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                                        ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -477,8 +471,8 @@ else: {
             <div class="row  effect-3">
                 <div class="col-md-12">
                     <div class="masonry_row">
-                    <?php                        
-                        $language = isset($_SESSION['userLocale'])?$_SESSION['userLocale']:osc_locale_code();
+                        <?php
+                        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
                         $db_prefix = DB_TABLE_PREFIX;
                         $data = new DAO();
                         $data->dao->select('item.*, item_description.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
@@ -488,7 +482,7 @@ else: {
                         $data->dao->orderBy('dt_pub_date', 'DESC');
                         $categories = get_category_array('1');
                         $data->dao->whereIn('fk_i_category_id', $categories);
-                        $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0 AND item_description.fk_c_locale_code='".$language."'");
+                        $data->dao->where("item_user.has_private_post = 0 AND item_user.user_type != 0 AND item_description.fk_c_locale_code='" . $language . "'");
 
                         $page_number = isset($_REQUEST['page_number']) ? $_REQUEST['page_number'] : 0;
                         $offset = 20;
@@ -500,7 +494,7 @@ else: {
                             $items = $result->result();
                         } else {
                             $items = array();
-                        }                        
+                        }
                         if ($items):
                             $item_result = Item::newInstance()->extendData($items);
                             $db_prefix = DB_TABLE_PREFIX;
@@ -636,7 +630,7 @@ else: {
                         //elseif($page_number > 0):
                         //    echo '<h2 class="result_text">No More Data Found</h2> ';
                         else:
-                            echo '<div class="usepost_no_record"><h2 class="result_text">'.__("Nothing to show off for now.", 'flatter').'</h2>'.__('Thanks to try later').'</div>';                           
+                            echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter') . '</h2>' . __('Thanks to try later') . '</div>';
                         endif;
                         ?>
                     </div>
@@ -685,197 +679,333 @@ function footer_script() {
     <?php if (osc_is_web_user_logged_in()): ?>
         <script>
             $('#autocomplete_main').typeahead({
-            source: function (query, process) {
-                var $items = new Array;
-                $items = [""];
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
-                    dataType: "json",
-                    type: "POST",
-                    data: {city_name: query, region_name: query, country_name: query},
-                    success: function (data) {                        
-                        $.map(data, function (data) {
-                            var group;
-                            group = {
-                                city_id: data.city_id,
-                                city_name:data.city_name,
-                                region_id: data.r_id,
-                                region_name:data.region_name,
-                                country_code: data.country_code,
-                                country_name:data.country_name,
-                                name: data.city_name + '-' + data.region_name + '-' + data.country_name,
-                            };
-                            $items.push(group);
-                        });                        
-                        process($items);
-                    }
-                });
-            },
-            updater:function (data) {
-                var new_text = data.name; 
-                $('#ajax_city_saved').removeClass('hidden');
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
-                    type: 'POST',
-                    data: {
-                        action: 'user_localisation',                     
-                        city: data.city_name,
-                        country: data.country_name,
-                        scountry: data.country_code,
-                        region_code: data.region_id,
-                        region_name: data.region_name,
-                    },
-                    dataType: "json", 
-                    success: function (data, textStatus, jqXHR) {
-                        $('#autocomplete_main').val(new_text);
-                        location.reload();                      
-                    }
-                });           
-            }
-        });
+                source: function (query, process) {
+                    var $items = new Array;
+                    $items = [""];
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                        dataType: "json",
+                        type: "POST",
+                        data: {city_name: query, region_name: query, country_name: query},
+                        success: function (data) {
+                            $.map(data, function (data) {
+                                var group;
+                                group = {
+                                    city_id: data.city_id,
+                                    city_name: data.city_name,
+                                    region_id: data.r_id,
+                                    region_name: data.region_name,
+                                    country_code: data.country_code,
+                                    country_name: data.country_name,
+                                    name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                                };
+                                $items.push(group);
+                            });
+                            process($items);
+                        }
+                    });
+                },
+                updater: function (data) {
+                    var new_text = data.name;
+                    $('#ajax_city_saved').removeClass('hidden');
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url('user_info_ajax.php'); ?>",
+                        type: 'POST',
+                        data: {
+                            action: 'user_localisation',
+                            city: data.city_name,
+                            country: data.country_name,
+                            scountry: data.country_code,
+                            region_code: data.region_id,
+                            region_name: data.region_name,
+                        },
+                        dataType: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            $('#autocomplete_main').val(new_text);
+                            location.reload();
+                        }
+                    });
+                }
+            });
         </script>
     <?php endif; ?>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
 
-        $(document).on('click', '.follow_remove', function () {
-            var user_id = $(this).attr('user-id');
-            $(this).closest('.sugg_box').hide('slow');
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
-                type: "POST",
-                data: {
-                    follow_remove: 'follow-remove',
-                    follow_user_id: user_id,
-                },
-                success: function (data) {
-                    $('#suggested_user_div').html(data);
-                }
+            $(document).on('click', '.follow_remove', function () {
+                var user_id = $(this).attr('user-id');
+                $(this).closest('.sugg_box').hide('slow');
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
+                    type: "POST",
+                    data: {
+                        follow_remove: 'follow-remove',
+                        follow_user_id: user_id,
+                    },
+                    success: function (data) {
+                        $('#suggested_user_div').html(data);
+                    }
+                });
             });
-        });
-        $(document).on('click', '.follow_users', function () {
-            var user_id = $(this).attr('user-id');
-            $(this).closest('.sugg_box').hide('slow');
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
-                type: "POST",
-                data: {
-                    follow: 'follow-user',
-                    follow_user_id: user_id,
-                },
-                success: function (data) {
-                    $('#suggested_user_div').html(data);
-                }
+            $(document).on('click', '.follow_users', function () {
+                var user_id = $(this).attr('user-id');
+                $(this).closest('.sugg_box').hide('slow');
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url('unfollow_and_add_circle.php') ?>",
+                    type: "POST",
+                    data: {
+                        follow: 'follow-user',
+                        follow_user_id: user_id,
+                    },
+                    success: function (data) {
+                        $('#suggested_user_div').html(data);
+                    }
+                });
             });
-        });
-        var pageNumber = $('#page_number').val();
-        var is_enable_ajax = true;
-        var loading = false;
-        var location_type = $('.filter_city').attr('data_location_type') || $('.filter_region').attr('data_location_type') || $('.filter_country').attr('data_location_type');
-        var location_id = $('.filter_city').attr('data_location_id') || $('.filter_region').attr('data_location_id') || $('.filter_country').attr('data_location_id');
-        var category_id = $('#sCategory').val();
-        var post_type = $('.post_type_filter').val();
-        $(document).ready(function () {
-            $(window).scroll(function (event) {
-                var scroll = $(window).scrollTop();
-                if (scroll > 650) {
-                    $('#home_primary_nav_wrap').addClass("all_news_nav_fix");
-                } else {
-                    $('#home_primary_nav_wrap').removeClass("all_news_nav_fix");
-                }
+            var pageNumber = $('#page_number').val();
+            var is_enable_ajax = true;
+            var loading = false;
+            var location_type = $('.filter_city').attr('data_location_type') || $('.filter_region').attr('data_location_type') || $('.filter_country').attr('data_location_type');
+            var location_id = $('.filter_city').attr('data_location_id') || $('.filter_region').attr('data_location_id') || $('.filter_country').attr('data_location_id');
+            var category_id = $('#sCategory').val();
+            var post_type = $('.post_type_filter').val();
+            $(document).ready(function () {
+                $(window).scroll(function (event) {
+                    var scroll = $(window).scrollTop();
+                    if (scroll > 650) {
+                        $('#home_primary_nav_wrap').addClass("all_news_nav_fix");
+                    } else {
+                        $('#home_primary_nav_wrap').removeClass("all_news_nav_fix");
+                    }
 
-            });
+                });
 
     <?php if (osc_is_web_user_logged_in()): ?>
 
 
-                $(window).scroll(function (event) {
-                    var screen = $(window).height();
-                    var scroll = $(window).scrollTop();
-                    if (screen > 1000) {
-                        var fix = 1100;
-                    }
-                    else if (screen > 900) {
-                        var fix = 870;
-                    }
-                    else if (screen > 800) {
-                        var fix = 800;
-                    }
-                    else if (screen > 700) {
-                        var fix = 700;
-                    }
-                    else if (screen > 600) {
-                        var fix = 530;
-                    }
-                    else if (screen > 500) {
-                        var fix = 450;
-                    }
-                    else if (screen > 400) {
-                        var fix = 500;
-                    }
-                    else if (screen > 300) {
-                        var fix = 450;
-                    }
-                    if (scroll > 0) {
-                        $('#wrap').addClass("box_fix_main");
-                        $('.box_post').addClass("box_post_main");
-                        $('.user_profile_navigation').addClass("fix_nav");
+                    $(window).scroll(function (event) {
+                        var screen = $(window).height();
+                        var scroll = $(window).scrollTop();
+                        if (screen > 1000) {
+                            var fix = 1100;
+                        }
+                        else if (screen > 900) {
+                            var fix = 870;
+                        }
+                        else if (screen > 800) {
+                            var fix = 800;
+                        }
+                        else if (screen > 700) {
+                            var fix = 700;
+                        }
+                        else if (screen > 600) {
+                            var fix = 530;
+                        }
+                        else if (screen > 500) {
+                            var fix = 450;
+                        }
+                        else if (screen > 400) {
+                            var fix = 500;
+                        }
+                        else if (screen > 300) {
+                            var fix = 450;
+                        }
+                        if (scroll > 0) {
+                            $('#wrap').addClass("box_fix_main");
+                            $('.box_post').addClass("box_post_main");
+                            $('.user_profile_navigation').addClass("fix_nav");
 
-                    } else {
-                        $('#wrap').removeClass("box_fix_main");
-                        $('.box_post').removeClass("box_post_main");
-                        $('.user_profile_navigation').removeClass("fix_nav");
-                    }
+                        } else {
+                            $('#wrap').removeClass("box_fix_main");
+                            $('.box_post').removeClass("box_post_main");
+                            $('.user_profile_navigation').removeClass("fix_nav");
+                        }
 
-                });
-                $('.select2').each(function () {
-                    var placeholder = $(this).attr('title');
-                    $(this).select2({
-                        placeholder: 'placeholder'
                     });
-                });
-                $('.filter_city').typeahead({
-                    source: function (query, process) {
-                        var $items = new Array;
-                        $items = [""];
-                        $.ajax({
-                            url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
-                            dataType: "json",
-                            type: "POST",
-                            data: {city_name: query, region_name: query, country_name: query},
-                            success: function (data) {
-                                $.map(data, function (data) {
-                                    var group;
-                                    group = {
-                                        city_id: data.city_id,
-                                        region_id: data.r_id,
-                                        country_code: data.country_code,
-                                        name: data.city_name + '-' + data.region_name + '-' + data.country_name,
-                                    };
-                                    $items.push(group);
-                                });
+                    $('.select2').each(function () {
+                        var placeholder = $(this).attr('title');
+                        $(this).select2({
+                            placeholder: 'placeholder'
+                        });
+                    });
+                    $('.filter_city').typeahead({
+                        source: function (query, process) {
+                            var $items = new Array;
+                            $items = [""];
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                                dataType: "json",
+                                type: "POST",
+                                data: {city_name: query, region_name: query, country_name: query},
+                                success: function (data) {
+                                    $.map(data, function (data) {
+                                        var group;
+                                        group = {
+                                            city_id: data.city_id,
+                                            region_id: data.r_id,
+                                            country_code: data.country_code,
+                                            name: data.city_name + '-' + data.region_name + '-' + data.country_name,
+                                        };
+                                        $items.push(group);
+                                    });
 
-                                process($items);
+                                    process($items);
+                                }
+                            });
+                        },
+                        afterSelect: function (obj) {
+                            console.log(obj);
+                            $('.posts_container .loading').fadeIn(500);
+                            $('.user_related_posts').css({'opacity': '0.2'});
+
+                            reset_variable_after_login();
+                            //make_after_login_item_ajax_call();
+                            var category_id = $('#sCategory').val();
+                            var post_type = $('.post_type_filter').val();
+                            $.ajax({
+                                type: 'post',
+                                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                                data: {
+                                    search_by: 'city',
+                                    city_id: obj.city_id,
+                                    region_id: obj.region_id,
+                                    country_code: obj.country_code,
+                                    category_id: category_id,
+                                    post_type: post_type,
+                                },
+                                success: function (data) {
+                                    $('.user_related_posts').empty().append(data);
+                                    $('.posts_container .loading').fadeOut(1000);
+                                    $('.user_related_posts').css({'opacity': '1'});
+                                }
+                            });
+                        },
+                        //                updater:function (item) {
+                        //                    console.log(item);
+                        //                },
+                    });
+    <?php endif; ?>
+    <?php if (!osc_is_web_user_logged_in()): ?>
+                    // init Masonry
+                    var $grid = $('.masonry_row').masonry({
+                        columnWidth: '.item',
+                        itemSelector: '.item',
+                    });
+                    // layout Masonry after each image loads
+                    $grid.imagesLoaded().progress(function () {
+                        $grid.masonry('layout');
+                    });
+                    $('#filter_value').val('1');
+                    $('#search_form a').click(function (e) {
+                        $('.result_message').html(''); // make blank previous error message
+                        $('#search_form li').removeClass('active');
+                        $(this).parent().addClass('active');
+                        e.preventDefault();
+
+                        var filter_value = $(this).attr('data-val');
+                        $('#filter_value').val(filter_value);
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                            data: {
+                                filter_value: filter_value
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                $('.masonry_row').html(data);
+                                is_enable_ajax = true;
+                                //                            $(".result_text").hide();
+                                $('.masonry_row').masonry('reloadItems');
+                                $grid.imagesLoaded().progress(function () {
+                                    $grid.masonry('layout');
+                                });
+                                $('#page_number').val(1);
+
+                            }
+
+                        });
+                    });
+                    $('#search_form li').click(function (e) {
+                        $(this).addClass('active');
+                    });
+                    $(window).on("scroll", function () {
+                        var scrollHeight = $(document).height();
+                        var scrollPosition = $(window).height() + $(window).scrollTop();
+                        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+                            setTimeout(make_item_ajax_call, 1000);
+                        }
+                    });
+
+                    $(document).on('click', '.item_cat', function () {
+                        var cat_id = $(this).attr('cat-id');
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url('item_filter.php') ?>",
+                            type: "POST",
+                            data: {
+                                cat_id: cat_id
+                            },
+                            success: function (data) {
+                                $('.masonry_row').html(data);
+                                $('html,body').animate({
+                                    scrollTop: 600
+                                }, 1000);
+                                $('.masonry_row').masonry('reloadItems');
+                                $grid.imagesLoaded().progress(function () {
+                                    $grid.masonry('layout');
+                                });
                             }
                         });
-                    },
-                    afterSelect: function (obj) {
-                        console.log(obj);
+                    });
+    <?php else: ?>
+                    var item_page_number = $('#item_page_number').val();
+                    var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                    var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            location_type: location_type,
+                            location_id: location_id,
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            $('.user_related_posts').append(data);
+                        }
+                    });
+                    $('.location_filter_tab').click(function () {
+                        if (!$(this).hasClass('active')) {
+                            $('.location_filter_tab').removeClass('active');
+                            $(this).addClass('active');
+                            var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                            var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                            $('.posts_container .loading').fadeIn(500);
+                            $('.user_related_posts').css({'opacity': '0.2'});
+                            reset_variable_after_login();
+                            // make_after_login_item_ajax_call();
+                            $.ajax({
+                                url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                                data: {
+                                    location_type: location_type,
+                                    location_id: location_id,
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                    $('.user_related_posts').empty().append(data);
+                                    $('.posts_container .loading').fadeOut(1000);
+                                    $('.user_related_posts').css({'opacity': '1'});
+                                }
+                            });
+                        }
+                    });
+                    $('#sCategory').change(function () {
                         $('.posts_container .loading').fadeIn(500);
-                        $('.user_related_posts').css({'opacity': '0.2'});
-
-                        reset_variable_after_login();
-                        //make_after_login_item_ajax_call();
+                        var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                        var location_id = $('.location_filter_tab.active').attr('data_location_id');
                         var category_id = $('#sCategory').val();
                         var post_type = $('.post_type_filter').val();
+                        $('.user_related_posts').css({'opacity': '0.2'});
+                        reset_variable_after_login();
+                        //make_after_login_item_ajax_call();
                         $.ajax({
-                            type: 'post',
-                            url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
                             data: {
-                                search_by: 'city',
-                                city_id: obj.city_id,
-                                region_id: obj.region_id,
-                                country_code: obj.country_code,
+                                location_type: location_type,
+                                location_id: location_id,
                                 category_id: category_id,
                                 post_type: post_type,
                             },
@@ -885,290 +1015,154 @@ function footer_script() {
                                 $('.user_related_posts').css({'opacity': '1'});
                             }
                         });
-                    },
-                    //                updater:function (item) {
-                    //                    console.log(item);
-                    //                },
-                });
-    <?php endif; ?>
-    <?php if (!osc_is_web_user_logged_in()): ?>
-                // init Masonry
-                var $grid = $('.masonry_row').masonry({
-                    columnWidth: '.item',
-                    itemSelector: '.item',
-                });
-                // layout Masonry after each image loads
-                $grid.imagesLoaded().progress(function () {
-                    $grid.masonry('layout');
-                });
-                $('#filter_value').val('1');
-                $('#search_form a').click(function (e) {
-                    $('.result_message').html(''); // make blank previous error message
-                    $('#search_form li').removeClass('active');
-                    $(this).parent().addClass('active');
-                    e.preventDefault();
-
-                    var filter_value = $(this).attr('data-val');
-                    $('#filter_value').val(filter_value);
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                        data: {
-                            filter_value: filter_value
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            $('.masonry_row').html(data);
-                            is_enable_ajax = true;
-                            //                            $(".result_text").hide();
-                            $('.masonry_row').masonry('reloadItems');
-                            $grid.imagesLoaded().progress(function () {
-                                $grid.masonry('layout');
-                            });
-                            $('#page_number').val(1);
-
-                        }
-
                     });
-                });
-                $('#search_form li').click(function (e) {
-                    $(this).addClass('active');
-                });
-                $(window).on("scroll", function () {
-                    var scrollHeight = $(document).height();
-                    var scrollPosition = $(window).height() + $(window).scrollTop();
-                    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-                        setTimeout(make_item_ajax_call, 1000);
-                    }
-                });
-
-                $(document).on('click', '.item_cat', function () {
-                    var cat_id = $(this).attr('cat-id');
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url('item_filter.php') ?>",
-                        type: "POST",
-                        data: {
-                            cat_id: cat_id
-                        },
-                        success: function (data) {
-                            $('.masonry_row').html(data);
-                            $('html,body').animate({
-                                scrollTop: 600
-                            }, 1000);
-                            $('.masonry_row').masonry('reloadItems');
-                            $grid.imagesLoaded().progress(function () {
-                                $grid.masonry('layout');
-                            });
-                        }
-                    });
-                });
-    <?php else: ?>
-                var item_page_number = $('#item_page_number').val();
-                var location_type = $('.location_filter_tab.active').attr('data_location_type');
-                var location_id = $('.location_filter_tab.active').attr('data_location_id');
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                    data: {
-                        location_type: location_type,
-                        location_id: location_id,
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                        $('.user_related_posts').append(data);
-                    }
-                });
-                $('.location_filter_tab').click(function () {
-                    if (!$(this).hasClass('active')) {
-                        $('.location_filter_tab').removeClass('active');
-                        $(this).addClass('active');
-                        var location_type = $('.location_filter_tab.active').attr('data_location_type');
-                        var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                    $('#countryId').change(function () {
                         $('.posts_container .loading').fadeIn(500);
                         $('.user_related_posts').css({'opacity': '0.2'});
+                        var country_id = $('#countryId').val();
                         reset_variable_after_login();
-                        // make_after_login_item_ajax_call();
+                        //make_after_login_item_ajax_call();
                         $.ajax({
                             url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
                             data: {
-                                location_type: location_type,
-                                location_id: location_id,
+                                country_id: country_id,
                             },
-                            success: function (data, textStatus, jqXHR) {
+                            success: function (data) {
                                 $('.user_related_posts').empty().append(data);
                                 $('.posts_container .loading').fadeOut(1000);
                                 $('.user_related_posts').css({'opacity': '1'});
                             }
                         });
-                    }
-                });
-                $('#sCategory').change(function () {
-                    $('.posts_container .loading').fadeIn(500);
-                    var location_type = $('.location_filter_tab.active').attr('data_location_type');
-                    var location_id = $('.location_filter_tab.active').attr('data_location_id');
-                    var category_id = $('#sCategory').val();
-                    var post_type = $('.post_type_filter').val();
-                    $('.user_related_posts').css({'opacity': '0.2'});
-                    reset_variable_after_login();
-                    //make_after_login_item_ajax_call();
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                        data: {
-                            location_type: location_type,
-                            location_id: location_id,
-                            category_id: category_id,
-                            post_type: post_type,
-                        },
-                        success: function (data) {
-                            $('.user_related_posts').empty().append(data);
-                            $('.posts_container .loading').fadeOut(1000);
-                            $('.user_related_posts').css({'opacity': '1'});
-                        }
                     });
-                });
-                $('#countryId').change(function () {
-                    $('.posts_container .loading').fadeIn(500);
-                    $('.user_related_posts').css({'opacity': '0.2'});
-                    var country_id = $('#countryId').val();
-                    reset_variable_after_login();
-                    //make_after_login_item_ajax_call();
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                        data: {
-                            country_id: country_id,
-                        },
-                        success: function (data) {
-                            $('.user_related_posts').empty().append(data);
-                            $('.posts_container .loading').fadeOut(1000);
-                            $('.user_related_posts').css({'opacity': '1'});
-                        }
-                    });
-                });
-                $('.filter-button').click(function () {
-                    var country_id = $('#countryId').val();
-                    var location_type = $('.location_filter_tab.active').attr('data_location_type');
-                    var location_id = $('.location_filter_tab.active').attr('data_location_id');
-                    var category_id = $('#sCategory').val();
-                    var post_type = $('.post_type_filter').val();
-                    $('.posts_container .loading').fadeIn(500);
-                    $('.user_related_posts').css({'opacity': '0.2'});
-                    reset_variable_after_login();
-                    //make_after_login_item_ajax_call();
-                    $.ajax({
-                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                        data: {
-                            location_type: location_type,
-                            location_id: location_id,
-                            category_id: category_id,
-                            country_id: country_id,
-                            post_type: post_type
-                        },
-                        success: function (data) {
-                            $('.user_related_posts').empty().append(data);
-                            $('.posts_container .loading').fadeOut(1000);
-                            $('.user_related_posts').css({'opacity': '1'});
-                        }
-                    });
-                });
-                $('.reset-button').click(function () {
-                    window.location.reload();
-
-                });
-                $(window).bind('scroll', function () {
-                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
-                        loading = true;
+                    $('.filter-button').click(function () {
+                        var country_id = $('#countryId').val();
+                        var location_type = $('.location_filter_tab.active').attr('data_location_type');
+                        var location_id = $('.location_filter_tab.active').attr('data_location_id');
+                        var category_id = $('#sCategory').val();
+                        var post_type = $('.post_type_filter').val();
                         $('.posts_container .loading').fadeIn(500);
-                        //                        $('.user_related_posts').css({'opacity': '0.2'});
-                        setTimeout(make_after_login_item_ajax_call, 1000);
-                    }
-                });
+                        $('.user_related_posts').css({'opacity': '0.2'});
+                        reset_variable_after_login();
+                        //make_after_login_item_ajax_call();
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                            data: {
+                                location_type: location_type,
+                                location_id: location_id,
+                                category_id: category_id,
+                                country_id: country_id,
+                                post_type: post_type
+                            },
+                            success: function (data) {
+                                $('.user_related_posts').empty().append(data);
+                                $('.posts_container .loading').fadeOut(1000);
+                                $('.user_related_posts').css({'opacity': '1'});
+                            }
+                        });
+                    });
+                    $('.reset-button').click(function () {
+                        window.location.reload();
+
+                    });
+                    $(window).bind('scroll', function () {
+                        if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_related_posts').offset().top + $('.user_related_posts').outerHeight() - window.innerHeight)) {
+                            loading = true;
+                            $('.posts_container .loading').fadeIn(500);
+                            //                        $('.user_related_posts').css({'opacity': '0.2'});
+                            setTimeout(make_after_login_item_ajax_call, 1000);
+                        }
+                    });
 
     <?php endif; ?>
-        });
+            });
 
-        //            $(window).load(function () {            
-        //                $.ajax({
-        //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",                
-        //                    success: function (data, textStatus, jqXHR) {
-        //                        $('.masonry_row').append(data);
-        //                        $('.masonry_row').masonry({
-        //                            columnWidth: '.item',
-        //                            itemSelector: '.item',
-        //                        });
-        //                        $('.masonry_row').masonry('layout');
-        //                        $('.masonry_row').masonry('reloadItems');
-        //                    }
-        //                });
-        //            });
+            //            $(window).load(function () {            
+            //                $.ajax({
+            //                    url: "<?php echo osc_current_web_theme_url() . '/item_ajax.php?filter_value=1' ?>",                
+            //                    success: function (data, textStatus, jqXHR) {
+            //                        $('.masonry_row').append(data);
+            //                        $('.masonry_row').masonry({
+            //                            columnWidth: '.item',
+            //                            itemSelector: '.item',
+            //                        });
+            //                        $('.masonry_row').masonry('layout');
+            //                        $('.masonry_row').masonry('reloadItems');
+            //                    }
+            //                });
+            //            });
 
-        function make_after_login_item_ajax_call() {
-            var page_number = $('#item_page_number').val();
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
-                data: {
-                    page_number: page_number,
-                    location_type: location_type,
-                    location_id: location_id,
-                    category_id: category_id,
-                    post_type: post_type,
-                },
-                success: function (data) {
-                    $('.posts_container .loading').fadeOut(1000);
-                    if ($('.result_text').size() < 1) {
-                        $(".user_related_posts").append(data);
-                        var next_page = parseInt($('#item_page_number').val()) + 1;
-                        $('#item_page_number').val(next_page);
+            function make_after_login_item_ajax_call() {
+                var page_number = $('#item_page_number').val();
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'item_after_login_ajax.php' ?>",
+                    data: {
+                        page_number: page_number,
+                        location_type: location_type,
+                        location_id: location_id,
+                        category_id: category_id,
+                        post_type: post_type,
+                    },
+                    success: function (data) {
+                        $('.posts_container .loading').fadeOut(1000);
+                        if ($('.result_text').size() < 1) {
+                            $(".user_related_posts").append(data);
+                            var next_page = parseInt($('#item_page_number').val()) + 1;
+                            $('#item_page_number').val(next_page);
+                        }
+
                     }
+                });
+            }
 
-                }
-            });
-        }
-
-        function make_item_ajax_call() {
-            var filter_value = $('#filter_value').val();
-            var page_number = $('#page_number').val();
-            var $grid = $('.masonry_row').masonry({
-                columnWidth: '.item',
-                itemSelector: '.item',
-            });
-            $('.loading').fadeIn(500);
-            $.ajax({
-                url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
-                data: {
-                    page_number: page_number,
-                    filter_value: filter_value,
-                },
-                success: function (data) {
-                    $('.loading').fadeOut(1000);
-                    if (data.indexOf("Nothing to show") >= 0) {
-                        if (page_number === 1) {
-                            $('.result_message').html('<h2 class="result_text"><?php _e("Ends of results", 'flatter'); ?></h2>');
-                        } else if ($('.result_text').size() < 1) {
-                            $('.result_message').html(data);
+            function make_item_ajax_call() {
+                var filter_value = $('#filter_value').val();
+                var page_number = $('#page_number').val();
+                var $grid = $('.masonry_row').masonry({
+                    columnWidth: '.item',
+                    itemSelector: '.item',
+                });
+                $('.loading').fadeIn(500);
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'item_ajax.php' ?>",
+                    data: {
+                        page_number: page_number,
+                        filter_value: filter_value,
+                    },
+                    success: function (data) {
+                        $('.loading').fadeOut(1000);
+                        if (data.indexOf("Nothing to show") >= 0) {
+                            if (page_number === 1) {
+                                $('.result_message').html('<h2 class="result_text"><?php _e("Ends of results", 'flatter'); ?></h2>');
+                            } else if ($('.result_text').size() < 1) {
+                                $('.result_message').html(data);
+                            }
+                        }
+                        else {
+                            $(".masonry_row").append(data);
+                            var next_page = parseInt($('#page_number').val()) + 1;
+                            $('#page_number').val(next_page);
+                            loading = false;
+                            $grid.imagesLoaded().progress(function () {
+                                $grid.masonry('layout');
+                            });
+                            $('.masonry_row').masonry('reloadItems');
                         }
                     }
-                    else {
-                        $(".masonry_row").append(data);
-                        var next_page = parseInt($('#page_number').val()) + 1;
-                        $('#page_number').val(next_page);
-                        loading = false;
-                        $grid.imagesLoaded().progress(function () {
-                            $grid.masonry('layout');
-                        });
-                        $('.masonry_row').masonry('reloadItems');
-                    }
-                }
-            });
-        }
-
-        function reset_variable_after_login() {
-            is_enable_ajax = true;
-            loading = false;
-            if (!$('.filter_city').val()) {
-                $('.filter_city').attr('data_location_id', '');
+                });
             }
-            location_type = $('.filter_city').attr('data_location_type');
-            location_id = $('.filter_city').attr('data_location_id');
-            category_id = $('#sCategory').val();
-            post_type = $('.post_type_filter').val();
-            $('#item_page_number').val(1);
-        }
+
+            function reset_variable_after_login() {
+                is_enable_ajax = true;
+                loading = false;
+                if (!$('.filter_city').val()) {
+                    $('.filter_city').attr('data_location_id', '');
+                }
+                location_type = $('.filter_city').attr('data_location_type');
+                location_id = $('.filter_city').attr('data_location_id');
+                category_id = $('#sCategory').val();
+                post_type = $('.post_type_filter').val();
+                $('#item_page_number').val(1);
+            }
     </script>
     <?php
 }

@@ -41,8 +41,8 @@ if (isset($_GET['type']) && $_GET['type'] == 'interest'):
     $intrest_data->dao->where(sprintf("a.fk_i_parent_id in (%s) AND b.fk_c_locale_code = '%s'", implode(",", $selected_themes_arr), $current_l));
     $intrest_data->dao->orderBy('a.pk_i_id', 'ASC');
     $result = $intrest_data->dao->get();
-    $interest = $result->result();    
-    
+    $interest = $result->result();
+
     $rdata = new DAO();
     $rdata->dao->select("rubric.rubric_id");
     $rdata->dao->from(DB_TABLE_PREFIX . 't_user_rubrics as rubric');
@@ -71,34 +71,40 @@ endif;
             <div class="container">
                 <div class="row">                 
                     <div class="col-md-12 col-sm-12">
-                        <div class="row">                         
-                            <?php foreach ($interest as $k => $i): ?>
-                                <div class="col-md-3 col-sm-3 margin-bottom-20">
-                                    <div title="<?php echo $i['s_name']; ?>" class="category_box <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'selected' : '' ?>" cat-id='<?php echo $i['fk_i_category_id'] ?>' check-type='interest'>
-                                        <div class="category_image">
-                                            <?php
-                                            if ($i['bs_image_name']) :
-                                                $img_path = UPLOAD_PATH . $i['bs_image_name'];
-                                            else:
-                                                $img_path = osc_current_web_theme_url() . 'images/no-photo.jpg';
-                                            endif;
-                                            ?>
-                                            <img src="<?php echo $img_path; ?>" class="img img-responsive cat-image"/>   
-                                            <div class="add_box">
-                                                <span class="add_icon"></span>
-                                            </div>
-                                            <div class="overlay"></div>
-                                            <input type="checkbox" name="cat_id[]" value="<?php echo $i['fk_i_category_id'] ?>" class="cat_checkbox" <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'checked="checked"' : '' ?> style="display: none">
+
+                        <?php
+                        $j = 1;
+                        foreach ($interest as $k => $i):
+                            ?>
+                            <div class="col-md-3 col-sm-3 margin-bottom-20">
+                                <div title="<?php echo $i['s_name']; ?>" class="category_box <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'selected' : '' ?>" cat-id='<?php echo $i['fk_i_category_id'] ?>' check-type='interest'>
+                                    <div class="category_image">
+                                        <?php
+                                        if ($i['bs_image_name']) :
+                                            $img_path = UPLOAD_PATH . $i['bs_image_name'];
+                                        else:
+                                            $img_path = osc_current_web_theme_url() . 'images/no-photo.jpg';
+                                        endif;
+                                        ?>
+                                        <img src="<?php echo $img_path; ?>" class="img img-responsive cat-image"/>   
+                                        <div class="add_box">
+                                            <span class="add_icon"></span>
                                         </div>
-                                        <div class="category_title">
-                                            <?php echo osc_highlight($i['s_name'], 10); ?>                                            
-                                        </div>
+                                        <div class="overlay"></div>
+                                        <input type="checkbox" name="cat_id[]" value="<?php echo $i['fk_i_category_id'] ?>" class="cat_checkbox" <?php echo in_array($i['fk_i_category_id'], $selected_rubric_arr) ? 'checked="checked"' : '' ?> style="display: none">
+                                    </div>
+                                    <div class="category_title">
+                                        <?php echo osc_highlight($i['s_name'], 100); ?>                                            
                                     </div>
                                 </div>
-                                <?php
-                            endforeach;
-                            ?>
-                        </div>
+                            </div>
+                            <?php
+                            if ($j % 4 == 0):
+                                echo '</div> <div class="col-md-12 col-sm-12">';
+                            endif;
+                            $j++;
+                        endforeach;
+                        ?>                        
                     </div>
                 </div>            
             </div>
@@ -109,7 +115,10 @@ endif;
                 <div class="row">                 
                     <div class="col-md-12 col-sm-12">
                         <div class="row">                         
-                            <?php foreach ($themes as $k => $theme): ?>
+                            <?php
+                            $t = 1;
+                            foreach ($themes as $k => $theme):
+                                ?>
                                 <div class="col-md-3 col-sm-3 margin-bottom-20">
                                     <div title="<?php echo $theme['s_name']; ?>" class="category_box <?php echo in_array($theme['cat_pk_id'], $selected_themes_arr) ? 'selected' : '' ?>" cat-id="<?php echo $theme['cat_pk_id'] ?>" check-type='theme'>
                                         <div class="category_image">
@@ -128,12 +137,16 @@ endif;
                                             <input type="checkbox" name="cat_id[]" value="<?php echo $theme['cat_pk_id'] ?>" class="cat_checkbox" <?php echo in_array($theme['cat_pk_id'], $selected_themes_arr) ? 'checked="checked"' : '' ?> style="display: none">
                                         </div>
                                         <div class="category_title">
-                                            <?php echo osc_highlight($theme['s_name'], 13); ?>
+                                            <?php echo osc_highlight($theme['s_name'], 100); ?>
                                         </div>
                                     </div>
                                 </div>
                                 <?php
                             endforeach;
+                            if ($t % 4 == 0):
+                                echo '</div> <div class="col-md-12 col-sm-12">';
+                            endif;
+                            $t++;
                             ?>
                         </div>
                     </div>
@@ -149,7 +162,7 @@ function new_footer() {
     <script>
         $(document).ready(function () {
             $('.category_box').click(function () {
-                
+
                 var cat_id = $(this).attr('cat-id');
                 var check_type = $(this).attr('check-type');
                 $(this).toggleClass('selected');

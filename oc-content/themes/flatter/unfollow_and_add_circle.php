@@ -59,10 +59,10 @@ if ($_REQUEST['follow'] == 'follow-user' || $_REQUEST['follow_remove'] == 'follo
                                     <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                     <div class="col-md-12 padding-0">                                                           
                                         <div class="col-md-offset-2 col-md-4 padding-0 sug_button">                                                           
-                                           <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>">Follow</button>
+                                           <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Follow', 'flatter'); ?></button>
                                         </div>
                                         <div class="col-md-4">         
-                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>">Remove</button>
+                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>"> <?php _e('Remove', 'flatter'); ?></button>
                                         </div>
                                     </div>
                                 </div>

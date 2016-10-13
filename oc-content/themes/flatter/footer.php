@@ -73,10 +73,10 @@ if (osc_is_web_user_logged_in()):
 
         <div class="notification-area"></div>
         <div class="chat-menu">
-            Discuss with your circle <span class="dropdown pull-right pointer"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i></i>
+            <?php _e('Discuss with your circle', 'flatter'); ?> <span class="dropdown pull-right pointer"><i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i></i>
                 <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
-                    <li><a class="chat-filter" data-value="all"> See all chats</a></li>
-                    <li class="circle_chat"><a class="chat-filter" data-value="circle"> See only my circle chat</a></li>
+                    <li><a class="chat-filter" data-value="all"><?php _e('See all chats', 'flatter'); ?></a></li>
+                    <li class="circle_chat"><a class="chat-filter" data-value="circle"> <?php _e('See only my circle chat', 'flatter'); ?></a></li>
                     <li class="pointer chat-filter chat_option">                               
                         <?php
                         $a = get_user_online_status(osc_logged_user_id());
@@ -98,7 +98,7 @@ if (osc_is_web_user_logged_in()):
             <a  href="javascript: openwindow()"><i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i></a>
             <span class="sound_pass">SoundPass</span>
         </div>
-        <div class="soundpass-text padding-7per text-center" style="display: none">Promote your brand or company at anytime</div>
+        <div class="soundpass-text padding-7per text-center" style="display: none"><?php _e('Promote your brand or company at anytime', 'flatter');?></div>
         <div class="chat-user-overflow" id="chat-user-list">                
             <?php
             if (!empty($users)):
