@@ -81,9 +81,9 @@ $logged_in_user_id = osc_logged_user_id();
                     endif;
                     ?>
                 </span></div>
-            <div class="">
+<!--            <div class="">
                 <i class="fa fa-play" aria-hidden="true"></i> <?php _e("Lectures", 'flatter') ?> <span class="bold padding-left-10">45</span>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="center-contant">

@@ -170,11 +170,11 @@ $user_desc = $user_result->row();
                         <ul class="nav nav-tabs padding-top-4per padding-bottom-20">
                             <li class="col-md-offset-1"><a href="#compte"><?php _e("Account", 'flatter') ?></a></li>
                             <li><a href="#language"><?php _e("Mother Language", 'flatter') ?></a></li>
-                            <li><a href="#contenu"><?php _e("Content", 'flatter') ?></a></li>
-                            <li><a href="#moyen_de_paiement"><?php _e("Mean of payment", 'flatter') ?></a></li>
+                            <!--<li><a href="#contenu"><?php _e("Content", 'flatter') ?></a></li>-->
+                            <!--<li><a href="#moyen_de_paiement"><?php _e("Mean of payment", 'flatter') ?></a></li>-->
                             <li><a href="#compte_bloques"><?php _e("Bloqued account", 'flatter') ?></a></li>
-                            <li><a href="#verouillage"><?php _e("Locking", 'flatter') ?></a></li>
-                            <li><a href="#audio"><?php _e("Audio", 'flatter') ?></a></li>
+                            <!--<li><a href="#verouillage"><?php _e("Locking", 'flatter') ?></a></li>-->
+                            <!--<li><a href="#audio"><?php _e("Audio", 'flatter') ?></a></li>-->
                         </ul>
                     </div>
                     <div id="compte">
@@ -384,7 +384,8 @@ $user_desc = $user_result->row();
                         </div>
                     </div>
                     <div class="breack-line"></div>
-                    <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
+                    
+<!--                    <div id="contenu" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row padding-bottom-10">
                             <div class='col-md-3'>
                                 <h3 class="bold blue_text"><?php _e("Content", 'flatter') ?></h3>
@@ -414,8 +415,8 @@ $user_desc = $user_result->row();
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="breack-line"></div>
+                    </div>-->
+<!--                    <div class="breack-line"></div>
                     <div id="moyen_de_paiement" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box bg-white  padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
@@ -516,7 +517,7 @@ $user_desc = $user_result->row();
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
-                        <!--            <div class="col-md-12 margin-top-20">
+                                    <div class="col-md-12 margin-top-20">
                                         <div class="col-md-offset-2 col-md-8 font-light-gray">
                                             En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
                                         </div>
@@ -526,15 +527,15 @@ $user_desc = $user_result->row();
                                                 <label class="onoffswitch-label" for="accept2"></label>
                                             </div>
                                         </div>
-                                    </div>-->
+                                    </div>
                         <div class="border-bottom-gray col-md-12 padding-top-4per"></div>
                         <div class="col-md-12 padding-top-4per">
                             <div class="col-md-offset-3">
                                 <button type="submit" class="btn btn-lg button-blue"><?php _e("Save", 'flatter') ?>  </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="breack-line"></div>
+                    </div>-->
+               <div class="breack-line"></div>
                     <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <?php
                         $user_id = osc_logged_user_id();
@@ -577,6 +578,7 @@ $user_desc = $user_result->row();
                         endif;
                         ?>
                     </div>
+               <!--     
                     <div class="breack-line"></div>
                     <div id="verouillage" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0 padding-bottom-20 ">
                         <div class="col-md-12 vertical-row">
@@ -585,7 +587,7 @@ $user_desc = $user_result->row();
                             </div>
                         </div>
                         <div class="col-md-offset-1 col-md-10 font-light-gray padding-3per">
-                            <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
+                            En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
                         </div>
                         <div class="border-bottom-gray col-md-12 padding-top-8per"></div>
                         <div class="col-md-12 padding-3per">
@@ -627,7 +629,7 @@ $user_desc = $user_result->row();
                         <div class="border-bottom-gray col-md-12"></div>
                         <div class="col-md-12">
                             <div class="col-md-offset-3 padding-7per">
-                                <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
+                                En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
                             </div>
                         </div>
                         <div class="border-bottom-gray col-md-12"></div>
@@ -647,11 +649,11 @@ $user_desc = $user_result->row();
                                 </div>
                             </div>
                             <div class="col-md-9 padding-3per padding-left-7per font-light-gray">
-                                <!--En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.-->  
+                                En continuant, vous ajoutez ce mode de paiement a votre compte Newsfid et acceptez les Conditions d'utilisation et de confidentialite des services Newsfid.  
                             </div>
                         </div>
                     </div>
-                    <div class="breack-line"></div>
+                    <div class="breack-line"></div>-->
                     <div id="delete-account" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>

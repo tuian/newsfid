@@ -1052,22 +1052,24 @@ function cust_admin_my_custom_items_column_data($row, $aRow) {
 
 //osc_add_hook('admin_items_table', 'cust_admin_my_custom_items_column_header');
 //osc_add_filter('items_processing_row', 'cust_admin_my_custom_items_column_data');
-function get_user_data($user_id) {
-    $db_prefix = DB_TABLE_PREFIX;
-    $user_data = new DAO();
-    $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.s_gender, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website, user.dt_reg_date as reg_date, user.mother_tongue, user.reading_language');
-    $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
-    $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext, user_cover_picture.cover_pic_ext');
-    $user_data->dao->select('user_role.id as role_id, user_role.role_name as role_name, user_role.role_name_eng as role_name_eng');
-    $user_data->dao->from("{$db_prefix}t_user user");
-    $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
-    $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
-    $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
-    $user_data->dao->where("user.pk_i_id={$user_id}");
-    $user_data->dao->limit(1);
-    $result = $user_data->dao->get();
-    $user = $result->row();
-    return $user;
+function get_user_data($user_id = null) {
+    if ($user_id):
+        $db_prefix = DB_TABLE_PREFIX;
+        $user_data = new DAO();
+        $user_data->dao->select('user.pk_i_id as user_id, user.s_name as user_name, user.s_email, user.s_gender, user.fk_i_city_id, user.s_city, user.s_region, user.fk_c_country_code, user.s_country, user.user_type, user.s_phone_mobile as phone_number, user.has_private_post, user.facebook as facebook, user.twitter as twitter, user.s_website as s_website, user.dt_reg_date as reg_date, user.mother_tongue, user.reading_language');
+        $user_data->dao->select('user2.pk_i_id, user2.fk_i_user_id, user2.s_extension, user2.s_path');
+        $user_data->dao->select('user_cover_picture.user_id AS cover_picture_user_id, user_cover_picture.pic_ext, user_cover_picture.cover_pic_ext');
+        $user_data->dao->select('user_role.id as role_id, user_role.role_name as role_name, user_role.role_name_eng as role_name_eng');
+        $user_data->dao->from("{$db_prefix}t_user user");
+        $user_data->dao->join("{$db_prefix}t_user_resource user2", "user.pk_i_id = user2.fk_i_user_id", "LEFT");
+        $user_data->dao->join("{$db_prefix}t_profile_picture user_cover_picture", "user.pk_i_id = user_cover_picture.user_id", "LEFT");
+        $user_data->dao->join("{$db_prefix}t_user_roles user_role", "user.user_role = user_role.id", "LEFT");
+        $user_data->dao->where("user.pk_i_id={$user_id}");
+        $user_data->dao->limit(1);
+        $result = $user_data->dao->get();
+        $user = $result->row();
+        return $user;
+    endif;
 }
 
 function item_resources_old($item_id) {
@@ -2466,7 +2468,7 @@ if ($page == 'user' && ($action == 'profile' || $action == 'change_username' || 
     }
     header("Location: " . osc_base_url());
 }
-if($page = 'item' && $id_item != ''):
+if ($page == 'item' && $id_item != ''):
     osc_redirect_to(osc_base_url());
 endif;
 //for paypal payment
@@ -2594,7 +2596,11 @@ function get_user_language($user_id) {
     $user = $result->row();
     if (!empty($user)):
         $lang = $user['reading_language'];
-        $lang = explode(",", $lang);
+        if ($lang != ''):
+            $lang = explode(",", $lang);
+        else:
+            $lang = array('en_US');
+        endif;
     else:
         $lang = array('en_US');
     endif;
