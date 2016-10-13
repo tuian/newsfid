@@ -265,7 +265,7 @@ else: {
                                     </div>
                                 </div>
                                 <div class="box-body" style="display: block;">
-                                    <div class="country-dropdown left-border" style="display: block;">
+                                    <div class="country-dropdown country-dropdown-main left-border" style="display: block;">
                                         <?php UserForm::country_select(array_slice(osc_get_countries(), 1, -1)); ?>                                
                                     </div>
                                 </div>
