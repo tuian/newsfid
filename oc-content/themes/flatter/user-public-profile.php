@@ -52,6 +52,42 @@ endif;
 ?>
 
 <div id="cover" class="cover">
+<div id="crop-cover-img">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3 class="modal-title"><?php _e("Upload Image", 'flatter') ?></h3>
+
+
+    <!-- upload form -->
+    <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkFormCover()">
+    <div class="col-md-offset-4 col-sm-offset-4 col-md-4 col-sm-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
+        <!-- hidden crop params -->
+        <input type="hidden" id="x1_cover" name="x1_cover" />
+        <input type="hidden" id="y1_cover" name="y1_cover" />
+        <input type="hidden" id="x2_cover" name="x2_cover" />
+        <input type="hidden" id="y2_cover" name="y2_cover" />
+
+        <h4><?php _e("Step1: Please select image file", 'flatter') ?></h4>
+        <div class="choose-file"><input type="file" name="file_cover_img" id="image_file_cover" onchange="fileSelectHandlerCover()" /></div>
+
+        <div class="error"></div>
+        <div id="loader-icon_cover" style="display:none;"><img src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" /></div>
+        <div class="step2">
+            <h4><?php _e("Step2: Please select a crop region", 'flatter') ?></h4>
+            <img id="preview_cover" />
+
+            <div class="info">
+                <input type="hidden" id="filesize_cover" name="filesize" />
+                <input type="hidden" id="filetype_cover" name="filetype" />
+                <input type="hidden" id="filedim_cover" name="filedim" />
+                <input type="hidden" id="w_cover" name="w" />
+                <input type="hidden" id="h_cover" name="h" />
+
+            </div>
+            
+        </div>
+    </form>
+</div>
+
     <?php if (osc_logged_user_id() == $user['user_id']): ?>
         <div class="file_upload_cover" data-toggle="modal" data-target="#crop-cover-img">
             <span class ="icon">
@@ -107,53 +143,7 @@ endif;
                                 <?php if (osc_user_id() == osc_logged_user_id()): ?>
 
 
-                                    <div id="crop-cover-img" class="modal  fade" role="dialog">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h3 class="modal-title"><?php _e("Upload Image", 'flatter') ?></h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="bbody">
 
-                                                        <!-- upload form -->
-                                                        <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkFormCover()">
-                                                            <!-- hidden crop params -->
-                                                            <input type="hidden" id="x1_cover" name="x1_cover" />
-                                                            <input type="hidden" id="y1_cover" name="y1_cover" />
-                                                            <input type="hidden" id="x2_cover" name="x2_cover" />
-                                                            <input type="hidden" id="y2_cover" name="y2_cover" />
-
-                                                            <h4><?php _e("Step1: Please select image file", 'flatter') ?></h4>
-                                                            <div class="choose-file"><input type="file" name="file_cover_img" id="image_file_cover" onchange="fileSelectHandlerCover()" /></div>
-
-                                                            <div class="error"></div>
-                                                            <div id="loader-icon_cover" style="display:none;"><img src="<?php echo osc_current_web_theme_url() . '/images/loader.gif' ?>" /></div>
-                                                            <div class="step2">
-                                                                <h4><?php _e("Step2: Please select a crop region", 'flatter') ?></h4>
-                                                                <img id="preview_cover" />
-
-                                                                <div class="info">
-                                                                    <input type="hidden" id="filesize_cover" name="filesize" />
-                                                                    <input type="hidden" id="filetype_cover" name="filetype" />
-                                                                    <input type="hidden" id="filedim_cover" name="filedim" />
-                                                                    <input type="hidden" id="w_cover" name="w" />
-                                                                    <input type="hidden" id="h_cover" name="h" />
-
-                                                                </div>
-                                                                <div class="col-md-offset-4 col-sm-offset-4 col-md-4 col-sm-4 padding-bottom-10 padding-top-10"><input type="submit" class="btn btn-info upload_profile_img" value="Upload" /></div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="clear"></div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php _e("Close", 'flatter') ?></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <!--                                    <form class="cover_image_upload" method="post" enctype="multipart/form-data">
                                                                             <span class="icon">
                                                                                 <i class="fa fa-camera"></i>

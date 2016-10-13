@@ -271,12 +271,12 @@ else: {
                                 </div>
 
                                 <div class="box-body" style="display: block;">
-                                    <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php echo 'Enter city, country, state or county' ?>">
+                                    <input type="text" class="filter_city" data_location_id="" data_location_type="city" placeholder="<?php _e('Enter city, country, state or county', 'flatter'); ?>">
                                 </div>
                                 <div class="box-body" style="display: block;">                            
-                                    <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="Search">
-                                        <img src="<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>" width="20px">  Search</button> or 
-                                    <button type="reset" class="btn btn-box-tool reset-button bold" data-toggle="tooltip" title="Reset">Reset</button>
+                                    <button type="submit" class="btn btn-box-tool filter-button" data-toggle="tooltip" title="<?php _e('Search', 'flatter'); ?>">
+                                        <img src="<?php echo osc_current_web_theme_url() . "images/research-icon.png" ?>" width="20px"><?php _e('Search', 'flatter'); ?></button> <?php _e('or', 'flatter'); ?> 
+                                    <button type="reset" class="btn btn-box-tool reset-button bold" data-toggle="tooltip" title="<?php _e('Reset', 'flatter'); ?>"><?php _e('Reset', 'flatter'); ?></button>
                                 </div>
                             </div>
                             <!-- /.box -->
@@ -307,10 +307,10 @@ else: {
                                                     <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
                                                     <div class="col-md-12 padding-0">                                                           
                                                         <div class="col-md-offset-2 col-md-4 col-sm-4 col-xs-4 padding-0 sug_button">
-                                                            <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>">Follow</button>
+                                                            <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Follow', 'flatter'); ?></button>
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10">         
-                                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>">Remove</button>
+                                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Remove', 'flatter'); ?></button>
                                                         </div>
                                                     </div>
                                                 </div>

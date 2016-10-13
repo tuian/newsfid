@@ -79,7 +79,7 @@ if ($_REQUEST['action'] == "chat-converstion"):
                 <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
                 <div class="textarea">
-                    <textarea class="msg_textarea" placeholder="Press enter to reply" id="messageBox"></textarea>
+                    <textarea class="msg_textarea" placeholder="<?php _e('Press enter to reply', 'flatter'); ?>" id="messageBox"></textarea>
                     <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
                 </div>
             </div>

@@ -166,13 +166,13 @@ if (osc_is_web_user_logged_in()):
                         <img src="<?php echo osc_current_web_theme_url() . '/images/msg.png' ?>">
                     </div>
                     <div class="col-md-8">
-                        no ongoing conversation history
+                        <?php _e('no ongoing conversation history', 'flatter'); ?>
                     </div>
                 </div>
                 <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
                 <div class="textarea">
-                    <textarea class="msg_textarea" placeholder="Press enter to reply"></textarea>
+                    <textarea class="msg_textarea" placeholder="<?php _e('Press enter to reply', 'flatter'); ?>"></textarea>
                     <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
                 </div>
             </div>
