@@ -1,13 +1,13 @@
 
 <?php
-//require '../../../oc-load.php';
-//require 'functions.php';
+require '../../../oc-load.php';
+require 'functions.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 
     <head>
-        <title>Player SoundPass</title>
+        <title>SoundPass</title>
         <meta name="description" content="Radio King propose des services Internet pour les Radios! Créez facilement votre Radio sur Internet, concevez le Site de votre Radio ou développez votre propre Application Mobile Radio!" />
         <meta name="keywords" content="créer site radio, hébergement radio, créer webradio, créer radio, radio, radios, player, radio fm, webradio, création de site, site internet, développement, développeur, radioking, radio king, streaming, shoutcast, cms radio, radio sur le web, cloud dj, radio broadcast, playlist radio, diffusion radio, application mobile, application radio, application radio iphone, application radio android, créer application iphone, site en ligne, radio sur internet" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -26,8 +26,8 @@
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
         
         <?php
-//        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
-        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : 'fr_FR';
+        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
+//        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : 'fr_FR';
         if ($language == "fr_FR"):
             ?>
             <script type="text/javascript">
