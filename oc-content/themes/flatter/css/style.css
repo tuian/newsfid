@@ -3983,3 +3983,13 @@ select{
 .comment_user_image .user_type_icon_image{
     width: 10px !important;
 }
+.active-lang>a {
+    color: #000 !important;
+    background: #b1b9cb !important;
+    border-left-color: #3c8dbc !important;
+}
+.active-lang>a .fa{
+    color: #f68935 !important;
+    background: #b1b9cb !important;
+    border-left-color: #3c8dbc !important;
+}

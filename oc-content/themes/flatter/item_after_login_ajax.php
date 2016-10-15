@@ -222,7 +222,7 @@ if ($items):
 
                     &nbsp;&nbsp;&nbsp;
                     <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                        <?php echo 'Comments' ?>
+                        <?php echo __('Comments', 'flatter'); ?>
                     </span>
                     <?php if ($user['user_id'] != osc_logged_user_id()): ?>
                         &nbsp;&nbsp;

@@ -197,7 +197,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                     <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
                         <li class="pointer"><a><?php _e("Block this user", 'flatter') ?></a></li>
                         <li class="close_chat pointer"><a><?php _e(" Close this chat", 'flatter') ?></a></li>
-                        <li class="pointer"><a><?php _e("Turn chat off", 'flatter') ?></a></li>
+                        <li class="pointer"><a><?php _e("Turn on Ghost mode", 'flatter') ?></a></li>
                     </ul>
                 </span>
             </div>

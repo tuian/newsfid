@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Osclass\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-03 13:50+0530\n"
-"PO-Revision-Date: 2016-10-11 14:46+0100\n"
+"PO-Revision-Date: 2016-10-15 11:00+0530\n"
 "Last-Translator: DrizzleDesigns <support@drizzledesigns.in>\n"
 "Language-Team: DrizzleDesigns <support@drizzledesigns.in>\n"
 "Language: fr_FR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #: 404.php:11
 msgid "Sorry but I can't find the page you're looking for"
@@ -49,15 +49,15 @@ msgstr "Avec"
 
 #: chat-converstion.php:27 tchat-converstion.php:164 tchat_user_data.php:128
 msgid "Block this user"
-msgstr "Bloquer cet utilisateur"
+msgstr "Bloquercet utilisateur"
 
 #: chat-converstion.php:28
 msgid "Close this chat"
-msgstr "Fermer ce chat"
+msgstr "Quitter la discussion"
 
 #: chat-converstion.php:29 tchat-converstion.php:166
-msgid "Turn chat off"
-msgstr "Tourner discuter off"
+msgid "Turn on Ghost mode"
+msgstr "Passer en mode discrétion"
 
 #: comments.php:5
 msgid "Comment"
@@ -93,7 +93,8 @@ msgstr "Votre email"
 
 #: comments.php:72
 msgid "Leave your comment (spam and offensive messages will be removed)"
-msgstr "Laissez un commentaire (le spam et les messages offensants seront supprimés)"
+msgstr ""
+"Laissez un commentaire (le spam et les messages offensants seront supprimés)"
 
 #: comments.php:75 contact.php:61 item-send-friend.php:55 item-sidebar.php:158
 #: t-chat.php:187 user-public-sidebar.php:46
@@ -168,8 +169,14 @@ msgstr "Choisir votre pays..."
 #: ddfunctions.php:23 ddfunctions.php:73 ddfunctions.php:122
 #: ddfunctions.php:124 locationfind.php:28 locationfind.php:83
 #: locationfind.php:125 locationfind.php:132 locationfind.php:134
+#: ddfunctions.php:115
+#, fuzzy
 msgid "Select a region..."
-msgstr "Selectionnez région"
+msgstr ""
+"#-#-#-#-#  0catalog.po (Osclass)  #-#-#-#-#\n"
+"Selectionnez région\n"
+"#-#-#-#-#  0catalog.po (Osclass)  #-#-#-#-#\n"
+"Selectionner une région"
 
 #: ddfunctions.php:38 ddfunctions.php:105 ddfunctions.php:118
 #: ddfunctions.php:128 ddfunctions.php:130 ddfunctions.php:184
@@ -178,10 +185,6 @@ msgstr "Selectionnez région"
 #: user-register.php:256
 msgid "Select a city..."
 msgstr "Sélectionner une ville..."
-
-#: ddfunctions.php:115
-msgid "Select a region..."
-msgstr "Selectionner une région"
 
 #: ddfunctions.php:192 locationfind.php:202 user-register.php:264
 msgid "No results"
@@ -315,8 +318,22 @@ msgid "Post your ad Today. It&rsquo;s totally free!"
 msgstr "Postez votre publicité aujourd'hui. C'est totalement gratuit !"
 
 #: functions.php:24
-msgid "<ul><li>Avoid scams by acting locally or paying with PayPal</li><li>Never pay with Western Union, Moneygram or other anonymous payment services</li><li>Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country</li><li>This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\"</li></ul>"
-msgstr "<ul><li>Evitez les arnaques en payant avec PayPal</li><li>Ne payez jamais avec Western Union, Moneygram ou d'autres services de paiement en ligne</li><li>N'achetez ou ne vendez rien or de votre pays. N'acceptez pas de chèques de l'étranger.</li><li>Ce site n'est jamais impliqué dans aucune transaction, et ne gère pas de paiements, de transports, de transactions de garanties, ne fournir de service d'entiercement, ou n'offre \"la protection de l'acheteur\" or \"la certification du vendeur\"</li></ul>"
+msgid ""
+"<ul><li>Avoid scams by acting locally or paying with PayPal</li><li>Never "
+"pay with Western Union, Moneygram or other anonymous payment services</"
+"li><li>Don't buy or sell outside of your country. Don't accept cashier "
+"cheques from outside your country</li><li>This site is never involved in any "
+"transaction, and does not handle payments, shipping, guarantee transactions, "
+"provide escrow services, or offer \"buyer protection\" or \"seller "
+"certification\"</li></ul>"
+msgstr ""
+"<ul><li>Evitez les arnaques en payant avec PayPal</li><li>Ne payez jamais "
+"avec Western Union, Moneygram ou d'autres services de paiement en ligne</"
+"li><li>N'achetez ou ne vendez rien or de votre pays. N'acceptez pas de "
+"chèques de l'étranger.</li><li>Ce site n'est jamais impliqué dans aucune "
+"transaction, et ne gère pas de paiements, de transports, de transactions de "
+"garanties, ne fournir de service d'entiercement, ou n'offre \"la protection "
+"de l'acheteur\" or \"la certification du vendeur\"</li></ul>"
 
 #: functions.php:29
 msgid "Disneyland, Anaheim, CA, United States"
@@ -491,7 +508,7 @@ msgstr "Retirer de la watchlist"
 #: loop-single-premium.php:30 loop-single.php:35 main - 2eme version.php:403
 #: version.php:478 main(30-6-2016).php:696 related-items.php:34
 msgid "Add to watchlist"
-msgstr "Ajouter à la watchlist"
+msgstr "Sauvegarder"
 
 #: functions.php:1746
 msgid "added your post to his/her watchlist"
@@ -585,8 +602,12 @@ msgid "Confirm"
 msgstr "Confirmer"
 
 #: header.php:566
-msgid "By continuing the navigation you accept the use of cookies to deliver adapted content with your center of interest."
-msgstr "En continuant à naviguer sur ce site vous acceptez l'utilisation des cookies pour vous proposer du contenu adapté à vos centres d'intérêts."
+msgid ""
+"By continuing the navigation you accept the use of cookies to deliver "
+"adapted content with your center of interest."
+msgstr ""
+"En continuant à naviguer sur ce site vous acceptez l'utilisation des cookies "
+"pour vous proposer du contenu adapté à vos centres d'intérêts."
 
 #: header.php:568
 msgid "Accept"
@@ -602,13 +623,20 @@ msgstr ""
 
 #: item-post.php:66
 msgid ""
-"You do not have to pay to publish on our service. Newsfid is a platform who allows people to seek for the right information at the right time. \n"
-"                                    Then thank you to make sure that you post your story into the proper topic so anyone can find it easily. \n"
-"                                    All story who does not respect our rules will be taking off without notice and delay."
+"You do not have to pay to publish on our service. Newsfid is a platform who "
+"allows people to seek for the right information at the right time. \n"
+"                                    Then thank you to make sure that you "
+"post your story into the proper topic so anyone can find it easily. \n"
+"                                    All story who does not respect our rules "
+"will be taking off without notice and delay."
 msgstr ""
-"Vous n'avez pas à payer pour publier sur notre service. Newsfid est une plateforme qui permet aux personnes de rechercher la bonne information au bon moment. \n"
-"Par conséquent merci de vous assurer que vous publiez votre contenu dans le bon sujet pour que les gens le trouve rapidement. \n"
-"Toute histoire qui ne respecte pas nos règles sera supprimé sans délai ni avertissement."
+"Vous n'avez pas à payer pour publier sur notre service. Newsfid est une "
+"plateforme qui permet aux personnes de rechercher la bonne information au "
+"bon moment. \n"
+"Par conséquent merci de vous assurer que vous publiez votre contenu dans le "
+"bon sujet pour que les gens le trouve rapidement. \n"
+"Toute histoire qui ne respecte pas nos règles sera supprimé sans délai ni "
+"avertissement."
 
 #: item-post.php:83
 msgid "Category"
@@ -691,12 +719,14 @@ msgid "Registered on"
 msgstr "Enregistré le"
 
 #: item-sidebar.php:74
-msgid "You must login or register a new account in order to contact the advertiser"
+msgid ""
+"You must login or register a new account in order to contact the advertiser"
 msgstr "Vous devez vous connecter ou vous inscrire pour contacter l'annonceur"
 
 #: item-sidebar.php:81
 msgid "It's your own story, you can't contact the publisher."
-msgstr "Ceci est votre propre histoire, vous ne pouvez pas contacter l'éditeur."
+msgstr ""
+"Ceci est votre propre histoire, vous ne pouvez pas contacter l'éditeur."
 
 #: item-sidebar.php:98
 msgid "Show phone number"
@@ -771,12 +801,14 @@ msgstr "Annonce offensante"
 #: setting.php:59 setting.php:84 setting.php:100 setting.php:117
 #: setting.php:133 setting.php:181 setting.php:420 setting.php:539
 #: user_posts.php:142 user_posts.php:304 user_premium_post.php:56
-msgid "Edit"
-msgstr "Editer"
-
 #: user_info.php:27 user_info.php:53 user_info.php:70 user_info.php:93
+#, fuzzy
 msgid "Edit"
-msgstr "Modifier"
+msgstr ""
+"#-#-#-#-#  0catalog.po (Osclass)  #-#-#-#-#\n"
+"Editer\n"
+"#-#-#-#-#  0catalog.po (Osclass)  #-#-#-#-#\n"
+"Modifier"
 
 #: item_after_login_ajax.php:120 item_after_login_ajax.php:123
 #: user_posts.php:149 user_posts.php:152
@@ -792,20 +824,38 @@ msgid "You've done it great"
 msgstr "Vous l'avez fait, parfait"
 
 #: item_after_login_ajax.php:152 user_posts.php:180
-msgid "We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours "
-msgstr "Nous sommes heureux de vous annoncer que vous avez commencé une campagne de publicité sur Newsfid. Votre post publicitaire est maintenant en ligne pour une durée de 48 heures."
+msgid ""
+"We are delighted to let you know that you started an adverting campaing on "
+"Newsfid. Your promoted post is now online during next 48 hours "
+msgstr ""
+"Nous sommes heureux de vous annoncer que vous avez commencé une campagne de "
+"publicité sur Newsfid. Votre post publicitaire est maintenant en ligne pour "
+"une durée de 48 heures."
 
 #: item_after_login_ajax.php:158 user_posts.php:187 user_premium_post.php:101
-msgid "We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post."
-msgstr "Nous sommes désolés du dérangement mais votre compte est trop bas pour l'instant. Merci de le renflouer pour pouvoir promouvoir ce post."
+msgid ""
+"We are very sorry for the inconvenience but your balance is two low for now ."
+"Thank you to top up in order to promote that post."
+msgstr ""
+"Nous sommes désolés du dérangement mais votre compte est trop bas pour "
+"l'instant. Merci de le renflouer pour pouvoir promouvoir ce post."
 
 #: item_after_login_ajax.php:161 user_posts.php:191 user_premium_post.php:105
-msgid "if you are a partner organization just contact us at services@newsfid.com and we'll do it for you."
-msgstr "Si vous êtes une organisation partenaire merci de nous contacter à services@newsfid.com et nous le ferons pour vous."
+msgid ""
+"if you are a partner organization just contact us at services@newsfid.com "
+"and we'll do it for you."
+msgstr ""
+"Si vous êtes une organisation partenaire merci de nous contacter à "
+"services@newsfid.com et nous le ferons pour vous."
 
 #: item_after_login_ajax.php:165 user_posts.php:195 user_premium_post.php:109
-msgid "You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all."
-msgstr "Vous pouvez obetnir jusqu'à 2000$ de crédit. Pour vous donner une idée cela veut dire que vous pouvez promouvoir 2000 posts sans dépenser d'argent du tout."
+msgid ""
+"You can get up to $2000 balance credit. To give you an idea it means that "
+"you can promote 2k posts without spending your money at all."
+msgstr ""
+"Vous pouvez obetnir jusqu'à 2000$ de crédit. Pour vous donner une idée cela "
+"veut dire que vous pouvez promouvoir 2000 posts sans dépenser d'argent du "
+"tout."
 
 #: item_after_login_ajax.php:178 item_after_login_ajax.php:180
 #: user_posts.php:208 user_posts.php:210 user_premium_post.php:122
@@ -820,7 +870,7 @@ msgstr "Aller au compte d'annonceur"
 #: item_after_login_ajax.php:220 popup_ajax.php:126 popup_ajax.php:325
 #: user-public-profile.php:291
 msgid "Tchat"
-msgstr "Tchater"
+msgstr "Discuter"
 
 #: item_after_login_ajax.php:248 item_comment_ajax.php:73 popup_ajax.php:164
 #: popup_ajax.php:365 user_posts.php:276 user_premium_post.php:190
@@ -862,7 +912,7 @@ msgstr "Trouver par lieu"
 
 #: locationfind.php:51 user-public-profile.php:362
 msgid "Search"
-msgstr "Recherche"
+msgstr "Chercher"
 
 #: loop-single-premium.php:44
 msgid "Edit Storie"
@@ -870,7 +920,8 @@ msgstr "Editer l'histoire"
 
 #: loop-single-premium.php:45 loop-single.php:57
 msgid "This action can not be undone. Are you sure you want to continue?"
-msgstr "Cette action ne peut pas être annulée. Etes-vous sûr de vouloir continuer ?"
+msgstr ""
+"Cette action ne peut pas être annulée. Etes-vous sûr de vouloir continuer ?"
 
 #: loop-single-premium.php:47 loop-single.php:59
 msgid "Activate"
@@ -947,7 +998,9 @@ msgstr "Local"
 
 #: main.php:358
 msgid "Please enter your City and Country name to use this tab"
-msgstr "Merci d'entrer le nom de votre Ville et de votre Pays pour utiliser cet onglet"
+msgstr ""
+"Merci d'entrer le nom de votre Ville et de votre Pays pour utiliser cet "
+"onglet"
 
 #: main.php:364
 msgid "Saved.."
@@ -986,8 +1039,12 @@ msgid "Choose topics that you are interested"
 msgstr "Choisissez les sujets qui vous intéresse "
 
 #: page-interest.php:49
-msgid "This step simply allows us to make you suggestions about which you are interested."
-msgstr "Cette étape nous permet simplement de vous faire des meilleures suggestions à propos de ce qui pourrai vous intéresser. "
+msgid ""
+"This step simply allows us to make you suggestions about which you are "
+"interested."
+msgstr ""
+"Cette étape nous permet simplement de vous faire des meilleures suggestions "
+"à propos de ce qui pourrai vous intéresser. "
 
 #: page-interest.php:53
 msgid "Take time to make your choice. You could change it later."
@@ -1011,12 +1068,22 @@ msgid "Choose one or more themes"
 msgstr "Choisissez les sujets qui vous intéressent vraiment."
 
 #: page-interest_with_edit.php:47
-msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo posuere auctor and, diam ultrices libero enim ut erat blandit ipsum in orci. Nulla justo ac leo elementum luctus not faucibus vehicula sapien."
-msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo posuere auctor and, diam ultrices libero enim ut erat blandit ipsum in orci. Nulla justo ac leo elementum luctus not faucibus vehicula sapien."
+msgid ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, "
+"justo posuere auctor and, diam ultrices libero enim ut erat blandit ipsum in "
+"orci. Nulla justo ac leo elementum luctus not faucibus vehicula sapien."
+msgstr ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, "
+"justo posuere auctor and, diam ultrices libero enim ut erat blandit ipsum in "
+"orci. Nulla justo ac leo elementum luctus not faucibus vehicula sapien."
 
 #: page-interest_with_edit.php:49
-msgid "In viverra arcu laoreet vitae iaculis. Proin erat justo, molestie sed dictum id, commodo non erat."
-msgstr "In viverra arcu laoreet vitae iaculis. Proin erat justo, molestie sed dictum id, commodo non erat."
+msgid ""
+"In viverra arcu laoreet vitae iaculis. Proin erat justo, molestie sed dictum "
+"id, commodo non erat."
+msgstr ""
+"In viverra arcu laoreet vitae iaculis. Proin erat justo, molestie sed dictum "
+"id, commodo non erat."
 
 #: page-people.php:14
 msgid "Search for someone or an organization"
@@ -1031,7 +1098,10 @@ msgid "Choose one or more topics that interest you"
 msgstr "Choississez un ou plusieurs sujets vous intéressant"
 
 #: page-rubric.php:48
-msgid "What kind of topics interest you? You must select at least four of them. This will allow us to connect to people and organization that have the same interests as you center."
+msgid ""
+"What kind of topics interest you? You must select at least four of them. "
+"This will allow us to connect to people and organization that have the same "
+"interests as you center."
 msgstr "Qu’est-ce qui qui vous passionne réellement"
 
 #: page-rubric.php:127
@@ -1126,7 +1196,8 @@ msgstr "Ajouter votre code d'intégration ici"
 #: popup_free_account_post.php:171
 msgid ""
 "You can not choose both at the same time\n"
-"                                            you can publish  image or a video link."
+"                                            you can publish  image or a "
+"video link."
 msgstr ""
 "Vous ne pouvez pas choisir les deux à la fois \n"
 "vous pouvez publier un lien d'image ou de vidéo"
@@ -1137,7 +1208,8 @@ msgstr "GIF"
 
 #: popup_free_account_post.php:187 update_user_post.php:223
 msgid "The image begins to automatically animate when the user will scroll."
-msgstr "L'image s'animera automatiquement quand l'utilisateur scrollera dessus."
+msgstr ""
+"L'image s'animera automatiquement quand l'utilisateur scrollera dessus."
 
 #: popup_free_account_post.php:193 update_user_post.php:229
 #: user-public-profile.php:328
@@ -1149,8 +1221,12 @@ msgid "(MP3 10.MO maximum)"
 msgstr "(MP3 10.MO maximum)"
 
 #: popup_free_account_post.php:204 update_user_post.php:240
-msgid "You can download only mp3 files. If you wish to publish mp3  bigger than 10mo thank you to subscribe."
-msgstr "Vous ne pouvez télécharger que des fichiers mp3. Si vous voulez publier un mp3 plus gros que 10Mo merci de vous abonner."
+msgid ""
+"You can download only mp3 files. If you wish to publish mp3  bigger than "
+"10mo thank you to subscribe."
+msgstr ""
+"Vous ne pouvez télécharger que des fichiers mp3. Si vous voulez publier un "
+"mp3 plus gros que 10Mo merci de vous abonner."
 
 #: popup_free_account_post.php:210 update_user_post.php:246
 #: user-public-profile.php:329
@@ -1158,16 +1234,24 @@ msgid "Podcast"
 msgstr "Podcast"
 
 #: popup_free_account_post.php:218
-msgid " Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe."
-msgstr "Votre podcast doit être au format mp3. Si vous voulez publier un fichier supérieur à 100mo merci de vous abonner."
+msgid ""
+" Your podcast must be a mp3 file. I you wish to publish a file bigger than "
+"100mo thank you to subscribe."
+msgstr ""
+"Votre podcast doit être au format mp3. Si vous voulez publier un fichier "
+"supérieur à 100mo merci de vous abonner."
 
 #: popup_free_account_post.php:232
 msgid "Add location(Country/state/region/City/place)"
 msgstr "Ajouter localisation (Pays/Etat/Région/Ville/Endroit)"
 
 #: popup_free_account_post.php:245
-msgid "This step is not mandatory but nevertheless important to improve your publication in our search engine."
-msgstr "Cette étape n'est pas obligatoire mais elle est importante pour augmenter la visibilité de votre publication dans notre moteur de recherche"
+msgid ""
+"This step is not mandatory but nevertheless important to improve your "
+"publication in our search engine."
+msgstr ""
+"Cette étape n'est pas obligatoire mais elle est importante pour augmenter la "
+"visibilité de votre publication dans notre moteur de recherche"
 
 #: popup_free_account_post.php:288 update_user_post.php:308
 msgid "Publier"
@@ -1302,8 +1386,11 @@ msgid "No running campaign"
 msgstr "Aucune campagne en cours"
 
 #: promoted_post_pack.php:211
-msgid "No campaign is running for now. Top up your credit or start one at anytime."
-msgstr "Aucune campagne est en cours d'exécution pour le moment. Rechargez votre crédit ou commencer une campagne publicitaire à tout moment."
+msgid ""
+"No campaign is running for now. Top up your credit or start one at anytime."
+msgstr ""
+"Aucune campagne est en cours d'exécution pour le moment. Rechargez votre "
+"crédit ou commencer une campagne publicitaire à tout moment."
 
 #: promoted_post_pack.php:239
 msgid "Select the pack you wish to up with"
@@ -1311,15 +1398,21 @@ msgstr "Sélectionner le pack que vous voulez"
 
 #: promoted_post_pack.php:240
 msgid "Once you balance will be aible to top up with a new pack but not before"
-msgstr "Vous ne pourrez obtenir un nouveau pack qu'une fois que votre compte sera équilibré."
+msgstr ""
+"Vous ne pourrez obtenir un nouveau pack qu'une fois que votre compte sera "
+"équilibré."
 
 #: promoted_post_pack.php:250
 msgid "Your publication will appear at the top of publication's window."
 msgstr "Votre publication apparaîtra en haut de la fenêtre de publications."
 
 #: promoted_post_pack.php:252
-msgid "it means that when a user is consulting a post he sees your publication in the header of the publication."
-msgstr "C'est-à-dire que quand un utilisateur consulte un post il verra votre publication tout en haut de la fenêtre"
+msgid ""
+"it means that when a user is consulting a post he sees your publication in "
+"the header of the publication."
+msgstr ""
+"C'est-à-dire que quand un utilisateur consulte un post il verra votre "
+"publication tout en haut de la fenêtre"
 
 #: promoted_post_pack.php:261
 msgid "promoted posts"
@@ -1529,8 +1622,11 @@ msgid "CEDEX"
 msgstr "CEDEX"
 
 #: setting.php:503
-msgid "By continuing you add this payment method to your account and accept the"
-msgstr "En continuant vous ajoutez cette méthode de paiement à votre compte et vous acceptez les"
+msgid ""
+"By continuing you add this payment method to your account and accept the"
+msgstr ""
+"En continuant vous ajoutez cette méthode de paiement à votre compte et vous "
+"acceptez les"
 
 #: setting.php:504
 msgid "generals temrs of use"
@@ -1605,8 +1701,14 @@ msgid "Lorem Ipsum is simply dummy text"
 msgstr "Lorem Ipsum is simply dummy text"
 
 #: soundpass.php:23 soundpass.php:70
-msgid "Lorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply dummy text"
-msgstr "Lorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply dummy text"
+msgid ""
+"Lorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum "
+"is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply "
+"dummy text"
+msgstr ""
+"Lorem Ipsum is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum "
+"is simply dummy textLorem Ipsum is simply dummy textLorem Ipsum is simply "
+"dummy text"
 
 #: soundpass.php:27
 msgid "Activer sound Pass"
@@ -1651,7 +1753,8 @@ msgstr "Améliorer votre expérience"
 #: subscribe.php:38
 msgid ""
 "Subscribers benefit from advantageous services. \n"
-"                                                    You can better manage your reputation and reach more users easily."
+"                                                    You can better manage "
+"your reputation and reach more users easily."
 msgstr "Les abonnés bénéficient de services avantageux"
 
 #: subscribe.php:50
@@ -1668,7 +1771,8 @@ msgstr "Newsfid Pro ( 12 mois sous contrat ) 1 mois gratuit offert"
 
 #: subscribe.php:99
 msgid "You will not be charged until the end of your trial period dated"
-msgstr "Vous ne serez pas facturé jusqu'à la fin de votre période d'essai en date du"
+msgstr ""
+"Vous ne serez pas facturé jusqu'à la fin de votre période d'essai en date du"
 
 #: subscribe.php:99
 msgid "You could cancel your membership online at any time."
@@ -1683,12 +1787,18 @@ msgid "I have read and accepted the Terms & Conditions"
 msgstr "Je l'ai lu et accepté les Conditions Générales d'Utilisation"
 
 #: subscribe.php:182
-msgid " I accept the terms of use and additional requirements related to the use of newsfid service. One case of conflict with my content I agree to b I accept the terms of use"
-msgstr "J'accepte les conditions d'utilisation générales et les exigences supplémentaires liées à l'utilisation du service Newsfid."
+msgid ""
+" I accept the terms of use and additional requirements related to the use of "
+"newsfid service. One case of conflict with my content I agree to b I accept "
+"the terms of use"
+msgstr ""
+"J'accepte les conditions d'utilisation générales et les exigences "
+"supplémentaires liées à l'utilisation du service Newsfid."
 
 #: subscribe.php:185
 msgid "You have an option to terminate your subscription online at any time "
-msgstr "Vous avez la possibilité de résilier votre abonnement en ligne à tout moment"
+msgstr ""
+"Vous avez la possibilité de résilier votre abonnement en ligne à tout moment"
 
 #: subscribe.php:187
 msgid "Activate my 30 days trials"
@@ -1700,7 +1810,9 @@ msgstr "offre valable une seule fois"
 
 #: subscribe.php:209
 msgid "Start newsfid pro and get 30 days trial. You can stop it when you want."
-msgstr "Commencer avec Newsfid pro et obtenir 30 jours d'essai. Vous pourrez arrêter quand vous voudrez. "
+msgstr ""
+"Commencer avec Newsfid pro et obtenir 30 jours d'essai. Vous pourrez arrêter "
+"quand vous voudrez. "
 
 #: subscribe.php:219
 msgid "Options"
@@ -1765,7 +1877,13 @@ msgstr "Unfollow"
 #: tchat_user_data.php:105 tchat_user_data.php:108 tchat_user_data.php:151
 #: user-public-profile.php:252
 msgid "Follow"
-msgstr "Abonnés"
+msgstr "M’abonner"
+
+msgid "Remove"
+msgstr "Retirer"
+
+msgid "Enter city, country, state or county"
+msgstr "Ville, Pays, Etat, region ..."
 
 #: tchat_user_data.php:117 tchat_user_data.php:184
 msgid "Remove from circle"
@@ -1794,12 +1912,19 @@ msgstr "liens"
 #: update_user_post.php:207
 msgid ""
 "You can not choose both at the same time\n"
-"                                                            you can publish  image or a video link."
-msgstr "Vous ne pouvez pas choisir les 2 à la fois. Vous pouvez publier soit une image soit une vidéo"
+"                                                            you can publish  "
+"image or a video link."
+msgstr ""
+"Vous ne pouvez pas choisir les 2 à la fois. Vous pouvez publier soit une "
+"image soit une vidéo"
 
 #: update_user_post.php:254
-msgid "Your podcast must be a mp3 file. I you wish to publish a file bigger than 100mo thank you to subscribe."
-msgstr "Votre podcast doit être au format mp3. Si vous voulez publier un fichier supérieur à 100mo merci de vous abonner"
+msgid ""
+"Your podcast must be a mp3 file. I you wish to publish a file bigger than "
+"100mo thank you to subscribe."
+msgstr ""
+"Votre podcast doit être au format mp3. Si vous voulez publier un fichier "
+"supérieur à 100mo merci de vous abonner"
 
 #: update_user_post.php:265
 msgid "Update location(Country/state/region/City/place)"
@@ -1831,19 +1956,30 @@ msgstr "Alerte"
 
 #: user-alerts.php:39
 msgid "This action can't be undone. Are you sure you want to continue?"
-msgstr "Cette action ne peut pas être annulée. Etes-vous sûr de vouloir continuer?"
+msgstr ""
+"Cette action ne peut pas être annulée. Etes-vous sûr de vouloir continuer?"
 
 #: user-alerts.php:39
 msgid "Delete this alert"
 msgstr "Supprimer cette alerte de recherche"
 
 #: user-category.php:23
-msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus."
-msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus."
+msgid ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, "
+"justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in "
+"orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus."
+msgstr ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet, "
+"justo et auctor posuere, diam enim ultrices libero, ut blandit erat ipsum in "
+"orci. Nulla elementum leo ac justo luctus, non vehicula sapien faucibus."
 
 #: user-category.php:26
-msgid "In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat."
-msgstr "In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie sed, commodo non erat."
+msgid ""
+"In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie "
+"sed, commodo non erat."
+msgstr ""
+"In viverra arcu vitae laoreet iaculis. Proin justo erat, dictum id molestie "
+"sed, commodo non erat."
 
 #: user-change_email.php:26
 msgid "Change e-mail"
@@ -2021,7 +2157,7 @@ msgstr "Gif"
 
 #: user-public-profile.php:363
 msgid "Reset"
-msgstr "Reset"
+msgstr "réinitialiser"
 
 #: user-public-profile.php:373
 msgid "Post"
@@ -2060,16 +2196,25 @@ msgid "No user found"
 msgstr "Aucun utilisateur trouvé"
 
 #: user-public-profile.php:481
-msgid " When people are following you ther are display just right here then you can better manage them and see who likes you"
-msgstr " Lorsque les utilisateurs s’ abonnent à vous ils s’affichent ici pour vous aidez à mieux gérer vos abonnés."
+msgid ""
+" When people are following you ther are display just right here then you can "
+"better manage them and see who likes you"
+msgstr ""
+" Lorsque les utilisateurs s’ abonnent à vous ils s’affichent ici pour vous "
+"aidez à mieux gérer vos abonnés."
 
 #: user-public-profile.php:514
 msgid "Who are you looking for among your circle?"
 msgstr "Qui recherchez vous dans votre Cercle de contact?"
 
 #: user-public-profile.php:536
-msgid "You can add people to your circle at anytime. That's the quicker and easier way to find back people you like to discuss with."
-msgstr "Vous pouvez ajouter des personnes à votre cercle à tout moment. C'est le moyen plus rapide et facile de retrouver des gens  avec qui vous aimez discuter."
+msgid ""
+"You can add people to your circle at anytime. That's the quicker and easier "
+"way to find back people you like to discuss with."
+msgstr ""
+"Vous pouvez ajouter des personnes à votre cercle à tout moment. C'est le "
+"moyen plus rapide et facile de retrouver des gens  avec qui vous aimez "
+"discuter."
 
 #: user-recover.php:27
 msgid "Send me a new password"
@@ -2112,8 +2257,15 @@ msgid "Create an account for free"
 msgstr "Créer un compte gratuitement"
 
 #: user-register.php:54
-msgid "Newsfid is an instant cloud service that hosts news and stories about what you are interesting for.  <br/><br/>\nYou can now follow organizations and  people and do even much more."
-msgstr "Newsfid est un service en ligne instantané de news et d'histoires à propos de vos centre d'intérêt.  <br/><br/>\n Vous pouvez maintenant suivre des gens et des organisations et faire bien plus."
+msgid ""
+"Newsfid is an instant cloud service that hosts news and stories about what "
+"you are interesting for.  <br/><br/>\n"
+"You can now follow organizations and  people and do even much more."
+msgstr ""
+"Newsfid est un service en ligne instantané de news et d'histoires à propos "
+"de vos centre d'intérêt.  <br/><br/>\n"
+" Vous pouvez maintenant suivre des gens et des organisations et faire bien "
+"plus."
 
 #: user-register.php:70
 msgid "I agree to the"
@@ -2168,8 +2320,13 @@ msgid "Are Sure Want To Delete This Post..??"
 msgstr "Etes-vous sûr de vouloir supprimer ce post ?"
 
 #: user_premium_post.php:94
-msgid "We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours"
-msgstr "Nous sommes heureux de vous annoncer que vous avez commencé une campagne de publicité sur Newsfid. Votre post en promotion est maintenant en ligne pour les 48 prochaines heures."
+msgid ""
+"We are delighted to let you know that you started an adverting campaing on "
+"Newsfid. Your promoted post is now online during next 48 hours"
+msgstr ""
+"Nous sommes heureux de vous annoncer que vous avez commencé une campagne de "
+"publicité sur Newsfid. Votre post en promotion est maintenant en ligne pour "
+"les 48 prochaines heures."
 
 #: user_premium_post.php:190
 msgid "comments more "
@@ -2188,8 +2345,14 @@ msgid "No watchlist posts found"
 msgstr "Aucune sauvegarde trouvée"
 
 #: user_watchlist.php:17
-msgid "Add to watchlist any posts you wish to read later. That is a good way to keep things if you need to hurry up because of something else to do in ruch                             "
-msgstr "Sauvegarder toute les publications que vous souhaitez lire plus tard. Voilà une bonne façon de garder les choses à portée de main si vous voulez vous y consacrer plus tard. "
+msgid ""
+"Add to watchlist any posts you wish to read later. That is a good way to "
+"keep things if you need to hurry up because of something else to do in "
+"ruch                             "
+msgstr ""
+"Sauvegarder toute les publications que vous souhaitez lire plus tard. Voilà "
+"une bonne façon de garder les choses à portée de main si vous voulez vous y "
+"consacrer plus tard. "
 
 #: user_watchlist.php:64
 msgid "Mark as read"
@@ -2198,6 +2361,12 @@ msgstr "Marqué comme lu"
 #: user_watchlist.php:188
 msgid "No watchlist item found"
 msgstr "Aucun item trouvé dans la watchlist"
+
+msgid "Share"
+msgstr "Partager"
+
+msgid "Unlike"
+msgstr "Unlike"
 
 #~ msgid "Publish your ad for free"
 #~ msgstr "Publier une annonce gratuite"
@@ -2315,7 +2484,9 @@ msgstr "Aucun item trouvé dans la watchlist"
 #~ "Le répertoire des images <strong>%s</strong> n'est pas inscriptible."
 
 #~ msgid "Osclass can't upload the logo image from the administration panel."
-#~ msgstr "Osclass ne peut pas télécharger l'image du logo depuis le panneau d'administration."
+#~ msgstr ""
+#~ "Osclass ne peut pas télécharger l'image du logo depuis le panneau "
+#~ "d'administration."
 
 #~ msgid "Please make the aforementioned image folder writable."
 #~ msgstr "Merci de rendre le dossier image mentionné accessible en écriture"
@@ -2439,9 +2610,6 @@ msgstr "Aucun item trouvé dans la watchlist"
 
 #~ msgid "Contact seller"
 #~ msgstr "Contacter l'annonceur"
-
-#~ msgid "Share"
-#~ msgstr "Partager"
 
 #~ msgid "Avoid scams by acting locally or paying with PayPal"
 #~ msgstr ""

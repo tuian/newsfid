@@ -1400,7 +1400,7 @@ function item_like_box($user_id, $item_id) {
     if ($like_item_array && in_array($item_id, $like_item_array)):
         $like = 'unlike';
         $like_class = 'liked';
-        $like_text = 'Unlike';
+        $like_text = __('Unlike', 'flatter');
     endif;
     ?>
     <span class="like_box <?php echo $like_class ?> item_like_box<?php echo $item_id ?>" data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $like ?>">
@@ -1625,9 +1625,9 @@ function user_share_box($user_id, $item_id) {
         $share_class = 'share';
         $action = 'share';
         $fa_class = 'fa fa-user-plus';
-        $share_text = 'Share';
+        $share_text = __('Share', 'flatter');
     else:
-        $share_text = 'Shared';
+        $share_text = __('Shared', 'flatter');;
         $disable = 'style="pointer-events: none;"';
     endif;
     ?>

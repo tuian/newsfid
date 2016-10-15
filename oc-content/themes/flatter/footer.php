@@ -83,7 +83,7 @@ if (osc_is_web_user_logged_in()):
                         if (!empty($a)):
                             if ($a['status'] == 0):
                                 ?>
-                                <a class="chat_off"><?php _e("Turn chat off", 'flatter'); ?></a>
+                                <a class="chat_off"><?php _e("Turn on Ghost mode", 'flatter'); ?></a>
                             <?php else: ?>
                                 <a class="chat_on"><?php _e("Turn chat on", 'flatter'); ?></a>
                             <?php endif; ?>
@@ -146,7 +146,7 @@ if (osc_is_web_user_logged_in()):
                             <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
                                 <li class="pointer block_user"><a><?php _e("Block this user", 'flatter'); ?></a></li>
                                 <li class="close_chat pointer"><a><?php _e("Close this chat", 'flatter'); ?> </a></li>
-                                <li class="pointer"><a><?php _e("Turn chat off", 'flatter'); ?></a></li>
+                                <li class="pointer"><a><?php _e("Turn on Ghost mode", 'flatter'); ?></a></li>
                             </ul>
                         </div>
                     </div>            
@@ -235,7 +235,7 @@ endif;
                         action: 'chat_on'
                     },
                     success: function () {
-                        $('.chat_off').text('<?php _e("Turn chat off", 'flatter') ?>');
+                        $('.chat_off').text('<?php _e("Turn on Ghost mode", 'flatter') ?>');
                         location.reload();
                     }
                 })

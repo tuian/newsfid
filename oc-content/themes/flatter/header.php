@@ -211,13 +211,13 @@
 
 //                                    if (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false):
 //                                if ((strpos($_SERVER['REQUEST_URI'], 'setting') !== false) || (strpos($parts[0], 'page=user') !== false && strpos($parts[0], 'action=pub_profile') !== false)):
-                                if ((strpos($_SERVER['REQUEST_URI'], 'Languages') !== false)):
-                                    $active = 'active';
-                                else:
-                                    $active = '';
-                                endif;
+//                                if ((strpos($_SERVER['REQUEST_URI'], 'Languages') !== false)):
+//                                    $active = 'active';
+//                                else:
+//                                    $active = '';
+//                                endif;
                                 ?>   
-                                <li class="treeview <?php echo $active ?>">
+                                <li class="treeview">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-language" aria-hidden="true"></i>
                                         <?php echo __('Languages'); ?>
@@ -225,29 +225,25 @@
                                     </a>                                
                                     <ul class="treeview-menu">
                                         <?php
-                                        $active = '';
-                                        if (strpos($parts[0], 'page=language') !== false && strpos($parts[0], 'auto=true') !== false && strpos($parts[0], 'locale=fr_FR')):
-                                            $active = 'active';
-                                        else:
-                                            $active = '';
+                                         $current_lang = osc_current_user_locale();
+                                        $active_lang = '';
+                                        if($current_lang == 'fr_FR'):
+                                            $active_lang = 'active-lang';                                        
                                         endif;
                                         ?> 
-                                        <li class="user_settings treeview <?php echo $active ?>">
-    <!--<a href="<?php echo osc_user_dashboard_url() ?>">-->
+                                        <li class="user_settings treeview <?php echo $active_lang ?>">    
                                             <a href="<?php echo osc_base_url(); ?>/index.php?page=language&auto=true&locale=fr_FR">
                                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                                 <?php _e("French", 'flatter'); ?>
                                             </a>
                                         </li>
-                                        <?php
-                                        $active = '';
-                                        if (strpos($parts[0], 'page=language') !== false && strpos($parts[0], 'auto=true') !== false && strpos($parts[0], 'locale=en_EN')):
-                                            $active = 'active';
-                                        else:
-                                            $active = '';
+                                        <?php     
+                                        $active_lang = '';
+                                        if ($current_lang == 'en_US'):
+                                            $active_lang = 'active-lang';                                       
                                         endif;
                                         ?> 
-                                        <li class="user_settings treeview <?php echo $active ?>">
+                                        <li class="user_settings treeview <?php echo $active_lang ?>">
                                             <a href="<?php echo osc_base_url(); ?>/index.php?page=language&auto=true&locale=en_US">
                                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                                 <?php _e("English", 'flatter'); ?>
