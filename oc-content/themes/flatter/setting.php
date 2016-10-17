@@ -172,7 +172,7 @@ $user_desc = $user_result->row();
                             <li><a href="#language"><?php _e("Mother Language", 'flatter') ?></a></li>
                             <!--<li><a href="#contenu"><?php _e("Content", 'flatter') ?></a></li>-->
                             <!--<li><a href="#moyen_de_paiement"><?php _e("Mean of payment", 'flatter') ?></a></li>-->
-                            <li><a href="#compte_bloques"><?php _e("Bloqued account", 'flatter') ?></a></li>
+                            <li><a href="#compte_bloques"><?php _e("Blocked account", 'flatter') ?></a></li>
                             <!--<li><a href="#verouillage"><?php _e("Locking", 'flatter') ?></a></li>-->
                             <!--<li><a href="#audio"><?php _e("Audio", 'flatter') ?></a></li>-->
                         </ul>
@@ -218,7 +218,7 @@ $user_desc = $user_result->row();
                                 </div>
                                 <div class="col-md-7 col-sm-7 col-xs-6 grey-border-box vertical-row">
                                     <div class="input-group code-box">
-                                        <span class="input-group-addon" id="basic-addon1">+33</span>
+                                        <span class="input-group-addon" id="basic-addon1"></span>
                                         <input type="text" name="up_mobile" class="user_mobile_textbox form-control disabled" value="<?php echo $user_info['phone_number'] ?>" disabled>
                                     </div>
                                 </div>
@@ -350,9 +350,9 @@ $user_desc = $user_result->row();
                         <div class="row">                      
                             <div class="col-md-3"></div>
                             <div class="col-md-7 text-gray margin-top-10 line-height-15">
-                                It helps other users to know automatically the language
+                                <?php _e('It helps other users to know automatically the language
                                 your are using when doing a post. Then users can
-                                read post which fits only with their native language.
+                                read post which fits only with their native language.', 'flatter'); ?>
                             </div>
                         </div>
                         <div class="col-md-12 padding-top-4per vertical-row">
@@ -379,7 +379,7 @@ $user_desc = $user_result->row();
                         <div class="row">                      
                             <div class="col-md-3"></div>
                             <div class="col-md-7 text-gray margin-top-10 margin-top-10 line-height-15">
-                                This language will be the Only one displays on your news feed. Depending on if you areas English or French user you can now choose to see only post writing in your native language. Other language will not be display to you.
+                                <?php _e('This language will be the Only one displays on your news feed. Depending on if you areas English or French user you can now choose to see only post writing in your native language. Other language will not be display to you.', 'flatter'); ?>
                             </div>
                         </div>
                     </div>
@@ -536,7 +536,7 @@ $user_desc = $user_result->row();
                         </div>
                     </div>-->
                <div class="breack-line"></div>
-                    <div id="compte_bloques" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
+                    <div id="compte_bloques" class="col-md-offset-1 col-md-10 main-contant border-radius-10 border-box white-bg padding-0">
                         <?php
                         $user_id = osc_logged_user_id();
                         $block = get_blocked_user($user_id);
@@ -654,7 +654,7 @@ $user_desc = $user_result->row();
                         </div>
                     </div>
                     <div class="breack-line"></div>-->
-                    <div id="delete-account" class="col-md-offset-1 col-md-9 main-contant border-radius-10 border-box white-bg padding-0">
+                    <div id="delete-account" class="col-md-offset-1 col-md-10 main-contant border-radius-10 border-box white-bg padding-0">
                         <div class="col-md-12 vertical-row">
                             <div class='col-md-7'>
                                 <h3 class="bold blue_text"><?php _e("Delete Account", 'flatter') ?></h3>
@@ -676,7 +676,7 @@ $user_desc = $user_result->row();
                         </div>
                         <div class="col-md-12">
                             <div class="col-md-offset-3 col-md-8 font-light-gray padding-top-8per padding-bottom-6per">
-                                <button class="en-savoir-plus-button-gry"><?php _e("Delete my account", 'flatter') ?></button>
+                                <button class="en-savoir-plus-button-gry delete_account"><?php _e("Delete my account", 'flatter') ?></button>
                             </div>
                         </div>
                     </div>
@@ -691,6 +691,9 @@ osc_add_hook('footer', 'custom_map_script');
 function custom_map_script() {
     ?>
     <script>
+        $(document).on('click', '.delete_account', function (){
+           alert('a'); 
+        });
         $(document).on('click', '.block_edit', function () {
             $('.block_btn').removeClass('btn-disabled').addClass('unblock');
             $('.block_btn').css('border','1px solid');

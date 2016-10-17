@@ -117,9 +117,9 @@ if ($item_id):
                                     <div class="bold"> <?php echo $item_pre_details[0]['s_title']; ?> </div>                                   
                                     <?php $desc = $item_pre_details[0]['s_description']; ?>   
                                     <?php custom_echo($desc, 100); ?> <br/>
-                                    <button class="get_more"><?php _e("Get more details", 'flatter') ?></button>
+                                    <button class="get_more"><?php _e("Read More", 'flatter') ?></button>
                                 </div>
-                                <div class="col-md-12 padding-0 padding-bottom-10"><?php _e("Promoted posts", 'flatter') ?>  </div>
+                                <div class="col-md-12 padding-0 padding-bottom-10"><?php _e("Spotlight", 'flatter') ?>  </div>
                                 <div class="col-md-12 post_resource" style="display: none">                                                                   
                                     <?php echo nl2br($item_pre_details[0]['s_description']); ?> 
                                 </div>
@@ -164,9 +164,9 @@ if ($item_id):
                                 </li> 
                                 <li> 
                                     <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == $user_pre_id) { ?>
-                <!--                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
-                                                    <i class="fa fa-pencil"></i>
-                                                </div>-->
+                    <!--                                        <div class="edit edit_post" item_id="<?php echo $item_id_pre; ?>">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </div>-->
                                     <?php } ?>
                                 </li>
                             </ul>
@@ -363,9 +363,9 @@ if ($item_id):
                                                         </li> 
                                                         <li> 
                                                             <?php if (osc_is_web_user_logged_in() && osc_logged_user_id() == osc_item_user_id()) { ?>
-                <!--                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
-                                                                            <i class="fa fa-pencil"></i>
-                                                                        </div>-->
+                    <!--                                                                <div class="edit edit_post" item_id="<?php echo osc_item_id(); ?>">
+                                                                                <i class="fa fa-pencil"></i>
+                                                                            </div>-->
                                                             <?php } ?>
                                                         </li>
                                                     </ul>
@@ -627,7 +627,7 @@ if ($item_id):
                             }
                         });
                     } else {
-                        alert('<?php _e("Please select region first", 'flatter') ?>');
+                        alert('<?php _e("Please select region first", "flatter") ?>');
                     }
                 },
                 afterSelect: function (obj) {

@@ -245,6 +245,17 @@ require 'functions.php';
                         <div class="green-round margin-left-15"></div>
                     </div>
                 </div>
+                <div class="col-md-12 border-bottom  vertical-row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <div class="orange bold padding-top-4per"><?php _e("Post a podcast", 'flatter') ?></div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="white-round margin-left-15"></div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-3 padding-top-3per">
+                        <div class="green-round margin-left-15"></div>
+                    </div>
+                </div>
                 <!---------------Table Row End---------1-------->
                 <!------------------Table row Start-------2--------->
                 <div class="col-md-12 border-bottom  vertical-row">

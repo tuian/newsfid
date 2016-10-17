@@ -32,8 +32,8 @@ endif;
 
         <div class="row wrap">
             <div class="">
-                <div class="col-md-4 col-sm-4 premium-fix"  id="wrap">
-                    <div class=" bg-white col-md-12 col-sm-12 padding-0 premium">
+                <div class="col-md-4 col-sm-4 col-xs-12 premium-fix"  id="wrap">
+                    <div class=" bg-white col-md-12 col-sm-12 col-xs-12 padding-0 premium">
                         <?php
                         if ($user['cover_picture_user_id']):
                             $cover_image_path = osc_base_url() . 'oc-content/plugins/profile_picture/images/profile' . $user['cover_picture_user_id'] . '.' . $user['cover_pic_ext'];
@@ -74,8 +74,8 @@ endif;
                             </div>
 
                             <div class="box-footer">
-                                <div class="col-md-12 col-sm-12 padding-0">
-                                    <div class="col-sm-6 border-right padding-left-0">
+                                <div class="col-md-12 col-sm-12 col-xs-12 padding-0">
+                                    <div class="col-sm-6 col-xs-12 border-right padding-left-0">
                                         <div class="description-block">
                                             <h5 class="description-header">
                                                 <?php
@@ -88,7 +88,7 @@ endif;
                                                 ?>
                                             </h5>
                                             <span class="description-text">
-                                                Running 
+                                                <?php _e("Running", "flatter") ?> 
                                             </span>
                                         </div>
                                     </div>
@@ -108,7 +108,7 @@ endif;
                                                                                 </span>
                                                                             </div>
                                                                         </div>-->
-                                    <div class="col-sm-6 col-md-6">
+                                    <div class="col-sm-6 col-md-6 col-xs-6">
                                         <div class="description-block">
                                             <h5 class="description-header">
                                                 <?php
@@ -173,11 +173,11 @@ endif;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-12 border-bottom-gray"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 border-bottom-gray"></div>
                             <div class="copyright_box_post">
                                 <span class="bold"><?php _e("Pack", 'flatter') ?>  : </span> <?php echo $pack_name['s_name']; ?>
                             </div>
-                            <div class="col-md-12 col-sm-12 border-bottom-gray"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 border-bottom-gray"></div>
                             <div class="box-default copyright_box_post">                                
                                 <?php _e("Copyright Newsfid", 'flatter') ?> - <span class="bold"> Gaël Eustache & Gwinel Madisse </span> (E&M) &copy; <?php echo date('Y') ?>
                             </div>
@@ -187,7 +187,7 @@ endif;
                 </div>
             </div>
             <div class="premium_post">
-                <div class="col-md-8 col-sm-8 padding-left-0">
+                <div class="col-md-8 col-sm-8 col-xs-12 padding-left-0">
                     <ul class="nav nav-tabs user_profile_navigation bg-white premium_nav_fix">
                         <li class="active user_posts"><a data-toggle="tab" data-target="#en_cours" href="javascript:void(0)"><?php _e("Running campaign", 'flatter') ?></a></li>
                         <li class="user_info"><a data-toggle="tab" data-target="#top_up_now" href="javascript:void(0)"><?php _e("Top up now", 'flatter') ?></a></li>

@@ -37,7 +37,7 @@ msgstr "S'abonner à cette recherche"
 
 #: alert-form.php:13 alert-form.php:20 header.php:408
 msgid "Subscribe now"
-msgstr "Abonnez-vous maintenant"
+msgstr "Abonnez-vous"
 
 #: alert-form.php:18
 msgid "Enter your e-mail"
@@ -530,10 +530,6 @@ msgstr "Votre recherche n'a donné aucun résultat. Merci de réessayer."
 msgid "User"
 msgstr "Utilisateur"
 
-#: functions.php:1833
-msgid "Publication"
-msgstr "Publication"
-
 #: functions.php:2197
 msgid "is now following you"
 msgstr "Vous suit désormais "
@@ -572,8 +568,8 @@ msgid "Advertising Account"
 msgstr "Compte publicitaire"
 
 #: header.php:425
-msgid "Informations"
-msgstr "Informations"
+msgid "Information"
+msgstr "Information"
 
 #: header.php:443
 msgid "Terms"
@@ -876,12 +872,12 @@ msgstr "Discuter"
 #: popup_ajax.php:365 user_posts.php:276 user_premium_post.php:190
 #: user_watchlist.php:117
 msgid "Display"
-msgstr "Afficher"
+msgstr "Il y a"
 
 #: item_after_login_ajax.php:248 item_comment_ajax.php:73 popup_ajax.php:164
 #: popup_ajax.php:365 user_posts.php:276 user_watchlist.php:117
 msgid "comments more"
-msgstr "plus de commentaires"
+msgstr "commentaire de plus"
 
 #: item_after_login_ajax.php:310 popup_ajax.php:231 popup_ajax.php:432
 #: user_posts.php:338 user_premium_post.php:239 user_watchlist.php:175
@@ -1126,7 +1122,7 @@ msgstr "Posts en promotion"
 
 #: popup_ajax.php:471
 msgid "Read More"
-msgstr "Tout lire"
+msgstr "En savoir plus"
 
 #: popup_ajax.php:472
 msgid "Read Less"
@@ -1134,19 +1130,16 @@ msgstr "Moins lire"
 
 #: popup_ajax.php:576
 msgid "Please select country first"
-msgstr "Merci de sélectionner d'abord un pays"
+msgstr "Merci de sélectionner plutôt un pays"
 
 #: popup_ajax.php:610
 msgid "Please select region first"
 msgstr "Merci de sélectionner d'abord une région"
 
 #: popup_free_account_post.php:63
-msgid "You have already"
-msgstr "Vous avez déjà"
+msgid "You have"
+msgstr "Vous avez"
 
-#: popup_free_account_post.php:63
-msgid "publication"
-msgstr "publication"
 
 #: popup_free_account_post.php:92
 msgid "Category *"
@@ -1254,7 +1247,7 @@ msgstr ""
 "visibilité de votre publication dans notre moteur de recherche"
 
 #: popup_free_account_post.php:288 update_user_post.php:308
-msgid "Publier"
+msgid "Publication"
 msgstr "Publier"
 
 #: popup_free_account_post.php:293 update_user_post.php:313
@@ -1862,17 +1855,13 @@ msgstr "Fermer ce chat"
 msgid "Press enter to reply"
 msgstr "Appuyer sur entrée pour répondre"
 
-#: tchat_user_data.php:73
-msgid "Abonnés"
-msgstr "Abonnés"
-
 #: tchat_user_data.php:85
 msgid "Lectures"
 msgstr "Lectures"
 
 #: tchat_user_data.php:103 tchat_user_data.php:167
 msgid "Unfollow"
-msgstr "Unfollow"
+msgstr " Me désabonner"
 
 #: tchat_user_data.php:105 tchat_user_data.php:108 tchat_user_data.php:151
 #: user-public-profile.php:252
@@ -1881,6 +1870,21 @@ msgstr "M’abonner"
 
 msgid "Remove"
 msgstr "Retirer"
+
+msgid "Blocked this user"
+msgstr "Bloquer cet utilisateur"
+
+msgid "Unlock user"
+msgstr "Débloquer"
+
+msgid "Registered since"
+msgstr "Inscrit depuis"
+
+msgid "Live"
+msgstr "Habite à"
+
+msgid "Already in your Circle"
+msgstr "Déjà dans votre Cercle"
 
 msgid "Enter city, country, state or county"
 msgstr "Ville, Pays, Etat, region ..."
@@ -2109,7 +2113,7 @@ msgstr "Téléphone"
 #: user-public-profile.php:74 user_circle.php:99 user_follower.php:97
 #: user_search_ajax.php:107
 msgid "FOLLOWERS"
-msgstr "abonnements"
+msgstr "ABONNES"
 
 #: user-public-profile.php:115 user-public-profile.php:190
 msgid "Upload Image"
@@ -2129,7 +2133,7 @@ msgstr "Télécharger"
 
 #: user-public-profile.php:269
 msgid "Followers"
-msgstr "Followers"
+msgstr "Abonnés"
 
 #: user-public-profile.php:280
 msgid "Likes"
@@ -2161,7 +2165,7 @@ msgstr "réinitialiser"
 
 #: user-public-profile.php:373
 msgid "Post"
-msgstr "Envoeyr"
+msgstr "Publication"
 
 #: user-public-profile.php:374
 msgid "Infos"
@@ -2328,10 +2332,6 @@ msgstr ""
 "publicité sur Newsfid. Votre post en promotion est maintenant en ligne pour "
 "les 48 prochaines heures."
 
-#: user_premium_post.php:190
-msgid "comments more "
-msgstr "Plus de commentaires"
-
 #: user_search_ajax.php:120
 msgid "LIKES"
 msgstr "LIKES"
@@ -2363,10 +2363,10 @@ msgid "No watchlist item found"
 msgstr "Aucun item trouvé dans la watchlist"
 
 msgid "Share"
-msgstr "Partager"
+msgstr "Partager"partagé
 
-msgid "Unlike"
-msgstr "Unlike"
+msgid "Shared"
+msgstr "partagé"
 
 #~ msgid "Publish your ad for free"
 #~ msgstr "Publier une annonce gratuite"
@@ -2797,8 +2797,38 @@ msgstr "Unlike"
 #~ msgid "Example"
 #~ msgstr "exemple"
 
-#~ msgid "Publish and share stories with the world"
-#~ msgstr "Publier et partager des histoires avec le monde "
+msgid "Publish and share stories with the world"
+msgstr "Publier et partager des histoires avec le monde "
 
-#~ msgid "Update my account"
-#~ msgstr "Mettre mon compte à niveau"
+msgid "Update my account"
+msgstr "Mettre mon compte à niveau"
+
+msgid "Spotlight"
+msgstr "Susceptible de vous intéressez"
+
+msgid "I’am uploading your publication to the world. Thanks, it won’t take long."
+msgstr "Je publie votre information. Un instant je vous prie. Merci"
+
+msgid "Promote your brand or company at anytime"
+msgstr "Vous pouvez promouvoir votre marque ou organisation sur le réseau SoundPass"
+
+msgid "No ongoing conversation history"
+msgstr "Pas d’historique de conversation en cours "
+
+msgid "Hide comments"
+msgstr "Rétrécir la conversation publique "
+
+msgid "Tell us your story here !"
+msgstr "Partagez instantanément votre information avec le monde"
+
+msgid "Register since"
+msgstr "Inscrit depuis"
+
+msgid "Following"
+msgstr "Abonnement"
+
+msgid "Suggestions"
+msgstr "Suggestions"
+
+msgid "Post a podcast"
+msgstr "Publier un podcast"

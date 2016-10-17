@@ -51,24 +51,24 @@ if ($_REQUEST['action'] == 'promoted_post'):
                     </div>
                     <div class="theme-modal-footer"></div> 
                     <div class="col-md-12 bg-white">
-                        <div class="col-md-offset-1 col-md-2 text-center">
+<!--                        <div class="col-md-offset-1 col-md-2 text-center">
                             <div class="payment-img">
                                 <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/CreditCards.png">
                             </div>
                             <input type="radio" class="payment-option" name="payment" value="payment-card" checked>
-                        </div>
+                        </div>-->
                         <div class="col-md-2 text-center">
                             <div class="payment-img">
                                 <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/paypal.png">
                             </div>
-                            <input type="radio" class="payment-option" name="payment" value="paypal">
+                            <input type="radio" class="payment-option" name="payment" value="paypal" checked="">
                         </div>
                         <div class="col-md-6 padding-3per bg-green-light">
                             <?php _e("You will get a benefits of Premium Post up to dated", 'flatter') ?> <?php echo date('d/m/Y', strtotime("+2 days", strtotime("NOW"))); ?>. 
                         </div>
 
                     </div>
-                    <div class="col-md-offset-3 col-md-6" id="payment-card">
+<!--                    <div class="col-md-offset-3 col-md-6" id="payment-card">
                         <div class="col-md-12">
                             <div class="blue_text bold"><?php echo __('Method of payment'); ?></div>
                         </div>
@@ -123,7 +123,7 @@ if ($_REQUEST['action'] == 'promoted_post'):
                         <div class="col-md-12 margin-top-20 grey-border">
                             <input type="text" placeholder="CEDEX">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="center-contant vertical-row none" id="paypal">
                         <div class="col-md-4 payment-img">
                             <img class="img img-responsive" src="<?php echo osc_current_web_theme_url(); ?>images/paypal-iphone.png">

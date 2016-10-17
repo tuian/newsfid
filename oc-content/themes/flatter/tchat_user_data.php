@@ -56,21 +56,21 @@ $logged_in_user_id = osc_logged_user_id();
         ?>
         <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>" class="col-md-2 padding-0"><img src="<?php echo $img_path ?>" class="background-white padding-10 img-circle"></a>
         <div class="col-md-6 padding-0 padding-top-8per">
-            <label class="font-color-black bold">Live:&nbsp;&nbsp;</label> <?php if ($user['s_city']): echo $user['s_city'] ?>-<?php
+            <label class="font-color-black bold"> <?php _e("Live","flatter")?>:&nbsp;&nbsp;</label> <?php if ($user['s_city']): echo $user['s_city'] ?>-<?php
             endif;
             if ($user['s_region']): echo $user['s_region']
                 ?>-<?php
             endif;
             echo $user['s_country']
             ?>
-            <div> <label class="font-color-black bold">Register since:&nbsp;&nbsp;</label><?php
+            <div> <label class="font-color-black bold"> <?php _e("Register since", "flatter") ?>:&nbsp;&nbsp;</label><?php
                 $date = $user['reg_date'];
                 echo date('l jS F Y', strtotime($date));
                 ?></div>
         </div>
         <div class="col-md-3 padding-top-8per">
             <div class="">
-                <i class="fa fa-users" aria-hidden="true"></i> <?php _e("Abonnés", 'flatter') ?> 
+                <i class="fa fa-users" aria-hidden="true"></i> <?php _e("Followers", 'flatter') ?> 
                 <span class="bold padding-left-10"> 
                     <?php
                     $user_followers = get_user_follower_data($user['user_id']);
@@ -114,7 +114,7 @@ $logged_in_user_id = osc_logged_user_id();
                 if (!empty($circle)):
                     if (in_array($user_id, $circle)):
                         ?>
-                        <a class="pointer removed_circle font-color-black bold"> <?php _e("Remove from circle", 'flatter') ?> </a>
+                        <a class="pointer removed_circle font-color-black bold"> <?php _e("Already in your Circle", 'flatter') ?> </a>
                     <?php else: ?>
                         <a class="pointer added_circle font-color-black bold"> <?php _e("Add to circle", 'flatter') ?> </a>
                     <?php endif; ?>
@@ -179,7 +179,7 @@ $logged_in_user_id = osc_logged_user_id();
                 logged_in_user_id: logged_in_user_id
             },
             success: function () {
-                $('.follow_user').text(<?php _e("Unfollow", 'flatter') ?>).addClass('unfollow_user').removeClass('follow_user');
+                $('.follow_user').text('<?php _e("Unfollow", 'flatter') ?>').addClass('unfollow_user').removeClass('follow_user');
             }
         })
     });

@@ -166,7 +166,7 @@ if (osc_is_web_user_logged_in()):
                         <img src="<?php echo osc_current_web_theme_url() . '/images/msg.png' ?>">
                     </div>
                     <div class="col-md-8">
-                        <?php _e('no ongoing conversation history', 'flatter'); ?>
+                        <?php _e('No ongoing conversation history', 'flatter'); ?>
                     </div>
                 </div>
                 <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->

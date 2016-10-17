@@ -9,7 +9,7 @@ require_once '../../../oc-load.php';
 require_once 'functions.php';
 $base_path = osc_themes_path();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_FILES['image_file'])) {
+    if (isset($_FILES['image_file']['name'])) {
 
         if (!$_FILES['image_file']['error'] && $_FILES['image_file']['size'] < $max_file_size) {
             $ext = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
@@ -28,12 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $vImg = imagecreatefromstring($data);
                 $dstImg = imagecreatetruecolor($nw, $nh);
                 imagecopyresampled($dstImg, $vImg, 0, 0, $x, $y, $nw, $nh, $w, $h);
-                imagepng($dstImg, $path);
+                if ($ext == 'png') {
+                    imagepng($dstImg, $path);
+                } elseif ($ext == 'jpg' || $ext == 'jpeg') {                    
+                    imagejpeg($dstImg, $path);                    
+                }
                 imagedestroy($dstImg);
 
                 $userId = osc_logged_user_id();
                 $files = $_FILES['tmp_name'];
-                $tmpName = $files['tmp_name'];
+                $tmpName = $files['name'];
 
                 Madhouse_Avatar_Actions::deleteAllResourcesFromUser($userId, false);
                 Madhouse_Avatar_Actions::process($path, $userId);
@@ -61,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$_FILES['file_cover_img']['error'] && $_FILES['file_cover_img']['size'] < $max_file_size) {
             $ext = strtolower(pathinfo($_FILES['file_cover_img']['name'], PATHINFO_EXTENSION));
             if (in_array($ext, $valid_exts)) {
-                $userId = osc_logged_user_id();                
+                $userId = osc_logged_user_id();
                 $path = osc_plugins_path() . 'profile_picture/images/' . 'profile' . $userId . '.' . $ext;
-                $size = getimagesize($_FILES['file_cover_img']['tmp_name']);               
+                $size = getimagesize($_FILES['file_cover_img']['tmp_name']);
                 $x = (int) $_POST['x1_cover'];
                 $y = (int) $_POST['y1_cover'];
                 $w = (int) $_POST['w'] ? $_POST['w'] : $size[0];

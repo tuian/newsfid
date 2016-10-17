@@ -2,15 +2,136 @@
 require_once '../../../oc-load.php';
 require_once 'functions.php';
 ?>
+<style>
+    .skin-blue ::-webkit-scrollbar {
+        width: 10px; 
+    }
+    ::-webkit-scrollbar-button {
+        background-color: transparent; 
+        height: 1px; 
+    }
+    ::-webkit-scrollbar-corner {
+        background-color: #D3D3D3; 
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 7px;
+        border-radius: 30px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+</style>
 <!---- modal popup for free user post start------>
 
 <!-- Modal -->
+
 <div id="popup-free-user-post" class="modal modal-transparent fade" role="dialog">
     <div class="col-md-offset-1 col-sm-offset-1 col-sm-10 col-md-10 post">
         <button type="button" class="close" data-dismiss="modal">&times;</button>-->
         <div class="large-modal">
             <!-- Modal content-->
             <div class="modal-content">
+                <div class="col-md-12 publication-loader padding-0" >
+                    <div class="col-md-12 padding-0 background-white blue_text text-center padding-10">
+                        <?php _e(' I’am uploading your publication to the world. Thanks, it won’t take long.','flatter') ?>
+                    </div>
+                    <style>
+                        .publication-loader{
+                            background: #372940;
+                            height: 300px;
+                            width: 60%;
+                            left: 18%;
+                            top: 30px;
+                        }
+                        #loader {
+                            position: relative;
+                            margin: 50px auto;
+                            width: 19%;
+                            z-index: 9999999;
+                            background: #372940;
+                            top: 7%;
+                        }
+
+                        .loader {
+                            position: absolute;
+                            opacity: .7;
+                        }
+
+                        .loader circle {
+                            animation: draw 4s infinite ease-in-out;
+                            transform-origin: center;
+                            transform: rotate(-90deg);
+                        }
+
+                        .loader-2 circle,
+                        .loader-6 circle {
+                            animation-delay: 1s;
+                        }
+
+                        .loader-7 circle {
+                            animation-delay: 2s;
+                        }
+
+                        .loader-4 circle, 
+                        .loader-8 circle {
+                            animation-delay: 3s;
+                        }
+
+                        .loader-3 {
+                            left: -150px;
+                            transform: rotateY(180deg);
+                        }
+
+                        .loader-6,
+                        .loader-7,
+                        .loader-8 {
+                            left: -150px;
+                            transform: rotateX(180deg) rotateY(180deg);
+                        }
+
+                        .loader-5 circle {
+                            opacity: .2;
+                        }
+
+                        @keyframes draw {
+                            50% {
+                                stroke-dashoffset: 0;
+                                transform: scale(.5);
+                            }
+                        }
+
+                    </style>
+                    <div id="loader">
+                        <svg class="loader">
+                        <filter id="blur">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
+                        </filter>
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="#F4F519" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-2">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="#DE2FFF" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-3">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="#FF5932" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-4">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="#E97E42" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-5">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="white" stroke-width="6" stroke-linecap="round" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-6">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="#00DCA3" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-7">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="purple" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                        <svg class="loader loader-8">
+                        <circle cx="75" cy="75" r="60" fill="transparent" stroke="#AAEA33" stroke-width="6" stroke-linecap="round" stroke-dasharray="385" stroke-dashoffset="385" filter="url(#blur)"></circle>
+                        </svg>
+                    </div>   
+                </div>
                 <form method="post" id="post_add" action="<?php echo osc_current_web_theme_url('post_add.php'); ?>" enctype="multipart/form-data">
                     <!--<input type="hidden" name="save" value="true">-->
                     <!-------------------------User Information Start---------------------------->
@@ -60,14 +181,14 @@ require_once 'functions.php';
 
                                 </div>
                                 <div class="col-md-12 col-sm-12 vertical-row">
-                                    <h5 class=" margin-0"><?php _e("You have already", 'flatter') ?>   <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span>  <?php _e(" publication", 'flatter') ?>  </h5>
+                                    <h5 class=" margin-0"><?php _e("You have", 'flatter') ?>  <span style="color:orangered"><?php echo get_user_posts_count($current_user['user_id']) ?></span>  <?php _e(" publication", 'flatter') ?>  </h5>
                                 </div>
 
 
                             </div>
                             <div class="col-md-4 col-sm-4 padding-top-4per">
-                                <div class="col-md-offset-4">
-                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng"> <?php _e("Update my account", 'flatter') ?> </a>
+                                <div class="<?php if(osc_current_user_locale() == "fr_FR"): ?> col-md-offset-3 <?php else: ?> col-md-offset-4 <?php endif;?>">
+                                    <a href="<?php echo osc_current_web_theme_url('subscribe.php'); ?>" class="en-savoir-plus-button-orng" <?php if(osc_current_user_locale() == "fr_FR"): ?> style="padding: 6% 11%" <?php endif;?>> <?php _e("Update my account", 'flatter') ?> </a>
                                 </div>
                             </div>
                         </div>
@@ -111,26 +232,26 @@ require_once 'functions.php';
 
                             </div><span class="error-scat red"><?php _e("Please select rubrics", 'flatter') ?></span>
                             <div class="input-text-area margin-top-10 padding-bottom-20 left-border box-shadow-none width-50">
-                                <input type="text" placeholder="Title" name="p_title" class="p_title"><span class="error-title red"><?php _e("Post Title Required", 'flatter') ?></span>
+                                <input type="text" placeholder="<?php _e("Title", "flatter") ?>" name="p_title" class="p_title"><span class="error-title red"><?php _e("Post Title Required", 'flatter') ?></span>
                             </div>
-                                 <div id="custom_fields">
-                                    <?php if( osc_count_item_meta() >= 1 ) { ?>
-                                        <br />
-                                        <div class="meta_list">
-                                            <?php while ( osc_has_item_meta() ) { ?>
-                                                <?php if(osc_item_meta_value()!='') { ?>
-                                                    <div class="meta">
-                                                        <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
-                                                    </div>
-                                                <?php } ?>
+                            <div id="custom_fields">
+                                <?php if (osc_count_item_meta() >= 1) { ?>
+                                    <br />
+                                    <div class="meta_list">
+                                        <?php while (osc_has_item_meta()) { ?>
+                                            <?php if (osc_item_meta_value() != '') { ?>
+                                                <div class="meta">
+                                                    <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
+                                                </div>
                                             <?php } ?>
-                                        </div>
-                                    <?php } ?>
-                                </div>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                     <div class="breack-line"></div>
-                    
+
                     <!-------------------------General Information end---------------------------->
 
                     <!-------------------------Add Media Start---------------------------->
@@ -140,7 +261,7 @@ require_once 'functions.php';
                                 <img src="<?php echo $img_path; ?>" alt="user" width='40px' class="img-circle" >
                             </div>
                             <div class="box-shadow-none width-90 description-box col-md-8 col-sm-8 padding-0">
-                                <textarea placeholder="<?php _e("Tell us your story", 'flatter') ?>" name="p_disc" class="p_disc"></textarea><span class="error-desc red"><?php _e("Post Description Required", 'flatter') ?></span>
+                                <textarea placeholder="<?php _e("Tell us your story here !", 'flatter') ?>" name="p_disc" class="p_disc"></textarea><span class="error-desc red"><?php _e("Post Description Required", 'flatter') ?></span>
                             </div>
                         </div>
                         <div class="border-bottom col-md-12 col-sm-12">                 
@@ -202,6 +323,7 @@ require_once 'functions.php';
                                         </div>
                                     </div>
                                 </div>
+                                <?php if($current_user['user_type'] == ('1' || '2' || '3')): ?>
                                 <div class=" col-md-12 col-sm-12 border-bottom">
                                     <div class="col-md-6 col-sm-6">
                                         <span class="bold"><?php _e("Music", 'flatter') ?></span>
@@ -210,7 +332,7 @@ require_once 'functions.php';
                                             <label class="onoffswitch-label" for="music"></label>
                                         </div>
                                         <div class="mp3-max">
-                                            <span class=""><?php _e("(MP3 10.MO maximum)", 'flatter') ?> </span>
+                                            <span class=""><?php _e("(MP3 100mo maximum)", 'flatter') ?> </span>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 text-bg-color">
@@ -239,6 +361,7 @@ require_once 'functions.php';
 
 
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="border-bottom col-md-12 col-sm-12">                 
@@ -326,6 +449,11 @@ require_once 'functions.php';
 
 <!----free user post end------->
 <script>
+    $('.publication-loader').hide();
+    $('#post_add').submit(function () {
+        $('.publication-loader').show();
+        $('#post_add').hide();
+    });
     $(document).on('click', '.post_file_upload_container', function () {
         $('.post_file_upload_container').css('background', 'none');
     });

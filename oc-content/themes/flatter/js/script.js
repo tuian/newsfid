@@ -53,8 +53,8 @@ function fileSelectHandler() {
     }
 
     // check for file size
-    if (oFile.size > 2500 * 10240) {
-        $('.error').html('You have selected too big file, please select a one smaller image file').show();
+    if (oFile.size > 250 * 1024) {
+        $('.error').html('<div class = "red"> You have selected too big file, please select a one smaller image file</div>').show();
         return;
     }
 
@@ -69,6 +69,8 @@ function fileSelectHandler() {
         oImage.src = e.target.result;
         oImage.onload = function () { // onload event handler
             $('#loader-icon').show();
+            $('#sections').hide();
+            $('#cover').hide();
             $('.step2').addClass('preview-img');
             // display step 2
             $('.step2').fadeIn(500);
@@ -108,6 +110,7 @@ function fileSelectHandler() {
                     jcrop_api = this;
                 });
                 $('#loader-icon').hide();
+                $('.upload_profile').show();
                 $('.step2').removeClass('preview-img');
             }, 3000);
 
@@ -155,7 +158,7 @@ function fileSelectHandlerCover() {
     }
 
     // check for file size
-    if (oFile.size > 2500 * 10240) {
+    if (oFile.size > 250 * 1024) {
         $('.error').html('You have selected too big file, please select a one smaller image file').show();
         return;
     }
@@ -192,7 +195,7 @@ function fileSelectHandlerCover() {
             setTimeout(function () {
                 // initialize Jcrop
                 $('#preview_cover').Jcrop({
-                    minSize: [600, 300], // min crop size
+                    minSize: [60, 30], // min crop size
                     aspectRatio: 2, // keep aspect ratio 1:1
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity
@@ -210,6 +213,9 @@ function fileSelectHandlerCover() {
                     jcrop_api = this;
                 });
                 $('#loader-icon_cover').hide();
+                $('.upload_profile_img').show();
+                $('#sections').hide();
+                $('#cover').hide();
                 $('.step2').removeClass('preview-img');
             }, 3000);
 

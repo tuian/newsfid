@@ -5,10 +5,10 @@
             var count = $(this).siblings('.comment_count').text();
             $(this).parent().parent().children('.load_more').toggle(500);
             if ($(this).hasClass('load_comment_text')) {
-                $(this).html('<i class="fa fa-plus-square-o"></i> Display ' + count + ' comments more ');
+                $(this).html('<i class="fa fa-plus-square-o"></i> <?php _e("Display", "flatter") ?>' + count + ' <?php _e("comments more", "flatter") ?> ');
                 $(this).removeClass('load_comment_text');
             } else {
-                $(this).html('<i class="fa fa-minus-square-o"></i> Hide comments');
+                $(this).html('<i class="fa fa-minus-square-o"></i> <?php _e("Hide comments", "flatter") ?>');
                 $(this).addClass('load_comment_text');
             }
         });

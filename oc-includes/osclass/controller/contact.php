@@ -155,7 +155,7 @@ MESSAGE;
 
                                             osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') );
                                         } else {
-                                            osc_add_flash_error_message( _m('The file you tried to upload does not have a valid extension') );
+                                            osc_add_flash_error_message( _m('Your email has been not sent properly, Please try again') );
                                         }
 
                                         $this->redirectTo( osc_contact_url() );

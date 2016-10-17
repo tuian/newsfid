@@ -363,7 +363,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                 }
                             });
                         } else {
-                            alert('<?php _e("Please select country first", 'flatter') ?>');
+                            alert("<?php _e("Please select country first", 'flatter') ?>");
                         }
                     },
                     afterSelect: function (obj) {

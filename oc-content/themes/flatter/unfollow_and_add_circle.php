@@ -21,13 +21,13 @@ endif;
 if ($_REQUEST['action'] == 'add_circle'):
     $circle_value = 1;
     $add_circle = update_user_circle($logged_in_user_id, $follow_user_id, $circle_value);
-    
+
 elseif ($_REQUEST['action'] == 'remove_circle'):
     $circle_value = 0;
     $add_circle = update_user_circle($logged_in_user_id, $follow_user_id, $circle_value);
 endif;
 
-if ($_REQUEST['follow'] == 'follow-user' || $_REQUEST['follow_remove'] == 'follow-remove'): 
+if ($_REQUEST['follow'] == 'follow-user' || $_REQUEST['follow_remove'] == 'follow-remove'):
     ?>
     <div class="suggested_user_div">
         <?php
@@ -38,40 +38,42 @@ if ($_REQUEST['follow'] == 'follow-user' || $_REQUEST['follow_remove'] == 'follo
         $suggested_follow_users = array_diff($suggested_users, $follow_user);
         $follow_remove = (array) get_user_following_remove_data($logged_user['user_id']);
         $suggested_users_result = array_diff($suggested_follow_users, $follow_remove);
-        $suggested_users_result = get_users_data($suggested_users_result);       
-        if ($follow_user != $suggested_users_result): 
+        $suggested_users_result = get_users_data($suggested_users_result);
+        if ($follow_user != $suggested_users_result):
             if (!empty($suggested_users_result)):
-                $i = 0;           
+                $i = 0;
                 foreach ($suggested_users_result as $suggested_user_array):
                     if (+$i > 3)
                         break;
-                   
+
 //                    if (!empty($suggested_user_array)):
 //                        if ((get_user_follower_data($suggested_user_array['user_id']))):
-                            ?>
-                            <div class="sugg_box col-md-12 col-xs-12 user margin-bottom-10 user-<?php echo $suggested_user_array['user_id'] ?>">
-                                <div class="col-md-3 col-xs-2 padding-0">
-                                    <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                </div>
-                                <div class="col-md-9 col-xs-10 padding-right-0">
-                                    <h5 class="direct-chat-name margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
+                    if (count(get_user_follower_data($suggested_user_array['user_id'])) > '0'):
+                        ?>
+                        <div class="sugg_box col-md-12 col-xs-12 user margin-bottom-10 user-<?php echo $suggested_user_array['user_id'] ?>">
+                            <div class="col-md-3 col-xs-2 padding-0">
+                                <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                            </div>
+                            <div class="col-md-9 col-xs-10 padding-right-0">
+                                <h5 class="direct-chat-name margin-0"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
-                                    <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                    <div class="col-md-12 padding-0">                                                           
-                                        <div class="col-md-offset-2 col-md-4 padding-0 sug_button">                                                           
-                                           <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Follow', 'flatter'); ?></button>
-                                        </div>
-                                        <div class="col-md-4">         
-                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>"> <?php _e('Remove', 'flatter'); ?></button>
-                                        </div>
+                                <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
+                                <div class="col-md-12 padding-0">                                                           
+                                    <div class="col-md-offset-2 col-md-4 padding-0 sug_button">                                                           
+                                        <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>" <?php if (osc_current_user_locale() == 'en_US'): ?> style="padding: 6% 16% !important;" <?php endif; ?>><?php _e('Follow', 'flatter'); ?></button>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10 <?php if (osc_current_user_locale() == 'fr_FR'): ?> margin-left-15 <?php endif; ?>">             
+                                        <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>"> <?php _e('Remove', 'flatter'); ?></button>
                                     </div>
                                 </div>
-                            </div>    
-                            <?php
+                            </div>
+                        </div>    
+                        <?php
+                    endif;
 //                        endif;
 //                    endif;
                     $i++;
-                endforeach;           
+                endforeach;
             endif;
             ?>
         </div>
@@ -81,6 +83,6 @@ endif;
 //osc_redirect_to(osc_base_url());
 ?>
 <script>
- 
+
 
 </script>

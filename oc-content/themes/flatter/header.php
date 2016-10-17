@@ -387,7 +387,7 @@
                                     <li class="treeview <?php echo $active ?>">
                                         <a href="<?php echo osc_current_web_theme_url() . 'subscribe.php' ?>">
                                             <i class="fa fa-money"></i>
-                                            <?php _e("Subscribe now", 'flatter'); ?>
+                                            <?php _e("Subscribe", 'flatter'); ?>
                                         </a>
                                     </li>   
                                 <?php endif; ?>
@@ -404,7 +404,7 @@
                                 <li class="treeview <?php echo $active ?>">
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-info"></i>
-                                        <?php _e("Informations", 'flatter'); ?>
+                                        <?php _e("Information", 'flatter'); ?>
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </a>
 

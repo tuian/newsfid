@@ -222,14 +222,14 @@ else: {
                                                 </div>-->
 
 
-                            <div class="box box-default no-border">
+                            <div class="box box-default no-border margin-0">
                                 <div class="box-header with-border">
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <span class="bold"> Filters </span>
+                                    <span class="bold"> <?php _e("Filters", "flatter") ?> </span>
                                     <!-- /.box-tools -->
                                 </div>
                                 <!-- /.box-header -->
@@ -280,6 +280,10 @@ else: {
                                 </div>
                             </div>
                             <!-- /.box -->
+                            <div class="box-header with-border">                                
+                                <span class="bold"> <?php _e("Suggestions", "flatter") ?></span>
+                                <!-- /.box-tools -->
+                            </div>
                             <div id="suggested_user_div">
                                 <div class="suggested_user_div">
                                     <?php
@@ -294,28 +298,29 @@ else: {
                                         foreach ($suggested_users_result as $suggested_user_array):
                                             if (+$i > 3)
                                                 break;
-
+                                            if (count(get_user_follower_data($suggested_user_array['user_id'])) > '0'):
 //                                                if ((get_user_follower_data($suggested_user_array['user_id']))): 
-                                            ?>
-                                            <div class="sugg_box col-md-12 col-xs-12 margin-bottom-10">
-                                                <div class="col-md-3 col-xs-2 padding-0">
-                                                    <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                                </div>
-                                                <div class="col-md-9 col-xs-10 padding-right-0">
-                                                    <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
+                                                ?>
+                                                <div class="sugg_box col-md-12 col-xs-12 margin-bottom-10">
+                                                    <div class="col-md-3 col-xs-2 padding-0">
+                                                        <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                    </div>
+                                                    <div class="col-md-9 col-xs-10 padding-right-0">
+                                                        <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
-                                                    <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
-                                                    <div class="col-md-12 padding-0">                                                           
-                                                        <div class="col-md-offset-2 col-md-4 col-sm-4 col-xs-4 padding-0 sug_button">
-                                                            <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Follow', 'flatter'); ?></button>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10">         
-                                                            <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Remove', 'flatter'); ?></button>
+                                                        <span class=""><i class="fa fa-users"></i> <?php echo count(get_user_follower_data($suggested_user_array['user_id'])) ?></span>                                                            
+                                                        <div class="col-md-12 padding-0">                                                           
+                                                            <div class="col-md-offset-2 col-md-4 col-sm-4 col-xs-4 padding-0 sug_button">
+                                                                <button class="follow_users" user-id="<?php echo $suggested_user_array['user_id']; ?>" <?php if (osc_current_user_locale() == 'en_US'): ?> style="padding: 6% 16% !important;" <?php endif; ?>><?php _e('Follow', 'flatter'); ?></button>
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-4 col-xs-4 padding-left-10 <?php if (osc_current_user_locale() == 'fr_FR'): ?> margin-left-15 <?php endif; ?>">         
+                                                                <button class="button-gray-box follow_remove" user-id="<?php echo $suggested_user_array['user_id']; ?>"><?php _e('Remove', 'flatter'); ?></button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>    
-                                            <?php
+                                                </div>    
+                                                <?php
+                                            endif;
 //                                              
                                             $i++;
                                         endforeach;
@@ -429,7 +434,7 @@ else: {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                                        ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                                          ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -451,7 +456,7 @@ else: {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                                        ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                                          ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
