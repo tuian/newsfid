@@ -113,18 +113,18 @@ if ($items):
                                     <?php echo $user['user_name'] ?>
                                 </a> 
                                 <?php if (!empty($share_array) && in_array($item['pk_i_id'], $share_array)): ?> 
-                                    <sapn><?php _e('shared ', 'flatter')?> <?php
+                                    <sapn><?php
                                         if ($post_user['user_id'] == $user['user_id']):
                                             if ($user['s_gender'] == 'male'):
-                                                echo 'his';
+                                                $gend = __('his', 'flatter');
                                             else:
-                                                echo 'her';
+                                                $gend = __('her', 'flatter');
                                             endif;
+                                            echo sprintf(__("shared %s post", 'flatter'), $gend);
                                         else:
-                                            ?>
-                                            <a class="blue_text" href="<?php echo osc_user_public_profile_url($post_user['user_id']) ?>"><?php echo $post_user['user_name'];?></a><?php _e(" 's",'flatter'); ?>
-                                        <?php endif; ?> 
-                                        <?php _e('post', 'flatter'); ?>
+                                            echo sprintf(__("shared <a class='blue_text' href='%s'>%s</a>'s post", 'flatter'), osc_user_public_profile_url($post_user['user_id']), $post_user['user_name']);
+                                            ?>                                             
+                                        <?php endif; ?>                                          
                                     </sapn>
                                 <?php endif; ?>
                             </span>

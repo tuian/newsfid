@@ -25,7 +25,7 @@ osc_current_web_theme_path('header.php');
                             </span>
                         </div>
                     </div>
-                    <form name="register" action="<?php echo osc_base_url(true); ?>" method="post" >
+                    <form name="register" id="user-register-form" action="<?php echo osc_base_url(true); ?>" method="post" >
                         <input type="hidden" name="page" value="register" />
                         <input type="hidden" name="action" value="register_post" />
                         <div class="row vertical-row user_login_row">

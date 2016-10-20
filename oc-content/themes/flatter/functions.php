@@ -1285,11 +1285,17 @@ function time_elapsed_string($ptime) {
         if ($d >= 1) {
             if ($secs < 86400) {
                 $r = round($d);
-                return $r . ' ' . ($r > 1 ? __($a_plural[$str], 'flatter') : $str) . __(' ago', 'flatter');
+                if($r > 1):
+                    return sprintf(__('%d %s ago', 'flatter'), $r, $a_plural[$str]);
+                else:
+                    return sprintf(__('%d %s ago', 'flatter'), $r, $str);                    
+                endif;
+//                return $r . ' ' . ($r > 1 ? __($a_plural[$str], 'flatter') : $str) . __(' ago', 'flatter');
+                                
             } else {
-//                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
-                return date("d M", $ptime);
-//               return strftime("%d %b", $ptime);
+                setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+//                return date("d M", $ptime);
+               return strftime("%d %b", $ptime);
             }
         }
     }
@@ -1375,7 +1381,7 @@ function update_item_like($user_id, $item_id, $like_value) {
     $result = $data->dao->get();
     $item = $result->row();
     if ($like_value == 1 && $user_id != $item['fk_i_user_id']):
-        $message = 'liked your post';
+        $message = __('liked your post', 'flatter');
         set_user_notification($user_id, $item['fk_i_user_id'], $message, $item['pk_i_id']);
     endif;
     return $like_reult;

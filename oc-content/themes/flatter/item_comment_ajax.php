@@ -43,7 +43,7 @@ else :
     $comment_data = $new_comment->dao->insert(DB_TABLE_PREFIX . 't_item_comment', $comment_array);
 
     //insert notification for author
-    $message = 'commented your post';
+    $message = __('commented your post', 'flatter');
     if ($comment_user_id != $item['fk_i_user_id']):
         set_user_notification($comment_user_id, $item['fk_i_user_id'], $message, $comment_item_id);
     endif;

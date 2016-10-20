@@ -40,7 +40,7 @@ if ($_REQUEST['notification'] == 'notification'):
                     else: echo "light-gray";
                     endif;
                     ?> ">
-                        <span class="notification_post pointer" item-id="<?php echo $n['item_id']; ?>"> <?php echo $n['message']; ?></span>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
+                        <span class="notification_post pointer" item-id="<?php echo $n['item_id']; ?>"> <?php echo __($n['message'], 'flatter'); ?></span>  <span class="pull-right"><?php echo time_elapsed_string(strtotime($n['created'])); ?></span>
                     </div>
                 </div>
             <?php
@@ -92,7 +92,7 @@ endif;
             }
         });
     });
-    $(document).on('click', '.mark_read', function () {
+    $(document).on('click', '.mark_read, .unread-notification', function () {
         var mark_time = $(this).attr('mark_time');
         var to_id = $(this).attr('to_user_id');
         $(this).closest('.unread-notification').removeClass('unread-notification');

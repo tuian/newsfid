@@ -4016,3 +4016,23 @@ select{
 .margin-left-4per{
     margin-left: 4%;
 }
+ .border-right-grey{
+    border-right: 2px solid #ccc;
+}
+.margin-20{
+    margin: 20px;
+}
+.margin-top-50{
+    margin-top: 50px;
+}
+.height-400{
+    height: 400px !important;
+}
+.orange_line_btn {
+    position: absolute;    
+    text-align: left;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #f68935 !important;
+    border-radius: 1px !important;
+}

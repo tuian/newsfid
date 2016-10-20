@@ -2363,7 +2363,7 @@ msgid "No watchlist item found"
 msgstr "Aucun item trouvé dans la watchlist"
 
 msgid "Share"
-msgstr "Partager"partagé
+msgstr "Partager"
 
 msgid "Shared"
 msgstr "partagé"
@@ -2832,3 +2832,49 @@ msgstr "Suggestions"
 
 msgid "Post a podcast"
 msgstr "Publier un podcast"
+
+msgid "Before to start"
+msgstr "Avant de commencer"
+
+msgid "Think to go into your Center of Interest in order To personalize your news feed as you wish at anytime."
+msgstr "Pensez à vous rendre dans votre Centre d’interrêt pour personaliser votre fil d’actualité comme bon vous semble."
+
+msgid "Thanks, I got it"
+msgstr "Merci j’ai compris"
+
+msgid "liked your post"
+msgstr "aimé votre post"
+
+msgid "commented your post"
+msgstr "A commenté votre post"
+
+msgid "Created promoted post"
+msgstr "Créé promu après"
+
+msgid "added you to his/her circle"
+msgstr "vous a ajouté à sa / son cercle"
+
+msgid "hours"
+msgstr "heures"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "seconds"
+msgstr "secondes"
+
+msgid "%d %s ago"
+msgstr "Il y a %d %s"
+ 
+msgid "his"
+msgstr "son"
+ 
+msgid "her"
+msgstr "son"
+ 
+msgid "shared <a class='blue_text' href='%s'>%s</a>'s post"
+msgstr "a partagé la publication de <a class='blue_text' href='%s'>%s</a>"
+
+msgid "shared %s post"
+msgstr "a partagé %s publication"
+ 
