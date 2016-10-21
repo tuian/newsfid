@@ -185,12 +185,12 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
         ?>
         <input type="hidden" id="hidden-data" from-id="<?php echo $user_id ?>" from-name="<?php echo $user['user_name'] ?>" to-id="<?php echo $to_user_id ?>" to-name="<?php echo $user_to['user_name'] ?>" old_msg_cnt="<?php echo count(get_chat_conversion($user_id, $to_user_id)); ?>"/>
         <div class="chat_box">
-            <div class="background-white padding-10">
+<!--            <div class="background-white padding-10">
                 <div class="bold">
                     <span class="orange padding-right-10"> With</span> <a><?php echo $user_to['user_name']; ?> </a>
                 </div>            
-            </div>
-            <div  class="col-md-12 border-bottom-gray"></div>
+            </div>-->
+<!--            <div  class="col-md-12 border-bottom-gray"></div>
             <div class="col-md-12 background-white">
                 <span class="dropdown vertical-row pull-right">
                     <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
@@ -200,7 +200,7 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                         <li class="pointer"><a><?php _e("Turn on Ghost mode", 'flatter') ?></a></li>
                     </ul>
                 </span>
-            </div>
+            </div>-->
 
             <?php
             if (!empty($user['s_path'])):
@@ -230,12 +230,12 @@ if ($_REQUEST['action'] == "online-chat-converstion"):
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
-            <!--<div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
+<!--            <div class="typing col-md-12 background-white"></div>
 
             <div class="textarea">
                 <textarea class="msg_textarea" placeholder="<?php _e("Press enter to reply", 'flatter') ?>" id="messageBox1"></textarea>
                 <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
-            </div>
+            </div>-->
         </div>
         <?php
     endif;

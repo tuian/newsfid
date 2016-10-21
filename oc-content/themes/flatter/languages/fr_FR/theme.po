@@ -2877,4 +2877,7 @@ msgstr "a partagé la publication de <a class='blue_text' href='%s'>%s</a>"
 
 msgid "shared %s post"
 msgstr "a partagé %s publication"
+
+msgid "Is responding now"
+msgstr "Est en train d’écrire"
  

@@ -98,7 +98,7 @@ if (osc_is_web_user_logged_in()):
             <a  href="javascript: openwindow()"><i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i></a>
             <span class="sound_pass">SoundPass</span>
         </div>
-        <div class="soundpass-text padding-7per text-center" style="display: none"><?php _e('Promote your brand or company at anytime', 'flatter');?></div>
+        <div class="soundpass-text padding-7per text-center" style="display: none"><?php _e('Promote your brand or company at anytime', 'flatter'); ?></div>
         <div class="chat-user-overflow" id="chat-user-list">                
             <?php
             if (!empty($users)):
@@ -127,7 +127,7 @@ if (osc_is_web_user_logged_in()):
                             </div>
                         </div>
                         <div class = "col-md-9 col-sm-9 col-xs-9 padding-left-0 user_chat_name">
-                            <span class = "bold chat-user" to-user-id = "<?php echo $u['user_id']; ?>"><a href = "javascript:void(0)"><?php echo $u['user_name'];
+                            <span class = "bold chat-user" user-name="<?php echo $u['user_name']; ?>" to-user-id = "<?php echo $u['user_id']; ?>"><a href = "javascript:void(0)"><?php echo $u['user_name'];
                                 ?></a></span>
                         </div>
                     </div>                        
@@ -137,20 +137,27 @@ if (osc_is_web_user_logged_in()):
             ?>   
         </div>
         <div id="online-chat">
-            <div class="chat_box">
-                <div class="background-white col-md-12 padding-10">
-                    <div class="bold">
-                        <div class="col-md-2 padding-0 orange padding-right-10"><?php  _e("With", 'flatter'); ?></div>
-                        <div class="col-md-10 dropdown"> 
-                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
-                                <li class="pointer block_user"><a><?php _e("Block this user", 'flatter'); ?></a></li>
-                                <li class="close_chat pointer"><a><?php _e("Close this chat", 'flatter'); ?> </a></li>
-                                <li class="pointer"><a><?php _e("Turn on Ghost mode", 'flatter'); ?></a></li>
-                            </ul>
-                        </div>
-                    </div>            
-                </div>
+            <?php
+            $typing = get_user_typing_status(osc_logged_user_id());
+            $to_user = $typing['to_user_id'];
+            if (!empty($to_user)):
+                $chat_user = get_user_data($to_user);
+            endif;
+            ?>
+            <div class="background-white col-md-12 padding-10">
+                <div class="bold">
+                    <span class="orange padding-right-10"><?php _e("With", 'flatter'); ?> </span> <a class="user_name_chat" user-id="<?php echo $chat_user['user_id']; ?>" href="<?php echo osc_user_public_profile_url($to_user) ?>"> <?php echo $chat_user['user_name']; ?></a>
+                    <div class="pull-right dropdown"> 
+                        <i class="fa fa-ellipsis-v dropdown-toggle pull-right pointer font-22px" aria-hidden="true" id="dropdownMenu2" data-toggle="dropdown"></i>
+                        <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu2">
+                            <li class="pointer block_user"><a><?php _e("Block this user", 'flatter'); ?></a></li>
+                            <li class="close_chat pointer"><a><?php _e("Close this chat", 'flatter'); ?> </a></li>
+                            <li class="pointer"><a><?php _e("Turn on Ghost mode", 'flatter'); ?></a></li>
+                        </ul>
+                    </div>
+                </div>            
+            </div>
+            <div class="chat_box">                
                 <div  class="col-md-12 border-bottom-gray"></div>
                 <?php
                 $user_id = osc_logged_user_id();
@@ -169,15 +176,16 @@ if (osc_is_web_user_logged_in()):
                         <?php _e('No ongoing conversation history', 'flatter'); ?>
                     </div>
                 </div>
-                <!--                <div class="typing col-md-12 background-white"> Dhaval is typing.....</div>-->
 
-                <div class="textarea">
-                    <textarea class="msg_textarea" placeholder="<?php _e('Press enter to reply', 'flatter'); ?>"></textarea>
-                    <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
-                </div>
+            </div>
+            <div id="chat-box-footer"></div>
+            <!--<div class="typing col-md-12 background-white" style="display: none"><?php _e('Is responding now', 'flatter'); ?>...</div>-->
+
+            <div class="textarea">
+                <textarea class="msg_textarea" placeholder="<?php _e('Press enter to reply', 'flatter'); ?>" id="messageBox"></textarea>
+                <img src="<?php echo $img_path; ?>" class="img-circle user_chat_photo" width="40px">
             </div>
         </div>
-        <div id="chat-box-footer"></div>
 
     </div>	
 
@@ -214,6 +222,57 @@ endif;
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
+//            $(document).on('keyup', '.msg_textarea', function () {
+//                var len = $(this).val().length;
+//                if (len >0) {
+//                    $.ajax({
+//                        url: '<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>',
+//                        type: 'post',
+//                        data: {
+//                            action: 'user_typing'
+//                        },
+//                        success: function () {
+//                            $('.typing').show();
+//                        }
+//                    })
+//                } else {
+//                    $.ajax({
+//                        url: '<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>',
+//                        type: 'post',
+//                        data: {
+//                            action: 'no_user_typing'
+//                        },
+//                        success: function () {
+//                            $('.typing').hide();
+//                        }
+//                    })
+//                }
+//
+//            });
+            function loadlink() {
+                var chat_user_id = $('.user_name_chat').attr('user-id');
+                if (chat_user_id === '') {
+                    return false;
+                }
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                    type: 'post',
+                    data: {
+                        action: 'chat-converstion',
+                        user_id: chat_user_id
+                    },
+                    success: function (data) {
+                        $('.chat_box').html(data);
+                        $('.chat_box').css('display', 'block');
+                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                    }
+                });
+            }
+
+            loadlink(); // This will run on page load
+            setInterval(function () {
+                loadlink() // this will run after every 5 seconds
+            }, 2000);
             $(document).on('click', '.chat_off', function () {
                 $.ajax({
                     url: '<?php echo osc_current_web_theme_url() . 'chat-on-off.php' ?>',
@@ -249,9 +308,7 @@ endif;
                     $('.soundpass-text').show();
                     $('.soundpass-show').show();
                 });
-            });
-
-    </script>
+            });</script>
 
 
     <script>
@@ -267,26 +324,28 @@ endif;
                         user_id: chat_user_id
                     },
                     success: function (data) {
-                        $('#online-chat').html(data);
-                        $('#online-chat').css('display', 'block');
+                        $('.chat_box').html(data);
+                        $('.chat_box').css('display', 'block');
                         $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
                     }
                 });
             }
         });
-
         $(document).on('click', '.chat-user', function () {
             var id = $(this).attr('to-user-id');
+            var name = $(this).attr('user-name');
+            $('.user_name_chat').html(name);
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
                 type: 'post',
                 data: {
                     action: 'chat-converstion',
+                    user_status: 'user_status',
                     user_id: id
                 },
                 success: function (data) {
-                    $('#online-chat').html(data);
-                    $('#online-chat').css('display', 'block');
+                    $('.chat_box').html(data);
+                    $('.chat_box').css('display', 'block');
                     $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
                 }
             });
@@ -398,7 +457,7 @@ endif;
 <?php if (osc_get_preference('anim', 'flatter_theme') != '0') { ?>
     <script src="<?php echo osc_current_web_theme_url('js/wow.min.js'); ?>"></script>
     <script type="text/javascript">
-            new WOW().init();</script>
+        new WOW().init();</script>
 <?php } ?>
 <?php osc_run_hook('footer'); ?>
 <?php if (osc_is_home_page() && !osc_is_web_user_logged_in()): ?>

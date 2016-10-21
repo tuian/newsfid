@@ -2651,4 +2651,15 @@ function get_user_online_status($user_id) {
     $user = $result->row();
     return $user;
 }
+
+function get_user_typing_status($user_id) {
+    $db_prefix = DB_TABLE_PREFIX;
+    $user_data = new DAO();
+    $user_data->dao->select('*');
+    $user_data->dao->from("oc_t_active_chat");
+    $user_data->dao->where("user_id", $user_id);
+    $result = $user_data->dao->get();
+    $user = $result->row();
+    return $user;
+}
 ?>
