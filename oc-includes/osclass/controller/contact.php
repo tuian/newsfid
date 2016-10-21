@@ -33,7 +33,9 @@
                                         $yourEmail = Params::getParam('yourEmail');
                                         $subject   = Params::getParam('subject');
                                         $message   = Params::getParam('message');
-
+                                        //custom mail
+                                        mail(osc_contact_email(),$subject,$message);
+                                        // end custom mail
                                         if( (osc_recaptcha_private_key() != '') ) {
                                             if( !osc_check_recaptcha() ) {
                                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong'));
@@ -85,6 +87,7 @@
 {$message_IP}
 MESSAGE;
 
+
                                         $params = array(
                                             'from'      => osc_contact_email(),
                                             'to'        => osc_contact_email(),
@@ -94,52 +97,51 @@ MESSAGE;
                                             'body'      => nl2br($message)
                                         );
 
-
                                         $error = false;
-                                        if( osc_contact_attachment() ) {
-                                            $attachment   = Params::getFiles('attachment');
-                                            if(isset($attachment['error']) && $attachment['error']==UPLOAD_ERR_OK) {
-                                                $mime_array = array(
-                                                    'text/php',
-                                                    'text/x-php',
-                                                    'application/php',
-                                                    'application/x-php',
-                                                    'application/x-httpd-php',
-                                                    'application/x-httpd-php-source',
-                                                    'application/x-javascript'
-                                                );
-                                                $resourceName = $attachment['name'];
-                                                $tmpName      = $attachment['tmp_name'];
-                                                $resourceType = $attachment['type'];
-
-                                                if(function_exists('mime_content_type')){
-                                                    $resourceType = mime_content_type($tmpName);
-                                                }
-
-                                                if(function_exists('finfo_open')){
-                                                    $finfo = finfo_open(FILEINFO_MIME);
-                                                    $output = finfo_file($finfo, $tmpName);
-                                                    finfo_close($finfo);
-
-                                                    $output = explode("; ",$output);
-                                                    if ( is_array($output) ) {
-                                                        $output = $output[0];
-                                                    }
-                                                    $resourceType = $output;
-                                                }
-
-                                                // check mime file
-                                                if(!in_array($resourceType, $mime_array)) {
-                                                    $emailAttachment = array('path' => $tmpName, 'name' => $resourceName);
-                                                    $error = false;
-                                                } else {
-                                                    $error = true;
-                                                }
-                                                // --- check mime file
-                                            } else {
-                                                $error = true;
-                                            }
-                                        }
+//                                        if( osc_contact_attachment() ) {
+//                                            $attachment   = Params::getFiles('attachment');
+//                                            if(isset($attachment['error']) && $attachment['error']==UPLOAD_ERR_OK) {
+//                                                $mime_array = array(
+//                                                    'text/php',
+//                                                    'text/x-php',
+//                                                    'application/php',
+//                                                    'application/x-php',
+//                                                    'application/x-httpd-php',
+//                                                    'application/x-httpd-php-source',
+//                                                    'application/x-javascript'
+//                                                );
+//                                                $resourceName = $attachment['name'];
+//                                                $tmpName      = $attachment['tmp_name'];
+//                                                $resourceType = $attachment['type'];
+//
+//                                                if(function_exists('mime_content_type')){
+//                                                    $resourceType = mime_content_type($tmpName);
+//                                                }
+//
+//                                                if(function_exists('finfo_open')){
+//                                                    $finfo = finfo_open(FILEINFO_MIME);
+//                                                    $output = finfo_file($finfo, $tmpName);
+//                                                    finfo_close($finfo);
+//
+//                                                    $output = explode("; ",$output);
+//                                                    if ( is_array($output) ) {
+//                                                        $output = $output[0];
+//                                                    }
+//                                                    $resourceType = $output;
+//                                                }
+//
+//                                                // check mime file
+//                                                if(!in_array($resourceType, $mime_array)) {
+//                                                    $emailAttachment = array('path' => $tmpName, 'name' => $resourceName);
+//                                                    $error = false;
+//                                                } else {
+//                                                    $error = true;
+//                                                }
+//                                                // --- check mime file
+//                                            } else {
+//                                                $error = true;
+//                                            }
+//                                        }
                                         if(!$error) {
                                             if( isset($emailAttachment) ) {
                                                 $params['attachment'] = $emailAttachment;

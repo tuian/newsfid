@@ -3843,7 +3843,7 @@ input#post_media.media_video{
     left: 10px;
     font-size: 22px;
     color:#fff;
-
+    text-shadow: 0px 2px 10px #000;
 }
 textarea.comment_text{  
     display:block;
@@ -3897,7 +3897,7 @@ textarea.comment_text{
     padding-bottom: 15px;
 }
 .text-shadow-black{
-    text-shadow: 0px 3px 3px rgb(0, 0, 0);
+    text-shadow: 1px 1px 7px rgb(0, 0, 0);
 }
 .button-box{
     border-radius: 0 !important;

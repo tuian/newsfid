@@ -80,7 +80,7 @@ endif;
 <div id="cover" class="cover">
     <?php if (osc_logged_user_id() == $user['user_id']): ?>
         <div class="file_upload_cover">
-            <span class ="icon" data-toggle="collapse" data-target="#update-cover">
+            <span class ="icon pointer" data-toggle="collapse" data-target="#update-cover">
                 <i class="fa fa-camera"></i>
             </span>
         </div>
