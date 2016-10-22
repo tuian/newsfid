@@ -31,6 +31,7 @@ endif;
 if ($_REQUEST['action'] == 'user_localisation'):    
     
     $city = $_REQUEST['city'];
+    $city_id = $_REQUEST['city_id'];
     $region_code = $_REQUEST['region_code'];
     $region_name = $_REQUEST['region_name'];
     $country = $_REQUEST['country'];
@@ -53,7 +54,7 @@ if ($_REQUEST['action'] == 'user_localisation'):
     
     
 //    $result = $user_data->dao->update("{$db_prefix}t_user", array('d_coord_lat' => $lat, 'd_coord_long' => $lng, 's_city' => $city, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
-    $result = $user_data->dao->update("{$db_prefix}t_user", array('s_region' => $region_name, 'fk_i_region_id' => $region_code, 's_city' => $city, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
+    $result = $user_data->dao->update("{$db_prefix}t_user", array('s_region' => $region_name, 'fk_i_region_id' => $region_code, 's_city' => $city, 'fk_i_city_id' => $city_id, 'fk_c_country_code' => $country_code, 's_country' => $country), array('pk_i_id' => $user_id));
     if ($result):
 //        $data['lat'] = $lat;
 //        $data['lng'] = $lng;

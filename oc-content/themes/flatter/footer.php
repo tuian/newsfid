@@ -179,7 +179,8 @@ if (osc_is_web_user_logged_in()):
 
             </div>
             <div id="chat-box-footer"></div>
-            <!--<div class="typing col-md-12 background-white" style="display: none"><?php _e('Is responding now', 'flatter'); ?>...</div>-->
+
+            <div class="typing col-md-12 background-white"></div>
 
             <div class="textarea">
                 <textarea class="msg_textarea" placeholder="<?php _e('Press enter to reply', 'flatter'); ?>" id="messageBox"></textarea>
@@ -222,33 +223,48 @@ endif;
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
-//            $(document).on('keyup', '.msg_textarea', function () {
-//                var len = $(this).val().length;
-//                if (len >0) {
-//                    $.ajax({
-//                        url: '<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>',
-//                        type: 'post',
-//                        data: {
-//                            action: 'user_typing'
-//                        },
-//                        success: function () {
-//                            $('.typing').show();
-//                        }
-//                    })
-//                } else {
-//                    $.ajax({
-//                        url: '<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>',
-//                        type: 'post',
-//                        data: {
-//                            action: 'no_user_typing'
-//                        },
-//                        success: function () {
-//                            $('.typing').hide();
-//                        }
-//                    })
-//                }
-//
-//            });
+            function typingStatus() {
+                var to_user_id = $('.user_name_chat').attr('user-id');
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                    type: 'post',
+                    data: {
+                        action_type: 'check-typing',
+                        to_user_id: to_user_id
+                    },
+                    success: function (data) {
+                        $('.typing').html(data);
+                    }
+                });
+            }
+            typingStatus();
+            setInterval(function () {
+                typingStatus()
+            }, 1000) /* time in milliseconds (ie 2 seconds)*/
+            $(document).on('keyup', '.msg_textarea', function () {
+                var len = $(this).val().length;
+                if (len > 0) {
+                    $.ajax({
+                        url: '<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>',
+                        type: 'post',
+                        data: {
+                            action: 'user_typing'
+                        },
+                        success: function () {
+                            $('.typing').show();
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        url: '<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>',
+                        type: 'post',
+                        data: {
+                            action: 'no_user_typing'
+                        }
+                    })
+                }
+
+            });
             function loadlink() {
                 var chat_user_id = $('.user_name_chat').attr('user-id');
                 if (chat_user_id === '') {
@@ -264,7 +280,7 @@ endif;
                     success: function (data) {
                         $('.chat_box').html(data);
                         $('.chat_box').css('display', 'block');
-                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                        $('.msg').scrollTop($('.msg').prop("scrollHeight"));
                     }
                 });
             }
@@ -314,6 +330,7 @@ endif;
     <script>
 
         $(document).ready(function () {
+             $('.msg_textarea').keyup();
             var chat_user_id = '<?php echo osc_get_preference('chat_user_id'); ?>';
             if (chat_user_id !== '') {
                 $.ajax({
@@ -457,7 +474,7 @@ endif;
 <?php if (osc_get_preference('anim', 'flatter_theme') != '0') { ?>
     <script src="<?php echo osc_current_web_theme_url('js/wow.min.js'); ?>"></script>
     <script type="text/javascript">
-        new WOW().init();</script>
+            new WOW().init();</script>
 <?php } ?>
 <?php osc_run_hook('footer'); ?>
 <?php if (osc_is_home_page() && !osc_is_web_user_logged_in()): ?>

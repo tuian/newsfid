@@ -20,6 +20,13 @@ elseif ($_REQUEST['action'] == "no_user_typing"):
     $result = $user_data->dao->update("{$db_prefix}t_active_chat", array('user_type' => 0), array('user_id' => $user_id));
     osc_set_preference('chat_user_id', '');
 endif;
+if ($_REQUEST['action_type'] == "check-typing"):
+    $to_id = $_REQUEST['to_user_id'];
+    $typing = get_user_typing_status($to_id);
+    if ($typing['user_type'] == '1'):
+        _e('Is responding now', 'flatter');echo '....';
+    endif;
+endif;
 if ($_REQUEST['action'] == "chat-converstion"):
     if ($_REQUEST['user_status'] == "user_status"):
         $to_user_id = $_REQUEST['user_id'];
@@ -235,6 +242,7 @@ endif;
                     $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
                     $('textarea.msg_textarea').val('');
                     $('textarea.msg_textarea').focus();
+                    $('.msg_textarea').keyup();
                 }
             });
         }

@@ -719,6 +719,7 @@ function footer_script() {
                         data: {
                             action: 'user_localisation',
                             city: data.city_name,
+                            city_id: data.city_id,
                             country: data.country_name,
                             scountry: data.country_code,
                             region_code: data.region_id,
