@@ -888,10 +888,6 @@ msgstr "Presser entrer pour commenter"
 msgid "Premium post amount"
 msgstr "Nombre de posts premium"
 
-#: item_ajax.php:166 user_posts.php:352 user_premium_post.php:253
-msgid "Nothing to show off for now."
-msgstr "Aucun contenu à afficher pour l'instant"
-
 #: item_comment_ajax.php:82 popup_ajax.php:173 popup_ajax.php:374
 #: user_watchlist.php:129
 msgid "load more"
@@ -994,9 +990,7 @@ msgstr "Local"
 
 #: main.php:358
 msgid "Please enter your City and Country name to use this tab"
-msgstr ""
-"Merci d'entrer le nom de votre Ville et de votre Pays pour utiliser cet "
-"onglet"
+msgstr "Merci d'entrer le nom de votre Ville et de votre Pays pour utiliser cet"
 
 #: main.php:364
 msgid "Saved.."
@@ -1007,8 +1001,11 @@ msgid "Show more"
 msgstr "Montrer plus"
 
 #: main.php:639
-msgid "Nothing to show off for now. Thanks to try later"
-msgstr "Aucun contenu à afficher pour l'instant. Merci d'essayer plus tard."
+msgid "Nothing to show off for now."
+msgstr "Aucun contenu à afficher pour l'instant."
+
+msgid "Thanks to try later"
+msgstr "Merci d'essayer plus tard."
 
 #: main.php:1141 user-public-profile.php:915
 msgid "Ends of results"
@@ -2877,7 +2874,7 @@ msgstr "a partagé la publication de <a class='blue_text' href='%s'>%s</a>"
 
 msgid "shared %s post"
 msgstr "a partagé %s publication"
-
+  
 msgid "Is responding now"
 msgstr "Est en train d’écrire"
  

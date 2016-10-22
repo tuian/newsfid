@@ -2080,23 +2080,25 @@ function admin_footer_script() {
  *  */
 // this code is not necessary once website live and old user update his interest
 $user_id = osc_logged_user_id();
-$interest_data = new DAO();
-$interest_data->dao->select("theme.theme_id");
-$interest_data->dao->from(DB_TABLE_PREFIX . 't_user_themes as theme');
-$interest_data->dao->where("theme.user_id = $user_id");
-$theme_list = $interest_data->dao->get();
-$user_selected_themes = $theme_list->result();
-if ($user_id != '0' && empty($user_selected_themes)):
-    $conn = getConnection();
-    $default_theme = array('1', '3'); // news, entertainment
-    foreach ($default_theme as $k => $v):
-        $conn->osc_dbExec("INSERT INTO %st_user_themes ( user_id, theme_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
-    endforeach;
-    $conn->osc_dbExec("DELETE FROM `%st_user_rubrics` WHERE `user_id` = %s", DB_TABLE_PREFIX, $user_id);
-    $default_rubrics = array('10', '13', '21', '117');
-    foreach ($default_rubrics as $k => $v):
-        $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
-    endforeach;
+if ($user_id):
+    $interest_data = new DAO();
+    $interest_data->dao->select("theme.theme_id");
+    $interest_data->dao->from(DB_TABLE_PREFIX . 't_user_themes as theme');
+    $interest_data->dao->where("theme.user_id = $user_id");
+    $theme_list = $interest_data->dao->get();
+    $user_selected_themes = $theme_list->result();
+    if (empty($user_selected_themes)):
+        $conn = getConnection();
+        $default_theme = array('1', '3'); // news, entertainment
+        foreach ($default_theme as $k => $v):
+            $conn->osc_dbExec("INSERT INTO %st_user_themes ( user_id, theme_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
+        endforeach;
+        $conn->osc_dbExec("DELETE FROM `%st_user_rubrics` WHERE `user_id` = %s", DB_TABLE_PREFIX, $user_id);
+        $default_rubrics = array('10', '13', '21', '117');
+        foreach ($default_rubrics as $k => $v):
+            $conn->osc_dbExec("INSERT INTO %st_user_rubrics ( user_id, rubric_id) VALUES (%s,'%s' )", DB_TABLE_PREFIX, $user_id, $v);
+        endforeach;
+    endif;
 endif;
 
 function pr($arr = array()) {

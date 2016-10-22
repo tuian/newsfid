@@ -250,7 +250,7 @@ if ($items):
     ?>
     <?php
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">'. _e("Nothing to show off for now.", 'flatter') .'</h2>Thanks to try later</div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">'. __("Nothing to show off for now.", 'flatter') .'</h2>'.__("Thanks to try later").'</div> ';
 endif;
 ?>
 

@@ -162,7 +162,7 @@ require 'functions.php';
     //elseif($page_number > 0):
     //    echo '<h2 class="result_text">No More Data Found</h2> ';
     else:
-        echo '<h2 class="result_text">Nothing to show off for now. Thanks to try later</h2> ';
+        echo '<h2 class="result_text">' . __('Nothing to show off for now.', 'flatter') . '</h2>' . __("Thanks to try later");
     endif;
     ?>
 </div>

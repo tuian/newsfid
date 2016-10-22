@@ -328,9 +328,9 @@ if ($items):
     endforeach;
 
 elseif ($page_number > 0):
-    echo '<div class="usepost_no_record"><h2 class="result_text">Ends of results</h2> </div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Ends of results", 'flatter').'</h2> </div> ';
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">Nothing to show off for now.</h2>Thanks to try later</div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter').'</h2>' . __("Thanks to try later", 'flatter').'</div> ';
 endif;
 if (osc_logged_user_id()):
     $id = '11';

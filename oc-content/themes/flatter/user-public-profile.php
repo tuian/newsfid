@@ -862,7 +862,7 @@ function custom_script() {
                                     success: function (data) {
                                         $('.user_posts_area .loading').fadeOut(1000);
                                         $('.user_posts_container').css({'opacity': '1'});
-                                        if (data.indexOf("Nothing to show") >= 0) {
+                                        if (data.indexOf("Nothing to show") >= 0 || data.indexOf("Aucun contenu") >= 0) {
                                             if (page_number === 1) {
                                                 $('.result_text_message').html('<h2 class="result_text"><?php _e("Ends of results", 'flatter') ?></h2>');
                                             } else if ($('.usepost_no_record').size() < 1) {
