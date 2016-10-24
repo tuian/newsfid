@@ -3012,6 +3012,12 @@ select {
     bottom: 3%;
     color: #fff;
 }
+.soundpass_radio_btn{    
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #f68935 !important;
+    border-radius: 1px !important;
+}
 .soundpass_btn{
     position: absolute;
     top: -30%;

@@ -1,7 +1,8 @@
 
 <?php
-require '../../../oc-load.php';
-require 'functions.php';
+//require '../../../oc-load.php';
+//require 'functions.php';
+//error_reporting(0);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
@@ -26,7 +27,7 @@ require 'functions.php';
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
         
         <?php
-        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
+        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : 'fr_FR';
 //        $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : 'fr_FR';
         if ($language == "fr_FR"):
             ?>

@@ -21,6 +21,7 @@
 <?php
 require_once '../../../oc-load.php';
 require_once 'functions.php';
+error_reporting(0);
 
 $item_id = $_REQUEST['item_id'];
 if ($item_id):
@@ -61,15 +62,15 @@ if ($item_id):
                 if (!empty($items_pre)):
                    
                     $item_ids = implode(',', $items_pre); // default premium post
-                    $cat_ids = '';
-                    if(osc_logged_user_id):  //only those premium post appear which are in my centre of interest and in same language
+                    $cat_ids = '';                   
+                    if(osc_logged_user_id()):  //only those premium post appear which are in my centre of interest and in same language
                         $ulang = '';
                         $user_language = get_user_language(osc_logged_user_id());
                         foreach ($user_language as $ul):
                             $ulang .= '"' . $ul . '",';
                         endforeach;
                         $ulang = rtrim($ulang, ",");
-
+                        
                         $data = new DAO();
                         $user_id = osc_logged_user_id();
                         $user_categories = get_user_categories($user_id);   
@@ -77,7 +78,7 @@ if ($item_id):
                         $data->dao->select('item.*, item_description.*');
                         $data->dao->join(sprintf('%st_item_description AS item_description', DB_TABLE_PREFIX), 'item.pk_i_id = item_description.fk_i_item_id', 'INNER');
                         $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
-                        $data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0 AND item_description.fk_c_locale_code IN (%s) AND item.pk_i_id IN (%s) AND item.fk_i_category_id IN (%s)', $ulang, $item_ids, $cat_ids));
+                        $data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0 AND item_description.fk_c_locale_code IN (%s) AND item.pk_i_id IN (%s) AND item.fk_i_category_id IN (%s)', $ulang, $item_ids, $cat_ids));                       
                         $post_data_result = $data->dao->get();
                         $post_data = $post_data_result->result();                    
                         if(!empty($post_data)):
@@ -87,13 +88,14 @@ if ($item_id):
                             endforeach;                        
                         endif;
                     else:  //only those premium post appear which are in same language
-                        $ulang = '"' . osc_current_user_locale() . '",';                    
+                        $ulang = '"' . osc_current_user_locale() . '"';                    
                         $data = new DAO();
                         $user_id = osc_logged_user_id();                        
                         $data->dao->select('item.*, item_description.*');
                         $data->dao->join(sprintf('%st_item_description AS item_description', DB_TABLE_PREFIX), 'item.pk_i_id = item_description.fk_i_item_id', 'INNER');
                         $data->dao->from(sprintf('%st_item AS item', DB_TABLE_PREFIX));
                         $data->dao->where(sprintf('item.b_enabled = 1 AND item.b_active = 1 AND item.b_spam = 0 AND item_description.fk_c_locale_code IN (%s) AND item.pk_i_id IN (%s)', $ulang, $item_ids));
+                       
                         $post_data_result = $data->dao->get();
                         $post_data = $post_data_result->result();                    
                         if(!empty($post_data)):

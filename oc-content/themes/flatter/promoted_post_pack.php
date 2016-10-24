@@ -1,5 +1,6 @@
 <?php
 // meta tag robots
+error_reporting(0);
 require_once '../../../oc-load.php';
 require_once 'functions.php';
 if (!osc_logged_user_id()):

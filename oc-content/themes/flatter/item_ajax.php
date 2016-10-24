@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require '../../../oc-load.php';
 require 'functions.php';
 $language = isset($_SESSION['userLocale']) ? $_SESSION['userLocale'] : osc_locale_code();
@@ -81,6 +82,11 @@ if ($items):
                                 <span class="item_time col-md-9 padding-left-10"><?php echo $date_in_french; ?></span>                            
                             </div>
 
+                             <div class="col-md-12">                                                        
+                                <a class="bold text-black" href="<?php echo osc_item_url(); ?>">
+                                    <?php echo osc_highlight(strip_tags(osc_item_title()), 80); ?>
+                                </a>                                                        
+                            </div>
                             <div class="col-md-12">
                                 <p class="item_description">
                                     <?php echo osc_highlight(strip_tags(osc_item_description()), 120); ?>

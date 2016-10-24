@@ -482,13 +482,31 @@
                                     </a>
 
                                 </li>
-                                <div class="soundpass_loggin_page">
+                                 <?php
+                                $active = '';
+                                if (strpos($_SERVER['REQUEST_URI'], 'soundpass') !== false):
+                                    $active = 'active';
+                                else:
+                                    $active = '';
+                                endif;
+                                ?>
+                                <li class="treeview <?php echo $active ?>">
+                                    <a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>">
+                                        <i class="fa fa-music"></i><?php echo __('SoundPass', 'flatter'); ?>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="javascript: openwindow()" class="btn soundpass_radio_btn margin-top-50"><?php _e("Start the radio", 'flatter'); ?></a>
+                                </li>
+                                
+<!--                                <div class="soundpass_loggin_page">
                                     <button class="btn soundpass_btn"><a href="<?php echo osc_current_web_theme_url() . 'soundpass.php' ?>"><?php _e("We have our owne radio", 'flatter'); ?></a></button>
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/2.jpg" style="filter: blur(4px);">
                                     <img src="<?php echo osc_current_web_theme_url() ?>images/1.jpg" class="img-circle circle_sound">
                                     <a  href="javascript: openwindow()"><i class="fa fa-2x fa-play play_btn" aria-hidden="true"></i></a>
                                     <span class="sound_pass">SoundPass</span>
-                                </div>
+                                </div>-->
                             <?php endif; ?>
                             <?php if (osc_is_web_user_logged_in()) : osc_user(); ?>                                           
 
