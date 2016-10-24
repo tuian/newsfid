@@ -27,7 +27,7 @@ if ($_REQUEST['action_type'] == "check-typing"):
         _e('Is responding now', 'flatter');echo '....';
     endif;
 endif;
-if ($_REQUEST['action'] == "chat-converstion"):
+if ($_REQUEST['action'] == "chat-converstion" && $_REQUEST['user_id'] != ''):
     if ($_REQUEST['user_status'] == "user_status"):
         $to_user_id = $_REQUEST['user_id'];
         $chat_array['user_id'] = $user_id;
@@ -169,6 +169,7 @@ if ($_REQUEST['action'] == "chat-converstion"):
     <?php
     endif;
 endif;
+if ($_REQUEST['action'] == "chat-converstion" && $_REQUEST['user_id'] != ''):
 ?>
 <script>
     $(document).on('click', '.chat_off', function () {
@@ -249,3 +250,4 @@ endif;
     };
 
 </script>
+<?php endif;?>

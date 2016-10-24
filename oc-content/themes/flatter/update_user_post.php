@@ -189,7 +189,8 @@ if ($_REQUEST['action'] == 'update_post'):
                                                             <!--<img class="vertical-top camera-icon img img-responsive" src="<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>">-->
                                                             <?php if ($item['item_type'] == "image" || $item['item_type'] == "gif" || $item['item_type'] == "image/jpeg"): ?> 
                                                                 <?php if (!empty($item_resorce['s_extension']) || !empty($item_resorce['pk_i_id'])): ?>
-                                                                    <div class="post_file_upload_container" style="background-image: url('<?php echo osc_base_url() . 'oc-content/uploads/8/' . $item_resorce['pk_i_id'] . '.' . $item_resorce['s_extension'] ?>')">
+                                                                    <!--<div class="post_file_upload_container" style="background-image: url('<?php echo osc_base_url() . 'oc-content/uploads/8/' . $item_resorce['pk_i_id'] . '.' . $item_resorce['s_extension'] ?>')">-->
+                                                                    <div class="post_file_upload_container" style="background-image: url('<?php echo osc_base_url() . $item_resorce['s_path'] . $item_resorce['pk_i_id'] . '.' . $item_resorce['s_extension']; ?>')">
                                                                     <?php else: ?>
                                                                         <div class="post_file_upload_container" style="background-image: url('<?php echo osc_current_web_theme_url() . '/images/camera.png' ?>')">
                                                                         <?php endif; ?>                                                               
@@ -399,7 +400,7 @@ if ($_REQUEST['action'] == 'update_post'):
                                 }
                             });
                         } else {
-                            alert('<?php _e("Please select region first", 'flatter') ?>');
+                            alert("<?php _e("Please select region first", 'flatter') ?>");
                         }
                     },
                     afterSelect: function (obj) {

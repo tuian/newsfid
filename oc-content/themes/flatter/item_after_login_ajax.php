@@ -35,7 +35,7 @@ endif;
 if (!empty($_REQUEST['category_id'])):
     $categories = $_REQUEST['category_id'];
     if (Category::newInstance()->isRoot($_REQUEST['category_id'])):
-        $categories = array_column(Category::newInstance()->findSubcategories($_REQUEST['category_id']), 'pk_i_id');
+        $categories = custom_array_column(Category::newInstance()->findSubcategories($_REQUEST['category_id']), 'pk_i_id');
         $categories = implode(',', $categories);
     endif;
     $data->dao->where(sprintf('item.fk_i_category_id IN (%s)', $categories));
@@ -111,9 +111,11 @@ if ($items):
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block ">
-                        <div class="user_image">
-                            <?php get_user_profile_picture($user['user_id']); ?>
-                        </div>
+                        <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
+                            <div class="user_image">
+                                <?php get_user_profile_picture($user['user_id']); ?>
+                            </div>
+                        </a>
                         <span class="username"><a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>"><?php echo $user['user_name'] ?></a>
                             <?php if (osc_logged_user_id() == $user['user_id']): ?>
                                 <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
@@ -212,7 +214,7 @@ if ($items):
                     <div class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>">                    
                         <?php item_resources(osc_item_id()); ?>
                     </div>
-                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                         ?></p>
+                    <p><?php //echo osc_highlight(osc_item_description(), 200);                                                          ?></p>
 
                     <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -226,7 +228,7 @@ if ($items):
                     </span>
                     <?php if ($user['user_id'] != osc_logged_user_id()): ?>
                         &nbsp;&nbsp;
-                        <span class="chat-user1 pointer" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo _e("Tchat", 'flatter'); ?></span>&nbsp;
+                        <a style="color: #777"><span class="chat-user1 pointer" name="<?php echo $user['user_name']; ?>" to-user-id = "<?php echo $user['user_id'] ?>"><?php echo _e("Tchat", 'flatter'); ?></span></a>&nbsp;
                     <?php endif; ?>
                     &nbsp;&nbsp;
                     <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
@@ -328,9 +330,9 @@ if ($items):
     endforeach;
 
 elseif ($page_number > 0):
-    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Ends of results", 'flatter').'</h2> </div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Ends of results", 'flatter') . '</h2> </div> ';
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter').'</h2>' . __("Thanks to try later", 'flatter').'</div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter') . '</h2>' . __("Thanks to try later", 'flatter') . '</div> ';
 endif;
 if (osc_logged_user_id()):
     $id = '11';
@@ -412,7 +414,7 @@ if (osc_logged_user_id()):
                             //                                $('.payment_result').empty().addClass('success').removeClass('error');
                             //                                $('.payment_result').text('Payment added successfully');
                             //                                data = '';
-    <?php // osc_add_flash_ok_message('Payment added successfully');                               ?>
+    <?php // osc_add_flash_ok_message('Payment added successfully');                                ?>
                             alert('Payment added successfully');
                             window.location.href = "<?php echo osc_base_url(); ?>";
                         } else {
@@ -516,6 +518,9 @@ if (osc_logged_user_id()):
         }
         $(document).on('click', '.chat-user1', function () {
             var id = $(this).attr('to-user-id');
+            var name = $(this).attr('name');
+            $('.user_name_chat').html(name);
+            $('.user_name_chat').attr('user-id', id);
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
                 type: 'post',
@@ -524,8 +529,8 @@ if (osc_logged_user_id()):
                     user_id: id
                 },
                 success: function (data) {
-                    $('#online-chat').html(data);
-                    $('#online-chat').css('display', 'block');
+                    $('.chat_box').html(data);
+                    $('.chat_box').css('display', 'block');
                     $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
                 }
             });

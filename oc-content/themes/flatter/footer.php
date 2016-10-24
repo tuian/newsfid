@@ -223,24 +223,6 @@ endif;
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>
     <script>
-            function typingStatus() {
-                var to_user_id = $('.user_name_chat').attr('user-id');
-                $.ajax({
-                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
-                    type: 'post',
-                    data: {
-                        action_type: 'check-typing',
-                        to_user_id: to_user_id
-                    },
-                    success: function (data) {
-                        $('.typing').html(data);
-                    }
-                });
-            }
-            typingStatus();
-            setInterval(function () {
-                typingStatus()
-            }, 1000) /* time in milliseconds (ie 2 seconds)*/
             $(document).on('keyup', '.msg_textarea', function () {
                 var len = $(this).val().length;
                 if (len > 0) {
@@ -249,9 +231,6 @@ endif;
                         type: 'post',
                         data: {
                             action: 'user_typing'
-                        },
-                        success: function () {
-                            $('.typing').show();
                         }
                     })
                 } else {
@@ -275,7 +254,9 @@ endif;
                     type: 'post',
                     data: {
                         action: 'chat-converstion',
-                        user_id: chat_user_id
+                        user_id: chat_user_id,
+                        action_type: 'check-typing',
+                        to_user_id: chat_user_id
                     },
                     success: function (data) {
                         $('.chat_box').html(data);
@@ -330,7 +311,7 @@ endif;
     <script>
 
         $(document).ready(function () {
-             $('.msg_textarea').keyup();
+            $('.msg_textarea').keyup();
             var chat_user_id = '<?php echo osc_get_preference('chat_user_id'); ?>';
             if (chat_user_id !== '') {
                 $.ajax({
@@ -348,10 +329,15 @@ endif;
                 });
             }
         });
+        $(document).on('click', '.close', function () {
+            $('.modal-backdrop').css('display', 'none');
+            $('.modal').css('display', 'none');
+        });
         $(document).on('click', '.chat-user', function () {
             var id = $(this).attr('to-user-id');
             var name = $(this).attr('user-name');
             $('.user_name_chat').html(name);
+            $('.user_name_chat').attr('user-id', id);
             $.ajax({
                 url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
                 type: 'post',

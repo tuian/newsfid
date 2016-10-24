@@ -280,10 +280,7 @@ else: {
                                 </div>
                             </div>
                             <!-- /.box -->
-                            <div class="box-header with-border">                                
-                                <span class="bold"> <?php _e("Suggestions", "flatter") ?></span>
-                                <!-- /.box-tools -->
-                            </div>
+
                             <div id="suggested_user_div">
                                 <div class="suggested_user_div">
                                     <?php
@@ -293,18 +290,29 @@ else: {
                                     $follow_remove = (array) get_user_following_remove_data($logged_user['user_id']);
                                     $suggested_users_result = array_diff($suggested_follow_users, $follow_remove);
                                     $suggested_users_result = get_users_data($suggested_users_result);
+                                    if (!empty($suggested_users_result)):
+                                        ?>
+                                        <div class = "box-header with-border">
+                                            <span class = "bold"> <?php _e("Suggestions", "flatter")
+                                        ?></span>
+                                            <!-- /.box-tools -->
+                                        </div>
+                                        <?php
+                                    endif;
                                     if ($suggested_users_result):
                                         $i = 0;
                                         foreach ($suggested_users_result as $suggested_user_array):
                                             if (+$i > 3)
                                                 break;
                                             if (count(get_user_follower_data($suggested_user_array['user_id'])) > '0'):
-//                                                if ((get_user_follower_data($suggested_user_array['user_id']))): 
+                                                //                                                if ((get_user_follower_data($suggested_user_array['user_id']))): 
                                                 ?>
                                                 <div class="sugg_box col-md-12 col-xs-12 margin-bottom-10">
-                                                    <div class="col-md-3 col-xs-2 padding-0">
-                                                        <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
-                                                    </div>
+                                                    <a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>">
+                                                        <div class="col-md-3 col-xs-2 padding-0">
+                                                            <?php get_user_profile_picture($suggested_user_array['user_id']) ?>
+                                                        </div>
+                                                    </a>
                                                     <div class="col-md-9 col-xs-10 padding-right-0">
                                                         <h5 class="direct-chat-name  margin-0" user-data=".user-<?php echo $suggested_user_array['user_id']; ?>"><a href="<?php echo osc_user_public_profile_url($suggested_user_array['user_id']) ?>"><?php echo $suggested_user_array['user_name'] ?></a></h5>  
 
@@ -434,7 +442,7 @@ else: {
                                         <li class="<?php echo osc_category_slug(); ?> <?php echo $i == '1' ? 'active' : ''; ?>" value="<?php echo osc_category_name() ?>">
                                             <a class="category" data-val="<?php echo osc_category_id() ?>" href="<?php echo osc_search_category_url(); ?>">
                                                 <?php echo osc_category_name(); ?>
-                                                <!--<span>(<?php //echo osc_category_total_items();                                                                          ?>)</span>-->
+                                                <!--<span>(<?php //echo osc_category_total_items();                                                                               ?>)</span>-->
                                             </a>
                                         </li>
                                         <?php
@@ -456,7 +464,7 @@ else: {
                                         <li class="<?php echo $n['slug']; ?>" value="<?php echo $n['name']; ?>">
                                             <a class="category" data-val="<?php echo $n['id']; ?>" href="<?php echo $n['href']; ?>">
                                                 <?php echo $n['name']; ?>
-                                                <!--<span>(<?php //echo $n['count'];                                                                          ?>)</span>-->
+                                                <!--<span>(<?php //echo $n['count'];                                                                               ?>)</span>-->
                                             </a>
                                         </li>
                                     <?php endforeach; ?>                            
@@ -547,12 +555,16 @@ else: {
                                                         <h3 class="item_title col-md-9">
                                                             <a class="item_title_head" data_item_id="<?php echo osc_item_id(); ?>" href="javascript:void(0)">
                                                                 <?php echo isset($user['user_name']) ? $user['user_name'] : osc_item_title(); ?>
-                                                                <?php //echo osc_item_title();      ?>
+                                                                <?php //echo osc_item_title();       ?>
                                                             </a>
                                                         </h3>
                                                         <span class="item_time col-md-9 padding-left-10"><?php echo $date_in_french; ?></span>                            
                                                     </div>
-
+                                                    <div class="col-md-12">                                                        
+                                                        <a class="bold text-black" href="<?php echo osc_item_url(); ?>">
+                                                            <?php echo osc_highlight(strip_tags(osc_item_title()), 80); ?>
+                                                        </a>                                                        
+                                                    </div>
                                                     <div class="col-md-12">
                                                         <p class="item_description">
                                                             <?php echo osc_highlight(strip_tags($item['s_description']), 120); ?>

@@ -1285,17 +1285,16 @@ function time_elapsed_string($ptime) {
         if ($d >= 1) {
             if ($secs < 86400) {
                 $r = round($d);
-                if($r > 1):
+                if ($r > 1):
                     return sprintf(__('%d %s ago', 'flatter'), $r, $a_plural[$str]);
                 else:
-                    return sprintf(__('%d %s ago', 'flatter'), $r, $str);                    
+                    return sprintf(__('%d %s ago', 'flatter'), $r, $str);
                 endif;
 //                return $r . ' ' . ($r > 1 ? __($a_plural[$str], 'flatter') : $str) . __(' ago', 'flatter');
-                                
             } else {
                 setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 //                return date("d M", $ptime);
-               return strftime("%d %b", $ptime);
+                return strftime("%d %b", $ptime);
             }
         }
     }
@@ -1512,14 +1511,14 @@ function user_follow_box($logged_in_user_id, $follow_user_id) {
     $following = 'following';
     $action = 'unfollow';
     $fa_class = 'fa fa-user-times';
-    $follow_text = 'Unfollow';
+    $follow_text = __('Unfollow', 'flatter');
     $user_following = get_user_following_data($logged_in_user_id);
 
     if (!($user_following && ( in_array($follow_user_id, $user_following)) )):
         $following = 'unfollowing';
         $action = 'follow';
         $fa_class = 'fa fa-user-plus';
-        $follow_text = 'Follow';
+        $follow_text = __('Follow', 'flatter');
     endif;
     ?>
     <span title="<?php echo $follow_text ?>" class="follow-user follow_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>">
@@ -1533,14 +1532,14 @@ function user_follow_btn_box($logged_in_user_id, $follow_user_id) {
     $following = 'following';
     $action = 'unfollow';
     $fa_class = 'fa fa-user-times';
-    $follow_text = 'Unfollow';
+    $follow_text = __('Unfollow', 'flatter');
     $user_following = get_user_following_data($logged_in_user_id);
 
     if (!($user_following && ( in_array($follow_user_id, $user_following)) )):
         $following = 'unfollowing';
         $action = 'follow';
         $fa_class = 'fa fa-user-plus';
-        $follow_text = "Follow";
+        $follow_text = __("Follow", 'flatter');
     endif;
     ?>   
     <button type="button" class="btn btn-box-tool frnd-sug-button pull-right follow-user-btn follow_btn_box_<?php echo $logged_in_user_id . $follow_user_id ?> <?php echo $following ?>" data_action = "<?php echo $action ?>" user-data=".user-<?php echo $follow_user_id ?>" data_current_user_id = "<?php echo $logged_in_user_id ?>" data_follow_user_id = "<?php echo $follow_user_id ?>" title="<?php echo $follow_text ?>"><?php echo $follow_text ?></button>                                                           
@@ -1575,7 +1574,7 @@ function update_user_following($logged_in_user_id, $follow_user_id, $follow_valu
         $user_follow_data->dao->insert(sprintf('%st_user_follow', DB_TABLE_PREFIX), $follow_array);
     endif;
     if ($follow_value == 1):
-        $message = 'is now following you';
+        $message = __('is now following you', 'flatter');
         set_user_notification($logged_in_user_id, $follow_user_id, $message);
     endif;
 }
@@ -1627,15 +1626,15 @@ function user_share_box($user_id, $item_id) {
 
     $user_share = get_user_shared_item($user_id);
 
-    if (!($user_share && ( in_array($item_id, $user_share)) )):
-        $share_class = 'share';
-        $action = 'share';
-        $fa_class = 'fa fa-user-plus';
-        $share_text = __('Share', 'flatter');
-    else:
-        $share_text = __('Shared', 'flatter');;
-        $disable = 'style="pointer-events: none;"';
-    endif;
+//    if (!($user_share && ( in_array($item_id, $user_share)) )):
+    $share_class = 'share';
+    $action = 'share';
+    $fa_class = 'fa fa-user-plus';
+    $share_text = __('Share', 'flatter');
+//    else:
+//        $share_text = __('Share', 'flatter');;
+//        $disable = 'style="pointer-events: none;"';
+//    endif;
     ?>
     <span class="share_box <?php echo $share_class ?> item_share_box<?php echo $user_id . $item_id ?>" <?php echo $disable ?> data_item_id = "<?php echo $item_id; ?>" data_user_id = "<?php echo $user_id; ?>" data_action = "<?php echo $action ?>">
         <?php
@@ -1670,8 +1669,8 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     $user_follow_array = $user_follow_result->result();
 
     if ($user_follow_array):
-        $user_follow_data->dao->update(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
-    else:
+//        $user_follow_data->dao->update(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
+//    else:
         $user_follow_data->dao->insert(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array);
     endif;
 //insert notification for author
@@ -1918,27 +1917,29 @@ function get_user_profile_picture($user_id) {
         $img_path = osc_current_web_theme_url() . '/images/user-default.jpg';
     endif;
     ?>
-    <div class="user_profile_img">
-        <img src="<?php echo $img_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
-        <?php
-        if ($user['user_type'] == 1):
-            $user_type_image_path = osc_current_web_theme_url() . 'images/Subscriber.png';
-        endif;
+    <a href="<?php echo osc_user_public_profile_url($user_id) ?>">
+        <div class="user_profile_img">
+            <img src="<?php echo $img_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
+            <?php
+            if ($user['user_type'] == 1):
+                $user_type_image_path = osc_current_web_theme_url() . 'images/Subscriber.png';
+            endif;
 
-        if ($user['user_type'] == 2):
-            $user_type_image_path = osc_current_web_theme_url() . 'images/Certified.png';
-        endif;
+            if ($user['user_type'] == 2):
+                $user_type_image_path = osc_current_web_theme_url() . 'images/Certified.png';
+            endif;
 
-        if ($user['user_type'] == 3):
-            $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
-        endif;
-        ?>
-        <?php if ($user['user_type'] != 0) : ?>
-            <div class="user_type_icon_image">
-                <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
-            </div>
-        <?php endif; ?>
-    </div>
+            if ($user['user_type'] == 3):
+                $user_type_image_path = osc_current_web_theme_url() . 'images/Ciertified-subscriber.png';
+            endif;
+            ?>
+            <?php if ($user['user_type'] != 0) : ?>
+                <div class="user_type_icon_image">
+                    <img src="<?php echo $user_type_image_path ?>" alt="<?php echo $user['user_name'] ?>" class="img img-responsive img-circle">
+                </div>
+            <?php endif; ?>
+        </div>
+    </a>
     <?php
 }
 

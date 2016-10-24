@@ -39,6 +39,15 @@ if ($_REQUEST['follow'] == 'follow-user' || $_REQUEST['follow_remove'] == 'follo
         $follow_remove = (array) get_user_following_remove_data($logged_user['user_id']);
         $suggested_users_result = array_diff($suggested_follow_users, $follow_remove);
         $suggested_users_result = get_users_data($suggested_users_result);
+        if (!empty($suggested_users_result)):
+            ?>
+            <div class = "box-header with-border">
+                <span class = "bold"> <?php _e("Suggestions", "flatter")
+            ?></span>
+                <!-- /.box-tools -->
+            </div>
+            <?php
+        endif;
         if ($follow_user != $suggested_users_result):
             if (!empty($suggested_users_result)):
                 $i = 0;

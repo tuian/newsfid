@@ -105,9 +105,11 @@ if ($items):
                 <div class="box box-widget">
                     <div class="box-header with-border">
                         <div class="user-block">
-                            <div class="user_image">
-                                <?php get_user_profile_picture($user['user_id']); ?>
-                            </div>  
+                            <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
+                                <div class="user_image">
+                                    <?php get_user_profile_picture($user['user_id']); ?>
+                                </div>  
+                            </a>
                             <span class="username">
                                 <a href="<?php echo osc_user_public_profile_url($user['user_id']) ?>">
                                     <?php echo $user['user_name'] ?>
@@ -129,9 +131,9 @@ if ($items):
                                 <?php endif; ?>
                             </span>
                             <span class="description"> <?php
-                                if (!empty($share_array) && in_array($item['pk_i_id'], $share_array)):
-                                    $i = get_user_shared_item_details($item['pk_i_id']);
-                                    echo time_elapsed_string(strtotime($i['created']));
+//                                if (!empty($share_array) && in_array($item['pk_i_id'], $share_array)):
+                                if (!empty($item['created'])):
+                                    echo time_elapsed_string(strtotime($item['created']));
                                 else:
                                     echo time_elapsed_string(strtotime($item['dt_pub_date']));
                                 endif;
@@ -153,10 +155,10 @@ if ($items):
                                                     <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> <?php _e("Promote Now", 'flatter') ?></a></li>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <!--                      <li class="disabled light_gray padding-left-10per">Sponsoriser</li>
-                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
-                                                                  <li><a></a></li>
-                                                                  <li><a>Signaler la publication</a></li>-->
+                                            <li class="remove_share"><?php _e('supprimer ce partage', 'flatter') ?></li>
+                                            <!--                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                                                                                              <li><a></a></li>
+                                                                                                              <li><a>Signaler la publication</a></li>-->
                                         </ul>
                                     </button>
                                 <?php endif; ?>
@@ -237,7 +239,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                           ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                              ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -297,7 +299,7 @@ if ($items):
                                             <span class="username">
                                                 <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']) ?>"> <?php echo $comment_user['user_name']; ?> </a>
 
-                                              <?php  if ($comment_data['fk_i_user_id'] == osc_logged_user_id()):
+                                                <?php if ($comment_data['fk_i_user_id'] == osc_logged_user_id()):
                                                     ?>
                                                     <div class="dropdown  pull-right">
                                                         <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
@@ -306,11 +308,11 @@ if ($items):
                                                             <li class="delete_cmnt" onclick="deleteComment(<?php echo $comment_data['pk_i_id']; ?>,<?php echo $item['pk_i_id']; ?>)"><a><?php echo __('Delete'); ?></a></li>
                                                         </ul>
                                                     </div>
-                    <?php endif; ?>
+                                                <?php endif; ?>
                                                 <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span>
                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
-                    <?php echo $comment_data['s_body']; ?>
+                                                <?php echo $comment_data['s_body']; ?>
                                             </span>
                                         </div>
                                         <!-- /.comment-text -->
@@ -326,21 +328,21 @@ if ($items):
                         ?>
                     </div>
                     <!-- /.box-footer -->
-            <?php if (osc_is_web_user_logged_in()): ?>
+                    <?php if (osc_is_web_user_logged_in()): ?>
                         <div class="box-footer">
                             <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
                                 <?php
                                 $current_user = get_user_data(osc_logged_user_id());
                                 ?>
                                 <div class="comment_user_image">
-                <?php get_user_profile_picture($current_user['user_id']) ?>
+                                    <?php get_user_profile_picture($current_user['user_id']) ?>
                                 </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
                                     <textarea class="form-control input-sm comment_text" placeholder="<?php _e("Press enter to post comment", 'flatter') ?>"></textarea>
                                 </div>
                             </form>
                         </div>
-            <?php endif; ?>
+                    <?php endif; ?>
                     <!-- /.box-footer -->
                 </div>
             </div>
@@ -350,7 +352,7 @@ if ($items):
     ?>
     <?php
 else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter') . '</h2>'. __("Thanks to try later", 'flatter') . '</div> ';
+    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter') . '</h2>' . __("Thanks to try later", 'flatter') . '</div> ';
 endif;
 ?>
 

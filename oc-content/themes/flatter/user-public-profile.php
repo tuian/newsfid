@@ -351,11 +351,13 @@ endif;
                                     <div class="col-md-7 padding-0">
                                         <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
                                         <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
+                                       <?php if(osc_user_id() == osc_logged_user_id()): ?>
                                         <div class="col-md-12 col-sm-12">
                                             <a href="javascript:void(0)" class="free_account" >
                                                 <button class="btn btn-info border-radius-0"><?php _e("Publish Something", 'flatter') ?></button>
                                             </a>
                                         </div>
+                                        <?php endif; ?>
                                     </div>                                
                                 </div>
                                 <div class="border-bottom-gray col-md-12 col-sm-12"></div>
