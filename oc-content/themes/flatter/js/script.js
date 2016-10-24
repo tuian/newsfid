@@ -53,7 +53,7 @@ function fileSelectHandler() {
     }
 
     // check for file size
-    if (oFile.size > 250 * 1024) {
+    if (oFile.size > 1000 * 4096) {
         $('.error').html('<div class = "red"> You have selected too big file, please select a one smaller image file</div>').show();
         return;
     }
@@ -158,7 +158,7 @@ function fileSelectHandlerCover() {
     }
 
     // check for file size
-    if (oFile.size > 250 * 1024) {
+    if (oFile.size > 1000 * 4096) {
         $('.error').html('You have selected too big file, please select a one smaller image file').show();
         return;
     }
