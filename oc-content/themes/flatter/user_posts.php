@@ -155,7 +155,7 @@ if ($items):
                                                     <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> <?php _e("Promote Now", 'flatter') ?></a></li>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <li class="remove_share"><?php _e('supprimer ce partage', 'flatter') ?></li>
+                                            <!--<li class="remove_share"><?php _e('supprimer ce partage', 'flatter') ?></li>-->
                                             <!--                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
                                                                                                               <li><a></a></li>
                                                                                                               <li><a>Signaler la publication</a></li>-->
@@ -239,7 +239,7 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                              ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                               ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
@@ -350,9 +350,28 @@ if ($items):
         endwhile;
     endforeach;
     ?>
-    <?php
-else:
-    echo '<div class="usepost_no_record"><h2 class="result_text">' . __("Nothing to show off for now.", 'flatter') . '</h2>' . __("Thanks to try later", 'flatter') . '</div> ';
+    <?php else:
+    ?>
+    <div class="no-user-post">
+        <div class="col-md-12 col-sm-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
+            <div class="col-md-4 col-sm-4 padding-0">
+                <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe.png" ?>" class="post_icon">
+            </div>
+            <div class="col-md-7 padding-0">
+                <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
+                <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
+                <?php if (osc_user_id() == osc_logged_user_id()): ?>
+                    <div class="col-md-12 col-sm-12">
+                        <a href="javascript:void(0)" class="free_account" >
+                            <button class="btn btn-info border-radius-0"><?php _e("Publish Something", 'flatter') ?></button>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>                                
+        </div>
+        <div class="border-bottom-gray col-md-12 col-sm-12"></div>
+    </div>
+<?php
 endif;
 ?>
 

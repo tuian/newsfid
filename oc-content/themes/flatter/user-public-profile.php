@@ -343,25 +343,7 @@ endif;
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number"> 
                             <input type="hidden" name="primium_item_id_post" id="primium_item_id_post">
-                            <div class="no-user-post">
-                                <div class="col-md-12 col-sm-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
-                                    <div class="col-md-4 col-sm-4 padding-0">
-                                        <img src="<?php echo osc_current_web_theme_url() . "images/earth-globe.png" ?>" class="post_icon">
-                                    </div>
-                                    <div class="col-md-7 padding-0">
-                                        <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
-                                        <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
-                                       <?php if(osc_user_id() == osc_logged_user_id()): ?>
-                                        <div class="col-md-12 col-sm-12">
-                                            <a href="javascript:void(0)" class="free_account" >
-                                                <button class="btn btn-info border-radius-0"><?php _e("Publish Something", 'flatter') ?></button>
-                                            </a>
-                                        </div>
-                                        <?php endif; ?>
-                                    </div>                                
-                                </div>
-                                <div class="border-bottom-gray col-md-12 col-sm-12"></div>
-                            </div>
+                            
                             <div class="user_posts_container"></div>
                             <div class="result_text_message"></div> 
                             <div class="loading text-center">
