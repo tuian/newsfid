@@ -109,61 +109,62 @@ function custom_map_script() {
     <script src="//maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&libraries=places"></script>
 
     <script>
-        //        google.maps.event.addDomListener(window, 'load', initMap);
-        //        function initMap() {
-        //            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '45.7640' ?>;
-        //            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
-        //
-        //            var myLatLng = {lat: latitude, lng: longitude};
-        //            var map = new google.maps.Map(document.getElementById('user_map'), {
-        //                zoom: 10,
-        //                center: myLatLng
-        //            });
-        //            //add the code here, after the map variable has been instantiated
-        //            var tab = jQuery('ul.user_profile_navigation li')[1]
-        //            jQuery(tab).one('click', function () {
-        //                setTimeout(function () {
-        //                    google.maps.event.trigger(map, 'resize');
-        //                    map.setCenter(myLatLng)
-        //                    google.maps.Marker({
-        //                        position: myLatLng,
-        //                        map: map,
-        //                        title: 'My City'
-        //                    });
-        //                }, 1000);
-        //
-        //            });
-        //        }
-        //        function updateMap(latitude, longitude) {
-        //            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
-        //            var map = new google.maps.Map(document.getElementById('user_map'), {
-        //                zoom: 10,
-        //                center: myLatLng
-        //            });
-        //            google.maps.event.trigger(map, 'resize');
-        //            map.setCenter(myLatLng)
-        //            google.maps.Marker({
-        //                position: myLatLng,
-        //                map: map,
-        //                title: 'My City'
-        //            });
-        //        }
-        //
-        //        //       
-        //        var goptions = {
-        //            map: '#user_map',
-        //            details: ".details",
-        //            types: ['(cities)'],
-        //            basemap: 'gray',
-        //            mapOptions: {
-        //                zoom: 10
-        //            },
-        //            marketOptions: {
-        //                draggable: true
-        //            }
-        //        }
 
-        
+        google.maps.event.addDomListener(window, 'load', initMap);
+        function initMap() {
+            var latitude = <?php echo osc_user_field('d_coord_lat') ? osc_user_field('d_coord_lat') : '145.7640' ?>;
+            var longitude = <?php echo osc_user_field('d_coord_long') ? osc_user_field('d_coord_long') : '4.8357' ?>;
+
+            var myLatLng = {lat: latitude, lng: longitude};
+            var map = new google.maps.Map(document.getElementById('user_map'), {
+                zoom: 10,
+                center: myLatLng
+            });
+            //add the code here, after the map variable has been instantiated
+            var tab = jQuery('ul.user_profile_navigation li')[1]
+            jQuery(tab).one('click', function () {
+                setTimeout(function () {
+                    google.maps.event.trigger(map, 'resize');
+                    map.setCenter(myLatLng)
+                    google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: 'My City'
+                    });
+                }, 1000);
+
+            });
+        }
+        function updateMap(latitude, longitude) {
+            var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+            var map = new google.maps.Map(document.getElementById('user_map'), {
+                zoom: 10,
+                center: myLatLng
+            });
+            google.maps.event.trigger(map, 'resize');
+            map.setCenter(myLatLng)
+            google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'My City'
+            });
+        }
+
+        //       
+        var goptions = {
+            map: '#user_map',
+            details: ".details",
+            types: ['(cities)'],
+            basemap: 'gray',
+            mapOptions: {
+                zoom: 10
+            },
+            marketOptions: {
+                draggable: true
+            }
+        }
+
+
         $(document).on('click', '.user_localisation_edit', function () {
             $('.user_localisation_textbox').removeClass('hide');
             $('.location-box').addClass('hide');
@@ -293,7 +294,16 @@ function custom_map_script() {
                 });
             });
         });
-
+        $(".user_localisation_textbox").change(function () {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'address': '<?php echo osc_user_field('s_city') ?>, <?php echo osc_user_field('s_country') ?>'}, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            alert("location : " + results[0].geometry.location.lat() + "<?php echo osc_user_field('s_city') ?> " + results[0].geometry.location.lng());
+                        } else {
+                            alert("Something got wrong " + status);
+                        }
+                    });
+                });
     </script>
     <?php
 }

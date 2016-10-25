@@ -3,8 +3,8 @@
 $valid_exts = array('jpeg', 'jpg', 'png', 'gif');
 $max_file_size = 1000 * 10240; #200kb
 $nw = $nh = 500; # image with # height
-$cover_height = 500;
-$cover_width = 1000;
+$cover_height = 400;
+$cover_width = 800;
 require_once '../../../oc-load.php';
 require_once 'functions.php';
 $base_path = osc_themes_path();

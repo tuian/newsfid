@@ -219,6 +219,9 @@ endif;
 <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.geocomplete.js') ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/imagesloaded.pkgd.min.js'); ?>"></script>        
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.imgareaselect.js'); ?>"></script>        
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/jquery.form.js'); ?>"></script>        
+<script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/modal.js'); ?>"></script>        
 
 <script type="text/javascript" src="<?php echo osc_current_web_theme_url('dist/js/app.min.js'); ?>"></script>
 <?php if (osc_get_preference('g_analytics', 'flatter_theme') != null) { ?>

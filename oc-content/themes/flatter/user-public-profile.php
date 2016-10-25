@@ -50,7 +50,45 @@ else:
     $cover_image_path = osc_current_web_theme_url() . "/images/cover-image.png";
 endif;
 ?>
-
+<div class="container">
+		<div>
+			<img class="img-circle" id="avatar-edit-img" height="128" data-src="<?php echo osc_current_web_theme_url() . "/images/user-default.jpg" ?>"  data-holder-rendered="true" style="width: 140px; height: 140px;" src="<?php echo osc_current_web_theme_url() . "/images/user-default.jpg" ?>"/>
+			<a type="button" class="btn btn-primary" id="change-pic">Change Image</a>
+		</div>
+    
+</div>
+<div id="changePic" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h3>Change Profile Picture</h3>
+            </div>
+            <div class="modal-body">
+                <form id="cropimage" method="post" enctype="multipart/form-data" action="<?php echo osc_current_web_theme_url() .'profile.php' ?>">
+					Upload your image <input type="file" name="photoimg" id="photoimg" />
+					<input type="hidden" name="hdn-profile-id" id="hdn-profile-id" value="1" />
+					<input type="hidden" name="hdn-x1-axis" id="hdn-x1-axis" value="" />
+					<input type="hidden" name="hdn-y1-axis" id="hdn-y1-axis" value="" />
+					<input type="hidden" name="hdn-x2-axis" value="" id="hdn-x2-axis" />
+					<input type="hidden" name="hdn-y2-axis" value="" id="hdn-y2-axis" />
+					<input type="hidden" name="hdn-thumb-width" id="hdn-thumb-width" value="" />
+					<input type="hidden" name="hdn-thumb-height" id="hdn-thumb-height" value="" />
+					<input type="hidden" name="action" value="" id="action" />
+					<input type="hidden" name="image_name" value="" id="image_name" />
+					
+					<div id='preview-avatar-profile'>
+				</div>
+				<div id="thumbs" style="padding:5px; width:600px"></div>
+				</form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-crop" class="btn btn-primary">Crop & Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="update-cover" class="collapse">
     <form id="upload_form" enctype="multipart/form-data" method="post" action="<?php echo osc_current_web_theme_url() . 'upload.php' ?>" onsubmit="return checkFormCover()">
         <!-- hidden crop params -->
@@ -343,7 +381,7 @@ endif;
                         <div class="user_posts_area user_details tab-pane fade in active" id="user_posts">
                             <input type="hidden" value="0" name="abc" class="user_post_page_number"> 
                             <input type="hidden" name="primium_item_id_post" id="primium_item_id_post">
-                            
+
                             <div class="user_posts_container"></div>
                             <div class="result_text_message"></div> 
                             <div class="loading text-center">
@@ -500,411 +538,510 @@ function custom_script() {
     <script src="<?php echo osc_current_web_theme_js_url('jquery.form.js') ?>"></script>    
     <script src="<?php echo osc_current_web_theme_js_url('jquery.Jcrop.js') ?>"></script>
     <script>
+            jQuery(document).ready(function () {
 
-                            $(window).scroll(function (event) {
-                                var screen = $(window).height();
-                                var scroll = $(window).scrollTop();
-                                if (screen > 900) {
-                                    var fix = 610;
-                                }
-                                else if (screen > 800) {
-                                    var fix = 600;
-                                }
-                                else if (screen > 700) {
-                                    var fix = 570;
-                                }
-                                else if (screen > 600) {
-                                    var fix = 500;
-                                }
-                                else if (screen > 480) {
-                                    var fix = 450;
-                                }
-                                else if (screen > 400) {
-                                    var fix = 380;
-                                }
-                                if (scroll > fix) {
-                                    $('#wrap').addClass("box_fix2");
-                                    $('#box_post2').addClass("box_post3");
-                                    $('.user_profile_navigation').addClass("fix_nav");
+                jQuery('#change-pic').on('click', function (e) {
+//                    alert('ff');
+                    jQuery('#changePic').modal({show: true});
 
-                                } else {
-                                    $('#wrap').removeClass("box_fix2");
-                                    $('#box_post2').removeClass("box_post3");
-                                    $('.user_profile_navigation').removeClass("fix_nav");
+                });
 
+                jQuery('#photoimg').on('change', function ()
+                {
+                    jQuery("#preview-avatar-profile").html('');
+                    jQuery("#preview-avatar-profile").html('Uploading....');
+                    jQuery("#cropimage").ajaxForm(
+                            {
+                                target: '#preview-avatar-profile',
+                                success: function () {
+                                    jQuery('img#photo').imgAreaSelect({
+                                        aspectRatio: '1:1',
+                                        onSelectEnd: getSizes,
+                                    });
+                                    jQuery('#image_name').val(jQuery('#photo').attr('file-name'));
                                 }
+                            }).submit();
 
-                            });
-                            $(document).on('click', '.add_circle', function () {
-                                var follow_user_id = $(this).attr('follow-user-id');
-                                var logged_in_user_id = $(this).attr('user-id');
-                                $.ajax({
-                                    url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
-                                    type: 'post',
-                                    data: {
-                                        action: 'add_circle',
-                                        follow_user_id: follow_user_id,
-                                        logged_in_user_id: logged_in_user_id
-                                    },
-                                    success: function () {
-                                        $('.add_circle').removeClass('btn-default').addClass('remove_circle').removeClass('add_circle');
-                                    }
-                                });
-                            });
-                            $(document).on('click', '.remove_circle', function () {
-                                var follow_user_id = $(this).attr('follow-user-id');
-                                var logged_in_user_id = $(this).attr('user-id');
-                                $.ajax({
-                                    url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
-                                    type: 'post',
-                                    data: {
-                                        action: 'remove_circle',
-                                        follow_user_id: follow_user_id,
-                                        logged_in_user_id: logged_in_user_id
-                                    },
-                                    success: function () {
-                                        $('.remove_circle').addClass('btn-default').addClass('add_circle').removeClass('remove_circle');
-                                    }
-                                });
-                            });
+                });
+
+                jQuery('#btn-crop').on('click', function (e) {
+                    e.preventDefault();
+                    params = {
+                        targetUrl: '<?php echo osc_current_web_theme_url() .'profile.php' ?>?action=save',
+                        action: 'save',
+                        x_axis: jQuery('#hdn-x1-axis').val(),
+                        y_axis: jQuery('#hdn-y1-axis').val(),
+                        x2_axis: jQuery('#hdn-x2-axis').val(),
+                        y2_axis: jQuery('#hdn-y2-axis').val(),
+                        thumb_width: jQuery('#hdn-thumb-width').val(),
+                        thumb_height: jQuery('#hdn-thumb-height').val()
+                    };
+
+                    saveCropImage(params);
+                });
+
+
+
+                function getSizes(img, obj)
+                {
+                    var x_axis = obj.x1;
+                    var x2_axis = obj.x2;
+                    var y_axis = obj.y1;
+                    var y2_axis = obj.y2;
+                    var thumb_width = obj.width;
+                    var thumb_height = obj.height;
+                    if (thumb_width > 0)
+                    {
+
+                        jQuery('#hdn-x1-axis').val(x_axis);
+                        jQuery('#hdn-y1-axis').val(y_axis);
+                        jQuery('#hdn-x2-axis').val(x2_axis);
+                        jQuery('#hdn-y2-axis').val(y2_axis);
+                        jQuery('#hdn-thumb-width').val(thumb_width);
+                        jQuery('#hdn-thumb-height').val(thumb_height);
+
+                    }
+                    else
+                        alert("Please select portion..!");
+                }
+
+                function saveCropImage(params) {
+                    jQuery.ajax({
+                        url: params['targetUrl'],
+                        cache: false,
+                        dataType: "html",
+                        data: {
+                            action: params['action'],
+                            id: jQuery('#hdn-profile-id').val(),
+                            t: 'ajax',
+                            w1: params['thumb_width'],
+                            x1: params['x_axis'],
+                            h1: params['thumb_height'],
+                            y1: params['y_axis'],
+                            x2: params['x2_axis'],
+                            y2: params['y2_axis'],
+                            image_name: jQuery('#image_name').val()
+                        },
+                        type: 'Post',
+                        // async:false,
+                        success: function (response) {
+                            jQuery('#changePic').modal('hide');
+                            jQuery(".imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer").css('display', 'none');
+
+                            jQuery("#avatar-edit-img").attr('src', response);
+                            jQuery("#preview-avatar-profile").html('');
+                            jQuery("#photoimg").val();
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('status Code:' + xhr.status + 'Error Message :' + thrownError);
+                        }
+                    });
+                }
+            });
+            $(window).scroll(function (event) {
+                var screen = $(window).height();
+                var scroll = $(window).scrollTop();
+                if (screen > 900) {
+                    var fix = 610;
+                }
+                else if (screen > 800) {
+                    var fix = 600;
+                }
+                else if (screen > 700) {
+                    var fix = 570;
+                }
+                else if (screen > 600) {
+                    var fix = 500;
+                }
+                else if (screen > 480) {
+                    var fix = 450;
+                }
+                else if (screen > 400) {
+                    var fix = 380;
+                }
+                if (scroll > fix) {
+                    $('#wrap').addClass("box_fix2");
+                    $('#box_post2').addClass("box_post3");
+                    $('.user_profile_navigation').addClass("fix_nav");
+
+                } else {
+                    $('#wrap').removeClass("box_fix2");
+                    $('#box_post2').removeClass("box_post3");
+                    $('.user_profile_navigation').removeClass("fix_nav");
+
+                }
+
+            });
+            $(document).on('click', '.add_circle', function () {
+                var follow_user_id = $(this).attr('follow-user-id');
+                var logged_in_user_id = $(this).attr('user-id');
+                $.ajax({
+                    url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
+                    type: 'post',
+                    data: {
+                        action: 'add_circle',
+                        follow_user_id: follow_user_id,
+                        logged_in_user_id: logged_in_user_id
+                    },
+                    success: function () {
+                        $('.add_circle').removeClass('btn-default').addClass('remove_circle').removeClass('add_circle');
+                    }
+                });
+            });
+            $(document).on('click', '.remove_circle', function () {
+                var follow_user_id = $(this).attr('follow-user-id');
+                var logged_in_user_id = $(this).attr('user-id');
+                $.ajax({
+                    url: '<?php echo osc_current_web_theme_url() . 'unfollow_and_add_circle.php' ?>',
+                    type: 'post',
+                    data: {
+                        action: 'remove_circle',
+                        follow_user_id: follow_user_id,
+                        logged_in_user_id: logged_in_user_id
+                    },
+                    success: function () {
+                        $('.remove_circle').addClass('btn-default').addClass('add_circle').removeClass('remove_circle');
+                    }
+                });
+            });
     </script>
     <script type="text/javascript" src="<?php echo osc_current_web_theme_url('js/masonry.pkgd.min.js'); ?>"></script>
     <script>
 
-                            $(document).on('click', '.file_upload', function () {
+            $(document).on('click', '.file_upload', function () {
 
-                                //$('#crop-img').modal('show');
-                                $('#crop-img').appendTo('body');
-                            });
-                            $(document).ready(function () {
-                                $('.filter_city').typeahead({
-                                    source: function (query, process) {
-                                        var $items = new Array;
-                                        $items = [""];
-                                        $.ajax({
-                                            url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
-                                            dataType: "json",
-                                            type: "POST",
-                                            data: {city_name: query, region_name: query, country_name: query},
-                                            success: function (data) {
-                                                $.map(data, function (data) {
-                                                    var group;
-                                                    group = {
-                                                        city_id: data.city_id,
-                                                        region_id: data.region_id,
-                                                        country_id: data.country_id,
-                                                        name: data.city_name + '-' + data.region_name + '-' + data.country_name,
-                                                    };
-                                                    $items.push(group);
-                                                });
-
-                                                process($items);
-                                            }
-                                        });
-                                    },
-                                    afterSelect: function (obj) {
-                                        $('.filter_city').attr('data_location_id', obj.id);
-                                    },
-                                    //                updater:function (item) {
-                                    //                    console.log(item);
-                                    //                },
-                                });
-                            });
-                            $(document).ready(function ($) {
-                                fetch_user_posts();
-                                $('#cover .img').hover(function () {
-                                    $('.file_upload_cover .icon').show();
-                                },
-                                        function () {
-                                            $('.file_upload_cover .icon').hide();
-                                        });
-
-                                $('.file_upload_cover .icon').hover(function () {
-                                    $('.file_upload_cover .icon').show();
-                                },
-                                        function () {
-                                            $('.file_upload_cover .icon').hide();
-                                        });
-                                var user_id = '<?php echo osc_user_id() ?>';
-                                $(document).on('click', '.user_profile_navigation .user_follower', function () {
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                        },
-                                        success: function (data) {
-                                            $('.user_follower_container .user_follower_box').html(data);
-                                        }
-                                    });
-                                });
-
-                                $(document).on('keyup', '.follower_search_text', function () {
-                                    var search_name = $('.follower_search_text').val();
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                            search_name: search_name
-                                        },
-                                        success: function (data) {
-                                            $('.user_follower_container .user_follower_box').html(data);
-                                        }
-                                    });
-                                });
-                                $(document).on('keyup', '.post_search', function () {
-                                    var search_name = $('.post_search').val();
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                            search_name: search_name
-                                        },
-                                        success: function (data) {
-                                            $('.user_posts_container').html(data);
-                                        }
-                                    });
-                                });
-
-                                $(document).on('click', '.user_profile_navigation .user_circle', function () {
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                        },
-                                        success: function (data) {
-                                            $('.user_circle_container .user_circle_box').html(data);
-                                        }
-                                    });
-
-                                });
-
-                                $(document).on('change', '.user_cover_img', function (event) {
-                                    var options = {
-                                        url: '<?php echo osc_current_web_theme_url('user_image_change.php'); ?>',
-                                        type: 'post',
-                                        data: {
-                                            type: 'cover_image',
-                                        },
-                                        success: function (html, statusText, xhr, $form) {
-                                            $('.widget-user-header').css({'background-image': ''});
-                                            $('.widget-user-header').css({'background-image': 'url(' + html + ')'});
-                                        },
+                //$('#crop-img').modal('show');
+                $('#crop-img').appendTo('body');
+            });
+            $(document).ready(function () {
+                $('.filter_city').typeahead({
+                    source: function (query, process) {
+                        var $items = new Array;
+                        $items = [""];
+                        $.ajax({
+                            url: "<?php echo osc_current_web_theme_url('search_city_ajax.php') ?>",
+                            dataType: "json",
+                            type: "POST",
+                            data: {city_name: query, region_name: query, country_name: query},
+                            success: function (data) {
+                                $.map(data, function (data) {
+                                    var group;
+                                    group = {
+                                        city_id: data.city_id,
+                                        region_id: data.region_id,
+                                        country_id: data.country_id,
+                                        name: data.city_name + '-' + data.region_name + '-' + data.country_name,
                                     };
-                                    $('.cover_image_upload').ajaxForm(options).submit();
+                                    $items.push(group);
                                 });
-                                $(document).on('keyup', '.circle_search', function () {
-                                    var search_name = $('.circle_search').val();
 
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                            search_name: search_name
-                                        },
-                                        success: function (data) {
-                                            $('.user_circle_container .user_circle_box').html(data);
-                                        }
-                                    });
-                                });
-                                var is_enable_ajax = true;
-                                var loading = false;
-
-                                $(window).bind('scroll', function () {
-                                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
-                                        loading = true;
-                                        $('.user_posts_area .loading').fadeIn(500);
-                                        // $('.user_posts_container').css({'opacity': '0.2'});
-                                        setTimeout(fetch_user_posts, 1000);
-                                    }
-                                });
-                                $('#sCategory').change(function () {
-                                    var user_id = '<?php echo osc_user_id() ?>';
-                                    var is_enable_ajax = true;
-                                    var loading = false;
-                                    var location_type = $('.filter_city').attr('data_location_type');
-                                    var location_id = $('.filter_city').attr('data_location_id');
-                                    var category_id = $('#sCategory').val();
-                                    var post_type = $('.post_type_filter').val();
-                                    $('.user_posts_area .loading').fadeIn(500);
-                                    $('.user_posts_container').css({'opacity': '0.2'});
-                                    reset_variables();
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                            location_type: location_type,
-                                            location_id: location_id,
-                                            category_id: category_id,
-                                            post_type: post_type,
-                                        },
-                                        success: function (data) {
-                                            $('.user_posts_container').empty().append(data);
-                                            $('.user_posts_area .loading').fadeOut(1000);
-                                            $('.user_posts_container').css({'opacity': '1'});
-                                        }
-                                    });
-                                });
-                                $('.country-dropdown #countryId').change(function () {
-                                    $('.posts_container .loading').fadeIn(500);
-                                    $('.user_related_posts').css({'opacity': '0.2'});
-                                    var country_id = $('#countryId').val();
-                                    reset_variables();
-                                    //make_after_login_item_ajax_call();
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                        data: {
-                                            country_id: country_id,
-                                        },
-                                        success: function (data) {
-                                            $('.user_posts_container').empty().append(data);
-                                            $('.user_posts_area .loading').fadeOut(1000);
-                                            $('.user_posts_container').css({'opacity': '1'});
-                                        }
-                                    });
-                                });
-                                $('.filter_city').change(function () {
-                                    var user_id = '<?php echo osc_user_id() ?>';
-                                    var is_enable_ajax = true;
-                                    var loading = false;
-                                    var location_type = $('.filter_city').attr('data_location_type');
-                                    var location_id = $('.filter_city').attr('data_location_id');
-                                    var category_id = $('#sCategory').val();
-                                    var post_type = $('.post_type_filter').val();
-                                    $('.user_posts_area .loading').fadeIn(500);
-                                    $('.user_posts_container').css({'opacity': '0.2'});
-                                    reset_variables();
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                            location_type: location_type,
-                                            location_id: location_id,
-                                            category_id: category_id,
-                                            post_type: post_type,
-                                        },
-                                        success: function (data) {
-                                            $('.user_posts_container').empty().append(data);
-                                            $('.user_posts_area .loading').fadeOut(1000);
-                                            $('.user_posts_container').css({'opacity': '1'});
-                                        }
-                                    });
-                                });
-                                $('.filter-button').click(function () {
-                                    var user_id = '<?php echo osc_user_id() ?>';
-                                    var is_enable_ajax = true;
-                                    var loading = false;
-                                    var location_type = $('.filter_city').attr('data_location_type');
-                                    var location_id = $('.filter_city').attr('data_location_id');
-                                    var category_id = $('#sCategory').val();
-                                    var post_type = $('.post_type_filter').val();
-                                    $('.user_posts_area .loading').fadeIn(500);
-                                    $('.user_posts_container').css({'opacity': '0.2'});
-                                    reset_variables();
-                                    $.ajax({
-                                        url: "<?php echo osc_current_web_theme_url() . '/user_posts.php' ?>",
-                                        data: {
-                                            user_id: user_id,
-                                            location_type: location_type,
-                                            location_id: location_id,
-                                            category_id: category_id,
-                                            post_type: post_type,
-                                        },
-                                        success: function (data) {
-                                            $('.user_posts_container').empty().append(data);
-                                            $('.user_posts_area .loading').fadeOut(1000);
-                                            $('.user_posts_container').css({'opacity': '1'});
-                                        }
-                                    });
-                                });
-                                $('.reset-button').click(function () {
-                                    window.location.reload();
-
-                                });
-                            });
-                            function fetch_user_posts() {
-                                var user_id = '<?php echo osc_user_id() ?>';
-                                var is_enable_ajax = true;
-                                var loading = false;
-                                var location_type = $('.filter_city').attr('data_location_type');
-                                var location_id = $('.filter_city').attr('data_location_id');
-                                var category_id = $('#sCategory').val();
-                                var post_type = $('.post_type_filter').val();
-                                var post = $('.user_post_page_number').val();
-
-                                var page_number = $('.user_posts_area .user_post_page_number').val();
-                                var user_id = '<?php echo osc_user_id() ?>';
-                                $.ajax({
-                                    url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
-                                    data: {
-                                        user_id: user_id,
-                                        page_number: page_number,
-                                        location_type: location_type,
-                                        location_id: location_id,
-                                        category_id: category_id,
-                                        post_type: post_type,
-                                    },
-                                    success: function (data) {
-                                        $('.user_posts_area .loading').fadeOut(1000);
-                                        $('.user_posts_container').css({'opacity': '1'});
-                                        if (data.indexOf("Nothing to show") >= 0 || data.indexOf("Aucun contenu") >= 0) {
-                                            if (page_number === 1) {
-                                                $('.result_text_message').html('<h2 class="result_text"><?php _e("Ends of results", 'flatter') ?></h2>');
-                                            } else if ($('.usepost_no_record').size() < 1) {
-                                                $('.result_text_message').html(data);
-                                            }
-                                            is_enable_ajax = false;
-                                        }
-                                        else {
-                                            loading = false;
-                                            $(".no-user-post").hide();
-                                            $(".user_posts_container").append(data);
-                                            var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
-                                            $('.user_posts_area .user_post_page_number').val(next_page);
-                                            is_enable_ajax = false;
-
-                                        }
-                                        //                                                        else {
-                                        //                                                            if (data.indexOf("Nothing to show") >= 0) {
-                                        //                                                                if (page_number === 1) {
-                                        //                                                                    $('.user_posts_area .result_text').html('<h2 class="result_text">Ends of results</h2>');
-                                        //                                                                } else if ($('.result_text').size() < 1) {
-                                        //                                                                    $('.user_posts_area .result_text').html(data);
-                                        //                                                                }
-                                        //                                                            }
-                                        ////                                                            $(".user_posts_area .result_text").text('Ends of results').show();
-                                        //                                                            is_enable_ajax = false;
-                                        //                                                        }
-                                    }
-                                });
+                                process($items);
                             }
-                            function reset_variables() {
-                                is_enable_ajax = true;
-                                loading = false;
-                                if (!$('.filter_city').val()) {
-                                    $('.filter_city').attr('data_location_id', '');
-                                }
-                                location_type = $('.filter_city').attr('data_location_type');
-                                location_id = $('.filter_city').attr('data_location_id');
-                                category_id = $('#sCategory').val();
-                                post_type = $('.post_type_filter').val();
-                                $('.user_posts_area .user_post_page_number').val(0);
+                        });
+                    },
+                    afterSelect: function (obj) {
+                        $('.filter_city').attr('data_location_id', obj.id);
+                    },
+                    //                updater:function (item) {
+                    //                    console.log(item);
+                    //                },
+                });
+            });
+            $(document).ready(function ($) {
+                fetch_user_posts();
+                $('#cover .img').hover(function () {
+                    $('.file_upload_cover .icon').show();
+                },
+                        function () {
+                            $('.file_upload_cover .icon').hide();
+                        });
+
+                $('.file_upload_cover .icon').hover(function () {
+                    $('.file_upload_cover .icon').show();
+                },
+                        function () {
+                            $('.file_upload_cover .icon').hide();
+                        });
+                var user_id = '<?php echo osc_user_id() ?>';
+                $(document).on('click', '.user_profile_navigation .user_follower', function () {
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
+                        data: {
+                            user_id: user_id,
+                        },
+                        success: function (data) {
+                            $('.user_follower_container .user_follower_box').html(data);
+                        }
+                    });
+                });
+
+                $(document).on('keyup', '.follower_search_text', function () {
+                    var search_name = $('.follower_search_text').val();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . 'user_follower.php' ?>",
+                        data: {
+                            user_id: user_id,
+                            search_name: search_name
+                        },
+                        success: function (data) {
+                            $('.user_follower_container .user_follower_box').html(data);
+                        }
+                    });
+                });
+                $(document).on('keyup', '.post_search', function () {
+                    var search_name = $('.post_search').val();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
+                        data: {
+                            user_id: user_id,
+                            search_name: search_name
+                        },
+                        success: function (data) {
+                            $('.user_posts_container').html(data);
+                        }
+                    });
+                });
+
+                $(document).on('click', '.user_profile_navigation .user_circle', function () {
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
+                        data: {
+                            user_id: user_id,
+                        },
+                        success: function (data) {
+                            $('.user_circle_container .user_circle_box').html(data);
+                        }
+                    });
+
+                });
+
+                $(document).on('change', '.user_cover_img', function (event) {
+                    var options = {
+                        url: '<?php echo osc_current_web_theme_url('user_image_change.php'); ?>',
+                        type: 'post',
+                        data: {
+                            type: 'cover_image',
+                        },
+                        success: function (html, statusText, xhr, $form) {
+                            $('.widget-user-header').css({'background-image': ''});
+                            $('.widget-user-header').css({'background-image': 'url(' + html + ')'});
+                        },
+                    };
+                    $('.cover_image_upload').ajaxForm(options).submit();
+                });
+                $(document).on('keyup', '.circle_search', function () {
+                    var search_name = $('.circle_search').val();
+
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . 'user_circle.php' ?>",
+                        data: {
+                            user_id: user_id,
+                            search_name: search_name
+                        },
+                        success: function (data) {
+                            $('.user_circle_container .user_circle_box').html(data);
+                        }
+                    });
+                });
+                var is_enable_ajax = true;
+                var loading = false;
+
+                $(window).bind('scroll', function () {
+                    if (is_enable_ajax && !loading && $(window).scrollTop() >= ($('.user_posts_container').offset().top + $('.user_posts_container').outerHeight() - window.innerHeight)) {
+                        loading = true;
+                        $('.user_posts_area .loading').fadeIn(500);
+                        // $('.user_posts_container').css({'opacity': '0.2'});
+                        setTimeout(fetch_user_posts, 1000);
+                    }
+                });
+                $('#sCategory').change(function () {
+                    var user_id = '<?php echo osc_user_id() ?>';
+                    var is_enable_ajax = true;
+                    var loading = false;
+                    var location_type = $('.filter_city').attr('data_location_type');
+                    var location_id = $('.filter_city').attr('data_location_id');
+                    var category_id = $('#sCategory').val();
+                    var post_type = $('.post_type_filter').val();
+                    $('.user_posts_area .loading').fadeIn(500);
+                    $('.user_posts_container').css({'opacity': '0.2'});
+                    reset_variables();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            user_id: user_id,
+                            location_type: location_type,
+                            location_id: location_id,
+                            category_id: category_id,
+                            post_type: post_type,
+                        },
+                        success: function (data) {
+                            $('.user_posts_container').empty().append(data);
+                            $('.user_posts_area .loading').fadeOut(1000);
+                            $('.user_posts_container').css({'opacity': '1'});
+                        }
+                    });
+                });
+                $('.country-dropdown #countryId').change(function () {
+                    $('.posts_container .loading').fadeIn(500);
+                    $('.user_related_posts').css({'opacity': '0.2'});
+                    var country_id = $('#countryId').val();
+                    reset_variables();
+                    //make_after_login_item_ajax_call();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            country_id: country_id,
+                        },
+                        success: function (data) {
+                            $('.user_posts_container').empty().append(data);
+                            $('.user_posts_area .loading').fadeOut(1000);
+                            $('.user_posts_container').css({'opacity': '1'});
+                        }
+                    });
+                });
+                $('.filter_city').change(function () {
+                    var user_id = '<?php echo osc_user_id() ?>';
+                    var is_enable_ajax = true;
+                    var loading = false;
+                    var location_type = $('.filter_city').attr('data_location_type');
+                    var location_id = $('.filter_city').attr('data_location_id');
+                    var category_id = $('#sCategory').val();
+                    var post_type = $('.post_type_filter').val();
+                    $('.user_posts_area .loading').fadeIn(500);
+                    $('.user_posts_container').css({'opacity': '0.2'});
+                    reset_variables();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/item_after_login_ajax.php' ?>",
+                        data: {
+                            user_id: user_id,
+                            location_type: location_type,
+                            location_id: location_id,
+                            category_id: category_id,
+                            post_type: post_type,
+                        },
+                        success: function (data) {
+                            $('.user_posts_container').empty().append(data);
+                            $('.user_posts_area .loading').fadeOut(1000);
+                            $('.user_posts_container').css({'opacity': '1'});
+                        }
+                    });
+                });
+                $('.filter-button').click(function () {
+                    var user_id = '<?php echo osc_user_id() ?>';
+                    var is_enable_ajax = true;
+                    var loading = false;
+                    var location_type = $('.filter_city').attr('data_location_type');
+                    var location_id = $('.filter_city').attr('data_location_id');
+                    var category_id = $('#sCategory').val();
+                    var post_type = $('.post_type_filter').val();
+                    $('.user_posts_area .loading').fadeIn(500);
+                    $('.user_posts_container').css({'opacity': '0.2'});
+                    reset_variables();
+                    $.ajax({
+                        url: "<?php echo osc_current_web_theme_url() . '/user_posts.php' ?>",
+                        data: {
+                            user_id: user_id,
+                            location_type: location_type,
+                            location_id: location_id,
+                            category_id: category_id,
+                            post_type: post_type,
+                        },
+                        success: function (data) {
+                            $('.user_posts_container').empty().append(data);
+                            $('.user_posts_area .loading').fadeOut(1000);
+                            $('.user_posts_container').css({'opacity': '1'});
+                        }
+                    });
+                });
+                $('.reset-button').click(function () {
+                    window.location.reload();
+
+                });
+            });
+            function fetch_user_posts() {
+                var user_id = '<?php echo osc_user_id() ?>';
+                var is_enable_ajax = true;
+                var loading = false;
+                var location_type = $('.filter_city').attr('data_location_type');
+                var location_id = $('.filter_city').attr('data_location_id');
+                var category_id = $('#sCategory').val();
+                var post_type = $('.post_type_filter').val();
+                var post = $('.user_post_page_number').val();
+
+                var page_number = $('.user_posts_area .user_post_page_number').val();
+                var user_id = '<?php echo osc_user_id() ?>';
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'user_posts.php' ?>",
+                    data: {
+                        user_id: user_id,
+                        page_number: page_number,
+                        location_type: location_type,
+                        location_id: location_id,
+                        category_id: category_id,
+                        post_type: post_type,
+                    },
+                    success: function (data) {
+                        $('.user_posts_area .loading').fadeOut(1000);
+                        $('.user_posts_container').css({'opacity': '1'});
+                        if (data.indexOf("Nothing to show") >= 0 || data.indexOf("Aucun contenu") >= 0) {
+                            if (page_number === 1) {
+                                $('.result_text_message').html('<h2 class="result_text"><?php _e("Ends of results", 'flatter') ?></h2>');
+                            } else if ($('.usepost_no_record').size() < 1) {
+                                $('.result_text_message').html(data);
                             }
-                            $(document).on('click', '.chat-user1', function () {
-                                var id = $(this).attr('to-user-id');
-                                $.ajax({
-                                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
-                                    type: 'post',
-                                    data: {
-                                        action: 'chat-converstion',
-                                        user_id: id
-                                    },
-                                    success: function (data) {
-                                        $('#online-chat').html(data);
-                                        $('#online-chat').css('display', 'block');
-                                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
-                                    }
-                                });
-                            });
+                            is_enable_ajax = false;
+                        }
+                        else {
+                            loading = false;
+                            $(".no-user-post").hide();
+                            $(".user_posts_container").append(data);
+                            var next_page = parseInt($('.user_posts_area .user_post_page_number').val()) + 1;
+                            $('.user_posts_area .user_post_page_number').val(next_page);
+                            is_enable_ajax = false;
+
+                        }
+                        //                                                        else {
+                        //                                                            if (data.indexOf("Nothing to show") >= 0) {
+                        //                                                                if (page_number === 1) {
+                        //                                                                    $('.user_posts_area .result_text').html('<h2 class="result_text">Ends of results</h2>');
+                        //                                                                } else if ($('.result_text').size() < 1) {
+                        //                                                                    $('.user_posts_area .result_text').html(data);
+                        //                                                                }
+                        //                                                            }
+                        ////                                                            $(".user_posts_area .result_text").text('Ends of results').show();
+                        //                                                            is_enable_ajax = false;
+                        //                                                        }
+                    }
+                });
+            }
+            function reset_variables() {
+                is_enable_ajax = true;
+                loading = false;
+                if (!$('.filter_city').val()) {
+                    $('.filter_city').attr('data_location_id', '');
+                }
+                location_type = $('.filter_city').attr('data_location_type');
+                location_id = $('.filter_city').attr('data_location_id');
+                category_id = $('#sCategory').val();
+                post_type = $('.post_type_filter').val();
+                $('.user_posts_area .user_post_page_number').val(0);
+            }
+            $(document).on('click', '.chat-user1', function () {
+                var id = $(this).attr('to-user-id');
+                $.ajax({
+                    url: "<?php echo osc_current_web_theme_url() . 'chat-converstion.php' ?>",
+                    type: 'post',
+                    data: {
+                        action: 'chat-converstion',
+                        user_id: id
+                    },
+                    success: function (data) {
+                        $('#online-chat').html(data);
+                        $('#online-chat').css('display', 'block');
+                        $('.msg').animate({scrollTop: $('.msg').prop("scrollHeight")}, 10);
+                    }
+                });
+            });
     </script>
 
 

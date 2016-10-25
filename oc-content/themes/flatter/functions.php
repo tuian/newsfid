@@ -1657,22 +1657,22 @@ function update_user_share_item($user_id, $item_id, $share_value) {
     $follow_array['item_id'] = $item_id;
     $follow_array['share_value'] = $share_value;
     $follow_array['created'] = date('Y-m-d H:i:s');
-    ;
+    
 
     $user_follow_data = new DAO();
-    $user_follow_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
-    $user_follow_data->dao->from(sprintf('%st_user_share_item', DB_TABLE_PREFIX));
-    $user_follow_data->dao->where('user_id', $user_id);
-    $user_follow_data->dao->where('item_id', $item_id);
-    $user_follow_data->dao->limit(1);
-    $user_follow_result = $user_follow_data->dao->get();
-    $user_follow_array = $user_follow_result->result();
-
-    if ($user_follow_array):
+//    $user_follow_data->dao->select(sprintf('%st_user_share_item.*', DB_TABLE_PREFIX));
+//    $user_follow_data->dao->from(sprintf('%st_user_share_item', DB_TABLE_PREFIX));
+//    $user_follow_data->dao->where('user_id', $user_id);
+//    $user_follow_data->dao->where('item_id', $item_id);
+//    $user_follow_data->dao->limit(1);
+//    $user_follow_result = $user_follow_data->dao->get();
+//    $user_follow_array = $user_follow_result->result();
+//
+//    if ($user_follow_array):
 //        $user_follow_data->dao->update(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array, array('id' => $user_follow_array[0]['id']));
 //    else:
         $user_follow_data->dao->insert(sprintf('%st_user_share_item', DB_TABLE_PREFIX), $follow_array);
-    endif;
+//    endif;
 //insert notification for author
 //item detail
     $data = new DAO();

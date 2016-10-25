@@ -4042,3 +4042,6 @@ select{
     border: 1px solid #f68935 !important;
     border-radius: 1px !important;
 }
+#update-cover .modal-dialog{
+    width: 100%;
+}

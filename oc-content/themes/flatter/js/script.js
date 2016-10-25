@@ -70,7 +70,7 @@ function fileSelectHandler() {
         oImage.onload = function () { // onload event handler
             $('#loader-icon').show();
             $('#sections').hide();
-            $('#cover').hide();
+//            $('#cover').hide();
             $('.step2').addClass('preview-img');
             // display step 2
             $('.step2').fadeIn(500);
@@ -214,8 +214,8 @@ function fileSelectHandlerCover() {
                 });
                 $('#loader-icon_cover').hide();
                 $('.upload_profile_img').show();
-                $('#sections').hide();
-                $('#cover').hide();
+//                $('#sections').hide();
+//                $('#cover').hide();
                 $('.step2').removeClass('preview-img');
             }, 3000);
 

@@ -2877,4 +2877,7 @@ msgstr "a partagé %s publication"
   
 msgid "Is responding now"
 msgstr "Est en train d’écrire"
+
+msgid "Remove this share"
+msgstr "Supprimer ce partage"
  

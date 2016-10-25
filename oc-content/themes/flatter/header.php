@@ -41,6 +41,7 @@
         <link href="<?php echo osc_current_web_theme_url('plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/style2.css'); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo osc_current_web_theme_url('css/jquery.Jcrop.min.css'); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo osc_current_web_theme_url('css/imgareaselect.css'); ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
             function openwindow()
             {

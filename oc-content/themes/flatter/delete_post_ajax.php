@@ -7,7 +7,7 @@ $user_id = $_REQUEST['user_id'];
 $post_id = $_REQUEST['post_id'];
 $db_prefix = DB_TABLE_PREFIX;
 if ($_REQUEST['action'] == 'delete_post'):
-    
+
     $delete_item_comment = new DAO();
     $delete_item_comment->dao->delete("{$db_prefix}t_item_comment", "fk_i_item_id= $post_id");
     $comment_result = $delete_item_comment->dao->get();
@@ -51,7 +51,7 @@ if ($_REQUEST['action'] == 'delete_post'):
     $delete_item_watchlist = new DAO();
     $delete_item_watchlist->dao->delete("{$db_prefix}t_item_watchlist", "item_id= $post_id");
     $watchlist_result = $delete_item_watchlist->dao->get();
-    
+
     $delete_item_premium = new DAO();
     $delete_item_premium->dao->delete("{$db_prefix}t_premium_items", "item_id= $post_id AND user_id = $user_id");
     $watchlist_result = $delete_item_premium->dao->get();
@@ -59,7 +59,12 @@ if ($_REQUEST['action'] == 'delete_post'):
     $delete_user_post = new DAO();
     $delete_user_post->dao->delete("{$db_prefix}t_item", "pk_i_id= $post_id AND fk_i_user_id = $user_id");
     $post_result = $delete_user_post->dao->get();
-    
-     osc_add_flash_ok_message(_e('Your Post Succsessfully Deleted...!!', 'flatter')); 
+
+    osc_add_flash_ok_message(_e('Your Post Succsessfully Deleted...!!', 'flatter'));
+endif;
+if ($_REQUEST['action_unshare'] == 'action_unshare' && $_REQUEST['share_id'] != ''):
+    $share_id = $_REQUEST['share_id'];
+    $delete_share = new DAO();
+    $delete_share->dao->delete("{$db_prefix}t_user_share_item", "id = $share_id");
 endif;
 ?>

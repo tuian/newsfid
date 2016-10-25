@@ -12,7 +12,7 @@ $data = new DAO();
 $share_array = get_user_shared_item($user_id);
 if (!empty($share_array)):
     $share_pk_id = implode(',', $share_array);
-    $data->dao->select('item.*, CASE WHEN item_share.created IS NOT NULL THEN item_share.created ELSE item.dt_pub_date END as f_date, item_location.*, item_share.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
+    $data->dao->select('item.*, item_share.id as share_id, CASE WHEN item_share.created IS NOT NULL THEN item_share.created ELSE item.dt_pub_date END as f_date, item_location.*, item_share.*, item_user.pk_i_id as item_user_id, item_user.has_private_post as item_user_has_private_post');
     $data->dao->join(sprintf('%st_user_share_item AS item_share', DB_TABLE_PREFIX), 'item_share.item_id = item.pk_i_id', 'LEFT');
 //    $data->dao->where(sprintf('(item.pk_i_id IN (%s) OR item.fk_i_user_id =%s) AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s AND item_share.share_value = %s', $share_pk_id, $user_id, 1, 1, 0, 1));
     $data->dao->where(sprintf('((item.pk_i_id IN (%s) AND item_share.share_value = 1) OR item.fk_i_user_id =%s) AND item.b_enabled = %s AND item.b_active = %s AND item.b_spam = %s', $share_pk_id, $user_id, 1, 1, 0));
@@ -138,30 +138,50 @@ if ($items):
                                     echo time_elapsed_string(strtotime($item['dt_pub_date']));
                                 endif;
                                 ?>
-                                <?php if (osc_logged_user_id() == $user['user_id'] = osc_item_user_id()): ?>
-                                    <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
-                                        <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
-                                            <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication--><?php _e("Delete", 'flatter') ?></a></li>
-                                            <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--><?php _e("Edit", 'flatter') ?> </a></li>
-                                            <?php
-                                            $items = get_item_premium();
-                                            if (!in_array($item_id, $items)):
-                                                $pack = get_user_pack_details(osc_logged_user_id());
-                                                if ($pack['remaining_post'] == 0):
-                                                    ?>
-                                                    <li class="premium" data-toggle="modal" data-target="#marketing"><a> <?php _e("Promote Now", 'flatter') ?></a></li>
+                                <?php
+                                if (osc_user_public_profile_url(osc_logged_user_id()) == osc_user_public_profile_url($user['user_id'])):
+                                    if (osc_logged_user_id() == $user['user_id'] = osc_item_user_id()):
+                                        ?>
+                                        <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                            <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                    <?php if (empty($item['created'])): ?>
+                                                    <li class="delete_post" data-user-id="<?php echo $user['user_id'] ?>" data-post-id="<?php echo $item_id; ?>"><a><!--Supprimer la publication--><?php _e("Delete", 'flatter') ?></a></li>
+                                                    <li class="edit_user_post" item_id="<?php echo $item_id; ?>"><a><!--Modifier--><?php _e("Edit", 'flatter') ?> </a></li>
+                                                    <?php
+                                                    $items = get_item_premium();
+                                                    if (!in_array($item_id, $items)):
+                                                        $pack = get_user_pack_details(osc_logged_user_id());
+                                                        if ($pack['remaining_post'] == 0):
+                                                            ?>
+                                                            <li class="premium" data-toggle="modal" data-target="#marketing"><a> <?php _e("Promote Now", 'flatter') ?></a></li>
 
-                                                <?php else: ?>
-                                                    <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> <?php _e("Promote Now", 'flatter') ?></a></li>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <!--<li class="remove_share"><?php _e('supprimer ce partage', 'flatter') ?></li>-->
-                                            <!--                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
-                                                                                                              <li><a></a></li>
-                                                                                                              <li><a>Signaler la publication</a></li>-->
-                                        </ul>
-                                    </button>
-                                <?php endif; ?>
+                                                        <?php else: ?>
+                                                            <li class="premium add_premium_post" item_id="<?php echo $item_id; ?>"><a href="javascript:void(0)"> <?php _e("Promote Now", 'flatter') ?></a></li>
+                                                        <?php endif; ?>
+                                                        <?php
+                                                    endif;
+                                                else:
+                                                    ?>
+                                                    <li class="remove_share" share-id = <?php echo $item['share_id']; ?>><?php _e('Remove this share', 'flatter') ?></li>
+                    <?php endif; ?>
+                                                <!--                                                                  <li class="disabled light_gray padding-left-10per">Remonter en tête de liste</li>
+                                                                                                                  <li><a></a></li>
+                                                                                                                  <li><a>Signaler la publication</a></li>-->
+                                            </ul>
+                                        </button>
+                                    <?php
+                                    else :
+                                        osc_user_public_profile_url(osc_logged_user_id())
+                                        ?>
+                                        <button type="button" class="btn btn-box-tool pull-right dropdown"><i class="fa fa-chevron-down" data-toggle="dropdown"></i>
+                                            <ul class="dropdown-menu padding-10" role="menu" aria-labelledby="menu1">
+                                                <li class="remove_share" share-id = <?php echo $item['share_id']; ?>><?php _e('Remove this share', 'flatter') ?></li>
+                                            </ul>
+                                        </button>
+                                    <?php
+                                    endif;
+                                endif;
+                                ?>
                             </span>
                             <div id="premium-popup"></div>
                             <div id="marketing" class="modal fade" role="dialog">
@@ -180,11 +200,11 @@ if ($items):
                                                     <div class="premium-success">
                                                         <h4><span  class="bold"> You've done it great</span></h4>
                                                         <div class="col-md-10 padding-0 padding-bottom-6per">
-                                                            <?php _e("We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours ", 'flatter') ?>
+                                                    <?php _e("We are delighted to let you know that you started an adverting campaing on Newsfid. Your promoted post is now online during next 48 hours ", 'flatter') ?>
 
                                                         </div>
                                                     </div>
-                                                <?php else : ?>
+                                                        <?php else : ?>
                                                     <div class="premium-fail">
                                                         <div class="col-md-10 padding-0 padding-bottom-10">
                                                             <?php _e("We are very sorry for the inconvenience but your balance is two low for now .Thank you to top up in order to promote that post.", 'flatter') ?>
@@ -195,11 +215,11 @@ if ($items):
 
                                                         </div>
                                                         <div class="col-md-10 padding-0 padding-bottom-13per text-gray">
-                                                            <?php _e("You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.", 'flatter') ?>
+                                                    <?php _e("You can get up to $2000 balance credit. To give you an idea it means that you can promote 2k posts without spending your money at all.", 'flatter') ?>
 
                                                         </div>
                                                     </div>
-                                                <?php endif; ?>
+            <?php endif; ?>
                                             </div>
                                         </div><div class="clearfix"></div>
                                         <div class="modal-footer padding-bottom-20">
@@ -209,9 +229,9 @@ if ($items):
                                                 if (!$pack['remaining_post'] == 0):
                                                     ?>
                                                     <button class="btn  btn-info pull-left button-box blue-box bold"><a class="font-color-white" href="<?php echo osc_user_public_profile_url(osc_logged_user_id()); ?>"><?php _e("Thanks", 'flatter') ?></a></button>
-                                                <?php else : ?>
+            <?php else : ?>
                                                     <button class="btn  btn-info pull-left button-box bold" data-dismiss="modal"><?php _e("Thanks", 'flatter') ?></button>
-                                                <?php endif; ?>
+            <?php endif; ?>
                                                 <button class="btn pull-left button-box btn-default adverting-btn bold"><a href="<?php echo osc_current_web_theme_url() . 'promoted_post_pack.php' ?>"><?php _e("Go to adverting account", 'flatter') ?></a></button>
                                             </div>
                                         </div>
@@ -239,20 +259,20 @@ if ($items):
                         endif;
                         ?>
 
-                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                               ?></p>
+                        <p><?php //echo osc_highlight(osc_item_description(), 200);                                                                                                           ?></p>
 
                         <?php echo item_like_box(osc_logged_user_id(), osc_item_id()) ?>
 
                         &nbsp;&nbsp;
 
-                        <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
+                            <?php echo user_share_box(osc_logged_user_id(), osc_item_id()) ?>
 
                         &nbsp;&nbsp;&nbsp;
                         <span class="comment_text"><i class="fa fa-comments"></i>&nbsp;<span class="comment_count_<?php echo osc_item_id(); ?>"><?php echo get_comment_count(osc_item_id()) ?></span>&nbsp;
-                            <?php echo __('Comments', 'flatter') ?>
+                        <?php echo __('Comments', 'flatter') ?>
                         </span>
                         &nbsp;&nbsp;
-                        <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
+            <?php echo user_watchlist_box(osc_logged_user_id(), osc_item_id()) ?>
                     </div>
                     <!-- /.box-body -->
 
@@ -274,7 +294,7 @@ if ($items):
                         <?php
                         if ($c_data):
                             ?>
-                            <?php if (count($c_data) > 3): ?>
+                <?php if (count($c_data) > 3): ?>
                                 <div class="box-body">
                                     <span class="load_more_comment"> <i class="fa fa-plus-square-o"></i> <?php _e("Display", 'flatter') ?> <?php echo count($c_data) - 3 ?>  <?php _e(" comments more", 'flatter') ?> </span>
                                     <span class="comment_count"><?php echo count($c_data) - 3 ?></span>
@@ -293,14 +313,14 @@ if ($items):
                                     <div class="box-comment">
                                         <!-- User image -->
                                         <div class="comment_user_image">
-                                            <?php get_user_profile_picture($comment_user['user_id']) ?>
+                    <?php get_user_profile_picture($comment_user['user_id']) ?>
                                         </div>
                                         <div class="comment-text">
                                             <span class="username">
                                                 <a href="<?php echo osc_user_public_profile_url($comment_user['user_id']) ?>"> <?php echo $comment_user['user_name']; ?> </a>
 
-                                                <?php if ($comment_data['fk_i_user_id'] == osc_logged_user_id()):
-                                                    ?>
+                    <?php if ($comment_data['fk_i_user_id'] == osc_logged_user_id()):
+                        ?>
                                                     <div class="dropdown  pull-right">
                                                         <i class="fa fa-angle-down  dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-hidden="true"></i>
                                                         <ul class="dropdown-menu edit-arrow" aria-labelledby="dropdownMenu1">
@@ -312,7 +332,7 @@ if ($items):
                                                 <span class="text-muted margin-left-5"><?php echo time_elapsed_string(strtotime($comment_data['dt_pub_date'])) ?></span>
                                             </span>
                                             <span class="comment_text comment_edt_<?php echo $comment_data['pk_i_id']; ?>" data-text="<?php echo $comment_data['s_body']; ?>">
-                                                <?php echo $comment_data['s_body']; ?>
+                    <?php echo $comment_data['s_body']; ?>
                                             </span>
                                         </div>
                                         <!-- /.comment-text -->
@@ -328,21 +348,21 @@ if ($items):
                         ?>
                     </div>
                     <!-- /.box-footer -->
-                    <?php if (osc_is_web_user_logged_in()): ?>
+                            <?php if (osc_is_web_user_logged_in()): ?>
                         <div class="box-footer">
                             <form class="comment_form" data_item_id="<?php echo osc_item_id() ?>" data_user_id ="<?php echo osc_logged_user_id() ?>" method="post">
-                                <?php
-                                $current_user = get_user_data(osc_logged_user_id());
-                                ?>
+                                    <?php
+                                    $current_user = get_user_data(osc_logged_user_id());
+                                    ?>
                                 <div class="comment_user_image">
-                                    <?php get_user_profile_picture($current_user['user_id']) ?>
+                <?php get_user_profile_picture($current_user['user_id']) ?>
                                 </div>                            <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
                                     <textarea class="form-control input-sm comment_text" placeholder="<?php _e("Press enter to post comment", 'flatter') ?>"></textarea>
                                 </div>
                             </form>
                         </div>
-                    <?php endif; ?>
+            <?php endif; ?>
                     <!-- /.box-footer -->
                 </div>
             </div>
@@ -350,7 +370,7 @@ if ($items):
         endwhile;
     endforeach;
     ?>
-    <?php else:
+<?php else:
     ?>
     <div class="no-user-post">
         <div class="col-md-12 col-sm-12 padding-top-8per background-white padding-left-7per vertical-row padding-bottom-13per blank_user_post">
@@ -360,13 +380,13 @@ if ($items):
             <div class="col-md-7 padding-0">
                 <div class="col-md-12 col-sm-12 light_gray bold padding-bottom-10"><?php _e("Nothing to show for now ", 'flatter') ?> </div>
                 <div class="col-md-12 col-sm-12 font-color-black padding-bottom-13per"><?php _e("Nothing has been post yet on that profile page", 'flatter') ?></div>
-                <?php if (osc_user_id() == osc_logged_user_id()): ?>
+    <?php if (osc_user_id() == osc_logged_user_id()): ?>
                     <div class="col-md-12 col-sm-12">
                         <a href="javascript:void(0)" class="free_account" >
                             <button class="btn btn-info border-radius-0"><?php _e("Publish Something", 'flatter') ?></button>
                         </a>
                     </div>
-                <?php endif; ?>
+    <?php endif; ?>
             </div>                                
         </div>
         <div class="border-bottom-gray col-md-12 col-sm-12"></div>
@@ -376,6 +396,23 @@ endif;
 ?>
 
 <script>
+    $(document).on('click', '.remove_share', function () {
+        if (!confirm('Are you sure want to unshare...???')) {
+            return false;
+        }
+        var share_id = $(this).attr('share-id');
+        $.ajax({
+            url: "<?php echo osc_current_web_theme_url('delete_post_ajax.php') ?>",
+            type: 'post',
+            data: {
+                action_unshare: 'action_unshare',
+                share_id: share_id,
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
     $(document).on('click', '.add_premium_post', function () {
         var item_id = $(this).attr('item_id');
         var user_id = <?php echo osc_logged_user_id() ?>;
